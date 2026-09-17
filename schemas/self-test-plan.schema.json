@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "self-test-plan",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "claim": {
+      "const": "LAB_SELF_TEST_ONLY"
+    },
+    "program": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "const": "LAB-SELF-TEST"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "itcve": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "const": "LAB-OFFLINE-SELF-TEST"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "profile": {
+      "const": "foundation-self-test"
+    },
+    "runnerVersion": {
+      "const": "0.1.0"
+    },
+    "oracleVersion": {
+      "const": "0.1.0"
+    },
+    "sourceCommit": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{40}|uncommitted)$"
+    },
+    "workspaceState": {
+      "enum": [
+        "clean",
+        "dirty",
+        "unversioned"
+      ]
+    },
+    "platform": {
+      "type": "object",
+      "properties": {
+        "os": {
+          "type": "string",
+          "minLength": 1
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "os",
+        "architecture",
+        "runtime"
+      ],
+      "additionalProperties": false
+    },
+    "determinismLevel": {
+      "const": "D0"
+    },
+    "seed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "const": "laboratory-fixture"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16777216
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "path",
+          "sha256",
+          "size"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "requirementId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^(/([^~]|~[01])*)*$"
+          },
+          "expected": {}
+        },
+        "required": [
+          "id",
+          "requirementId",
+          "path",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "claim",
+    "program",
+    "itcve",
+    "profile",
+    "runnerVersion",
+    "oracleVersion",
+    "sourceCommit",
+    "workspaceState",
+    "platform",
+    "determinismLevel",
+    "seed",
+    "artifacts",
+    "assertions"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-3",
+  "version": "0.1.0",
+  "status": "draft",
+  "title": "Remote wallet storage synchronization and HTTP interoperability",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "0.1.0"
+  },
+  "profile": "storage-http-sync",
+  "vectors": [
+    {
+      "id": "ISI-3-V001",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R001",
+      "title": "Mediated initial synchronization",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Load canonical synthetic user and transaction records into reference storage A.",
+        "Use the ITCVE multi-remote wallet to synchronize through the public boundary into empty SUT storage B.",
+        "Query B through an independent reader and canonical projection."
+      ],
+      "expected": [
+        "User identities, transaction bytes/status, outputs, spending links, baskets, tags, labels, certificates and proof references match the fixture scope.",
+        "Local database surrogate IDs may differ only under an explicit identity mapping; relationships cannot be discarded."
+      ],
+      "evidence": [
+        "source-record-fixture",
+        "wallet-mediated-transcript",
+        "destination-projection"
+      ],
+      "blockers": [
+        "Frozen storage wire/schema contract",
+        "Canonical entity-key mapping"
+      ]
+    },
+    {
+      "id": "ISI-3-V002",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R002",
+      "title": "Incremental updates and idempotence",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Apply canonical record updates and sync checkpoints through the multi-remote wallet.",
+        "Replay a completed chunk and inspect final state."
+      ],
+      "expected": [
+        "No acknowledged record is lost or duplicated.",
+        "Repeated sync converges to the exact semantic record set, including declared deletion/tombstone behavior."
+      ],
+      "evidence": [
+        "sync-chunks",
+        "checkpoint-records",
+        "before-after-projections"
+      ],
+      "blockers": [
+        "Conflict ordering and tombstone specification"
+      ]
+    },
+    {
+      "id": "ISI-3-V003",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R003",
+      "title": "Restart, resume and provider failover",
+      "origin": "laboratory-profile",
+      "reference": "docs/determinism.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Pause at a declared chunk boundary and restart B.",
+        "Resume through the wallet, then switch the active provider to B.",
+        "Perform a new action and read it through a freshly initialized client."
+      ],
+      "expected": [
+        "Checkpoint progress remains consistent with committed records.",
+        "Wallet state remains usable and portable after provider substitution."
+      ],
+      "evidence": [
+        "restart-log",
+        "sync-checkpoints",
+        "post-failover-action"
+      ],
+      "blockers": [
+        "Active-provider semantics",
+        "Qualified reset/restart driver"
+      ]
+    },
+    {
+      "id": "ISI-3-V004",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R004",
+      "title": "Transaction and proof state fidelity",
+      "origin": "open-interpretation",
+      "reference": "docs/decisions.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Synchronize pending, accepted, mined, rejected, abandoned and conflicted fixture states where supported by the frozen contract.",
+        "Observe proof updates and resulting output availability."
+      ],
+      "expected": [
+        "Transaction and proof identities remain consistent across servers.",
+        "Nonspendable outputs never become spendable merely because they were synchronized."
+      ],
+      "evidence": [
+        "record-set",
+        "proof-bytes",
+        "spendability-observations"
+      ],
+      "blockers": [
+        "Normative cross-implementation state mapping"
+      ]
+    },
+    {
+      "id": "ISI-3-V005",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R005",
+      "title": "Identity scoping and permitted record access",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Use two synthetic identities and the specified authenticated client sessions.",
+        "Read and update only the records allowed by each fixture identity."
+      ],
+      "expected": [
+        "Public storage calls honor the declared identity binding and method contract.",
+        "Each identity observes precisely its expected record set."
+      ],
+      "evidence": [
+        "authenticated-session-evidence",
+        "identity-scoped-projections"
+      ],
+      "blockers": [
+        "TS/Go authentication contract reconciliation"
+      ]
+    },
+    {
+      "id": "ISI-3-V006",
+      "version": "0.1.0",
+      "requirementId": "ISI-3-R006",
+      "title": "Full HTTP Remote Wallet Storage boundary",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Execute the reviewed method and transport inventory with canonical JSON/binary fixtures.",
+        "Exercise all selected lifecycle, action, output, certificate and synchronization operations."
+      ],
+      "expected": [
+        "Every applicable method matches the pinned request, result, error, byte encoding, auth and version negotiation contract.",
+        "Implementation extensions have explicit labels and applicability."
+      ],
+      "evidence": [
+        "rpc-contract-lock",
+        "method-coverage",
+        "wire-transcripts"
+      ],
+      "blockers": [
+        "Published implementation-neutral storage contract",
+        "Qualified TS/Go boundary adapters"
+      ]
+    }
+  ]
+}

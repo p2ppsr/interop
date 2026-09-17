@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-1",
+  "version": "0.1.0",
+  "status": "draft",
+  "title": "Integrated transaction processing network",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "0.1.0"
+  },
+  "profile": "full-stack",
+  "vectors": [
+    {
+      "id": "ISI-1-V001",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R001",
+      "title": "Offline topology and deterministic funding",
+      "origin": "laboratory-profile",
+      "reference": "docs/determinism.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Restore closed service topology and clean device snapshots.",
+        "Mine the declared regtest funding schedule and mature the funding outputs.",
+        "Onboard each local and remote wallet through the common lifecycle."
+      ],
+      "expected": [
+        "Every component reports the pinned regtest chain identity.",
+        "Funding outpoints, maturity, ownership and amounts match the canonical initial-state manifest.",
+        "No undeclared external service is contacted."
+      ],
+      "evidence": [
+        "topology-lock",
+        "funding-transactions",
+        "headers-and-proofs",
+        "initial-state-commitment",
+        "egress-log"
+      ],
+      "blockers": [
+        "Pinned complete service-image closure",
+        "Qualified mining and native onboarding adapters"
+      ]
+    },
+    {
+      "id": "ISI-1-V002",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R002",
+      "title": "Integrated ToDo lifecycle",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-4/0.1.0/README.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Execute the ISI-4 ToDo create/list/reload/redeem sequence in the complete topology.",
+        "Observe submission, processing, proof delivery and storage synchronization at causal barriers."
+      ],
+      "expected": [
+        "Each required ISI-4 assertion passes in this declared integrated matrix cell.",
+        "The same accepted transaction is traceable across wallet, Arcade, processor, proof service, storage and overlay when applicable."
+      ],
+      "evidence": [
+        "wallet-http-trace",
+        "transaction-graph",
+        "processing-events",
+        "proofs",
+        "storage-projection"
+      ],
+      "blockers": [
+        "ISI-4 executable corpus",
+        "Admission/seen/mined/spendability interpretation"
+      ]
+    },
+    {
+      "id": "ISI-1-V003",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R003",
+      "title": "GlobalKVStore message with licensed image",
+      "origin": "laboratory-profile",
+      "reference": "docs/decisions.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Admit a pinned message-board web artifact and canonical image bytes.",
+        "Create an LCH asset and place its content through UHRP.",
+        "Publish its reference within the specified GlobalKVStore PushDrop payload.",
+        "Resolve the message from another wallet/device, acquire the declared rights with regtest payment, and retrieve/decrypt/render the image."
+      ],
+      "expected": [
+        "Payload, namespace, owner, key and version match the frozen fixture.",
+        "Resolved image digest matches the original; rights and delivery evidence satisfy the pinned LCH profile.",
+        "A reload reconstructs the same message and valid content relationship from authoritative state."
+      ],
+      "evidence": [
+        "pushdrop-transaction",
+        "kvstore-lookup",
+        "lch-header",
+        "rights-and-payment-evidence",
+        "content-digests",
+        "ui-observations"
+      ],
+      "blockers": [
+        "Message-board artifact and payload schema",
+        "Pinned LCH policy and fixture keys",
+        "Independent content/payment oracle"
+      ]
+    },
+    {
+      "id": "ISI-1-V004",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R004",
+      "title": "CHIRP content variant",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0167.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Repeat the image retrieval profile using a pinned CHIRP root and local UHRP hosts.",
+        "Retrieve the complete byte sequence and declared ranges."
+      ],
+      "expected": [
+        "Resolved bytes and root relationships satisfy independently checked CHIRP fixtures.",
+        "Range reconstruction agrees with the canonical full image; incorrect content is not treated as valid."
+      ],
+      "evidence": [
+        "chirp-root",
+        "chunk-manifest",
+        "retrieved-content-digests"
+      ],
+      "blockers": [
+        "Executable canonical CHIRP corpus and independent checker"
+      ]
+    },
+    {
+      "id": "ISI-1-V005",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R005",
+      "title": "Processing states and bounded recovery",
+      "origin": "open-interpretation",
+      "reference": "docs/decisions.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Apply the declared submission/event/mining schedule.",
+        "Introduce a planned service pause, resume it, and observe convergence without changing SUT artifacts."
+      ],
+      "expected": [
+        "Queued, accepted, seen and mined states remain distinguishable.",
+        "No duplicate financial effect or lost acknowledged state after the declared recovery boundary.",
+        "Invalid local fixture transactions receive the specified terminal result and never produce spendable accepted outputs."
+      ],
+      "evidence": [
+        "event-timeline",
+        "wallet-and-storage-states",
+        "chain-state"
+      ],
+      "blockers": [
+        "Exact per-layer state mapping and deadline policy"
+      ]
+    },
+    {
+      "id": "ISI-1-V006",
+      "version": "0.1.0",
+      "requirementId": "ISI-1-R006",
+      "title": "Substitution and portability matrix",
+      "origin": "laboratory-profile",
+      "reference": "docs/conformance-model.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Replace one declared SUT role at a time while keeping support artifacts pinned.",
+        "Repeat from a clean baseline on a separately administered environment."
+      ],
+      "expected": [
+        "Every result is scoped to its exact combination.",
+        "Declared user-data and transaction semantics survive the qualified substitution; limitations remain explicit."
+      ],
+      "evidence": [
+        "matrix-manifest",
+        "independent-replay-record"
+      ],
+      "blockers": [
+        "Qualified alternative implementations",
+        "Independent laboratory availability"
+      ]
+    }
+  ]
+}

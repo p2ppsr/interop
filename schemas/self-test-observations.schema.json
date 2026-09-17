@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "self-test-observations",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "producer": {
+      "const": "tpnil-foundation-self-test@0.1.0"
+    },
+    "values": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "producer",
+    "values"
+  ],
+  "additionalProperties": false
+}

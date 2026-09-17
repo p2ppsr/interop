@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-2",
+  "version": "0.1.0",
+  "status": "draft",
+  "title": "Overlay synchronization and HTTP interoperability",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "0.1.0"
+  },
+  "profile": "overlay-http-sync",
+  "vectors": [
+    {
+      "id": "ISI-2-V001",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R001",
+      "title": "Canonical topical state synchronization",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0088.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Start a pinned reference node with fixture topic tm_tpnil_reference and a canonical admitted UTXO graph.",
+        "Start an empty SUT and invoke its declared synchronization mechanism.",
+        "Observe bounded convergence through the declared HTTP boundaries."
+      ],
+      "expected": [
+        "Canonical topical outpoints, amounts, scripts, spending relationships and retained ancestors match the independently derived set.",
+        "Unknown topics remain separate and no extra admitted outputs appear."
+      ],
+      "evidence": [
+        "reference-fixture",
+        "sync-transcript",
+        "canonical-utxo-projection"
+      ],
+      "blockers": [
+        "Concrete signed transaction graph",
+        "Frozen synchronization transport and convergence bound"
+      ]
+    },
+    {
+      "id": "ISI-2-V002",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R002",
+      "title": "Submission and duplicate semantics",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0022.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit the pinned BEEF transaction to the fixture topic over HTTP.",
+        "Repeat the same submission according to the profile."
+      ],
+      "expected": [
+        "Per-topic admission response matches the independently computed acceptance set.",
+        "Repeated delivery does not duplicate canonical topical outputs or effects."
+      ],
+      "evidence": [
+        "http-request-response",
+        "beef-bytes",
+        "topical-state-before-after"
+      ],
+      "blockers": [
+        "Exact status/header/body/error contract"
+      ]
+    },
+    {
+      "id": "ISI-2-V003",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R003",
+      "title": "Lookup service interoperability",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0024.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Query the declared ls_tpnil_reference lookup service using the canonical query.",
+        "Resolve every referenced output against its returned transaction data."
+      ],
+      "expected": [
+        "Result type, output selection, BEEF associations and declared ordering satisfy the frozen lookup contract.",
+        "Topic names and lookup service names are not interchanged."
+      ],
+      "evidence": [
+        "lookup-transcript",
+        "beef-bytes",
+        "independent-output-resolution"
+      ],
+      "blockers": [
+        "Canonical query schema and fixture oracle"
+      ]
+    },
+    {
+      "id": "ISI-2-V004",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R004",
+      "title": "Incremental, resumed and bidirectional synchronization",
+      "origin": "laboratory-profile",
+      "reference": "docs/determinism.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Add and spend fixture outputs on the source.",
+        "Interrupt a planned sync between declared checkpoints, restart, and repeat.",
+        "Run the reverse direction with a fresh isolated state."
+      ],
+      "expected": [
+        "Final state equals the canonical latest set without omissions or duplicates.",
+        "Replayed checkpoints preserve the declared causality and ancestor retention rules."
+      ],
+      "evidence": [
+        "checkpoint-log",
+        "state-commitments",
+        "transaction-graph"
+      ],
+      "blockers": [
+        "Checkpoint/resume interoperability specification"
+      ]
+    },
+    {
+      "id": "ISI-2-V005",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R005",
+      "title": "Specified rejection and chain changes",
+      "origin": "open-interpretation",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0136.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Apply the corpus of rejected local transactions and topic-inadmissible outputs.",
+        "Apply a predeclared regtest reorganization when this profile is selected."
+      ],
+      "expected": [
+        "No rejected fixture output appears as admitted state.",
+        "Reorganization behavior matches the selected anchor/rollback profile and is distinguishable from ordinary convergence."
+      ],
+      "evidence": [
+        "rejection-transcripts",
+        "headers",
+        "topical-state-commitments"
+      ],
+      "blockers": [
+        "BASM applicability and reorg requirements"
+      ]
+    },
+    {
+      "id": "ISI-2-V006",
+      "version": "0.1.0",
+      "requirementId": "ISI-2-R006",
+      "title": "Complete public boundary inventory",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-1 regtest baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Enumerate the pinned submission, lookup, discovery and synchronization methods selected by this profile.",
+        "Execute each applicable request/result/error and transport assertion."
+      ],
+      "expected": [
+        "Coverage map has no unexplained mandatory boundary omissions.",
+        "Administrative routes are separately scoped and confer no public-boundary coverage."
+      ],
+      "evidence": [
+        "contract-lock",
+        "method-coverage-report"
+      ],
+      "blockers": [
+        "Reviewed frozen HTTP contract",
+        "Executable boundary vectors"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+name: Foundation checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.21.1'
+      - run: npm test
+      - run: npm run check
+      - run: node scripts/verify-published-journals.mjs
+      - run: python3 -m unittest discover -s test -p 'test_*.py' -v
+      - run: npm run demo
+      - run: node bin/tpnil.mjs verify out/demo
+      - run: node scripts/check-journal-history.mjs "$BASE_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
