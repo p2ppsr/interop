@@ -2,7 +2,7 @@
 
 **TPNIL** is a BSV Blockchain initiative for impartial interoperability evaluation, without fear or favor. The laboratory brings published requirements, canonical software artifacts, integrated test environments, deterministic results, and durable evidence into a common framework open to equal participation.
 
-**Version 0.1.0 — private establishment phase, experimental.** The offline core and journal verifier are implemented. Four draft programs define the scope of evaluation; SUT adapters and native test environments are under development. [Implementation status](docs/implementation-status.md) records current capabilities and qualification prerequisites.
+**Version 0.2.0 — private establishment phase, experimental.** The offline core and journal verifier are implemented. Four draft programs define the scope of evaluation; SUT adapters and native test environments are under development. [Implementation status](docs/implementation-status.md) records current capabilities and qualification prerequisites.
 
 ## The laboratory
 
@@ -13,11 +13,11 @@ The [charter](CHARTER.md) defines the mission and principles. [Governance](GOVER
 | [ISI-1](programs/ISI-1/0.1.0/README.md) | Complete transaction-processing stack integration | 0.1.0 | Draft |
 | [ISI-2](programs/ISI-2/0.1.0/README.md) | Overlay synchronization, submission, and lookup | 0.1.0 | Draft |
 | [ISI-3](programs/ISI-3/0.1.0/README.md) | Remote wallet storage boundary and mediated synchronization | 0.1.0 | Draft |
-| [ISI-4](programs/ISI-4/0.1.0/README.md) | BRC-100 wallet and application interoperability | 0.1.0 | Draft |
+| [ISI-4](programs/ISI-4/1.0.0/README.md) | Production BRC-100 wallet and application interoperability | 1.0.0 | Draft |
 
-All four programs use [ITCVE-1](itcves/ITCVE-1/0.1.0/README.md). ISI-1 defines the integrated foundation; the other programs evaluate narrower profiles within it. Results are specific to the executed profile and artifact combination.
+All four programs select versioned ITCVE-1 profiles. ISI-4 uses the [production-wallet controlled-service profile](itcves/ITCVE-1/1.0.0/README.md); ISI-1 through ISI-3 retain [version 0.1.0](itcves/ITCVE-1/0.1.0/README.md). ISI-1 defines the integrated foundation; the other programs evaluate narrower profiles within it. Results are specific to the executed profile and artifact combination.
 
-BSV Desktop is the initial reference wallet candidate. The initial application candidate is a compiled tarball from `p2ppsr/todo-ts`. Their [candidate manifests](suts/README.md) record provenance and outstanding admission requirements.
+[BSV Desktop 2.8.5](suts/intake/bsv-desktop-2.8.5.md) is the current reference wallet candidate under production-fidelity intake. The initial application candidate is a compiled tarball from `p2ppsr/todo-ts`. Their [candidate manifests](suts/README.md) record provenance and outstanding admission requirements.
 
 ## Run the offline core
 

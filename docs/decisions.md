@@ -13,12 +13,13 @@
 | D-007 | Initial application source p2ppsr/todo-ts | Adopted; compiled candidate built |
 | D-008 | D1 native semantic determinism; D0 controlled byte replay | Adopted |
 | D-009 | Canonical origin https://todo.itcve.test | Draft profile |
-| D-010 | Uniform regtest admission as a laboratory requirement | Adopted |
-| D-011 | BSV Desktop v2.8.3 reference wallet candidate | macOS arm64 digest verified; admission pending |
+| D-010 | Uniform regtest admission in initial profiles | Superseded for ISI-4 by D-017; retained for unchanged profiles |
+| D-011 | BSV Desktop reference wallet candidate | v2.8.5 intake records verified macOS arm64 bytes and static signature integrity; runtime admission pending |
 | D-012 | Reconciled TypeScript/Go storage boundary and synchronization contract | Open: clause-level contract |
 | D-013 | Queued/accepted/seen/mined/rejected states and wallet spendability mapping | Open: clause-level contract |
 | D-014 | Message-board source, GlobalKVStore schema, and LCH rights policy | Open |
 | D-015 | Native hardware, OS/browser locks, signing rights, archive retention, and resource budget | Open |
 | D-016 | Oregon law; Jackson County state court and appropriate Oregon federal forum | Adopted in [governance](../GOVERNANCE.md#governing-law-and-dispute-forum) |
+| D-017 | Production mainnet wallet artifacts, qualitative intake, and explicitly configured controlled services; no public-mainnet spending | Adopted in [ISI-4 decision 0001](../programs/ISI-4/decisions/0001-production-fidelity.md) |
 
 Open and draft items remain prerequisites for the profiles that depend on them.

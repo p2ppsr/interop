@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { canonical, digest, hashJson, parseJson, validate, equal } from './json.mjs';
 
 export const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-export const VERSION = '0.1.0';
+export const VERSION = '0.1.0'; // Stable self-test and evidence protocol.
+export const RELEASE_VERSION = '0.2.0';
 export const readJson = file => parseJson(fs.readFileSync(file));
 const schemas = new Map();
 export function checkSchema(name, value) {
@@ -72,16 +73,27 @@ export function checkCatalog(catalog) {
   }
 }
 export function checkRepository() {
-  const catalogs = [1, 2, 3, 4].map(n => readJson(path.join(ROOT, 'programs', `ISI-${n}`, VERSION, 'catalog.json')));
-  catalogs.forEach(checkCatalog);
+  const index = readJson(path.join(ROOT, 'programs/index.json'));
+  checkSchema('program-index', index);
+  unique(index.programs.map(p => p.id), 'program ID');
+  if (index.programs.length !== 4) throw new Error('Expected four registered programs');
+  const catalogs = index.programs.map(p => readJson(path.join(ROOT, 'programs', p.id, p.version, 'catalog.json')));
   const version = fs.readFileSync(path.join(ROOT, 'VERSION'), 'utf8').trim();
-  if (version !== VERSION || readJson(path.join(ROOT, 'package.json')).version !== VERSION) throw new Error('Laboratory version mismatch');
-  for (const catalog of catalogs) {
-    if (catalog.itcve.id !== 'ITCVE-1' || catalog.itcve.version !== VERSION) throw new Error('Unknown environment');
-    for (const vector of catalog.vectors) {
-      if (!vector.reference.startsWith('https://')) {
-        safeRelative(vector.reference);
-        if (!fs.existsSync(path.join(ROOT, vector.reference))) throw new Error(`Missing reference ${vector.reference}`);
+  if (version !== RELEASE_VERSION || readJson(path.join(ROOT, 'package.json')).version !== RELEASE_VERSION) throw new Error('Laboratory version mismatch');
+  // Validate retained catalogs as well as the current selection.
+  for (const entry of index.programs) {
+    for (const version of fs.readdirSync(path.join(ROOT, 'programs', entry.id)).filter(v => /^\d+\.\d+\.\d+$/.test(v))) {
+      const catalog = readJson(path.join(ROOT, 'programs', entry.id, version, 'catalog.json'));
+      checkCatalog(catalog);
+      if (catalog.id !== entry.id || catalog.version !== version) throw new Error('Catalog path identity mismatch');
+      if (catalog.itcve.id !== 'ITCVE-1') throw new Error('Unknown environment');
+      const environment = readJson(path.join(ROOT, 'itcves', catalog.itcve.id, catalog.itcve.version, 'profile.json'));
+      if (environment.id !== catalog.itcve.id || environment.version !== catalog.itcve.version) throw new Error('Environment identity mismatch');
+      for (const vector of catalog.vectors) {
+        if (!vector.reference.startsWith('https://')) {
+          safeRelative(vector.reference);
+          if (!fs.existsSync(path.join(ROOT, vector.reference))) throw new Error(`Missing reference ${vector.reference}`);
+        }
       }
     }
   }

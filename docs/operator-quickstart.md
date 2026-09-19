@@ -28,3 +28,11 @@ python3 scripts/package-webroot.py path/to/compiled-webroot out/application.tgz 
 The packager fixes paths, ownership, modes, timestamps and gzip metadata, rejects symlinks/nonregular files and environment/source-control files, limits input to 10,000 files/256 MiB, and refuses overwrite. It requires `index.html`. Pin Python/zlib/OS along with the compiler and package lock for cross-host reproducibility; two matching local builds are not independent laboratory reproduction. This tool does not safely extract arbitrary submitted archives or provision HTTPS.
 
 The local journal uses a single-writer lock. After a crashed process, preserve a copy and inspect the journal with `verify` before manual recovery. Lock removal requires confirmation that the writer has stopped; interrupted journal content remains preserved during recovery. Restore from a known checkpoint or publish a separately identified recovery record; orphan staging objects are not valid runs. Official publication additionally requires the governance/evidence launch gates.
+
+Production-artifact intake uses a separate command:
+
+```sh
+node bin/tpnil.mjs review-intake suts/intake/bsv-desktop-2.8.5.json out/artifacts/BSV-Desktop-2.8.5-arm64-mac.dmg
+```
+
+The [intake contract](intake.md) defines required evidence and exit codes. Its output is an intake review, separate from synthetic self-tests and executed SUT results.

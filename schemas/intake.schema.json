@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "program": {
+      "const": "ISI-4@1.0.0"
+    },
+    "itcve": {
+      "const": "ITCVE-1@1.0.0"
+    },
+    "profile": {
+      "const": "production-wallet-controlled-services"
+    },
+    "walletNetwork": {
+      "const": "main"
+    },
+    "serviceReality": {
+      "const": "isolated-fixtures"
+    },
+    "publicMainnetBroadcast": {
+      "const": false
+    },
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "release": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "publisherUrl": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "release",
+        "sha256",
+        "size",
+        "publisherUrl"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "kind": {
+            "enum": [
+              "release-metadata",
+              "source-observation",
+              "runtime-observation",
+              "rights-record"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "kind"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "enum": [
+              "artifact-identity",
+              "production-fidelity",
+              "runner-isolation",
+              "service-coverage",
+              "initial-state",
+              "observation-coverage",
+              "repeatability",
+              "retention-rights"
+            ]
+          },
+          "status": {
+            "enum": [
+              "verified",
+              "source-observed",
+              "unresolved",
+              "not-supported"
+            ]
+          },
+          "finding": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidenceIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "finding",
+          "evidenceIds"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "program",
+    "itcve",
+    "profile",
+    "walletNetwork",
+    "serviceReality",
+    "publicMainnetBroadcast",
+    "artifact",
+    "evidence",
+    "criteria"
+  ],
+  "additionalProperties": false
+}

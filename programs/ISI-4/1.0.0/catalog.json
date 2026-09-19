@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-4",
+  "version": "1.0.0",
+  "status": "draft",
+  "title": "BRC-100 wallet-to-application interoperability",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "1.0.0"
+  },
+  "profile": "production-wallet-todo",
+  "vectors": [
+    {
+      "id": "ISI-4-V001",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R001",
+      "title": "Production wallet intake, initialization, and fixture funding",
+      "origin": "laboratory-profile",
+      "reference": "docs/intake.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence"
+      ],
+      "steps": [
+        "Verify the unchanged production-release artifact and its installation identity.",
+        "Initialize through ordinary supported user interfaces with mainnet selected and explicitly configured ITCVE services.",
+        "Establish fixture output ownership, provenance, and declared spending eligibility against the controlled service model."
+      ],
+      "expected": [
+        "The artifact and configuration match the reviewed intake record. No special wallet build or regtest support is required.",
+        "Runtime observations identify which service boundaries are controlled and which are unresolved.",
+        "Fixture funding is distinguished from public-mainnet funds and acceptance."
+      ],
+      "evidence": [
+        "artifact-verification",
+        "configuration-record",
+        "runtime-routing-observations",
+        "fixture-provenance",
+        "initial-wallet-state"
+      ],
+      "blockers": [
+        "Qualified isolated native runner",
+        "Supported endpoint coverage confirmed in the installed release",
+        "Mainnet-format fixture and independent service-state oracle"
+      ]
+    },
+    {
+      "id": "ISI-4-V002",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R002",
+      "title": "Create encrypted ToDo token",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Serve the nominated compiled ToDo tarball at https://todo.itcve.test.",
+        "Create the canonical task text and declared satoshi amount through ordinary application UI.",
+        "Capture wallet calls and validate the resulting transaction independently."
+      ],
+      "expected": [
+        "The task ciphertext decrypts under the declared protocol/key context.",
+        "The intended PushDrop output has the specified amount, locking semantics and todo tokens basket association.",
+        "Returned outpoint corresponds to actual serialized transaction bytes."
+      ],
+      "evidence": [
+        "app-and-wallet-trace",
+        "raw-transaction",
+        "pushdrop-fields",
+        "basket-state"
+      ],
+      "blockers": [
+        "Admitted ToDo artifact",
+        "Independent script/transaction/crypto checker"
+      ]
+    },
+    {
+      "id": "ISI-4-V003",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R003",
+      "title": "List, decrypt and cold reload",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "List todo tokens with transaction data.",
+        "Clear application cache in a fresh browser context while preserving the same wallet identity and origin permissions.",
+        "Reload from the canonical origin and reconstruct the tasks from wallet state."
+      ],
+      "expected": [
+        "Every expected unspent task appears exactly once with correct plaintext and satoshi value.",
+        "Task reconstruction works without relying on the application P0 cache or UI-only success markers."
+      ],
+      "evidence": [
+        "listOutputs-transcript",
+        "BEEF",
+        "fresh-context-proof",
+        "rendered-task-observation"
+      ],
+      "blockers": [
+        "Executable browser driver and independent BEEF projection"
+      ]
+    },
+    {
+      "id": "ISI-4-V004",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R004",
+      "title": "Redeem token and verify spendability",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Complete the canonical task through the application.",
+        "Observe createAction/signAction and the consumed output.",
+        "Reload and compare wallet output/action state with chain acceptance at declared barriers."
+      ],
+      "expected": [
+        "The redemption consumes the intended task outpoint with a valid unlocking script.",
+        "Spent output is absent from the unspent task set; value conservation includes explicit fees and change.",
+        "Spendability is established against the declared controlled service and wallet-state model; public-mainnet acceptance requires separate live evidence."
+      ],
+      "evidence": [
+        "unsigned-and-signed-transactions",
+        "spent-outpoint-proof",
+        "basket-and-balance-projections"
+      ],
+      "blockers": [
+        "Acceptance/spendability state contract",
+        "Independent script and amount validator"
+      ]
+    },
+    {
+      "id": "ISI-4-V005",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R005",
+      "title": "Permissions and wallet communications substrates",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Run declared HTTP, window-injection or XDM substrate profiles with the same application and isolated permission baseline.",
+        "Perform scripted approve and deny choices at specified UI barriers.",
+        "Repeat under the alternate origin explicitly declared by the vector."
+      ],
+      "expected": [
+        "Transport faithfully conveys method arguments, results and specified errors.",
+        "Permission scope and user decisions have the declared effects without cross-origin assumptions."
+      ],
+      "evidence": [
+        "substrate-trace",
+        "origin-proof",
+        "permission-decision-log"
+      ],
+      "blockers": [
+        "Per-substrate browser policy and permission vectors"
+      ]
+    },
+    {
+      "id": "ISI-4-V006",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R006",
+      "title": "Broadcast options and transaction lifecycle",
+      "origin": "open-interpretation",
+      "reference": "docs/decisions.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Exercise declared broadcast options against explicitly configured ITCVE service endpoints with a fixed event schedule.",
+        "Observe controlled rejection and recovery cases within the isolated fixture service."
+      ],
+      "expected": [
+        "The report distinguishes wallet decisions, service responses, and public-network observations.",
+        "A controlled service rejection produces the specified wallet and application state under the adopted criterion."
+      ],
+      "evidence": [
+        "processing-timeline",
+        "action-and-output-state",
+        "returned-errors"
+      ],
+      "blockers": [
+        "BRC versus implementation-specific lifecycle decisions"
+      ]
+    },
+    {
+      "id": "ISI-4-V007",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R007",
+      "title": "Data portability and counterpart replacement",
+      "origin": "laboratory-profile",
+      "reference": "docs/conformance-model.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Move the synthetic user dataset through the qualified ISI-3 storage profile.",
+        "Reopen ToDo with the same identity and declared compatible wallet configuration."
+      ],
+      "expected": [
+        "Tasks, encryption context, transaction provenance and unspent state remain reconstructible.",
+        "Changing storage does not require the app cache to preserve data."
+      ],
+      "evidence": [
+        "portable-record-set",
+        "fresh-client-read",
+        "task-projection"
+      ],
+      "blockers": [
+        "Portable identity/key protocol and storage profile"
+      ]
+    },
+    {
+      "id": "ISI-4-V008",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R008",
+      "title": "Comprehensive wallet boundary coverage",
+      "origin": "laboratory-profile",
+      "reference": "docs/boundary-inventories.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": false,
+      "preconditions": [
+        "Digest-verified production wallet and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Generate a traceability matrix for every applicable BRC-100 method and referenced primitive.",
+        "Run concrete positive, specified-error, permission and substrate cases outside the ToDo subset."
+      ],
+      "expected": [
+        "Coverage explicitly distinguishes wallet-todo from a future complete-wallet profile.",
+        "No untested method is counted as passing BRC-100."
+      ],
+      "evidence": [
+        "method-inventory",
+        "requirements-coverage",
+        "raw-observations"
+      ],
+      "blockers": [
+        "Complete clause-level corpus and qualified wallet adapters"
+      ]
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — production-fidelity intake (2026-09-18)
+
+- Adopted ISI-4 decision 0001, ISI-4 1.0.0, and ITCVE-1 1.0.0: unchanged mainnet wallet artifacts with explicitly configured controlled services, replacing mandatory wallet regtest support.
+- Added qualitative intake records, artifact/evidence validation, and the `review-intake` command.
+- Added independent current-program selection while retaining prior definitions and the 0.1.0 self-test/evidence protocol.
+- Applied intake to BSV Desktop 2.8.5: downloaded and digest-verified the macOS arm64 DMG, verified static signature integrity, and recorded release-tagged configuration findings. Runtime admission and ToDo execution remain blocked.
+- Updated the charter and artifact-submission agreement to version 1.0.0 for profile-specific funding and production fidelity.
+
 ## 0.1.0 — foundation (2026-09-17 UTC)
 
 - Established TPNIL charter and founding governance, equal participation, evidence, and determinism policies.

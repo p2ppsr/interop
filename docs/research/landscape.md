@@ -1,6 +1,6 @@
 # Implementation and standards landscape
 
-Research timestamp: 2026-09-17 UTC. Repository heads and source-file SHA-256 digests are recorded in [sources.lock.json](sources.lock.json) and [source-files.lock.json](source-files.lock.json). These are discovery/provenance locks, not a runnable dependency closure. Licensing labels are observed repository metadata, not legal clearance.
+Research baseline: 2026-09-17 UTC. The [2026-09-18 BSV Desktop intake](../intake.md) supersedes the wallet admission prerequisite and records v2.8.5 findings; observations below remain scoped to their original revisions. Repository heads and source-file SHA-256 digests are recorded in [sources.lock.json](sources.lock.json) and [source-files.lock.json](source-files.lock.json). These are discovery/provenance locks, not a runnable dependency closure. Licensing labels are observed repository metadata, not legal clearance.
 
 ## Specifications before implementation behavior
 

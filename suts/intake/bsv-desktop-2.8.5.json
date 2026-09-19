@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "bsv-desktop-2.8.5-macos-arm64",
+  "program": "ISI-4@1.0.0",
+  "itcve": "ITCVE-1@1.0.0",
+  "profile": "production-wallet-controlled-services",
+  "walletNetwork": "main",
+  "serviceReality": "isolated-fixtures",
+  "publicMainnetBroadcast": false,
+  "artifact": {
+    "release": "v2.8.5",
+    "sha256": "05dec27dc461d4a9fbbe9aafdec53bdb6e947b46c0d1652e16342da47471d12e",
+    "size": 197754121,
+    "publisherUrl": "https://github.com/bsv-blockchain/bsv-desktop/releases/download/v2.8.5/BSV-Desktop-2.8.5-arm64-mac.dmg"
+  },
+  "evidence": [
+    {
+      "id": "release",
+      "path": "docs/research/intake-2026-09-18/release.json",
+      "sha256": "56018fc6bedd9c6940596d9df8c9763dc8caf29eec3c98ed2a6cd786b4fd7e5b",
+      "kind": "release-metadata"
+    },
+    {
+      "id": "source-observations",
+      "path": "docs/research/intake-2026-09-18/source-observations.json",
+      "sha256": "79336b48b430a4f1fe7a4e9f44f5154cab8ba2c7072e98a31af1c507825de8e4",
+      "kind": "source-observation"
+    },
+    {
+      "id": "signature-inspection",
+      "path": "docs/research/intake-2026-09-18/signature-inspection.json",
+      "sha256": "bf7c63e5c6a78a17675001b40a342b1e75ce6737637636fd47e4690490fd08fd",
+      "kind": "release-metadata"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "artifact-identity",
+      "status": "verified",
+      "finding": "Downloaded v2.8.5 macOS arm64 DMG matches the publisher-reported SHA-256 and size. Static signature integrity verification succeeds; signing metadata identifies BSV Association, TeamIdentifier SV8SWTHA2H. Installation and execution are not established.",
+      "evidenceIds": [
+        "release",
+        "signature-inspection"
+      ]
+    },
+    {
+      "id": "production-fidelity",
+      "status": "source-observed",
+      "finding": "The tagged source exposes ordinary mainnet, remote-storage, and proxy settings. Installed-binary configuration and intervention effects remain unobserved.",
+      "evidenceIds": [
+        "source-observations"
+      ]
+    },
+    {
+      "id": "runner-isolation",
+      "status": "unresolved",
+      "finding": "No isolated macOS guest with qualified native automation and complete wallet-state separation is admitted.",
+      "evidenceIds": []
+    },
+    {
+      "id": "service-coverage",
+      "status": "source-observed",
+      "finding": "Remote storage is configurable; renderer, local-storage, and monitor service clients require separate runtime routing evidence. Direct proof/header/submission endpoint overrides were not established in the inspected settings.",
+      "evidenceIds": [
+        "source-observations"
+      ]
+    },
+    {
+      "id": "initial-state",
+      "status": "unresolved",
+      "finding": "Mainnet-format fixture funding, headers, proofs, and storage records with independent validation are not assembled.",
+      "evidenceIds": []
+    },
+    {
+      "id": "observation-coverage",
+      "status": "unresolved",
+      "finding": "Native ToDo driver and independent transaction, script, amount, encryption-context, basket, and state predicates are not implemented.",
+      "evidenceIds": []
+    },
+    {
+      "id": "repeatability",
+      "status": "unresolved",
+      "finding": "Two clean native baseline executions and reset evidence remain outstanding.",
+      "evidenceIds": []
+    },
+    {
+      "id": "retention-rights",
+      "status": "unresolved",
+      "finding": "Canonical artifact and dependency archival/replay acceptance records remain outstanding.",
+      "evidenceIds": []
+    }
+  ]
+}

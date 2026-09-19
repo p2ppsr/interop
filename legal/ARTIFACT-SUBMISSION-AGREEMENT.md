@@ -1,6 +1,6 @@
 # Canonical SUT artifact submission agreement
 
-Version 0.1.0. This agreement takes effect through the signed submission schedule described in section 5. The Steward is PEER TO PEER PRIVACY SYSTEMS RESEARCH LLC, identified in [GOVERNANCE.md](../GOVERNANCE.md).
+Version 1.0.0. This agreement takes effect through the signed submission schedule described in section 5. The Steward is PEER TO PEER PRIVACY SYSTEMS RESEARCH LLC, identified in [GOVERNANCE.md](../GOVERNANCE.md).
 
 ## 1. Ownership and admitted subject
 
@@ -24,7 +24,7 @@ Admission requires worldwide archival and replay rights for dependencies, or rep
 
 ## 4. Evidence and confidentiality
 
-Submissions shall use synthetic identities and regtest funds and exclude customer information, real credentials, and unrelated confidential data. The Submitter shall identify restricted material before transfer. Public conformance results and canonical artifact retention cannot be vetoed merely because a result is unfavorable. Any confidentiality schedule must preserve independent review and the stated reproducibility claim; if it cannot, the run must be labeled restricted/experimental and cannot support public certification.
+Submissions shall use isolated laboratory identities and the selected profile’s funding fixtures and exclude customer information, real credentials, and unrelated confidential data. The Submitter shall identify restricted material before transfer. Public conformance results and canonical artifact retention cannot be vetoed merely because a result is unfavorable. Any confidentiality schedule must preserve independent review and the stated reproducibility claim; if it cannot, the run must be labeled restricted/experimental and cannot support public certification.
 
 The lab may delay publication under a published defect-handling process; it must retain the original evidence and a record of the reason. Corrected binaries create new identities and new runs. The submitter can contest errors through the appeal process; it cannot silently replace archived bytes.
 

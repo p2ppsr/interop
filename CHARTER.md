@@ -1,6 +1,6 @@
 # Foundational charter
 
-Version 0.1.0 — adopted 2026-09-17 UTC.
+Version 1.0.0 — production-fidelity amendment adopted 2026-09-18; founding charter adopted 2026-09-17.
 
 ## Purpose
 
@@ -12,7 +12,7 @@ The laboratory acts without fear or favor. Participation is open on equal publis
 
 TPNIL develops and maintains end-to-end testing primitives, independent test oracles, deterministic runners, integrated test stands, conformance vectors, acceptance criteria, and permanent evaluation journals. Each finding identifies the evaluated artifact, applicable requirements, environment, versions, platforms, counterpart implementations, and supporting evidence. Its scope is limited to the behavior evaluated.
 
-An ISI defines interoperability conditions, authoritative references, profiles, acceptance criteria, and interpretation decisions. An ITCVE supplies a closed dependency set and repeatable initial state. A System Under Test (SUT) is an admitted artifact identified by its exact bytes and configuration.
+An ISI defines interoperability conditions, authoritative references, profiles, acceptance criteria, and interpretation decisions. An ITCVE defines the dependency boundary, initial state, observation controls, and reproducibility conditions. A System Under Test (SUT) is an admitted artifact identified by its exact bytes and configuration.
 
 ## Principles
 
@@ -32,7 +32,7 @@ The laboratory's governance vision is meritocratic and based on rough consensus:
 
 Two provisional paths are expressly open. Accepted founding participants may activate a council under the standing conditions in [governance](GOVERNANCE.md#standing-council-path), with authority to succeed P2PPSR as steward. The laboratory also maintains a standing offer to explore transfer to BSV Association's control as a means of achieving collaborative, multi-stakeholder governance. TPNIL is currently unaffiliated with BSVA, and no such transfer or agreement has taken effect. Other arrangements remain possible under the same governance principles.
 
-Initial findings are experimental. Certification requires independent reproduction, qualified reviewers, an adopted certification scheme, and a functioning appeals process. Conformance findings address defined interoperability behavior; they provide no general security, financial, or product warranty. Evaluation uses synthetic identities and isolated regtest funds.
+Initial findings are experimental. Certification requires independent reproduction, qualified reviewers, an adopted certification scheme, and a functioning appeals process. Conformance findings address defined interoperability behavior; they provide no general security, financial, or product warranty. Evaluation uses isolated laboratory identities and the funding model defined by the selected profile. ISI-4 evaluates production mainnet wallet binaries against explicitly configured controlled services and isolated fixtures, without requiring regtest support. [ISI-4 decision 0001](programs/ISI-4/decisions/0001-production-fidelity.md) defines that boundary.
 
 The repository is private during establishment. Public release requires a recorded decision by the current steward under the governance doctrine.
 
