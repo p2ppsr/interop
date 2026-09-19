@@ -18,3 +18,5 @@
 | Signing, independent journal checkpoints, mirrors, certification marks | Not established |
 
 The self-test core produces LAB_SELF_TEST_ONLY results. Intake review produces INTAKE_REVIEW_ONLY readiness reports. SUT conformance and certification remain unissued. Draft catalogs record the fixtures, drivers, and normative decisions required for executable evaluation.
+
+Native wallet and ToDo execution is blocked by [ISI-4 decision 0002](../programs/ISI-4/decisions/0002-native-infrastructure.md) pending planned, provisioned, and documented laboratory infrastructure. Static intake findings remain valid within their recorded scope.

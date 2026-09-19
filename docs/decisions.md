@@ -21,5 +21,6 @@
 | D-015 | Native hardware, OS/browser locks, signing rights, archive retention, and resource budget | Open |
 | D-016 | Oregon law; Jackson County state court and appropriate Oregon federal forum | Adopted in [governance](../GOVERNANCE.md#governing-law-and-dispute-forum) |
 | D-017 | Production mainnet wallet artifacts, qualitative intake, and explicitly configured controlled services; no public-mainnet spending | Adopted in [ISI-4 decision 0001](../programs/ISI-4/decisions/0001-production-fidelity.md) |
+| D-018 | Native wallet/ToDo execution deferred pending planned, provisioned, and documented laboratory infrastructure | Blocked by [ISI-4 decision 0002](../programs/ISI-4/decisions/0002-native-infrastructure.md) |
 
 Open and draft items remain prerequisites for the profiles that depend on them.

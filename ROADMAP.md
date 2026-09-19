@@ -6,6 +6,8 @@ The charter, governance, licensing policy, initial candidates, and determinism m
 
 ## Gate 1 — establish the production-wallet intake boundary
 
+Native execution is currently blocked under [ISI-4 decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until the laboratory infrastructure is planned, provisioned, and documented.
+
 Apply [production SUT intake](docs/intake.md) to the unchanged release. Verify artifact identity and signatures, ordinary mainnet settings, local and remote storage modes, all service dependencies, and configuration effects. Source observations guide the inventory; native observations establish actual routing and behavior. The first BSV Desktop 2.8.5 intake is blocked pending runtime evidence.
 
 Provision a clean native guest and qualified automation. Resolve the required service routes through ordinary supported configuration. Pin the complete controlled-service closure and mainnet-format fixture model. The initial profile permits no public-mainnet broadcast or funds. Unresolved mandatory dependencies block the affected vectors while other observable behavior remains eligible for separately scoped evaluation.

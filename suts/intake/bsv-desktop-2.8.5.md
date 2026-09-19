@@ -34,3 +34,5 @@ Remote storage is the most direct supported candidate integration path. Its conf
 5. Artifact and dependency retention terms for admitted reporting.
 
 [The machine-readable intake](bsv-desktop-2.8.5.json) records each criterion and evidence digest. The review command verifies those records and the actual DMG. No ToDo vector, wallet conformance result, or public-mainnet transaction is recorded by this intake.
+
+Native execution is deferred under [ISI-4 decision 0002](../../programs/ISI-4/decisions/0002-native-infrastructure.md) pending the laboratory infrastructure plan, provisioning, and documentation. The retained intake record remains unchanged.
