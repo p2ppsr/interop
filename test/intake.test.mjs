@@ -56,3 +56,19 @@ test('intake rejects evidence traversal and symlink substitution', async t => {
   const file=path.join(root,record.evidence[0].path);fs.unlinkSync(file);fs.symlinkSync(artifact,file);
   await assert.rejects(reviewIntake(record,artifact,root),/Symlink/);
 });
+
+test('retained intake review verifies from archived objects and detects changes', async t => {
+  const { verifyIntakeReview } = await import('../src/intake.mjs');
+  const { canonical, hashJson } = await import('../src/json.mjs');
+  const { root, record, artifact } = fixture(t);
+  const report = await reviewIntake(record, artifact, root);
+  const objects = path.join(root, 'objects'); fs.mkdirSync(objects);
+  fs.writeFileSync(path.join(objects, hashJson(record)), canonical(record));
+  for (const e of record.evidence) fs.copyFileSync(path.join(root, e.path), path.join(objects, e.sha256));
+  const file = path.join(root, 'report.json');fs.writeFileSync(file, JSON.stringify(report));
+  assert.deepEqual(verifyIntakeReview(file, objects), { verified: true, claim: 'INTAKE_REVIEW_ONLY', artifactBytesRehashed: false });
+  report.readiness = 'READY_FOR_EXECUTION'; fs.writeFileSync(file, JSON.stringify(report));
+  assert.throws(() => verifyIntakeReview(file, objects), /differs/);
+  fs.writeFileSync(path.join(objects, record.evidence[0].sha256), 'altered');
+  assert.throws(() => verifyIntakeReview(file, objects), /digest/);
+});

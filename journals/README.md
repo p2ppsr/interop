@@ -7,3 +7,5 @@ Published bundles identify their claim type, source revision, artifacts, observa
 Tracked journal evidence is append-only. CI rejects modifications and deletions; corrections and replacement results are new bundles linked to earlier records. Independent checkpoints and mirrors provide verification beyond the repository administrator's control.
 
 `intake/` retains INTAKE_REVIEW_ONLY reports with record and artifact digests. These reports record admission readiness and unmet criteria. They are append-only intake evidence, separate from executable SUT results and the self-test journal format.
+
+Intake reports retain their complete review record and referenced evidence in `intake/objects/<sha256>`. CI verifies object integrity and recomputes readiness from the archived record. Large candidate binaries remain separately retained; archive verification reports that it has not rehashed those binary bytes.

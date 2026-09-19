@@ -1,0 +1,64 @@
+{
+  "sourceCommit": "cb0350d5472bf33bb8e599e6599f922324306e5e",
+  "files": [
+    {
+      "path": "src/lib/config.ts",
+      "sha256": "51e8654caeb73c90e976a232876f0bc8b9d27996d0880b6866034210484d486d",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/config.ts"
+    },
+    {
+      "path": "src/lib/components/WalletConfig.tsx",
+      "sha256": "e611b50c6ef56d559e36596daf0492ac38a33311ea9381f13b45cd99572e7c71",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/components/WalletConfig.tsx"
+    },
+    {
+      "path": "src/lib/components/NetworkSettingsDialog.tsx",
+      "sha256": "185718c0e41218f453ab4fe56fac83b86d270779a7b717b5c4d9078b886b60fc",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/components/NetworkSettingsDialog.tsx"
+    },
+    {
+      "path": "src/lib/services/WalletService.ts",
+      "sha256": "a1f50821da5b3af5cff99f2d03ad7b9c9da4e4d0c37861be6b54a577526b8c34",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/services/WalletService.ts"
+    },
+    {
+      "path": "src/lib/services/createServices.ts",
+      "sha256": "75307fa5d49a3ec755174d96cd85ac6f3da0309470e1e416bea217b66956d5db",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/services/createServices.ts"
+    },
+    {
+      "path": "src/lib/constants/endpoints.ts",
+      "sha256": "1701a38081d8dfac0108d662c9d95038988f7e2561d0bfc4324df0d2e46fc3ee",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/constants/endpoints.ts"
+    },
+    {
+      "path": "electron/endpoints.ts",
+      "sha256": "b865c2a3eba6ee78da4042bc08e7015ea33049135c4ae8f9f1269b55f22fe1e9",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/endpoints.ts"
+    },
+    {
+      "path": "electron/networkSettings.ts",
+      "sha256": "bd57b70841c2dc3041497ba8c7fdc2aa17f587f66115d1f8749bf1160205cbc9",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/networkSettings.ts"
+    },
+    {
+      "path": "electron/storage.ts",
+      "sha256": "fa21307898c077d9772fb2357e9f0be426b878ab10406ffc1f41915801c8b148",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/storage.ts"
+    },
+    {
+      "path": "electron/monitor-worker.ts",
+      "sha256": "555a29fda2750dac7b82b69683873938ae3a53cb1b49efe8203d066362f60179",
+      "url": "https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/monitor-worker.ts"
+    }
+  ],
+  "findings": [
+    "Mainnet is the default and an ordinary UI choice.",
+    "WalletConfig exposes remote storage URL, WAB URL, and message-box URL.",
+    "The renderer service factory builds default services and selects ChainTracks from chain-specific constants.",
+    "Local storage and monitor worker construct their own default services and ChainTracks clients.",
+    "Network settings expose an HTTP proxy; this does not establish plaintext HTTPS visibility or controlled response delivery.",
+    "Local storage and monitor worker use the OS home directory for .bsv-desktop state. A distinct browser profile alone is insufficient native-state isolation."
+  ],
+  "runtimeVerification": "not-performed"
+}
