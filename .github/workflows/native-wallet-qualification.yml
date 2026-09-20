@@ -61,11 +61,13 @@ jobs:
           binary="$app/Contents/MacOS/$bundle_executable"
           test -x "$binary"
           terminate_app() {
-            pkill -TERM -f "$app/Contents/" 2>/dev/null || true
-            for attempt in $(seq 1 10); do
-              if ! pgrep -f "$app/Contents/" >/dev/null; then return; fi
+            local pid="$1"
+            kill -TERM "$pid" 2>/dev/null || true
+            for attempt in $(seq 1 5); do
+              if ! kill -0 "$pid" 2>/dev/null; then return; fi
               sleep 1
             done
+            kill -KILL "$pid" 2>/dev/null || true
             pkill -KILL -f "$app/Contents/" 2>/dev/null || true
           }
           "$binary" --remote-debugging-port=9222 > "$evidence/app-first-launch.log" 2>&1 &
@@ -77,17 +79,17 @@ jobs:
           done
           test -n "${cert:-}"
           node scripts/native/electron-cdp.mjs snapshot > "$evidence/pre-trust-ui.json"
-          terminate_app
+          terminate_app "$first_pid"
           wait "$first_pid" 2>/dev/null || true
 
-          security add-trusted-cert -r trustRoot -p ssl \
-            -k "$HOME/Library/Keychains/login.keychain-db" "$cert"
+          sudo -n security add-trusted-cert -d -r trustRoot -p ssl \
+            -k /Library/Keychains/System.keychain "$cert"
           security verify-cert -c "$cert" -p ssl -n localhost > "$evidence/certificate-verify.txt"
 
           "$binary" --remote-debugging-port=9222 > "$evidence/app-qualified-launch.log" 2>&1 &
           app_pid=$!
           cleanup() {
-            terminate_app
+            terminate_app "$app_pid"
             wait "$app_pid" 2>/dev/null || true
           }
           trap cleanup EXIT
