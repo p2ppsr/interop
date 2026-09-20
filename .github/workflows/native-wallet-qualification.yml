@@ -60,6 +60,14 @@ jobs:
           printf 'bundle_executable=%s\n' "$bundle_executable" >> "$evidence/app-version.txt"
           binary="$app/Contents/MacOS/$bundle_executable"
           test -x "$binary"
+          terminate_app() {
+            pkill -TERM -f "$app/Contents/" 2>/dev/null || true
+            for attempt in $(seq 1 10); do
+              if ! pgrep -f "$app/Contents/" >/dev/null; then return; fi
+              sleep 1
+            done
+            pkill -KILL -f "$app/Contents/" 2>/dev/null || true
+          }
           "$binary" --remote-debugging-port=9222 > "$evidence/app-first-launch.log" 2>&1 &
           first_pid=$!
           for attempt in $(seq 1 60); do
@@ -69,8 +77,8 @@ jobs:
           done
           test -n "${cert:-}"
           node scripts/native/electron-cdp.mjs snapshot > "$evidence/pre-trust-ui.json"
-          kill "$first_pid"
-          wait "$first_pid" || true
+          terminate_app
+          wait "$first_pid" 2>/dev/null || true
 
           security add-trusted-cert -r trustRoot -p ssl \
             -k "$HOME/Library/Keychains/login.keychain-db" "$cert"
@@ -79,7 +87,7 @@ jobs:
           "$binary" --remote-debugging-port=9222 > "$evidence/app-qualified-launch.log" 2>&1 &
           app_pid=$!
           cleanup() {
-            kill "$app_pid" 2>/dev/null || true
+            terminate_app
             wait "$app_pid" 2>/dev/null || true
           }
           trap cleanup EXIT
@@ -88,14 +96,23 @@ jobs:
             sleep 1
           done
           node scripts/native/electron-cdp.mjs snapshot > "$evidence/initial-ui.json"
+          node scripts/native/electron-cdp.mjs click-text 'Create Wallet' > "$evidence/create-wallet.json"
+          for attempt in $(seq 1 30); do
+            node scripts/native/electron-cdp.mjs snapshot > "$evidence/vault-ui.json"
+            if grep -q 'Create vault' "$evidence/vault-ui.json"; then break; fi
+            sleep 1
+          done
+          grep -q 'Create vault' "$evidence/vault-ui.json"
           vault_passphrase="tpnil-$(printf '%s' 'TPNIL ISI-4 disposable vault v1' | shasum -a 256 | cut -c1-32)"
           node scripts/native/electron-cdp.mjs fill-label 'Unlock passphrase' "$vault_passphrase" > "$evidence/vault-fill.json"
           node scripts/native/electron-cdp.mjs fill-label 'Confirm passphrase' "$vault_passphrase" > "$evidence/vault-confirm.json"
           node scripts/native/electron-cdp.mjs click-text 'Create vault' > "$evidence/vault-create.json"
-          sleep 3
-          node scripts/native/electron-cdp.mjs snapshot > "$evidence/greeter-ui.json"
-          node scripts/native/electron-cdp.mjs click-text 'Create Wallet' > "$evidence/create-wallet.json"
-          sleep 3
+          for attempt in $(seq 1 30); do
+            node scripts/native/electron-cdp.mjs snapshot > "$evidence/direct-key-ui.json"
+            if grep -q 'Primary Key' "$evidence/direct-key-ui.json"; then break; fi
+            sleep 1
+          done
+          grep -q 'Primary Key' "$evidence/direct-key-ui.json"
           fixture_key="$(printf '%s' 'TPNIL ISI-4 isolated wallet identity v1' | shasum -a 256 | awk '{print $1}')"
           node scripts/native/electron-cdp.mjs fill-label 'Primary Key' "$fixture_key" > "$evidence/wallet-key-fill.json"
           node scripts/native/electron-cdp.mjs click-text 'Login' > "$evidence/wallet-login.json"
