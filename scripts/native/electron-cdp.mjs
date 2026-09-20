@@ -28,6 +28,10 @@ async function connect(url) {
     const { resolve, reject, timer } = pending.get(message.id); pending.delete(message.id); clearTimeout(timer);
     if (message.error) reject(new Error(message.error.message)); else resolve(message.result);
   });
+  socket.addEventListener('close', () => {
+    for (const { reject, timer } of pending.values()) { clearTimeout(timer); reject(new Error('CDP connection closed')); }
+    pending.clear();
+  });
   const call = (method, params = {}) => new Promise((resolve, reject) => {
     const id = nextId++;
     const timer = setTimeout(() => { pending.delete(id); reject(new Error(`CDP ${method} timeout`)); }, 15000);
@@ -91,6 +95,17 @@ try {
   const { socket, call } = await connect(page.webSocketDebuggerUrl);
   let result;
   if (command === 'snapshot' && args.length === 0) result = await evaluate(call, snapshotExpression);
+  else if (command === 'wait-text' && (args.length === 1 || args.length === 2)) {
+    const wanted = args[0], timeout = args.length === 2 ? Number(args[1]) : 60000;
+    if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 300000) throw new Error('Invalid wait timeout');
+    const deadline = Date.now() + timeout;
+    do {
+      result = await evaluate(call, snapshotExpression);
+      if (result.text.includes(wanted)) break;
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } while (Date.now() < deadline);
+    if (!result.text.includes(wanted)) throw new Error(`text not observed before timeout: ${wanted}`);
+  }
   else if (command === 'click-text' && args.length === 1) result = await evaluate(call, clickExpression(args[0]));
   else if (command === 'fill-label' && args.length === 2) result = await evaluate(call, fillExpression(args[0], args[1]));
   else if (command === 'eval' && args.length === 1) result = await evaluate(call, args[0]);
@@ -99,7 +114,7 @@ try {
     const capture = await call('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
     fs.writeFileSync(args[0], Buffer.from(capture.data, 'base64'), { flag: 'wx', mode: 0o644 });
     result = { path: args[0], bytes: Buffer.byteLength(capture.data, 'base64') };
-  } else throw new Error('usage: electron-cdp.mjs snapshot | click-text <text> | fill-label <label> <value> | eval <expression> | screenshot <new-file>');
+  } else throw new Error('usage: electron-cdp.mjs snapshot | wait-text <text> [timeout-ms] | click-text <text> | fill-label <label> <value> | eval <expression> | screenshot <new-file>');
   socket.close();
   process.stdout.write(JSON.stringify({ target: { id: page.id, title: page.title, url: page.url }, result }, null, 2) + '\n');
 } catch (error) {
