@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TPNIL native qualification plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "claim", "platform", "artifact", "expected"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "id": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]+$" },
+    "claim": { "const": "INFRASTRUCTURE_QUALIFICATION_ONLY" },
+    "platform": { "const": "macos-arm64" },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "url", "sha256", "size"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "pattern": "^https://" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "size": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["appVersion", "bundleIdentifier", "teamIdentifier", "signingAuthority", "gatekeeperSource", "manifestName", "network", "bridgeVersion"],
+      "properties": {
+        "appVersion": { "type": "string", "minLength": 1 },
+        "bundleIdentifier": { "type": "string", "minLength": 1 },
+        "teamIdentifier": { "type": "string", "minLength": 1 },
+        "signingAuthority": { "type": "string", "minLength": 1 },
+        "gatekeeperSource": { "type": "string", "minLength": 1 },
+        "manifestName": { "type": "string", "minLength": 1 },
+        "network": { "const": "mainnet" },
+        "bridgeVersion": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

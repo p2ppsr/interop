@@ -4,7 +4,8 @@ import { verifyIntakeReview } from '../src/intake.mjs';
 import { ROOT } from '../src/core.mjs';
 import { verifyJournal } from '../src/journal.mjs';
 import { verifyQualification } from '../src/qualification.mjs';
-let count = 0, intakeCount = 0, qualificationCount = 0;
+import { verifyNativeQualification } from '../src/native-qualification.mjs';
+let count = 0, intakeCount = 0, qualificationCount = 0, nativeQualificationCount = 0;
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, entry.name);
@@ -16,8 +17,11 @@ function walk(dir) {
     else if (file.startsWith(path.join(ROOT, 'journals/qualification') + path.sep) && entry.name === 'record.json') {
       verifyQualification(dir); qualificationCount++;
     }
+    else if (file.startsWith(path.join(ROOT, 'journals/native-qualification') + path.sep) && entry.name === 'record.json') {
+      verifyNativeQualification(dir); nativeQualificationCount++;
+    }
     else if (entry.name === 'journal.jsonl') { verifyJournal(dir); count++; }
   }
 }
 walk(path.join(ROOT, 'journals'));
-console.log(JSON.stringify({ verifiedPublishedSelfTestJournals: count, verifiedIntakeReviews: intakeCount, verifiedInfrastructureQualifications: qualificationCount, officialSutRuns: 0 }));
+console.log(JSON.stringify({ verifiedPublishedSelfTestJournals: count, verifiedIntakeReviews: intakeCount, verifiedInfrastructureQualifications: qualificationCount, verifiedNativeInfrastructureQualifications: nativeQualificationCount, officialSutRuns: 0 }));

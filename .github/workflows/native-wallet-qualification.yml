@@ -17,6 +17,7 @@ jobs:
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/tpnil-native-evidence"
           {
+            printf 'execution_started_at=%s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
             printf 'ImageOS=%s\n' "$ImageOS"
             printf 'ImageVersion=%s\n' "$ImageVersion"
             printf 'runner_arch=%s\n' "$RUNNER_ARCH"
@@ -146,7 +147,17 @@ jobs:
           jq -e '.network == "mainnet"' "$evidence/getNetwork.json" >/dev/null
           jq -e '.version | type == "string" and length > 0' "$evidence/getVersion.json" >/dev/null
           ps -axo pid,ppid,user,command | grep -E '[B]SV Desktop|[E]lectron' > "$evidence/processes.txt"
-          shasum -a 256 "$evidence"/* | sort > "$evidence/SHA256SUMS"
+          jq -n \
+            --arg capturedAt "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg runId "$GITHUB_RUN_ID" \
+            --arg runAttempt "$GITHUB_RUN_ATTEMPT" \
+            --arg runUrl "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            --arg sourceRevision "$GITHUB_SHA" \
+            --arg workflowRef "$GITHUB_WORKFLOW_REF" \
+            '{capturedAt:$capturedAt,repository:$repository,runId:$runId,runAttempt:$runAttempt,runUrl:$runUrl,sourceRevision:$sourceRevision,workflowRef:$workflowRef}' \
+            > "$evidence/run-metadata.json"
+          (cd "$evidence" && shasum -a 256 * | sort > SHA256SUMS)
       - name: Retain native qualification evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
