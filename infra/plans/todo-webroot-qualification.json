@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "TPNIL-INFRA-TODO-WEBROOT-001",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "logicalOrigin": "https://todo.itcve.test",
+  "artifact": {
+    "id": "todo-ts-236733c-webroot",
+    "path": "out/artifacts/todo-ts-236733c-webroot.tgz",
+    "sha256": "b3c41dc60ba99b497231008a15033a60110cc7cd60b2d4fffd405e33f4979ddc",
+    "size": 502803
+  },
+  "assertions": [
+    {
+      "id": "WEBROOT-INDEX",
+      "kind": "response",
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bodySha256": "e4ede5ba3d867a6c6b1db0d2e87a4c5476976bbfec767354d9d948b3150d877f"
+    },
+    {
+      "id": "WEBROOT-BRC100-MANIFEST",
+      "kind": "json-equals",
+      "path": "/manifest.json",
+      "pointer": "/metanet/brcs",
+      "expected": ["BRC-2", "BRC-73", "BRC-100", "BRC-116"]
+    },
+    {
+      "id": "WEBROOT-BASKET",
+      "kind": "json-equals",
+      "path": "/manifest.json",
+      "pointer": "/metanet/groupPermissions/basketAccess/0/basket",
+      "expected": "todo tokens"
+    },
+    {
+      "id": "WEBROOT-ASSET-CLOSURE",
+      "kind": "reference-closure",
+      "path": "/"
+    },
+    {
+      "id": "WEBROOT-REPEATABILITY",
+      "kind": "repeat-equal",
+      "path": "/manifest.json"
+    }
+  ]
+}

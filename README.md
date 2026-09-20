@@ -2,7 +2,7 @@
 
 **TPNIL** is a BSV Blockchain initiative for impartial interoperability evaluation, without fear or favor. The laboratory brings published requirements, canonical software artifacts, integrated test environments, deterministic results, and durable evidence into a common framework open to equal participation.
 
-**Version 0.2.0 — private establishment phase, experimental.** The offline core and journal verifier are implemented. Four draft programs define the scope of evaluation; SUT adapters and native test environments are under development. [Implementation status](docs/implementation-status.md) records current capabilities and qualification prerequisites.
+**Version 0.3.0 — private establishment phase, experimental.** The offline core, journal verifier, and portable laboratory qualification runner are implemented. Four draft programs define the scope of evaluation; native SUT adapters and controlled transaction services remain under development. [Implementation status](docs/implementation-status.md) records current capabilities and qualification prerequisites.
 
 ## The laboratory
 
@@ -29,9 +29,13 @@ npm run check
 npm run demo
 node bin/tpnil.mjs verify out/demo
 node bin/tpnil.mjs replay out/demo
+node bin/tpnil.mjs run-qualification infra/plans/todo-webroot-qualification.json . out/todo-webroot-run local-operator
+node bin/tpnil.mjs verify-qualification out/todo-webroot-run
 ```
 
 The demo performs a synthetic laboratory self-test, writes a content-addressed result and hash-linked journal to `out/demo`, and verifies repeatability. Results carry the `LAB_SELF_TEST_ONLY` designation. Each run requires a fresh output directory; for subsequent runs use `node bin/tpnil.mjs demo out/another-run`.
+
+The qualification command executes the canonical application-serving test stand, retains the artifact and raw responses by digest, and produces an offline-verifiable evidence bundle. It carries the `INFRASTRUCTURE_QUALIFICATION_ONLY` designation. [Laboratory infrastructure](infra/README.md) defines how the same execution protocol operates locally, at independent laboratories, and through CI schedulers.
 
 The [operator guide](docs/operator-quickstart.md) covers artifact hashing, compiled web-root packaging, evidence verification, and journal recovery.
 
@@ -42,4 +46,4 @@ The [operator guide](docs/operator-quickstart.md) covers artifact hashing, compi
 - [Source research](docs/research/landscape.md), [decision register](docs/decisions.md), and [roadmap](ROADMAP.md) connect the foundation to its next qualification stages.
 - [Participation](CONTRIBUTING.md) explains submissions and technical contributions.
 
-`programs/` holds versioned requirements and vector catalogs; `itcves/` defines environment profiles; `schemas/` holds machine-readable contracts; `src/` and `bin/` implement the offline core; `adapters/` specifies the control plane; `suts/` records artifact candidates; `fixtures/` contains laboratory self-tests; `journals/` retains accepted evidence; and `docs/` contains technical policies and research.
+`programs/` holds versioned requirements and vector catalogs; `itcves/` defines environment profiles; `infra/` contains runnable laboratory plans and provisioning contracts; `schemas/` holds machine-readable contracts; `src/` and `bin/` implement the offline core; `adapters/` specifies the control plane; `suts/` records artifact candidates; `fixtures/` contains laboratory self-tests; `journals/` retains accepted evidence; and `docs/` contains technical policies and research.

@@ -1,6 +1,6 @@
 {
   "name": "tpnil",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Transaction Processing Network Interoperability Laboratory",
   "type": "module",
@@ -10,6 +10,7 @@
   "scripts": {
     "test": "node --test",
     "check": "node bin/tpnil.mjs check",
+    "qualification": "node bin/tpnil.mjs run-qualification infra/plans/todo-webroot-qualification.json . out/todo-webroot-qualification local-operator",
     "demo": "node bin/tpnil.mjs demo"
   },
   "license": "SEE LICENSE IN LICENSE.md"

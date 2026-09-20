@@ -5,6 +5,7 @@ import { checkRepository } from '../src/core.mjs';
 import { reviewIntakeFile } from '../src/intake.mjs';
 import { runDemo } from '../src/demo.mjs';
 import { verifyJournal, verifyPrefix } from '../src/journal.mjs';
+import { runQualification, verifyQualification } from '../src/qualification.mjs';
 
 try {
   const [command, ...args] = process.argv.slice(2);
@@ -15,6 +16,14 @@ try {
     if (result.readiness === 'BLOCKED') process.exitCode = 1;
   }
   else if (command === 'demo' && args.length <= 1) result = runDemo(args[0] ?? 'out/demo');
+  else if (command === 'run-qualification' && args.length === 4) {
+    result = await runQualification(args[0], args[1], args[2], args[3]);
+    if (result.overall !== 'PASS') process.exitCode = 1;
+  }
+  else if (command === 'verify-qualification' && args.length === 1) {
+    result = verifyQualification(args[0]);
+    if (result.overall !== 'PASS') process.exitCode = 1;
+  }
   else if (['verify', 'replay'].includes(command) && args.length === 1) {
     const state = verifyJournal(args[0]);
     result = { verifiedRuns: state.entries.length, replayed: true, head: state.head, claim: 'LAB_SELF_TEST_ONLY', outcomes: state.results.map(x => x.overall) };
@@ -27,7 +36,7 @@ try {
     const actual = hash.digest('hex');
     if (actual !== args[1]) throw new Error('Artifact digest mismatch');
     result = { sha256: actual, size, verified: true };
-  } else throw new Error('Usage: tpnil check | demo [new-directory] | verify <journal> | replay <journal> | verify-prefix <old> <new> | verify-artifact <file> <sha256> | review-intake <record> <artifact>');
+  } else throw new Error('Usage: tpnil check | demo [new-directory] | verify <journal> | replay <journal> | verify-prefix <old> <new> | verify-artifact <file> <sha256> | review-intake <record> <artifact> | run-qualification <plan> <artifact-root> <output> <runner-id> | verify-qualification <output>');
   process.stdout.write(JSON.stringify(result, null, 2) + '\n');
 } catch (error) {
   process.stderr.write(`TPNIL ERROR: ${error.message}\n`);

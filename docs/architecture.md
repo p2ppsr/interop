@@ -35,3 +35,13 @@ The coordinator deduplicates immutable image layers and fixture blobs and reuses
 ## Implementation strategy
 
 The dependency-free Node core establishes machine-readable contracts and evidence mechanics. Wire protocols and JSON artifacts remain language-neutral. TypeScript and Go adapters can consume the same program definitions, but imported SDK-level vectors are reviewed for licenses, semantics, independent oracles, and complete HTTP/native coverage before being credited. HTTP drivers, controlled-service orchestration, native automation, and content acquisition are separate modules with their own conformance tests and qualification gates.
+
+## Deployment model
+
+The laboratory is a portable protocol rather than a hosted service. The repository-owned controller, plans, adapters, and oracles run from an operator terminal or a CI scheduler without changing their semantics. Docker Compose is the baseline service-topology representation for single-host and independent reproduction. Kubernetes may implement the same topology when concurrency or integrated-stack capacity requires it; no result depends on Kubernetes-specific behavior unless the selected profile declares that behavior.
+
+Native applications run in disposable guests or declared physical devices. A clean base is acquired and qualified separately, identified by digest and platform metadata, and cloned for each execution. The control plane stages only the run inputs, leases the complete topology, collects evidence, and tears down the clone. Repository, archive, and CI credentials do not enter the SUT guest.
+
+GitHub Actions performs source checks and may schedule qualified capacity. Hosted runners are not historical native environments: their image contents change and their retained artifacts expire. TPNIL therefore records the observed runner image, stores durable evidence in the laboratory archive and Git history according to size, and supports the same run from an independent local installation.
+
+Every evidence bundle binds the plan, artifact, environment observation, raw observations, evaluator result, and content-addressed objects. The verifier operates without the original runner or network. Re-execution establishes semantic repeatability; offline verification establishes that the retained evidence yields the same result.

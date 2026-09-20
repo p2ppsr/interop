@@ -5,7 +5,7 @@ import { canonical, digest, hashJson, parseJson, validate, equal } from './json.
 
 export const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 export const VERSION = '0.1.0'; // Stable self-test and evidence protocol.
-export const RELEASE_VERSION = '0.2.0';
+export const RELEASE_VERSION = '0.3.0';
 export const readJson = file => parseJson(fs.readFileSync(file));
 const schemas = new Map();
 export function checkSchema(name, value) {

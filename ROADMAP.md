@@ -6,7 +6,7 @@ The charter, governance, licensing policy, initial candidates, and determinism m
 
 ## Gate 1 — establish the production-wallet intake boundary
 
-Native execution is currently blocked under [ISI-4 decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until the laboratory infrastructure is planned, provisioned, and documented.
+The hybrid execution architecture is adopted under [ISI-4 decision 0003](programs/ISI-4/decisions/0003-hybrid-laboratory.md). The portable application-serving lane is executable and produces infrastructure-only evidence. Native execution remains blocked under [decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until the disposable macOS runner is provisioned, qualified, and documented.
 
 Apply [production SUT intake](docs/intake.md) to the unchanged release. Verify artifact identity and signatures, ordinary mainnet settings, local and remote storage modes, all service dependencies, and configuration effects. Source observations guide the inventory; native observations establish actual routing and behavior. The first BSV Desktop 2.8.5 intake is blocked pending runtime evidence.
 

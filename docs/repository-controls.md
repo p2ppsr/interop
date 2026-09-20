@@ -4,7 +4,7 @@ Status: 2026-09-17 UTC.
 
 `p2ppsr/interop` is private, with `main` as its default branch. Public release requires a recorded decision by the authorized steward under GOVERNANCE.md.
 
-The `offline-core` GitHub Actions job runs on pushes and pull requests. It uses read-only repository permissions, no persisted checkout credentials, pinned action commits, and a fixed Node version. Checks cover the core, catalogs, retained journals, web-root packaging, and append-only journal history.
+The `offline-core` GitHub Actions job runs on pushes and pull requests. It uses read-only repository permissions, no persisted checkout credentials, pinned action commits, a named Ubuntu release, and a fixed Node version. Checks cover the core, catalogs, qualification execution, retained journals, web-root packaging, and append-only journal history. The job log records GitHub's observed hosted-runner image identifier and version.
 
 Server-enforced branch protection is unavailable under the current private-repository account plan. Signed checkpoints, independent mirrors, and a second administrative custodian are also outstanding. These controls are prerequisites for official reporting under the [evidence policy](evidence.md).
 

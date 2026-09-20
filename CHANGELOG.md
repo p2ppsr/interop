@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — portable laboratory execution (2026-09-20)
+
+- Adopted the hybrid execution architecture: one repository-owned protocol for local, independently operated, and CI-scheduled laboratories; portable controlled services; disposable native guests; and offline-verifiable evidence bundles.
+- Added the `run-qualification` and `verify-qualification` commands, a safe canonical web-root extractor, a logical-origin HTTP test stand, raw response retention, and content-addressed application/evidence closure.
+- Added the first executable infrastructure plan for the canonical `todo-ts` web-root artifact. Its result is expressly limited to infrastructure qualification and cannot issue a SUT conformance finding.
+- Selected a pinned Tart/Apple Virtualization lane for disposable macOS arm64 guests. Native runner qualification and ISI-4 wallet execution remain separate recorded gates.
+
 ## 0.2.0 — production-fidelity intake (2026-09-18)
 
 - Adopted ISI-4 decision 0001, ISI-4 1.0.0, and ITCVE-1 1.0.0: unchanged mainnet wallet artifacts with explicitly configured controlled services, replacing mandatory wallet regtest support.
