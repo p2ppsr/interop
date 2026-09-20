@@ -1,0 +1,126 @@
+name: Native wallet qualification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bsv-desktop-macos-arm64:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Record runner environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/tpnil-native-evidence"
+          {
+            printf 'ImageOS=%s\n' "$ImageOS"
+            printf 'ImageVersion=%s\n' "$ImageVersion"
+            printf 'runner_arch=%s\n' "$RUNNER_ARCH"
+            printf 'source_revision=%s\n' "$GITHUB_SHA"
+            sw_vers
+            uname -a
+          } > "$RUNNER_TEMP/tpnil-native-evidence/environment.txt"
+      - name: Install and exercise BSV Desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/tpnil-native-evidence"
+          dmg="$RUNNER_TEMP/BSV-Desktop-2.8.5-arm64-mac.dmg"
+          mountpoint="$RUNNER_TEMP/bsv-desktop-mount"
+          install_root="$RUNNER_TEMP/Applications"
+          expected_sha='05dec27dc461d4a9fbbe9aafdec53bdb6e947b46c0d1652e16342da47471d12e'
+          curl --fail --location --retry 4 --retry-all-errors \
+            --output "$dmg" \
+            'https://github.com/bsv-blockchain/bsv-desktop/releases/download/v2.8.5/BSV-Desktop-2.8.5-arm64-mac.dmg'
+          actual_sha="$(shasum -a 256 "$dmg" | awk '{print $1}')"
+          test "$actual_sha" = "$expected_sha"
+          stat -f 'artifact_size=%z' "$dmg" > "$evidence/artifact.txt"
+          printf 'artifact_sha256=%s\n' "$actual_sha" >> "$evidence/artifact.txt"
+
+          mkdir -p "$mountpoint" "$install_root"
+          hdiutil attach -readonly -nobrowse -mountpoint "$mountpoint" "$dmg" > "$evidence/hdiutil-attach.txt"
+          app_source="$(find "$mountpoint" -maxdepth 2 -type d -name '*.app' -print -quit)"
+          test -n "$app_source"
+          /usr/bin/ditto "$app_source" "$install_root/BSV Desktop.app"
+          hdiutil detach "$mountpoint" > "$evidence/hdiutil-detach.txt"
+          app="$install_root/BSV Desktop.app"
+          codesign --verify --deep --strict --verbose=2 "$app" 2> "$evidence/codesign-verify.txt"
+          codesign -d --verbose=4 "$app" 2> "$evidence/codesign-details.txt"
+          set +e
+          spctl --assess --type execute --verbose=4 "$app" > "$evidence/gatekeeper.txt" 2>&1
+          printf 'gatekeeper_exit=%s\n' "$?" >> "$evidence/gatekeeper.txt"
+          set -e
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist" > "$evidence/app-version.txt"
+
+          binary="$app/Contents/MacOS/BSV Desktop"
+          "$binary" --remote-debugging-port=9222 > "$evidence/app-first-launch.log" 2>&1 &
+          first_pid=$!
+          for attempt in $(seq 1 60); do
+            cert="$(find "$HOME/Library/Application Support" -path '*/certs/server.crt' -print -quit 2>/dev/null || true)"
+            if test -n "$cert" && curl --silent --fail http://127.0.0.1:9222/json/list >/dev/null; then break; fi
+            sleep 1
+          done
+          test -n "${cert:-}"
+          node scripts/native/electron-cdp.mjs snapshot > "$evidence/pre-trust-ui.json"
+          kill "$first_pid"
+          wait "$first_pid" || true
+
+          security add-trusted-cert -r trustRoot -p ssl \
+            -k "$HOME/Library/Keychains/login.keychain-db" "$cert"
+          security verify-cert -c "$cert" -p ssl -n localhost > "$evidence/certificate-verify.txt"
+
+          "$binary" --remote-debugging-port=9222 > "$evidence/app-qualified-launch.log" 2>&1 &
+          app_pid=$!
+          cleanup() {
+            kill "$app_pid" 2>/dev/null || true
+            wait "$app_pid" 2>/dev/null || true
+          }
+          trap cleanup EXIT
+          for attempt in $(seq 1 60); do
+            if curl --silent --fail http://127.0.0.1:9222/json/list >/dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/native/electron-cdp.mjs snapshot > "$evidence/initial-ui.json"
+          vault_passphrase="tpnil-$(printf '%s' 'TPNIL ISI-4 disposable vault v1' | shasum -a 256 | cut -c1-32)"
+          node scripts/native/electron-cdp.mjs fill-label 'Unlock passphrase' "$vault_passphrase" > "$evidence/vault-fill.json"
+          node scripts/native/electron-cdp.mjs fill-label 'Confirm passphrase' "$vault_passphrase" > "$evidence/vault-confirm.json"
+          node scripts/native/electron-cdp.mjs click-text 'Create vault' > "$evidence/vault-create.json"
+          sleep 3
+          node scripts/native/electron-cdp.mjs snapshot > "$evidence/greeter-ui.json"
+          node scripts/native/electron-cdp.mjs click-text 'Create Wallet' > "$evidence/create-wallet.json"
+          sleep 3
+          fixture_key="$(printf '%s' 'TPNIL ISI-4 isolated wallet identity v1' | shasum -a 256 | awk '{print $1}')"
+          node scripts/native/electron-cdp.mjs fill-label 'Primary Key' "$fixture_key" > "$evidence/wallet-key-fill.json"
+          node scripts/native/electron-cdp.mjs click-text 'Login' > "$evidence/wallet-login.json"
+          for attempt in $(seq 1 60); do
+            node scripts/native/electron-cdp.mjs snapshot > "$evidence/authenticated-ui.json"
+            if ! grep -q 'Create Wallet' "$evidence/authenticated-ui.json"; then break; fi
+            sleep 1
+          done
+          node scripts/native/electron-cdp.mjs screenshot "$evidence/authenticated-ui.png" > "$evidence/screenshot.json"
+
+          curl --fail --silent --show-error --cacert "$cert" \
+            https://localhost:2121/manifest.json > "$evidence/bridge-manifest.json"
+          for method in isAuthenticated getNetwork getVersion; do
+            curl --fail --silent --show-error --cacert "$cert" \
+              -H 'Origin: https://todo.itcve.test' -H 'Content-Type: application/json' \
+              --data '{}' "https://localhost:2121/$method" > "$evidence/$method.json"
+          done
+          jq -e '.name == "BSV Desktop"' "$evidence/bridge-manifest.json" >/dev/null
+          jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null
+          jq -e '.network == "mainnet"' "$evidence/getNetwork.json" >/dev/null
+          jq -e '.version | type == "string" and length > 0' "$evidence/getVersion.json" >/dev/null
+          ps -axo pid,ppid,user,command | grep -E '[B]SV Desktop|[E]lectron' > "$evidence/processes.txt"
+          shasum -a 256 "$evidence"/* | sort > "$evidence/SHA256SUMS"
+      - name: Retain native qualification evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: bsv-desktop-macos-arm64-qualification
+          path: ${{ runner.temp }}/tpnil-native-evidence
+          if-no-files-found: error
+          retention-days: 30
