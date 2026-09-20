@@ -1,0 +1,13 @@
+# ISI-4 decision 0004 — native qualification lanes
+
+Recorded 2026-09-20 by the founding steward.
+
+TPNIL admits GitHub-hosted Apple-silicon macOS runners as an ephemeral native qualification lane. This lane installs and drives an unchanged release artifact in a clean virtual machine, records the hosted image identity, retains raw evidence outside the expiring workflow artifact, and evaluates that evidence with the repository-owned offline verifier. GitHub Actions schedules the capacity; the TPNIL plan and verifier determine the finding.
+
+The lane is qualified for artifact acquisition and digest verification, macOS signature and Gatekeeper checks, ordinary first-use initialization, normal certificate trust, renderer automation, local BRC-100 bridge observations, evidence capture, and teardown. Runs [35533034148](https://github.com/p2ppsr/interop/actions/runs/35533034148) and [35533139040](https://github.com/p2ppsr/interop/actions/runs/35533139040) repeated the complete qualification from source revision `0ad5969b002071f156a87c5095d087b14c85ab52`. Their retained records have hashes `ea4aac09e6b9740eff419dcc86b4fa316d64648fdf7bf20a37f3579abcfa8522` and `20209f3a7ff2183a2faa9ae207f71fca2adce2e1d378fad7df6882894340f4b7`.
+
+These findings qualify infrastructure. They establish that the admitted BSV Desktop 2.8.5 artifact can be installed, initialized with an isolated unfunded fixture identity, authenticated, and observed on its local BRC-100 bridge as a mainnet wallet. They do not establish transaction processing, controlled-service routing, ToDo behavior, interoperability conformance, or certification.
+
+The independently reproducible native lane remains `macos-arm64-tart-1`. It uses Tart 2.37.0, installed from its signed and notarized upstream release, and the macOS Tahoe base currently identified by `sha256:1b093499716409d29e8b5336844528e1cae375db97d2ad8e5aeff78cf0da201e`. Each evaluation receives a disposable clone. The same repository-owned driver and evidence format operate in hosted and local lanes. A hosted image may change between runs; every run therefore records the observed image version. The local base provides the stable reconstruction point and must pass the same qualification before it can support scored vectors.
+
+Decision 0002 is satisfied for the native installation and bridge-qualification scope. It continues to block ISI-4 V001–V004 until controlled transaction, proof, header, storage, and application-service routes are implemented and observed; fixture state and independent oracles are pinned; and the complete profile passes clean reset and repetition requirements. No public-mainnet funds or broadcasts are permitted in the initial controlled-service profile.

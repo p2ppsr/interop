@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added the hosted macOS native qualification lane, observed-state Electron driver, signed artifact admission checks, and two retained BSV Desktop 2.8.5 runs.
+- Added content-addressed native evidence bundles with offline recomputation and tamper tests.
+- Recorded the hosted qualification and pinned local reconstruction strategy in ISI-4 decision 0004.
+
 ## 0.3.0 — portable laboratory execution (2026-09-20)
 
 - Adopted the hybrid execution architecture: one repository-owned protocol for local, independently operated, and CI-scheduled laboratories; portable controlled services; disposable native guests; and offline-verifiable evidence bundles.

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "macos-arm64-tart-1",
+  "status": "provisioning",
+  "hostArchitecture": "arm64",
+  "virtualization": "Apple Virtualization.framework",
+  "runtime": {
+    "name": "Tart",
+    "version": "2.37.0",
+    "releaseUrl": "https://github.com/cirruslabs/tart/releases/tag/2.37.0",
+    "archiveSha256": "d531752c4dad5d4214ac7ff540cefc2647df1fca2338d413d3c01754f54b356b",
+    "executableSha256": "4bb842d1c9284c1c9cb56f017dde916dfce6995ef9844913d5af89ea54126df7",
+    "signer": "Developer ID Application: Cirrus Labs, Inc. (9M2P8L4D89)"
+  },
+  "base": {
+    "source": "ghcr.io/cirruslabs/macos-tahoe-base",
+    "digest": "sha256:1b093499716409d29e8b5336844528e1cae375db97d2ad8e5aeff78cf0da201e",
+    "localName": "tpnil-macos-tahoe-base-202609"
+  },
+  "run": {
+    "namePrefix": "tpnil-run-",
+    "cpus": 8,
+    "memoryMiB": 16384,
+    "display": "1440x900",
+    "network": "host-only",
+    "clipboard": false,
+    "audio": false,
+    "artifactShare": "read-only",
+    "clone": "stacked-copy-on-write"
+  }
+}

@@ -42,4 +42,4 @@ This command performs no installation, networking, wallet calls, or transaction 
 
 The [BSV Desktop 2.8.5 intake](../suts/intake/bsv-desktop-2.8.5.md) is the first application of this process.
 
-The first retained [intake review](../journals/intake/2026-09-18/bsv-desktop-2.8.5-macos-arm64.json) records BLOCKED readiness. It binds the reviewed record and artifact digests and remains preserved when later reviews are added.
+The first retained [intake review](../journals/intake/2026-09-18/bsv-desktop-2.8.5-macos-arm64.json) records BLOCKED readiness. It binds the evidence and artifact digests available at that time and remains preserved when later reviews are added. Native qualification now supplies installation and bridge evidence; service coverage, fixture state, observation coverage, and retention terms still prevent a replacement `READY_FOR_EXECUTION` review.

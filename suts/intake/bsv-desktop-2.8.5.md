@@ -1,12 +1,12 @@
 # BSV Desktop 2.8.5 intake
 
-Profile: ISI-4 1.0.0 / ITCVE-1 1.0.0, production wallet with explicitly configured controlled services. Status: **BLOCKED for native vector execution**.
+Profile: ISI-4 1.0.0 / ITCVE-1 1.0.0, production wallet with explicitly configured controlled services. Status: **native baseline qualified; blocked for controlled-service vectors**.
 
 ## Artifact
 
 The downloaded macOS arm64 DMG is 197,754,121 bytes with SHA-256 `05dec27dc461d4a9fbbe9aafdec53bdb6e947b46c0d1652e16342da47471d12e`, matching [release metadata](../../docs/research/intake-2026-09-18/release.json). The bundle identifies version 2.8.5 and `com.bsvblockchain.bsvdesktop`.
 
-Read-only mounting and static signature verification succeeded. The [signature inspection](../../docs/research/intake-2026-09-18/signature-inspection.json) records Developer ID Application: BSV Association, TeamIdentifier `SV8SWTHA2H`, and a stapled notarization ticket. These observations establish static integrity; the application was not installed or launched. The image was detached after inspection.
+Read-only mounting and static signature verification succeeded. The [signature inspection](../../docs/research/intake-2026-09-18/signature-inspection.json) records Developer ID Application: BSV Association, TeamIdentifier `SV8SWTHA2H`, and a stapled notarization ticket. Subsequent native qualification installed the same digest on clean macOS virtual machines. Two runs passed Gatekeeper, first-use initialization with an isolated unfunded fixture, ordinary certificate trust, mainnet-mode reporting, authentication, and local BRC-100 bridge inspection. The retained records are [run 35533034148](../../journals/native-qualification/2026-09-20/bsv-desktop-2.8.5-macos-arm64-35533034148/record.json) and [run 35533139040](../../journals/native-qualification/2026-09-20/bsv-desktop-2.8.5-macos-arm64-35533139040/record.json).
 
 ## Supported configuration inventory
 
@@ -27,12 +27,11 @@ Remote storage is the most direct supported candidate integration path. Its conf
 
 ## Execution prerequisites
 
-1. An isolated native runner with ordinary installation and UI automation.
-2. Runtime confirmation that required service boundaries are explicitly configurable and observable, or a narrower declared vector scope for any unresolved boundary.
-3. A pinned controlled-service closure and independently validated mainnet-format funding, header, proof, and storage fixtures.
-4. Native application driving and independent V001–V004 oracles, followed by two clean repetitions.
-5. Artifact and dependency retention terms for admitted reporting.
+1. Runtime confirmation that required service boundaries are explicitly configurable and observable, or a narrower declared vector scope for any unresolved boundary.
+2. A pinned controlled-service closure and independently validated mainnet-format funding, header, proof, and storage fixtures.
+3. Independent V001–V004 application and transaction oracles, followed by two clean vector repetitions.
+4. Artifact and dependency retention terms for admitted reporting.
 
 [The machine-readable intake](bsv-desktop-2.8.5.json) records each criterion and evidence digest. The review command verifies those records and the actual DMG. No ToDo vector, wallet conformance result, or public-mainnet transaction is recorded by this intake.
 
-Native execution is deferred under [ISI-4 decision 0002](../../programs/ISI-4/decisions/0002-native-infrastructure.md) pending the laboratory infrastructure plan, provisioning, and documentation. The retained intake record remains unchanged.
+Native baseline qualification is admitted under [ISI-4 decision 0004](../../programs/ISI-4/decisions/0004-native-qualification-lanes.md). The retained intake record remains unchanged because it describes the evidence available at that review; a later intake review will incorporate the native records after service-boundary evidence is complete.

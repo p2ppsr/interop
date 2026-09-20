@@ -27,6 +27,10 @@ function keyValues(bytes) {
   for (const line of bytes.toString('utf8').split('\n').filter(Boolean)) {
     const index = line.indexOf('=');
     if (index > 0) result[line.slice(0, index)] = line.slice(index + 1);
+    else {
+      const match = /^([^:]+):\s*(.*)$/.exec(line);
+      if (match) result[match[1]] = match[2];
+    }
   }
   return result;
 }
@@ -97,7 +101,7 @@ function parseEvidence(plan, files) {
       network: json('getNetwork.json').network,
       version: json('getVersion.json').version
     },
-    authenticatedUiObserved: json('authenticated-ui.json').result?.text?.includes('Authenticated successfully!') === true,
+    authenticatedUiObserved: json('authenticated-ui.json').result?.url?.includes('#/dashboard/') === true && json('authenticated-ui.json').result?.buttons?.includes('Logout') === true,
     evidence
   };
 }

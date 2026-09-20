@@ -19,7 +19,7 @@ function evidence(t) {
     'app-qualified-launch.log': Buffer.from('Certificate accepted by the network stack\n'),
     'app-version.txt': Buffer.from('2.8.5\nbundle_executable=BSV-Desktop\n'),
     'artifact.txt': Buffer.from('artifact_size=197754121\nartifact_sha256=05dec27dc461d4a9fbbe9aafdec53bdb6e947b46c0d1652e16342da47471d12e\n'),
-    'authenticated-ui.json': json({ target: {}, result: { text: 'Authenticated successfully!' } }),
+    'authenticated-ui.json': json({ target: {}, result: { url: 'file:///app/index.html#/dashboard/apps', text: 'Your Balance', buttons: ['Logout'] } }),
     'authenticated-ui.png': Buffer.from([137, 80, 78, 71]),
     'bridge-manifest.json': json({ name: 'BSV Desktop' }),
     'certificate-verify.txt': Buffer.from('certificate verification successful.\n'),

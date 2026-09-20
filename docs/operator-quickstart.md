@@ -37,4 +37,4 @@ node bin/tpnil.mjs review-intake suts/intake/bsv-desktop-2.8.5.json out/artifact
 
 The [intake contract](intake.md) defines required evidence and exit codes. Its output is an intake review, separate from synthetic self-tests and executed SUT results.
 
-`node scripts/verify-published-journals.mjs` verifies retained self-test journals and intake-review objects. Intake archive verification checks recorded evidence and readiness; rerunning `review-intake` with the canonical binary additionally verifies the artifact bytes.
+`node scripts/verify-published-journals.mjs` verifies retained self-test, intake, portable qualification, and native qualification objects. Native archive verification recomputes its findings without the runner or network; `verify-artifact` separately verifies obtained release bytes against the recorded digest.

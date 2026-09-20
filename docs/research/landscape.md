@@ -6,13 +6,13 @@ Research baseline: 2026-09-17 UTC. The [2026-09-18 BSV Desktop intake](../intake
 
 The [BRC repository](https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/README.md) is the primary standards source. Normative references identify individual clauses in commit-pinned BRC text. The source register covers wallet interfaces, overlay submission and lookup, CHIRP, and LCH.
 
-[BRC-100](https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md) specifies the wallet/application interface and references additional standards for derivation, baskets, transactions, proofs and cryptography. The laboratory's offline regtest admission rule is an additional program requirement. A ToDo success sequence exercises only a subset of that interface.
+[BRC-100](https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md) specifies the wallet/application interface and references additional standards for derivation, baskets, transactions, proofs and cryptography. A ToDo success sequence exercises only a subset of that interface. ISI-4 1.0.0 evaluates unchanged production wallets in mainnet mode against controlled services; older program versions retain their original regtest requirements.
 
 ## Initial wallet and application
 
-[BSV Desktop v2.8.3](https://github.com/bsv-blockchain/bsv-desktop/releases/tag/v2.8.3) is the latest published release observed during intake. Its platform assets and publisher-reported SHA-256 values are retained separately from source-head observations. The macOS arm64 DMG was downloaded and its bytes verified against the published digest; this does not verify signing, regtest support, or conformance on any platform.
+[BSV Desktop v2.8.3](https://github.com/bsv-blockchain/bsv-desktop/releases/tag/v2.8.3) was the release observed at the 2026-09-17 research baseline. The current intake and native qualification use v2.8.5. Its macOS arm64 DMG was verified, installed twice on clean macOS VMs, and observed through the local BRC-100 bridge. Those infrastructure findings do not establish transaction-processing or application conformance.
 
-The inspected [wallet service](https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/services/WalletService.ts) and [storage configuration](https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/storage.ts) use the main/test/ttn chain configuration. Admission remains pending verification of the common offline regtest lifecycle. These source observations are scoped to the pinned files; release-binary configuration requires separate qualification.
+The inspected [wallet service](https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/src/lib/services/WalletService.ts) and [storage configuration](https://github.com/bsv-blockchain/bsv-desktop/blob/cb0350d5472bf33bb8e599e6599f922324306e5e/electron/storage.ts) use the main/test/ttn chain configuration. Native qualification confirms the admitted binary reports `mainnet`; controlled transaction, proof, header, and storage routes remain to be established. Source observations remain scoped to the pinned files.
 
 [`p2ppsr/todo-ts`](https://github.com/p2ppsr/todo-ts/blob/236733c586c4d2cc3ab7f957afa382005509acd4/frontend/src/App.tsx) supplies the initial application candidate. The reviewed application encrypts task text with the `todo list` protocol and key ID `1`, creates PushDrop outputs in `todo tokens`, reads transaction-backed output lists, and redeems tasks via action construction and signing. Its QA/cache path motivates a fresh-browser reconstruction assertion. UI success messages alone cannot establish accepted chain state. The compiled web-root artifact must be separately hashed and admitted.
 
@@ -36,4 +36,4 @@ The public [BSV Wallet](https://github.com/bsv-blockchain/bsv-wallet/blob/b2154b
 
 ## Qualification priorities
 
-The next stages reconcile TypeScript/Go storage semantics, establish the common offline regtest lifecycle, and implement independent state projections and evidence replay. The [roadmap](../../ROADMAP.md) defines the qualification gates for each program.
+The next stages complete the controlled-service closure for the production wallet, implement independent ToDo transaction and state predicates, and reconcile TypeScript/Go storage semantics. The [roadmap](../../ROADMAP.md) defines the qualification gates for each program.

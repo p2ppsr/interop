@@ -6,11 +6,11 @@ The charter, governance, licensing policy, initial candidates, and determinism m
 
 ## Gate 1 — establish the production-wallet intake boundary
 
-The hybrid execution architecture is adopted under [ISI-4 decision 0003](programs/ISI-4/decisions/0003-hybrid-laboratory.md). The portable application-serving lane is executable and produces infrastructure-only evidence. Native execution remains blocked under [decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until the disposable macOS runner is provisioned, qualified, and documented.
+The hybrid execution architecture is adopted under [ISI-4 decision 0003](programs/ISI-4/decisions/0003-hybrid-laboratory.md). The portable application-serving lane and hosted macOS qualification lane are executable and produce infrastructure-only evidence. [Decision 0004](programs/ISI-4/decisions/0004-native-qualification-lanes.md) records two native repetitions. Scored ToDo execution remains blocked under [decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until controlled-service routing, fixture state, reset, and oracle requirements are complete.
 
-Apply [production SUT intake](docs/intake.md) to the unchanged release. Verify artifact identity and signatures, ordinary mainnet settings, local and remote storage modes, all service dependencies, and configuration effects. Source observations guide the inventory; native observations establish actual routing and behavior. The first BSV Desktop 2.8.5 intake is blocked pending runtime evidence.
+Apply [production SUT intake](docs/intake.md) to the unchanged release. Artifact identity, signatures, ordinary installation, mainnet reporting, and the local bridge now have native evidence. Complete local and remote storage observations, all service dependencies, routing, and configuration effects before replacing the blocked intake review.
 
-Provision a clean native guest and qualified automation. Resolve the required service routes through ordinary supported configuration. Pin the complete controlled-service closure and mainnet-format fixture model. The initial profile permits no public-mainnet broadcast or funds. Unresolved mandatory dependencies block the affected vectors while other observable behavior remains eligible for separately scoped evaluation.
+Complete the pinned Tart guest as the independent reconstruction lane and run the admitted driver there. Resolve the required service routes through ordinary supported configuration. Pin the complete controlled-service closure and mainnet-format fixture model. The initial profile permits no public-mainnet broadcast or funds. Unresolved mandatory dependencies block the affected vectors while other observable behavior remains eligible for separately scoped evaluation.
 
 ## Gate 2 — execute the first ToDo sequence
 
