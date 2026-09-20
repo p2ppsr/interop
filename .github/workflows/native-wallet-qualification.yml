@@ -97,8 +97,22 @@ jobs:
             if curl --silent --fail http://127.0.0.1:9222/json/list >/dev/null; then break; fi
             sleep 1
           done
-          node scripts/native/electron-cdp.mjs snapshot > "$evidence/initial-ui.json"
+          for attempt in $(seq 1 30); do
+            node scripts/native/electron-cdp.mjs snapshot > "$evidence/initial-ui.json"
+            if grep -q 'Create Wallet' "$evidence/initial-ui.json"; then break; fi
+            sleep 1
+          done
+          grep -q 'Create Wallet' "$evidence/initial-ui.json"
           node scripts/native/electron-cdp.mjs click-text 'Create Wallet' > "$evidence/create-wallet.json"
+          for attempt in $(seq 1 30); do
+            node scripts/native/electron-cdp.mjs snapshot > "$evidence/direct-key-ui.json"
+            if grep -q 'Primary Key' "$evidence/direct-key-ui.json"; then break; fi
+            sleep 1
+          done
+          grep -q 'Primary Key' "$evidence/direct-key-ui.json"
+          fixture_key="$(printf '%s' 'TPNIL ISI-4 isolated wallet identity v1' | shasum -a 256 | awk '{print $1}')"
+          node scripts/native/electron-cdp.mjs fill-label 'Primary Key' "$fixture_key" > "$evidence/wallet-key-fill.json"
+          node scripts/native/electron-cdp.mjs click-text 'Login' > "$evidence/wallet-login.json"
           for attempt in $(seq 1 30); do
             node scripts/native/electron-cdp.mjs snapshot > "$evidence/vault-ui.json"
             if grep -q 'Create vault' "$evidence/vault-ui.json"; then break; fi
@@ -109,20 +123,15 @@ jobs:
           node scripts/native/electron-cdp.mjs fill-label 'Unlock passphrase' "$vault_passphrase" > "$evidence/vault-fill.json"
           node scripts/native/electron-cdp.mjs fill-label 'Confirm passphrase' "$vault_passphrase" > "$evidence/vault-confirm.json"
           node scripts/native/electron-cdp.mjs click-text 'Create vault' > "$evidence/vault-create.json"
-          for attempt in $(seq 1 30); do
-            node scripts/native/electron-cdp.mjs snapshot > "$evidence/direct-key-ui.json"
-            if grep -q 'Primary Key' "$evidence/direct-key-ui.json"; then break; fi
-            sleep 1
-          done
-          grep -q 'Primary Key' "$evidence/direct-key-ui.json"
-          fixture_key="$(printf '%s' 'TPNIL ISI-4 isolated wallet identity v1' | shasum -a 256 | awk '{print $1}')"
-          node scripts/native/electron-cdp.mjs fill-label 'Primary Key' "$fixture_key" > "$evidence/wallet-key-fill.json"
-          node scripts/native/electron-cdp.mjs click-text 'Login' > "$evidence/wallet-login.json"
           for attempt in $(seq 1 60); do
             node scripts/native/electron-cdp.mjs snapshot > "$evidence/authenticated-ui.json"
-            if ! grep -q 'Create Wallet' "$evidence/authenticated-ui.json"; then break; fi
+            curl --fail --silent --show-error --cacert "$cert" \
+              -H 'Origin: https://todo.itcve.test' -H 'Content-Type: application/json' \
+              --data '{}' https://localhost:2121/isAuthenticated > "$evidence/isAuthenticated.json"
+            if jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null; then break; fi
             sleep 1
           done
+          jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null
           node scripts/native/electron-cdp.mjs screenshot "$evidence/authenticated-ui.png" > "$evidence/screenshot.json"
 
           curl --fail --silent --show-error --cacert "$cert" \
