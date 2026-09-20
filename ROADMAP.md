@@ -24,7 +24,9 @@ Freeze overlay and storage HTTP contracts, extract reviewed method inventories, 
 
 ## Gate 4 — integrated scenario and native matrix
 
-Qualify the full-stack profile, including its pinned Teranode/Arcade/Merkle/ChainTracks closure and declared funding model. Connect its integration findings to the production-wallet profile with explicit configuration and dependency differences. Add a pinned message-board application that writes a GlobalKVStore PushDrop payload containing an LCH-controlled UHRP image reference; independently resolve and validate bytes, rights/payment receipts, keys, and rendering, then exercise the CHIRP variant. Qualify device-specific IPA, APK/AAB, Windows, macOS, Linux, Chrome, Safari, Brave, and mobile wallet-browser profiles. Safari qualification requires Safari in a licensed Apple environment.
+Follow the qualification staircase in [ISI-1 decision 0001](programs/ISI-1/decisions/0001-layered-synthesis.md): frozen BRC-167/BRC-170 vectors, board-record contract, content availability, licensed acquisition, overlay convergence, transaction lifecycle, reference application, then fault and substitution matrices. Qualify the full-stack profile with a pinned Teranode/Arcade/Merkle/ChainTracks regtest closure and program-controlled BRC-100 wallets. The TPNIL Synthesis Board writes a current BRC-35 Global KVStore record containing an LCH-controlled UHRP/CHIRP image reference; independent oracles validate token state, content bytes, policies, payments, keys, processing states, proofs, and restart reconstruction.
+
+Connect the resulting service findings to the ISI-4 production-wallet profile with explicit configuration and dependency differences. Do not present a regtest service result as evidence about unchanged mainnet wallet behavior. Qualify device-specific IPA, APK/AAB, Windows, macOS, Linux, Chrome, Safari, Brave, and mobile wallet-browser profiles. Safari qualification requires Safari in a licensed Apple environment.
 
 ## Gate 5 — independent laboratory reproduction
 

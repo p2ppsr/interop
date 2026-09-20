@@ -19,6 +19,7 @@ jobs:
       - run: printf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"
       - run: npm test
       - run: npm run check
+      - run: npm run qualify:standards
       - run: node scripts/verify-published-journals.mjs
       - run: python3 -m unittest discover -s test -p 'test_*.py' -v
       - run: npm run demo

@@ -86,7 +86,7 @@
       "requirementId": "ISI-1-R003",
       "title": "GlobalKVStore message with licensed image",
       "origin": "laboratory-profile",
-      "reference": "docs/decisions.md",
+      "reference": "programs/ISI-1/decisions/0001-layered-synthesis.md",
       "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
       "executable": false,
       "preconditions": [
@@ -115,7 +115,7 @@
       ],
       "blockers": [
         "Message-board artifact and payload schema",
-        "Pinned LCH policy and fixture keys",
+        "Frozen board-record and LCH acquisition profiles with fixture keys",
         "Independent content/payment oracle"
       ]
     },
@@ -125,7 +125,7 @@
       "requirementId": "ISI-1-R004",
       "title": "CHIRP content variant",
       "origin": "standard",
-      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/overlays/0167.md",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/9c9b3ecfe1c0b765400812deff57d018a01cf0ec/overlays/0167.md",
       "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
       "executable": false,
       "preconditions": [
@@ -147,7 +147,7 @@
         "retrieved-content-digests"
       ],
       "blockers": [
-        "Executable canonical CHIRP corpus and independent checker"
+        "Frozen imported CHIRP corpus and independent checker"
       ]
     },
     {
@@ -156,7 +156,7 @@
       "requirementId": "ISI-1-R005",
       "title": "Processing states and bounded recovery",
       "origin": "open-interpretation",
-      "reference": "docs/decisions.md",
+      "reference": "programs/ISI-1/decisions/0001-layered-synthesis.md",
       "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
       "executable": false,
       "preconditions": [

@@ -26,6 +26,7 @@ Use Node.js 22 or later. These commands require no package installation or exter
 ```sh
 npm test
 npm run check
+npm run qualify:standards
 npm run demo
 node bin/tpnil.mjs verify out/demo
 node bin/tpnil.mjs replay out/demo
@@ -34,7 +35,7 @@ node bin/tpnil.mjs verify-qualification out/todo-webroot-run
 node bin/tpnil.mjs verify-native-qualification journals/native-qualification/2026-09-20/bsv-desktop-2.8.5-macos-arm64-35533034148
 ```
 
-The demo performs a synthetic laboratory self-test, writes a content-addressed result and hash-linked journal to `out/demo`, and verifies repeatability. Results carry the `LAB_SELF_TEST_ONLY` designation. Each run requires a fresh output directory; for subsequent runs use `node bin/tpnil.mjs demo out/another-run`.
+The demo performs a synthetic laboratory self-test, writes a content-addressed result and hash-linked journal to `out/demo`, and verifies repeatability. `npm run qualify:standards` verifies the exact imported BRC-167 and BRC-170 corpora and independently recomputes core CHIRP and LCH invariants. Both carry the `LAB_SELF_TEST_ONLY` designation. Each demo run requires a fresh output directory; for subsequent runs use `node bin/tpnil.mjs demo out/another-run`.
 
 The qualification commands execute the canonical application-serving test stand and verify retained native evidence. Both produce offline-verifiable bundles carrying the `INFRASTRUCTURE_QUALIFICATION_ONLY` designation. [Laboratory infrastructure](infra/README.md) defines how the same execution protocol operates locally, at independent laboratories, and through CI schedulers.
 
@@ -44,7 +45,7 @@ The [operator guide](docs/operator-quickstart.md) covers artifact hashing, compi
 
 - [Conformance model](docs/conformance-model.md), [determinism](docs/determinism.md), and [evidence policy](docs/evidence.md) define evaluation and reporting.
 - [Architecture](docs/architecture.md), [adapter contract](adapters/README.md), and [schemas](schemas/README.md) define laboratory interfaces.
-- [Source research](docs/research/landscape.md), [decision register](docs/decisions.md), and [roadmap](ROADMAP.md) connect the foundation to its next qualification stages.
+- [Source research](docs/research/landscape.md), [synthesis baseline](docs/research/synthesis-baseline.md), [decision register](docs/decisions.md), and [roadmap](ROADMAP.md) connect the foundation to its next qualification stages.
 - [Participation](CONTRIBUTING.md) explains submissions and technical contributions.
 
 `programs/` holds versioned requirements and vector catalogs; `itcves/` defines environment profiles; `infra/` contains runnable laboratory plans and provisioning contracts; `schemas/` holds machine-readable contracts; `src/` and `bin/` implement the offline core; `adapters/` specifies the control plane; `suts/` records artifact candidates; `fixtures/` contains laboratory self-tests; `journals/` retains accepted evidence; and `docs/` contains technical policies and research.

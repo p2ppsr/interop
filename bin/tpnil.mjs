@@ -7,11 +7,13 @@ import { runDemo } from '../src/demo.mjs';
 import { verifyJournal, verifyPrefix } from '../src/journal.mjs';
 import { runQualification, verifyQualification } from '../src/qualification.mjs';
 import { archiveNativeQualification, verifyNativeQualification } from '../src/native-qualification.mjs';
+import { qualifyStandardFixtures } from '../src/standards.mjs';
 
 try {
   const [command, ...args] = process.argv.slice(2);
   let result;
   if (command === 'check' && args.length === 0) result = checkRepository();
+  else if (command === 'qualify-standards' && args.length === 0) result = qualifyStandardFixtures();
   else if (command === 'review-intake' && args.length === 2) {
     result = await reviewIntakeFile(args[0], args[1]);
     if (result.readiness === 'BLOCKED') process.exitCode = 1;
@@ -45,7 +47,7 @@ try {
     const actual = hash.digest('hex');
     if (actual !== args[1]) throw new Error('Artifact digest mismatch');
     result = { sha256: actual, size, verified: true };
-  } else throw new Error('Usage: tpnil check | demo [new-directory] | verify <journal> | replay <journal> | verify-prefix <old> <new> | verify-artifact <file> <sha256> | review-intake <record> <artifact> | run-qualification <plan> <artifact-root> <output> <runner-id> | verify-qualification <output> | archive-native-qualification <plan> <evidence> <output> | verify-native-qualification <output>');
+  } else throw new Error('Usage: tpnil check | qualify-standards | demo [new-directory] | verify <journal> | replay <journal> | verify-prefix <old> <new> | verify-artifact <file> <sha256> | review-intake <record> <artifact> | run-qualification <plan> <artifact-root> <output> <runner-id> | verify-qualification <output> | archive-native-qualification <plan> <evidence> <output> | verify-native-qualification <output>');
   process.stdout.write(JSON.stringify(result, null, 2) + '\n');
 } catch (error) {
   process.stderr.write(`TPNIL ERROR: ${error.message}\n`);

@@ -5,6 +5,9 @@
 - Added the hosted macOS native qualification lane, observed-state Electron driver, signed artifact admission checks, and two retained BSV Desktop 2.8.5 runs.
 - Added content-addressed native evidence bundles with offline recomputation and tamper tests.
 - Recorded the hosted qualification and pinned local reconstruction strategy in ISI-4 decision 0004.
+- Adopted the layered ISI-1 transaction-processing synthesis: current BRC-35 Global KVStore records, UHRP, CHIRP, LCH, overlay convergence, Teranode/Arcade/Merkle processing, independent oracles, and the TPNIL Synthesis Board.
+- Recorded current implementation pins and exploratory passing CHIRP, LCH, and LCH reference-application suites without treating upstream tests as TPNIL conformance evidence.
+- Imported digest-pinned BRC-167 and BRC-170 vector corpora and added dependency-free laboratory self-tests for CHIRP identifiers, LCH framing, segmented authenticated decryption, range reconstruction, and tamper rejection.
 
 ## 0.3.0 — portable laboratory execution (2026-09-20)
 

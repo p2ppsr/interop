@@ -4,6 +4,8 @@ Version **0.1.0**, status **DRAFT**, profile `full-stack`, environment **ITCVE-1
 
 The [catalog](catalog.json) defines draft requirements, vector plans, references, observations, evidence, and outstanding prerequisites. `npm run check` validates its structure. Profile adoption requires exact fixtures and independent executable oracles for every mandatory requirement.
 
+[Decision 0001](../decisions/0001-layered-synthesis.md) establishes the layered route from standards vectors through the TPNIL Synthesis Board and the complete transaction-processing run. The deterministic full-stack topology uses program-controlled wallets on regtest. Production wallet binaries remain in ISI-4's controlled mainnet-wallet profile until a bridge profile is separately qualified.
+
 | Requirement / vector | Intended assertion family | Requirement origin | State |
 | --- | --- | --- | --- |
 | ISI-1-R001 / ISI-1-V001 | Offline topology and deterministic funding | laboratory-profile | Draft; not executable |
@@ -23,4 +25,4 @@ The SUT can replace any declared role in the complete stack. All remaining roles
 
 ## Changelog
 
-0.1.0: initial foundation and draft vector plans; no SUT execution.
+0.1.0: initial foundation and draft vector plans; layered synthesis execution strategy adopted; no SUT execution.
