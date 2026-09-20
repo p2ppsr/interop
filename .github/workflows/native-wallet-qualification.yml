@@ -56,7 +56,10 @@ jobs:
           set -e
           /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist" > "$evidence/app-version.txt"
 
-          binary="$app/Contents/MacOS/BSV Desktop"
+          bundle_executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Contents/Info.plist")"
+          printf 'bundle_executable=%s\n' "$bundle_executable" >> "$evidence/app-version.txt"
+          binary="$app/Contents/MacOS/$bundle_executable"
+          test -x "$binary"
           "$binary" --remote-debugging-port=9222 > "$evidence/app-first-launch.log" 2>&1 &
           first_pid=$!
           for attempt in $(seq 1 60); do
