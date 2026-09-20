@@ -168,7 +168,7 @@ export async function runQualification(planFile, artifactRoot, output, runnerId)
     const endedAt = utcNow();
     const observations = { schemaVersion: VERSION, claim: CLAIM, startedAt, endedAt, host: hostRecord(runnerId), logicalOrigin: plan.logicalOrigin, artifact: { id: plan.artifact.id, sha256: digest(bytes), size: bytes.length }, inventory, requests: requestLog };
     const result = { schemaVersion: VERSION, claim: CLAIM, planHash: hashJson(plan), observationsHash: hashJson(observations), overall: outcomes.every(item => item.status === 'PASS') ? 'PASS' : 'FAIL', outcomes };
-    fs.mkdirSync(output, { recursive: false });
+    fs.mkdirSync(output, { recursive: true });
     const objects = path.join(output, 'objects'); fs.mkdirSync(objects);
     const artifactHash = putObject(objects, bytes);
     for (const [hash, body] of evidence) if (putObject(objects, body) !== hash) throw new Error('Evidence digest mismatch');
