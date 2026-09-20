@@ -132,6 +132,8 @@ jobs:
           jq -e '.network == "mainnet"' "$evidence/getNetwork.json" >/dev/null
           jq -e '.version | type == "string" and length > 0' "$evidence/getVersion.json" >/dev/null
           ps -axo pid,ppid,user,command | grep -E '[B]SV Desktop|[E]lectron' > "$evidence/processes.txt"
+          cleanup
+          trap - EXIT
           jq -n \
             --arg capturedAt "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
             --arg repository "$GITHUB_REPOSITORY" \
