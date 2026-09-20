@@ -1,0 +1,32 @@
+{
+  "name": "@tpnil/synthesis",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Reusable deterministic building blocks for the TPNIL ISI-1 synthesis environment",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "run:reference": "tsx src/cli.ts",
+    "prepare:arcade-fixture": "tsx src/arcade-fixture.ts",
+    "prepare:board-arcade-fixture": "tsx src/board-arcade-fixture.ts",
+    "prepare:uhrp-arcade-fixture": "tsx src/uhrp-arcade-fixture.ts",
+    "prepare:lch-arcade-fixture": "tsx src/lch-arcade-fixture.ts",
+    "probe:teranode": "tsx src/teranode-probe.ts"
+  },
+  "dependencies": {
+    "@bsv/chirp": "0.1.1",
+    "@bsv/lch": "0.1.0",
+    "@bsv/sdk": "2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "tsx": "4.20.6",
+    "typescript": "6.0.2",
+    "vitest": "4.1.11"
+  },
+  "license": "Open BSV License"
+}

@@ -9,3 +9,5 @@ Canonical encoding **TPNIL-JSON-1** is UTF-8 JSON without trailing whitespace; o
 `program-index.schema.json` selects independently versioned current programs. `intake.schema.json` defines production-fidelity review records. Laboratory release 0.2.0 retains the 0.1.0 self-test/evidence protocol and adds the 1.0.0 intake contract.
 
 `qualification-plan.schema.json` defines portable service-origin qualification. `native-qualification-plan.schema.json` binds a native artifact and its platform admission expectations. Both produce infrastructure qualification findings and cannot issue SUT conformance.
+
+`component-qualification-plan.schema.json` binds an external source revision, an argument-vector command, and semantic output assertions. The runner retains stdout, stderr, source state, tool versions, and the replayable result as content-addressed objects. These findings qualify supporting infrastructure only.

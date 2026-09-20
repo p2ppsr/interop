@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ARCADE-LCH-TERANODE-MERKLE",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/bsv-blockchain/arcade.git",
+    "commit": "1c44e133c91cc337a98bfb17047d4f9de95df71d"
+  },
+  "adapters": [
+    {
+      "path": "infra/adapters/arcade-docker-desktop-host.patch",
+      "sha256": "2f490684109f6d700e2ace58d2d1a662bd6ed6472a21c75710a1e454615cbc1c",
+      "purpose": "Route callbacks and libp2p bootstrap traffic through Docker Desktop's host.docker.internal boundary on macOS runners."
+    },
+    {
+      "path": "infra/adapters/arcade-real-teranode-merkle-test.patch",
+      "sha256": "2efd6224ca48a0284eae08220c8d4d6200b67b6f25fd41d29337fbfc22ffe641",
+      "purpose": "Add the laboratory test that carries a signed extended transaction through Arcade into the pinned Teranode runtime, then proves the mined transaction through Merkle Service against the exact Teranode block header."
+    }
+  ],
+  "environment": {
+    "TPNIL_TERANODE_FIXTURE": "${LAB_ROOT}/out/arcade-lch-teranode-merkle-fixture.json"
+  },
+  "inputs": [
+    {
+      "environment": "TPNIL_TERANODE_FIXTURE",
+      "sha256": "a318ea78f49046ccad1d08574f713ae42bbfc7811a3cf4a16ad6f739ea16593e",
+      "purpose": "Signed BRC-170 multilateral settlement transaction with two verified receipts and a recovered license for the Synthesis Board LCH asset."
+    }
+  ],
+  "command": [
+    "go",
+    "test",
+    "-tags=e2e",
+    "-run",
+    "^TestTPNIL_ArcadeBroadcastsToRealTeranode$",
+    "-count=1",
+    "-v",
+    "-timeout=10m",
+    "./tests/e2e"
+  ],
+  "timeoutSeconds": 900,
+  "requiredOutput": [
+    "transactions accepted by network",
+    "real Teranode accepted and mined Arcade transaction 2aef33cc19bbeeaa0cfafb39502e98ac44de5495d2594430a5d6162d32039990",
+    "real Teranode block produced a Merkle proof matching header root",
+    "--- PASS: TestTPNIL_ArcadeBroadcastsToRealTeranode"
+  ]
+}

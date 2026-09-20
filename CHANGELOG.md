@@ -2,12 +2,22 @@
 
 ## Unreleased
 
+## 0.4.0 — executable transaction-processing synthesis (2026-09-20)
+
 - Added the hosted macOS native qualification lane, observed-state Electron driver, signed artifact admission checks, and two retained BSV Desktop 2.8.5 runs.
 - Added content-addressed native evidence bundles with offline recomputation and tamper tests.
 - Recorded the hosted qualification and pinned local reconstruction strategy in ISI-4 decision 0004.
 - Adopted the layered ISI-1 transaction-processing synthesis: current BRC-35 Global KVStore records, UHRP, CHIRP, LCH, overlay convergence, Teranode/Arcade/Merkle processing, independent oracles, and the TPNIL Synthesis Board.
 - Recorded current implementation pins and exploratory passing CHIRP, LCH, and LCH reference-application suites without treating upstream tests as TPNIL conformance evidence.
 - Imported digest-pinned BRC-167 and BRC-170 vector corpora and added dependency-free laboratory self-tests for CHIRP identifiers, LCH framing, segmented authenticated decryption, range reconstruction, and tamper rejection.
+- Added the executable Synthesis Board reference profile with BRC-100-derived PushDrop records, revision spends, overlay HTTP synchronization, CHIRP host failover, LCH acquisition, replay, and negative cases.
+- Added a digest-pinned Teranode regtest profile and retained qualifications for deterministic funding, real board-record transactions, conflict rejection, token revision, mining, retrieval, and restart recovery.
+- Added source-pinned Arcade component qualification with declared laboratory adapters, a real Merkle Service image, embedded ChainTracks, retained inputs, and offline-verifiable output evidence.
+- Proved the joined Arcade-to-Teranode-to-Merkle path first with a controlled payment and then with revision 3 of the actual Synthesis Board PushDrop token. Teranode accepted and mined the transactions, Merkle Service acquired the exact native block and subtree data, and each returned proof reproduced the real block-header root.
+- Added canonical signed UHRP advertisement tokens, `tm_uhrp` submission, `ls_uhrp` HTTP lookup, expiry, revocation, replay, and content-host failover to the reference profile, with a dedicated content-addressed reference qualification journal.
+- Extended the joined on-chain path through the canonical UHRP advertisement and a receipt-complete two-payee BRC-170 LCH settlement, with each transaction accepted by Arcade, mined by pinned Teranode, and independently verified through Merkle Service against the native block header.
+- Added a one-command clean-stack orchestrator, recursive aggregate verifier, and two clean retained joined-stack qualifications that bind transaction ancestry, fixture digests, generated plans, runtime evidence, and component evidence.
+- Added retained ChainTracks reorganization evidence and missed-callback `/reprocess` recovery for ten watched transactions against immutable Merkle Service v0.6.0, including an explicit compatibility adapter for the historical coinbase-placeholder fixture.
 
 ## 0.3.0 — portable laboratory execution (2026-09-20)
 

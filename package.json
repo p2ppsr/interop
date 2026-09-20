@@ -1,6 +1,6 @@
 {
   "name": "tpnil",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Transaction Processing Network Interoperability Laboratory",
   "type": "module",
@@ -8,9 +8,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "node --test",
+    "test": "node --test test/*.test.mjs",
     "check": "node bin/tpnil.mjs check",
     "qualify:standards": "node bin/tpnil.mjs qualify-standards",
+    "test:synthesis": "npm ci --prefix synthesis --ignore-scripts && npm run typecheck --prefix synthesis && npm test --prefix synthesis",
     "qualification": "node bin/tpnil.mjs run-qualification infra/plans/todo-webroot-qualification.json . out/todo-webroot-qualification local-operator",
     "demo": "node bin/tpnil.mjs demo"
   },

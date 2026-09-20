@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ARCADE-MERKLE-CHAINTRACKS-REORG",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/bsv-blockchain/arcade.git",
+    "commit": "1c44e133c91cc337a98bfb17047d4f9de95df71d"
+  },
+  "adapters": [
+    {
+      "path": "infra/adapters/arcade-docker-desktop-host.patch",
+      "sha256": "2f490684109f6d700e2ace58d2d1a662bd6ed6472a21c75710a1e454615cbc1c",
+      "purpose": "Route callbacks and libp2p bootstrap traffic through Docker Desktop's host.docker.internal boundary on macOS runners."
+    }
+  ],
+  "command": [
+    "go",
+    "test",
+    "-tags=e2e",
+    "-run",
+    "^TestReorg_",
+    "-count=1",
+    "-v",
+    "-timeout=15m",
+    "./tests/e2e"
+  ],
+  "timeoutSeconds": 1200,
+  "requiredOutput": [
+    "phase 3: no anchors moved to the same-height loser",
+    "phase 4: re-anchor + revert converged",
+    "phase 5: orphaned proofs preserved and verifiable",
+    "--- PASS: TestReorg_SameHeightTie_OrphanProcessedSecond",
+    "--- PASS: TestReorg_SameHeightTie_OrphanWasTip_ReanchorsOnReorgEvent"
+  ]
+}

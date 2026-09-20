@@ -1,0 +1,22 @@
+diff --git a/tests/e2e/harness/containers.go b/tests/e2e/harness/containers.go
+index 09f4715..f2b6cef 100644
+--- a/tests/e2e/harness/containers.go
++++ b/tests/e2e/harness/containers.go
+@@ -6,6 +6,7 @@ import (
+ 	"context"
+ 	"fmt"
+ 	"os"
++	"runtime"
+ 	"strings"
+ 	"testing"
+ 	"time"
+@@ -112,6 +113,9 @@ type Containers struct {
+ // keeps the gateway recipe (host.docker.internal:host-gateway resolves
+ // to it and routes to the host).
+ func hostFromContainerAddr(gatewayIP string) string {
++	if runtime.GOOS == "darwin" {
++		return "host.docker.internal"
++	}
+ 	if isPodmanRuntime() {
+ 		return "host.containers.internal"
+ 	}

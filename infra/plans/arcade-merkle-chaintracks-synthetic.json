@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ARCADE-MERKLE-CHAINTRACKS-SYNTHETIC",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/bsv-blockchain/arcade.git",
+    "commit": "1c44e133c91cc337a98bfb17047d4f9de95df71d"
+  },
+  "adapters": [
+    {
+      "path": "infra/adapters/arcade-docker-desktop-host.patch",
+      "sha256": "2f490684109f6d700e2ace58d2d1a662bd6ed6472a21c75710a1e454615cbc1c",
+      "purpose": "Route callbacks and libp2p bootstrap traffic through Docker Desktop's host.docker.internal boundary on macOS runners."
+    }
+  ],
+  "command": [
+    "go",
+    "test",
+    "-tags=e2e",
+    "-run",
+    "^TestSmoke_SyntheticBlockMined$",
+    "-count=1",
+    "-v",
+    "-timeout=15m",
+    "./tests/e2e"
+  ],
+  "timeoutSeconds": 1200,
+  "requiredOutput": [
+    "broadcast + registered 7 txs",
+    "chaintracks tip =",
+    "all 7 txs MINED with paths matching the synthetic root",
+    "--- PASS: TestSmoke_SyntheticBlockMined"
+  ]
+}

@@ -20,6 +20,9 @@ jobs:
       - run: npm test
       - run: npm run check
       - run: npm run qualify:standards
+      - run: npm ci --prefix synthesis --ignore-scripts
+      - run: npm run typecheck --prefix synthesis
+      - run: npm test --prefix synthesis
       - run: node scripts/verify-published-journals.mjs
       - run: python3 -m unittest discover -s test -p 'test_*.py' -v
       - run: npm run demo

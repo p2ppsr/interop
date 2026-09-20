@@ -1,0 +1,57 @@
+diff --git a/tests/e2e/smoke_reprocess_test.go b/tests/e2e/smoke_reprocess_test.go
+index 62f6255..5d13a2f 100644
+--- a/tests/e2e/smoke_reprocess_test.go
++++ b/tests/e2e/smoke_reprocess_test.go
+@@ -4,6 +4,7 @@ package e2e_test
+ 
+ import (
+ 	"context"
++	"os"
+ 	"testing"
+ 	"time"
+ 
+@@ -33,21 +34,22 @@ import (
+ // Unlike the round-trip test this path doesn't require libp2p
+ // mesh formation, so it passes locally on rootless podman too.
+ func TestSmoke_RealBlockMined_ViaReprocess(t *testing.T) {
+-	// QUARANTINED: merkle-service's /reprocess enqueues the block message (HTTP
+-	// 202) but its franz block-processor consumer never fetches it, so no
+-	// callbacks are emitted and the txs never reach MINED — a regression from the
+-	// sarama->franz migration that only affects the recovery path (the live
+-	// round-trip in TestSmoke_RealBlockMined_SingleSubtree, which covers the
+-	// datahub-free callback path, passes). Tracked in
+-	// bsv-blockchain/merkle-service#148; re-enable once that ships.
+-	t.Skip("quarantined pending bsv-blockchain/merkle-service#148 (/reprocess block message not consumed by franz block-processor)")
+-
+ 	skipIfNoDocker(t)
+ 	const blockHash = "000000000000000001bc8a601dd5f0659d36a9b077808850375dfa2d9f009396"
+ 
+ 	fix := harness.LoadBlockFixture(t, blockHash)
+ 	t.Logf("loaded fixture: height=%d txCount=%d picked=%d subtrees=%d",
+ 		fix.Height, fix.TxCount, len(fix.PickedTxIDs), len(fix.Subtrees))
++	if len(fix.Subtrees) == 0 || len(fix.Subtrees[0].Bin) < 32 {
++		t.Fatal("fixture has no coinbase subtree placeholder")
++	}
++	for i := range 32 {
++		if fix.Subtrees[0].Bin[i] != 0 {
++			t.Fatal("fixture coinbase placeholder is not the admitted legacy zero form")
++		}
++		fix.Subtrees[0].Bin[i] = 0xff
++	}
++	t.Log("normalized legacy zero coinbase placeholder to canonical 0xff form")
+ 
+ 	// WithReprocessReady pre-allocates the harness datahub on the
+ 	// network gateway IP and stuffs its URL into merkle-service's
+@@ -55,7 +57,11 @@ func TestSmoke_RealBlockMined_ViaReprocess(t *testing.T) {
+ 	// datahub listener binds after the container is up but on the
+ 	// pre-reserved port, so the URL we registered up front is the
+ 	// one that actually serves the block.
+-	h := harness.New(t, harness.WithReprocessReady())
++	options := []harness.Option{harness.WithReprocessReady()}
++	if image := os.Getenv("TPNIL_MERKLE_IMAGE"); image != "" {
++		options = append(options, harness.WithMerkleImage(image))
++	}
++	h := harness.New(t, options...)
+ 	h.Datahub.StageFixture(fix)
+ 
+ 	rt := harness.StartArcade(t, harness.ArcadeOptions{

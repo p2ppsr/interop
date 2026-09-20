@@ -2,7 +2,7 @@
 
 **TPNIL** is a BSV Blockchain initiative for impartial interoperability evaluation, without fear or favor. The laboratory brings published requirements, canonical software artifacts, integrated test environments, deterministic results, and durable evidence into a common framework open to equal participation.
 
-**Version 0.3.0 — private establishment phase, experimental.** The offline core, journal verifiers, portable application lane, and first native macOS qualification lane are implemented. Four draft programs define the scope of evaluation; controlled transaction services and scored SUT adapters remain under development. [Implementation status](docs/implementation-status.md) records current capabilities and qualification prerequisites.
+**Version 0.4.0 — private establishment phase, experimental.** The laboratory now executes a causally joined transaction-processing reference stack. A signed Synthesis Board revision, canonical UHRP advertisement, and two-payee BRC-170 LCH settlement pass through Arcade, pinned Teranode, and Merkle Service; ChainTracks reorganization, missed-callback recovery, complete runtime restart, content-host failure, and deterministic replay have retained, offline-verifiable evidence. These are laboratory and infrastructure qualifications; no SUT conformance or certification result has been issued. [Implementation status](docs/implementation-status.md) records the exact boundary.
 
 ## The laboratory
 
@@ -33,11 +33,18 @@ node bin/tpnil.mjs replay out/demo
 node bin/tpnil.mjs run-qualification infra/plans/todo-webroot-qualification.json . out/todo-webroot-run local-operator
 node bin/tpnil.mjs verify-qualification out/todo-webroot-run
 node bin/tpnil.mjs verify-native-qualification journals/native-qualification/2026-09-20/bsv-desktop-2.8.5-macos-arm64-35533034148
+node bin/tpnil.mjs verify-runtime-qualification journals/runtime-qualification/2026-09-20/teranode-synthesis-board-v0.15.9-arm64
+node bin/tpnil.mjs verify-reference-qualification journals/reference-qualification/2026-09-20/synthesis-board-v0.1.0
+node bin/tpnil.mjs verify-component-qualification journals/component-qualification/2026-09-20/arcade-real-teranode-merkle
+node bin/tpnil.mjs verify-component-qualification journals/component-qualification/2026-09-20/arcade-synthesis-board-teranode-merkle
+node bin/tpnil.mjs verify-component-qualification journals/component-qualification/2026-09-20/arcade-merkle-reprocess-recovery
+node bin/tpnil.mjs verify-synthesis-stack journals/synthesis-stack-qualification/2026-09-20/repetition-3
+npm run test:synthesis
 ```
 
 The demo performs a synthetic laboratory self-test, writes a content-addressed result and hash-linked journal to `out/demo`, and verifies repeatability. `npm run qualify:standards` verifies the exact imported BRC-167 and BRC-170 corpora and independently recomputes core CHIRP and LCH invariants. Both carry the `LAB_SELF_TEST_ONLY` designation. Each demo run requires a fresh output directory; for subsequent runs use `node bin/tpnil.mjs demo out/another-run`.
 
-The qualification commands execute the canonical application-serving test stand and verify retained native evidence. Both produce offline-verifiable bundles carrying the `INFRASTRUCTURE_QUALIFICATION_ONLY` designation. [Laboratory infrastructure](infra/README.md) defines how the same execution protocol operates locally, at independent laboratories, and through CI schedulers.
+The qualification commands execute the canonical application-serving test stand and verify retained native, component, runtime, reference-profile, and joined-stack evidence. Infrastructure bundles do not issue SUT conformance. The synthesis package labels its result `LAB_REFERENCE_PROFILE_ONLY`. [Laboratory infrastructure](infra/README.md) defines the reproducible profiles, the one-command joined-stack runner, and their claim boundaries.
 
 The [operator guide](docs/operator-quickstart.md) covers artifact hashing, compiled web-root packaging, evidence verification, and journal recovery.
 

@@ -1,0 +1,157 @@
+diff --git a/tests/e2e/tpnil_teranode_test.go b/tests/e2e/tpnil_teranode_test.go
+new file mode 100644
+index 0000000..9e95bf0
+--- /dev/null
++++ b/tests/e2e/tpnil_teranode_test.go
+@@ -0,0 +1,151 @@
++//go:build e2e
++
++package e2e_test
++
++import (
++	"bytes"
++	"context"
++	"encoding/hex"
++	"encoding/json"
++	"fmt"
++	"io"
++	"net/http"
++	"os"
++	"testing"
++	"time"
++
++	"github.com/bsv-blockchain/arcade/tests/e2e/harness"
++)
++
++type tpnilFixture struct {
++	Schema string `json:"schema"`
++	TxID   string `json:"txid"`
++	EFHex  string `json:"efHex"`
++	RawHex string `json:"rawHex"`
++}
++
++type rpcEnvelope struct {
++	Result json.RawMessage `json:"result"`
++	Error  *struct {
++		Code    int    `json:"code"`
++		Message string `json:"message"`
++	} `json:"error"`
++}
++
++func TestTPNIL_ArcadeBroadcastsToRealTeranode(t *testing.T) {
++	fixturePath := os.Getenv("TPNIL_TERANODE_FIXTURE")
++	if fixturePath == "" {
++		t.Fatal("TPNIL_TERANODE_FIXTURE is required")
++	}
++	payload, err := os.ReadFile(fixturePath)
++	if err != nil {
++		t.Fatalf("read fixture: %v", err)
++	}
++	var fixture tpnilFixture
++	if err := json.Unmarshal(payload, &fixture); err != nil {
++		t.Fatalf("decode fixture: %v", err)
++	}
++	if fixture.Schema != "tpnil-arcade-teranode-fixture@1.0.0" {
++		t.Fatalf("unexpected fixture schema %q", fixture.Schema)
++	}
++	ef, err := hex.DecodeString(fixture.EFHex)
++	if err != nil {
++		t.Fatalf("decode EF: %v", err)
++	}
++
++	h := harness.New(t)
++	rt := harness.StartArcade(t, harness.ArcadeOptions{
++		MerkleServiceURL: h.Containers.MerkleHostURL,
++		DatahubURL:       envOr("TPNIL_TERANODE_DATAHUB_URL", "http://127.0.0.1:8090/api/v1"),
++		LibP2PBootstrap:  h.LibP2P.BootstrapMultiaddr(),
++		MerkleAuthToken:  "e2e-watch-token",
++		CallbackToken:    "e2e-callback-token",
++	})
++	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
++	defer cancel()
++
++	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, rt.BaseURL+"/tx", bytes.NewReader(ef))
++	req.Header.Set("Content-Type", "application/octet-stream")
++	resp, err := http.DefaultClient.Do(req)
++	if err != nil {
++		t.Fatalf("arcade POST /tx: %v", err)
++	}
++	body, _ := io.ReadAll(resp.Body)
++	_ = resp.Body.Close()
++	if resp.StatusCode != http.StatusAccepted {
++		t.Fatalf("arcade POST /tx status %d: %s", resp.StatusCode, body)
++	}
++	if err := harness.WaitForMerkleRegistration(ctx, h.Containers.MerkleHostURL, fixture.TxID, 30*time.Second); err != nil {
++		t.Fatalf("merkle registration: %v", err)
++	}
++	if err := harness.WaitForStatus(ctx, rt, fixture.TxID, "ACCEPTED_BY_NETWORK", 30*time.Second); err != nil {
++		t.Fatalf("arcade network acceptance: %v", err)
++	}
++	if err := waitForMempool(ctx, fixture.TxID); err != nil {
++		t.Fatal(err)
++	}
++	var blocks []string
++	rpcCall(t, ctx, "generate", []any{1}, &blocks)
++	if len(blocks) != 1 {
++		t.Fatalf("generate returned %d blocks", len(blocks))
++	}
++	var mined struct {
++		TxID string `json:"txid"`
++		Hex  string `json:"hex"`
++	}
++	rpcCall(t, ctx, "getrawtransaction", []any{fixture.TxID, 1}, &mined)
++	if mined.TxID != fixture.TxID || mined.Hex != fixture.RawHex {
++		t.Fatalf("mined transaction diverged")
++	}
++	t.Logf("real Teranode accepted and mined Arcade transaction %s in block %s", fixture.TxID, blocks[0])
++}
++
++func waitForMempool(ctx context.Context, txid string) error {
++	deadline := time.Now().Add(30 * time.Second)
++	for time.Now().Before(deadline) {
++		var ids []string
++		if err := rpcCallE(ctx, "getrawmempool", nil, &ids); err == nil {
++			for _, id := range ids {
++				if id == txid {
++					return nil
++				}
++			}
++		}
++		time.Sleep(250 * time.Millisecond)
++	}
++	return fmt.Errorf("transaction %s did not reach the real Teranode mempool", txid)
++}
++
++func rpcCall(t *testing.T, ctx context.Context, method string, params []any, target any) {
++	t.Helper()
++	if err := rpcCallE(ctx, method, params, target); err != nil {
++		t.Fatalf("RPC %s: %v", method, err)
++	}
++}
++
++func rpcCallE(ctx context.Context, method string, params []any, target any) error {
++	body, _ := json.Marshal(map[string]any{"jsonrpc": "1.0", "id": "tpnil-arcade", "method": method, "params": params})
++	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, envOr("TPNIL_TERANODE_RPC_URL", "http://127.0.0.1:9292/"), bytes.NewReader(body))
++	req.Header.Set("Content-Type", "application/json")
++	req.SetBasicAuth(envOr("TPNIL_TERANODE_RPC_USER", "tpnil"), envOr("TPNIL_TERANODE_RPC_PASSWORD", "tpnil-regtest-only"))
++	resp, err := http.DefaultClient.Do(req)
++	if err != nil {
++		return err
++	}
++	defer resp.Body.Close()
++	var envelope rpcEnvelope
++	if err := json.NewDecoder(resp.Body).Decode(&envelope); err != nil {
++		return err
++	}
++	if envelope.Error != nil {
++		return fmt.Errorf("%d: %s", envelope.Error.Code, envelope.Error.Message)
++	}
++	return json.Unmarshal(envelope.Result, target)
++}
++
++func envOr(name, fallback string) string {
++	if value := os.Getenv(name); value != "" {
++		return value
++	}
++	return fallback
++}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ARCADE-FUNDING-TERANODE-MERKLE",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/bsv-blockchain/arcade.git",
+    "commit": "1c44e133c91cc337a98bfb17047d4f9de95df71d"
+  },
+  "adapters": [
+    {
+      "path": "infra/adapters/arcade-docker-desktop-host.patch",
+      "sha256": "2f490684109f6d700e2ace58d2d1a662bd6ed6472a21c75710a1e454615cbc1c",
+      "purpose": "Route callbacks and libp2p bootstrap traffic through Docker Desktop's host.docker.internal boundary on macOS runners."
+    },
+    {
+      "path": "infra/adapters/arcade-real-teranode-merkle-test.patch",
+      "sha256": "2efd6224ca48a0284eae08220c8d4d6200b67b6f25fd41d29337fbfc22ffe641",
+      "purpose": "Add the laboratory test that carries a signed extended transaction through Arcade into the pinned Teranode runtime, then proves the mined transaction through Merkle Service against the exact Teranode block header."
+    }
+  ],
+  "environment": {
+    "TPNIL_TERANODE_FIXTURE": "${PLAN_ROOT}/../fixtures/funding.json"
+  },
+  "inputs": [
+    {
+      "environment": "TPNIL_TERANODE_FIXTURE",
+      "sha256": "5261ea90213b1d4b3bf1a22bc1912655ab605a12fb1341631ace1569a0657c3b",
+      "purpose": "Controlled signed fee-chain transaction."
+    }
+  ],
+  "command": [
+    "go",
+    "test",
+    "-tags=e2e",
+    "-run",
+    "^TestTPNIL_ArcadeBroadcastsToRealTeranode$",
+    "-count=1",
+    "-v",
+    "-timeout=10m",
+    "./tests/e2e"
+  ],
+  "timeoutSeconds": 900,
+  "requiredOutput": [
+    "transactions accepted by network",
+    "real Teranode accepted and mined Arcade transaction 410591f98f93ed58f9ef325ff6620e282ab664311ec607669e56e82201ad3b17",
+    "real Teranode block produced a Merkle proof matching header root",
+    "--- PASS: TestTPNIL_ArcadeBroadcastsToRealTeranode"
+  ]
+}
