@@ -131,6 +131,39 @@ function controlledFetch(proxyUrl: string): typeof fetch {
 }
 
 describe('controlled wallet services', () => {
+  it('retains only bridge timing and response facts from the wallet diagnostic boundary', async () => {
+    const webroot = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-controlled-webroot-'))
+    temporaryDirectories.push(webroot)
+    fs.writeFileSync(path.join(webroot, 'index.html'), '<!doctype html><title>fixture</title>')
+    const services = new ControlledWalletServices({ webroot })
+    await services.start()
+    try {
+      const result = await controlledPost(
+        services.proxyUrl,
+        'usercom.babbage.systems',
+        '/signals',
+        Buffer.from(JSON.stringify({ events: [{
+          source: 'metanet-explorer-mobile',
+          name: 'wallet.bridge.operation.finish',
+          anonymousId: 'secret-identity',
+          context: {
+            method: 'createAction', status: 'success', duration_ms: 71_000,
+            suppress_response: true, navigation_changed: true, message: 'secret-error-detail'
+          }
+        }] })),
+        { 'content-type': 'application/json' }
+      )
+      expect(result.status).toBe(200)
+      expect(services.walletBridgeObservations).toEqual([{
+        name: 'wallet_bridge_operation_finish', method: 'createAction', status: 'success',
+        durationMs: 71_000, suppressResponse: true, navigationChanged: true
+      }])
+      expect(JSON.stringify(services.walletBridgeObservations)).not.toMatch(/secret/)
+    } finally {
+      await services.close()
+    }
+  }, 20_000)
+
   it('funds the WAB from a mature Teranode coinbase and spends through the controlled faucet', async () => {
     const webroot = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-controlled-webroot-'))
     temporaryDirectories.push(webroot)

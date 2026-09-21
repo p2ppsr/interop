@@ -27,6 +27,20 @@ export interface SubmittedTransaction {
   verdict: 'ACCEPTED_BY_NETWORK' | 'REJECTED'
 }
 
+export interface WalletBridgeObservation {
+  name: string
+  method?: string
+  status?: string
+  durationMs?: number
+  queueWaitMs?: number
+  userPromptWaitMs?: number
+  pendingCalls?: number
+  stale?: boolean
+  suppressResponse?: boolean
+  tabChanged?: boolean
+  navigationChanged?: boolean
+}
+
 export interface ControlledServicesOptions {
   webroot: string
   walletStorageRootKeyHex?: string
@@ -122,6 +136,7 @@ export class ControlledWalletServices {
   readonly headers = new Map<number, HeaderRecord>([[0, genesisHeader]])
   readonly routes: RouteObservation[] = []
   readonly submissions: SubmittedTransaction[] = []
+  readonly walletBridgeObservations: WalletBridgeObservation[] = []
   readonly temporaryDirectory: string
   readonly identityKey: string
   readonly storageRootKeyHex: string
@@ -371,7 +386,7 @@ export class ControlledWalletServices {
         ? 'controlled-wallet-storage'
         : host === 'wab.itcve.test' && this.wabPort !== undefined
           ? 'controlled-service'
-        : host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
+        : host === 'usercom.babbage.systems' || host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
           host === 'overlay-eu-1.bsvb.tech' || host === 'overlay-ap-1.bsvb.tech' || host === 'users.bapp.dev'
           ? 'controlled-service'
         : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test'
@@ -442,6 +457,10 @@ export class ControlledWalletServices {
       return
     }
     if (host === 'api.1sat.app') return this.handleOneSat(request, response, url)
+    if (host === 'usercom.babbage.systems' && request.method === 'POST' && url.pathname === '/signals') {
+      await this.handleWalletDiagnostics(request, response)
+      return
+    }
     if (host === 'wab.itcve.test' && request.method === 'POST' && url.pathname === '/demo/faucet/request') {
       await this.handleFaucet(request, response)
       return
@@ -483,6 +502,54 @@ export class ControlledWalletServices {
       return
     }
     sendJson(response, 502, { error: 'undeclared egress blocked', host, path: url.pathname })
+  }
+
+  private async handleWalletDiagnostics(request: IncomingMessage, response: ServerResponse): Promise<void> {
+    try {
+      const chunks: Buffer[] = []
+      let size = 0
+      for await (const chunk of request) {
+        size += chunk.length
+        if (size > 1_000_000) throw new Error('Diagnostic batch exceeds controlled limit')
+        chunks.push(Buffer.from(chunk))
+      }
+      const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as { events?: unknown }
+      if (!Array.isArray(body.events) || body.events.length > 1_000)
+        throw new Error('Diagnostic batch is invalid')
+      for (const event of body.events) {
+        if (event === null || typeof event !== 'object') continue
+        const item = event as { source?: unknown; name?: unknown; context?: unknown }
+        if (item.source !== 'metanet-explorer-mobile' || typeof item.name !== 'string' ||
+          !/^wallet\.bridge\.[a-z.]{1,64}$/.test(item.name) ||
+          item.context === null || typeof item.context !== 'object') continue
+        const context = item.context as Record<string, unknown>
+        const observation: WalletBridgeObservation = { name: item.name.replaceAll('.', '_') }
+        for (const [field, key] of [
+          ['method', 'method'], ['status', 'status'], ['durationMs', 'duration_ms'],
+          ['queueWaitMs', 'queue_wait_ms'], ['userPromptWaitMs', 'user_prompt_wait_ms'],
+          ['pendingCalls', 'pending_calls'], ['stale', 'stale'],
+          ['suppressResponse', 'suppress_response'], ['tabChanged', 'tab_changed'],
+          ['navigationChanged', 'navigation_changed']
+        ] as const) {
+          const value = context[key]
+          const isText = (field === 'method' || field === 'status') &&
+            typeof value === 'string' && value.length <= 80
+          const isNumber = (field === 'durationMs' || field === 'queueWaitMs' ||
+            field === 'userPromptWaitMs' || field === 'pendingCalls') &&
+            typeof value === 'number' && Number.isFinite(value) && value >= 0
+          const isBoolean = (field === 'stale' || field === 'suppressResponse' ||
+            field === 'tabChanged' || field === 'navigationChanged') && typeof value === 'boolean'
+          if (isText || isNumber || isBoolean)
+            (observation as unknown as Record<string, unknown>)[field] = value
+        }
+        this.walletBridgeObservations.push(observation)
+      }
+      if (this.walletBridgeObservations.length > 1_000)
+        this.walletBridgeObservations.splice(0, this.walletBridgeObservations.length - 1_000)
+      sendJson(response, 200, { accepted: body.events.length })
+    } catch (error) {
+      sendJson(response, 400, { error: error instanceof Error ? error.message : 'Invalid diagnostic batch' })
+    }
   }
 
   private async handleOneSat(request: IncomingMessage, response: ServerResponse, url: URL): Promise<void> {

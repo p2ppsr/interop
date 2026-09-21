@@ -131,6 +131,7 @@ async function close(exitCode: number): Promise<never> {
     overlay: { origin: 'https://overlay.itcve.test', topics: ['tm_users'], services: ['ls_ship', 'ls_slap', 'ls_users'] },
     routes: services.routes,
     overlayObservations: services.overlayObservations,
+    walletBridgeObservations: services.walletBridgeObservations,
     umpRecords: services.umpRecords.map(record => ({
       txid: record.txid,
       outputIndex: record.outputIndex,

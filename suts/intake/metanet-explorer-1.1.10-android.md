@@ -1,6 +1,6 @@
 # Metanet Explorer 1.1.10 Android intake
 
-Status: **artifact and runtime admitted; wallet-backed vectors blocked at ordinary account activation**.
+Status: **artifact and runtime admitted; controlled-WAB activation and UMP publication observed twice; ToDo completion remains unresolved**.
 
 The canonical artifact is the v1.1.10 AAB from publisher workflow run `34056462568`, pinned at SHA-256 `8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d`. Bundletool 1.18.3 converted the exact AAB into a universal APK so the compiled payload could run on the laboratory emulator. The installed derivative is separately identified by SHA-256 `c8bba03da50a1f8ab61ef3c2ae45aac5d14d42bdb3eae40d709d18ae756b865f` and uses the repository's public fixture key. It is not represented as a publisher or store signature.
 
@@ -9,3 +9,5 @@ The package installed as `app.metanet.explorer` version 1.1.10, code 66, on the 
 The app's ordinary browser loaded the pinned ToDo webroot at `http://10.0.2.2:8089`. That browser context did not expose CWI, and the application displayed its explicit Metanet Explorer requirement. This proves the application-serving and native-browser boundary. V002 through V008 remain `BLOCKED` because their wallet-backed precondition was not established.
 
 The [machine-readable intake](metanet-explorer-1.1.10-android.json) and [offline-verifiable run record](../../journals/native-observation/2026-09-20/metanet-explorer-1.1.10-android-arm64/record.json) preserve the exact outcome. Admission does not imply conformance.
+
+Two subsequent clean runs on the Linux/amd64 KVM runner, [35573872562](https://github.com/p2ppsr/interop/actions/runs/35573872562) and [35575264398](https://github.com/p2ppsr/interop/actions/runs/35575264398), used the same admitted artifact with an ITCVE-controlled WAB selected through the ordinary setup interface. The WAB root wallet internalized a mature Teranode-mined output after proof verification. Each run completed the phone-shaped fixture and one-time code flow, created a wallet, received a 1,000-satoshi faucet payment, admitted a `tm_users` UMP record, and submitted a transaction containing a seven-satoshi ToDo token. Both runs ended at the task-visibility assertion with the create dialog open. Live WebView inspection on the second run reported a React Native wallet response timeout. The raw controlled-boundary and UI evidence remains attached to each Actions run; [decision 0007](../../programs/ISI-4/decisions/0007-controlled-wallet-bridge-observation.md) defines the next diagnostic boundary. These trials do not revise the earlier intake record or establish full V001–V004 conformance.

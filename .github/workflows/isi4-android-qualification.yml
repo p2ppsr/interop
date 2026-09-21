@@ -137,6 +137,10 @@ jobs:
             > "$RUNNER_TEMP/tpnil-evidence/emulator.txt" 2>&1 &
           launcher_pid=$!
           cleanup() {
+            if test -n "${webview_console_pid:-}"; then
+              kill -TERM "$webview_console_pid" >/dev/null 2>&1 || true
+              wait "$webview_console_pid" >/dev/null 2>&1 || true
+            fi
             if test "$(adb -s emulator-5570 get-state 2>/dev/null || true)" = device; then
               adb -s emulator-5570 logcat -d -s chromium:V ReactNativeJS:V WebViewConsole:V \
                 | python3 scripts/native/android/filter-app-console.py \
@@ -215,6 +219,14 @@ jobs:
             --text 'https://storage.babbage.systems' \
             --value "$(jq --raw-output .storageUrl "$runtime_dir/runtime.json")" \
             > "$evidence_dir/config-storage.json"
+          app_pid="$(adb -s emulator-5570 shell pidof app.metanet.explorer | tr -d '\r')"
+          test -n "$app_pid"
+          adb -s emulator-5570 forward --remove tcp:9223 >/dev/null 2>&1 || true
+          adb -s emulator-5570 forward tcp:9223 "localabstract:webview_devtools_remote_$app_pid"
+          node scripts/native/android/watch-webview-console.mjs \
+            http://127.0.0.1:9223 https://todo.itcve.test/ \
+            > "$evidence_dir/webview-console.jsonl" 2>&1 &
+          webview_console_pid=$!
           "$maestro_bin" test \
             -e TPNIL_WAB_URL="$(jq --raw-output .wabUrl "$runtime_dir/runtime.json")" \
             -e TPNIL_STORAGE_URL="$(jq --raw-output .storageUrl "$runtime_dir/runtime.json")" \
