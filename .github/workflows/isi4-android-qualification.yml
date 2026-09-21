@@ -42,6 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           scripts/native/android/create-avd.sh TPNIL_API_35 > "$RUNNER_TEMP/tpnil-evidence/avd.txt"
+          adb start-server
           scripts/native/android/launch-emulator.sh TPNIL_API_35 5570 \
             > "$RUNNER_TEMP/tpnil-evidence/emulator.txt" 2>&1 &
           launcher_pid=$!
@@ -50,9 +51,14 @@ jobs:
             kill "$launcher_pid" >/dev/null 2>&1 || true
           }
           trap cleanup EXIT
-          adb -s emulator-5570 wait-for-device
           for attempt in $(seq 1 180); do
-            test "$(adb -s emulator-5570 shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 && break
+            if ! kill -0 "$launcher_pid" 2>/dev/null; then
+              wait "$launcher_pid" || true
+              cat "$RUNNER_TEMP/tpnil-evidence/emulator.txt" >&2
+              exit 1
+            fi
+            test "$(adb -s emulator-5570 get-state 2>/dev/null || true)" = device && \
+              test "$(adb -s emulator-5570 shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 && break
             sleep 1
           done
           test "$(adb -s emulator-5570 shell getprop sys.boot_completed | tr -d '\r')" = 1
