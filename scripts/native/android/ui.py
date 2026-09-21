@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -44,7 +45,15 @@ if args.command in ('click', 'wait', 'set-text'):
         target.click()
     elif args.command == 'set-text':
         target.set_text(args.value)
-    print(json.dumps(info, sort_keys=True))
+        if not device(text=args.value).wait(timeout=10):
+            raise SystemExit('set-text did not produce the exact requested value')
+        print(json.dumps({
+            'command': 'set-text',
+            'valueSha256': hashlib.sha256(args.value.encode()).hexdigest(),
+            'verified': True,
+        }, sort_keys=True))
+    else:
+        print(json.dumps(info, sort_keys=True))
 elif args.command == 'press':
     device.press(args.key)
     print(json.dumps({'pressed': args.key}, sort_keys=True))

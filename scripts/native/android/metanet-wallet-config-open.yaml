@@ -1,0 +1,33 @@
+appId: app.metanet.explorer
+name: Open the production wallet setup
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    text: 'Open'
+    waitUntilVisible: false
+    optional: true
+- tapOn:
+    text: 'Not Now'
+    waitUntilVisible: false
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: 'p0-first-run-wallet-invite'
+    timeout: 45000
+- tapOn:
+    id: 'p0-first-run-wallet-setup'
+- extendedWaitUntil:
+    visible:
+      id: 'p0-onboarding-screen'
+    timeout: 45000
+- tapOn:
+    id: 'p0-configure-providers'
+- extendedWaitUntil:
+    visible: 'Could Not Check Wallet Setup'
+    timeout: 20000
+- tapOn:
+    text: 'OK'
+- tapOn:
+    id: 'p0-wallet-setup-advanced-service-settings'
+- assertVisible: 'https://wab.babbage.systems'

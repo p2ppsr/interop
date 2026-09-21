@@ -1,0 +1,10 @@
+appId: app.metanet.explorer
+name: Find the production wallet storage setting
+---
+- assertVisible: '${TPNIL_WAB_URL}'
+- scrollUntilVisible:
+    element:
+      text: 'https://storage.babbage.systems'
+    direction: DOWN
+    timeout: 15000
+- assertVisible: 'https://storage.babbage.systems'

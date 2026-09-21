@@ -189,6 +189,28 @@ jobs:
           rm -f "$runtime_dir/.activation.json"
           maestro_bin="${MAESTRO_BIN:-$HOME/.maestro/bin/maestro}"
           test -x "$maestro_bin"
+          TPNIL_ANDROID_UI_VENV=/runner-cache/tpnil/tools/android-ui-venv \
+            scripts/native/android/prepare-ui-driver.sh > "$evidence_dir/ui-driver-install.txt"
+          ui_python="$(tail -n 1 "$evidence_dir/ui-driver-install.txt")"
+          test -x "$ui_python"
+          "$ui_python" -m pip freeze > "$evidence_dir/ui-driver-packages.txt"
+          "$maestro_bin" test \
+            --format junit \
+            --output "$evidence_dir/config-open.xml" \
+            scripts/native/android/metanet-wallet-config-open.yaml
+          "$ui_python" scripts/native/android/ui.py --serial emulator-5570 set-text \
+            --text 'https://wab.babbage.systems' \
+            --value "$(jq --raw-output .wabUrl "$runtime_dir/runtime.json")" \
+            > "$evidence_dir/config-wab.json"
+          "$maestro_bin" test \
+            -e TPNIL_WAB_URL="$(jq --raw-output .wabUrl "$runtime_dir/runtime.json")" \
+            --format junit \
+            --output "$evidence_dir/config-storage.xml" \
+            scripts/native/android/metanet-wallet-config-storage.yaml
+          "$ui_python" scripts/native/android/ui.py --serial emulator-5570 set-text \
+            --text 'https://storage.babbage.systems' \
+            --value "$(jq --raw-output .storageUrl "$runtime_dir/runtime.json")" \
+            > "$evidence_dir/config-storage.json"
           "$maestro_bin" test \
             -e TPNIL_WAB_URL="$(jq --raw-output .wabUrl "$runtime_dir/runtime.json")" \
             -e TPNIL_STORAGE_URL="$(jq --raw-output .storageUrl "$runtime_dir/runtime.json")" \
