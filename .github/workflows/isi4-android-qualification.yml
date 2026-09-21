@@ -96,7 +96,8 @@ jobs:
           runtime_dir="$RUNNER_TEMP/tpnil-runtime"
           evidence_dir="$RUNNER_TEMP/tpnil-evidence"
           mkdir -p "$runtime_dir" "$evidence_dir"
-          npm --prefix synthesis run wallet-lab:android-runtime -- \
+          "$GITHUB_WORKSPACE/synthesis/node_modules/.bin/tsx" \
+            "$GITHUB_WORKSPACE/synthesis/src/wallet-lab/android-runtime.ts" \
             "$RUNNER_TEMP/tpnil-source/ts-stack/infra/wab" \
             "$RUNNER_TEMP/tpnil-source/todo-webroot" \
             "$GITHUB_WORKSPACE/fixtures/teranode/wab-funding-v1.json" \
@@ -119,6 +120,11 @@ jobs:
             > "$RUNNER_TEMP/tpnil-evidence/emulator.txt" 2>&1 &
           launcher_pid=$!
           cleanup() {
+            if test "$(adb -s emulator-5570 get-state 2>/dev/null || true)" = device; then
+              adb -s emulator-5570 exec-out screencap -p > "$evidence_dir/last-screen.png" || true
+              adb -s emulator-5570 shell uiautomator dump /sdcard/tpnil-last-window.xml >/dev/null 2>&1 || true
+              adb -s emulator-5570 shell cat /sdcard/tpnil-last-window.xml > "$evidence_dir/last-window.xml" 2>/dev/null || true
+            fi
             adb -s emulator-5570 emu kill >/dev/null 2>&1 || true
             kill "$launcher_pid" >/dev/null 2>&1 || true
             kill -TERM "$runtime_pid" >/dev/null 2>&1 || true

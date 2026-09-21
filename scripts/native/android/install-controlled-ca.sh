@@ -62,6 +62,18 @@ test "$("$adb_bin" -s "$serial" shell id -u | tr -d '\r')" = 0
 "$adb_bin" -s "$serial" shell chmod 0644 "/system/etc/security/cacerts/${certificate_hash}.0"
 "$adb_bin" -s "$serial" reboot
 wait_for_boot
+sdk="$("$adb_bin" -s "$serial" shell getprop ro.build.version.sdk | tr -d '\r')"
+if test "$sdk" -ge 34; then
+  become_root
+  zygote_pids="$("$adb_bin" -s "$serial" shell pidof zygote64 zygote | tr -d '\r')"
+  test -n "$zygote_pids"
+  for zygote_pid in $zygote_pids; do
+    "$adb_bin" -s "$serial" shell nsenter -t "$zygote_pid" -m -- \
+      mount -o bind /system/etc/security/cacerts /apex/com.android.conscrypt/cacerts
+    "$adb_bin" -s "$serial" shell test -f \
+      "/proc/${zygote_pid}/root/apex/com.android.conscrypt/cacerts/${certificate_hash}.0"
+  done
+fi
 "$adb_bin" -s "$serial" shell settings put global http_proxy "$proxy_host"
 test "$("$adb_bin" -s "$serial" shell settings get global http_proxy | tr -d '\r')" = "$proxy_host"
 "$adb_bin" -s "$serial" shell test -f "/system/etc/security/cacerts/${certificate_hash}.0"
