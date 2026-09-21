@@ -153,11 +153,11 @@ jobs:
             sleep 1
           done
           test "$(adb -s emulator-5570 shell getprop sys.boot_completed | tr -d '\r')" = 1
-          scripts/native/android/install-controlled-ca.sh \
+          bash -x scripts/native/android/install-controlled-ca.sh \
             emulator-5570 \
             "$(jq --raw-output .caCertificate "$runtime_dir/runtime.json")" \
             "$(jq --raw-output .proxyUrl "$runtime_dir/runtime.json")" \
-            > "$evidence_dir/controlled-ca.txt"
+            > "$evidence_dir/controlled-ca.txt" 2>&1
           adb -s emulator-5570 install "$RUNNER_TEMP/tpnil-apk/universal.apk"
           adb -s emulator-5570 shell pm clear app.metanet.explorer
           adb -s emulator-5570 shell input keyevent KEYCODE_HOME
