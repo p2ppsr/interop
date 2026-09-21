@@ -25,17 +25,15 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
 # Configure the production wallet through its ordinary advanced setup surface.
 - tapOn:
     id: 'p0-configure-providers'
-- waitForAnimationToEnd:
-    timeout: 1000
+- extendedWaitUntil:
+    visible: 'Could Not Check Wallet Setup'
+    timeout: 20000
 - tapOn:
     text: 'OK'
-    waitUntilVisible: false
-    optional: true
 - tapOn:
     id: 'p0-wallet-setup-advanced-service-settings'
 - longPressOn:
     text: 'https://wab.babbage.systems'
-- eraseText: 1
 - inputText: '${TPNIL_WAB_URL}'
 - assertVisible: '${TPNIL_WAB_URL}'
 - hideKeyboard
@@ -52,7 +50,6 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
     timeout: 15000
 - longPressOn:
     text: 'https://storage.babbage.systems'
-- eraseText: 1
 - inputText: '${TPNIL_STORAGE_URL}'
 - assertVisible: '${TPNIL_STORAGE_URL}'
 - hideKeyboard
