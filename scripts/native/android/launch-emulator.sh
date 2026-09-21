@@ -11,7 +11,7 @@ serial="emulator-$port"
 test -x "$emulator"
 "$adb_bin" start-server
 "$emulator" -avd "$avd_name" -port "$port" -no-window -no-snapshot -wipe-data \
-  -no-boot-anim -gpu swiftshader_indirect -no-audio -no-metrics &
+  -writable-system -no-boot-anim -gpu swiftshader_indirect -no-audio -no-metrics &
 emulator_pid=$!
 trap 'kill -TERM "$emulator_pid" 2>/dev/null || true' EXIT
 

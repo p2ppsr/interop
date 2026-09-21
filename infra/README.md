@@ -41,6 +41,7 @@ The repository contains all TPNIL-owned provisioning and evaluation logic. Opera
 - `chromium-extension-1`: runs the exact extension archive in a fresh Chromium persistent context, routes declared production service identities to isolated fixtures without changing extension bytes, blocks undeclared egress, and retains wallet, browser, service, and transaction observations.
 - `android-avd-1`: creates the declared Android AVD from public SDK inputs, installs a digest-verified artifact or separately identified bundle derivative, drives public UI and WebView boundaries, and captures package, signer, device, runtime, screenshot, and DOM evidence.
 - `github-android-kvm-1`: schedules `android-avd-1` on the repository-scoped `tpnil-android-qa` runner. The non-root pod has direct KVM allocation, a tokenless service account, and a digest-pinned runner image. Its cache is disposable capacity; repository plans and evidence verification remain authoritative.
+- `isi4-metanet-wab-ump-controlled-services`: configures the admitted Metanet Explorer AAB through its ordinary setup UI, authenticates against the pinned WAB demo boundary, funds the WAB from a proof-carrying Teranode-mined coinbase, exercises root SLAP/SHIP and UMP discovery, and runs the canonical ToDo create, reload, and redemption sequence.
 
 The portable lane qualifies the controller, archive, application artifact, and service-origin mechanics. The hosted macOS lane qualifies installation, ordinary first-use setup, renderer automation, local bridge observation, evidence capture, and teardown. Both produce `INFRASTRUCTURE_QUALIFICATION_ONLY`, never a SUT conformance verdict. The Tart lane remains the stable independent reconstruction target and must complete routing and reset qualification before scored native vectors run there.
 
@@ -86,6 +87,10 @@ npm --prefix synthesis run wallet-lab -- run \
   ../out/isi4-yours \
   local-operator
 npm --prefix synthesis run wallet-lab -- verify ../out/isi4-yours
+
+npm --prefix synthesis run prepare:teranode-wallet-funding -- \
+  ../out/teranode-regtest \
+  ../fixtures/teranode/wab-funding-v1.json
 
 ./scripts/native/android/create-avd.sh TPNIL_API_35 35
 ./scripts/native/android/launch-emulator.sh TPNIL_API_35

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "isi4-metanet-wab-ump-controlled-services",
+  "claim": "EXPERIMENTAL_CONFORMANCE_RESULT",
+  "program": "ISI-4@1.0.0",
+  "itcve": "ITCVE-1@1.0.0",
+  "walletNetwork": "main",
+  "publicMainnetBroadcast": false,
+  "sut": {
+    "id": "metanet-explorer-1.1.10-android",
+    "canonicalAabSha256": "8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d",
+    "canonicalAabSize": 213058875,
+    "sourceRevision": "82266f20ea41289abece8ff7fa9b5cd71c940359"
+  },
+  "application": {
+    "repository": "https://github.com/p2ppsr/todo-ts.git",
+    "revision": "236733c586c4d2cc3ab7f957afa382005509acd4",
+    "origin": "https://todo.itcve.test"
+  },
+  "wab": {
+    "repository": "https://github.com/bsv-blockchain/ts-stack.git",
+    "revision": "6e53b215c43af5ea2e50bcdb7f136e23ee7da080",
+    "version": "1.8.2",
+    "origin": "https://wab.itcve.test/demo",
+    "authMethod": "DemoPhone"
+  },
+  "funding": {
+    "fixture": "fixtures/teranode/wab-funding-v1.json",
+    "fixtureSha256": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+    "profile": "TPNIL-TERANODE-REGTEST-1",
+    "profileSha256": "a78b57500264612b2926244854772a8cf1f220c8ad9c8a2adca6714a2e4ae77d",
+    "blockHash": "6ebffaae4ded7763885b0db4343bfd50586cbaadafdecd5dd5d02e165d059a63",
+    "height": 1,
+    "txid": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+    "atomicBeefSha256": "a05ce3c06d577a24781a2956416311af9445065d43a761b186b5fc17471da7d4"
+  },
+  "controlledServices": {
+    "walletStorage": "https://wallet.1sat.app",
+    "overlay": "https://overlay.itcve.test",
+    "rootSlapTrackers": [
+      "https://overlay-us-1.bsvb.tech",
+      "https://overlay-eu-1.bsvb.tech",
+      "https://overlay-ap-1.bsvb.tech",
+      "https://users.bapp.dev"
+    ],
+    "lookupServices": ["ls_slap", "ls_ship", "ls_users"],
+    "topics": ["tm_users"]
+  },
+  "runner": {
+    "workflow": ".github/workflows/isi4-android-qualification.yml",
+    "labels": ["self-hosted", "tpnil-android-qa", "android-emulator", "kvm"],
+    "androidApi": 35,
+    "reset": "fresh AVD data and cleared app package state"
+  },
+  "vectors": [
+    {
+      "id": "ISI-4-V001",
+      "criteria": [
+        "artifact identity",
+        "ordinary controlled-service configuration",
+        "WAB authentication",
+        "recovery acknowledgement",
+        "Teranode funding proof",
+        "WAB wallet payment",
+        "UMP SHIP admission and lookup"
+      ]
+    },
+    {
+      "id": "ISI-4-V002",
+      "criteria": ["canonical task creation", "retained transaction BEEF", "controlled acceptance"]
+    },
+    {
+      "id": "ISI-4-V003",
+      "criteria": ["cold application restart", "task and value reconstructed from wallet state"]
+    },
+    {
+      "id": "ISI-4-V004",
+      "criteria": ["exact task redemption", "retained spend BEEF", "task absent after redemption"]
+    },
+    {
+      "id": "ISI-4-V005",
+      "expectedOutcomeUntilExpanded": "BLOCKED",
+      "blocker": "deny and alternate-origin permission cases are outside this first driver"
+    },
+    {
+      "id": "ISI-4-V006",
+      "expectedOutcomeUntilExpanded": "BLOCKED",
+      "blocker": "controlled rejection and recovery schedule is outside this first driver"
+    },
+    {
+      "id": "ISI-4-V007",
+      "expectedOutcomeUntilExpanded": "BLOCKED",
+      "blocker": "ISI-3 multi-remote replacement profile"
+    },
+    {
+      "id": "ISI-4-V008",
+      "expectedOutcomeUntilExpanded": "BLOCKED",
+      "blocker": "complete clause-level BRC-100 corpus"
+    }
+  ]
+}

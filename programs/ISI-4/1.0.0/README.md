@@ -4,7 +4,7 @@ Version 1.0.0 — draft technical vectors with executable wallet drivers. Profil
 
 ISI-4 evaluates unchanged production wallet artifacts in their mainnet configuration, using ordinary supported integration paths. [Decision 0001](../decisions/0001-production-fidelity.md) replaces the earlier regtest prerequisite with qualitative intake and explicit evidence of integration fidelity.
 
-The initial environment supplies controlled services and isolated fixtures. It distinguishes wallet behavior, fixture-service behavior, and public-mainnet observations. The initial demonstration uses no public-mainnet funds or broadcast. [Decision 0005](../decisions/0005-multi-wallet-execution.md) defines the common browser-extension and Android execution lanes.
+The initial environment supplies controlled services and isolated fixtures. It distinguishes wallet behavior, fixture-service behavior, and public-mainnet observations. The initial demonstration uses no public-mainnet funds or broadcast. [Decision 0005](../decisions/0005-multi-wallet-execution.md) defines the common browser-extension and Android execution lanes. [Decision 0006](../decisions/0006-controlled-wab-discovery-and-funding.md) defines the controlled WAB identity, Teranode-mined funding, root SLAP/SHIP discovery, and UMP boundary used to activate production mobile wallets through their ordinary configuration.
 
 ## Initial demonstration scope
 

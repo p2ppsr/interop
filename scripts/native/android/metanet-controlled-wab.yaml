@@ -1,0 +1,276 @@
+appId: app.metanet.explorer
+name: TPNIL controlled WAB, UMP, and ToDo exercise
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    text: 'Open'
+    waitUntilVisible: false
+    optional: true
+- tapOn:
+    text: 'Not Now'
+    waitUntilVisible: false
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: 'p0-onboarding-screen'
+    timeout: 45000
+
+# Configure the production wallet through its ordinary advanced setup surface.
+- tapOn:
+    id: 'p0-configure-providers'
+- waitForAnimationToEnd:
+    timeout: 1000
+- tapOn:
+    text: 'OK'
+    waitUntilVisible: false
+    optional: true
+- tapOn:
+    id: 'p0-wallet-setup-advanced-service-settings'
+- tapOn:
+    text: 'https://wab.babbage.systems'
+- eraseText: 100
+- inputText: '${TPNIL_WAB_URL}'
+- hideKeyboard
+- waitForAnimationToEnd:
+    timeout: 1000
+- tapOn:
+    text: 'OK'
+    waitUntilVisible: false
+    optional: true
+- scrollUntilVisible:
+    element:
+      text: 'https://storage.babbage.systems'
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    text: 'https://storage.babbage.systems'
+- eraseText: 100
+- inputText: '${TPNIL_STORAGE_URL}'
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: 'Check recovery service'
+    direction: UP
+    timeout: 15000
+- tapOn:
+    text: 'Check recovery service'
+- waitForAnimationToEnd:
+    timeout: 1500
+- tapOn:
+    text: 'OK'
+    waitUntilVisible: false
+    optional: true
+- tapOn:
+    text: 'Use setup'
+
+# Create a fresh wallet identity with a laboratory-provisioned WAB account.
+- extendedWaitUntil:
+    visible:
+      id: 'p0-phone-screen'
+    timeout: 30000
+- tapOn:
+    id: 'p0-phone-input'
+- inputText: '${TPNIL_PHONE_NATIONAL}'
+- tapOn:
+    id: 'p0-phone-continue'
+- extendedWaitUntil:
+    visible:
+      id: 'p0-otp-screen'
+    timeout: 60000
+- tapOn:
+    id: 'p0-otp-digit-0'
+- inputText: '${TPNIL_OTP}'
+- extendedWaitUntil:
+    visible:
+      id: 'p0-password-screen'
+    timeout: 60000
+- tapOn:
+    id: 'p0-password-input'
+- inputText: '${TPNIL_WALLET_PASSWORD}'
+- tapOn:
+    id: 'p0-password-confirm-input'
+- inputText: '${TPNIL_WALLET_PASSWORD}'
+- tapOn:
+    id: 'p0-password-continue'
+- extendedWaitUntil:
+    visible:
+      text: 'I have saved my account recovery key'
+    timeout: 60000
+- tapOn:
+    text: 'I have saved my account recovery key'
+- tapOn:
+    text: 'I understand I should recover a lost factor while the others still work'
+- tapOn:
+    text: 'I understand Metanet Explorer cannot recover this key for me'
+- tapOn:
+    text: 'I saved my account recovery key'
+- extendedWaitUntil:
+    visible:
+      id: 'p0-browser-ready'
+    timeout: 60000
+
+# Open the canonical application at the controlled origin with deterministic input.
+- openLink:
+    link: 'metanet://browser?target=new&url=${TPNIL_TODO_CREATE_URL}'
+    autoVerify: true
+- tapOn:
+    text: 'Open'
+    waitUntilVisible: false
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 2500
+- repeat:
+    times: 4
+    commands:
+      - tapOn:
+          id: 'p0-app-permissions-allow-all'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-protocol-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-basket-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-certificate-grant'
+          waitUntilVisible: false
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 200
+- extendedWaitUntil:
+    visible: 'Create a Task'
+    timeout: 45000
+- tapOn:
+    text: 'OK'
+- waitForAnimationToEnd:
+    timeout: 1000
+- repeat:
+    times: 5
+    commands:
+      - tapOn:
+          id: 'p0-app-permissions-allow-all'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-protocol-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-permission-allow'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-spending-allow-up-to'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-spending-spend'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-basket-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-certificate-grant'
+          waitUntilVisible: false
+          optional: true
+      - waitForAnimationToEnd:
+          timeout: 250
+- extendedWaitUntil:
+    visible: '.*${TPNIL_TASK_NAME} ${TPNIL_TASK_AMOUNT} satoshis.*'
+    timeout: 60000
+
+# Reload the unchanged app and prove basket-backed encrypted state reappears.
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      id: 'p0-browser-ready'
+    timeout: 60000
+- openLink:
+    link: 'metanet://browser?target=new&url=${TPNIL_TODO_URL}'
+    autoVerify: true
+- tapOn:
+    text: 'Open'
+    waitUntilVisible: false
+    optional: true
+- repeat:
+    times: 3
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 300
+      - tapOn:
+          id: 'p0-app-permissions-allow-all'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-protocol-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-basket-grant'
+          waitUntilVisible: false
+          optional: true
+- extendedWaitUntil:
+    visible: '.*${TPNIL_TASK_NAME} ${TPNIL_TASK_AMOUNT} satoshis.*'
+    timeout: 60000
+
+# Redeem the exact token and prove the task disappears.
+- openLink:
+    link: 'metanet://browser?target=new&url=${TPNIL_TODO_COMPLETE_URL}'
+    autoVerify: true
+- tapOn:
+    text: 'Open'
+    waitUntilVisible: false
+    optional: true
+- repeat:
+    times: 3
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 300
+      - tapOn:
+          id: 'p0-app-permissions-allow-all'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-protocol-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-basket-grant'
+          waitUntilVisible: false
+          optional: true
+- extendedWaitUntil:
+    visible: 'Complete "${TPNIL_TASK_NAME}"?'
+    timeout: 60000
+- tapOn:
+    text: 'Complete Task'
+- repeat:
+    times: 5
+    commands:
+      - waitForAnimationToEnd:
+          timeout: 250
+      - tapOn:
+          id: 'p0-app-permissions-allow-all'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-protocol-grant'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-spending-spend'
+          waitUntilVisible: false
+          optional: true
+      - tapOn:
+          id: 'p0-basket-grant'
+          waitUntilVisible: false
+          optional: true
+- assertNotVisible: 'Complete Task'
+- assertNotVisible: '.*${TPNIL_TASK_NAME} ${TPNIL_TASK_AMOUNT} satoshis.*'

@@ -3,10 +3,12 @@ import http, { type IncomingMessage, type ServerResponse } from 'node:http'
 import net from 'node:net'
 import os from 'node:os'
 import path from 'node:path'
-import { Beef, PrivateKey } from '@bsv/sdk'
-import { KnexSessionManager, Setup, StorageServer } from '@bsv/wallet-toolbox'
+import { createHash } from 'node:crypto'
+import { Beef, Curve, P2PKH, PrivateKey, PublicKey, Random, RPuzzle, Transaction, Utils } from '@bsv/sdk'
+import { KnexSessionManager, Services, Setup, StorageServer, Wallet } from '@bsv/wallet-toolbox'
 import { Proxy } from 'http-mitm-proxy'
 import type { RouteObservation } from './model.js'
+import { ControlledOverlayServices, type OverlayObservation, type UmpRecord } from './overlay-services.js'
 
 export interface HeaderRecord {
   version: number
@@ -29,6 +31,47 @@ export interface ControlledServicesOptions {
   webroot: string
   walletStorageRootKeyHex?: string
   submitVerdicts?: Array<'ACCEPTED_BY_NETWORK' | 'REJECTED'>
+  wabPort?: number
+}
+
+export interface TeranodeWalletFundingFixture {
+  schema: 'tpnil-teranode-wallet-funding@1.0.0'
+  profile: string
+  profileSha256: string
+  chain: 'regtest'
+  publicWalletNetwork: 'main'
+  fundingHeight: number
+  maturityDepth: number
+  fundingBlockHash: string
+  blockHeaderHex: string
+  merkleRoot: string
+  txid: string
+  outputIndex: number
+  satoshis: number
+  rawHex: string
+  rawSha256: string
+  atomicBeefHex: string
+  atomicBeefSha256: string
+  payment: {
+    publicKey: string
+    address: string
+    protocol: 'wallet payment'
+    derivationPrefix: string
+    derivationSuffix: string
+    senderIdentityKey: string
+  }
+}
+
+export interface TeranodeFundingObservation {
+  txid: string
+  outputIndex: number
+  satoshis: number
+  blockHeight: number
+  blockHash: string
+  merkleRoot: string
+  profile: string
+  profileSha256: string
+  atomicBeefSha256: string
 }
 
 const genesisHeader: HeaderRecord = {
@@ -82,14 +125,18 @@ export class ControlledWalletServices {
   readonly temporaryDirectory: string
   readonly identityKey: string
   readonly storageRootKeyHex: string
+  readonly overlay = new ControlledOverlayServices()
   private readonly verdicts: Array<'ACCEPTED_BY_NETWORK' | 'REJECTED'>
   private readonly webroot: string
+  private readonly wabPort?: number
   private routeSequence = 0
   private servicePort = 0
   private storagePort = 0
   private proxyPort = 0
   private storageSetup?: Awaited<ReturnType<typeof Setup.createWalletSQLite>>
   private storageServer?: StorageServer
+  private faucetWallet?: Wallet
+  private readonly faucetPayments = new Map<string, { amount: number; txid: string; outputIndex: number; k: string; tx: number[] }>()
   private serviceServer?: http.Server
   private proxy?: Proxy
 
@@ -98,6 +145,7 @@ export class ControlledWalletServices {
     this.storageRootKeyHex = options.walletStorageRootKeyHex ?? '11'.repeat(32)
     this.identityKey = PrivateKey.fromHex(this.storageRootKeyHex).toPublicKey().toString()
     this.verdicts = [...(options.submitVerdicts ?? [])]
+    this.wabPort = options.wabPort
     this.temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-wallet-services-'))
   }
 
@@ -106,8 +154,35 @@ export class ControlledWalletServices {
     return `http://127.0.0.1:${this.proxyPort}`
   }
 
+  get emulatorProxyUrl(): string {
+    if (this.proxyPort === 0) throw new Error('Controlled services are not started')
+    return `http://10.0.2.2:${this.proxyPort}`
+  }
+
   get caDirectory(): string {
     return path.join(this.temporaryDirectory, 'ca')
+  }
+
+  get storageUrl(): string {
+    if (this.storagePort === 0) throw new Error('Controlled services are not started')
+    return `http://127.0.0.1:${this.storagePort}`
+  }
+
+  get overlayObservations(): readonly OverlayObservation[] {
+    return this.overlay.observations
+  }
+
+  get umpRecords(): readonly UmpRecord[] {
+    return this.overlay.records
+  }
+
+  get faucetObservations(): ReadonlyArray<{ presentationHash: string; amount: number; txid: string; outputIndex: number }> {
+    return [...this.faucetPayments.entries()].map(([presentationKey, payment]) => ({
+      presentationHash: createHash('sha256').update(Buffer.from(presentationKey, 'hex')).digest('hex'),
+      amount: payment.amount,
+      txid: payment.txid,
+      outputIndex: payment.outputIndex
+    }))
   }
 
   registerHeader(header: HeaderRecord): void {
@@ -125,10 +200,110 @@ export class ControlledWalletServices {
     return true
   }
 
+  async fundRemoteWalletFromTeranode(
+    rootKeyHex: string,
+    fixture: TeranodeWalletFundingFixture
+  ): Promise<TeranodeFundingObservation> {
+    if (fixture.schema !== 'tpnil-teranode-wallet-funding@1.0.0' || fixture.chain !== 'regtest' ||
+      fixture.publicWalletNetwork !== 'main' || fixture.maturityDepth < 100)
+      throw new Error('Teranode wallet funding fixture is outside the admitted profile')
+    const atomicBeef = Uint8Array.from(Utils.toArray(fixture.atomicBeefHex, 'hex'))
+    const atomicBeefSha256 = createHash('sha256').update(atomicBeef).digest('hex')
+    if (atomicBeefSha256 !== fixture.atomicBeefSha256)
+      throw new Error('Teranode funding Atomic BEEF digest does not match its manifest')
+    const funding = Transaction.fromAtomicBEEF(atomicBeef)
+    if (funding.id('hex') !== fixture.txid || funding.toHex() !== fixture.rawHex ||
+      createHash('sha256').update(funding.toUint8Array()).digest('hex') !== fixture.rawSha256)
+      throw new Error('Teranode funding transaction does not match its manifest')
+    if (funding.merklePath === undefined || funding.merklePath.blockHeight !== fixture.fundingHeight ||
+      funding.merklePath.computeRoot(fixture.txid) !== fixture.merkleRoot)
+      throw new Error('Teranode funding Merkle path does not match its block metadata')
+    const header = Buffer.from(fixture.blockHeaderHex, 'hex')
+    if (header.length !== 80 || Buffer.from(header.subarray(36, 68)).reverse().toString('hex') !== fixture.merkleRoot)
+      throw new Error('Teranode funding block header does not commit to the declared Merkle root')
+    this.registerHeader({
+      version: header.readInt32LE(0),
+      previousHash: Buffer.from(header.subarray(4, 36)).reverse().toString('hex'),
+      merkleRoot: fixture.merkleRoot,
+      time: header.readUInt32LE(68),
+      bits: header.readUInt32LE(72),
+      nonce: header.readUInt32LE(76),
+      height: fixture.fundingHeight,
+      hash: fixture.fundingBlockHash
+    })
+    if (!await funding.merklePath.verify(fixture.txid, {
+      currentHeight: async () => fixture.fundingHeight + fixture.maturityDepth,
+      isValidRootForHeight: async (root, height) => root === fixture.merkleRoot && height === fixture.fundingHeight
+    })) throw new Error('Teranode funding proof is not valid and mature')
+    const wallet = await Setup.createWalletClientNoEnv({
+      chain: 'main',
+      rootKeyHex,
+      storageUrl: this.storageUrl
+    })
+    try {
+      if (wallet.services === undefined) throw new Error('Remote wallet services are absent')
+      const remoteServices = wallet.services as Services
+      remoteServices.options.chainTracker = {
+        isValidRootForHeight: async (root: string, height: number) => this.headers.get(height)?.merkleRoot === root,
+        currentHeight: async () => 900_100
+      }
+      remoteServices.postBeef = async (beef, txids) => txids.map(txid => {
+        const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
+        this.submissions.push({ txid, bytes, verdict: 'ACCEPTED_BY_NETWORK' })
+        return {
+          name: 'tpnil-controlled-submission',
+          status: 'success' as const,
+          txidResults: [{ txid, status: 'success' as const }]
+        }
+      })
+      const senderIdentityKey = fixture.payment.senderIdentityKey
+      const derivationPrefix = fixture.payment.derivationPrefix
+      const derivationSuffix = fixture.payment.derivationSuffix
+      const keyID = `${derivationPrefix} ${derivationSuffix}`
+      const { publicKey } = await wallet.getPublicKey({
+        protocolID: [2, '3241645161d8'],
+        keyID,
+        counterparty: senderIdentityKey,
+        forSelf: true
+      })
+      if (publicKey !== fixture.payment.publicKey ||
+        funding.outputs[fixture.outputIndex]?.lockingScript.toHex() !==
+          new P2PKH().lock(PublicKey.fromString(publicKey).toAddress()).toHex() ||
+        funding.outputs[fixture.outputIndex]?.satoshis !== fixture.satoshis)
+        throw new Error('Teranode funding output is not controlled by the declared WAB wallet key')
+      await wallet.internalizeAction({
+        tx: atomicBeef,
+        outputs: [{
+          outputIndex: fixture.outputIndex,
+          protocol: 'wallet payment',
+          paymentRemittance: { derivationPrefix, derivationSuffix, senderIdentityKey }
+        }],
+        description: 'TPNIL Teranode-mined WAB funding',
+        labels: ['tpnil-fixture', 'wab-faucet', 'teranode-mined']
+      })
+      this.faucetWallet = wallet
+      return {
+        txid: fixture.txid,
+        outputIndex: fixture.outputIndex,
+        satoshis: fixture.satoshis,
+        blockHeight: fixture.fundingHeight,
+        blockHash: fixture.fundingBlockHash,
+        merkleRoot: fixture.merkleRoot,
+        profile: fixture.profile,
+        profileSha256: fixture.profileSha256,
+        atomicBeefSha256
+      }
+    } catch (error) {
+      await wallet.destroy()
+      throw error
+    }
+  }
+
   async start(): Promise<void> {
     this.storagePort = await freePort()
     this.servicePort = await freePort()
     this.proxyPort = await freePort()
+    await this.overlay.initialize()
     const database = path.join(this.temporaryDirectory, 'storage.sqlite')
     const env = {
       chain: 'main' as const,
@@ -194,6 +369,11 @@ export class ControlledWalletServices {
       if (target === undefined) return callback(new Error('Proxy target options are absent'))
       const disposition = host === 'wallet.1sat.app'
         ? 'controlled-wallet-storage'
+        : host === 'wab.itcve.test' && this.wabPort !== undefined
+          ? 'controlled-service'
+        : host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
+          host === 'overlay-eu-1.bsvb.tech' || host === 'overlay-ap-1.bsvb.tech' || host === 'users.bapp.dev'
+          ? 'controlled-service'
         : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test'
           ? 'controlled-application'
           : host === 'api.1sat.app' || host === 'messagebox.1sat.app'
@@ -209,12 +389,19 @@ export class ControlledWalletServices {
       context.isSSL = false
       target.agent = this.proxy!.httpAgent
       target.host = '127.0.0.1'
-      target.port = host === 'wallet.1sat.app' ? this.storagePort : this.servicePort
+      const pathname = new URL(context.clientToProxyRequest.url ?? '/', 'http://redacted.invalid').pathname
+      target.port = host === 'wallet.1sat.app'
+        ? this.storagePort
+        : host === 'wab.itcve.test' && pathname === '/demo/faucet/request'
+          ? this.servicePort
+        : host === 'wab.itcve.test' && this.wabPort !== undefined
+          ? this.wabPort
+          : this.servicePort
       target.headers.host = host
       callback()
     })
     await new Promise<void>((resolve, reject) => {
-      this.proxy!.listen({ port: this.proxyPort, host: '127.0.0.1', sslCaDir: this.caDirectory }, error =>
+      this.proxy!.listen({ port: this.proxyPort, host: '0.0.0.0', sslCaDir: this.caDirectory }, error =>
         error ? reject(error) : resolve()
       )
     })
@@ -234,6 +421,7 @@ export class ControlledWalletServices {
     }
     if (this.serviceServer !== undefined)
       await new Promise<void>(resolve => this.serviceServer!.close(() => resolve()))
+    await this.faucetWallet?.destroy()
     await this.storageServer?.close()
     await this.storageSetup?.wallet.destroy()
     await this.storageSetup?.activeStorage.destroy()
@@ -254,6 +442,29 @@ export class ControlledWalletServices {
       return
     }
     if (host === 'api.1sat.app') return this.handleOneSat(request, response, url)
+    if (host === 'wab.itcve.test' && request.method === 'POST' && url.pathname === '/demo/faucet/request') {
+      await this.handleFaucet(request, response)
+      return
+    }
+    if (host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
+      host === 'overlay-eu-1.bsvb.tech' || host === 'overlay-ap-1.bsvb.tech' || host === 'users.bapp.dev') {
+      await this.overlay.handle(request, response, url.pathname)
+      return
+    }
+    if (url.pathname === '/v1/tx' || url.pathname.startsWith('/v1/tx/')) {
+      await this.handleArc(request, response, url)
+      return
+    }
+    if (url.pathname.startsWith('/chaintracks/v2/')) {
+      this.handleGoChaintracks(response, url)
+      return
+    }
+    if (url.pathname === '/getPresentHeight' || url.pathname === '/findChainTipHeaderHex' ||
+      url.pathname === '/findChainTipHashHex' || url.pathname === '/getHeaders' ||
+      url.pathname === '/findHeaderHexForHeight' || url.pathname === '/getInfo') {
+      this.handleLegacyChaintracks(response, url)
+      return
+    }
     if (host === 'messagebox.1sat.app') {
       sendJson(response, 503, { error: 'message box is outside this vector profile' })
       return
@@ -337,6 +548,111 @@ export class ControlledWalletServices {
       return
     }
     sendJson(response, 404, { error: 'controlled service route is not implemented', path: url.pathname })
+  }
+
+  private async handleArc(request: IncomingMessage, response: ServerResponse, url: URL): Promise<void> {
+    if (request.method === 'GET') {
+      const txid = url.pathname.split('/').at(-1) ?? ''
+      const transaction = this.submissions.find(candidate => candidate.txid === txid)
+      sendJson(response, transaction === undefined ? 404 : 200, transaction === undefined
+        ? { txid, txStatus: 'UNKNOWN', extraInfo: 'unknown controlled transaction' }
+        : { txid, txStatus: transaction.verdict, extraInfo: '', timestamp: '2026-09-20T00:00:00.000Z' })
+      return
+    }
+    try {
+      const chunks: Buffer[] = []
+      for await (const chunk of request) chunks.push(Buffer.from(chunk))
+      const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as { rawTx?: unknown }
+      if (typeof body.rawTx !== 'string') throw new Error('ARC rawTx is absent')
+      const bytes = Uint8Array.from(Utils.toArray(body.rawTx, 'hex'))
+      const beef = Beef.fromBinary(bytes)
+      const txid = beef.atomicTxid ?? Transaction.fromBEEF(bytes).id('hex')
+      const verdict = this.verdicts.shift() ?? 'ACCEPTED_BY_NETWORK'
+      this.submissions.push({ txid, bytes, verdict })
+      sendJson(response, verdict === 'REJECTED' ? 400 : 200, {
+        txid,
+        txStatus: verdict,
+        extraInfo: verdict === 'REJECTED' ? 'controlled rejection' : '',
+        timestamp: '2026-09-20T00:00:00.000Z'
+      })
+    } catch (error) {
+      sendJson(response, 400, {
+        txid: '',
+        txStatus: 'REJECTED',
+        extraInfo: error instanceof Error ? error.message : String(error),
+        timestamp: '2026-09-20T00:00:00.000Z'
+      })
+    }
+  }
+
+  private async handleFaucet(request: IncomingMessage, response: ServerResponse): Promise<void> {
+    try {
+      if (this.faucetWallet === undefined) throw new Error('Controlled faucet wallet is not provisioned')
+      const chunks: Buffer[] = []
+      for await (const chunk of request) chunks.push(Buffer.from(chunk))
+      const body = JSON.parse(Buffer.concat(chunks).toString('utf8')) as { presentationKey?: unknown }
+      if (typeof body.presentationKey !== 'string' || !/^[0-9a-fA-F]{64}$/.test(body.presentationKey)) {
+        sendJson(response, 400, { message: 'A 32-byte presentationKey is required.' })
+        return
+      }
+      let payment = this.faucetPayments.get(body.presentationKey.toLowerCase())
+      if (payment === undefined) {
+        const k = Random(32)
+        const curve = new Curve()
+        let r = curve.g.mul(k).x?.umod(curve.n)?.toArray()
+        if (r === undefined || r === null) throw new Error('Unable to derive controlled R-puzzle')
+        r = r[0]! > 127 ? [0, ...r] : r
+        const lockingScript = new RPuzzle('raw').lock(r)
+        const result = await this.faucetWallet.createAction({
+          description: 'TPNIL controlled WAB faucet payment',
+          outputs: [{ lockingScript: lockingScript.toHex(), satoshis: 1_000, outputDescription: 'Faucet payment' }],
+          options: { randomizeOutputs: false, acceptDelayedBroadcast: false }
+        })
+        if (result.txid === undefined || result.tx === undefined) throw new Error('Controlled faucet action is incomplete')
+        const createdPayment = {
+          amount: 1_000,
+          txid: result.txid,
+          outputIndex: 0,
+          k: Utils.toHex(k),
+          tx: [...result.tx]
+        }
+        this.faucetPayments.set(body.presentationKey.toLowerCase(), createdPayment)
+        payment = createdPayment
+      }
+      sendJson(response, 200, { success: true, paymentData: payment })
+    } catch (error) {
+      sendJson(response, 500, { message: error instanceof Error ? error.message : String(error) })
+    }
+  }
+
+  private handleGoChaintracks(response: ServerResponse, url: URL): void {
+    const route = url.pathname.slice('/chaintracks/v2'.length)
+    if (route === '/height') return sendJson(response, 200, { height: 900_100 })
+    if (route === '/network') return sendJson(response, 200, { network: 'main' })
+    if (route === '/tip') return sendJson(response, 200, { ...(this.headers.get(0) ?? genesisHeader), height: 900_100 })
+    if (route.startsWith('/header/height/')) {
+      const header = this.headers.get(Number(route.split('/').at(-1)))
+      return sendJson(response, header === undefined ? 404 : 200, header ?? { error: 'unknown controlled height' })
+    }
+    if (route === '/headers.bin') {
+      response.writeHead(200, { 'content-type': 'application/octet-stream', 'content-length': String(genesisBytes.length) })
+      response.end(genesisBytes)
+      return
+    }
+    sendJson(response, 404, { error: 'controlled go-chaintracks route is not implemented', path: route })
+  }
+
+  private handleLegacyChaintracks(response: ServerResponse, url: URL): void {
+    let value: unknown
+    if (url.pathname === '/getPresentHeight') value = 900_100
+    else if (url.pathname === '/findChainTipHashHex') value = genesisHeader.hash
+    else if (url.pathname === '/findChainTipHeaderHex') value = { ...genesisHeader, height: 900_100 }
+    else if (url.pathname === '/getInfo') value = { chain: 'main', heightBulk: 900_100, heightLive: 900_100 }
+    else if (url.pathname === '/getHeaders') value = genesisBytes.toString('hex')
+    else if (url.pathname === '/findHeaderHexForHeight') value = this.headers.get(Number(url.searchParams.get('height')))
+    sendJson(response, value === undefined ? 404 : 200, value === undefined
+      ? { status: 'error', code: 'ERR_NOT_FOUND' }
+      : { status: 'success', value })
   }
 
   private serveApplication(response: ServerResponse, url: URL): void {

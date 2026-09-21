@@ -22,24 +22,33 @@
       "preconditions": [
         "Digest-verified production wallet and application artifacts",
         "Reviewed production-fidelity intake and declared mainnet configuration",
-        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence"
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "For controlled-WAB profiles, a digest-pinned mature Teranode funding output and qualified SLAP/SHIP/UMP services"
       ],
       "steps": [
         "Verify the unchanged production-release artifact and its installation identity.",
         "Initialize through ordinary supported user interfaces with mainnet selected and explicitly configured ITCVE services.",
-        "Establish fixture output ownership, provenance, and declared spending eligibility against the controlled service model."
+        "Establish fixture output ownership, provenance, and declared spending eligibility against the controlled service model.",
+        "Complete the wallet\u2019s ordinary WAB authentication and recovery acknowledgement with an ITCVE-provisioned fixture account.",
+        "Observe the wallet submit and resolve its UMP record through the controlled root SLAP, SHIP, and topical overlay boundaries."
       ],
       "expected": [
         "The artifact and configuration match the reviewed intake record. No special wallet build or regtest support is required.",
         "Runtime observations identify which service boundaries are controlled and which are unresolved.",
-        "Fixture funding is distinguished from public-mainnet funds and acceptance."
+        "Fixture funding is distinguished from public-mainnet funds and acceptance.",
+        "The initial spendable balance descends from the declared Teranode-mined output and its verified block-header Merkle commitment.",
+        "The UMP record is admitted only after its canonical field predicates pass and is returned by the declared lookup keys."
       ],
       "evidence": [
         "artifact-verification",
         "configuration-record",
         "runtime-routing-observations",
         "fixture-provenance",
-        "initial-wallet-state"
+        "initial-wallet-state",
+        "wab-authentication-observation",
+        "teranode-funding-atomic-beef",
+        "root-discovery-transcript",
+        "ump-submission-and-lookup"
       ],
       "blockers": [
         "Wallet- and platform-specific prerequisites are reported as scored outcomes by the executable driver."
