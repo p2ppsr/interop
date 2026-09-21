@@ -132,6 +132,7 @@ async function close(exitCode: number): Promise<never> {
     routes: services.routes,
     overlayObservations: services.overlayObservations,
     walletBridgeObservations: services.walletBridgeObservations,
+    storageRpcObservations: services.storageRpcObservations,
     umpRecords: services.umpRecords.map(record => ({
       txid: record.txid,
       outputIndex: record.outputIndex,

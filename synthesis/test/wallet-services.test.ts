@@ -164,6 +164,31 @@ describe('controlled wallet services', () => {
     }
   }, 20_000)
 
+  it('retains wallet storage method and response timing without RPC arguments', async () => {
+    const webroot = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-controlled-webroot-'))
+    temporaryDirectories.push(webroot)
+    fs.writeFileSync(path.join(webroot, 'index.html'), '<!doctype html><title>fixture</title>')
+    const services = new ControlledWalletServices({ webroot })
+    await services.start()
+    try {
+      const response = await controlledPost(
+        services.proxyUrl, 'wallet.1sat.app', '/',
+        Buffer.from(JSON.stringify({
+          jsonrpc: '2.0', id: 1, method: 'getSettings',
+          params: [{ fixtureSecret: 'must-not-be-retained' }]
+        })),
+        { 'content-type': 'application/json' }
+      )
+      expect(services.storageRpcObservations).toEqual([expect.objectContaining({
+        method: 'getSettings', status: response.status, completed: true
+      })])
+      expect(services.storageRpcObservations[0]?.durationMs).toBeGreaterThanOrEqual(0)
+      expect(JSON.stringify(services.storageRpcObservations)).not.toContain('must-not-be-retained')
+    } finally {
+      await services.close()
+    }
+  }, 20_000)
+
   it('funds the WAB from a mature Teranode coinbase and spends through the controlled faucet', async () => {
     const webroot = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-controlled-webroot-'))
     temporaryDirectories.push(webroot)

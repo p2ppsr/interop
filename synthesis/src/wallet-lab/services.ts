@@ -41,6 +41,14 @@ export interface WalletBridgeObservation {
   navigationChanged?: boolean
 }
 
+export interface StorageRpcObservation {
+  sequence: number
+  method?: string
+  status?: number
+  durationMs?: number
+  completed: boolean
+}
+
 export interface ControlledServicesOptions {
   webroot: string
   walletStorageRootKeyHex?: string
@@ -137,6 +145,7 @@ export class ControlledWalletServices {
   readonly routes: RouteObservation[] = []
   readonly submissions: SubmittedTransaction[] = []
   readonly walletBridgeObservations: WalletBridgeObservation[] = []
+  readonly storageRpcObservations: StorageRpcObservation[] = []
   readonly temporaryDirectory: string
   readonly identityKey: string
   readonly storageRootKeyHex: string
@@ -154,6 +163,9 @@ export class ControlledWalletServices {
   private readonly faucetPayments = new Map<string, { amount: number; txid: string; outputIndex: number; k: string; tx: number[] }>()
   private serviceServer?: http.Server
   private proxy?: Proxy
+  private readonly storageRequests = new WeakMap<object, {
+    observation: StorageRpcObservation; startedAt: number; chunks: Buffer[]; size: number
+  }>()
 
   constructor(options: ControlledServicesOptions) {
     this.webroot = path.resolve(options.webroot)
@@ -401,6 +413,13 @@ export class ControlledWalletServices {
         pathname: new URL(context.clientToProxyRequest.url ?? '/', 'http://redacted.invalid').pathname,
         disposition
       })
+      if (host === 'wallet.1sat.app') {
+        const observation: StorageRpcObservation = {
+          sequence: this.routeSequence, completed: false
+        }
+        this.storageRpcObservations.push(observation)
+        this.storageRequests.set(context, { observation, startedAt: Date.now(), chunks: [], size: 0 })
+      }
       context.isSSL = false
       target.agent = this.proxy!.httpAgent
       target.host = '127.0.0.1'
@@ -413,6 +432,36 @@ export class ControlledWalletServices {
           ? this.wabPort
           : this.servicePort
       target.headers.host = host
+      callback()
+    })
+    this.proxy.onRequestData((context, chunk, callback) => {
+      const request = this.storageRequests.get(context)
+      if (request !== undefined && request.size + chunk.length <= 64_000) {
+        request.chunks.push(Buffer.from(chunk))
+        request.size += chunk.length
+      }
+      callback(null, chunk)
+    })
+    this.proxy.onRequestEnd((context, callback) => {
+      const request = this.storageRequests.get(context)
+      if (request !== undefined) {
+        try {
+          const body = JSON.parse(Buffer.concat(request.chunks).toString('utf8')) as { method?: unknown }
+          if (typeof body.method === 'string' && /^[A-Za-z][A-Za-z0-9_]{0,79}$/.test(body.method))
+            request.observation.method = body.method
+        } catch { /* Binary and oversized RPC envelopes retain only their route and timing. */ }
+        request.chunks = []
+      }
+      callback()
+    })
+    this.proxy.onResponseEnd((context, callback) => {
+      const request = this.storageRequests.get(context)
+      if (request !== undefined) {
+        request.observation.status = context.serverToProxyResponse?.statusCode
+        request.observation.durationMs = Date.now() - request.startedAt
+        request.observation.completed = true
+        this.storageRequests.delete(context)
+      }
       callback()
     })
     await new Promise<void>((resolve, reject) => {

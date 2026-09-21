@@ -163,6 +163,14 @@ jobs:
             rm -f "$runtime_dir/.activation.json" "$runtime_dir/wab.log"
             if test -s "$runtime_dir/controlled-boundary.json"; then
               cp "$runtime_dir/controlled-boundary.json" "$evidence_dir/controlled-boundary.json"
+              if test -n "${task_amount:-}"; then
+                "$GITHUB_WORKSPACE/synthesis/node_modules/.bin/tsx" \
+                  "$GITHUB_WORKSPACE/synthesis/src/wallet-lab/verify-android-boundary.ts" \
+                  "$evidence_dir/controlled-boundary.json" \
+                  "$GITHUB_WORKSPACE/fixtures/teranode/wab-funding-v1.json" \
+                  "$task_amount" > "$evidence_dir/boundary-verification.json" \
+                  2> "$evidence_dir/boundary-verification-error.txt" || true
+              fi
             fi
           }
           trap cleanup EXIT
@@ -246,6 +254,8 @@ jobs:
           cleanup
           trap - EXIT
           test -s "$evidence_dir/controlled-boundary.json"
+          jq --exit-status '.verified == true and .taskOutputSatoshis == 7' \
+            "$evidence_dir/boundary-verification.json" >/dev/null
           jq --exit-status '.umpRecords | length >= 1' "$evidence_dir/controlled-boundary.json" >/dev/null
           jq --exit-status '[.submissions[] | select(.verdict == "ACCEPTED_BY_NETWORK")] | length >= 3' \
             "$evidence_dir/controlled-boundary.json" >/dev/null
