@@ -31,6 +31,14 @@ if pgrep -f "[q]emu-system.*${avd_name}" >/dev/null ||
   printf 'A previous instance of %s is still running\n' "$avd_name" >&2
   exit 1
 fi
+avd_directory="${ANDROID_AVD_HOME:-$HOME/.android/avd}/${avd_name}.avd"
+test -f "$avd_directory/config.ini"
+# -wipe-data resets userdata, but a writable system overlay survives. Discard
+# every generated read-write OS partition before installing this run's CA.
+for partition in system vendor product system_ext odm; do
+  rm -f "$avd_directory/${partition}.img.qcow2"
+done
+printf 'discarded prior writable OS overlays for %s\n' "$avd_name"
 "$emulator" -avd "$avd_name" -port "$port" -no-window -no-snapshot -wipe-data \
   -writable-system -no-boot-anim -gpu swiftshader_indirect -no-audio -no-metrics &
 emulator_pid=$!
