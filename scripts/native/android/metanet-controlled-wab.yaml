@@ -33,10 +33,12 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
     optional: true
 - tapOn:
     id: 'p0-wallet-setup-advanced-service-settings'
-- tapOn:
+- longPressOn:
     text: 'https://wab.babbage.systems'
-- eraseText: 100
+- tapOn: 'Select all'
+- eraseText: 1
 - inputText: '${TPNIL_WAB_URL}'
+- assertVisible: '${TPNIL_WAB_URL}'
 - hideKeyboard
 - waitForAnimationToEnd:
     timeout: 1000
@@ -49,10 +51,12 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
       text: 'https://storage.babbage.systems'
     direction: DOWN
     timeout: 15000
-- tapOn:
+- longPressOn:
     text: 'https://storage.babbage.systems'
-- eraseText: 100
+- tapOn: 'Select all'
+- eraseText: 1
 - inputText: '${TPNIL_STORAGE_URL}'
+- assertVisible: '${TPNIL_STORAGE_URL}'
 - hideKeyboard
 - scrollUntilVisible:
     element:
