@@ -19,27 +19,49 @@ PY
 certificate_hash="$(openssl x509 -inform PEM -subject_hash_old -in "$ca" -noout | head -n 1)"
 test -n "$certificate_hash"
 
-"$adb_bin" -s "$serial" root >/dev/null
-"$adb_bin" -s "$serial" wait-for-device
-if ! "$adb_bin" -s "$serial" remount >/tmp/tpnil-adb-remount.txt 2>&1; then
-  "$adb_bin" -s "$serial" disable-verity >/dev/null 2>&1 || true
+wait_for_boot() {
+  timeout 60 "$adb_bin" -s "$serial" wait-for-device
+  for _ in $(seq 1 180); do
+    test "$("$adb_bin" -s "$serial" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 && return
+    sleep 1
+  done
+  return 1
+}
+
+become_root() {
+  for _ in $(seq 1 5); do
+    if timeout 20 "$adb_bin" -s "$serial" root >/dev/null 2>&1; then
+      timeout 30 "$adb_bin" -s "$serial" wait-for-device >/dev/null 2>&1 || true
+      test "$("$adb_bin" -s "$serial" shell id -u 2>/dev/null | tr -d '\r')" = 0 && return
+    fi
+    "$adb_bin" reconnect offline >/dev/null 2>&1 || true
+    sleep 2
+  done
+  return 1
+}
+
+remount_log="$(mktemp)"
+trap 'rm -f "$remount_log"' EXIT
+wait_for_boot
+become_root
+remount_code=0
+"$adb_bin" -s "$serial" remount >"$remount_log" 2>&1 || remount_code=$?
+if test "$remount_code" -ne 0 || grep -qi 'reboot your device' "$remount_log"; then
+  if test "$remount_code" -ne 0; then
+    "$adb_bin" -s "$serial" disable-verity >/dev/null 2>&1 || true
+  fi
   "$adb_bin" -s "$serial" reboot
-  "$adb_bin" -s "$serial" wait-for-device
-  "$adb_bin" -s "$serial" root >/dev/null
-  "$adb_bin" -s "$serial" wait-for-device
-  "$adb_bin" -s "$serial" remount
+  wait_for_boot
+  become_root
+  "$adb_bin" -s "$serial" remount >"$remount_log" 2>&1
 fi
+test "$("$adb_bin" -s "$serial" shell id -u | tr -d '\r')" = 0
 "$adb_bin" -s "$serial" push "$ca" "/data/local/tmp/${certificate_hash}.0" >/dev/null
 "$adb_bin" -s "$serial" shell cp "/data/local/tmp/${certificate_hash}.0" "/system/etc/security/cacerts/${certificate_hash}.0"
 "$adb_bin" -s "$serial" shell chown root:root "/system/etc/security/cacerts/${certificate_hash}.0"
 "$adb_bin" -s "$serial" shell chmod 0644 "/system/etc/security/cacerts/${certificate_hash}.0"
 "$adb_bin" -s "$serial" reboot
-"$adb_bin" -s "$serial" wait-for-device
-for _ in $(seq 1 180); do
-  test "$("$adb_bin" -s "$serial" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 && break
-  sleep 1
-done
-test "$("$adb_bin" -s "$serial" shell getprop sys.boot_completed | tr -d '\r')" = 1
+wait_for_boot
 "$adb_bin" -s "$serial" shell settings put global http_proxy "$proxy_host"
 test "$("$adb_bin" -s "$serial" shell settings get global http_proxy | tr -d '\r')" = "$proxy_host"
 "$adb_bin" -s "$serial" shell test -f "/system/etc/security/cacerts/${certificate_hash}.0"
