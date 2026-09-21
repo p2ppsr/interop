@@ -148,7 +148,7 @@ describe('controlled wallet services', () => {
           anonymousId: 'secret-identity',
           context: {
             method: 'createAction', status: 'success', duration_ms: 71_000,
-            suppress_response: true, navigation_changed: true, message: 'secret-error-detail'
+            suppress_response: true, navigation_changed: true, active: false, message: 'secret-error-detail'
           }
         }] })),
         { 'content-type': 'application/json' }
@@ -156,7 +156,7 @@ describe('controlled wallet services', () => {
       expect(result.status).toBe(200)
       expect(services.walletBridgeObservations).toEqual([{
         name: 'wallet_bridge_operation_finish', method: 'createAction', status: 'success',
-        durationMs: 71_000, suppressResponse: true, navigationChanged: true
+        durationMs: 71_000, suppressResponse: true, navigationChanged: true, promptActive: false
       }])
       expect(JSON.stringify(services.walletBridgeObservations)).not.toMatch(/secret/)
     } finally {

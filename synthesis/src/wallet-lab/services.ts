@@ -35,6 +35,7 @@ export interface WalletBridgeObservation {
   queueWaitMs?: number
   userPromptWaitMs?: number
   pendingCalls?: number
+  promptActive?: boolean
   stale?: boolean
   suppressResponse?: boolean
   tabChanged?: boolean
@@ -577,6 +578,7 @@ export class ControlledWalletServices {
           ['method', 'method'], ['status', 'status'], ['durationMs', 'duration_ms'],
           ['queueWaitMs', 'queue_wait_ms'], ['userPromptWaitMs', 'user_prompt_wait_ms'],
           ['pendingCalls', 'pending_calls'], ['stale', 'stale'],
+          ['promptActive', 'active'],
           ['suppressResponse', 'suppress_response'], ['tabChanged', 'tab_changed'],
           ['navigationChanged', 'navigation_changed']
         ] as const) {
@@ -586,7 +588,7 @@ export class ControlledWalletServices {
           const isNumber = (field === 'durationMs' || field === 'queueWaitMs' ||
             field === 'userPromptWaitMs' || field === 'pendingCalls') &&
             typeof value === 'number' && Number.isFinite(value) && value >= 0
-          const isBoolean = (field === 'stale' || field === 'suppressResponse' ||
+          const isBoolean = (field === 'stale' || field === 'promptActive' || field === 'suppressResponse' ||
             field === 'tabChanged' || field === 'navigationChanged') && typeof value === 'boolean'
           if (isText || isNumber || isBoolean)
             (observation as unknown as Record<string, unknown>)[field] = value
