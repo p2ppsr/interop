@@ -60,15 +60,34 @@ jobs:
                 '.assets[] | select(.name == "metanet-explorer-v1.1.10.aab") | .url'
           )"
           aab="$RUNNER_TEMP/tpnil-artifacts/metanet-explorer-v1.1.10.aab"
-          curl --fail --silent --show-error --location \
-            --header "@$auth_header" \
-            --header "Accept: application/octet-stream" \
-            --header "X-GitHub-Api-Version: 2022-11-28" \
-            "$asset_api" --output "$aab"
+          cache_directory="${TPNIL_SUT_ARTIFACT_CACHE:-/runner-cache/tpnil/artifacts}"
+          cached_aab="$cache_directory/metanet-explorer-v1.1.10-8746b803.aab"
+          mkdir -p "$cache_directory"
+          artifact_source=verified-runner-cache
+          if ! test -f "$cached_aab" || \
+            ! test "$(sha256sum "$cached_aab" | awk '{print $1}')" = \
+              8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d || \
+            ! test "$(stat -c '%s' "$cached_aab")" = 213058875; then
+            artifact_source=private-artifact-vault
+            incoming="$cached_aab.incoming-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+            rm -f "$incoming"
+            curl --fail --silent --show-error --location \
+              --header "@$auth_header" \
+              --header "Accept: application/octet-stream" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              "$asset_api" --output "$incoming"
+            test "$(sha256sum "$incoming" | awk '{print $1}')" = \
+              8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d
+            test "$(stat -c '%s' "$incoming")" = 213058875
+            mv "$incoming" "$cached_aab"
+          fi
+          cp "$cached_aab" "$aab"
           test "$(sha256sum "$aab" | awk '{print $1}')" = "8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d"
           test "$(stat -c '%s' "$aab")" = "213058875"
-          scripts/native/android/bundle-to-universal-apk.sh "$aab" "$RUNNER_TEMP/tpnil-apk" \
-            > "$RUNNER_TEMP/tpnil-evidence/derivation.txt"
+          {
+            printf 'artifact_source=%s\n' "$artifact_source"
+            scripts/native/android/bundle-to-universal-apk.sh "$aab" "$RUNNER_TEMP/tpnil-apk"
+          } > "$RUNNER_TEMP/tpnil-evidence/derivation.txt"
       - name: Exercise controlled WAB, UMP, and ToDo vectors
         env:
           TPNIL_ANDROID_API: 35
@@ -135,7 +154,9 @@ jobs:
           todo_complete_url="https%3A%2F%2Ftodo.itcve.test%2F%3Fp0CompleteTask%3D${task_name}%26p0ImmediateBroadcast%3D1"
           otp="$(jq --exit-status --raw-output .code "$runtime_dir/.activation.json")"
           rm -f "$runtime_dir/.activation.json"
-          maestro test \
+          maestro_bin="${MAESTRO_BIN:-$HOME/.maestro/bin/maestro}"
+          test -x "$maestro_bin"
+          "$maestro_bin" test \
             -e TPNIL_WAB_URL="$(jq --raw-output .wabUrl "$runtime_dir/runtime.json")" \
             -e TPNIL_STORAGE_URL="$(jq --raw-output .storageUrl "$runtime_dir/runtime.json")" \
             -e TPNIL_PHONE_NATIONAL=5550102030 \
