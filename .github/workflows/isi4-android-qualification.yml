@@ -138,6 +138,9 @@ jobs:
           launcher_pid=$!
           cleanup() {
             if test "$(adb -s emulator-5570 get-state 2>/dev/null || true)" = device; then
+              adb -s emulator-5570 logcat -d -s chromium:V ReactNativeJS:V WebViewConsole:V \
+                | python3 scripts/native/android/filter-app-console.py \
+                  > "$evidence_dir/app-console.txt" || true
               adb -s emulator-5570 exec-out screencap -p > "$evidence_dir/last-screen.png" || true
               adb -s emulator-5570 shell uiautomator dump /sdcard/tpnil-last-window.xml >/dev/null 2>&1 || true
               adb -s emulator-5570 shell cat /sdcard/tpnil-last-window.xml > "$evidence_dir/last-window.xml" 2>/dev/null || true
@@ -177,6 +180,7 @@ jobs:
             > "$evidence_dir/controlled-ca.txt" 2>&1
           adb -s emulator-5570 install "$RUNNER_TEMP/tpnil-apk/universal.apk"
           adb -s emulator-5570 shell pm clear app.metanet.explorer
+          adb -s emulator-5570 logcat -c
           adb -s emulator-5570 shell input keyevent KEYCODE_HOME
           sleep 10
           kill -0 "$launcher_pid"
