@@ -126,7 +126,14 @@ jobs:
               adb -s emulator-5570 shell cat /sdcard/tpnil-last-window.xml > "$evidence_dir/last-window.xml" 2>/dev/null || true
             fi
             adb -s emulator-5570 emu kill >/dev/null 2>&1 || true
-            kill "$launcher_pid" >/dev/null 2>&1 || true
+            for attempt in $(seq 1 30); do
+              kill -0 "$launcher_pid" 2>/dev/null || break
+              sleep 1
+            done
+            if kill -0 "$launcher_pid" 2>/dev/null; then
+              kill "$launcher_pid" >/dev/null 2>&1 || true
+            fi
+            wait "$launcher_pid" >/dev/null 2>&1 || true
             kill -TERM "$runtime_pid" >/dev/null 2>&1 || true
             wait "$runtime_pid" >/dev/null 2>&1 || true
             rm -f "$runtime_dir/.activation.json" "$runtime_dir/wab.log"
@@ -153,6 +160,9 @@ jobs:
             > "$evidence_dir/controlled-ca.txt"
           adb -s emulator-5570 install "$RUNNER_TEMP/tpnil-apk/universal.apk"
           adb -s emulator-5570 shell pm clear app.metanet.explorer
+          adb -s emulator-5570 shell input keyevent KEYCODE_HOME
+          sleep 10
+          kill -0 "$launcher_pid"
           task_name="TPNIL-WAB-UMP-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           task_amount=7
           todo_url="https://todo.itcve.test/"

@@ -10,6 +10,27 @@ serial="emulator-$port"
 
 test -x "$emulator"
 "$adb_bin" start-server
+if test "$("$adb_bin" -s "$serial" get-state 2>/dev/null || true)" = device; then
+  "$adb_bin" -s "$serial" emu kill >/dev/null 2>&1 || true
+  for _ in $(seq 1 60); do
+    test "$("$adb_bin" -s "$serial" get-state 2>/dev/null || true)" != device && break
+    sleep 1
+  done
+  test "$("$adb_bin" -s "$serial" get-state 2>/dev/null || true)" != device
+fi
+# ADB may disconnect before QEMU releases its AVD lock.
+for _ in $(seq 1 60); do
+  if ! pgrep -f "[q]emu-system.*${avd_name}" >/dev/null &&
+    ! pgrep -f "[e]mulator.*-avd ${avd_name}" >/dev/null; then
+    break
+  fi
+  sleep 1
+done
+if pgrep -f "[q]emu-system.*${avd_name}" >/dev/null ||
+  pgrep -f "[e]mulator.*-avd ${avd_name}" >/dev/null; then
+  printf 'A previous instance of %s is still running\n' "$avd_name" >&2
+  exit 1
+fi
 "$emulator" -avd "$avd_name" -port "$port" -no-window -no-snapshot -wipe-data \
   -writable-system -no-boot-anim -gpu swiftshader_indirect -no-audio -no-metrics &
 emulator_pid=$!
