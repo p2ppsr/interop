@@ -38,3 +38,18 @@ node bin/tpnil.mjs review-intake suts/intake/bsv-desktop-2.8.5.json out/artifact
 The [intake contract](intake.md) defines required evidence and exit codes. Its output is an intake review, separate from synthetic self-tests and executed SUT results.
 
 `node scripts/verify-published-journals.mjs` verifies retained self-test, intake, portable qualification, and native qualification objects. Native archive verification recomputes its findings without the runner or network; `verify-artifact` separately verifies obtained release bytes against the recorded digest.
+
+Prepare and execute the admitted Yours Wallet profile with:
+
+```sh
+scripts/prepare-yours-wallet-run.sh
+npm ci --prefix synthesis --ignore-scripts
+npm run typecheck --prefix synthesis
+npm test --prefix synthesis
+npm --prefix synthesis run wallet-lab -- run ../infra/plans/isi4-yours-todo-controlled-services.json
+npm --prefix synthesis run wallet-lab -- verify ../out/isi4-yours-todo-controlled-services
+```
+
+The runner requires two repetitions. It records failed and blocked vectors and exits nonzero only when the two semantic projections differ or the harness cannot produce verifiable evidence. The retained ToDo archive is under `fixtures/artifacts/`; the exact public Yours archive is downloaded and verified by the preparation script.
+
+Android operators use `scripts/native/android/create-avd.sh`, `launch-emulator.sh`, `bundle-to-universal-apk.sh`, `capture-runtime.sh`, and the optional uiautomator2 driver. The public fixture key under `fixtures/keys/` signs laboratory derivatives and carries no publisher identity. `.github/workflows/isi4-android-qualification.yml` executes the same boundary on the owned KVM runner.

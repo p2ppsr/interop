@@ -9,10 +9,12 @@ import { verifyComponentQualification } from '../src/component-qualification.mjs
 import { verifyRuntimeQualification } from '../src/runtime-qualification.mjs';
 import { verifyReferenceQualification } from '../src/reference-qualification.mjs';
 import { verifySynthesisStackQualification } from '../src/synthesis-stack-qualification.mjs';
+import { verifyNativeObservation, verifyWalletRun, verifyWalletRunSeries } from '../src/sut-evidence.mjs';
 let count = 0, intakeCount = 0, qualificationCount = 0, nativeQualificationCount = 0;
 let componentQualificationCount = 0, runtimeQualificationCount = 0;
 let referenceQualificationCount = 0;
 let synthesisStackCount = 0;
+let nativeObservationCount = 0, experimentalWalletRunCount = 0, experimentalWalletSeriesCount = 0;
 function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, entry.name);
@@ -39,6 +41,15 @@ function walk(dir) {
     else if (file.startsWith(path.join(ROOT, 'journals/synthesis-stack-qualification') + path.sep) && entry.name === 'result.json') {
       verifySynthesisStackQualification(dir); synthesisStackCount++;
     }
+    else if (file.startsWith(path.join(ROOT, 'journals/native-observation') + path.sep) && entry.name === 'record.json') {
+      verifyNativeObservation(dir); nativeObservationCount++;
+    }
+    else if (file.startsWith(path.join(ROOT, 'journals/wallet-runs') + path.sep) && entry.name === 'record.json') {
+      verifyWalletRun(dir); experimentalWalletRunCount++;
+    }
+    else if (file.startsWith(path.join(ROOT, 'journals/wallet-runs') + path.sep) && entry.name === 'series.json') {
+      verifyWalletRunSeries(dir); experimentalWalletSeriesCount++;
+    }
     else if (entry.name === 'journal.jsonl') { verifyJournal(dir); count++; }
   }
 }
@@ -52,5 +63,8 @@ console.log(JSON.stringify({
   verifiedRuntimeQualifications: runtimeQualificationCount,
   verifiedReferenceQualifications: referenceQualificationCount,
   verifiedSynthesisStacks: synthesisStackCount,
+  verifiedNativeObservations: nativeObservationCount,
+  verifiedExperimentalWalletRuns: experimentalWalletRunCount,
+  verifiedExperimentalWalletSeries: experimentalWalletSeriesCount,
   officialSutRuns: 0
 }));

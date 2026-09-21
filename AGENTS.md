@@ -22,6 +22,7 @@ Write as TPNIL, for readers who encounter the repository without its drafting hi
 - Label synthetic fixtures and results LAB_SELF_TEST_ONLY. SUT conformance requires executed applicable assertions and complete evidence; certification additionally requires the governance gates.
 - Freeze standards, artifacts, dependencies, versions, oracles, and criteria before scored runs. Apply the same admission requirements to reference implementations.
 - Preserve accepted journal records and failed attempts. Append corrections with references to the original evidence.
+- Treat `PASS`, `FAIL`, and `BLOCKED` as laboratory data. A completed, verifiable run may contain any of them; execution tooling fails only when the run or evidence contract fails.
 - Follow each program’s declared network and funding boundary. ISI-4 uses unchanged production mainnet binaries with supported, explicitly configured ITCVE services and isolated fixtures; it requires no wallet regtest API or special build. Keep personal wallets, production credentials, and public-mainnet spending outside this controlled-service profile. Preserve application trust controls and record unsupported integration limits.
 - Record decisions, conflicts, unresolved interpretations, coverage, and verified acceptances accurately.
 - Run npm test, npm run check, and the Python packaging tests for relevant changes. Check document links after structural edits.

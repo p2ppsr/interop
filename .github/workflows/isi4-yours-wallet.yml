@@ -1,0 +1,38 @@
+name: ISI-4 Yours Wallet controlled-service run
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  yours-wallet:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.19.0
+          cache: npm
+          cache-dependency-path: synthesis/package-lock.json
+      - name: Prepare exact artifacts and browser
+        run: |
+          set -euo pipefail
+          scripts/prepare-yours-wallet-run.sh
+          npm ci --prefix synthesis --ignore-scripts
+          npx --prefix synthesis playwright install --with-deps chromium
+      - name: Execute two clean repetitions
+        run: |
+          set -euo pipefail
+          xvfb-run -a npm --prefix synthesis run wallet-lab -- run ../infra/plans/isi4-yours-todo-controlled-services.json
+      - name: Verify retained result
+        run: npm --prefix synthesis run wallet-lab -- verify ../out/isi4-yours-todo-controlled-services
+      - name: Upload immutable evidence candidate
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: isi4-yours-wallet-5.1.0
+          path: out/isi4-yours-todo-controlled-services
+          if-no-files-found: error
+          retention-days: 90

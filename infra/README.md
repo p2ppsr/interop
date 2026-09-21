@@ -38,8 +38,13 @@ The repository contains all TPNIL-owned provisioning and evaluation logic. Opera
 - `portable-webroot-1`: extracts and serves a submitted web-root artifact on loopback under its declared logical origin, checks the manifest and static dependency closure, repeats selected observations, and retains all response bodies with the artifact in an offline-verifiable bundle.
 - `github-macos-arm64-1`: uses a clean GitHub-hosted Apple-silicon macOS virtual machine for native artifact admission and bridge qualification. The run records the observed hosted-image version because GitHub updates this capacity over time. Workflow artifacts are transferred into the repository-owned evidence format before their retention period expires.
 - `macos-arm64-tart-1`: runs an unchanged production macOS wallet in a disposable Apple Virtualization guest. The base guest is pinned by registry digest, cloned for each run, and destroyed after evidence collection. Its network is restricted to the host service plane and explicitly declared acquisition endpoints during preparation.
+- `chromium-extension-1`: runs the exact extension archive in a fresh Chromium persistent context, routes declared production service identities to isolated fixtures without changing extension bytes, blocks undeclared egress, and retains wallet, browser, service, and transaction observations.
+- `android-avd-1`: creates the declared Android AVD from public SDK inputs, installs a digest-verified artifact or separately identified bundle derivative, drives public UI and WebView boundaries, and captures package, signer, device, runtime, screenshot, and DOM evidence.
+- `github-android-kvm-1`: schedules `android-avd-1` on the repository-scoped `tpnil-android-qa` runner. The non-root pod has direct KVM allocation, a tokenless service account, and a digest-pinned runner image. Its cache is disposable capacity; repository plans and evidence verification remain authoritative.
 
 The portable lane qualifies the controller, archive, application artifact, and service-origin mechanics. The hosted macOS lane qualifies installation, ordinary first-use setup, renderer automation, local bridge observation, evidence capture, and teardown. Both produce `INFRASTRUCTURE_QUALIFICATION_ONLY`, never a SUT conformance verdict. The Tart lane remains the stable independent reconstruction target and must complete routing and reset qualification before scored native vectors run there.
+
+The Chromium extension lane has issued the first `EXPERIMENTAL_CONFORMANCE_RESULT` for Yours Wallet 5.1.0. The Android lane currently retains an intake observation for Metanet Explorer and an engineering-only BSV Browser source-candidate observation. Claim type follows the admitted artifact and completed vector scope, not the scheduler that ran it.
 
 ## Commands
 
@@ -74,6 +79,17 @@ node bin/tpnil.mjs archive-synthesis-stack \
   journals/synthesis-stack-qualification/<date>/<run>
 node bin/tpnil.mjs verify-synthesis-stack \
   journals/synthesis-stack-qualification/<date>/<run>
+
+./scripts/prepare-yours-wallet-run.sh
+npm --prefix synthesis run wallet-lab -- run \
+  ../infra/plans/isi4-yours-todo-controlled-services.json \
+  ../out/isi4-yours \
+  local-operator
+npm --prefix synthesis run wallet-lab -- verify ../out/isi4-yours
+
+./scripts/native/android/create-avd.sh TPNIL_API_35 35
+./scripts/native/android/launch-emulator.sh TPNIL_API_35
+npm run verify:journals
 ```
 
 The resulting directories are portable evidence bundles. `record.json` binds the plan, observations, result, and raw evidence stored by SHA-256 under `objects/`. Portable web-root bundles retain the application artifact. Native bundles retain the release digest, size, publisher signature evidence, and all run observations; the large release artifact remains in the separately controlled artifact archive.

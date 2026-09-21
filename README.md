@@ -2,7 +2,7 @@
 
 **TPNIL** is a BSV Blockchain initiative for impartial interoperability evaluation, without fear or favor. The laboratory brings published requirements, canonical software artifacts, integrated test environments, deterministic results, and durable evidence into a common framework open to equal participation.
 
-**Version 0.4.0 — private establishment phase, experimental.** The laboratory now executes a causally joined transaction-processing reference stack. A signed Synthesis Board revision, canonical UHRP advertisement, and two-payee BRC-170 LCH settlement pass through Arcade, pinned Teranode, and Merkle Service; ChainTracks reorganization, missed-callback recovery, complete runtime restart, content-host failure, and deterministic replay have retained, offline-verifiable evidence. These are laboratory and infrastructure qualifications; no SUT conformance or certification result has been issued. [Implementation status](docs/implementation-status.md) records the exact boundary.
+**Version 0.5.0 — private establishment phase, experimental.** The laboratory now executes both the causally joined transaction-processing reference stack and an admitted production-wallet BRC-100 lane. Two clean Yours Wallet 5.1.0 repetitions produced the same semantic result: V001–V004 passed, V005–V006 failed, and V007–V008 were blocked. Metanet Explorer has an exact-AAB Android observation with an account-activation blocker; a BSV Browser source candidate reached an authenticated 28-method BRC-100 context and the ToDo funding boundary. These are experimental results and engineering observations. Certification remains unavailable. [Implementation status](docs/implementation-status.md) records the exact boundary.
 
 ## The laboratory
 
@@ -17,7 +17,7 @@ The [charter](CHARTER.md) defines the mission and principles. [Governance](GOVER
 
 All four programs select versioned ITCVE-1 profiles. ISI-4 uses the [production-wallet controlled-service profile](itcves/ITCVE-1/1.0.0/README.md); ISI-1 through ISI-3 retain [version 0.1.0](itcves/ITCVE-1/0.1.0/README.md). ISI-1 defines the integrated foundation; the other programs evaluate narrower profiles within it. Results are specific to the executed profile and artifact combination.
 
-[BSV Desktop 2.8.5](suts/intake/bsv-desktop-2.8.5.md) is the current reference wallet candidate under production-fidelity intake. The initial application candidate is a compiled tarball from `p2ppsr/todo-ts`. Their [candidate manifests](suts/README.md) record provenance and outstanding admission requirements.
+[BSV Desktop 2.8.5](suts/intake/bsv-desktop-2.8.5.md) remains the reference desktop wallet candidate. [Yours Wallet 5.1.0](suts/intake/yours-wallet-5.1.0.md) is the first wallet with a retained experimental result. [Metanet Explorer 1.1.10](suts/intake/metanet-explorer-1.1.10-android.md) has a qualified Android artifact and recorded activation blocker. [BSV Browser 1.6.1](suts/candidates/bsv-browser-1.6.1-source-candidate.md) has engineering evidence but awaits a publisher binary for admission. The canonical application artifact is the deterministic compiled `p2ppsr/todo-ts` web-root archive under `fixtures/artifacts/`.
 
 ## Run the offline core
 
@@ -40,6 +40,9 @@ node bin/tpnil.mjs verify-component-qualification journals/component-qualificati
 node bin/tpnil.mjs verify-component-qualification journals/component-qualification/2026-09-20/arcade-merkle-reprocess-recovery
 node bin/tpnil.mjs verify-synthesis-stack journals/synthesis-stack-qualification/2026-09-20/repetition-3
 npm run test:synthesis
+npm run verify:journals
+./scripts/prepare-yours-wallet-run.sh
+npm --prefix synthesis run wallet-lab -- run ../infra/plans/isi4-yours-todo-controlled-services.json ../out/isi4-yours local-operator
 ```
 
 The demo performs a synthetic laboratory self-test, writes a content-addressed result and hash-linked journal to `out/demo`, and verifies repeatability. `npm run qualify:standards` verifies the exact imported BRC-167 and BRC-170 corpora and independently recomputes core CHIRP and LCH invariants. Both carry the `LAB_SELF_TEST_ONLY` designation. Each demo run requires a fresh output directory; for subsequent runs use `node bin/tpnil.mjs demo out/another-run`.

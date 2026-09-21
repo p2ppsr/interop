@@ -1,6 +1,6 @@
 # Laboratory journals
 
-This directory holds verified evaluation bundles accepted for retention. Portable and native infrastructure qualification runs are recorded; no scored SUT evaluation has been issued. The foundation self-test generates local evidence through the [operator commands](../docs/operator-quickstart.md); candidate output defaults to ignored `out/` directories.
+This directory holds verified evaluation bundles accepted for retention. Portable and native infrastructure qualifications, native intake observations, and experimental wallet results are recorded. The foundation self-test generates local evidence through the [operator commands](../docs/operator-quickstart.md); candidate output defaults to ignored `out/` directories.
 
 Published bundles identify their claim type, source revision, artifacts, observations, and outcomes. Official SUT results require qualified adapters and the publication conditions in the [evidence policy](../docs/evidence.md).
 
@@ -19,3 +19,5 @@ Intake reports retain their complete review record and referenced evidence in `i
 `reference-qualification/` retains the locked synthesis package, deterministic profile, and complete reference result. Its verifier recomputes claim, profile, standards, assertion, replay, identifier, and minimum-topology checks without executing a network service. The result is `LAB_REFERENCE_PROFILE_ONLY`.
 
 `synthesis-stack-qualification/` retains a self-contained joined run: runtime evidence, exact signed fixtures, generated digest-locked plans, four component qualifications, and the aggregate result. Its verifier checks every nested bundle and the transaction ancestry from controlled funding through board revision, UHRP advertisement, and LCH settlement. The result is `INFRASTRUCTURE_QUALIFICATION_ONLY`.
+
+`native-observation/` retains content-addressed Android intake and engineering observations. `wallet-runs/` retains experimental ISI-4 results with all eight vector outcomes. The offline verifier checks every declared evidence file and digest. Certification remains unavailable until the governance and independent-reproduction gates are complete.

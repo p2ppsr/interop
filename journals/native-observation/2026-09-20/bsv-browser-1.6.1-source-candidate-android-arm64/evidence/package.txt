@@ -1,0 +1,323 @@
+Activity Resolver Table:
+  Schemes:
+      peerpay:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter ca0c6ee
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "peerpay"
+          Scheme: "exp+bsv-browser"
+      http:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 4809c69
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "https"
+          Scheme: "http"
+          AutoVerify=true
+      https:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 4809c69
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "https"
+          Scheme: "http"
+          AutoVerify=true
+      bsv-wallet:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 8aabef0
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "bsv-browser"
+          Scheme: "bsv-wallet"
+          Scheme: "exp+bsv-browser"
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 814da1c
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "bsv-wallet"
+          Scheme: "exp+bsv-browser"
+      exp+bsv-browser:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 8aabef0
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "bsv-browser"
+          Scheme: "bsv-wallet"
+          Scheme: "exp+bsv-browser"
+        34f22a2 org.bsvassociation.browser/.MainActivity filter ca0c6ee
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "peerpay"
+          Scheme: "exp+bsv-browser"
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 725678f
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "bsv-browser"
+          Scheme: "exp+bsv-browser"
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 814da1c
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "bsv-wallet"
+          Scheme: "exp+bsv-browser"
+      bsv-browser:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 8aabef0
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "bsv-browser"
+          Scheme: "bsv-wallet"
+          Scheme: "exp+bsv-browser"
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 725678f
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "bsv-browser"
+          Scheme: "exp+bsv-browser"
+
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        34f22a2 org.bsvassociation.browser/.MainActivity filter 8b4b33
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        8fd9625 org.bsvassociation.browser/androidx.profileinstaller.ProfileInstallReceiver filter ca37c08
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        8fd9625 org.bsvassociation.browser/androidx.profileinstaller.ProfileInstallReceiver filter d5663fa
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        8fd9625 org.bsvassociation.browser/androidx.profileinstaller.ProfileInstallReceiver filter d9aedab
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        8fd9625 org.bsvassociation.browser/androidx.profileinstaller.ProfileInstallReceiver filter 7966fa1
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+
+Domain verification status:
+
+Permissions:
+  Permission [org.bsvassociation.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (a005d91):
+    sourcePackage=org.bsvassociation.browser
+    uid=10212 gids=[] type=0 prot=signature
+    perm=PermissionInfo{dd034f6 org.bsvassociation.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  org.bsvassociation.browser/com.google.mlkit.common.internal.MlKitInitProvider:
+    Provider{e0db0f7 org.bsvassociation.browser/com.google.mlkit.common.internal.MlKitInitProvider}
+  org.bsvassociation.browser/expo.modules.filesystem.FileSystemFileProvider:
+    Provider{dc9cb64 org.bsvassociation.browser/expo.modules.filesystem.FileSystemFileProvider}
+  org.bsvassociation.browser/expo.modules.clipboard.ClipboardFileProvider:
+    Provider{e3c41cd org.bsvassociation.browser/expo.modules.clipboard.ClipboardFileProvider}
+  org.bsvassociation.browser/androidx.startup.InitializationProvider:
+    Provider{d42aa82 org.bsvassociation.browser/androidx.startup.InitializationProvider}
+  org.bsvassociation.browser/com.reactnativecommunity.webview.RNCWebViewFileProvider:
+    Provider{7e26593 org.bsvassociation.browser/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+  org.bsvassociation.browser/expo.modules.sharing.SharingFileProvider:
+    Provider{90a39d0 org.bsvassociation.browser/expo.modules.sharing.SharingFileProvider}
+
+ContentProvider Authorities:
+  [org.bsvassociation.browser.ClipboardFileProvider]:
+    Provider{e3c41cd org.bsvassociation.browser/expo.modules.clipboard.ClipboardFileProvider}
+      applicationInfo=ApplicationInfo{dd82dc9 org.bsvassociation.browser}
+  [org.bsvassociation.browser.fileprovider]:
+    Provider{7e26593 org.bsvassociation.browser/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+      applicationInfo=ApplicationInfo{574ecce org.bsvassociation.browser}
+  [org.bsvassociation.browser.androidx-startup]:
+    Provider{d42aa82 org.bsvassociation.browser/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{843c7ef org.bsvassociation.browser}
+  [org.bsvassociation.browser.SharingFileProvider]:
+    Provider{90a39d0 org.bsvassociation.browser/expo.modules.sharing.SharingFileProvider}
+      applicationInfo=ApplicationInfo{da122fc org.bsvassociation.browser}
+  [org.bsvassociation.browser.FileSystemFileProvider]:
+    Provider{dc9cb64 org.bsvassociation.browser/expo.modules.filesystem.FileSystemFileProvider}
+      applicationInfo=ApplicationInfo{12cdd85 org.bsvassociation.browser}
+  [org.bsvassociation.browser.mlkitinitprovider]:
+    Provider{e0db0f7 org.bsvassociation.browser/com.google.mlkit.common.internal.MlKitInitProvider}
+      applicationInfo=ApplicationInfo{57707da org.bsvassociation.browser}
+
+Key Set Manager:
+  [org.bsvassociation.browser]
+      Signing KeySets: 60
+
+Packages:
+  Package [org.bsvassociation.browser] (4aef40b):
+    appId=10212
+    pkg=Package{85b72e8 org.bsvassociation.browser}
+    codePath=/data/app/~~KRcAX5Tn_B-hT3pr6ABaEw==/org.bsvassociation.browser-96BDoExOfPxlGa4q1I6umg==
+    resourcePath=/data/app/~~KRcAX5Tn_B-hT3pr6ABaEw==/org.bsvassociation.browser-96BDoExOfPxlGa4q1I6umg==
+    legacyNativeLibraryDir=/data/app/~~KRcAX5Tn_B-hT3pr6ABaEw==/org.bsvassociation.browser-96BDoExOfPxlGa4q1I6umg==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=1 minSdk=24 targetSdk=36
+    minExtensionVersions=[]
+    versionName=1.6.1
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesIntents=[Intent { act=android.intent.action.VIEW cat=[android.intent.category.BROWSABLE] dat=https:/... }, Intent { act=org.chromium.intent.action.PAY }, Intent { act=org.chromium.intent.action.IS_READY_TO_PAY }, Intent { act=org.chromium.intent.action.UPDATE_PAYMENT_DETAILS }, Intent { act=android.intent.action.SEND dat=content://*/... typ=*/* }, Intent { act=androidx.camera.extensions.action.VENDOR_ACTION }, Intent { act=android.intent.action.OPEN_DOCUMENT_TREE }, Intent { act=android.intent.action.OPEN_DOCUMENT cat=[android.intent.category.DEFAULT,android.intent.category.OPENABLE] dat=content://*/... typ=*/* }, Intent { act=android.support.customtabs.action.CustomTabsService }]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.camera.extensions.impl
+    timeStamp=2026-09-20 18:44:43
+    lastUpdateTime=2026-09-20 18:44:44
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{2915562 version:2, signatures:[51ed3f60], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      org.bsvassociation.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.MODIFY_AUDIO_SETTINGS
+      android.permission.SYSTEM_ALERT_WINDOW
+      android.permission.NFC
+      android.permission.NEARBY_WIFI_DEVICES
+      android.permission.BLUETOOTH_CONNECT
+      android.permission.INTERNET
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.CHANGE_WIFI_STATE
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.CAMERA
+      android.permission.USE_FINGERPRINT
+      org.bsvassociation.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+      android.permission.BLUETOOTH_ADVERTISE
+      android.permission.VIBRATE
+      android.permission.ACCESS_WIFI_STATE
+      android.permission.USE_BIOMETRIC
+      android.permission.RECORD_AUDIO
+      android.permission.BLUETOOTH_SCAN
+    install permissions:
+      android.permission.MODIFY_AUDIO_SETTINGS: granted=true
+      android.permission.NFC: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.CHANGE_WIFI_STATE: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.USE_FINGERPRINT: granted=true
+      org.bsvassociation.browser.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.ACCESS_WIFI_STATE: granted=true
+      android.permission.USE_BIOMETRIC: granted=true
+    User 0: ceDataInode=385026 deDataInode=90131 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/org.bsvassociation.browser
+      firstInstallTime=2026-09-20 18:32:59
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-Xu6d.frro
+        /data/resource-cache/com.android.systemui-accent-UDtX.frro
+        /data/resource-cache/com.android.systemui-dynamic-Z64Q.frro
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.ACCESS_FINE_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.NEARBY_WIFI_DEVICES: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.BLUETOOTH_CONNECT: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_COARSE_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.BLUETOOTH_ADVERTISE: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.BLUETOOTH_SCAN: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    com.google.android.dialer:
+      org.bsvassociation.browser
+    com.google.android.apps.restore:
+      org.bsvassociation.browser
+    com.google.android.apps.safetyhub:
+      org.bsvassociation.browser
+    com.google.android.apps.messaging:
+      org.bsvassociation.browser
+    com.google.android.settings.intelligence:
+      org.bsvassociation.browser
+    com.google.android.as:
+      org.bsvassociation.browser
+    com.google.android.apps.wellbeing:
+      org.bsvassociation.browser
+    com.google.android.gms:
+      org.bsvassociation.browser
+    com.google.android.apps.docs:
+      org.bsvassociation.browser
+    com.google.android.contacts:
+      org.bsvassociation.browser
+    com.google.android.apps.youtube.music:
+      org.bsvassociation.browser
+    com.google.android.apps.maps:
+      org.bsvassociation.browser
+    com.google.android.calendar:
+      org.bsvassociation.browser
+    com.google.android.youtube:
+      org.bsvassociation.browser
+    com.google.android.gm:
+      org.bsvassociation.browser
+    com.google.android.apps.wallpaper:
+      org.bsvassociation.browser
+    com.android.wallpaper:
+      org.bsvassociation.browser
+    com.android.systemui.accessibility.accessibilitymenu:
+      org.bsvassociation.browser
+    app.metanet.explorer:
+      org.bsvassociation.browser
+    org.bsvassociation.browser:
+      [com.google.android.bluetooth,com.android.bluetooth]
+      com.google.android.documentsui
+      com.google.android.apps.messaging
+      com.google.android.googlequicksearchbox
+      com.android.chrome
+      com.google.android.apps.docs
+      com.google.android.apps.maps
+      com.google.android.youtube
+      com.google.android.apps.photos
+      com.google.android.gm
+      app.metanet.explorer
+  queryable via interaction:
+    User 0:
+      [com.android.settings,com.android.localtransport,com.android.inputdevices,com.android.location.fused,com.android.keychain,com.android.providers.settings,com.android.dynsystem,com.android.emulator.multidisplay,android,com.android.server.telecom,com.android.DeviceAsWebcam]:
+        org.bsvassociation.browser
+      com.google.android.gms:
+        org.bsvassociation.browser
+      com.google.android.webview:
+        org.bsvassociation.browser
+      com.google.android.inputmethod.latin:
+        org.bsvassociation.browser
+      org.bsvassociation.browser:
+        com.google.android.webview
+  queryable via uses-library:
+
+Dexopt state:
+  [org.bsvassociation.browser]
+    path: /data/app/~~KRcAX5Tn_B-hT3pr6ABaEw==/org.bsvassociation.browser-96BDoExOfPxlGa4q1I6umg==/base.apk
+      arm64: [status=verify] [reason=install] [primary-abi]
+        [location is /data/app/~~KRcAX5Tn_B-hT3pr6ABaEw==/org.bsvassociation.browser-96BDoExOfPxlGa4q1I6umg==/oat/arm64/base.odex]
+
+Compiler stats:
+  [org.bsvassociation.browser]
+     base.apk - 669

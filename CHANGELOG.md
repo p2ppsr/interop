@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+## 0.5.0 — multi-wallet BRC-100 execution (2026-09-20)
+
+- Retained a deterministic compiled `todo-ts` web-root artifact and enabled ISI-4 V001 through V006 for drivers that implement the required observations.
+- Added the Yours Wallet 5.1.0 Chromium driver, isolated controlled services, mainnet-format funding fixture, transaction and PushDrop oracles, permission observations, broadcast schedules, and full eight-vector reporting.
+- Retained two clean Yours Wallet repetitions with the same semantic projection: V001–V004 pass, V005–V006 fail, and V007–V008 are blocked.
+- Added exact-AAB Metanet Explorer 1.1.10 qualification, deterministic bundletool conversion, a public Android fixture signing key, native UI and WebView probes, and a retained phone-verification blocker.
+- Added a source-pinned BSV Browser 1.6.1 engineering build and observation. Ordinary wallet creation produced an authenticated mainnet 28-method BRC-100 context; the live ToDo flow reached the expected 25-satoshi funding boundary. The build remains outside production admission because no publisher binary was available.
+- Added offline-verifiable native-observation and wallet-run evidence formats, journal verification, tamper tests, and append-only retained evidence.
+- Added local Android AVD tooling and a repository-scoped KVM GitHub Actions lane backed by a non-root, tokenless, digest-pinned Evans Creek runner.
+- Added manually dispatched Android qualification and Yours Wallet execution workflows whose plans, artifacts, and semantic verification remain repository-owned.
+- Adopted ISI-4 decision 0005 to define multi-wallet execution, preserve failed and blocked results, and separate engineering candidates from admitted artifacts.
+
 ## 0.4.0 — executable transaction-processing synthesis (2026-09-20)
 
 - Added the hosted macOS native qualification lane, observed-state Electron driver, signed artifact admission checks, and two retained BSV Desktop 2.8.5 runs.

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "metanet-explorer-1.1.10-android",
+  "program": "ISI-4@1.0.0",
+  "itcve": "ITCVE-1@1.0.0",
+  "profile": "production-wallet-controlled-services",
+  "walletNetwork": "main",
+  "serviceReality": "isolated-fixtures",
+  "publicMainnetBroadcast": false,
+  "artifact": {
+    "release": "v1.1.10",
+    "sha256": "8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d",
+    "size": 213058875,
+    "publisherUrl": "https://github.com/p2ppsr/metanet-explorer-mobile/actions/runs/34056462568/artifacts/9997029382"
+  },
+  "evidence": [
+    {
+      "id": "android-observation",
+      "path": "journals/native-observation/2026-09-20/metanet-explorer-1.1.10-android-arm64/record.json",
+      "sha256": "f98351400314edaaf16557bdec43a8e4db6cb4dd0f00e5e3a8871cfd35e27fbb",
+      "kind": "runtime-observation"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "artifact-identity",
+      "status": "verified",
+      "finding": "The v1.1.10 publisher workflow AAB is pinned by SHA-256 and size. Bundletool 1.18.3 produced an installable universal APK from that AAB; the derived APK uses the public laboratory fixture signature and is identified separately from a store-signed production APK.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "production-fidelity",
+      "status": "source-observed",
+      "finding": "The exact release payload reports app.metanet.explorer 1.1.10 (66) and follows the ordinary production first-run flow. Re-signing the universal derivative changes Android signer identity, so signer-dependent behavior is outside this run.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "runner-isolation",
+      "status": "verified",
+      "finding": "The application ran from cleared package state in the dedicated TPNIL_API_36 emulator. The AVD definition, Android properties, toolchain and installed package state are retained.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "service-coverage",
+      "status": "not-supported",
+      "finding": "The ordinary first-run path requires phone-number verification before the wallet service boundary becomes available. No personal phone number or undisclosed pre-provisioned identity was introduced.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "initial-state",
+      "status": "not-supported",
+      "finding": "Wallet initialization did not pass the ordinary phone verification boundary, so controlled fixture funding was not applicable to this run.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "observation-coverage",
+      "status": "source-observed",
+      "finding": "Native launch, package identity, the first-run verification barrier, browser navigation to the pinned ToDo webroot and its explicit wallet-required result were observed. Wallet-backed V002 through V008 remained blocked by initialization.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "repeatability",
+      "status": "unresolved",
+      "finding": "One clean Android execution is retained. A second execution requires an admitted activation fixture or supported pre-provisioned wallet state.",
+      "evidenceIds": ["android-observation"]
+    },
+    {
+      "id": "retention-rights",
+      "status": "unresolved",
+      "finding": "The laboratory retains the digest, source provenance and observations. An accepted artifact-submission grant for indefinite redistribution of the publisher AAB remains outstanding.",
+      "evidenceIds": ["android-observation"]
+    }
+  ]
+}

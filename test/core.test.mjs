@@ -31,11 +31,11 @@ test('strict parser rejects ambiguous keys, Unicode, numbers and trailing data',
   assert.equal(canonical(parseJson('"🌍"')), '"🌍"');
 });
 test('unsupported schema keywords fail closed', () => assert.throws(() => validate({ allOf: [] }, {}), /Unsupported/));
-test('catalogs have complete design metadata and cannot imply execution', () => {
-  assert.deepEqual(checkRepository(), { catalogs: 4, draftVectors: 26, executableSutVectors: 0 });
+test('catalogs distinguish executable vectors from design-only vectors', () => {
+  assert.deepEqual(checkRepository(), { catalogs: 4, draftVectors: 26, executableSutVectors: 6 });
   const c = clone(readJson(path.join(ROOT, 'programs/ISI-4/0.1.0/catalog.json')));
-  c.vectors[0].executable = true; assert.throws(() => checkCatalog(c));
-  c.vectors[0].executable = false; c.vectors[1].id = c.vectors[0].id; assert.throws(() => checkCatalog(c), /Duplicate/);
+  c.vectors[0].executable = true; checkCatalog(c);
+  c.vectors[1].id = c.vectors[0].id; assert.throws(() => checkCatalog(c), /Duplicate/);
 });
 test('plans reject unknown fields, empty suites, repeated IDs and SUT claims', () => {
   const { plan } = demoPlan();

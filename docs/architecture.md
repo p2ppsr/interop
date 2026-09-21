@@ -46,4 +46,6 @@ Native applications run in disposable guests or declared physical devices. A cle
 
 GitHub Actions performs source checks and may schedule qualified capacity. Hosted runners are not historical native environments: their image contents change and their retained artifacts expire. TPNIL therefore records the observed runner image, stores durable evidence in the laboratory archive and Git history according to size, and supports the same run from an independent local installation.
 
+Android jobs can run on a local SDK/AVD or the repository-scoped `tpnil-android-qa` KVM runner. The runner is scheduling capacity rather than a trusted oracle: repository plans create the AVD, derive installable artifacts from pinned inputs, drive public interfaces, capture device state, and produce evidence that the offline verifier checks. Chromium extension runs use the same principle on a fresh persistent context with a blocked-egress controlled-service boundary.
+
 Every evidence bundle binds the plan, artifact, environment observation, raw observations, evaluator result, and content-addressed objects. The verifier operates without the original runner or network. Re-execution establishes semantic repeatability; offline verification establishes that the retained evidence yields the same result.

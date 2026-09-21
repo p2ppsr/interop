@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "yours-wallet-5.1.0-chromium",
+  "program": "ISI-4@1.0.0",
+  "itcve": "ITCVE-1@1.0.0",
+  "profile": "production-wallet-controlled-services",
+  "walletNetwork": "main",
+  "serviceReality": "isolated-fixtures",
+  "publicMainnetBroadcast": false,
+  "artifact": {
+    "release": "v5.1.0",
+    "sha256": "d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52",
+    "size": 13513123,
+    "publisherUrl": "https://github.com/yours-org/yours-wallet/releases/download/v5.1.0/pw-v5.1.0.zip"
+  },
+  "evidence": [
+    {
+      "id": "repetition-1",
+      "path": "journals/wallet-runs/2026-09-20/yours-wallet-5.1.0-todo-controlled-services/repetition-1/record.json",
+      "sha256": "959346908375107d3ad7696a4573875adc1431cf8123d1741eda63da2e7545ae",
+      "kind": "runtime-observation"
+    },
+    {
+      "id": "repetition-2",
+      "path": "journals/wallet-runs/2026-09-20/yours-wallet-5.1.0-todo-controlled-services/repetition-2/record.json",
+      "sha256": "6aeba3d0009f3ff8f947df505a4d0f699537f82074f4ebd2de32982bb8161f97",
+      "kind": "runtime-observation"
+    }
+  ],
+  "criteria": [
+    {
+      "id": "artifact-identity",
+      "status": "verified",
+      "finding": "Both repetitions used the unchanged public v5.1.0 Chromium extension archive after exact SHA-256 and size verification. The runtime reported yours-wallet-5.1.0.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "production-fidelity",
+      "status": "verified",
+      "finding": "The production extension ran on mainnet through its normal installation and wallet-creation flow. Its fixed production service identities were routed to isolated fixtures without changing the extension bytes.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "runner-isolation",
+      "status": "verified",
+      "finding": "Each repetition used a fresh Chromium persistent context, a new wallet identity and temporary controlled-service state. Undeclared outbound destinations were blocked and recorded.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "service-coverage",
+      "status": "verified",
+      "finding": "The laboratory controlled the extension's Wallet Storage, transaction-submission, header/proof, application-origin and declared auxiliary service destinations. Route transcripts are retained for both repetitions.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "initial-state",
+      "status": "verified",
+      "finding": "Each wallet internalized an independently validated mainnet-format BRC-29 fixture transaction and Merkle proof. The fixture is expressly separate from a public-mainnet UTXO or acceptance claim.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "observation-coverage",
+      "status": "verified",
+      "finding": "All eight vectors received explicit outcomes. V001 through V004 passed; V005 and V006 failed; V007 and V008 recorded the remaining multi-remote and clause-corpus blockers. Raw BEEF, decoded PushDrop fields, wallet projections, permission observations, service verdicts and method inventory are retained.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "repeatability",
+      "status": "verified",
+      "finding": "Two clean repetitions produced the same semantic projection and the same vector outcomes. Transaction identifiers differ because each repetition uses a newly generated wallet identity.",
+      "evidenceIds": ["repetition-1", "repetition-2"]
+    },
+    {
+      "id": "retention-rights",
+      "status": "unresolved",
+      "finding": "The public release URL and exact digest are retained. An accepted artifact-submission grant for indefinite redistribution of the extension archive remains outstanding.",
+      "evidenceIds": []
+    }
+  ]
+}

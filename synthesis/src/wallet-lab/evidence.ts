@@ -1,0 +1,143 @@
+import { createHash } from 'node:crypto'
+import fs from 'node:fs'
+import path from 'node:path'
+import { canonicalJson, sha256Hex } from '../determinism.js'
+import type { WalletLabResult } from './model.js'
+
+const secretKeys = new Set([
+  'mnemonic',
+  'password',
+  'privatekey',
+  'rootkey',
+  'rootkeyhex',
+  'seed',
+  'authorization',
+  'cookie',
+  'set-cookie',
+  'auth_token'
+])
+
+export function redactEvidence(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(redactEvidence)
+  if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, item]) => [
+        key,
+        secretKeys.has(key.toLowerCase()) ? '[REDACTED]' : redactEvidence(item)
+      ])
+    )
+  }
+  return value
+}
+
+export class EvidenceBundle {
+  private readonly files = new Map<string, Uint8Array>()
+
+  constructor(readonly directory: string) {}
+
+  addJson(name: string, value: unknown): void {
+    this.addBytes(name, Buffer.from(`${canonicalJson(redactEvidence(value))}\n`))
+  }
+
+  addText(name: string, value: string): void {
+    this.addBytes(name, Buffer.from(value))
+  }
+
+  addBytes(name: string, value: Uint8Array): void {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(name) || name.includes('..'))
+      throw new TypeError(`Invalid evidence name: ${name}`)
+    this.files.set(name, Uint8Array.from(value))
+  }
+
+  write(result: Omit<WalletLabResult, 'evidence'>): WalletLabResult {
+    fs.mkdirSync(this.directory, { recursive: true })
+    const evidence = [...this.files.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([name, bytes]) => {
+        const destination = path.join(this.directory, 'evidence', name)
+        fs.mkdirSync(path.dirname(destination), { recursive: true })
+        fs.writeFileSync(destination, bytes)
+        return { name, sha256: sha256Hex(bytes), size: bytes.length }
+      })
+    const complete: WalletLabResult = { ...result, evidence }
+    fs.writeFileSync(path.join(this.directory, 'record.json'), `${canonicalJson(complete)}\n`)
+    return complete
+  }
+}
+
+export function verifyEvidenceBundle(directory: string): WalletLabResult {
+  const recordPath = path.join(directory, 'record.json')
+  const parsed = JSON.parse(fs.readFileSync(recordPath, 'utf8')) as WalletLabResult
+  if (parsed.schema !== 'tpnil-isi4-wallet-run@1.0.0') throw new Error('Unsupported wallet-run evidence schema')
+  if (parsed.claim !== 'EXPERIMENTAL_CONFORMANCE_RESULT' || parsed.program !== 'ISI-4@1.0.0' || parsed.itcve !== 'ITCVE-1@1.0.0')
+    throw new Error('Unexpected wallet-run claim or program boundary')
+  if (!Array.isArray(parsed.vectors) || parsed.vectors.length !== 8)
+    throw new Error('A wallet run must score all eight vectors')
+  if (!Array.isArray(parsed.evidence) || parsed.evidence.length === 0)
+    throw new Error('Wallet-run evidence is empty')
+  const names = parsed.evidence.map(item => item.name)
+  if (new Set(names).size !== names.length) throw new Error('Evidence names are not unique')
+  const evidenceRoot = path.join(directory, 'evidence')
+  const actual: string[] = []
+  const walk = (current: string): void => {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const absolute = path.join(current, entry.name)
+      if (entry.isSymbolicLink()) throw new Error(`Evidence contains a symlink: ${entry.name}`)
+      if (entry.isDirectory()) walk(absolute)
+      else if (entry.isFile()) actual.push(path.relative(evidenceRoot, absolute).split(path.sep).join('/'))
+      else throw new Error(`Unsupported evidence entry: ${entry.name}`)
+    }
+  }
+  walk(evidenceRoot)
+  if (canonicalJson([...names].sort()) !== canonicalJson(actual.sort()))
+    throw new Error('Evidence file set differs from the record')
+  for (const item of parsed.evidence) {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(item.name) || item.name.includes('..'))
+      throw new Error(`Invalid evidence name: ${item.name}`)
+    const file = path.join(directory, 'evidence', item.name)
+    const stat = fs.statSync(file)
+    if (stat.size !== item.size) throw new Error(`Evidence size mismatch: ${item.name}`)
+    const digest = createHash('sha256').update(fs.readFileSync(file)).digest('hex')
+    if (digest !== item.sha256) throw new Error(`Evidence digest mismatch: ${item.name}`)
+  }
+  return parsed
+}
+
+interface WalletRunSeries {
+  schema: string
+  claim: string
+  program: string
+  repetitions: Array<{ runId: string; outcome: string; recordSha256: string }>
+  repetitionMatch: boolean
+  semanticProjection: Record<string, string | number | boolean>
+  outcome: string
+}
+
+export function verifyWalletRunSeries(directory: string): { results: WalletLabResult[]; repetitionMatch: boolean } {
+  const series = JSON.parse(fs.readFileSync(path.join(directory, 'series.json'), 'utf8')) as WalletRunSeries
+  if (series.schema !== 'tpnil-isi4-wallet-run-series@1.0.0' ||
+      series.claim !== 'EXPERIMENTAL_CONFORMANCE_RESULT' || series.program !== 'ISI-4@1.0.0')
+    throw new Error('Unexpected wallet-run series boundary')
+  const entries = fs.readdirSync(directory, { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && entry.name.startsWith('repetition-'))
+    .map(entry => entry.name)
+    .sort()
+  if (entries.length < 2 || entries.length !== series.repetitions.length)
+    throw new Error('Wallet-run series repetition set differs from the record')
+  const results = entries.map(name => verifyEvidenceBundle(path.join(directory, name)))
+  const declared = series.repetitions.map(item => item.runId)
+  if (canonicalJson(declared) !== canonicalJson(entries)) throw new Error('Wallet-run series order or identifiers differ')
+  for (let index = 0; index < entries.length; index += 1) {
+    const bytes = fs.readFileSync(path.join(directory, entries[index]!, 'record.json'))
+    const declaration = series.repetitions[index]!
+    if (declaration.recordSha256 !== sha256Hex(bytes)) throw new Error(`Wallet-run record digest mismatch: ${declaration.runId}`)
+    if (declaration.outcome !== results[index]!.outcome) throw new Error(`Wallet-run outcome mismatch: ${declaration.runId}`)
+  }
+  const projections = results.map(result => canonicalJson(result.semanticProjection))
+  const repetitionMatch = projections.every(projection => projection === projections[0])
+  if (series.repetitionMatch !== repetitionMatch) throw new Error('Wallet-run series repeatability finding differs')
+  if (canonicalJson(series.semanticProjection) !== projections[0]) throw new Error('Wallet-run series projection differs')
+  const expectedOutcome = repetitionMatch ? results[0]!.outcome : 'INCONCLUSIVE'
+  if (series.outcome !== expectedOutcome) throw new Error('Wallet-run series outcome differs')
+  return { results, repetitionMatch }
+}

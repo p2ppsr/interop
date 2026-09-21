@@ -1,0 +1,373 @@
+Activity Resolver Table:
+  Schemes:
+      exp+metanet-mobile:
+        20fc9bd app.metanet.explorer/.MainActivity filter f4b8703
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "metanet"
+          Scheme: "exp+metanet-mobile"
+      http:
+        20fc9bd app.metanet.explorer/.MainActivity filter 59d9680
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "https"
+          Scheme: "http"
+          AutoVerify=true
+      https:
+        20fc9bd app.metanet.explorer/.MainActivity filter 59d9680
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "https"
+          Scheme: "http"
+          AutoVerify=true
+      metanet:
+        20fc9bd app.metanet.explorer/.MainActivity filter f4b8703
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "metanet"
+          Scheme: "exp+metanet-mobile"
+        20fc9bd app.metanet.explorer/.MainActivity filter ef444b9
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.BROWSABLE"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "metanet"
+
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        20fc9bd app.metanet.explorer/.MainActivity filter 55eabb2
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      android.intent.action.QUICKBOOT_POWERON:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      com.htc.intent.action.QUICKBOOT_POWERON:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        907b598 app.metanet.explorer/androidx.profileinstaller.ProfileInstallReceiver filter e0b2c57
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      expo.modules.notifications.NOTIFICATION_EVENT:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        907b598 app.metanet.explorer/androidx.profileinstaller.ProfileInstallReceiver filter d2cd1f1
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      com.google.android.c2dm.intent.RECEIVE:
+        b07d0fe app.metanet.explorer/io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver filter 675905f
+          Action: "com.google.android.c2dm.intent.RECEIVE"
+        c8bff0a app.metanet.explorer/com.google.firebase.iid.FirebaseInstanceIdReceiver filter b0cd37b
+          Action: "com.google.android.c2dm.intent.RECEIVE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        907b598 app.metanet.explorer/androidx.profileinstaller.ProfileInstallReceiver filter 57301d6
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        907b598 app.metanet.explorer/androidx.profileinstaller.ProfileInstallReceiver filter 48e9344
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+      android.intent.action.BOOT_COMPLETED:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      android.intent.action.MY_PACKAGE_REPLACED:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      android.intent.action.REBOOT:
+        a859aac app.metanet.explorer/expo.modules.notifications.service.NotificationsService filter d0b7375
+          Action: "android.intent.action.QUICKBOOT_POWERON"
+          Action: "com.htc.intent.action.QUICKBOOT_POWERON"
+          Action: "expo.modules.notifications.NOTIFICATION_EVENT"
+          Action: "android.intent.action.BOOT_COMPLETED"
+          Action: "android.intent.action.MY_PACKAGE_REPLACED"
+          Action: "android.intent.action.REBOOT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+
+Service Resolver Table:
+  Non-Data Actions:
+      com.google.firebase.MESSAGING_EVENT:
+        c2b9c2d app.metanet.explorer/io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService filter ff56562
+          Action: "com.google.firebase.MESSAGING_EVENT"
+        c2c36f3 app.metanet.explorer/expo.modules.notifications.service.ExpoFirebaseMessagingService filter a839fb0
+          Action: "com.google.firebase.MESSAGING_EVENT"
+          mPriority=-1, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+        6d2ce29 app.metanet.explorer/com.google.firebase.messaging.FirebaseMessagingService filter f4875ae
+          Action: "com.google.firebase.MESSAGING_EVENT"
+          mPriority=-500, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+
+Domain verification status:
+
+Permissions:
+  Permission [app.metanet.explorer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (b84a28):
+    sourcePackage=app.metanet.explorer
+    uid=10211 gids=[] type=0 prot=signature
+    perm=PermissionInfo{f0e7ee0 app.metanet.explorer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  app.metanet.explorer/com.google.mlkit.common.internal.MlKitInitProvider:
+    Provider{5147599 app.metanet.explorer/com.google.mlkit.common.internal.MlKitInitProvider}
+  app.metanet.explorer/io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider:
+    Provider{2e0e05e app.metanet.explorer/io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider}
+  app.metanet.explorer/expo.modules.filesystem.FileSystemFileProvider:
+    Provider{1787d5b app.metanet.explorer/expo.modules.filesystem.FileSystemFileProvider}
+  app.metanet.explorer/com.google.firebase.provider.FirebaseInitProvider:
+    Provider{5e149f8 app.metanet.explorer/com.google.firebase.provider.FirebaseInitProvider}
+  app.metanet.explorer/expo.modules.clipboard.ClipboardFileProvider:
+    Provider{3463ed1 app.metanet.explorer/expo.modules.clipboard.ClipboardFileProvider}
+  app.metanet.explorer/androidx.startup.InitializationProvider:
+    Provider{2b29d36 app.metanet.explorer/androidx.startup.InitializationProvider}
+  app.metanet.explorer/com.reactnativecommunity.webview.RNCWebViewFileProvider:
+    Provider{fb79437 app.metanet.explorer/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+  app.metanet.explorer/io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsInitProvider:
+    Provider{9dd0da4 app.metanet.explorer/io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsInitProvider}
+
+ContentProvider Authorities:
+  [app.metanet.explorer.FileSystemFileProvider]:
+    Provider{1787d5b app.metanet.explorer/expo.modules.filesystem.FileSystemFileProvider}
+      applicationInfo=ApplicationInfo{7fff341 app.metanet.explorer}
+  [app.metanet.explorer.ClipboardFileProvider]:
+    Provider{3463ed1 app.metanet.explorer/expo.modules.clipboard.ClipboardFileProvider}
+      applicationInfo=ApplicationInfo{95e90e6 app.metanet.explorer}
+  [app.metanet.explorer.mlkitinitprovider]:
+    Provider{5147599 app.metanet.explorer/com.google.mlkit.common.internal.MlKitInitProvider}
+      applicationInfo=ApplicationInfo{54df627 app.metanet.explorer}
+  [app.metanet.explorer.reactnativefirebasecrashlyticsinitprovider]:
+    Provider{9dd0da4 app.metanet.explorer/io.invertase.firebase.crashlytics.ReactNativeFirebaseCrashlyticsInitProvider}
+      applicationInfo=ApplicationInfo{c5be0d4 app.metanet.explorer}
+  [app.metanet.explorer.reactnativefirebaseappinitprovider]:
+    Provider{2e0e05e app.metanet.explorer/io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider}
+      applicationInfo=ApplicationInfo{997827d app.metanet.explorer}
+  [app.metanet.explorer.fileprovider]:
+    Provider{fb79437 app.metanet.explorer/com.reactnativecommunity.webview.RNCWebViewFileProvider}
+      applicationInfo=ApplicationInfo{8f2d572 app.metanet.explorer}
+  [app.metanet.explorer.androidx-startup]:
+    Provider{2b29d36 app.metanet.explorer/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{499cdc3 app.metanet.explorer}
+  [app.metanet.explorer.firebaseinitprovider]:
+    Provider{5e149f8 app.metanet.explorer/com.google.firebase.provider.FirebaseInitProvider}
+      applicationInfo=ApplicationInfo{a003640 app.metanet.explorer}
+
+Key Set Manager:
+  [app.metanet.explorer]
+      Signing KeySets: 59
+
+Packages:
+  Package [app.metanet.explorer] (c699d6c):
+    appId=10211
+    pkg=Package{4771f35 app.metanet.explorer}
+    codePath=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==
+    resourcePath=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==
+    legacyNativeLibraryDir=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=66 minSdk=24 targetSdk=36
+    minExtensionVersions=[]
+    versionName=1.1.10
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=3
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesIntents=[Intent { act=android.intent.action.VIEW cat=[android.intent.category.BROWSABLE] dat=https:/... }, Intent { act=org.chromium.intent.action.PAY }, Intent { act=org.chromium.intent.action.IS_READY_TO_PAY }, Intent { act=org.chromium.intent.action.UPDATE_PAYMENT_DETAILS }, Intent { act=android.intent.action.OPEN_DOCUMENT_TREE }, Intent { act=android.support.customtabs.action.CustomTabsService }, Intent { act=androidx.camera.extensions.action.VENDOR_ACTION }]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.camera.extensions.impl
+      androidx.window.extensions
+      androidx.window.sidecar
+      android.ext.adservices
+    usesLibraryFiles:
+      /system_ext/framework/androidx.window.extensions.jar
+      /system_ext/framework/androidx.window.sidecar.jar
+    timeStamp=2026-09-20 17:55:05
+    lastUpdateTime=2026-09-20 17:55:05
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{a389fca version:3, signatures:[c73646ba], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE HAS_DOMAIN_URLS PARTIALLY_DIRECT_BOOT_AWARE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      app.metanet.explorer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+      com.sonyericsson.home.permission.BROADCAST_BADGE
+      android.permission.POST_NOTIFICATIONS
+      com.google.android.c2dm.permission.RECEIVE
+      android.permission.ACCESS_FINE_LOCATION
+      android.permission.MODIFY_AUDIO_SETTINGS
+      com.oppo.launcher.permission.WRITE_SETTINGS
+      me.everything.badger.permission.BADGE_COUNT_READ
+      com.anddoes.launcher.permission.UPDATE_COUNT
+      com.sec.android.provider.badge.permission.READ
+      me.everything.badger.permission.BADGE_COUNT_WRITE
+      com.huawei.android.launcher.permission.WRITE_SETTINGS
+      android.permission.RECEIVE_BOOT_COMPLETED
+      android.permission.INTERNET
+      android.permission.READ_EXTERNAL_STORAGE
+      android.permission.ACCESS_COARSE_LOCATION
+      android.permission.READ_APP_BADGE
+      com.majeur.launcher.permission.UPDATE_BADGE
+      android.permission.ACCESS_NETWORK_STATE
+      com.oppo.launcher.permission.READ_SETTINGS
+      android.permission.CAMERA
+      com.sonymobile.home.permission.PROVIDER_INSERT_BADGE
+      com.huawei.android.launcher.permission.READ_SETTINGS
+      android.permission.USE_FINGERPRINT
+      com.sec.android.provider.badge.permission.WRITE
+      com.sec.android.provider.badge.BadgeProvider
+      app.metanet.explorer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+      android.permission.WRITE_EXTERNAL_STORAGE
+      android.permission.VIBRATE
+      com.huawei.android.launcher.permission.CHANGE_BADGE
+      android.permission.USE_BIOMETRIC
+      com.htc.launcher.permission.UPDATE_SHORTCUT
+      android.permission.RECORD_AUDIO
+      com.htc.launcher.permission.READ_SETTINGS
+      android.permission.WAKE_LOCK
+    install permissions:
+      com.google.android.c2dm.permission.RECEIVE: granted=true
+      android.permission.MODIFY_AUDIO_SETTINGS: granted=true
+      android.permission.RECEIVE_BOOT_COMPLETED: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      android.permission.USE_FINGERPRINT: granted=true
+      app.metanet.explorer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.USE_BIOMETRIC: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=352811 deDataInode=73917 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/app.metanet.explorer
+      firstInstallTime=2026-09-20 17:55:05
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-Xu6d.frro
+        /data/resource-cache/com.android.systemui-accent-UDtX.frro
+        /data/resource-cache/com.android.systemui-dynamic-Z64Q.frro
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_FINE_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_EXTERNAL_STORAGE: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.ACCESS_COARSE_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.WRITE_EXTERNAL_STORAGE: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    com.google.android.dialer:
+      app.metanet.explorer
+    com.google.android.apps.restore:
+      app.metanet.explorer
+    com.google.android.apps.safetyhub:
+      app.metanet.explorer
+    com.google.android.apps.messaging:
+      app.metanet.explorer
+    com.google.android.settings.intelligence:
+      app.metanet.explorer
+    com.google.android.as:
+      app.metanet.explorer
+    com.google.android.apps.wellbeing:
+      app.metanet.explorer
+    com.google.android.gms:
+      app.metanet.explorer
+    com.google.android.apps.docs:
+      app.metanet.explorer
+    com.google.android.contacts:
+      app.metanet.explorer
+    com.google.android.apps.youtube.music:
+      app.metanet.explorer
+    com.google.android.apps.maps:
+      app.metanet.explorer
+    com.google.android.calendar:
+      app.metanet.explorer
+    com.google.android.youtube:
+      app.metanet.explorer
+    com.google.android.gm:
+      app.metanet.explorer
+    com.google.android.apps.wallpaper:
+      app.metanet.explorer
+    com.android.wallpaper:
+      app.metanet.explorer
+    com.android.systemui.accessibility.accessibilitymenu:
+      app.metanet.explorer
+    app.metanet.explorer:
+      com.google.android.documentsui
+      com.android.chrome
+      com.google.android.apps.docs
+  queryable via interaction:
+    User 0:
+      [com.android.server.telecom,com.android.providers.settings,com.android.DeviceAsWebcam,com.android.localtransport,com.android.location.fused,android,com.android.emulator.multidisplay,com.android.inputdevices,com.android.dynsystem,com.android.settings,com.android.keychain]:
+        app.metanet.explorer
+      com.google.android.gms:
+        app.metanet.explorer
+      com.google.android.webview:
+        app.metanet.explorer
+      com.google.android.inputmethod.latin:
+        app.metanet.explorer
+      app.metanet.explorer:
+        com.google.android.webview
+  queryable via uses-library:
+
+Dexopt state:
+  [app.metanet.explorer]
+    path: /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk
+      arm64: [status=verify] [reason=install] [primary-abi]
+        [location is /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/oat/arm64/base.odex]
+
+Compiler stats:
+  [app.metanet.explorer]
+     base.apk - 4200

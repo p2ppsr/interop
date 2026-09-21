@@ -5,7 +5,7 @@ import { canonical, digest, hashJson, parseJson, validate, equal } from './json.
 
 export const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 export const VERSION = '0.1.0'; // Stable self-test and evidence protocol.
-export const RELEASE_VERSION = '0.4.0';
+export const RELEASE_VERSION = '0.5.0';
 export const readJson = file => parseJson(fs.readFileSync(file));
 const schemas = new Map();
 export function checkSchema(name, value) {
@@ -97,5 +97,9 @@ export function checkRepository() {
       }
     }
   }
-  return { catalogs: catalogs.length, draftVectors: catalogs.reduce((n, c) => n + c.vectors.length, 0), executableSutVectors: 0 };
+  return {
+    catalogs: catalogs.length,
+    draftVectors: catalogs.reduce((n, c) => n + c.vectors.length, 0),
+    executableSutVectors: catalogs.reduce((n, c) => n + c.vectors.filter(vector => vector.executable).length, 0)
+  };
 }

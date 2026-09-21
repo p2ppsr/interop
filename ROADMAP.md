@@ -6,17 +6,17 @@ The charter, governance, licensing policy, initial candidates, and determinism m
 
 ## Gate 1 — establish the production-wallet intake boundary
 
-The hybrid execution architecture is adopted under [ISI-4 decision 0003](programs/ISI-4/decisions/0003-hybrid-laboratory.md). The portable application-serving lane and hosted macOS qualification lane are executable and produce infrastructure-only evidence. [Decision 0004](programs/ISI-4/decisions/0004-native-qualification-lanes.md) records two native repetitions. Scored ToDo execution remains blocked under [decision 0002](programs/ISI-4/decisions/0002-native-infrastructure.md) until controlled-service routing, fixture state, reset, and oracle requirements are complete.
+The hybrid execution architecture is adopted under [ISI-4 decision 0003](programs/ISI-4/decisions/0003-hybrid-laboratory.md). The portable application-serving lane, hosted macOS qualification lane, Chromium extension lane, local Android AVD, and repository-scoped KVM Android runner are executable. [Decision 0005](programs/ISI-4/decisions/0005-multi-wallet-execution.md) records the multi-wallet boundary and the first scored run.
 
-Apply [production SUT intake](docs/intake.md) to the unchanged release. Artifact identity, signatures, ordinary installation, mainnet reporting, and the local bridge now have native evidence. Complete local and remote storage observations, all service dependencies, routing, and configuration effects before replacing the blocked intake review.
+Yours Wallet 5.1.0 has exact release identity, ordinary initialization, mainnet reporting, isolated service routing, mainnet-format fixture funding, independent oracles, two clean repetitions, and a retained experimental result. Metanet Explorer 1.1.10 has exact AAB identity and native runtime evidence; wallet vectors stop at its ordinary phone-verification boundary. BSV Browser 1.6.1 has source-candidate engineering evidence and awaits a canonical publisher binary. BSV Desktop retains its native baseline while its controlled-service and fixture-state work remains open.
 
-Complete the pinned Tart guest as the independent reconstruction lane and run the admitted driver there. Resolve the required service routes through ordinary supported configuration. Pin the complete controlled-service closure and mainnet-format fixture model. The initial profile permits no public-mainnet broadcast or funds. Unresolved mandatory dependencies block the affected vectors while other observable behavior remains eligible for separately scoped evaluation.
+Complete the pinned Tart guest as the independent BSV Desktop reconstruction lane. Add an admitted Metanet activation fixture, a publisher BSV Browser artifact, and the remaining device-specific runners without introducing personal identities or public-mainnet spending. Unresolved prerequisites block only their affected vectors.
 
 ## Gate 2 — execute the first ToDo sequence
 
-Admit the compiled todo-ts artifact and canonical wallet configuration under ISI-4 1.0.0. Serve the application at the canonical origin. Implement independent create/list/reload/decrypt/redeem assertions and record two clean repetitions with retained raw evidence. Validate transaction bytes, scripts, amounts, basket state, encryption context, and declared service-state transitions independently of UI markers.
+The deterministic compiled `todo-ts` artifact is retained and its application path is executable. The Yours Wallet lane implements independent create/list/reload/decrypt/redeem assertions and records raw transaction bytes, decoded PushDrop fields, basket state, encryption results, service transitions, and two clean repetitions.
 
-The initial demonstration covers V001–V004. Complete BRC-100 coverage and public-mainnet acceptance have separate evidence requirements. Wallet regtest support and special test builds are not prerequisites for this profile.
+The initial demonstration has completed V001–V004. V005 and V006 produced repeatable failures, which are retained as results. Complete the V005 permission-denial and alternate-origin corpus, the V006 accepted/rejected/recovery submission schedules, the V007 ISI-3 multi-remote substitution, and the V008 clause-level BRC-100 corpus. Public-mainnet acceptance remains a separate evidence property.
 
 ## Gate 3 — isolated interoperability boundaries
 
