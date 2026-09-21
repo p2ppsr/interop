@@ -28,10 +28,29 @@ wait_for_boot() {
   return 1
 }
 
+wait_for_stable_adb() {
+  local consecutive=0
+  for _ in $(seq 1 30); do
+    if timeout 5 "$adb_bin" -s "$serial" shell id -u >/dev/null 2>&1; then
+      consecutive=$((consecutive + 1))
+      test "$consecutive" -ge 3 && return
+    else
+      consecutive=0
+    fi
+    sleep 2
+  done
+  return 1
+}
+
 become_root() {
   for attempt in $(seq 1 12); do
     if ! timeout 20 "$adb_bin" -s "$serial" wait-for-device >/dev/null 2>&1; then
       printf 'adb root attempt %s: device unavailable\n' "$attempt" >&2
+      if test "$((attempt % 3))" -eq 0; then
+        printf 'restarting dedicated runner ADB transport\n' >&2
+        "$adb_bin" kill-server >/dev/null 2>&1 || true
+        "$adb_bin" start-server >/dev/null 2>&1 || true
+      fi
       sleep 2
       continue
     fi
@@ -44,6 +63,11 @@ become_root() {
       fi
     fi
     printf 'adb root attempt %s: %s\n' "$attempt" "$root_response" >&2
+    if test "$((attempt % 3))" -eq 0; then
+      printf 'restarting dedicated runner ADB transport\n' >&2
+      "$adb_bin" kill-server >/dev/null 2>&1 || true
+      "$adb_bin" start-server >/dev/null 2>&1 || true
+    fi
     sleep 2
   done
   return 1
@@ -52,6 +76,7 @@ become_root() {
 remount_log="$(mktemp)"
 trap 'rm -f "$remount_log"' EXIT
 wait_for_boot
+wait_for_stable_adb
 become_root
 remount_code=0
 "$adb_bin" -s "$serial" remount >"$remount_log" 2>&1 || remount_code=$?
@@ -61,6 +86,7 @@ if test "$remount_code" -ne 0 || grep -qi 'reboot your device' "$remount_log"; t
   fi
   "$adb_bin" -s "$serial" reboot
   wait_for_boot
+  wait_for_stable_adb
   become_root
   "$adb_bin" -s "$serial" remount >"$remount_log" 2>&1
 fi
@@ -71,6 +97,7 @@ test "$("$adb_bin" -s "$serial" shell id -u | tr -d '\r')" = 0
 "$adb_bin" -s "$serial" shell chmod 0644 "/system/etc/security/cacerts/${certificate_hash}.0"
 "$adb_bin" -s "$serial" reboot
 wait_for_boot
+wait_for_stable_adb
 sdk="$("$adb_bin" -s "$serial" shell getprop ro.build.version.sdk | tr -d '\r')"
 if test "$sdk" -ge 34; then
   become_root
