@@ -1,0 +1,739 @@
+--------- beginning of main
+09-20 17:55:19.513  3080  3080 I etanet.explorer: Using CollectorTypeCMC GC.
+09-20 17:55:19.524  3080  3080 E etanet.explorer: Not starting debugger since process cannot load the jdwp agent.
+09-20 17:55:19.533  3080  3080 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+09-20 17:55:19.589  3080  3080 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+09-20 17:55:19.590  3080  3080 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+09-20 17:55:19.675  3080  3080 D nativeloader: Configuring clns-9 for other apk /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/lib/arm64:/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/app.metanet.explorer
+09-20 17:55:19.679  3080  3080 I etanet.explorer: AssetManager2(0xb4000073ca403358) locale list changing from [] to [en-US]
+09-20 17:55:19.687  3080  3080 V GraphicsEnvironment: Currently set values for:
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment: app.metanet.explorer is not listed in per-application setting
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment: ANGLE allowlist from config: 
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment: app.metanet.explorer is not listed in ANGLE allowlist or settings, returning default
+09-20 17:55:19.688  3080  3080 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+09-20 17:55:19.700  3080  3080 D SessionsDependencies: Dependency to CRASHLYTICS added.
+09-20 17:55:19.702  3080  3080 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+09-20 17:55:19.705  3080  3080 D FirebaseSessions: Initializing Firebase Sessions SDK.
+09-20 17:55:19.710  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libcrashlytics.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes4.dex): ok
+09-20 17:55:19.711  3080  3080 I FirebaseCrashlytics: Initializing Firebase Crashlytics 19.4.4 for app.metanet.explorer
+09-20 17:55:19.719  3080  3080 D SessionsDependencies: Subscriber CRASHLYTICS registered.
+09-20 17:55:19.720  3080  3127 D FirebaseSessions: No Sessions subscribers. Not listening to lifecycle events.
+09-20 17:55:19.729  3080  3080 I FirebaseInitProvider: FirebaseApp initialization successful
+09-20 17:55:19.730  3080  3080 D ReactNativeFirebaseApp: received application context.
+09-20 17:55:19.733  3080  3080 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBJSON: true
+09-20 17:55:19.733  3080  3080 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:19.733  3080  3080 I RNFBCrashlyticsInit: initialization successful
+09-20 17:55:19.755  3080  3080 W SoLoader: Initializing SoLoader: 0
+09-20 17:55:19.757  3080  3080 W SoLoader: Recording new base apk path: /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk
+09-20 17:55:19.757  3080  3080 W SoLoader: Previously recorded 0 base apk paths.
+09-20 17:55:19.757  3080  3080 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+09-20 17:55:19.757  3080  3080 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+09-20 17:55:19.757  3080  3080 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a]]
+09-20 17:55:19.762  3080  3080 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/lib/arm64 flags = 0]]
+09-20 17:55:19.762  3080  3080 I SoLoader: init finish: 4 SO sources prepared
+09-20 17:55:19.762  3080  3080 W SoLoader: SoLoader initialized: 8
+09-20 17:55:19.776  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.782  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libjsi.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.787  3080  3132 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+09-20 17:55:19.788  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libfbjni.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.799  3080  3135 D libcrashlytics: Initializing libcrashlytics version 3.2.0
+09-20 17:55:19.803  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreactnative.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Entering merged library JNI_OnLoad.
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x714d7cf5e8
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x714d8a3c4c
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x714d8c0068
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x714d903dd4
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x714d9ee9c0
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x714d9f3c54
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x714d9ffc58
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x714da02b1c
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x714da28164
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x714dad3580
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x714dad9f94
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x714dae156c
+09-20 17:55:19.803  3080  3080 D jni_lib_merge: About to register 12 actual methods.
+09-20 17:55:19.828  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreact_codegen_rnscreens.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Entering merged library JNI_OnLoad.
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x714d7cf5e8
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x714d8a3c4c
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x714d8c0068
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x714d903dd4
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x714d9ee9c0
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x714d9f3c54
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x714d9ffc58
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x714da02b1c
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x714da28164
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x714dad3580
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x714dad9f94
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x714dae156c
+09-20 17:55:19.828  3080  3080 D jni_lib_merge: About to register 12 actual methods.
+09-20 17:55:19.829  3080  3135 D libcrashlytics: Initializing native crash handling successful.
+09-20 17:55:19.832  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreact_codegen_RNCSlider.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.836  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreact_codegen_rnsvg.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Entering merged library JNI_OnLoad.
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x714d7cf5e8
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x714d8a3c4c
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x714d8c0068
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x714d903dd4
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x714d9ee9c0
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x714d9f3c54
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x714d9ffc58
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x714da02b1c
+09-20 17:55:19.836  3080  3080 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x714da28164
+09-20 17:55:19.837  3080  3080 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x714dad3580
+09-20 17:55:19.837  3080  3080 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x714dad9f94
+09-20 17:55:19.837  3080  3080 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x714dae156c
+09-20 17:55:19.837  3080  3080 D jni_lib_merge: About to register 12 actual methods.
+09-20 17:55:19.839  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreact_codegen_safeareacontext.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:19.843  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libappmodules.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+--------- beginning of system
+09-20 17:55:19.863  3080  3142 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+09-20 17:55:19.864  3080  3080 I etanet.explorer: AssetManager2(0xb4000073ca4120d8) locale list changing from [] to [en-US]
+09-20 17:55:19.876  3080  3126 I DynamiteModule: Considering local module com.google.android.gms.measurement.dynamite:152 and remote module com.google.android.gms.measurement.dynamite:139
+09-20 17:55:19.876  3080  3126 I DynamiteModule: Selected local version of com.google.android.gms.measurement.dynamite
+09-20 17:55:19.881  3080  3080 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+09-20 17:55:19.882  3080  3080 I etanet.explorer: AssetManager2(0xb4000073ca40c318) locale list changing from [] to [en-US]
+09-20 17:55:19.938  3080  3080 I NitroBsvCryptoOnLoad: Loading NitroBsvCrypto C++ library...
+09-20 17:55:19.958  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libNitroBsvCrypto.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes5.dex): ok
+09-20 17:55:19.958  3080  3080 I NitroBsvCryptoOnLoad: Successfully loaded NitroBsvCrypto C++ library!
+09-20 17:55:19.958  3080  3080 I QuickCrypto: Loading C++ library...
+09-20 17:55:19.974  3080  3080 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libQuickCrypto.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes5.dex): ok
+09-20 17:55:19.978  3080  3080 I QuickCrypto: Successfully loaded C++ library!
+09-20 17:55:19.987  3080  3142 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+09-20 17:55:19.987  3080  3142 I EGL_emulation: Opening libGLESv2_emulation.so
+09-20 17:55:19.991  3080  3142 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+09-20 17:55:19.992  3080  3142 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+09-20 17:55:20.019  3080  3080 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+09-20 17:55:20.019  3080  3080 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+09-20 17:55:20.021  3080  3080 D CompatChangeReporter: Compat change id reported: 377864165; UID 10211; state: ENABLED
+09-20 17:55:20.021  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+09-20 17:55:20.021  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+09-20 17:55:20.021  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+09-20 17:55:20.021  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+09-20 17:55:20.021  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+09-20 17:55:20.022  3080  3080 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+09-20 17:55:20.032  3080  3080 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+09-20 17:55:20.032  3080  3080 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+09-20 17:55:20.040  3080  3080 W HWUI    : Unknown dataspace 0
+09-20 17:55:20.091  3080  3120 I FirebaseCrashlytics: Saved version control info
+09-20 17:55:20.092  3080  3149 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libhermesvm.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:20.095  3080  3149 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libhermestooling.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: Entering merged library JNI_OnLoad.
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: Preparing 4 pre-merged libs (including stub)
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: Preparing to register libhermes_executor_so.  onload_func: 0x70be7e2eec
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: Preparing to register libhermesinstancejni_so.  onload_func: 0x70be7ea69c
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: Preparing to register libjsijniprofiler_so.  onload_func: 0x70be7eaf44
+09-20 17:55:20.095  3080  3149 D jni_lib_merge: About to register 3 actual methods.
+09-20 17:55:20.531  3080  3146 W ConfigurationContentLdr: ContentProvider query returned null cursor, using default values
+09-20 17:55:20.537  3080  3146 I FA      : App measurement initialized, version: 130000
+09-20 17:55:20.537  3080  3146 I FA      : To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+09-20 17:55:20.538  3080  3146 I FA      : To enable faster debug mode event logging run:
+09-20 17:55:20.538  3080  3146 I FA      :   adb shell setprop debug.firebase.analytics.app app.metanet.explorer
+09-20 17:55:20.690  3080  3080 I Choreographer: Skipped 36 frames!  The application may be doing too much work on its main thread.
+09-20 17:55:20.798  3080  3149 I ExpoModulesCore: ✅ AppContext was initialized
+09-20 17:55:20.860  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+09-20 17:55:20.862  3080  3149 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+09-20 17:55:20.879  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 17:55:20.879  3080  3080 I ImeTracker: app.metanet.explorer:9e2adc1d: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 17:55:20.882  3080  3080 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+09-20 17:55:20.882  3080  3080 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+09-20 17:55:20.889  3080  3149 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+09-20 17:55:20.923  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libworklets.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:20.930  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libexpo-modules-core.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:20.932  3080  3150 W BridgelessReactContext: [WARNING] Bridgeless doesn't support CatalystInstance. Accessing an API that's not part of the new architecture is not encouraged usage.
+09-20 17:55:20.939  3080  3150 I ExpoModulesCore: ✅ JSI interop was installed
+09-20 17:55:20.973  3080  3150 I ExpoModulesCore: ✅ Constants were exported
+09-20 17:55:21.036  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class expo.modules.kotlin.views.GroupViewManagerWrapper
+09-20 17:55:21.037  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+09-20 17:55:21.039  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContainerViewManager
+09-20 17:55:21.039  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.reanimated.view.REASharedTransitionBoundaryManager
+09-20 17:55:21.040  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class expo.modules.kotlin.views.SimpleViewManagerWrapper
+09-20 17:55:21.042  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.host.TabsHostViewManager
+09-20 17:55:21.042  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderConfigViewManager
+09-20 17:55:21.042  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderSubviewManager
+09-20 17:55:21.043  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.modals.formsheet.FormSheetHostViewManager
+09-20 17:55:21.044  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.scrollviewmarker.ScrollViewMarkerViewManager
+09-20 17:55:21.048  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.modals.formsheet.FormSheetContentWrapperViewManager
+09-20 17:55:21.048  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContentWrapperManager
+09-20 17:55:21.049  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.screen.StackScreenViewManager
+09-20 17:55:21.050  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+09-20 17:55:21.051  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+09-20 17:55:21.052  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenViewManager
+09-20 17:55:21.052  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.header.config.StackHeaderConfigViewManager
+09-20 17:55:21.053  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+09-20 17:55:21.053  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.SearchBarManager
+09-20 17:55:21.054  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.host.StackHostViewManager
+09-20 17:55:21.055  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenFooterManager
+09-20 17:55:21.056  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.slider.ReactSliderManager
+09-20 17:55:21.057  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ModalScreenViewManager
+09-20 17:55:21.057  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.safearea.SafeAreaViewManager
+09-20 17:55:21.057  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackViewManager
+09-20 17:55:21.060  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.header.subview.StackHeaderSubviewViewManager
+09-20 17:55:21.061  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativecommunity.webview.RNCWebViewManager
+09-20 17:55:21.062  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class org.reactnative.maskedview.RNCMaskedViewManager
+09-20 17:55:21.064  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.reactnativepagerview.PagerViewViewManager
+09-20 17:55:21.065  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.screen.TabsScreenViewManager
+09-20 17:55:21.130  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$DefsViewManager
+09-20 17:55:21.131  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.VirtualViewManager$RenderableShadowNode
+09-20 17:55:21.132  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeMergeManager
+09-20 17:55:21.133  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+09-20 17:55:21.134  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LinearGradientManager
+09-20 17:55:21.135  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeGaussianBlurManager
+09-20 17:55:21.138  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+09-20 17:55:21.138  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+09-20 17:55:21.139  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+09-20 17:55:21.139  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeColorMatrixManager
+09-20 17:55:21.140  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+09-20 17:55:21.140  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ClipPathViewManager
+09-20 17:55:21.140  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$SymbolManager
+09-20 17:55:21.141  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PatternManager
+09-20 17:55:21.141  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeBlendManager
+09-20 17:55:21.141  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+09-20 17:55:21.146  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.SvgViewManager
+09-20 17:55:21.148  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+09-20 17:55:21.152  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$UseViewManager
+09-20 17:55:21.155  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$CircleViewManager
+09-20 17:55:21.155  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TSpanViewManager
+09-20 17:55:21.160  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FilterManager
+09-20 17:55:21.162  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MarkerManager
+09-20 17:55:21.164  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerButtonViewManager
+09-20 17:55:21.167  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+09-20 17:55:21.168  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ForeignObjectManager
+09-20 17:55:21.170  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$EllipseViewManager
+09-20 17:55:21.170  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$LineViewManager
+09-20 17:55:21.171  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeFloodManager
+09-20 17:55:21.171  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$GroupViewManager
+09-20 17:55:21.171  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextViewManager
+09-20 17:55:21.176  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$ImageViewManager
+09-20 17:55:21.176  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeCompositeManager
+09-20 17:55:21.177  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+09-20 17:55:21.177  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RadialGradientManager
+09-20 17:55:21.177  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$MaskManager
+09-20 17:55:21.181  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+09-20 17:55:21.183  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$RectViewManager
+09-20 17:55:21.184  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$TextPathViewManager
+09-20 17:55:21.185  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+09-20 17:55:21.187  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$FeOffsetManager
+09-20 17:55:21.189  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.horcrux.svg.RenderableViewManager$PathViewManager
+09-20 17:55:21.190  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+09-20 17:55:21.191  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+09-20 17:55:21.196  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+09-20 17:55:21.197  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+09-20 17:55:21.198  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerRootViewManager
+09-20 17:55:21.198  3080  3150 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.virtual.view.ReactVirtualViewManager
+09-20 17:55:21.230  3080  3146 I FA      : Tag Manager is not found and thus will not be used
+09-20 17:55:21.463  3080  3150 V AsyncStorageExpoMigration: No scoped database found
+09-20 17:55:21.475  3080  3150 I NitroModules: Loading NitroModules C++ library...
+09-20 17:55:21.475  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libNitroModules.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes5.dex): ok
+09-20 17:55:21.476  3080  3150 I NitroModules: Successfully loaded NitroModules C++ library!
+09-20 17:55:21.521  3080  3150 I ReactNativeJS: '[headless] 🚀 FCM background handler registered at', '2026-09-21T00:55:21.521Z'
+09-20 17:55:21.521  3080  3150 I ReactNativeJS: [headless] Reconstructing wallet from storage...
+09-20 17:55:21.547  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/librnscreens.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes5.dex): ok
+09-20 17:55:21.597  3080  3150 I ReactNativeJS: [NativeCrypto] Ready: openssl-secp256k1/1 async-backend-v1
+09-20 17:55:21.598  3080  3150 I ReactNativeJS: Running "main"
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBJSON: true
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isErrorGenerationOnJSCrashEnabled via RNFBJSON: true
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isErrorGenerationOnJSCrashEnabled final value: true
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isCrashlyticsJavascriptExceptionHandlerChainingEnabled via RNFBJSON: true
+09-20 17:55:21.639  3080  3150 D RNFBCrashlyticsInit: isCrashlyticsJavascriptExceptionHandlerChainingEnabled final value: true
+09-20 17:55:21.646  3080  3080 I ExpoModulesCore: ✅ JSI interop was installed
+09-20 17:55:21.706  3080  3150 I ReactNativeJS: '🌍 Device language detected via expo-localization:', 'en'
+09-20 17:55:21.707  3080  3150 I ReactNativeJS: '🔤 Detected language code:', 'en'
+09-20 17:55:21.707  3080  3150 I ReactNativeJS: '📱 Full locale info:', { languageTag: 'en-US',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   regionCode: 'US',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   languageRegionCode: 'US',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   textDirection: 'ltr',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   languageCode: 'en',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   languageScriptCode: null,
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   decimalSeparator: '.',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   digitGroupingSeparator: ',',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   measurementSystem: 'us',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   temperatureUnit: 'fahrenheit',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   currencyCode: 'USD',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   currencySymbol: '$',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   languageCurrencyCode: 'USD',
+09-20 17:55:21.707  3080  3150 I ReactNativeJS:   languageCurrencySymbol: '$' }
+09-20 17:55:21.708  3080  3150 I ReactNativeJS: '🌍 Final language to use:', 'en'
+09-20 17:55:21.709  3080  3150 I ReactNativeJS: '📋 Supported languages:', [ 'en', 'es', 'zh', 'hi', 'fr', 'ar', 'pt', 'bn', 'ru', 'id' ]
+09-20 17:55:21.712  3080  3150 I ReactNativeJS: TabStore constructor called
+09-20 17:55:21.717  3080  3150 W ReactNativeJS: [headless] No wallet snapshot found in storage
+09-20 17:55:21.719  3080  3150 W ReactNativeJS: [headless] Could not reconstruct wallet from storage
+09-20 17:55:21.725  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:21.725  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:21.739  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:24.249  3080  3363 I etanet.explorer: AssetManager2(0xb4000073ca429af8) locale list changing from [] to [en-US]
+09-20 17:55:24.249  3080  3363 I WebViewFactory: Loading com.google.android.webview version 133.0.6943.137 (code 694313732)
+09-20 17:55:24.250  3080  3363 I etanet.explorer: AssetManager2(0xb4000073ca423a18) locale list changing from [] to [en-US]
+09-20 17:55:24.250  3080  3363 I etanet.explorer: AssetManager2(0xb4000073ca4249b8) locale list changing from [] to [en-US]
+09-20 17:55:24.251  3080  3363 I etanet.explorer: AssetManager2(0xb4000073ca4233d8) locale list changing from [] to [en-US]
+09-20 17:55:24.251  3080  3363 I etanet.explorer: AssetManager2(0xb4000073ca4265d8) locale list changing from [] to [en-US]
+09-20 17:55:24.251  3080  3363 V ResourcesManager: The following library key has been added: ResourcesKey{ mHash=168b28e3 mResDir=null mSplitDirs=[] mOverlayDirs=[] mLibDirs=[/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk,/data/app/~~IZJ20XX3Qjn3ucgscOTxNA==/com.google.android.trichromelibrary_694313732-o9AUKMAShJPhoa8KBhX5EA==/TrichromeLibrary.apk] mDisplayId=0 mOverrideConfig=v36 mCompatInfo={420dpi always-compat} mLoaders=[]}
+09-20 17:55:24.253  3080  3363 W etanet.explorer: Failed to find entry 'classes.dex': Entry not found
+09-20 17:55:24.253  3080  3363 D nativeloader: Configuring clns-10 for other apk /data/app/~~IZJ20XX3Qjn3ucgscOTxNA==/com.google.android.trichromelibrary_694313732-o9AUKMAShJPhoa8KBhX5EA==/TrichromeLibrary.apk. target_sdk_version=34, uses_libraries=ALL, library_path=/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/lib/arm64:/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk!/lib/arm64-v8a:/data/app/~~IZJ20XX3Qjn3ucgscOTxNA==/com.google.android.trichromelibrary_694313732-o9AUKMAShJPhoa8KBhX5EA==/TrichromeLibrary.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+09-20 17:55:24.253  3080  3363 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+09-20 17:55:24.254  3080  3363 D nativeloader: Configuring clns-11 for other apk /data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk. target_sdk_version=34, uses_libraries=, library_path=/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/lib/arm64:/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk!/lib/arm64-v8a:/data/app/~~IZJ20XX3Qjn3ucgscOTxNA==/com.google.android.trichromelibrary_694313732-o9AUKMAShJPhoa8KBhX5EA==/TrichromeLibrary.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+09-20 17:55:24.272  3080  3363 I cr_WVCFactoryProvider: version=133.0.6943.137 (694313732) minSdkVersion=29 isBundle=false multiprocess=true packageId=2
+09-20 17:55:24.275  3080  3363 D nativeloader: Load /data/app/~~IZJ20XX3Qjn3ucgscOTxNA==/com.google.android.trichromelibrary_694313732-o9AUKMAShJPhoa8KBhX5EA==/TrichromeLibrary.apk!/lib/arm64-v8a/libmonochrome_64.so using class loader ns clns-11 (caller=/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk): ok
+09-20 17:55:24.277  3080  3363 D nativeloader: Load /system/lib64/libwebviewchromium_plat_support.so using class loader ns clns-11 (caller=/data/app/~~IOx-vBJX-I5oax3EWhjy8g==/com.google.android.webview-18hhytvNKKLY9J3ZndgSFA==/WebViewGoogle.apk): ok
+09-20 17:55:24.282  3080  3366 I chromium: [0920/175524.282526:INFO:variations_seed_loader.cc(67)] Failed to open file for reading.: No such file or directory (2)
+09-20 17:55:24.283  3080  3366 I cr_VariationsUtils: Failed reading seed file "/data/user/0/app.metanet.explorer/app_webview/variations_seed_new"
+09-20 17:55:24.283  3080  3366 I chromium: [0920/175524.283423:INFO:variations_seed_loader.cc(67)] Failed to open file for reading.: No such file or directory (2)
+09-20 17:55:24.283  3080  3366 I cr_VariationsUtils: Failed reading seed file "/data/user/0/app.metanet.explorer/app_webview/variations_seed"
+09-20 17:55:24.283  3080  3366 I cr_VariationsUtils: Requesting new seed from IVariationsSeedServer
+09-20 17:55:24.289  3080  3363 I cr_LibraryLoader: Successfully loaded native library
+09-20 17:55:24.289  3080  3363 I cr_CachingUmaRecorder: Flushed 6 samples from 6 histograms, 0 samples were dropped.
+09-20 17:55:25.744  3080  3452 D ProfileInstaller: Installing profile for app.metanet.explorer
+09-20 17:55:31.782  3080  3131 W System  : Ignoring header If-None-Match because its value was null.
+09-20 17:55:31.908  3080  3100 I etanet.explorer: Background concurrent mark compact GC freed 22MB AllocSpace bytes, 139(6924KB) LOS objects, 49% free, 8307KB/16MB, paused 126us,2.741ms total 110.746ms
+09-20 17:55:31.933  3080  3165 E etanet.explorer: Invalid resource ID 0x00000001.
+09-20 17:55:31.934  3080  3165 E etanet.explorer: Invalid resource ID 0x00000004.
+09-20 17:55:33.351  3080  3165 I etanet.explorer: Explicit concurrent mark compact GC freed 1004KB AllocSpace bytes, 6(248KB) LOS objects, 49% free, 7931KB/15MB, paused 98us,4.843ms total 64.132ms
+09-20 17:55:36.268  3080  3146 E FA      : Name starts with reserved prefix. Type, name: event param, firebase_enabled
+09-20 17:55:37.546  3080  3150 W ReactNativeJS: InteractionManager has been deprecated and will be removed in a future release. Please refactor long tasks into smaller ones, and  use 'requestIdleCallback' instead.
+09-20 17:55:37.686  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.686  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.687  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.732  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.732  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.746  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.752  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.752  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.758  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.758  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.767  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.767  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.770  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.770  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.770  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.770  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:37.792  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:37.792  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:37.795  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:37.795  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.033  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.033  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.257  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:38.257  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.257  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.439  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.439  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.547  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.547  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.724  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:38.725  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.725  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.726  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.726  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.732  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.732  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.815  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libreanimated.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:38.945  3080  3150 W ReactNativeJS: No wallet manager found
+09-20 17:55:38.946  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.946  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.968  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:38.970  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.970  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.970  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.971  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.971  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.971  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:38.971  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:38.971  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:39.261  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:39.261  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:39.263  3080  3127 W etanet.explorer: Long monitor contention with owner Firebase Background Thread #3 (3135) at java.lang.Void com.google.firebase.heartbeatinfo.DefaultHeartBeatController.lambda$registerHeartBeat$0$com-google-firebase-heartbeatinfo-DefaultHeartBeatController()(DefaultHeartBeatController.java:71) waiters=0 in java.lang.Void com.google.firebase.heartbeatinfo.DefaultHeartBeatController.lambda$registerHeartBeat$0$com-google-firebase-heartbeatinfo-DefaultHeartBeatController() for 221ms
+09-20 17:55:39.263  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:39.323  3080  3080 I ReactNative: [GESTURE HANDLER] Initialize gesture handler for root view com.facebook.react.runtime.ReactSurfaceView{e767165 V.E...... .......D 0,0-1080,2400 #1}
+09-20 17:55:39.426  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:55:39.443  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:39.443  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:39.443  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:55:39.443  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:55:39.492  3080  3150 D nativeloader: Load /data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a/libgesturehandler.so using class loader ns clns-9 (caller=/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!classes3.dex): ok
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Entering merged library JNI_OnLoad.
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x714d7cf5e8
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x714d8a3c4c
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x714d8c0068
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x714d903dd4
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x714d9ee9c0
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x714d9f3c54
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x714d9ffc58
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x714da02b1c
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x714da28164
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x714dad3580
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x714dad9f94
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x714dae156c
+09-20 17:55:39.492  3080  3150 D jni_lib_merge: About to register 12 actual methods.
+09-20 17:55:39.757  3080  3100 W etanet.explorer: Cleared Reference was only reachable from finalizer (only reported once)
+09-20 17:55:39.849  3080  3100 I etanet.explorer: Background concurrent mark compact GC freed 5791KB AllocSpace bytes, 9(484KB) LOS objects, 49% free, 10019KB/19MB, paused 128us,5.300ms total 144.667ms
+09-20 17:57:34.024  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.app.Dialog$$ExternalSyntheticLambda2@ac81fa9
+09-20 17:57:34.104  3080  3142 D HWUI    : endAllActiveAnimators on 0xb40000730a5f8440 (RippleDrawable) with handle 0xb4000073aa4ba280
+09-20 17:57:34.143  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 17:57:34.143  3080  3080 I ImeTracker: app.metanet.explorer:21205a6a: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 17:57:45.113  3080  3080 I ReactNative: [GESTURE HANDLER] Tearing down gesture handler registered for root view com.facebook.react.runtime.ReactSurfaceView{e767165 V.E...... ......ID 0,0-1080,2400 #1}
+09-20 17:57:45.131  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:57:45.131  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:57:45.131  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:57:45.140  3080  3150 I ReactNativeJNI: instanceHandle is null, event of type topDetached will be dropped
+09-20 17:59:12.046  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:59:12.280  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:59:12.293  3080  3150 W HWUI    : Image decoding logging dropped!
+09-20 17:59:12.294  3080  3150 W HWUI    : Image decoding logging dropped!
+09-20 17:59:12.309  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:59:12.310  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 17:59:12.310  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 17:59:12.326  3080  3080 I ImeTracker: app.metanet.explorer:c0cb472d: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+09-20 17:59:12.326  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 17:59:12.328  3080  3080 D InsetsController: Setting requestedVisibleTypes to -1 (was -9)
+09-20 17:59:12.377  3080  3080 I AssistStructure: Flattened final assist data: 1808 bytes, containing 1 windows, 11 views
+09-20 17:59:12.886  3080  6948 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=app.metanet.explorer
+09-20 17:59:13.107  3080  3080 I ImeTracker: app.metanet.explorer:c0cb472d: onShown
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122412, 10481810, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122448, 1457519, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122491, 879436, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122527, 5453645, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122563, 9470729, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122599, 5597397, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122635, 2087522, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122671, 838065, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122707, 8264815, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122736, 13311233, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122772, 1886400, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 122808, 6633442, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 17:59:13.173  3080  6949 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-80 - not enough time since last trigger
+09-20 17:59:28.445  3080  3080 I ImeTracker: app.metanet.explorer:6bace4c1: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_REQUEST_HIDE_WITH_CONTROL fromUser true
+09-20 17:59:28.445  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@d267690
+09-20 17:59:28.447  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 17:59:28.447  3080  3080 D InsetsController: Setting requestedVisibleTypes to -9 (was -1)
+09-20 17:59:28.683  3080  3080 I ImeTracker: system_server:a4527873: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-20 17:59:28.718  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 130390, 199690, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 17:59:28.718  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 130479, 867235, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 17:59:30.647  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 17:59:30.761  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 17:59:30.761  3080  3080 I ImeTracker: app.metanet.explorer:3b4b9c84: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 17:59:30.761  3080  3080 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+09-20 18:16:48.638  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:16:48.650  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@3fda965
+09-20 18:17:13.077  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@a143ffb
+09-20 18:17:13.082  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:17:13.101  3080  3150 I ReactNativeJNI: instanceHandle is null, event of type topEndEditing will be dropped
+09-20 18:17:13.534  3080  3080 I ImeTracker: app.metanet.explorer:65eae407: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_CLOSE_CURRENT_SESSION fromUser false
+09-20 18:17:13.534  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:17:13.534  3080  3080 I ImeTracker: app.metanet.explorer:65eae407: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 18:17:34.415  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:17:34.667  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:17:34.667  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:17:34.673  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:17:34.673  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:17:34.673  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:17:34.693  3080  3080 I ImeTracker: app.metanet.explorer:f5056a68: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+09-20 18:17:34.694  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 18:17:34.694  3080  3080 D InsetsController: Setting requestedVisibleTypes to -1 (was -9)
+09-20 18:17:34.704  3080  3080 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+09-20 18:17:34.829  3080  3080 I AssistStructure: Flattened final assist data: 1808 bytes, containing 1 windows, 11 views
+09-20 18:17:35.025  3080  3080 I ImeTracker: app.metanet.explorer:f5056a68: onShown
+09-20 18:17:45.291  3080  3080 E FrameTracker: force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589493, 14500578, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589522, 6817120, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589551, 9299079, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589573, 14628913, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed App frame:UNKNOWN: 3, 589617, 19095165, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:UNKNOWN: 3, 589617, 19095165, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589647, 2480208, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589669, 9277208, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589691, 5553709, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.291  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589713, 1117293, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.292  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589735, 7272960, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.292  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 589757, 1067128, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:17:45.292  3080  6949 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-80
+09-20 18:17:52.360  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:18:14.641  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:18:35.153  3080  3080 I ImeTracker: app.metanet.explorer:73658ea2: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_REQUEST_HIDE_WITH_CONTROL fromUser true
+09-20 18:18:35.153  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@d267690
+09-20 18:18:35.153  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:18:35.153  3080  3080 D InsetsController: Setting requestedVisibleTypes to -9 (was -1)
+09-20 18:18:35.400  3080  3080 I ImeTracker: system_server:fcfa99e8: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615430, 367064, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615467, 824940, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615497, 2080942, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615563, 897152, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615607, 5792237, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 615629, 628612, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:35.428  3080  6949 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-81
+09-20 18:18:36.197  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 18:18:36.197  3080  3080 D InsetsController: Setting requestedVisibleTypes to -1 (was -9)
+09-20 18:18:36.198  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 18:18:36.198  3080  3080 I ImeTracker: com.google.android.inputmethod.latin:c440c8c2: onCancelled at PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+09-20 18:18:36.218  3080  3080 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+09-20 18:18:36.238  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@d267690
+09-20 18:18:36.402  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:18:36.402  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:18:36.414  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:18:36.444  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:18:36.444  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:18:36.444  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:18:36.513  3080  3080 I ImeTracker: system_server:a88ac088: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-20 18:18:36.532  3080  3080 I ImeTracker: com.google.android.inputmethod.latin:c440c8c2: onShown
+09-20 18:18:36.532  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@d267690
+09-20 18:18:36.578  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@72515df
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616247, 7421401, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616269, 775360, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed App frame:UNKNOWN: 3, 616291, 64503402, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:UNKNOWN: 3, 616291, 64503402, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616313, 2997905, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616335, 6905405, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616357, 6869489, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616408, 13705699, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.594  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616437, 3853991, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:18:36.598  3080  6949 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-80 - not enough time since last trigger
+09-20 18:18:36.752  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@72515df
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616646, 16012037, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616689, 2470580, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616732, 903247, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616768, 4108039, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616804, 4407207, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616840, 1119457, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616876, 2004125, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616912, 4704584, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616955, 1276626, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 616991, 3559252, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 617034, 2697127, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 617063, 4615420, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:18:36.863  3080  6949 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-81 - not enough time since last trigger
+09-20 18:18:37.115  3080  3100 I etanet.explorer: Background concurrent mark compact GC freed 8537KB AllocSpace bytes, 0(0B) LOS objects, 49% free, 11MB/22MB, paused 102us,376us total 102.009ms
+09-20 18:19:18.208  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:18.218  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:19:18.220  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:19:18.220  3080  3080 D AutofillManager: view not autofillable - not passing ime action check
+09-20 18:19:18.221  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@3d86c3e
+09-20 18:19:18.251  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:19:18.251  3080  3080 D InsetsController: Setting requestedVisibleTypes to -9 (was -1)
+09-20 18:19:18.270  3080  3080 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+09-20 18:19:19.559  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:19.643  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:19:19.643  3080  3080 I ImeTracker: app.metanet.explorer:834e0249: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 18:19:35.378  3080  3150 W ReactNativeJS: No wallet manager found
+09-20 18:19:35.379  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.379  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.385  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.394  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.394  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.394  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.395  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.399  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@d56ac83
+09-20 18:19:35.409  3080  3080 I ReactNative: [GESTURE HANDLER] Initialize gesture handler for root view com.facebook.react.runtime.ReactSurfaceView{e767165 V.E...... .......D 0,0-1080,2400 #1}
+09-20 18:19:35.411  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.431  3080  3080 I cr_CombinedPProvider: #registerProvider() provider:WV.C8@addbdb5 isPolicyCacheEnabled:false policyProvidersSize:0
+09-20 18:19:35.432  3080  3080 I cr_PolicyProvider: #setManagerAndSource() 0
+09-20 18:19:35.436  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:35.436  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:35.442  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.479  3080  3080 I cr_CombinedPProvider: #linkNativeInternal() 1
+09-20 18:19:35.481  3080  3080 I cr_AppResProvider: #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+09-20 18:19:35.483  3080  3080 I cr_PolicyProvider: #notifySettingsAvailable() 0
+09-20 18:19:35.483  3080  3080 I cr_CombinedPProvider: #onSettingsAvailable() 0
+09-20 18:19:35.483  3080  3080 I cr_CombinedPProvider: #flushPolicies()
+09-20 18:19:35.496  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.512  3080  3080 I etanet.explorer: AssetManager2(0xb4000073ca42b718) locale list changing from [] to [en-US]
+09-20 18:19:35.513  3080  3080 I etanet.explorer: AssetManager2(0xb4000073ca44ff78) locale list changing from [] to [en-US]
+09-20 18:19:35.554  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:35.569  3080  7629 E chromium: [ERROR:simple_file_enumerator.cc(21)] opendir /data/user/0/app.metanet.explorer/cache/WebView/Default/HTTP Cache/Code Cache/js: No such file or directory (2)
+09-20 18:19:35.570  3080  7629 E chromium: [ERROR:simple_index_file.cc(613)] Could not reconstruct index from disk
+09-20 18:19:35.571  3080  7629 E chromium: [ERROR:simple_file_enumerator.cc(21)] opendir /data/user/0/app.metanet.explorer/cache/WebView/Default/HTTP Cache/Code Cache/wasm: No such file or directory (2)
+09-20 18:19:35.571  3080  7629 E chromium: [ERROR:simple_index_file.cc(613)] Could not reconstruct index from disk
+09-20 18:19:35.662  3080  7634 W cr_media: BLUETOOTH_CONNECT permission is missing.
+09-20 18:19:35.663  3080  7634 W cr_media: getBluetoothAdapter() requires BLUETOOTH permission
+09-20 18:19:35.663  3080  7634 W cr_media: registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+09-20 18:19:35.681  3080  7647 W libc    : Access denied finding property "vendor.mesa.log"
+09-20 18:19:35.681  3080  7647 W libc    : Access denied finding property "vendor.mesa.log.file"
+09-20 18:19:35.681  3080  7647 E MESA    : Failed to open rendernode: No such file or directory
+09-20 18:19:35.708  3080  7647 D vulkan  : searching for layers in '/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/lib/arm64'
+09-20 18:19:35.709  3080  7647 D vulkan  : searching for layers in '/data/app/~~RgBjtEVt0icPIf4Ge3LerQ==/app.metanet.explorer-IhqXXhNgGx7oo4cu_d4e2w==/base.apk!/lib/arm64-v8a'
+09-20 18:19:35.720  3080  7647 W libc    : Access denied finding property "vendor.mesa.vk.trace.per.submit"
+09-20 18:19:35.720  3080  7647 W libc    : Access denied finding property "vendor.mesa.gallium.print.optio"
+09-20 18:19:35.720  3080  7647 W libc    : Access denied finding property "vendor.mesa.vk.trace.frame"
+09-20 18:19:35.723  3080  7647 W libc    : Access denied finding property "vendor.mesa.vk.wsi.headless.swa"
+09-20 18:19:35.791  3080  7647 W chromium: [WARNING:viz_main_impl.cc(85)] VizNullHypothesis is disabled (not a warning)
+09-20 18:19:35.815  3080  7657 I CameraManagerGlobal: Connecting to camera service
+09-20 18:19:35.904  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:19:35.904  3080  3080 I ImeTracker: app.metanet.explorer:be6fa9ab: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 18:19:35.917  3080  7638 W VideoCapabilities: Unsupported mime video/apv
+09-20 18:19:35.918  3080  7638 W VideoCapabilities: Unsupported mime video/apv
+09-20 18:19:36.062  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:36.074  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:36.074  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:36.382  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:36.382  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:36.383  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:36.391  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:36.392  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:36.392  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:36.392  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:36.393  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:36.393  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:50.049  3080  3080 I cr_A11yState: Enabled accessibility services list updated. []
+09-20 18:19:50.049  3080  3080 D AutofillManager: Fill dialog is enabled:false, hints=[]
+09-20 18:19:50.050  3080  3080 I cr_A11yState: Informing listeners of changes.
+09-20 18:19:50.050  3080  3080 I cr_A11yState: New AccessibilityState: State{isScreenReaderEnabled=false, isTouchExplorationEnabled=false, isPerformGesturesEnabled=false, isAnyAccessibilityServiceEnabled=false, isAccessibilityToolPresent=false, isSpokenFeedbackServicePresent=false, isTextShowPasswordEnabled=true, isOnlyPasswordManagersEnabled=false}
+09-20 18:19:56.242  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:56.243  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:56.243  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:56.251  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:19:56.251  3080  3080 W HWUI    : Image decoding logging dropped!
+09-20 18:19:56.271  3080  3080 I ImeTracker: app.metanet.explorer:be1bb4cc: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+09-20 18:19:56.272  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 18:19:56.272  3080  3080 D InsetsController: Setting requestedVisibleTypes to -1 (was -9)
+09-20 18:19:56.287  3080  3080 I AssistStructure: Flattened final assist data: 3884 bytes, containing 1 windows, 29 views
+09-20 18:19:56.662  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:19:56.662  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:19:56.693  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:19:56.835  3080  3080 I ImeTracker: app.metanet.explorer:be1bb4cc: onShown
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651641, 9195611, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651677, 5277904, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651706, 6035779, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651735, 3844572, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651786, 3998656, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651808, 1157532, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651830, 4559658, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651852, 4027033, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651874, 3392701, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 651896, 4589368, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@0@app.metanet.explorer>
+09-20 18:19:56.902  3080  6949 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-80 - not enough time since last trigger
+09-20 18:20:15.695  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:15.793  3080  3080 I AutofillManager: showAutofillDialog() return false due to improve fill dialog
+09-20 18:20:15.794  3080  3080 I ImeTracker: app.metanet.explorer:b48b72ba: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser true
+09-20 18:20:15.794  3080  3080 D InsetsController: show(ime(), fromIme=false)
+09-20 18:20:15.794  3080  3080 I ImeTracker: app.metanet.explorer:b48b72ba: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+09-20 18:20:15.852  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:16.045  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.045  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.047  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:16.054  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.054  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.061  3080  3080 I ImeTracker: app.metanet.explorer:8e8be07c: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+09-20 18:20:16.061  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:20:16.061  3080  3080 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ImeBackAnimationController@d267690
+09-20 18:20:16.062  3080  3080 D InsetsController: Setting requestedVisibleTypes to -9 (was -1)
+09-20 18:20:16.062  3080  3080 D CompatChangeReporter: Compat change id reported: 395521150; UID 10211; state: ENABLED
+09-20 18:20:16.073  3080  3080 I ImeTracker: app.metanet.explorer:3c78150e: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_CLOSE_CURRENT_SESSION fromUser false
+09-20 18:20:16.073  3080  3080 D InsetsController: hide(ime(), fromIme=false)
+09-20 18:20:16.073  3080  3080 I ImeTracker: app.metanet.explorer:3c78150e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-20 18:20:16.080  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:16.096  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.096  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.107  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.107  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.107  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.107  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.149  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:16.178  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.179  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.296  3080  3080 E ImeBackDispatcher: Ime callback not found. Ignoring unregisterReceivedCallback. callbackId: 220355246
+09-20 18:20:16.322  3080  3080 I ImeTracker: system_server:efec4be8: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660259, 17485147, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660289, 3599482, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660304, 1606983, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660319, 2390483, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660334, 4380609, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660349, 882568, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660371, 3895860, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660393, 2403278, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660415, 3920153, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660437, 6051904, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660459, 5288238, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  3080 W FrameTracker: Missed SF frame:JANK_COMPOSER, 660481, 6883197, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@0@app.metanet.explorer>
+09-20 18:20:16.345  3080  6949 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-81 - not enough time since last trigger
+09-20 18:20:16.387  3080  3127 W etanet.explorer: Long monitor contention with owner Firebase Background Thread #2 (3134) at java.lang.Void com.google.firebase.heartbeatinfo.DefaultHeartBeatController.lambda$registerHeartBeat$0$com-google-firebase-heartbeatinfo-DefaultHeartBeatController()(DefaultHeartBeatController.java:71) waiters=2 in java.lang.Void com.google.firebase.heartbeatinfo.DefaultHeartBeatController.lambda$registerHeartBeat$0$com-google-firebase-heartbeatinfo-DefaultHeartBeatController() for 140ms
+09-20 18:20:16.468  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:20:16.473  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.473  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.524  3080  3150 W ReactNativeJS: '[CWI] Wallet unavailable for API call:', 'getVersion', 'Wallet APIs are unavailable in web2 mode.'
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:20:16.647  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:20:53.830  3080  3080 W RemoteInputConnectionImpl: requestCursorUpdates on inactive InputConnection
+09-20 18:21:36.878  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:21:36.880  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:36.880  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:36.982  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:36.982  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:36.994  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:21:36.994  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:21:37.015  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:37.015  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:37.022  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:37.022  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:37.063  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:21:37.063  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:37.063  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:37.096  3080  3100 I etanet.explorer: Background concurrent mark compact GC freed 10MB AllocSpace bytes, 8(652KB) LOS objects, 49% free, 11MB/22MB, paused 186us,357us total 202.788ms
+09-20 18:21:37.117  3080  3152 W unknown:ReactNative: StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-20 18:21:37.120  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:37.120  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:37.120  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:37.120  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.885  3080  3150 W ReactNativeJS: '[CWI] Wallet unavailable for API call:', 'getVersion', 'Wallet APIs are unavailable in web2 mode.'
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.894  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.895  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.895  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:39.895  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled via RNFBPreferences: true
+09-20 18:21:39.895  3080  3152 D RNFBCrashlyticsInit: isCrashlyticsCollectionEnabled final value: true
+09-20 18:21:40.736  3080  3080 I Choreographer: Skipped 33 frames!  The application may be doing too much work on its main thread.
+09-20 18:21:40.904  3080  3105 I HWUI    : Davey! duration=727ms; Flags=0, FrameTimelineVsyncId=695900, IntendedVsync=1644690951566, Vsync=1644690951566, InputEventId=0, HandleInputStart=1644700061617, AnimationStart=1644700061783, PerformTraversalsStart=1644700265700, DrawStart=1644700288492, FrameDeadline=1644757618230, FrameStartTime=1644700060950, FrameInterval=16666666, WorkloadTarget=16666666, SyncQueued=1644700328283, SyncStart=1644722855033, IssueDrawCommandsStart=1644722898867, SwapBuffers=1645277671742, FrameCompleted=1645441078367, DequeueBufferDuration=1750, QueueBufferDuration=171458, GpuCompleted=1645441078367, SwapBuffersCompleted=1645278019200, DisplayPresentTime=0, CommandSubmissionCompleted=1645277671742, 
