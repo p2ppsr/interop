@@ -176,7 +176,6 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       const promptUrl = page.url()
       if (handledPromptUrls.has(promptUrl)) return
       handledPromptUrls.add(promptUrl)
-      let completed = false
       try {
         await page.locator('body').waitFor({ state: 'visible', timeout: 20_000 })
         await page.waitForFunction(() => {
@@ -202,9 +201,8 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
           ? page.getByRole('button', { name: /^Allow(?: Selected)?$/, exact: true })
           : page.getByRole('button', { name: /^Deny(?: All)?$/, exact: true })
         await button.first().click({ timeout: 20_000 })
-        completed = true
       } finally {
-        if (!completed) handledPromptUrls.delete(promptUrl)
+        handledPromptUrls.delete(promptUrl)
       }
     }
     context.on('page', page => {
