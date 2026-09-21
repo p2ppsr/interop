@@ -84,9 +84,26 @@ jobs:
           cp "$cached_aab" "$aab"
           test "$(sha256sum "$aab" | awk '{print $1}')" = "8746b80347252bc35606cbefa40325131c9bf79eb6dbd140458766e9d513da3d"
           test "$(stat -c '%s' "$aab")" = "213058875"
+          apk="$RUNNER_TEMP/tpnil-apk/universal.apk"
+          cached_apk="$cache_directory/metanet-explorer-v1.1.10-c8bba03d.apk"
+          mkdir -p "$RUNNER_TEMP/tpnil-apk"
           {
             printf 'artifact_source=%s\n' "$artifact_source"
-            scripts/native/android/bundle-to-universal-apk.sh "$aab" "$RUNNER_TEMP/tpnil-apk"
+            if test -f "$cached_apk" &&
+              test "$(sha256sum "$cached_apk" | awk '{print $1}')" = \
+                c8bba03da50a1f8ab61ef3c2ae45aac5d14d42bdb3eae40d709d18ae756b865f; then
+              printf 'apk_source=verified-runner-cache\n'
+              cp "$cached_apk" "$apk"
+            else
+              printf 'apk_source=derived-from-canonical-aab\n'
+              scripts/native/android/bundle-to-universal-apk.sh "$aab" "$RUNNER_TEMP/tpnil-apk"
+              test "$(sha256sum "$apk" | awk '{print $1}')" = \
+                c8bba03da50a1f8ab61ef3c2ae45aac5d14d42bdb3eae40d709d18ae756b865f
+              incoming_apk="$cached_apk.incoming-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+              cp "$apk" "$incoming_apk"
+              mv "$incoming_apk" "$cached_apk"
+            fi
+            sha256sum "$aab" "$apk"
           } > "$RUNNER_TEMP/tpnil-evidence/derivation.txt"
       - name: Exercise controlled WAB, UMP, and ToDo vectors
         env:
