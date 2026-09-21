@@ -221,7 +221,17 @@ export class ControlledWalletServices {
   }
 
   async close(): Promise<void> {
-    this.proxy?.close()
+    if (this.proxy !== undefined) {
+      for (const client of this.proxy.wsServer?.clients ?? []) client.terminate()
+      for (const client of this.proxy.wssServer?.clients ?? []) client.terminate()
+      this.proxy.httpAgent?.destroy()
+      this.proxy.httpsAgent?.destroy()
+      this.proxy.httpServer?.closeAllConnections()
+      this.proxy.httpsServer?.closeAllConnections()
+      for (const { server } of Object.values(this.proxy.sslServers ?? {}))
+        server?.closeAllConnections()
+      this.proxy.close()
+    }
     if (this.serviceServer !== undefined)
       await new Promise<void>(resolve => this.serviceServer!.close(() => resolve()))
     await this.storageServer?.close()
