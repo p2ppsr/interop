@@ -13,6 +13,12 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
     optional: true
 - extendedWaitUntil:
     visible:
+      id: 'p0-first-run-wallet-invite'
+    timeout: 45000
+- tapOn:
+    id: 'p0-first-run-wallet-setup'
+- extendedWaitUntil:
+    visible:
       id: 'p0-onboarding-screen'
     timeout: 45000
 
