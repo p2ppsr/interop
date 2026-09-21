@@ -29,12 +29,21 @@ wait_for_boot() {
 }
 
 become_root() {
-  for _ in $(seq 1 5); do
-    if timeout 20 "$adb_bin" -s "$serial" root >/dev/null 2>&1; then
-      timeout 30 "$adb_bin" -s "$serial" wait-for-device >/dev/null 2>&1 || true
-      test "$("$adb_bin" -s "$serial" shell id -u 2>/dev/null | tr -d '\r')" = 0 && return
+  for attempt in $(seq 1 12); do
+    if ! timeout 20 "$adb_bin" -s "$serial" wait-for-device >/dev/null 2>&1; then
+      printf 'adb root attempt %s: device unavailable\n' "$attempt" >&2
+      sleep 2
+      continue
     fi
-    "$adb_bin" reconnect offline >/dev/null 2>&1 || true
+    root_response=''
+    if root_response="$(timeout 25 "$adb_bin" -s "$serial" root 2>&1)"; then
+      timeout 30 "$adb_bin" -s "$serial" wait-for-device >/dev/null 2>&1 || true
+      if test "$("$adb_bin" -s "$serial" shell id -u 2>/dev/null | tr -d '\r')" = 0; then
+        printf 'adb root established on attempt %s\n' "$attempt" >&2
+        return
+      fi
+    fi
+    printf 'adb root attempt %s: %s\n' "$attempt" "$root_response" >&2
     sleep 2
   done
   return 1
