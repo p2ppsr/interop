@@ -34,7 +34,8 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
     id: 'p0-wallet-setup-advanced-service-settings'
 - longPressOn:
     text: 'https://wab.babbage.systems'
-- inputText: '${TPNIL_WAB_URL}'
+- setClipboard: '${TPNIL_WAB_URL}'
+- pasteText
 - assertVisible: '${TPNIL_WAB_URL}'
 - hideKeyboard
 - waitForAnimationToEnd:
@@ -50,7 +51,8 @@ name: TPNIL controlled WAB, UMP, and ToDo exercise
     timeout: 15000
 - longPressOn:
     text: 'https://storage.babbage.systems'
-- inputText: '${TPNIL_STORAGE_URL}'
+- setClipboard: '${TPNIL_STORAGE_URL}'
+- pasteText
 - assertVisible: '${TPNIL_STORAGE_URL}'
 - hideKeyboard
 - scrollUntilVisible:
