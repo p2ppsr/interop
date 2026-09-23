@@ -21,7 +21,7 @@ All four programs select versioned ITCVE-1 profiles. ISI-4 uses the [production-
 
 ## Run the offline core
 
-Use Node.js 22 or later. These commands require no package installation or external services:
+Use Node.js 24.7.0 or later; `.nvmrc` pins the CI runtime. These commands require no package installation or external services:
 
 ```sh
 npm test
