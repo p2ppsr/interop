@@ -1,0 +1,56 @@
+{
+  "profile": "ISI-4-BRC39-FILES",
+  "version": "0.1.0",
+  "status": "PROPOSED",
+  "resultClass": "LAB_SELF_TEST_ONLY",
+  "standards": [
+    {
+      "brc": 38,
+      "commit": "2b959b13f1f73040d13cc4eb14edbfc376f8010b",
+      "path": "outpoints/0038.md",
+      "sha256": "5d54e70943d84115088a001e06eeb21a2a0412bd680128a44c10725c416d0681"
+    },
+    {
+      "brc": 39,
+      "commit": "2b959b13f1f73040d13cc4eb14edbfc376f8010b",
+      "path": "outpoints/0039.md",
+      "sha256": "1cf70b5196795fb374e7bf84e3758321f506f663e90ed3c5224d488a8a9d9649"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "fixtures/wallet-data/v1/all-categories.brc38.json",
+      "sha256": "7e94599a13863917ea6981417fa2f97eaccf6758d10a7682da2f375beeba9620"
+    },
+    {
+      "path": "src/portability/brc39.mjs",
+      "sha256": "6381cce6be4ff9d718c8a45634391404417a2f31a55749be7c7fb4ed784f6525"
+    },
+    {
+      "path": "test/wallet-data-envelope.test.mjs",
+      "sha256": "8a4c624180dafc6ec91e7addcc26b0c5d9658504fe8f5c2fa8f131ff06ff5523"
+    },
+    {
+      "path": "programs/ISI-4/proposals/brc39-file-portability-0.1.0.md",
+      "sha256": "857cf93f15fc569bd8bd3b9a4b4f38e4d828931bd105c3ef41cab4d4aa650056"
+    }
+  ],
+  "oracleRuntime": {
+    "node": "24.18.0",
+    "crypto": "node:crypto Argon2id and AES-256-GCM"
+  },
+  "syntheticFixture": {
+    "source": "unfunded generated identity and records",
+    "records": 13,
+    "containsSigningKeys": false,
+    "validFunding": false
+  },
+  "sutRuns": [],
+  "remainingAdmissions": [
+    "publisher binaries and dependency lockfiles",
+    "complete BRC-38 semantic oracle",
+    "native wallet drivers",
+    "application fixtures",
+    "reviewer acceptance"
+  ]
+}
