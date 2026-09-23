@@ -1,6 +1,6 @@
 # Foundation operator commands
 
-Run the dependency-free core with Node 22 or later. Record the exact Node and OS versions for reproducibility. CI validates the core on a hosted worker; SUT evaluation requires a qualified ITCVE.
+Run the dependency-free core with Node 24.7.0 or later (`.nvmrc` pins the CI runtime). The independent BRC-39 oracle uses the [native Argon2 API](https://nodejs.org/api/crypto.html#cryptoargon2algorithm-parameters-callback) introduced in Node 24.7.0. Record the exact Node and OS versions for reproducibility. CI validates the core on a hosted worker; SUT evaluation requires a qualified ITCVE.
 
 ```sh
 npm test
