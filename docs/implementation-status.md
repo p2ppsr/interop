@@ -38,3 +38,5 @@ The self-test core produces `LAB_SELF_TEST_ONLY` results. Infrastructure runs pr
 The infrastructure architecture and first portable lane are implemented under [ISI-4 decision 0003](../programs/ISI-4/decisions/0003-hybrid-laboratory.md). [Decision 0004](../programs/ISI-4/decisions/0004-native-qualification-lanes.md) admits the hosted macOS lane for infrastructure qualification. [Decision 0005](../programs/ISI-4/decisions/0005-multi-wallet-execution.md) records the Chromium and Android execution boundary, the first scored result, and the remaining per-wallet blockers.
 
 [ISI-4 decision 0007](../programs/ISI-4/decisions/0007-controlled-wallet-bridge-observation.md) records the bounded native-bridge and storage diagnostic boundaries and four retained Android trials.
+
+[Shared device infrastructure](shared-device-infrastructure.md) records tenant isolation, federated identity verification and the boundary between physical-device transport and controlled-service qualification.
