@@ -155,10 +155,20 @@ jobs:
           node scripts/native/electron-cdp.mjs click-text 'Create vault' > "$evidence/vault-create.json"
           for attempt in $(seq 1 60); do
             node scripts/native/electron-cdp.mjs snapshot > "$evidence/authenticated-ui.json"
-            curl --fail --silent --show-error --cacert "$cert" \
+            status="$(curl --silent --show-error --connect-timeout 2 --max-time 5 --cacert "$cert" \
               -H 'Origin: https://todo.itcve.test' -H 'Content-Type: application/json' \
-              --data '{}' https://localhost:2121/isAuthenticated > "$evidence/isAuthenticated.json"
-            if jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null; then break; fi
+              --output "$evidence/readiness-$attempt.json" --write-out '%{http_code}' \
+              --data '{}' https://localhost:2121/isAuthenticated)"
+            printf '%s attempt=%s http=%s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" "$attempt" "$status" >> "$evidence/readiness.log"
+            cp "$evidence/readiness-$attempt.json" "$evidence/isAuthenticated.json"
+            case "$status" in
+              200)
+                jq -e '.authenticated | type == "boolean"' "$evidence/isAuthenticated.json" >/dev/null
+                if jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null; then break; fi
+                ;;
+              503) ;; # Wallet initialization is still in progress.
+              *) printf 'Unexpected readiness status: %s\n' "$status" >&2; exit 1 ;;
+            esac
             sleep 1
           done
           jq -e '.authenticated == true' "$evidence/isAuthenticated.json" >/dev/null
