@@ -31,10 +31,11 @@ installation observations are infrastructure evidence; the pending conformance
 coverage remains recorded in [implementation status](implementation-status.md).
 
 Provider configuration, encrypted operator recovery credentials, the atomic
-USD75 feasibility envelope and cleanup service are maintained in network-ops:
+USD450 cumulative qualification envelope (USD400devices/USD50other) and cleanup service are maintained in network-ops:
 `config/shared-device-lab.json`, `config/shared-device-profiles.json`, and
-`scripts/shared-device-lab/`. The initial envelope is a feasibility limit, not
-a commercial subscription or completion of the full qualification matrix.
+`scripts/shared-device-lab/`. The envelope includes all prior gross reservations and has no automatic renewal.
+It is a qualification limit, not a commercial subscription or completion of the
+full qualification matrix.
 
 
 The manual `Shared physical Android qualification` workflow retrieves an exact
@@ -48,6 +49,14 @@ artifacts. The shared atomic cost reservation and provider TTL govern each run.
 
 The disposable GCE lane has executed KVM API12 and the repository's 47 core tests,
 catalog check, packaging command and LAB_SELF_TEST_ONLY demo through IAP, with
-VM and boot-disk deletion verified. Android emulator and controlled-wallet replay
-remain additional qualification gates. Operational source and complete attempt
+VM and boot-disk deletion verified. Controlled GCE replay `lab-2db91794-84ef-4a13-b2c0-135340d6bb0c` now retains
+the transaction boundary after controller shutdown. Independent verification
+confirms four accepted submissions, funding ancestry, UMP registration and a
+seven-satoshi ToDo output. The frozen1.1.10 app's final UI assertion still fails;
+its diagnostic boundary is verified, but customer completion is not.
+
+Fresh hosted Mac runs36510559954 and36510756890 each passed all13native
+BSV Desktop baseline assertions and offline verification. Distinct CI jobs do
+not establish physical-host independence or the pinned Tart reconstruction.
+The two-clean-small-pack and full G2 matrices remain acceptance gates. Operational source and complete attempt
 history remain in network-ops.
