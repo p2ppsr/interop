@@ -5,7 +5,7 @@ const [command, ...args] = process.argv.slice(2);
 const endpoint = process.env.TPNIL_CDP_ENDPOINT ?? 'http://127.0.0.1:9222';
 
 async function target() {
-  const response = await fetch(`${endpoint}/json/list`);
+  const response = await fetch(`${endpoint}/json/list`, { signal: AbortSignal.timeout(10000) });
   if (!response.ok) throw new Error(`CDP target discovery returned ${response.status}`);
   const targets = await response.json();
   const page = targets.find(item => item.type === 'page' && item.webSocketDebuggerUrl);
@@ -16,7 +16,7 @@ async function target() {
 async function connect(url) {
   const socket = new WebSocket(url);
   await new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error('CDP connection timeout')), 10000);
+    const timer = setTimeout(() => { socket.close(); reject(new Error('CDP connection timeout')); }, 10000);
     socket.addEventListener('open', () => { clearTimeout(timer); resolve(); }, { once: true });
     socket.addEventListener('error', () => { clearTimeout(timer); reject(new Error('CDP connection failed')); }, { once: true });
   });
@@ -43,7 +43,7 @@ async function connect(url) {
 
 async function evaluate(call, expression) {
   const result = await call('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true, userGesture: true });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text ?? 'Renderer evaluation failed');
+  if (result.exceptionDetails) throw new Error(result.exceptionDetails.exception?.description ?? result.exceptionDetails.text ?? 'Renderer evaluation failed');
   return result.result?.value;
 }
 
@@ -79,7 +79,7 @@ function fillExpression(label, value) {
 const snapshotExpression = `(() => ({
   url: location.href,
   title: document.title,
-  text: document.body.innerText,
+  text: document.body?.innerText ?? '',
   buttons: [...document.querySelectorAll('button,[role="button"]')].map(item => item.innerText.trim()).filter(Boolean),
   inputs: [...document.querySelectorAll('input,textarea')].map(item => ({
     id: item.id,
@@ -90,9 +90,11 @@ const snapshotExpression = `(() => ({
   }))
 }))()`;
 
+let activeSocket;
 try {
   const page = await target();
   const { socket, call } = await connect(page.webSocketDebuggerUrl);
+  activeSocket = socket;
   let result;
   if (command === 'snapshot' && args.length === 0) result = await evaluate(call, snapshotExpression);
   else if (command === 'wait-text' && (args.length === 1 || args.length === 2)) {
@@ -115,9 +117,17 @@ try {
     fs.writeFileSync(args[0], Buffer.from(capture.data, 'base64'), { flag: 'wx', mode: 0o644 });
     result = { path: args[0], bytes: Buffer.byteLength(capture.data, 'base64') };
   } else throw new Error('usage: electron-cdp.mjs snapshot | wait-text <text> [timeout-ms] | click-text <text> | fill-label <label> <value> | eval <expression> | screenshot <new-file>');
-  socket.close();
   process.stdout.write(JSON.stringify({ target: { id: page.id, title: page.title, url: page.url }, result }, null, 2) + '\n');
 } catch (error) {
   process.stderr.write(`TPNIL CDP ERROR: ${error.message}\n`);
   process.exitCode = 2;
+} finally {
+  // A renderer exception must not leave the CDP connection keeping this CLI
+  // alive until the enclosing paid VM job times out.
+  if (activeSocket) {
+    activeSocket.close();
+    setTimeout(() => {
+      if (activeSocket.readyState !== WebSocket.CLOSED) process.exit(process.exitCode || 2);
+    }, 2000).unref();
+  }
 }
