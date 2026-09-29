@@ -4,12 +4,17 @@ set -euo pipefail
 runtime_dir="$RUNNER_TEMP/tpnil-runtime"
 evidence_dir="$RUNNER_TEMP/tpnil-evidence"
 mkdir -p "$runtime_dir" "$evidence_dir"
-"$GITHUB_WORKSPACE/synthesis/node_modules/.bin/tsx" \
-  "$GITHUB_WORKSPACE/synthesis/src/wallet-lab/android-runtime.ts" \
-  "$RUNNER_TEMP/tpnil-source/ts-stack/infra/wab" \
-  "$RUNNER_TEMP/tpnil-source/todo-webroot" \
-  "$GITHUB_WORKSPACE/fixtures/teranode/wab-funding-v1.json" \
-  "$runtime_dir" > "$evidence_dir/controller.log" 2>&1 &
+# Make the recorded PID the controller itself. The tsx CLI wrapper can exit
+# on SIGTERM before its child finishes writing the transaction-boundary file.
+(
+  cd "$GITHUB_WORKSPACE/synthesis"
+  exec node --import tsx \
+    "$GITHUB_WORKSPACE/synthesis/src/wallet-lab/android-runtime.ts" \
+    "$RUNNER_TEMP/tpnil-source/ts-stack/infra/wab" \
+    "$RUNNER_TEMP/tpnil-source/todo-webroot" \
+    "$GITHUB_WORKSPACE/fixtures/teranode/wab-funding-v1.json" \
+    "$runtime_dir"
+) > "$evidence_dir/controller.log" 2>&1 &
 runtime_pid=$!
 for attempt in $(seq 1 180); do
   kill -0 "$runtime_pid" 2>/dev/null || {
