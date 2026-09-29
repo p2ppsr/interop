@@ -4,10 +4,54 @@ on:
 permissions:
   contents: read
 jobs:
-  bsv-desktop-macos-arm64:
-    runs-on: macos-15
-    timeout-minutes: 30
+  admit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      deadline: ${{ steps.admit.outputs.deadline }}
     steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: google
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/375754315907/locations/global/workloadIdentityPools/shared-device-ci/providers/github
+          service_account: tpnil-device-worker@babbage-device-lab.iam.gserviceaccount.com
+          project_id: babbage-device-tpnil
+          token_format: access_token
+          create_credentials_file: false
+      - name: Fetch immutable transport
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: python3 scripts/fetch-shared-device-runtime.py --runtime-only
+      - id: admit
+        name: Reserve gross cost before a Mac job can start
+        env:
+          SHARED_DEVICE_LAB_IDENTITY_MODE: github-oidc
+          SHARED_DEVICE_LAB_GCP_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: python3 "$RUNNER_TEMP/shared-device-runtime/scripts/shared-device-lab/github_job.py" reserve --tenant tpnil
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: admitted-runtime
+          path: ${{ runner.temp }}/shared-device-runtime/transport.tgz
+          retention-days: 1
+  macos-native:
+    needs: admit
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - name: Verify remaining reservation time
+        env:
+          LEASE_DEADLINE: ${{ needs.admit.outputs.deadline }}
+        run: test "$(( $(date +%s) + 900 ))" -lt "$LEASE_DEADLINE"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.19.0
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
@@ -152,4 +196,42 @@ jobs:
           name: bsv-desktop-macos-arm64-qualification
           path: ${{ runner.temp }}/tpnil-native-evidence
           if-no-files-found: error
+          retention-days: 30
+  release:
+    needs: [admit, macos-native]
+    if: always() && needs.admit.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: google
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/375754315907/locations/global/workloadIdentityPools/shared-device-ci/providers/github
+          service_account: tpnil-device-worker@babbage-device-lab.iam.gserviceaccount.com
+          project_id: babbage-device-tpnil
+          token_format: access_token
+          create_credentials_file: false
+      - name: Fetch immutable transport
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: python3 scripts/fetch-shared-device-runtime.py --runtime-only
+      - name: Confirm exact Mac job termination
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHARED_DEVICE_LAB_IDENTITY_MODE: github-oidc
+          SHARED_DEVICE_LAB_GCP_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: python3 "$RUNNER_TEMP/shared-device-runtime/scripts/shared-device-lab/github_job.py" release --tenant tpnil
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        if: always()
+        with:
+          name: hosted-macos-release
+          path: ${{ runner.temp }}/shared-device-runtime/artifacts/ops/shared-device-lab-runs/
+          if-no-files-found: warn
           retention-days: 30
