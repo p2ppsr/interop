@@ -36,7 +36,9 @@ jobs:
         run: |
           python3 -m venv "$RUNNER_TEMP/device-python"
           "$RUNNER_TEMP/device-python/bin/pip" install -r "$RUNNER_TEMP/shared-device-runtime/scripts/shared-device-lab/requirements.lock.txt"
-          command -v adb
+          test -x "$ANDROID_HOME/platform-tools/adb"
+          "$ANDROID_HOME/platform-tools/adb" version
+          printf '%s\n' "$ANDROID_HOME/platform-tools" >> "$GITHUB_PATH"
       - name: Observe frozen app installation on a clean physical device
         env:
           SHARED_DEVICE_LAB_IDENTITY_MODE: github-oidc
