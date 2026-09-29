@@ -35,3 +35,19 @@ USD75 feasibility envelope and cleanup service are maintained in network-ops:
 `config/shared-device-lab.json`, `config/shared-device-profiles.json`, and
 `scripts/shared-device-lab/`. The initial envelope is a feasibility limit, not
 a commercial subscription or completion of the full qualification matrix.
+
+
+The manual `Shared physical Android qualification` workflow retrieves an exact
+network-ops runtime generation and frozen laboratory APK, validates their SHA256,
+and uses the tenant's short-lived Google identity. It verifies device identity,
+prior package/marker absence, installation, process launch, screenshot collection
+and provider termination. This result is INFRASTRUCTURE_QUALIFICATION_ONLY;
+it does not execute the ISI-4 controlled-service vectors or issue a SUT verdict.
+Raw provider endpoints and private transport descriptors are excluded from Actions
+artifacts. The shared atomic cost reservation and provider TTL govern each run.
+
+The disposable GCE lane has executed KVM API12 and the repository's 47 core tests,
+catalog check, packaging command and LAB_SELF_TEST_ONLY demo through IAP, with
+VM and boot-disk deletion verified. Android emulator and controlled-wallet replay
+remain additional qualification gates. Operational source and complete attempt
+history remain in network-ops.

@@ -1,0 +1,55 @@
+name: Shared physical Android qualification
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Qualification profile; this run does not issue customer acceptance
+        type: choice
+        options: [google-pixel8a-api35, google-samsung-s24-api34]
+        default: google-pixel8a-api35
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  qualify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - id: google
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: projects/375754315907/locations/global/workloadIdentityPools/shared-device-ci/providers/github
+          service_account: tpnil-device-worker@babbage-device-lab.iam.gserviceaccount.com
+          project_id: babbage-device-tpnil
+          token_format: access_token
+          access_token_lifetime: 1800s
+          create_credentials_file: false
+      - name: Fetch immutable operator release and frozen lab APK
+        env:
+          GOOGLE_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: python3 scripts/fetch-shared-device-runtime.py
+      - name: Prepare pinned transport dependencies
+        run: |
+          python3 -m venv "$RUNNER_TEMP/device-python"
+          "$RUNNER_TEMP/device-python/bin/pip" install -r "$RUNNER_TEMP/shared-device-runtime/scripts/shared-device-lab/requirements.lock.txt"
+          command -v adb
+      - name: Observe frozen app installation on a clean physical device
+        env:
+          SHARED_DEVICE_LAB_IDENTITY_MODE: github-oidc
+          SHARED_DEVICE_LAB_GCP_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          SHARED_DEVICE_PROFILE: ${{ inputs.profile }}
+        run: |
+          export SHARED_DEVICE_LAB_PYTHON="$RUNNER_TEMP/device-python/bin/python"
+          "$SHARED_DEVICE_LAB_PYTHON" "$RUNNER_TEMP/shared-device-runtime/scripts/shared-device-lab/android_probe.py" \
+            --tenant tpnil --profile "$SHARED_DEVICE_PROFILE" --apk "$RUNNER_TEMP/shared-device-runtime/metanet.apk"
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        if: always()
+        with:
+          name: shared-device-qualification
+          path: ${{ runner.temp }}/shared-device-runtime/artifacts/ops/shared-device-lab-runs/
+          if-no-files-found: warn
+          retention-days: 30
