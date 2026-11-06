@@ -1,0 +1,17 @@
+{
+  "schema": "tpnil-native-messaging-profile@1",
+  "id": "native-wallet-paid-messagebox@1.0.0",
+  "claimBoundary": "Qualified by the enclosing unchanged-native-wallet artifact, isolation, trust, funding and cleanup envelope.",
+  "payer": "The admitted native wallet public BRC-100 interface; no replacement sender key or wallet.",
+  "implementations": ["typescript", "go-adapted"],
+  "recipientFee": 23,
+  "message": "Native wallet encrypted peer delivery",
+  "assertions": [
+    "Signed controlled recipient advertisement is admitted by the real Overlay Engine and resolved through the real Mongo-backed MessageBox lookup service.",
+    "The actual native wallet creates and signs the fee-bearing payment and encrypts the message through its public wallet interface.",
+    "The recipient decrypts the original payload and internalizes the exact payment output; independent script/ancestry verification and value accounting pass.",
+    "The message survives complete service restart, recipient acknowledgment deletes it, and a new message cannot reuse the payment after acknowledgment and another restart."
+  ],
+  "goTransport": "Authenticated HTTP; no native Go WebSocket claim",
+  "fixture": "fixtures/teranode/wab-funding-v1.json"
+}

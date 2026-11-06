@@ -1,0 +1,110 @@
+{
+  "schema": "tpnil-native-identity-trust-reference@1",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "nativeExecution": false,
+  "sourceBase": "0563733792b7aa8b692b6cd4fa2e8bd7a712ec8d",
+  "sourceState": "Prospective trusted-native helper changes were present in the shared working tree; exact source digests below bind the executed implementation. These reference executions do not qualify the unchanged native wallet.",
+  "archive": {
+    "path": "evidence.json.gz",
+    "sha256": "c8d5b8a542af6249c97920b216406798f935234f596055c1a4c162429d49fe16",
+    "size": 756358,
+    "files": 48
+  },
+  "runs": [
+    {
+      "directory": "identity-trust-reference-2",
+      "originalSettingsTokens": 0,
+      "boundaryAssertions": 42,
+      "trustAssertions": 8,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T22:57:19.385Z",
+        "endedAt": "2026-11-06T22:59:20.387Z",
+        "monotonicElapsedMs": 121001,
+        "requiredMs": 120000
+      },
+      "signedSettingsTransactions": 2
+    },
+    {
+      "directory": "identity-trust-reference-existing-2",
+      "originalSettingsTokens": 1,
+      "boundaryAssertions": 42,
+      "trustAssertions": 8,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T22:57:19.507Z",
+        "endedAt": "2026-11-06T22:59:20.510Z",
+        "monotonicElapsedMs": 121001,
+        "requiredMs": 120000
+      },
+      "signedSettingsTransactions": 2
+    }
+  ],
+  "sources": [
+    {
+      "path": "synthesis/src/wallet-lab/native/identity-trust.ts",
+      "sha256": "c384e145e34ee207b2923b89c28215a593ad97e6c00c447a742311b29db46e07"
+    },
+    {
+      "path": "synthesis/src/wallet-lab/native/verify-identity-trust.ts",
+      "sha256": "22dcba8142e9bbff226c959c9b7e8893967be23823b3ab1cab27b4f87a050df1"
+    },
+    {
+      "path": "infra/native/integrated/plan-trusted.json",
+      "sha256": "133a33716890626e1e5d5eb7e4c57d72c64034d55b6272422ec6759570c38a4d"
+    },
+    {
+      "path": "infra/native/integrated/trust-profile.json",
+      "sha256": "44956caee43df56ff307b9d259074f964e68a5092242a211961347acb58d30a6"
+    },
+    {
+      "path": "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native.json",
+      "sha256": "f825d8a4e84f92b36f17e9ae50a0690a717a5a357e036cfa3b5de5e84ff0f367"
+    }
+  ],
+  "tamperRejections": [
+    "missing-real-cache-expiry",
+    "changed-original-settings-restoration",
+    "valid-transaction-that-does-not-spend-temporary-token"
+  ],
+  "priorRuns": [
+    {
+      "directory": "identity-trust-reference-1",
+      "originalSettingsTokens": 0,
+      "boundaryAssertions": 42,
+      "trustAssertions": 8,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T22:48:07.399Z",
+        "endedAt": "2026-11-06T22:50:08.404Z",
+        "monotonicElapsedMs": 121002.237167,
+        "requiredMs": 120000
+      },
+      "signedSettingsTransactions": 2
+    },
+    {
+      "directory": "identity-trust-reference-existing-1",
+      "originalSettingsTokens": 1,
+      "boundaryAssertions": 42,
+      "trustAssertions": 8,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T22:51:48.673Z",
+        "endedAt": "2026-11-06T22:53:49.675Z",
+        "monotonicElapsedMs": 121001.06054100001,
+        "requiredMs": 120000
+      },
+      "signedSettingsTransactions": 2
+    }
+  ],
+  "correction": "The original two runs passed raw predicates, but actual EvidenceBundle serialization exposed a fractional monotonic timer field. The failed regression is preserved. The helper now conservatively floors elapsed milliseconds; both restoration cases were rerun with real waits. The verifier also parses decrypted settings JSON before canonical comparison, preserving byte binding while accepting evidence key sorting.",
+  "validation": {
+    "actualEvidenceBundleSerialization": "PASS",
+    "targetedTests": {
+      "pass": 3,
+      "fail": 0
+    },
+    "typecheck": "PASS",
+    "historicalJournals": "PASS"
+  }
+}

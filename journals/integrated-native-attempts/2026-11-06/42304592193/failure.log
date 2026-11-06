@@ -1,0 +1,254 @@
+all-go-native	Install the pinned integrated service closure	﻿2026-11-06T22:27:20.5740896Z ##[group]Run npm ci --ignore-scripts --prefix components/transport
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5741417Z [36;1mnpm ci --ignore-scripts --prefix components/transport[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5742163Z [36;1mnode scripts/prepare-messaging.mjs[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5742516Z [36;1mnode scripts/prepare-storage-sync-go.mjs[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5742898Z [36;1mnpm ci --ignore-scripts --prefix integrations/services[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5743331Z [36;1mnpm rebuild better-sqlite3 --prefix integrations/services[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5743750Z [36;1mrustup toolchain install 1.88.0 --profile minimal[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5744682Z [36;1mdocker build --build-arg TPNIL_NATIVE_BASE=tpnil-native-go:9b94f0ec358093c164119b5973b3e42eded4999d -f infra/native/integrated/Dockerfile -t tpnil-native-integrated:9b94f0ec358093c164119b5973b3e42eded4999d .[0m
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5781914Z shell: /usr/bin/bash -e {0}
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5782174Z env:
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5782367Z   GOTOOLCHAIN: local
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:20.5782585Z ##[endgroup]
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4644984Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4646033Z added 103 packages, and audited 104 packages in 2s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4646503Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4646797Z 34 packages are looking for funding
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4647350Z   run `npm fund` for details
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4658062Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:22.4658443Z found 0 vulnerabilities
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:34.5650782Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:36.1376607Z npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:36.1441416Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:36.1593714Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:39.8917723Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:39.8918393Z added 755 packages in 10s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:43.8342095Z npm warn rebuild 7 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:43.8344880Z rebuilt dependencies successfully
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.1119704Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.3498075Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.4512720Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.5431214Z npm warn deprecated eslint-config-standard-with-typescript@23.0.0: Please use eslint-config-love, instead.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.8272947Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:46.8770904Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:48.7730020Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:49.7239179Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:49.7239982Z added 562 packages in 6s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:52.1589683Z all modules verified
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:52.1986094Z go: downloading firebase.google.com/go/v4 v4.22.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:52.1994230Z go: downloading google.golang.org/api v0.309.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:52.4069188Z go: downloading cloud.google.com/go/firestore v1.26.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:52.5541172Z go: downloading cloud.google.com/go v0.123.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.1981117Z go: downloading github.com/googleapis/gax-go/v2 v2.26.2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.1991938Z go: downloading google.golang.org/genproto v0.0.0-20261012220534-4341edf3f941
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.1992751Z go: downloading github.com/MicahParks/keyfunc v1.9.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.1993573Z go: downloading github.com/golang-jwt/jwt/v4 v4.5.2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.2172108Z go: downloading cloud.google.com/go/storage v1.69.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.2220716Z go: downloading cloud.google.com/go/auth v0.24.1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.2272806Z go: downloading cloud.google.com/go/longrunning v1.3.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.2397766Z go: downloading google.golang.org/genproto/googleapis/api v0.0.0-20261012220534-4341edf3f941
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.2692521Z go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20261019180522-ce908d29299b
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.4307978Z go: downloading cloud.google.com/go/compute/metadata v0.10.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.4404649Z go: downloading cloud.google.com/go/auth/oauth2adapt v0.3.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.4450056Z go: downloading github.com/google/s2a-go v0.1.11
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.4877456Z go: downloading cloud.google.com/go/iam v1.14.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.5430115Z go: downloading github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.62.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.5519254Z go: downloading go.opentelemetry.io/contrib/detectors/gcp v1.47.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.6584354Z go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.23
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.6585382Z go: downloading cloud.google.com/go/monitoring v1.31.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.6586203Z go: downloading github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.62.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.6795504Z go: downloading github.com/envoyproxy/go-control-plane/envoy v1.40.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:55.7281917Z go: downloading github.com/spiffe/go-spiffe/v2 v2.9.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:56.2397540Z go: downloading github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:56.2403364Z go: downloading github.com/go-jose/go-jose/v4 v4.1.8
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:56.2632702Z go: downloading github.com/envoyproxy/protoc-gen-validate v1.3.3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:27:56.2642592Z go: downloading cel.dev/expr v0.25.3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:28:25.6724353Z Prepared pinned TS/Go Message Box and discovery components.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:28:57.9108160Z ?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:28:57.9109272Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	0.043s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9766567Z {
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9767091Z   "schema": "tpnil-storage-sync-go-build@1.0.0",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9768274Z   "patchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9769206Z   "patchSha256": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9769771Z   "upstream": {
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9770308Z     "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9770777Z     "version": "v0.191.4",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9771279Z     "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9771940Z   },
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9772544Z   "replacementModule": "/home/runner/work/interop/interop/out/storage-sync-go-source",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9773113Z   "toolchain": "go1.27.3",
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9773720Z   "binarySha256": "ecefa6a0e2d4607a211f1c6a85fb4bb306d5e023c5a644c75a0aca8011b9f754"
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:24.9774235Z }
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:26.5173047Z npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6056846Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6057715Z added 226 packages, and audited 227 packages in 4s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6058323Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6058884Z 57 packages are looking for funding
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6059887Z   run `npm fund` for details
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6082472Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:28.6083122Z found 0 vulnerabilities
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:29.3653143Z npm warn rebuild 4 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:29.3655639Z rebuilt dependencies successfully
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:29.4299518Z info: syncing channel updates for 1.88.0-x86_64-unknown-linux-gnu
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:29.5923298Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:29.5926578Z info: downloading 3 components
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.2282312Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.2365573Z   1.88.0-x86_64-unknown-linux-gnu installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.2366200Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5227981Z #0 building with "default" instance using docker driver
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5229012Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5232741Z #1 [internal] load build definition from Dockerfile
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5233552Z #1 transferring dockerfile: 1.25kB done
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5235028Z #1 WARN: InvalidDefaultArgInFrom: Default value for ARG ${TPNIL_NATIVE_BASE} results in empty or invalid base image name (line 2)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5236201Z #1 DONE 0.0s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5236445Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5237195Z #2 [internal] load metadata for docker.io/library/tpnil-native-go:9b94f0ec358093c164119b5973b3e42eded4999d
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5237901Z #2 DONE 0.0s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5238032Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5238183Z #3 [internal] load .dockerignore
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5238516Z #3 transferring context: 2B done
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5238773Z #3 DONE 0.0s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5238894Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5239260Z #4 [ 1/15] FROM docker.io/library/tpnil-native-go:9b94f0ec358093c164119b5973b3e42eded4999d
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5239689Z #4 DONE 0.1s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5239814Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:37.5239961Z #5 [internal] load build context
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2004345Z #5 ...
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2006531Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2009659Z #6 [ 2/15] WORKDIR /work
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2016316Z #6 DONE 2.8s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2021286Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:40.2022700Z #5 [internal] load build context
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:42.4634278Z #5 transferring context: 448.13MB 5.1s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:45.3137296Z #5 transferring context: 765.19MB 7.8s done
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:45.3138985Z #5 DONE 7.9s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:45.5932718Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:45.5934106Z #7 [ 3/15] COPY components/transport/package.json components/transport/package-lock.json /work/components/transport/
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:47.0695309Z #7 DONE 1.5s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:47.2205939Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:47.2206914Z #8 [ 4/15] RUN npm ci --ignore-scripts --prefix /work/components/transport
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.5955859Z #8 2.525 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.5957045Z #8 2.525 added 103 packages, and audited 104 packages in 2s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.5958686Z #8 2.525 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7092783Z #8 2.526 34 packages are looking for funding
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7093538Z #8 2.526   run `npm fund` for details
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7093989Z #8 2.527 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7094417Z #8 2.527 found 0 vulnerabilities
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7094915Z #8 2.529 npm notice
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7095637Z #8 2.529 npm notice New major version of npm available! 11.16.0 -> 12.2.2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7096697Z #8 2.529 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7097638Z #8 2.529 npm notice To update run: npm install -g npm@12.2.2
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7098230Z #8 2.529 npm notice
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.7098586Z #8 DONE 2.6s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8882892Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8884298Z #9 [ 5/15] COPY components/transport/*.mjs /work/components/transport/
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8885374Z #9 DONE 0.0s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8885814Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8887035Z #10 [ 6/15] COPY integrations/services/package.json integrations/services/package-lock.json /work/integrations/services/
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8888343Z #10 DONE 0.0s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8888775Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:49.8890092Z #11 [ 7/15] RUN npm ci --ignore-scripts --prefix /work/integrations/services && cd /work/integrations/services && npm rebuild better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:51.4440218Z #11 1.707 npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:53.9262074Z #11 4.189 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:53.9263383Z #11 4.189 added 226 packages, and audited 227 packages in 4s
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:53.9264465Z #11 4.189 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:54.0778938Z #11 4.189 57 packages are looking for funding
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:54.0779795Z #11 4.189   run `npm fund` for details
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:54.0780303Z #11 4.190 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:54.0780784Z #11 4.190 found 0 vulnerabilities
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:57.9731099Z #11 8.236 npm error code 1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1265128Z #11 8.236 npm error path /work/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1266397Z #11 8.236 npm error command failed
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1267095Z #11 8.237 npm error command sh -c node-gyp rebuild
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1267887Z #11 8.243 npm error gyp info it worked if it ends with ok
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1268550Z #11 8.243 npm error gyp info using node-gyp@12.3.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1269000Z #11 8.243 npm error gyp info using node@24.22.1 | linux | x64
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1269864Z #11 8.243 npm error gyp info find Python using Python version 3.12.3 found at "/usr/bin/python3"
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1271060Z #11 8.243 npm error gyp http GET https://nodejs.org/download/release/v24.22.1/node-v24.22.1-headers.tar.gz
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1272433Z #11 8.243 npm error gyp http 200 https://nodejs.org/download/release/v24.22.1/node-v24.22.1-headers.tar.gz
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1273481Z #11 8.243 npm error gyp http GET https://nodejs.org/download/release/v24.22.1/SHASUMS256.txt
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1274277Z #11 8.243 npm error gyp http 200 https://nodejs.org/download/release/v24.22.1/SHASUMS256.txt
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1274811Z #11 8.243 npm error gyp info spawn /usr/bin/python3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1275192Z #11 8.243 npm error gyp info spawn args [
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1275970Z #11 8.243 npm error gyp info spawn args '/usr/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1276619Z #11 8.243 npm error gyp info spawn args 'binding.gyp',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1277006Z #11 8.243 npm error gyp info spawn args '-f',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1277390Z #11 8.243 npm error gyp info spawn args 'make',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1278056Z #11 8.243 npm error gyp info spawn args '-I',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1279640Z #11 8.243 npm error gyp info spawn args '/work/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/config.gypi',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1280671Z #11 8.243 npm error gyp info spawn args '-I',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1281527Z #11 8.243 npm error gyp info spawn args '/usr/lib/node_modules/npm/node_modules/node-gyp/addon.gypi',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1282835Z #11 8.243 npm error gyp info spawn args '-I',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1283797Z #11 8.243 npm error gyp info spawn args '/tmp/tpnil-home/.cache/node-gyp/24.22.1/include/node/common.gypi',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1284804Z #11 8.243 npm error gyp info spawn args '-Dlibrary=shared_library',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1285691Z #11 8.243 npm error gyp info spawn args '-Dvisibility=default',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1286594Z #11 8.243 npm error gyp info spawn args '-Dnode_root_dir=/tmp/tpnil-home/.cache/node-gyp/24.22.1',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1287513Z #11 8.243 npm error gyp info spawn args '-Dnode_gyp_dir=/usr/lib/node_modules/npm/node_modules/node-gyp',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1288770Z #11 8.243 npm error gyp info spawn args '-Dnode_lib_file=/tmp/tpnil-home/.cache/node-gyp/24.22.1/<(target_arch)/node.lib',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1289958Z #11 8.243 npm error gyp info spawn args '-Dmodule_root_dir=/work/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1290808Z #11 8.243 npm error gyp info spawn args '-Dnode_engine=v8',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1291284Z #11 8.243 npm error gyp info spawn args '--depth=.',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1292010Z #11 8.243 npm error gyp info spawn args '--no-parallel',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1292739Z #11 8.243 npm error gyp info spawn args '--generator-output',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1293164Z #11 8.243 npm error gyp info spawn args 'build',
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1293611Z #11 8.243 npm error gyp info spawn args '-Goutput_dir=.'
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1294007Z #11 8.243 npm error gyp info spawn args ]
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1294352Z #11 8.243 npm error gyp ERR! build error 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1294970Z #11 8.243 npm error gyp ERR! stack Error: not found: make
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1295966Z #11 8.243 npm error gyp ERR! stack at getNotFoundError (/usr/lib/node_modules/npm/node_modules/which/lib/index.js:16:17)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1297183Z #11 8.243 npm error gyp ERR! stack at which (/usr/lib/node_modules/npm/node_modules/which/lib/index.js:77:9)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1298474Z #11 8.243 npm error gyp ERR! stack at async doWhich (/usr/lib/node_modules/npm/node_modules/node-gyp/lib/build.js:120:22)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1299817Z #11 8.243 npm error gyp ERR! stack at async loadConfigGypi (/usr/lib/node_modules/npm/node_modules/node-gyp/lib/build.js:78:7)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1300906Z #11 8.243 npm error gyp ERR! stack at async build (/usr/lib/node_modules/npm/node_modules/node-gyp/lib/build.js:36:3)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1302114Z #11 8.243 npm error gyp ERR! stack at async run (/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js:81:18)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1302951Z #11 8.243 npm error gyp ERR! System Linux 7.0.0-1017-azure
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1303865Z #11 8.243 npm error gyp ERR! command "/usr/local/bin/node" "/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "rebuild"
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1305055Z #11 8.243 npm error gyp ERR! cwd /work/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1305689Z #11 8.243 npm error gyp ERR! node -v v24.22.1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1306083Z #11 8.243 npm error gyp ERR! node-gyp -v v12.3.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1306521Z #11 8.243 npm error gyp ERR! $npm_package_name better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1306964Z #11 8.243 npm error gyp ERR! $npm_package_version 13.0.3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1307448Z #11 8.243 npm error gyp ERR! not ok
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1308445Z #11 8.244 npm error A complete log of this run can be found in: /tmp/tpnil-home/.npm/_logs/2026-11-06T22_29_54_006Z-debug-0.log
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1309936Z #11 ERROR: process "/bin/sh -c npm ci --ignore-scripts --prefix /work/integrations/services && cd /work/integrations/services && npm rebuild better-sqlite3" did not complete successfully: exit code: 1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1365783Z ------
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1367265Z  > [ 7/15] RUN npm ci --ignore-scripts --prefix /work/integrations/services && cd /work/integrations/services && npm rebuild better-sqlite3:
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1369313Z 8.243 npm error gyp ERR! stack at async run (/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js:81:18)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1377843Z 8.243 npm error gyp ERR! System Linux 7.0.0-1017-azure
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1379386Z 8.243 npm error gyp ERR! command "/usr/local/bin/node" "/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js" "rebuild"
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1381141Z 8.243 npm error gyp ERR! cwd /work/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1382522Z 8.243 npm error gyp ERR! node -v v24.22.1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1383235Z 8.243 npm error gyp ERR! node-gyp -v v12.3.0
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1384026Z 8.243 npm error gyp ERR! $npm_package_name better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1384823Z 8.243 npm error gyp ERR! $npm_package_version 13.0.3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1392568Z 8.243 npm error gyp ERR! not ok
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1393844Z 8.244 npm error A complete log of this run can be found in: /tmp/tpnil-home/.npm/_logs/2026-11-06T22_29_54_006Z-debug-0.log
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1394735Z ------
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1394935Z 
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1401089Z  [33m1 warning found (use docker --debug to expand):
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1402822Z [0m - InvalidDefaultArgInFrom: Default value for ARG ${TPNIL_NATIVE_BASE} results in empty or invalid base image name (line 2)
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1404055Z Dockerfile:9
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1404425Z --------------------
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1405135Z    7 |     COPY components/transport/*.mjs /work/components/transport/
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1406510Z    8 |     COPY integrations/services/package.json integrations/services/package-lock.json /work/integrations/services/
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1408301Z    9 | >>> RUN npm ci --ignore-scripts --prefix /work/integrations/services && cd /work/integrations/services && npm rebuild better-sqlite3
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1409506Z   10 |     COPY integrations/services/src /work/integrations/services/src
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1410432Z   11 |     COPY integrations/services/vendor /work/integrations/services/vendor
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1411132Z --------------------
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1413276Z ERROR: failed to build: failed to solve: process "/bin/sh -c npm ci --ignore-scripts --prefix /work/integrations/services && cd /work/integrations/services && npm rebuild better-sqlite3" did not complete successfully: exit code: 1
+all-go-native	Install the pinned integrated service closure	2026-11-06T22:29:58.1625065Z ##[error]Process completed with exit code 1.
+all-go-native	Retain every attempt and qualification receipt	﻿2026-11-06T22:29:58.2127090Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2127532Z with:
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2127754Z   name: native-go-yours-wallet-5.1.0
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2128041Z   path: out/native-go-wallet
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2128294Z   if-no-files-found: error
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2128522Z   retention-days: 90
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2128738Z   compression-level: 6
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2128950Z   overwrite: false
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2129166Z   include-hidden-files: false
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2129396Z env:
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2129579Z   GOTOOLCHAIN: local
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.2129792Z ##[endgroup]
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.4632960Z (node:6621) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.4633982Z (Use `node --trace-deprecation ...` to show where the warning was created)
+all-go-native	Retain every attempt and qualification receipt	2026-11-06T22:29:58.4675381Z ##[error]No files were found with the provided path: out/native-go-wallet. No artifacts will be uploaded.

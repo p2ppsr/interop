@@ -56,3 +56,50 @@ jobs:
           path: out/go-components
           if-no-files-found: error
           retention-days: 90
+  integrated-components:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: '1.27.3'
+          cache-dependency-path: synthesis/go/go.sum
+      - name: Prepare exact component closures
+        run: |
+          npm ci --ignore-scripts --prefix synthesis
+          npm ci --ignore-scripts --prefix components/transport
+          npm ci --ignore-scripts --prefix integrations/services
+          npm rebuild better-sqlite3 --prefix integrations/services
+          rustup toolchain install 1.88.0 --profile minimal
+          npm run prepare:go
+          node scripts/prepare-storage-sync-go.mjs
+          node scripts/prepare-messaging.mjs
+      - name: Verify trust and adapter regressions
+        run: |
+          npm test --prefix components/transport
+          npm test --prefix integrations/services
+          RUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml
+      - name: Execute all component matrices with fresh repeated state
+        env:
+          RUSTUP_TOOLCHAIN: 1.88.0
+        run: node scripts/run-integrated-lab.mjs out/integrated-lab
+      - name: Verify the complete evidence pack offline
+        run: |
+          node scripts/verify-integrated-lab.mjs out/integrated-lab
+          RUSTUP_TOOLCHAIN=1.88.0 node scripts/verify-published-integrations.mjs --semantic
+          node scripts/test-messaging-verifier.mjs out/integrated-lab/messaging-1
+          RUSTUP_TOOLCHAIN=1.88.0 node scripts/test-rust-verifier.mjs out/integrated-lab/rust-1 out/integrated-lab/transport-typescript-1/paid-http.json out/integrated-lab/transport-go-1/paid-http.json out/integrated-lab/overlay-identity-1/rust-certificate-vectors.json
+      - name: Retain every attempt
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: integrated-lab
+          path: out/integrated-lab
+          if-no-files-found: warn
+          retention-days: 7

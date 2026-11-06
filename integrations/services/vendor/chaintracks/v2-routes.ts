@@ -1,0 +1,420 @@
+/**
+ * V2 API Routes for ChaintracksService
+ *
+ * RESTful API with path parameters matching go-chaintracks v2 API
+ */
+
+import { Router, Request, Response, NextFunction } from 'express'
+import { Chaintracks } from '@bsv/wallet-toolbox'
+import { log } from './logger'
+import { parseHeaderHeight, parseHeaderRange } from './resourceLimits'
+
+interface ApiResponse {
+  status: 'success' | 'error'
+  value?: unknown
+  code?: string
+  description?: string
+}
+
+function success(value: unknown): ApiResponse {
+  return { status: 'success', value }
+}
+
+function error(code: string, description: string): ApiResponse {
+  return { status: 'error', code, description }
+}
+
+// Express route params can be typed `string | string[]`; normalise to a single string.
+function firstParam(value: string | string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value[0] : value
+}
+
+// Reverse a hex string's byte order (for converting display hash to internal byte order)
+function reverseHex(hex: string): Buffer {
+  const buf = Buffer.from(hex, 'hex')
+  return buf.reverse()
+}
+
+// Convert header to 80-byte binary format
+// Note: previousHash and merkleRoot are byte-reversed in JSON (display format)
+// but need to be in internal byte order for binary serialization
+function headerToBytes(header: {
+  version: number
+  previousHash: string
+  merkleRoot: string
+  time: number
+  bits: number
+  nonce: number
+}): Buffer {
+  const buf = Buffer.alloc(80)
+  buf.writeUInt32LE(header.version, 0)
+  reverseHex(header.previousHash).copy(buf, 4) // Reverse from display to internal
+  reverseHex(header.merkleRoot).copy(buf, 36) // Reverse from display to internal
+  buf.writeUInt32LE(header.time, 68)
+  buf.writeUInt32LE(header.bits, 72)
+  buf.writeUInt32LE(header.nonce, 76)
+  return buf
+}
+
+export function createV2Routes(chaintracks: Chaintracks): Router {
+  const router = Router()
+
+  // GET /v2/network - Get blockchain network name
+  router.get('/network', async (_req: Request, res: Response) => {
+    try {
+      const network = chaintracks.chain
+      res.json(success(network))
+    } catch (err) {
+      log.error({ operation: 'v2.get_network', outcome: 'error', err }, 'Failed to get network')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get network'))
+    }
+  })
+
+  // GET /v2/height - Get current chain height (go-chaintracks compatible)
+  router.get('/height', async (_req: Request, res: Response) => {
+    try {
+      res.set('Cache-Control', 'public, max-age=60')
+      res.json(success({ height: await chaintracks.getPresentHeight() }))
+    } catch (err) {
+      log.error({ operation: 'v2.get_height', outcome: 'error', err }, 'Failed to get chain height')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get chain height'))
+    }
+  })
+
+  // GET /v2/tip - Get chain tip header
+  router.get('/tip', async (_req: Request, res: Response) => {
+    try {
+      res.set('Cache-Control', 'no-cache')
+      const header = await chaintracks.findChainTipHeader()
+      if (!header) {
+        return res.status(404).json(error('ERR_NO_TIP', 'Chain tip not found'))
+      }
+      res.json(success(header))
+    } catch (err) {
+      log.error({ operation: 'v2.get_tip', outcome: 'error', err }, 'Failed to get chain tip')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get chain tip'))
+    }
+  })
+
+  // GET /v2/tip/stream - SSE stream compatible with go-chaintracks/Arcade.
+  router.get('/tip/stream', async (req: Request, res: Response) => {
+    res.status(200)
+    res.set({
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive'
+    })
+    res.flushHeaders()
+
+    let subscriptionId: string | undefined
+    let closed = false
+    const keepalive = setInterval(() => {
+      if (!res.writableEnded) res.write(': keepalive\n\n')
+    }, 15000)
+    const cleanup = () => {
+      closed = true
+      clearInterval(keepalive)
+      if (subscriptionId != null) {
+        const id = subscriptionId
+        subscriptionId = undefined
+        chaintracks.unsubscribe(id).catch(err => {
+          log.warn(
+            { operation: 'v2.tip_stream.unsubscribe', outcome: 'error', err },
+            'Failed to unsubscribe tip stream'
+          )
+        })
+      }
+    }
+    req.once('close', cleanup)
+
+    try {
+      subscriptionId = await chaintracks.subscribeHeaders(header => {
+        if (!res.writableEnded) res.write(`data: ${JSON.stringify(header)}\n\n`)
+      })
+      if (closed) {
+        const id = subscriptionId
+        subscriptionId = undefined
+        await chaintracks.unsubscribe(id)
+        return
+      }
+      const tip = await chaintracks.findChainTipHeader()
+      if (!res.writableEnded) res.write(`data: ${JSON.stringify(tip)}\n\n`)
+    } catch (err) {
+      log.error({ operation: 'v2.tip_stream', outcome: 'error', err }, 'Failed to start tip stream')
+      cleanup()
+      if (!res.writableEnded) res.end()
+    }
+  })
+
+  // GET /v2/reorg/stream - SSE reorganization stream.
+  router.get('/reorg/stream', async (req: Request, res: Response) => {
+    res.status(200)
+    res.set({
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive'
+    })
+    res.flushHeaders()
+
+    let subscriptionId: string | undefined
+    let closed = false
+    const keepalive = setInterval(() => {
+      if (!res.writableEnded) res.write(': keepalive\n\n')
+    }, 15000)
+    const cleanup = () => {
+      closed = true
+      clearInterval(keepalive)
+      if (subscriptionId != null) {
+        const id = subscriptionId
+        subscriptionId = undefined
+        chaintracks.unsubscribe(id).catch(err => {
+          log.warn(
+            { operation: 'v2.reorg_stream.unsubscribe', outcome: 'error', err },
+            'Failed to unsubscribe reorg stream'
+          )
+        })
+      }
+    }
+    req.once('close', cleanup)
+
+    try {
+      subscriptionId = await chaintracks.subscribeReorgs(
+        (depth, oldTip, newTip, deactivatedHeaders) => {
+          if (!res.writableEnded) {
+            res.write(`data: ${JSON.stringify({ depth, oldTip, newTip, deactivatedHeaders })}\n\n`)
+          }
+        }
+      )
+      if (closed) {
+        const id = subscriptionId
+        subscriptionId = undefined
+        await chaintracks.unsubscribe(id)
+      }
+    } catch (err) {
+      log.error(
+        { operation: 'v2.reorg_stream', outcome: 'error', err },
+        'Failed to start reorg stream'
+      )
+      cleanup()
+      if (!res.writableEnded) res.end()
+    }
+  })
+
+  // GET /v2/header/height/:height - Get header by height
+  router.get('/header/height/:height', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if ((firstParam(req.params.height) ?? '').endsWith('.bin')) return next()
+      let height: number
+      try {
+        height = parseHeaderHeight(firstParam(req.params.height))
+      } catch (err) {
+        if (!(err instanceof RangeError)) throw err
+        return res.status(400).json(error('ERR_INVALID_PARAMS', 'Invalid height parameter'))
+      }
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      const header = await chaintracks.findHeaderForHeight(height)
+      if (!header) {
+        return res.status(404).json(error('ERR_NOT_FOUND', `Header not found at height ${height}`))
+      }
+      res.json(success(header))
+    } catch (err) {
+      log.error(
+        { operation: 'v2.get_header_by_height', outcome: 'error', err },
+        'Failed to get header'
+      )
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get header'))
+    }
+  })
+
+  // GET /v2/header/hash/:hash - Get header by hash
+  router.get('/header/hash/:hash', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const hash = firstParam(req.params.hash)
+      if ((hash ?? '').endsWith('.bin')) return next()
+      if (!hash || !/^[a-fA-F0-9]{64}$/.test(hash)) {
+        return res.status(400).json(error('ERR_INVALID_PARAMS', 'Invalid hash parameter'))
+      }
+
+      const header = await chaintracks.findHeaderForBlockHash(hash)
+      if (!header) {
+        return res.status(404).json(error('ERR_NOT_FOUND', `Header not found for hash ${hash}`))
+      }
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (header.height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      res.json(success(header))
+    } catch (err) {
+      log.error(
+        { operation: 'v2.get_header_by_hash', outcome: 'error', err },
+        'Failed to get header'
+      )
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get header'))
+    }
+  })
+
+  // GET /v2/headers?height=N&count=M - Get multiple headers as binary
+  router.get('/headers', async (req: Request, res: Response) => {
+    try {
+      const { height, count } = parseHeaderRange(req.query as Record<string, unknown>)
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      // Collect headers as binary (80 bytes each)
+      const buffers: Buffer[] = []
+      for (let i = 0; i < count; i++) {
+        const header = await chaintracks.findHeaderForHeight(height + i)
+        if (!header) break
+        buffers.push(headerToBytes(header))
+      }
+
+      res.set('Content-Type', 'application/octet-stream')
+      res.send(Buffer.concat(buffers))
+    } catch (err) {
+      if (err instanceof RangeError) {
+        return res.status(400).json(error('ERR_INVALID_PARAMS', err.message))
+      }
+      log.error({ operation: 'v2.get_headers', outcome: 'error', err }, 'Failed to get headers')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get headers'))
+    }
+  })
+
+  // Binary routes (80 bytes per header, height returned in X-Block-Height header)
+
+  // GET /v2/tip.bin - Get chain tip as 80-byte binary
+  router.get('/tip.bin', async (_req: Request, res: Response) => {
+    try {
+      res.set('Cache-Control', 'no-cache')
+      const header = await chaintracks.findChainTipHeader()
+      if (!header) {
+        return res.status(404).json(error('ERR_NO_TIP', 'Chain tip not found'))
+      }
+      res.set('Content-Type', 'application/octet-stream')
+      res.set('X-Block-Height', String(header.height))
+      res.send(headerToBytes(header))
+    } catch (err) {
+      log.error({ operation: 'v2.get_tip_bin', outcome: 'error', err }, 'Failed to get chain tip')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get chain tip'))
+    }
+  })
+
+  // GET /v2/header/height/:height.bin - Get header by height as 80-byte binary
+  router.get('/header/height/:height.bin', async (req: Request, res: Response) => {
+    try {
+      const heightStr = (firstParam(req.params.height) ?? '').replace(/\.bin$/, '')
+      let height: number
+      try {
+        height = parseHeaderHeight(heightStr)
+      } catch (err) {
+        if (!(err instanceof RangeError)) throw err
+        return res.status(400).json(error('ERR_INVALID_PARAMS', 'Invalid height parameter'))
+      }
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      const header = await chaintracks.findHeaderForHeight(height)
+      if (!header) {
+        return res.status(404).json(error('ERR_NOT_FOUND', `Header not found at height ${height}`))
+      }
+      res.set('Content-Type', 'application/octet-stream')
+      res.set('X-Block-Height', String(header.height))
+      res.send(headerToBytes(header))
+    } catch (err) {
+      log.error(
+        { operation: 'v2.get_header_by_height_bin', outcome: 'error', err },
+        'Failed to get header'
+      )
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get header'))
+    }
+  })
+
+  // GET /v2/header/hash/:hash.bin - Get header by hash as 80-byte binary
+  router.get('/header/hash/:hash.bin', async (req: Request, res: Response) => {
+    try {
+      const hash = (firstParam(req.params.hash) ?? '').replace('.bin', '')
+      if (!hash || !/^[a-fA-F0-9]{64}$/.test(hash)) {
+        return res.status(400).json(error('ERR_INVALID_PARAMS', 'Invalid hash parameter'))
+      }
+
+      const header = await chaintracks.findHeaderForBlockHash(hash)
+      if (!header) {
+        return res.status(404).json(error('ERR_NOT_FOUND', `Header not found for hash ${hash}`))
+      }
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (header.height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      res.set('Content-Type', 'application/octet-stream')
+      res.set('X-Block-Height', String(header.height))
+      res.send(headerToBytes(header))
+    } catch (err) {
+      log.error(
+        { operation: 'v2.get_header_by_hash_bin', outcome: 'error', err },
+        'Failed to get header'
+      )
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get header'))
+    }
+  })
+
+  // GET /v2/headers.bin?height=N&count=M - Get multiple headers as binary (80 bytes each)
+  router.get('/headers.bin', async (req: Request, res: Response) => {
+    try {
+      const { height, count } = parseHeaderRange(req.query as Record<string, unknown>)
+
+      const currentHeight = await chaintracks.currentHeight()
+      if (height < currentHeight - 100) {
+        res.set('Cache-Control', 'public, max-age=3600')
+      } else {
+        res.set('Cache-Control', 'no-cache')
+      }
+
+      // Collect headers as binary (80 bytes each)
+      const buffers: Buffer[] = []
+      let headerCount = 0
+      for (let i = 0; i < count; i++) {
+        const header = await chaintracks.findHeaderForHeight(height + i)
+        if (!header) break
+        buffers.push(headerToBytes(header))
+        headerCount++
+      }
+
+      res.set('Content-Type', 'application/octet-stream')
+      res.set('X-Start-Height', String(height))
+      res.set('X-Header-Count', String(headerCount))
+      res.send(Buffer.concat(buffers))
+    } catch (err) {
+      if (err instanceof RangeError) {
+        return res.status(400).json(error('ERR_INVALID_PARAMS', err.message))
+      }
+      log.error({ operation: 'v2.get_headers_bin', outcome: 'error', err }, 'Failed to get headers')
+      res.status(500).json(error('ERR_INTERNAL', 'Failed to get headers'))
+    }
+  })
+
+  return router
+}

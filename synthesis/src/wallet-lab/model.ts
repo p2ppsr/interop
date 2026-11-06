@@ -46,7 +46,7 @@ export interface WalletLabResult {
   schema: 'tpnil-isi4-wallet-run@1.0.0'
   claim: WalletLabClaim
   program: 'ISI-4@1.0.0'
-  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0'
+  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0'
   profile: 'production-wallet-todo-controlled-services' | 'desktop-wallet-todo-controlled-services' | 'desktop-wallet-todo-declared-fixture-hook'
   runId: string
   startedAt: string

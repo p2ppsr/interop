@@ -1,0 +1,20 @@
+{
+  "schema": "tpnil-native-identity-trust-profile@1",
+  "id": "native-public-settings-token@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "configurationSurface": "WalletSettingsManager through unchanged native public wallet CWI only",
+  "assertions": [
+    "identity-trust.initial-exclusion",
+    "identity-trust.public-settings-token",
+    "identity-trust.cache-expiry",
+    "identity-trust.positive-discovery",
+    "identity-trust.settings-restored",
+    "identity-trust.temporary-token-spent",
+    "identity-trust.public-boundary-only",
+    "identity-trust.cleanup"
+  ],
+  "minimumCacheExpiryMs": 120000,
+  "runtimeWaitMs": 121000,
+  "retirement": "Restore exact original settings via public signed token operation; delete the temporary token if no prior token existed; enclosing isolated container retires residual memory cache.",
+  "completeBRC100Conformance": false
+}

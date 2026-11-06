@@ -1,0 +1,25 @@
+{
+  "schema": "tpnil-messaging-profile@1",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "scope": "Pinned real TS and Go Message Box handlers/authentication with SQLite, TS AuthSocket, client-side Go HTTP polling, funded controlled BRC-100 wallets, and Mongo-backed MessageBox advertisement service. The separately identified Go SQLite compatibility adapter normalizes byte arrays before authentication signing and atomically persists per-recipient payment replay claims.",
+  "network": "Loopback controlled services; no production credentials, public-mainnet submission, FCM or device lease.",
+  "assertions": {
+    "unauthenticated-denied": "An unauthenticated list request cannot read messages.",
+    "encrypted-delivery": "A recipient decrypts exactly the submitted payload and observes the authenticated sender.",
+    "identity-isolation": "Another identity cannot list or acknowledge the recipient's message.",
+    "duplicate-rejected": "A repeated message ID never adds a second message.",
+    "permission-denial": "A recipient block prevents storage; restoring permission permits delivery.",
+    "unpaid-denied": "A positive recipient fee prevents an unpaid message from being stored.",
+    "paid-internalization": "A real funded sender creates a BRC-29 payment, the server stores it, and the receiving wallet internalizes the exact output.",
+    "payment-replay-rejected": "One payment cannot fund two distinct message requests.",
+    "restart-recovery": "Within five bounded reads after complete server restart, the recipient sees every unacknowledged message.",
+    "acknowledgment-durable": "A recipient acknowledgment removes the message after restart.",
+    "http-auth-replay-rejected": "An exact signed HTTP application request cannot execute twice.",
+    "live-delivery": "An authenticated recipient receives a new message using its declared TS WebSocket or Go HTTP polling transport.",
+    "discovery": "A real MessageBox topic manager admits a signed advertisement, a Mongo-backed lookup resolves its outpoint and revocation removes it.",
+    "payment-replay-after-acknowledgment": "A payment remains non-reusable after recipient acknowledgment and complete server restart."
+  },
+  "funding": "fixtures/teranode/wab-funding-v1.json",
+  "nativeWalletClaim": false,
+  "goNativeWebSockets": false
+}

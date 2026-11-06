@@ -1,0 +1,18 @@
+{
+  "schema": "tpnil-engineering-correction@1",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "reason": "Version1 certificate vector incorrectly used issuer identity instead of its BRC-52 derived certificate-signature public key. The Rust FAIL is a vector defect, not a Rust signature defect.",
+  "original": "../local-02/rust-certificate-vectors.json",
+  "replacement": "../local-03/rust-certificate-vectors.json",
+  "passingRustRun": "../rust-cross-check-02",
+  "evidence": [
+    {
+      "path": "result.json",
+      "sha256": "7ec30f6911eaf5061e40239c01e5b7a7b7893a977d819b0766d98d53dedb5659"
+    },
+    {
+      "path": "calls.json",
+      "sha256": "611d1f774c5dcfd6c3a0438d37e97540db5a007628102a59a7f5e3691fe8f02c"
+    }
+  ]
+}

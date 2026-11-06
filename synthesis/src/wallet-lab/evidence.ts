@@ -74,15 +74,15 @@ export function verifyEvidenceBundle(directory: string): WalletLabResult {
   const recordPath = path.join(directory, 'record.json')
   const parsed = JSON.parse(fs.readFileSync(recordPath, 'utf8')) as WalletLabResult
   if (parsed.schema !== 'tpnil-isi4-wallet-run@1.0.0') throw new Error('Unsupported wallet-run evidence schema')
-  if (!['EXPERIMENTAL_CONFORMANCE_RESULT', 'ENGINEERING_OBSERVATION_ONLY'].includes(parsed.claim) || parsed.program !== 'ISI-4@1.0.0' || !['ITCVE-1@1.0.0', 'ITCVE-1@1.1.0'].includes(parsed.itcve))
+  if (!['EXPERIMENTAL_CONFORMANCE_RESULT', 'ENGINEERING_OBSERVATION_ONLY'].includes(parsed.claim) || parsed.program !== 'ISI-4@1.0.0' || !['ITCVE-1@1.0.0', 'ITCVE-1@1.1.0', 'ITCVE-1@1.3.0'].includes(parsed.itcve))
     throw new Error('Unexpected wallet-run claim or program boundary')
   const selection = parsed.configuration.serviceComponents?.components
-  if (selection !== null && typeof selection === 'object' && Object.values(selection).includes('go') && parsed.itcve !== 'ITCVE-1@1.1.0')
+  if (selection !== null && typeof selection === 'object' && Object.values(selection).includes('go') && !['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0'].includes(parsed.itcve))
     throw new Error('Go service selection requires the Go component profile')
-  if (parsed.itcve === 'ITCVE-1@1.1.0') {
+  if (['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0'].includes(parsed.itcve)) {
     if (parsed.claim !== 'ENGINEERING_OBSERVATION_ONLY' || parsed.configuration.serviceComponents === undefined)
       throw new Error('Go component profile requires engineering claim and component identities')
-    validateComponentIdentity(parsed.configuration.serviceComponents)
+    validateComponentIdentity(parsed.configuration.serviceComponents, parsed.itcve === 'ITCVE-1@1.3.0' ? parsed.itcve : undefined)
     const identity = JSON.parse(fs.readFileSync(path.join(directory, 'evidence/service-components.json'), 'utf8'))
     if (canonicalJson(identity) !== canonicalJson(parsed.configuration.serviceComponents))
       throw new Error('Service component evidence differs from configuration')

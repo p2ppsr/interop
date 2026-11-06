@@ -59,6 +59,9 @@ interface ListOutputProjection {
 }
 
 export interface YoursRunOptions {
+  integratedProfile?: 'ITCVE-1@1.3.0'
+  go?: import('./go-services.js').GoServiceOptions
+  additionalScenario?: (context: { application: Page; services: ControlledWalletServices; evidence: EvidenceBundle }) => Promise<void>
   nativeQualification?: { fundingFixture: TeranodeWalletFundingFixture; sandbox: true }
   components?: ComponentSelection
   extensionDirectory: string
@@ -140,7 +143,8 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
   const outputDirectory = path.resolve(options.outputDirectory)
   const runId = path.basename(outputDirectory)
   const evidence = new EvidenceBundle(outputDirectory)
-  const services = new ControlledWalletServices({ webroot, components: options.components })
+  if (options.go?.storageSyncPatch && options.integratedProfile !== 'ITCVE-1@1.3.0') throw new Error('Patched native services require the prospective integrated profile')
+  const services = new ControlledWalletServices({ webroot, components: options.components, go: options.go })
   const permissions: PermissionObservation[] = []
   const consoleErrors: string[] = []
   const profileDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-yours-profile-'))
@@ -668,6 +672,12 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     })
     progress('safe BRC-100 boundary corpus exercised')
 
+    if (options.additionalScenario !== undefined) {
+      progress('additional integrated component scenario: starting')
+      await options.additionalScenario({ application, services, evidence })
+      progress('additional integrated component scenario: completed')
+    }
+
     if (options.nativeQualification !== undefined) {
       evidence.addJson('native-transactions.json', await services.nativeTransactions())
       evidence.addJson('native-submissions.json', services.submissions.map(item => ({ txid: item.txid, verdict: item.verdict, beefHex: Buffer.from(item.bytes).toString('hex') })))
@@ -678,7 +688,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       schema: 'tpnil-isi4-wallet-run@1.0.0',
       claim: Object.values(services.components).includes('go') ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT',
       program: 'ISI-4@1.0.0',
-      itcve: Object.values(services.components).includes('go') ? 'ITCVE-1@1.1.0' : 'ITCVE-1@1.0.0',
+      itcve: options.integratedProfile ?? (Object.values(services.components).includes('go') ? 'ITCVE-1@1.1.0' : 'ITCVE-1@1.0.0'),
       profile: 'production-wallet-todo-controlled-services',
       runId,
       startedAt,

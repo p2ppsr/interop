@@ -1,0 +1,287 @@
+{
+  "schema": "tpnil-integration-attempt@1",
+  "claim": "OBSERVER_EXECUTION_ERROR",
+  "source": "28916cb6355f120c790a0cd97a5d97d7d52116c2",
+  "run": "https://github.com/p2ppsr/interop/actions/runs/42309035783",
+  "artifactId": 13547503956,
+  "artifactSha256": "c7cb1c6ffbe1f63085fb9e4a7ad7ee213364989f3b3d5d085e176bde973e04ea",
+  "walletExecuted": true,
+  "baselineQualifiedEnvironment": false,
+  "baselineWalletVectors": [
+    {
+      "assertions": [
+        {
+          "detail": "yours-wallet-5.1.0",
+          "evidence": [
+            "artifact.json"
+          ],
+          "id": "artifact-and-version",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "mainnet",
+          "evidence": [
+            "boundary.json"
+          ],
+          "id": "mainnet-configuration",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "6104e89be2a3e228362be679a14b29632795654fce4f96e83fca5d5fac7f359a",
+          "evidence": [
+            "funding.atomicbeef",
+            "funding.json"
+          ],
+          "id": "controlled-fixture-proof",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V001",
+      "limitations": [
+        "The controlled mainnet-format fixture is not a public-mainnet UTXO or public-network acceptance claim."
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "3fac2fe359567363b486e31dd46341c279abde2e7d7584310453886242a0767a.0",
+          "evidence": [
+            "created-output.json"
+          ],
+          "id": "todo-basket-output",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "1ToDoDtKreEzbHYKFjmoBuduFmSXXUGZG",
+          "evidence": [
+            "created-output.json"
+          ],
+          "id": "pushdrop-protocol-field",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "TPNIL controlled task",
+          "evidence": [
+            "created-output.json"
+          ],
+          "id": "encrypted-task-roundtrip",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V002",
+      "limitations": [],
+      "outcome": "PASS"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "3fac2fe359567363b486e31dd46341c279abde2e7d7584310453886242a0767a.0",
+          "evidence": [
+            "cold-reload.json"
+          ],
+          "id": "wallet-state-reconstruction",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V003",
+      "limitations": [],
+      "outcome": "PASS"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "3fac2fe359567363b486e31dd46341c279abde2e7d7584310453886242a0767a.0",
+          "evidence": [
+            "redeem.json"
+          ],
+          "id": "spent-output-absent",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V004",
+      "limitations": [
+        "Delayed-broadcast wallet state was evaluated; public-mainnet acceptance was outside the profile."
+      ],
+      "outcome": "PASS"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "",
+          "evidence": [
+            "permissions.json"
+          ],
+          "id": "deny-enforced",
+          "outcome": "FAIL"
+        },
+        {
+          "detail": "",
+          "evidence": [
+            "permissions.json"
+          ],
+          "id": "origin-isolation",
+          "outcome": "FAIL"
+        }
+      ],
+      "id": "ISI-4-V005",
+      "limitations": [
+        "The extension window-injection substrate was exercised; HTTP and XDM substrates are separate deployment profiles."
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "d0d21001cc9485090680b54d24a6d2066dcc9bc66b33809935df972332773cdd",
+          "evidence": [
+            "broadcast-lifecycle.json"
+          ],
+          "id": "accepted-service-verdict-observed",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "811cf0f301c01f3f429727935e1aa12934d54444bb3c67fe5f8ad8e96ba215c0",
+          "evidence": [
+            "broadcast-lifecycle.json"
+          ],
+          "id": "rejection-preserves-wallet-state",
+          "outcome": "FAIL"
+        },
+        {
+          "detail": "3f42da6e50500491f7e00909fdbea614af0aada615aba4fd35d08157afe5997f",
+          "evidence": [
+            "broadcast-lifecycle.json"
+          ],
+          "id": "post-rejection-recovery",
+          "outcome": "FAIL"
+        }
+      ],
+      "id": "ISI-4-V006",
+      "limitations": [
+        "These are controlled-service verdicts; they are not public-mainnet observations."
+      ],
+      "outcome": "FAIL"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "Creation, cold reload, and redemption used the controlled Wallet Toolbox remote-storage boundary.",
+          "evidence": [
+            "cold-reload.json",
+            "redeem.json"
+          ],
+          "id": "remote-storage-continuity",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V007",
+      "limitations": [
+        "Counterpart replacement requires the executable ISI-3 multi-remote synchronization profile, which is not yet implemented."
+      ],
+      "outcome": "BLOCKED"
+    },
+    {
+      "assertions": [
+        {
+          "detail": "28 methods",
+          "evidence": [
+            "method-inventory.json"
+          ],
+          "id": "declared-method-inventory",
+          "outcome": "PASS"
+        },
+        {
+          "detail": "encrypt/decrypt, signature, and HMAC",
+          "evidence": [
+            "method-inventory.json"
+          ],
+          "id": "crypto-positive-cases",
+          "outcome": "PASS"
+        }
+      ],
+      "id": "ISI-4-V008",
+      "limitations": [
+        "Certificate acquisition, identity discovery, linkage revelation, abort, and relinquishment need clause-level positive and specified-error fixtures before complete BRC-100 coverage can be claimed."
+      ],
+      "outcome": "BLOCKED"
+    }
+  ],
+  "reportedPartialIntegrationOutcomes": [
+    {
+      "lane": "relay",
+      "reportedOutcomes": {
+        "PASS": 8
+      },
+      "qualified": false
+    },
+    {
+      "lane": "paid-http",
+      "reportedOutcomes": {
+        "PASS": 9
+      },
+      "qualified": false
+    },
+    {
+      "lane": "messaging",
+      "reportedOutcomes": {
+        "PASS": 6
+      },
+      "qualified": false
+    },
+    {
+      "lane": "synthesis",
+      "reportedOutcomes": {
+        "PASS": 4
+      },
+      "qualified": false
+    },
+    {
+      "lane": "boundary",
+      "reportedOutcomes": {
+        "PASS": 42
+      },
+      "qualified": false
+    }
+  ],
+  "completedRepetitions": 0,
+  "qualifiedIntegratedEnvironment": false,
+  "cause": "The first native repetition completed the recorded relay, paid HTTP, Message Box, synthesis, and 42 boundary predicates, including trusted identity discovery, then evidence production rejected an undefined optional originator argument with Unsupported canonical fixture value: undefined. No complete worker result or second repetition exists; this is an observer serialization failure, not a new wallet conformance failure.",
+  "recovery": "Encode optional call arguments as explicit JSON-compatible evidence, preserving the strict canonical serializer and actual call semantics; regression-test the real evidence bundle and execute two fresh native repetitions. Keep this failed attempt and its original ZIP unchanged.",
+  "cleanup": {
+    "containerRemoved": true,
+    "mongo": {
+      "clean": true,
+      "forced": false,
+      "code": 0,
+      "signal": null
+    }
+  },
+  "files": [
+    {
+      "name": "artifacts.json",
+      "size": 742,
+      "sha256": "7c55e986309624713a2ebbd7cf641651acee08b1fba390198ed00bfa366f6eef"
+    },
+    {
+      "name": "jobs.json",
+      "size": 4535,
+      "sha256": "d52d37d84ea4b153f114f7ed13cacd38b0e0bf76d17bc9e741001fd0aeafd0b9"
+    },
+    {
+      "name": "logs.zip",
+      "size": 56614,
+      "sha256": "dfabcb05dd5422d005247be345fe31cabdccc824a8134aa85b938248d6ea3ebd"
+    },
+    {
+      "name": "native-evidence.zip",
+      "size": 288511,
+      "sha256": "c7cb1c6ffbe1f63085fb9e4a7ad7ee213364989f3b3d5d085e176bde973e04ea"
+    },
+    {
+      "name": "run.json",
+      "size": 11992,
+      "sha256": "d62d99fd5cb2d920b5ec6625de7fe94dafa1ea3bf8c545ccccb078f75a94662c"
+    }
+  ]
+}

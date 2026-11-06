@@ -116,6 +116,15 @@ const genesisBytes = Buffer.from(
   'hex'
 )
 
+export function serializeHeader(header: Omit<HeaderRecord, 'hash'>): Buffer {
+  const raw = Buffer.alloc(80)
+  raw.writeInt32LE(header.version, 0)
+  Buffer.from(header.previousHash, 'hex').reverse().copy(raw, 4)
+  Buffer.from(header.merkleRoot, 'hex').reverse().copy(raw, 36)
+  raw.writeUInt32LE(header.time, 68); raw.writeUInt32LE(header.bits, 72); raw.writeUInt32LE(header.nonce, 76)
+  return raw
+}
+
 export function withHeaderHash(header: Omit<HeaderRecord, 'hash'>): HeaderRecord {
   const raw = Buffer.alloc(80)
   raw.writeInt32LE(header.version, 0)
@@ -170,6 +179,7 @@ export class ControlledWalletServices {
   readonly overlay = new ControlledOverlayServices()
   private readonly verdicts: Array<'ACCEPTED_BY_NETWORK' | 'REJECTED'>
   private readonly webroot: string
+  private readonly externalOverlayLookups = new Map<string, string>()
   private readonly wabPort?: number
   private routeSequence = 0
   private servicePort = 0
@@ -195,6 +205,17 @@ export class ControlledWalletServices {
     this.verdicts = [...(options.submitVerdicts ?? [])]
     this.wabPort = options.wabPort
     this.temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-wallet-services-'))
+  }
+
+  /** Add a real loopback lookup provider for a prospective joined profile. */
+  registerOverlayLookup(origin: string, services: string[]): void {
+    const url = new URL(origin)
+    if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !url.port || url.username || url.password || url.search || url.hash || url.pathname !== '/') throw new Error('Overlay provider must be an exact loopback HTTP origin')
+    for (const service of services) {
+      if (!/^ls_[a-z0-9_]+$/.test(service)) throw new Error('Invalid overlay lookup service name')
+      if (this.externalOverlayLookups.has(service) && this.externalOverlayLookups.get(service) !== url.origin) throw new Error('Overlay lookup provider already registered')
+      this.externalOverlayLookups.set(service, url.origin)
+    }
   }
 
   get componentDiagnostics(): string { return this.goServices?.diagnostics ?? '' }
@@ -412,59 +433,7 @@ export class ControlledWalletServices {
       await this.syncGoHeaders()
     }
     if (this.components.storage === 'typescript') {
-      const database = path.join(this.temporaryDirectory, 'storage.sqlite')
-      const env = {
-        chain: 'main' as const,
-        identityKey: this.identityKey,
-        identityKey2: this.identityKey,
-        filePath: database,
-        taalApiKey: 'controlled-fixture-no-key',
-        devKeys: { [this.identityKey]: this.storageRootKeyHex },
-        mySQLConnection: '{}'
-      }
-      this.storageSetup = await Setup.createWalletSQLite({
-        env,
-        rootKeyHex: this.storageRootKeyHex,
-        filePath: database,
-        databaseName: 'tpnil-wallet-lab'
-      })
-      this.storageSetup.services.options.chainTracker = {
-        isValidRootForHeight: async (root: string, height: number) => this.headers.get(height)?.merkleRoot === root,
-        currentHeight: async () => 900_100
-      } as never
-      this.storageSetup.services.postBeef = (async (beef: { toBinaryAtomic: (txid: string) => number[] }, txids: string[]) =>
-        txids.map(txid => {
-          const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
-          const verdict = this.verdicts.shift() ?? 'ACCEPTED_BY_NETWORK'
-          this.submissions.push({ txid, bytes, verdict })
-          this.routes.push({
-            sequence: ++this.routeSequence,
-            method: 'POST',
-            host: 'api.1sat.app',
-            pathname: '/1sat/tx',
-            disposition: 'controlled-service',
-            status: verdict === 'REJECTED' ? 400 : 200
-          })
-          return verdict === 'ACCEPTED_BY_NETWORK'
-            ? { name: 'tpnil-controlled-submission', status: 'success', txidResults: [{ txid, status: 'success' }] }
-            : {
-                name: 'tpnil-controlled-submission',
-                status: 'error',
-                error: new Error('controlled rejection'),
-                txidResults: [{ txid, status: 'error', serviceError: false }]
-              }
-        })) as unknown as typeof this.storageSetup.services.postBeef
-      this.storageServer = new StorageServer(this.storageSetup.activeStorage, {
-        host: '127.0.0.1',
-        port: this.storagePort,
-        wallet: this.storageSetup.wallet,
-        monetize: false,
-        logRpcRequests: false,
-        sessionManager: new KnexSessionManager(this.storageSetup.activeStorage.knex),
-        maxRpcListLimit: 100_000,
-        defaultRpcListLimit: 1_000
-      })
-      this.storageServer.start()
+      await this.startTypeScriptStorage()
     } else {
       this.goStorageServer = http.createServer((request, response) => {
         void this.forwardGo(request, response, `/storage${request.url ?? '/'}`).catch(error => {
@@ -559,6 +528,91 @@ export class ControlledWalletServices {
     })
   }
 
+  private async startTypeScriptStorage(): Promise<void> {
+    const database = path.join(this.temporaryDirectory, 'storage.sqlite')
+    const env = {
+      chain: 'main' as const,
+      identityKey: this.identityKey,
+      identityKey2: this.identityKey,
+      filePath: database,
+      taalApiKey: 'controlled-fixture-no-key',
+      devKeys: { [this.identityKey]: this.storageRootKeyHex },
+      mySQLConnection: '{}'
+    }
+    this.storageSetup = await Setup.createWalletSQLite({
+      env,
+      rootKeyHex: this.storageRootKeyHex,
+      filePath: database,
+      databaseName: 'tpnil-wallet-lab'
+    })
+    this.storageSetup.services.options.chainTracker = {
+      isValidRootForHeight: async (root: string, height: number) => this.headers.get(height)?.merkleRoot === root,
+      currentHeight: async () => 900_100
+    } as never
+    this.storageSetup.services.getHeaderForHeight = async height => {
+      const header = this.headers.get(height)
+      if (header === undefined) throw new Error(`Controlled header unavailable: ${height}`)
+      return [...serializeHeader(header)]
+    }
+    this.storageSetup.services.getHeight = async () => 900_100
+    this.storageSetup.services.postBeef = (async (beef: { toBinaryAtomic: (txid: string) => number[] }, txids: string[]) =>
+      txids.map(txid => {
+        const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
+        const verdict = this.verdicts.shift() ?? 'ACCEPTED_BY_NETWORK'
+        this.submissions.push({ txid, bytes, verdict })
+        this.routes.push({
+          sequence: ++this.routeSequence,
+          method: 'POST',
+          host: 'api.1sat.app',
+          pathname: '/1sat/tx',
+          disposition: 'controlled-service',
+          status: verdict === 'REJECTED' ? 400 : 200
+        })
+        return verdict === 'ACCEPTED_BY_NETWORK'
+          ? { name: 'tpnil-controlled-submission', status: 'success', txidResults: [{ txid, status: 'success' }] }
+          : {
+              name: 'tpnil-controlled-submission',
+              status: 'error',
+              error: new Error('controlled rejection'),
+              txidResults: [{ txid, status: 'error', serviceError: false }]
+            }
+      })) as unknown as typeof this.storageSetup.services.postBeef
+    this.storageServer = new StorageServer(this.storageSetup.activeStorage, {
+      host: '127.0.0.1',
+      port: this.storagePort,
+      wallet: this.storageSetup.wallet,
+      monetize: false,
+      logRpcRequests: false,
+      sessionManager: new KnexSessionManager(this.storageSetup.activeStorage.knex),
+      maxRpcListLimit: 100_000,
+      defaultRpcListLimit: 1_000
+    })
+    this.storageServer.start()
+    await new Promise<void>((resolve, reject) => {
+      this.storageServer!.server.once('listening', resolve)
+      this.storageServer!.server.once('error', reject)
+    })
+  }
+
+  private async closeTypeScriptStorageServer(): Promise<void> {
+    const server = this.storageServer?.server as http.Server | undefined
+    if (server === undefined || !server.listening) return
+    server.closeAllConnections()
+    await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve()))
+  }
+
+  /** Reopen the same provider state without recreating its identity or database. */
+  async restartStorage(): Promise<void> {
+    if (this.components.storage === 'go') return this.restartGoComponents()
+    await this.faucetWallet?.destroy()
+    this.faucetWallet = undefined
+    await this.closeTypeScriptStorageServer()
+    await this.storageSetup?.wallet.destroy()
+    await this.storageSetup?.activeStorage.destroy()
+    await this.startTypeScriptStorage()
+    if (this.faucetRootKeyHex !== undefined) this.faucetWallet = await this.connectRemoteWallet(this.faucetRootKeyHex)
+  }
+
   async restartGoComponents(): Promise<void> {
     if (this.goServices === undefined) throw new Error('No Go components selected')
     await this.faucetWallet?.destroy()
@@ -595,7 +649,7 @@ export class ControlledWalletServices {
       this.serviceServer.closeAllConnections()
       await clean(() => new Promise<void>(resolve => this.serviceServer!.close(() => resolve())))
     }
-    await clean(async () => this.storageServer?.close())
+    await clean(async () => this.closeTypeScriptStorageServer())
     await clean(async () => this.storageSetup?.wallet.destroy())
     await clean(async () => this.storageSetup?.activeStorage.destroy())
     fs.rmSync(this.temporaryDirectory, { recursive: true, force: true })
@@ -678,16 +732,24 @@ export class ControlledWalletServices {
         await this.handleGoOverlay(request, response, url.pathname)
         return
       }
-      if (this.components.overlay === 'go' && url.pathname === '/lookup') {
+      if (url.pathname === '/lookup') {
         // Read the question once, then replay it to the selected service.
         const chunks: Buffer[] = []
         let size = 0
         for await (const chunk of request) { size += chunk.length; if (size > 4 * 1024 * 1024) throw new Error('Lookup exceeds limit'); chunks.push(Buffer.from(chunk)) }
         const body = Buffer.concat(chunks)
-        const question = JSON.parse(body.toString()) as { service?: string }
+        const question = JSON.parse(body.toString()) as { service?: string; query?: { service?: string } }
+        const lookupOrigin = this.externalOverlayLookups.get(question.service === 'ls_slap' ? question.query?.service ?? '' : question.service ?? '')
+        if (lookupOrigin !== undefined) {
+          const result = await fetch(`${lookupOrigin}/lookup`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, redirect: 'error', signal: AbortSignal.timeout(15_000) })
+          const answer = await result.json()
+          this.routes.push({ sequence: ++this.routeSequence, method: 'POST', host, pathname: url.pathname, disposition: 'controlled-service', status: result.status })
+          sendJson(response, result.status, answer)
+          return
+        }
         const { Readable } = await import('node:stream')
         const replay = Object.assign(Readable.from([body]), { method: request.method, headers: request.headers, url: request.url }) as IncomingMessage
-        if (question.service === 'ls_users' || question.service === 'ls_tpnil') {
+        if (this.components.overlay === 'go' && (question.service === 'ls_users' || question.service === 'ls_tpnil')) {
           const result = await this.forwardGo(replay, response, '/overlay/lookup')
           if (result !== undefined) {
             const answer = JSON.parse(result.output.toString()) as { outputs?: unknown[] }

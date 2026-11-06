@@ -1,5 +1,13 @@
 # Foundation operator commands
 
+For the integrated TS/Go component matrix and separate native wallet lane,
+follow [ITCVE-1 1.3.0](../itcves/ITCVE-1/1.3.0/README.md). Its runner requires
+committed source and fresh output directories, executes all declared lanes and
+repetitions, and verifies observations with independent oracles. Upstream
+failures remain data; missing evidence or failed cleanup prevents qualification.
+The [results report](integrated-lab-results-2026-11-06.md) links original evidence
+and the independent archive-verification command.
+
 Use the Node.js version pinned in `.nvmrc` and Python 3. Record the actual Node and OS versions for each new run; historical journals retain their original runtimes and verdicts. The independent BRC-39 oracle uses Node's [native Argon2 API](https://nodejs.org/api/crypto.html#cryptoargon2algorithm-parameters-callback).
 
 The dependency-free core runs locally. CI validates it on hosted workers; SUT execution uses the selected ITCVE.

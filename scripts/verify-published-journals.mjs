@@ -13,7 +13,8 @@ import { verifyRuntimeQualification } from '../src/runtime-qualification.mjs';
 import { verifyReferenceQualification } from '../src/reference-qualification.mjs';
 import { verifySynthesisStackQualification } from '../src/synthesis-stack-qualification.mjs';
 import { verifyNativeObservation, verifyWalletRun, verifyWalletRunSeries } from '../src/sut-evidence.mjs';
-let nativeWalletQualificationCount = 0, nativeWalletAttemptCount = 0;
+import { verifyPublishedIntegrations } from './verify-published-integrations.mjs';
+let nativeWalletQualificationCount = 0, nativeWalletAttemptCount = 0, integrationEngineeringFiles = 0;
 let count = 0, intakeCount = 0, qualificationCount = 0, nativeQualificationCount = 0;
 let componentQualificationCount = 0, runtimeQualificationCount = 0;
 let referenceQualificationCount = 0;
@@ -84,10 +85,24 @@ function walk(dir) {
       execFileSync(path.join(ROOT, 'synthesis/node_modules/.bin/tsx'), [path.join(ROOT, 'synthesis/src/wallet-lab/native/verify.ts'), dir], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
       nativeWalletQualificationCount++;
     }
+    else if (file.startsWith(path.join(ROOT, 'journals/integrated-engineering') + path.sep) && entry.name === 'bundle-inventory.json') {
+      const inventory = JSON.parse(fs.readFileSync(file, 'utf8'));
+      assert.equal(inventory.schema, 'tpnil-engineering-evidence-inventory@1');
+      assert.equal(inventory.claim, 'ENGINEERING_OBSERVATION_ONLY');
+      assert.equal(new Set(inventory.files.map(item => item.path)).size, inventory.files.length);
+      for (const item of inventory.files) {
+        assert.ok(/^journals\/[a-zA-Z0-9._/-]+$/.test(item.path) && !item.path.includes('..'));
+        const target = path.join(ROOT, item.path); assert.ok(fs.lstatSync(target).isFile());
+        const bytes = fs.readFileSync(target); assert.equal(bytes.length, item.size);
+        assert.equal(createHash('sha256').update(bytes).digest('hex'), item.sha256);
+        integrationEngineeringFiles++;
+      }
+    }
     else if (entry.name === 'journal.jsonl') { verifyJournal(dir); count++; }
   }
 }
 walk(path.join(ROOT, 'journals'));
+const publishedIntegrations = verifyPublishedIntegrations();
 console.log(JSON.stringify({
   verifiedPublishedSelfTestJournals: count,
   verifiedIntakeReviews: intakeCount,
@@ -102,5 +117,8 @@ console.log(JSON.stringify({
   verifiedExperimentalWalletSeries: experimentalWalletSeriesCount,
   verifiedNativeWalletQualifications: nativeWalletQualificationCount,
   verifiedNativeWalletFailedAttempts: nativeWalletAttemptCount,
+  verifiedIntegrationEngineeringFiles: integrationEngineeringFiles,
+  verifiedPublishedIntegrationArchives: publishedIntegrations.verifiedPublishedIntegrationArchives,
+  verifiedPublishedIntegrationAttempts: publishedIntegrations.verifiedPublishedIntegrationAttempts,
   officialSutRuns: 0
 }));

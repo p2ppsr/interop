@@ -1,0 +1,31 @@
+{
+  "schema": "tpnil-messaging-sources@1",
+  "node": "24.22.1",
+  "go": "go1.27.3",
+  "components": [
+    {
+      "id": "typescript-messagebox",
+      "repository": "bsv-blockchain/ts-stack",
+      "commit": "eb131148c3e95749162e7c8263e444e255c7db1f",
+      "path": "infra/message-box-server",
+      "license": "Open BSV",
+      "archiveSha256": "112672e0c2aaebc15d7eb0f9e7ecf1b9e3a9497134db9af5931494c61e0004ed"
+    },
+    {
+      "id": "go-messagebox",
+      "repository": "bsv-blockchain/go-message-box-server",
+      "commit": "4a97f1b3b7c6f3eb985f714648c598db0ee3b6e4",
+      "path": ".",
+      "license": "Open BSV",
+      "archiveSha256": "1598ed008f744b69f0a9c15466255888c8f6423f1a732d4312fbeb735e0dc7ed"
+    },
+    {
+      "id": "messagebox-discovery",
+      "repository": "bsv-blockchain/messagebox-services",
+      "commit": "71ee613d0ca51d7140ce54ab637ff8fb27f5db47",
+      "path": "backend",
+      "license": "Open BSV",
+      "archiveSha256": "5633f0dee32da0e2741ec7274b2c48e3bce88de64915bc81abacf51b3a6fdb71"
+    }
+  ]
+}

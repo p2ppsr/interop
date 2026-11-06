@@ -69,3 +69,15 @@ The [1.2.0 native qualification](itcves/ITCVE-1/1.2.0/README.md) admits the
 unchanged Yours Wallet 5.1.0 Chromium extension on the all-Go Linux/amd64 closure.
 Two clean native repetitions match: V001–V004 PASS, V005–V006 FAIL and V007–V008
 BLOCKED, with mined funding ancestry and actual redemption verified offline.
+
+[ITCVE-1 1.3.0](itcves/ITCVE-1/1.3.0/README.md) adds the integrated component
+runner: TS/Go Message Box and discovery, mediated storage replacement, actual
+TS/Go overlay synchronization, ChainTracks, Identity Services, Wallet Relay,
+paid HTTP and an independent Rust participant. Its separate native profile
+connects these services to the unchanged wallet's public API and the
+Board/UHRP/CHIRP/LCH graph, retaining raw observations, explicit adapters,
+failure findings and offline verification.
+
+The [integrated results report](docs/integrated-lab-results-2026-11-06.md)
+records executed lanes, native attempts, original CI archives and reproduction
+commands.

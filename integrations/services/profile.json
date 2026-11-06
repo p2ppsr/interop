@@ -1,0 +1,69 @@
+{
+  "schema": "tpnil-services-profile@1.0.0",
+  "id": "ITCVE-SERVICES-1@0.1.0",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "funding": "Synthetic controlled transactions; locally mined contiguous regtest headers; no public network or native-wallet claim",
+  "transports": {
+    "overlay": "Loopback HTTP",
+    "gasp": "Upstream clients with explicit one-to-one logical-peer to loopback transport",
+    "goCompatibilityAdapter": "Omit absent inputs:null and empty/null proof, txMetadata and outputMetadata on GASP leaf responses; preserve all graph, transaction and proof fields"
+  },
+  "assertions": [
+    {
+      "id": "CHAIN-001",
+      "criterion": "Contiguous canonical-regtest ingestion and exact HTTP header"
+    },
+    {
+      "id": "CHAIN-002",
+      "criterion": "Reject altered header identity before mutation"
+    },
+    {
+      "id": "OVERLAY-001",
+      "criterion": "HTTP admission and exact payload lookup"
+    },
+    {
+      "id": "OVERLAY-002",
+      "criterion": "Idempotent duplicate submission"
+    },
+    {
+      "id": "DISCOVERY-001",
+      "criterion": "Real signed SHIP admission and lookup"
+    },
+    {
+      "id": "DISCOVERY-002",
+      "criterion": "Real signed SLAP admission and lookup"
+    },
+    {
+      "id": "OVERLAY-003",
+      "criterion": "Actual TS-to-TS HTTP GASP and replay"
+    },
+    {
+      "id": "OVERLAY-GO-001",
+      "criterion": "Go pulls a TS-only outpoint by GASP"
+    },
+    {
+      "id": "OVERLAY-GO-002",
+      "criterion": "TS pulls a Go-only outpoint by GASP with declared null-field adapter"
+    },
+    {
+      "id": "IDENTITY-001",
+      "criterion": "Certificate issuer signature and exact selective disclosure plus tamper rejection"
+    },
+    {
+      "id": "IDENTITY-002",
+      "criterion": "Identity overlay admission and issuer-filtered lookup"
+    },
+    {
+      "id": "OVERLAY-004",
+      "criterion": "SQLite/Mongo server replacement preserves state"
+    },
+    {
+      "id": "IDENTITY-003",
+      "criterion": "Signed identity spend removes the lookup record"
+    },
+    {
+      "id": "CHAIN-003",
+      "criterion": "Higher-work branch selection and persistence across replacement"
+    }
+  ]
+}

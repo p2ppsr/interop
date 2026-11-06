@@ -9,11 +9,13 @@ on:
         options:
           - typescript
           - all-go-native
+          - integrated-native
+          - integrated-native-trusted
 permissions:
   contents: read
 jobs:
   yours-wallet:
-    if: inputs.profile != 'all-go-native'
+    if: inputs.profile != 'all-go-native' && inputs.profile != 'integrated-native' && inputs.profile != 'integrated-native-trusted'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -46,9 +48,9 @@ jobs:
           if-no-files-found: error
           retention-days: 90
   all-go-native:
-    if: inputs.profile == 'all-go-native'
+    if: inputs.profile == 'all-go-native' || startsWith(inputs.profile, 'integrated-native')
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -70,8 +72,29 @@ jobs:
           go build -mod=readonly -trimpath -o ../../out/itcve-mongo ./cmd/itcve-mongo
       - name: Build the frozen native browser closure
         run: docker build --iidfile out/native-go-image.id -f infra/native/yours-go/Dockerfile -t tpnil-native-go:${{ github.sha }} .
+      - name: Install the pinned integrated service closure
+        if: startsWith(inputs.profile, 'integrated-native')
+        run: |
+          npm ci --ignore-scripts --prefix components/transport
+          node scripts/prepare-messaging.mjs
+          node scripts/prepare-storage-sync-go.mjs
+          npm ci --ignore-scripts --prefix integrations/services
+          npm rebuild better-sqlite3 --prefix integrations/services
+          rustup toolchain install 1.88.0 --profile minimal
+          docker build --build-arg TPNIL_NATIVE_BASE=tpnil-native-go:${{ github.sha }} -f infra/native/integrated/Dockerfile -t tpnil-native-integrated:${{ github.sha }} .
       - name: Execute two clean isolated native repetitions and verify results
+        if: inputs.profile == 'all-go-native'
         run: node scripts/run-native-go-wallet.mjs tpnil-native-go:${{ github.sha }} out/native-go-wallet
+      - name: Execute and independently verify the integrated native wallet graph
+        if: startsWith(inputs.profile, 'integrated-native')
+        env:
+          RUSTUP_TOOLCHAIN: 1.88.0
+          TPNIL_NATIVE_PROFILE: ${{ inputs.profile }}
+        run: |
+          native_flag=--integrated
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-trusted ]; then native_flag=--integrated-trusted; fi
+          node scripts/run-native-go-wallet.mjs tpnil-native-integrated:${{ github.sha }} out/native-go-wallet "$native_flag"
+          node scripts/verify-native-integrated.mjs out/native-go-wallet
       - name: Retain every attempt and qualification receipt
         if: always()
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4

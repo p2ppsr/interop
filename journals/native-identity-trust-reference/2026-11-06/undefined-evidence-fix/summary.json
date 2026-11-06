@@ -1,0 +1,94 @@
+{
+  "schema": "tpnil-native-trust-evidence-correction@1",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "nativeExecution": false,
+  "sourceBase": "c621bf8adaa0d5ecdf828ca3872d3787ae88675e",
+  "sourceState": "Shared working tree included the explicitly hashed evidence snapshot correction.",
+  "correctsNativeAttempt": 42309035783,
+  "failure": "Native boundary passed all42 predicates including positive discovery, then the observer rejected undefined optional argument values while serializing its trust report.",
+  "correction": "Evidence snapshot preserves undefined as null plus exact JSON Pointer paths; native wallet calls and results and all acceptance predicates are unchanged.",
+  "archive": {
+    "path": "evidence.json.gz",
+    "sha256": "5b595918dc1334e6a3b5afdac0bc7cb5bd57f1e736e543edd69c946688a5b302",
+    "size": 756253,
+    "files": 46
+  },
+  "runs": [
+    {
+      "directory": "identity-trust-live-reference-4",
+      "originalSettingsTokens": 0,
+      "trustAssertions": 8,
+      "boundaryAssertions": 42,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T23:25:04.924Z",
+        "endedAt": "2026-11-06T23:27:05.925Z",
+        "monotonicElapsedMs": 121000,
+        "requiredMs": 120000
+      },
+      "directLiveReport": true,
+      "noIntermediateJsonSerialization": true,
+      "encodedUndefinedValues": 16,
+      "signedSettingsTransactions": 2
+    },
+    {
+      "directory": "identity-trust-live-existing-4",
+      "originalSettingsTokens": 1,
+      "trustAssertions": 8,
+      "boundaryAssertions": 42,
+      "result": "PASS",
+      "wait": {
+        "startedAt": "2026-11-06T23:25:04.854Z",
+        "endedAt": "2026-11-06T23:27:05.855Z",
+        "monotonicElapsedMs": 121000,
+        "requiredMs": 120000
+      },
+      "directLiveReport": true,
+      "noIntermediateJsonSerialization": true,
+      "encodedUndefinedValues": 24,
+      "signedSettingsTransactions": 2
+    }
+  ],
+  "sources": [
+    {
+      "path": "synthesis/src/wallet-lab/native/identity-trust.ts",
+      "sha256": "2e4435103aaf5101c8b538898bc64d4a28206a0a0d2e9a6f4ed40554b0f1ec26"
+    },
+    {
+      "path": "synthesis/src/wallet-lab/native/verify-identity-trust.ts",
+      "sha256": "c9f16c62f3c87160eec1aca62dd65a862e3af1263c9faa661e417cc804d6c91b"
+    },
+    {
+      "path": "synthesis/test/native-identity-trust.test.ts",
+      "sha256": "ccde479de6e1d89701a8e6557f2116d64f56d658af365f8b7d6ec934a4b32d7a"
+    }
+  ],
+  "failedPreflights": [
+    {
+      "directory": "identity-trust-live-reference-3",
+      "trustResult": "PASS",
+      "failure": {
+        "stage": "direct-live-EvidenceBundle",
+        "message": "TypeError: Unsupported canonical fixture value: undefined",
+        "stack": "TypeError: Unsupported canonical fixture value: undefined\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:25:9)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:10)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:10)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:16:42)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)"
+      }
+    },
+    {
+      "directory": "identity-trust-live-existing-3",
+      "trustResult": "PASS",
+      "failure": {
+        "stage": "direct-live-EvidenceBundle",
+        "message": "TypeError: Unsupported canonical fixture value: undefined",
+        "stack": "TypeError: Unsupported canonical fixture value: undefined\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:25:9)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:10)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:10)\n    at Array.map (<anonymous>)\n    at normalize (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:16:42)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/determinism.ts:22:27)"
+      }
+    }
+  ],
+  "validation": {
+    "targetedTests": {
+      "pass": 5,
+      "fail": 0
+    },
+    "typecheck": "PASS",
+    "readOnlyIndependentReview": "PASS"
+  }
+}

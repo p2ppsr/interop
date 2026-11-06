@@ -1,0 +1,83 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import { createHash } from 'node:crypto'
+import { crc32 } from 'node:zlib'
+import { extractZipSafely, verifyIntegrationArchive, verifyPublishedIntegrations, verifyArchiveSemantics, componentArchiveSummary } from '../scripts/verify-published-integrations.mjs'
+
+const hash = bytes => createHash('sha256').update(bytes).digest('hex')
+function temporary(run) { const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-test-')); try { return run(directory) } finally { fs.rmSync(directory, { recursive: true, force: true }) } }
+function zip(entries) {
+  const locals = [], central = []; let offset = 0
+  for (const entry of entries) {
+    const name = Buffer.from(entry.name), localName = Buffer.from(entry.localName ?? entry.name), body = Buffer.from(entry.body ?? ''), size = entry.size ?? body.length, checksum = entry.checksum ?? crc32(body)
+    const local = Buffer.alloc(30); local.writeUInt32LE(0x04034b50); local.writeUInt16LE(20, 4); local.writeUInt32LE(checksum, 14); local.writeUInt32LE(body.length, 18); local.writeUInt32LE(size, 22); local.writeUInt16LE(localName.length, 26)
+    const record = Buffer.alloc(46); record.writeUInt32LE(0x02014b50); record.writeUInt16LE(0x0314, 4); record.writeUInt16LE(20, 6); record.writeUInt32LE(checksum, 16); record.writeUInt32LE(body.length, 20); record.writeUInt32LE(size, 24); record.writeUInt16LE(name.length, 28); record.writeUInt32LE(((entry.mode ?? 0o100644) << 16) >>> 0, 38); record.writeUInt32LE(offset, 42)
+    locals.push(local, localName, body); central.push(record, name); offset += local.length + localName.length + body.length
+  }
+  const directory = Buffer.concat(central), end = Buffer.alloc(22); end.writeUInt32LE(0x06054b50); end.writeUInt16LE(entries.length, 8); end.writeUInt16LE(entries.length, 10); end.writeUInt32LE(directory.length, 12); end.writeUInt32LE(offset, 16)
+  return Buffer.concat([...locals, directory, end])
+}
+function bundle(directory, archive = zip([{ name: 'result.json', body: '{}' }])) {
+  fs.mkdirSync(directory, { recursive: true })
+  const source = 'ab'.repeat(20)
+  fs.writeFileSync(path.join(directory, 'integrated-lab.zip'), archive)
+  fs.writeFileSync(path.join(directory, 'qualification.json'), JSON.stringify({ schema: 'tpnil-integrated-component-qualification@1', claim: 'INFRASTRUCTURE_QUALIFICATION_ONLY', profile: 'ITCVE-1@1.3.0', source }))
+  const provenance = { schema: 'tpnil-integrated-component-archive@1', source, files: ['qualification.json', 'integrated-lab.zip'].map(name => { const bytes = fs.readFileSync(path.join(directory, name)); return { path: name, size: bytes.length, sha256: hash(bytes) } }) }
+  fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify(provenance)); return provenance
+}
+test('published archive integrity binds every byte and complete file set without external dependencies', () => temporary(directory => {
+  bundle(directory); assert.equal(verifyIntegrationArchive(directory).kind, 'component')
+  fs.appendFileSync(path.join(directory, 'qualification.json'), ' ')
+  assert.throws(() => verifyIntegrationArchive(directory))
+}))
+test('unlisted files and duplicate inventory entries cannot verify', () => temporary(directory => {
+  const provenance = bundle(directory)
+  fs.writeFileSync(path.join(directory, 'unlisted.txt'), 'extra'); assert.throws(() => verifyIntegrationArchive(directory)); fs.unlinkSync(path.join(directory, 'unlisted.txt'))
+  provenance.files.push(provenance.files[0]); fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify(provenance))
+  assert.throws(() => verifyIntegrationArchive(directory), /Duplicate/)
+}))
+test('removing a whole provenance manifest cannot hide a published archive', () => temporary(root => {
+  const directory = path.join(root, 'journals/integrated-component-qualification/2026-11-06/1')
+  bundle(directory); assert.equal(verifyPublishedIntegrations({ root }).verifiedPublishedIntegrationArchives, 1)
+  fs.unlinkSync(path.join(directory, 'provenance.json')); assert.throws(() => verifyPublishedIntegrations({ root }), /Unmanifested/)
+}))
+test('observer build failures cannot claim native wallet execution', () => temporary(directory => {
+  const bytes = Buffer.from('Compiler unavailable\n'); fs.writeFileSync(path.join(directory, 'failure.log'), bytes)
+  const attempt = { schema: 'tpnil-integration-attempt@1', source: 'ab'.repeat(20), claim: 'OBSERVER_BUILD_ERROR', walletExecuted: false, files: [{ name: 'failure.log', size: bytes.length, sha256: hash(bytes) }] }
+  const filename = path.join(directory, 'attempt.json'); fs.writeFileSync(filename, JSON.stringify(attempt))
+  assert.equal(verifyIntegrationArchive(directory).kind, 'attempt')
+  attempt.walletExecuted = true; fs.writeFileSync(filename, JSON.stringify(attempt)); assert.throws(() => verifyIntegrationArchive(directory))
+}))
+test('safe ZIP extraction preserves bytes and rejects CRC damage', () => temporary(directory => {
+  assert.deepEqual(extractZipSafely(zip([{ name: 'a/file.json', body: '{"ok":true}' }]), directory), { entries: 1, bytes: 11 })
+  assert.equal(fs.readFileSync(path.join(directory, 'a/file.json'), 'utf8'), '{"ok":true}')
+  fs.rmSync(path.join(directory, 'a'), { recursive: true }); assert.throws(() => extractZipSafely(zip([{ name: 'a', body: 'data', checksum: 0 }]), directory), /CRC/)
+}))
+for (const [name, entries] of [
+  ['traversal', [{ name: '../escape', body: 'bad' }]],
+  ['absolute path', [{ name: '/escape' }]],
+  ['symlink', [{ name: 'link', body: '/outside', mode: 0o120777 }]],
+  ['local/central name disagreement', [{ name: 'safe', localName: 'evil' }]],
+  ['duplicate names', [{ name: 'a' }, { name: 'a' }]],
+  ['case-colliding names', [{ name: 'A' }, { name: 'a' }]],
+  ['file/directory collision', [{ name: 'a' }, { name: 'a/b' }]],
+  ['expansion overflow', [{ name: 'large', size: 256 * 1024 * 1024 + 1 }]]
+]) test(`ZIP ${name} is rejected before publication`, () => temporary(directory => { assert.throws(() => extractZipSafely(zip(entries), directory)) }))
+test('failed semantic extraction removes its uniquely owned temporary directory', () => temporary(directory => {
+  bundle(directory, zip([{ name: '../escape' }]))
+  const before = fs.readdirSync(os.tmpdir()).filter(name => name.startsWith('tpnil-published-integration-')).sort()
+  assert.throws(() => verifyArchiveSemantics(verifyIntegrationArchive(directory)))
+  assert.deepEqual(fs.readdirSync(os.tmpdir()).filter(name => name.startsWith('tpnil-published-integration-')).sort(), before)
+}))
+test('component counts distinguish outer repetitions and isolated storage runs', () => temporary(directory => {
+  fs.mkdirSync(path.join(directory, 'storage')); fs.writeFileSync(path.join(directory, 'storage/result.json'), JSON.stringify({ runs: [{}, {}, {}] }))
+  fs.writeFileSync(path.join(directory, 'run-lock.json'), JSON.stringify({ source: 'ab'.repeat(20) }))
+  const run = (result, status) => ({ result, assertions: [{ id: 'predicate', implementation: 'go', result: status }], exitCode: 0, timedOut: false })
+  fs.writeFileSync(path.join(directory, 'result.json'), JSON.stringify({ lanes: [{ id: 'storage-sync', runs: [run('storage/result.json', 'PASS')] }, { id: 'messaging', runs: [run('one/result.json', 'FAIL'), run('two/result.json', 'FAIL')] }] }))
+  const actual = componentArchiveSummary(directory)
+  assert.equal(actual.laneRuns, 3); assert.equal(actual.isolatedExecutions, 5)
+  assert.deepEqual(actual.assertions, { total: 3, outcomes: { PASS: 1, FAIL: 2 } }); assert.deepEqual(actual.findings.map(item => item.repetition), [1, 2])
+}))

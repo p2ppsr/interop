@@ -1,0 +1,56 @@
+{
+  "schema": "tpnil-native-synthesis@0.1.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "boundary": "API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim",
+  "assertions": [
+    {
+      "id": "NATIVE-SYNTHESIS-UHRP",
+      "verdict": "PASS",
+      "outputs": 2,
+      "txid": "23a9537780ac703d6f7bdd25488b338dd99496862c7b50da3148f484b5d68dde"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-BOARD",
+      "verdict": "PASS",
+      "txid": "a706836f51137f98fdd131a936cb76e8c881f078fbc34054c465416b96e3d114"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-EXECUTION",
+      "verdict": "FAIL",
+      "error": "LCHError: LCH endpoint returned 422\n    at requireResponse (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/lch/dist/http.js:187:15)\n    at async LCHHttpAcquisitionClient.post (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/lch/dist/http.js:147:9)\n    at async LCHHttpAcquisitionClient.deliver (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/lch/dist/http.js:117:23)\n    at async LCHMultipayBuyer.settleDelivery (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/lch/dist/multipayClient.js:243:23)\n    at async ReferenceLCHClient.acquire (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/lch-reference/referenceClient.ts:130:26)\n    at async runNativeSynthesis (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/synthesis.ts:134:22)\n    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/src/native-synthesis-probe.ts:22:18)"
+    }
+  ],
+  "transactions": [
+    {
+      "role": "uhrp-advertisements",
+      "txid": "23a9537780ac703d6f7bdd25488b338dd99496862c7b50da3148f484b5d68dde"
+    },
+    {
+      "role": "board-create",
+      "txid": "a706836f51137f98fdd131a936cb76e8c881f078fbc34054c465416b96e3d114"
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "overlay",
+      "closed": true
+    },
+    {
+      "name": "replica",
+      "closed": true
+    }
+  ],
+  "result": "FAIL",
+  "interface": "Toolbox public wallet API engineering check; not native",
+  "funding": {
+    "txid": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+    "outputIndex": 0,
+    "satoshis": 5000000000,
+    "blockHeight": 1,
+    "blockHash": "6ebffaae4ded7763885b0db4343bfd50586cbaadafdecd5dd5d02e165d059a63",
+    "merkleRoot": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+    "profile": "TPNIL-TERANODE-REGTEST-1",
+    "profileSha256": "a78b57500264612b2926244854772a8cf1f220c8ad9c8a2adca6714a2e4ae77d",
+    "atomicBeefSha256": "a05ce3c06d577a24781a2956416311af9445065d43a761b186b5fc17471da7d4"
+  }
+}

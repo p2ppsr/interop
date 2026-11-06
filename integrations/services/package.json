@@ -1,0 +1,24 @@
+{
+  "name": "@tpnil/services-integration",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --import tsx --test test/*.test.ts",
+    "qualify": "tsx src/qualification.ts"
+  },
+  "dependencies": {
+    "@bsv/overlay": "2.7.0",
+    "@bsv/overlay-express": "2.8.0",
+    "@bsv/overlay-discovery-services": "2.2.9",
+    "@bsv/sdk": "4.0.1",
+    "@bsv/wallet-toolbox": "2.15.3",
+    "better-sqlite3": "12.6.2",
+    "knex": "3.3.0",
+    "mongodb": "7.6.0",
+    "mongodb-memory-server": "11.2.0",
+    "express": "5.2.1",
+    "pino": "10.3.1",
+    "tsx": "4.20.6"
+  }
+}

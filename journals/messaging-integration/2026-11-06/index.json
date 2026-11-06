@@ -1,0 +1,1109 @@
+{
+  "schema": "tpnil-messaging-attempt-index@1",
+  "date": "2026-11-06",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "nativeWalletQualification": false,
+  "acceptedMatrix": "messaging-attempt10",
+  "acceptedNativeHelperEngineering": "native-messaging-engineering-3",
+  "qualificationBoundary": "Reference-wallet helper results do not establish unchanged-native-wallet qualification. Enclosing native artifact admission and its own runs are required.",
+  "attempts": [
+    {
+      "attempt": "messaging-attempt1",
+      "archive": "messaging-attempt1.tar.gz",
+      "archiveSha256": "4ec064fcc776450fb0872fe176571919c07d400af47b7e423feb7f8b856a2970",
+      "bytes": 20203,
+      "resultSha256": "b282281e1111614f44486ca3fa92494ca8e6f217394345e11c228098d63bfa1c",
+      "counts": {
+        "PASS": 16,
+        "FAIL": 8,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt1/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt1/go-host.log",
+          "sha256": "8f59ffb206cf26640cd8a340cb1439e55f566d1fb2075105a4fce6f0f838c088",
+          "bytes": 605
+        },
+        {
+          "path": "messaging-attempt1/go.sqlite",
+          "sha256": "0904174968d26498f3d2790a147b1255d3a2cc42654c3383db7b43693521cf34",
+          "bytes": 81920
+        },
+        {
+          "path": "messaging-attempt1/result.json",
+          "sha256": "b282281e1111614f44486ca3fa92494ca8e6f217394345e11c228098d63bfa1c",
+          "bytes": 12692
+        },
+        {
+          "path": "messaging-attempt1/submissions.json",
+          "sha256": "28afbf36287e696a47c9a0c5ec2b8bb9c2d8338e4311267a966d1fdb087d3ddf",
+          "bytes": 3365
+        },
+        {
+          "path": "messaging-attempt1/typescript.sqlite",
+          "sha256": "4f020810c5703d38730405a83399b5c5f8b2038b21b525f0bacb9d614740382e",
+          "bytes": 167936
+        },
+        {
+          "path": "messaging-attempt1/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt1/wire.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "bytes": 3
+        },
+        {
+          "path": "messaging-attempt1.log",
+          "sha256": "b71ce05f86e632c8aab0825539f0594db6344bce8565de2d3d13f74888991bd7",
+          "bytes": 4163
+        }
+      ],
+      "note": "Initial observer captured no paid request; SDK imported before fetch observer. Basic real HTTP delivery exercised."
+    },
+    {
+      "attempt": "messaging-attempt2",
+      "archive": "messaging-attempt2.tar.gz",
+      "archiveSha256": "d7f761ab1420dbdf24332a930f7ad4b6f5d09fe50e95ef947ee9216528c41089",
+      "bytes": 56430,
+      "resultSha256": "3bb59e11b0c46e1dfe57c48fd901917851ca343aaa6a5252ea273408ac24635a",
+      "counts": {
+        "PASS": 20,
+        "FAIL": 4,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt2/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt2/go-host.log",
+          "sha256": "730cde08442236b3bb0fe755feec251a7f826c3c5cceeeb426f0ffd5172957d5",
+          "bytes": 1465
+        },
+        {
+          "path": "messaging-attempt2/go.sqlite",
+          "sha256": "8e787a437c63abd6b313a3d54ac10bad716a18e62ddb9aef9f265b9cdea5af81",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt2/result.json",
+          "sha256": "3bb59e11b0c46e1dfe57c48fd901917851ca343aaa6a5252ea273408ac24635a",
+          "bytes": 10484
+        },
+        {
+          "path": "messaging-attempt2/submissions.json",
+          "sha256": "5258407e395e6157e9a0b999a0e97a1aed21def421b75a2cfe0d7a5e38f5fb6a",
+          "bytes": 3843
+        },
+        {
+          "path": "messaging-attempt2/typescript-payment.json",
+          "sha256": "b7d269c0f82ca798685e6b66f3b3097779bf2b08b30a5c7d7a77b062b876a310",
+          "bytes": 10427
+        },
+        {
+          "path": "messaging-attempt2/typescript.sqlite",
+          "sha256": "cb45f8ec4c92eaf1e0839e9e58c1923032b3f2edc8a94af477bed0388f9c6dc1",
+          "bytes": 184320
+        },
+        {
+          "path": "messaging-attempt2/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt2/wire.json",
+          "sha256": "423fdee216093ed1e097a97fed8f461560cb48619d8682384f9437da3ebf2d2f",
+          "bytes": 155893
+        },
+        {
+          "path": "messaging-attempt2.log",
+          "sha256": "62f7308476b32363109e261270f1c78b1de0ee35f34a8b3a8f928642a6b7a3dc",
+          "bytes": 4607
+        }
+      ],
+      "note": "Observer corrected; unchanged Go byte-array encoding and recipient payment replay gaps observed. Restart needed bounded connection refresh."
+    },
+    {
+      "attempt": "messaging-attempt3",
+      "archive": "messaging-attempt3.tar.gz",
+      "archiveSha256": "9974164a951925ee7b3132ccc5f155b17c611217774a60f525eefff78a0a59a6",
+      "bytes": 81026,
+      "resultSha256": "5f22a1e095ad1837a9e773cdd1bd09c55a590a90891395748d41b27000b0b70f",
+      "counts": {
+        "PASS": 34,
+        "FAIL": 2,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt3/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt3/go-adapted-payment.json",
+          "sha256": "7fc926481326259d8bb1481c8d32cb7498617b5cb8677829a8c5b1e0a5f8caa4",
+          "bytes": 16040
+        },
+        {
+          "path": "messaging-attempt3/go-adapted.sqlite",
+          "sha256": "92a1b67e2ee038d251f6c635b28e966dc839a5c67597f77c6e54f5fad21d45a2",
+          "bytes": 86016
+        },
+        {
+          "path": "messaging-attempt3/go-host.log",
+          "sha256": "0dfc3a46554c9e07ce3b197719bf645d8ee7aac7e2e3e7a13e29f8b8a8b0e297",
+          "bytes": 3250
+        },
+        {
+          "path": "messaging-attempt3/go.sqlite",
+          "sha256": "5270bb01ab8bb0e5ff2834190b85bba7dbaf28bbe3ab54579e38266cc227276c",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt3/result.json",
+          "sha256": "5f22a1e095ad1837a9e773cdd1bd09c55a590a90891395748d41b27000b0b70f",
+          "bytes": 12150
+        },
+        {
+          "path": "messaging-attempt3/submissions.json",
+          "sha256": "4fbd710599fd39394be025461295278d28010035a886c5a73897f10b39d5ec7f",
+          "bytes": 5998
+        },
+        {
+          "path": "messaging-attempt3/typescript-payment.json",
+          "sha256": "86850060b20c618d1d991e1bc69cb7542fdd24426590cc4ac95566ed1eb7a69d",
+          "bytes": 10448
+        },
+        {
+          "path": "messaging-attempt3/typescript.sqlite",
+          "sha256": "42faf3a9bfd32bb3b7a4cef8677338ad26ac52c4c1fb0d54537b5dce270dd830",
+          "bytes": 184320
+        },
+        {
+          "path": "messaging-attempt3/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt3/wire.json",
+          "sha256": "a00dccd08ef5b08e27cc45050eba5fbf79b82080c896159a96e0537f5c11f1ba",
+          "bytes": 244294
+        },
+        {
+          "path": "messaging-attempt3.log",
+          "sha256": "14f4de768e6c56548d101de8db7d781a28d73cb359dc978f65e506c919d776d5",
+          "bytes": 5713
+        }
+      ],
+      "note": "Initial compatibility adapter passed its then-current checks. Subsequent review found payment claims must survive acknowledgment."
+    },
+    {
+      "attempt": "messaging-attempt4",
+      "archive": "messaging-attempt4.tar.gz",
+      "archiveSha256": "6e0c36d0e7503a069b3be72209dfe3f1add001f63258d724333b7167de7adb43",
+      "bytes": 92445,
+      "resultSha256": "e3eed0808a225f8ec4003d29207b431f5dcbf53774015cd993c03b2bc799f8d9",
+      "counts": {
+        "PASS": 36,
+        "FAIL": 4,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt4/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt4/go-adapted-payment.json",
+          "sha256": "b0a60e47453c2571518189302d47e3e677d40f132d3bde8901dd7f0ef1303429",
+          "bytes": 15220
+        },
+        {
+          "path": "messaging-attempt4/go-adapted.sqlite",
+          "sha256": "429511294f57898ca94e56613c86324d774adf9afe0f244dc751af44757779b4",
+          "bytes": 98304
+        },
+        {
+          "path": "messaging-attempt4/go-host.log",
+          "sha256": "997d703e8d0985ca438a5e4231c6b4f87c43a85b600981c93eedfd295bc2b75c",
+          "bytes": 3742
+        },
+        {
+          "path": "messaging-attempt4/go.sqlite",
+          "sha256": "76ee17d2088662974bf112f3a159292d15b537cda5168e373680d5748c35e545",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt4/mongo-startup.log",
+          "sha256": "0bf16e39cf33aff46174959acd120be32636be27479412bee35f7bb61eb7983b",
+          "bytes": 49020
+        },
+        {
+          "path": "messaging-attempt4/result.json",
+          "sha256": "e3eed0808a225f8ec4003d29207b431f5dcbf53774015cd993c03b2bc799f8d9",
+          "bytes": 15714
+        },
+        {
+          "path": "messaging-attempt4/submissions.json",
+          "sha256": "4bb8977e6548141bb3e22d6e6e4878594a7b8e55744ad2e96f95628c25e09053",
+          "bytes": 5730
+        },
+        {
+          "path": "messaging-attempt4/typescript-payment.json",
+          "sha256": "985a1fab6295eb9d107fc369e0586ce568a36c114ffed9aa44d26f8b65b71e64",
+          "bytes": 10453
+        },
+        {
+          "path": "messaging-attempt4/typescript.sqlite",
+          "sha256": "d9f82cff93b41ae63e097ac264c757fadda620507e1386943ebf6188f9bdeebe",
+          "bytes": 184320
+        },
+        {
+          "path": "messaging-attempt4/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt4/wire.json",
+          "sha256": "663a6b1b2b97da4eefaa50aef026bac63de5a52e751bd2e3b5ad25f94345a640",
+          "bytes": 276297
+        },
+        {
+          "path": "messaging-attempt4.log",
+          "sha256": "202dd793c7322ff3d5d961f7e77d8777a8ce3db5f908d5e71ac25dfe45594f88",
+          "bytes": 6610
+        }
+      ],
+      "note": "Durable SQLite payment claims added. Discovery startup failed due to undersized Mongo tmpfs/home; failed container logs retained and resource removed."
+    },
+    {
+      "attempt": "messaging-attempt5",
+      "archive": "messaging-attempt5.tar.gz",
+      "archiveSha256": "0d5b9b6feeb250b36831140cf67c74d677d379534f8ccb6183480787eff52430",
+      "bytes": 98759,
+      "resultSha256": "ebf3166ecc7a48dd3545dcb80b64c5fa4d7a3fd59cd6e41fe3406c2aa6ec6f00",
+      "counts": {
+        "PASS": 36,
+        "FAIL": 4,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt5/discovery-a/overlay.sqlite",
+          "sha256": "ec76c94bf8bffdae4b6073193898306eda83ca4a6d86e27eac7d9b6ed72397dc",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt5/discovery-b/overlay.sqlite",
+          "sha256": "677d8bf7a3899f817b1a26fca1a00a35b270aee24208767dc1362317565addbd",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt5/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt5/go-adapted-payment.json",
+          "sha256": "35107c0478d6698410ae3e32ddfb3ab07f655ac7ab1eeaaad2dba2380f2d0813",
+          "bytes": 22660
+        },
+        {
+          "path": "messaging-attempt5/go-adapted.sqlite",
+          "sha256": "1ce57f9828319d1c2b2d8777b3df04ef3066b2bfa8ce671c41c903fb42062984",
+          "bytes": 106496
+        },
+        {
+          "path": "messaging-attempt5/go-host.log",
+          "sha256": "d859504c2d811eb5de21d272388cfe56a28593ab27bf6581839d428d49b82057",
+          "bytes": 3742
+        },
+        {
+          "path": "messaging-attempt5/go.sqlite",
+          "sha256": "2f5a8ba05bf6bd230c6509a324bdd6549ae99817180d6687007d88377dbf723f",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt5/result.json",
+          "sha256": "ebf3166ecc7a48dd3545dcb80b64c5fa4d7a3fd59cd6e41fe3406c2aa6ec6f00",
+          "bytes": 15445
+        },
+        {
+          "path": "messaging-attempt5/submissions.json",
+          "sha256": "2428861f6310534c4fb0d562fd7285f5c0f148a9fdcadce0d52efcc352f1985c",
+          "bytes": 10813
+        },
+        {
+          "path": "messaging-attempt5/typescript-payment.json",
+          "sha256": "0ae9b7d85f67a702df0cc638cac8732aeb86aa47457148ee985a25b3d1b83a00",
+          "bytes": 10464
+        },
+        {
+          "path": "messaging-attempt5/typescript.sqlite",
+          "sha256": "47dcf91bf8f5ff7d9e266e02da1c1b0282a7917ba66baa57ab7e825897377210",
+          "bytes": 184320
+        },
+        {
+          "path": "messaging-attempt5/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt5/wire.json",
+          "sha256": "15be6b9e2c33cd12564a6a49b9dffc23a2146ddb773ef141821e3a060788ae71",
+          "bytes": 291165
+        },
+        {
+          "path": "messaging-attempt5.log",
+          "sha256": "15455440750521485246c0fdebfe0811f1f19395489f66704d9e98105ad83452",
+          "bytes": 8645
+        }
+      ],
+      "note": "Real discovery started. Historical discovery SDK2.0.13 reversed coinbase maturity verification exposed; maintained SDK oracle used subsequently without altering fixture height."
+    },
+    {
+      "attempt": "messaging-attempt6",
+      "archive": "messaging-attempt6.tar.gz",
+      "archiveSha256": "8a1d9dd3e33ebb955b3b79f45da35f78043ee069e2edd3efdca41a2729e09c82",
+      "bytes": 110991,
+      "resultSha256": "aa375c9795f947d74989d8decf97a112ea3fddf9f1deeaa8ce841c958c8f4a29",
+      "counts": {
+        "PASS": 36,
+        "FAIL": 4,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt6/discovery-a/overlay.sqlite",
+          "sha256": "7b0d6b3eae4d520686920d3f4eba0f9ad7a3eac4c40ef46edd6e6c0411ff397a",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt6/discovery-b/overlay.sqlite",
+          "sha256": "29c6261ee5794270df1a46b51dc4baa90dc91d13e5ea88b3503e8b72fd39c976",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt6/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt6/go-adapted-payment.json",
+          "sha256": "1b497467f2c8043e9be4a17c50124a213ed40314822017d3b247388f0a25f515",
+          "bytes": 22678
+        },
+        {
+          "path": "messaging-attempt6/go-adapted.sqlite",
+          "sha256": "f856b75ec25c131743a041a9084c06a0d7f7506efa04939d865115c505735f20",
+          "bytes": 106496
+        },
+        {
+          "path": "messaging-attempt6/go-host.log",
+          "sha256": "38cb4b985596f31e7432a512acf8a02d42380ba7e5f1eea7ad1bf55fafc506ab",
+          "bytes": 4406
+        },
+        {
+          "path": "messaging-attempt6/go.sqlite",
+          "sha256": "4fdd28cd393aeafc351e87010ba441df4baf99548bfbe869c2972e5a5a97e9d6",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt6/result.json",
+          "sha256": "aa375c9795f947d74989d8decf97a112ea3fddf9f1deeaa8ce841c958c8f4a29",
+          "bytes": 17606
+        },
+        {
+          "path": "messaging-attempt6/submissions.json",
+          "sha256": "1886bc29ba58ddc0e430c705ae56884f3ef1d6797c53a3f88ed09c72b23c83ef",
+          "bytes": 10815
+        },
+        {
+          "path": "messaging-attempt6/typescript-payment.json",
+          "sha256": "3c5f273f89d2593041121660effb8318661dcdcf60c6510ca70b2e6e2fa1b95e",
+          "bytes": 10431
+        },
+        {
+          "path": "messaging-attempt6/typescript.sqlite",
+          "sha256": "9b14b644a0fa3d982582fb8d54de8406f7295224a66ec1bf31fccc5c2ec30e0a",
+          "bytes": 192512
+        },
+        {
+          "path": "messaging-attempt6/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt6/wire.json",
+          "sha256": "bd18ade4ef5038327ee8e6d3ab5ea80f65221316377bbb616a258096c7220547",
+          "bytes": 316222
+        },
+        {
+          "path": "messaging-attempt6.log",
+          "sha256": "c928a992fb68345901fea07876941005dafb6e65d3a68aa5d79ae48e4bbf66a3",
+          "bytes": 101542
+        }
+      ],
+      "note": "Two-engine discovery/GASP/restart passed. Advertisement revocation signing counterparty was incorrect and independent script oracle rejected it."
+    },
+    {
+      "attempt": "messaging-attempt7",
+      "archive": "messaging-attempt7.tar.gz",
+      "archiveSha256": "c0d4254c3d9b212453a50a7d7d69a51c5ed417cb8902d65fb502b246ff26db51",
+      "bytes": 112048,
+      "resultSha256": "3ebe8d94d8d1ca29b5478f38ea3cdd60a09d60f0e653cd63d3078f90edfc20cd",
+      "counts": {
+        "PASS": 37,
+        "FAIL": 3,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt7/discovery-a/overlay.sqlite",
+          "sha256": "f50015f77a51b307011af7a988ec4dbec210aefba4f5ddde83a84352c1e9b3e2",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt7/discovery-b/overlay.sqlite",
+          "sha256": "2f02547b81f5a612bf53b8cb5015e8ba5fc6c62a1a54067d27aa4d0a588abc5f",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt7/discovery.json",
+          "sha256": "4823986a9211eaa80c757355d65ee17420c00edd92987a9b1b07f69222fbdc73",
+          "bytes": 37319
+        },
+        {
+          "path": "messaging-attempt7/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt7/go-adapted-payment.json",
+          "sha256": "6f0dd9a550324ed0137d47bd4d8d129684dc2c456a9ed1ad07706ce60422ca42",
+          "bytes": 19752
+        },
+        {
+          "path": "messaging-attempt7/go-adapted.sqlite",
+          "sha256": "d94a31902f9692d52375305c27a93682579019609b0c2d1bf87bde05787e0b3c",
+          "bytes": 98304
+        },
+        {
+          "path": "messaging-attempt7/go-host.log",
+          "sha256": "9e475a62d7141de241b9b3cf7af49133726e90b169d58d6c1777ef429dffe631",
+          "bytes": 4406
+        },
+        {
+          "path": "messaging-attempt7/go.sqlite",
+          "sha256": "a92deb414bd05a0bf7f2ce6ff0b0add41031a41e3784a1218dded6bb11ca88aa",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt7/result.json",
+          "sha256": "3ebe8d94d8d1ca29b5478f38ea3cdd60a09d60f0e653cd63d3078f90edfc20cd",
+          "bytes": 15332
+        },
+        {
+          "path": "messaging-attempt7/submissions.json",
+          "sha256": "4fcf16c86fc40b51460a5299c9570f41692f81c0f2681604776c328e2afd2bb7",
+          "bytes": 9379
+        },
+        {
+          "path": "messaging-attempt7/typescript-payment.json",
+          "sha256": "1381010c45d980514a75363624e29aea37ffadcbaaf1d54ccd588efcfe6429b7",
+          "bytes": 10445
+        },
+        {
+          "path": "messaging-attempt7/typescript.sqlite",
+          "sha256": "9d7f4d84aec7043e5a009241583da94af8e87b58e2e16d3d4dbe3762da76306a",
+          "bytes": 192512
+        },
+        {
+          "path": "messaging-attempt7/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt7/wire.json",
+          "sha256": "e1e84989d6551a8384b56d139d700c7caa0428fe5361adc21838462906afdb8d",
+          "bytes": 311231
+        },
+        {
+          "path": "messaging-attempt7.log",
+          "sha256": "8cd44ae883a0640b9538fa26dc4738521a8c70d68e1a57390f524aa29871f1f9",
+          "bytes": 61178
+        }
+      ],
+      "note": "Final HTTP/polling and discovery matrix:37PASS,3 unchanged-Go baseline FAIL. This profile remains frozen in components/messaging/profiles/http-polling-v1.json."
+    },
+    {
+      "attempt": "messaging-attempt8",
+      "archive": "messaging-attempt8.tar.gz",
+      "archiveSha256": "d282f2886a005f6ba7fd830c01eb1d454455716e9b93387c017e8ced7b5047e7",
+      "bytes": 122545,
+      "resultSha256": "976a2ed6f2d7b7b717ae88c7273ecd3bec9b5c13b5652f2207468d3c0da848be",
+      "counts": {
+        "PASS": 38,
+        "FAIL": 3,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt8/discovery-a/overlay.sqlite",
+          "sha256": "d1101e6049321f91268c1b2b320ef02d5a7ae71ff20bd792184d2c87797c72fb",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt8/discovery-b/overlay.sqlite",
+          "sha256": "24fa29e11f413564acaaecccf41b1e14c6b40ae9dc41482a6bd4ec17af2a6b61",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt8/discovery.json",
+          "sha256": "38a739eda8cc5f42905078643568762f50eedc3ab98b4e28f10107986141a331",
+          "bytes": 42011
+        },
+        {
+          "path": "messaging-attempt8/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt8/go-adapted-payment.json",
+          "sha256": "1c745cdf8a85c145e828bacd88ac75ccbae84dec43ab1aedc699cbc3f93497fc",
+          "bytes": 21398
+        },
+        {
+          "path": "messaging-attempt8/go-adapted.sqlite",
+          "sha256": "25d3c93e9a7cc41a3c73ef0962e5093450e5682477c5f3349c970c3f6f938029",
+          "bytes": 106496
+        },
+        {
+          "path": "messaging-attempt8/go-host.log",
+          "sha256": "8820ddc13302dad36d56a62e3d44f72f03a54f1d5eefc4ab20c03aebdba4c8a1",
+          "bytes": 4684
+        },
+        {
+          "path": "messaging-attempt8/go.sqlite",
+          "sha256": "5a2ce4d69a5dd49f2ae849e00dc07d34458d9891f9f21ffd1f8f0834dec2253e",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt8/result.json",
+          "sha256": "976a2ed6f2d7b7b717ae88c7273ecd3bec9b5c13b5652f2207468d3c0da848be",
+          "bytes": 21400
+        },
+        {
+          "path": "messaging-attempt8/submissions.json",
+          "sha256": "6ea068f02f3ce5e9b12afaf5b7e3488bd1ce1a6be386ce885d34d936aaa936e4",
+          "bytes": 10203
+        },
+        {
+          "path": "messaging-attempt8/typescript-payment.json",
+          "sha256": "01b39da9dddfbb917312d661c55ddebb57f495e50477d3779c625a9e73869850",
+          "bytes": 10431
+        },
+        {
+          "path": "messaging-attempt8/typescript.sqlite",
+          "sha256": "4a90079bfc1d0ba0c914f962eda247876885be91cdc836420b6bbb3792c677ba",
+          "bytes": 192512
+        },
+        {
+          "path": "messaging-attempt8/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt8/wire.json",
+          "sha256": "92637897ccb6b82730e400f209b4939eca7be3372d74ed78c4424e0f44df4c63",
+          "bytes": 335963
+        },
+        {
+          "path": "messaging-attempt8.log",
+          "sha256": "fc2247b6c79b5844e54eb4ae8fd5fb7d580779c686d30eddfb14337707905bc6",
+          "bytes": 84244
+        }
+      ],
+      "note": "Actual TS AuthSocket over Go SQLite added:38PASS,3 unchanged-Go baseline FAIL. Native helper found custom-driver duplicate classification returned500; fixed before this matrix."
+    },
+    {
+      "attempt": "messaging-attempt9",
+      "archive": "messaging-attempt9.tar.gz",
+      "archiveSha256": "2f8b587e2aa63f1778dd4eb3f442a0bb6bd1084400a1cc5a3b9a8791e2bf753d",
+      "bytes": 150756,
+      "resultSha256": "c85cf6783e9543646406232b2424ccee2780b77e2ebc344c809768a2b2973b68",
+      "counts": {
+        "PASS": 38,
+        "FAIL": 3,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt9/discovery-a/overlay.sqlite",
+          "sha256": "fce071812dda47e8228b6a1903f0124d49399d1222d21cd0361160d182f19180",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt9/discovery-b/overlay.sqlite",
+          "sha256": "ddeb811ba473926d5fd647fe38f8696a499f9fad49782c3d2a473a7f78722dd7",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt9/discovery.json",
+          "sha256": "24b661635929803c194b4d077378b46e60a53fa5b7f4abb081894c4b623d92ae",
+          "bytes": 45683
+        },
+        {
+          "path": "messaging-attempt9/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt9/go-adapted-payment.json",
+          "sha256": "03bb8bc7f068f596c6274d06006c3ebe57de4888a0ecd4533ddc2cd205d9acd2",
+          "bytes": 22682
+        },
+        {
+          "path": "messaging-attempt9/go-adapted.sqlite",
+          "sha256": "f3c1f6dcd06ce32baad49218ddf56f6feb445e6fa90eec513ef32f2d9ae14949",
+          "bytes": 126976
+        },
+        {
+          "path": "messaging-attempt9/go-host.log",
+          "sha256": "3f9921632cc9248390b2715973f322da506137d459637ab919274d1aa7817b7a",
+          "bytes": 4684
+        },
+        {
+          "path": "messaging-attempt9/go.sqlite",
+          "sha256": "4ff6019c4e39750146d6c9fd6c94cd02c177a91bdfd278a41895bfee5e321b19",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt9/result.json",
+          "sha256": "c85cf6783e9543646406232b2424ccee2780b77e2ebc344c809768a2b2973b68",
+          "bytes": 21436
+        },
+        {
+          "path": "messaging-attempt9/submissions.json",
+          "sha256": "420e2d7049aae9d7a86df5ff7b71d8b2de05cd3ef28a37d0f5cd8c27fe0dedc0",
+          "bytes": 10823
+        },
+        {
+          "path": "messaging-attempt9/typescript-payment.json",
+          "sha256": "e717a6c5f1db8954babfbdcc8f35cc620b3467130a0120b4f4f63e629fe4bc50",
+          "bytes": 10452
+        },
+        {
+          "path": "messaging-attempt9/typescript.sqlite",
+          "sha256": "971e9856684c379d03e6be2c7f194059444cd5100bf22d9026da0d20cec1b6ad",
+          "bytes": 192512
+        },
+        {
+          "path": "messaging-attempt9/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt9/wire.json",
+          "sha256": "2c73dab5455cc9e85d8fd1e8a97ed1e75b19daf410fbeb0483fbb86c216a2662",
+          "bytes": 419131
+        },
+        {
+          "path": "messaging-attempt9.log",
+          "sha256": "bf4753bf98429411f3fc7c65ee33024cad3386b28ce9952b573e4f4c58118386",
+          "bytes": 102430
+        }
+      ],
+      "note": "Paged backlog matrix:38PASS,3 unchanged-Go baseline FAIL. Adapted Go and TS14/14 each. Includes paginated34-message push backlog, cross-identity room rejection, reconnect, restart and durable acknowledgment."
+    },
+    {
+      "attempt": "messaging-attempt10",
+      "archive": "messaging-attempt10.tar.gz",
+      "archiveSha256": "c80591ee437c87a27f6dbccd85d8bc6f54c46315e3491733fa25da8ee38a23af",
+      "bytes": 150755,
+      "resultSha256": "0c1bd61091ab37276e58a7b1a1302beeb0d3dc237b617fc8bdb18e3baed0ff3a",
+      "counts": {
+        "PASS": 38,
+        "FAIL": 3,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "messaging-attempt10/discovery-a/overlay.sqlite",
+          "sha256": "c96e5c6bc873470b744154508e6f0d1cbcb4fc50d724dda6b33d1d389156b65f",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt10/discovery-b/overlay.sqlite",
+          "sha256": "d183d6d239bb199e4ded0cbb72358e204bbf347c66310a39c9729fe4d9e49319",
+          "bytes": 122880
+        },
+        {
+          "path": "messaging-attempt10/discovery.json",
+          "sha256": "d442012bd561cc7c4ba5a5f3b6a0de2af12b2ab956eb4edd95fbcbdc489f3946",
+          "bytes": 45745
+        },
+        {
+          "path": "messaging-attempt10/funding.json",
+          "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+          "bytes": 532
+        },
+        {
+          "path": "messaging-attempt10/go-adapted-payment.json",
+          "sha256": "49d51b52ce6ec8853adb342ccb0a259788ac0af79925afd61f394bc039104dd3",
+          "bytes": 22693
+        },
+        {
+          "path": "messaging-attempt10/go-adapted.sqlite",
+          "sha256": "1bb83ec8fb839a291e3c849869f9e5e43f4132158c349005bc30359f477c57d0",
+          "bytes": 126976
+        },
+        {
+          "path": "messaging-attempt10/go-host.log",
+          "sha256": "1128d6cf56a86f87778bca6a7f5e058a995f6be42fd741c03c2e56eb3948107a",
+          "bytes": 4684
+        },
+        {
+          "path": "messaging-attempt10/go.sqlite",
+          "sha256": "dccb3ec0a06b59e91878c02767fdc6dfc66079e1d8433887d0d2ad0de3739f91",
+          "bytes": 90112
+        },
+        {
+          "path": "messaging-attempt10/result.json",
+          "sha256": "0c1bd61091ab37276e58a7b1a1302beeb0d3dc237b617fc8bdb18e3baed0ff3a",
+          "bytes": 21487
+        },
+        {
+          "path": "messaging-attempt10/submissions.json",
+          "sha256": "500f0e0e838e99a0dfe94edc6602375104abbe35533c87871469bfe46d2797cf",
+          "bytes": 10823
+        },
+        {
+          "path": "messaging-attempt10/typescript-payment.json",
+          "sha256": "30d7c5df3079c2b14118d63390682502f5095a450dceb8817d4778e2fac57d43",
+          "bytes": 10477
+        },
+        {
+          "path": "messaging-attempt10/typescript.sqlite",
+          "sha256": "59f9fe67044a10f2d67243ca912abd94ec294af1bae4f6d46fc71e51f8264c87",
+          "bytes": 192512
+        },
+        {
+          "path": "messaging-attempt10/webroot/index.html",
+          "sha256": "9477e517611cb7c397291badc56b5c7d5367eb3f497f753f9b2172456396e48d",
+          "bytes": 54
+        },
+        {
+          "path": "messaging-attempt10/wire.json",
+          "sha256": "306bf7e2d1f96daec51f281af08d1cbbd1c7fec695e01817e568a6689ae85779",
+          "bytes": 419372
+        },
+        {
+          "path": "messaging-attempt10.log",
+          "sha256": "ae3a379e426606991fe3372b96233a1c4273e79b4b6e0861cf2ab98ef7dbdf4f",
+          "bytes": 102423
+        }
+      ],
+      "note": "Final matrix:38PASS,3 unchanged-Go baseline FAIL. All adapted-Go and TS assertions pass, including public sendLiveMessage authenticated HTTP fallback and recipient live push,34-message paginated backlog,ownership,reconnect,restart and durable acknowledgment."
+    },
+    {
+      "attempt": "native-messaging-engineering-1",
+      "archive": "native-messaging-engineering-1.tar.gz",
+      "archiveSha256": "051064c05dc480dccb6d797a0df16e13fcc4b874082005a9293cf631f179b244",
+      "bytes": 40274,
+      "resultSha256": "5919fd8e0070abded8a57a53b65da9dd5e24f056f1294e040bc2239aa402ef1c",
+      "counts": {
+        "PASS": 5,
+        "FAIL": 1,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "native-messaging-engineering-1/CALLER.txt",
+          "sha256": "a83f50e25820ec62ed74a2037ba4bb312e120520ded59f151960a0a6d9bb263e",
+          "bytes": 86
+        },
+        {
+          "path": "native-messaging-engineering-1/discovery-go-adapted/overlay.sqlite",
+          "sha256": "11d388a71a69fa4c92543835d9edbf06b93e8118ee0aaceafe7acab9e3d86ff5",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-1/discovery-typescript/overlay.sqlite",
+          "sha256": "c5a2ef47bd842a3d70fbbce35856531f26664acef85f95af87eaa35c5b713a64",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-1/exchanges.json",
+          "sha256": "cb1bb9797fa6115fb0c91caab2188b3f282e6ec2c6ae4052d7be2c57c5c4bf17",
+          "bytes": 53624
+        },
+        {
+          "path": "native-messaging-engineering-1/go-adapted.log",
+          "sha256": "69a08860e5db03d0635a96d30d0acfe4b38e3644e27653b3f531aadbaf0b212e",
+          "bytes": 1660
+        },
+        {
+          "path": "native-messaging-engineering-1/go-adapted.sqlite",
+          "sha256": "f8e14fbb6ea394e1c562ccef9d2f85285ebe6e32c53b3ad7b02047e2584ea59c",
+          "bytes": 98304
+        },
+        {
+          "path": "native-messaging-engineering-1/result.json",
+          "sha256": "5919fd8e0070abded8a57a53b65da9dd5e24f056f1294e040bc2239aa402ef1c",
+          "bytes": 37188
+        },
+        {
+          "path": "native-messaging-engineering-1/typescript-native-payment.json",
+          "sha256": "8b15214298c18f8b1ec6247b8d46476216fcaae33689e4533c81296804f18fa4",
+          "bytes": 32911
+        },
+        {
+          "path": "native-messaging-engineering-1/typescript.sqlite",
+          "sha256": "57bb9407f5a449e276dac92caf25c81f383150b494318be6511941efdefa9b2a",
+          "bytes": 172032
+        },
+        {
+          "path": "native-messaging-engineering-1/webroot/index.html",
+          "sha256": "4d4562f9d1c1ff9de5da3a2192165314744b5944cba31ef19bdb9763ed7c5914",
+          "bytes": 37
+        },
+        {
+          "path": "native-messaging-engineering-1.log",
+          "sha256": "b29e674ae7d73d2732eeed27ae217bd6a0945b2c33a5ce65c2ed2c86b68f72f1",
+          "bytes": 32327
+        },
+        {
+          "path": "native-messaging-engineering-1/engineering-driver.mjs",
+          "sha256": "5100048e12119ada3303fa2ea71a0cc76705e983b7d46815ec3e797bd932622d",
+          "bytes": 1323
+        }
+      ],
+      "note": "Reference Toolbox wallet exercised helper;5PASS and Go replay500 failure. Not native evidence."
+    },
+    {
+      "attempt": "native-messaging-engineering-2",
+      "archive": "native-messaging-engineering-2.tar.gz",
+      "archiveSha256": "5aff81c144363591c8c3ea1534b1d92ef90aebcd98ab936a838e332c414a75c7",
+      "bytes": 50992,
+      "resultSha256": "96b05397d83298066995a0cbf6f49b3a625a226cdb529d13dd63ff550beb51bb",
+      "counts": {
+        "PASS": 6,
+        "FAIL": 0,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "native-messaging-engineering-2/CALLER.txt",
+          "sha256": "a83f50e25820ec62ed74a2037ba4bb312e120520ded59f151960a0a6d9bb263e",
+          "bytes": 86
+        },
+        {
+          "path": "native-messaging-engineering-2/discovery-go-adapted/overlay.sqlite",
+          "sha256": "0fef88e752e63a2790f98607e539b9903fd793a5836dded1f712b1cbc57a82e2",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-2/discovery-typescript/overlay.sqlite",
+          "sha256": "0b364e1fc6cba3623f83565e07275d84fea383fecfc2ac3dc2dab432b67db6ea",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-2/exchanges.json",
+          "sha256": "2b8dd3f8d8b8e5271b5f59b44901ab27c9fcb79d6b1da5a5677a0e4a988b43b3",
+          "bytes": 60582
+        },
+        {
+          "path": "native-messaging-engineering-2/go-adapted-native-payment.json",
+          "sha256": "620558689fc357bbea315bd1d864df07f70038ab3ec3ef564cd260977eca82c5",
+          "bytes": 61972
+        },
+        {
+          "path": "native-messaging-engineering-2/go-adapted.log",
+          "sha256": "79ee3148c453398bbf49f88a055f73546fadbbb5e6bfb32416b1ca3a8afe5b41",
+          "bytes": 1586
+        },
+        {
+          "path": "native-messaging-engineering-2/go-adapted.sqlite",
+          "sha256": "43c519fbccc66831f86fdfb036f64a454ec9ba2b8e66687833ec3958fae8fba2",
+          "bytes": 98304
+        },
+        {
+          "path": "native-messaging-engineering-2/result.json",
+          "sha256": "96b05397d83298066995a0cbf6f49b3a625a226cdb529d13dd63ff550beb51bb",
+          "bytes": 43355
+        },
+        {
+          "path": "native-messaging-engineering-2/typescript-native-payment.json",
+          "sha256": "c20de10870cacb9f1587d6a8f61fc6e4aacc46ff3c7a4715b3e2f034cb685e79",
+          "bytes": 35773
+        },
+        {
+          "path": "native-messaging-engineering-2/typescript.sqlite",
+          "sha256": "5744ff77ba216611d4f3ec7797a6fa7c2337fb1759de81a9018f93b168e760fd",
+          "bytes": 172032
+        },
+        {
+          "path": "native-messaging-engineering-2/webroot/index.html",
+          "sha256": "4d4562f9d1c1ff9de5da3a2192165314744b5944cba31ef19bdb9763ed7c5914",
+          "bytes": 37
+        },
+        {
+          "path": "native-messaging-engineering-2.log",
+          "sha256": "39ac98aa344a9f043a40d6c7c9063ad879aa2f86b62ac91a7683c581fae5a152",
+          "bytes": 34065
+        },
+        {
+          "path": "native-messaging-engineering-2/engineering-driver.mjs",
+          "sha256": "9485680413e889868cc2511a3ad5757858598317f9db8487157042013886aac2",
+          "bytes": 1323
+        }
+      ],
+      "note": "Reference Toolbox helper6/6PASS with Go replay400 and TS409. Not native evidence."
+    },
+    {
+      "attempt": "native-messaging-engineering-3",
+      "archive": "native-messaging-engineering-3.tar.gz",
+      "archiveSha256": "a334c3dbb3a5d34a4a5e977790ea48bfe83d4ec753f405eab57925f45b700297",
+      "bytes": 55314,
+      "resultSha256": "74beecabc62fdf00b1bbb262c59c10b3bfc9d43312143dfb049d1126c0588618",
+      "counts": {
+        "PASS": 6,
+        "FAIL": 0,
+        "BLOCKED": 0
+      },
+      "nativeWalletQualification": false,
+      "files": [
+        {
+          "path": "native-messaging-engineering-3/CALLER.txt",
+          "sha256": "a83f50e25820ec62ed74a2037ba4bb312e120520ded59f151960a0a6d9bb263e",
+          "bytes": 86
+        },
+        {
+          "path": "native-messaging-engineering-3/discovery-go-adapted/overlay.sqlite",
+          "sha256": "65285c86bf9b628740a90362ad7c54eb971e25b505dae08d6e39f189c56fdada",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-3/discovery-typescript/overlay.sqlite",
+          "sha256": "876186a56064a827a9bcd97f47b564abc2b17217bb8dfa856260b73ef92ec7ee",
+          "bytes": 122880
+        },
+        {
+          "path": "native-messaging-engineering-3/exchanges.json",
+          "sha256": "56e33a4b14f6f2d90f83e60904c59aa5a21dcfb5682fdc67fc7e1e78a798ec38",
+          "bytes": 64613
+        },
+        {
+          "path": "native-messaging-engineering-3/go-adapted-native-payment.json",
+          "sha256": "eeb9e44f161600ccf789c5fbf681ce888a5ba948f89fb7381053ce03ec7f7d23",
+          "bytes": 71125
+        },
+        {
+          "path": "native-messaging-engineering-3/go-adapted.log",
+          "sha256": "d68ed429763b37b6029da8b218679fe743fd0ce293de5b281e1fcd3c01ae6daf",
+          "bytes": 1586
+        },
+        {
+          "path": "native-messaging-engineering-3/go-adapted.sqlite",
+          "sha256": "cc7d837570badb8da2ef5bed61bcb6d970696c3cb215eae833675d9564bd2627",
+          "bytes": 98304
+        },
+        {
+          "path": "native-messaging-engineering-3/result.json",
+          "sha256": "74beecabc62fdf00b1bbb262c59c10b3bfc9d43312143dfb049d1126c0588618",
+          "bytes": 46840
+        },
+        {
+          "path": "native-messaging-engineering-3/typescript-native-payment.json",
+          "sha256": "8547e1263b5493e97bb96e17c0aacc69fdfd9bd853b67426a9d0853cd889aab7",
+          "bytes": 36565
+        },
+        {
+          "path": "native-messaging-engineering-3/typescript.sqlite",
+          "sha256": "b928a09349dc24d8c9c87aa8da3bcea1390f1693aa0345f99d6a6287ccd4a7fa",
+          "bytes": 172032
+        },
+        {
+          "path": "native-messaging-engineering-3/webroot/index.html",
+          "sha256": "4d4562f9d1c1ff9de5da3a2192165314744b5944cba31ef19bdb9763ed7c5914",
+          "bytes": 37
+        },
+        {
+          "path": "native-messaging-engineering-3.log",
+          "sha256": "28b85cd76f6355f7b55296555b473e6f8e0f2ae55c75f1adaa37e98deeb91a9d",
+          "bytes": 49394
+        },
+        {
+          "path": "native-messaging-engineering-3/engineering-driver.mjs",
+          "sha256": "3141f9a9011af646c54d786a52720b9a18ebf796eab47439ec927932a0d822db",
+          "bytes": 1323
+        }
+      ],
+      "note": "Final reference Toolbox helper6/6PASS; complete independently verifiable recipient/lifecycle/ciphertext evidence and canonical JSON hash bindings. Not native evidence."
+    }
+  ],
+  "preparation": [
+    {
+      "path": "messaging-prepare.log",
+      "sha256": "e66d919771f20ad44a46fc0a311399570eaebb591ae04a0636186e1bbac55b36"
+    },
+    {
+      "path": "messaging-prepare2.log",
+      "sha256": "7829bd521ebbc710f33556fd6bdb81f9067136a63cd5f777fdb1fc99db92b7db"
+    },
+    {
+      "path": "messaging-prepare3.log",
+      "sha256": "7829bd521ebbc710f33556fd6bdb81f9067136a63cd5f777fdb1fc99db92b7db"
+    }
+  ],
+  "verification": [
+    {
+      "path": "checks/matrix-negative-tests-final.txt",
+      "sha256": "d8157257d0e0c93ba8d66fb4ed63033a85e16efb35138bbacfe1369bc7032dc0"
+    },
+    {
+      "path": "checks/matrix-negative-tests.txt",
+      "sha256": "d8157257d0e0c93ba8d66fb4ed63033a85e16efb35138bbacfe1369bc7032dc0"
+    },
+    {
+      "path": "checks/matrix-verifier-final.json",
+      "sha256": "14b55abe4f020a979fb7eb9041de4739e244cadd257ccf064503662d665a969d"
+    },
+    {
+      "path": "checks/matrix-verifier.json",
+      "sha256": "6913fc899712e441cf95c185f24ca04c8a49c690e419ed8572037daee655c9e8"
+    },
+    {
+      "path": "checks/native-helper-negative-tests.txt",
+      "sha256": "a5c4b41c5a35bc23fb01a8718e199c2c8df07988936eb787374186ac7d11e9b2"
+    },
+    {
+      "path": "checks/native-helper-verifier.json",
+      "sha256": "90705515b9eb69eff3a43d019df019a1c0c2267d5bec5aaa726ac49b2b2a3a80"
+    }
+  ]
+}

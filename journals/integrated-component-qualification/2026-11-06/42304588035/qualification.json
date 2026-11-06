@@ -1,0 +1,287 @@
+{
+  "schema": "tpnil-integrated-component-qualification@1",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "profile": "ITCVE-1@1.3.0",
+  "source": "9b94f0ec358093c164119b5973b3e42eded4999d",
+  "workflowRun": 42304588035,
+  "workflowUrl": "https://github.com/p2ppsr/interop/actions/runs/42304588035",
+  "jobUrl": "https://github.com/p2ppsr/interop/actions/runs/42304588035/job/128190584512",
+  "workflowConclusion": "success",
+  "artifact": {
+    "id": 13545981560,
+    "name": "integrated-lab",
+    "size": 1831018,
+    "sha256": "d47fc2f2b391e8ca6f06e1f7fb1b736ee5e63a2f6299d7da1cb46a0435daa860",
+    "url": "https://github.com/p2ppsr/interop/actions/runs/42304588035/artifacts/13545981560"
+  },
+  "verification": {
+    "completed": true,
+    "childOraclesVerified": true,
+    "sourceChecksUnmodified": true,
+    "command": "node scripts/verify-integrated-lab.mjs out/ci-42304588035",
+    "localVerificationSource": "c768a577cd4bf2798deaf1fda07e942d590ae424",
+    "localPlatform": "darwin-arm64",
+    "localNode": "24.22.1",
+    "receipt": "independent-verification.json",
+    "note": "Verification used identical component source after a Docker build-tools-only correction and evidence append; the original artifact remains byte-identical."
+  },
+  "laneCount": 8,
+  "laneRuns": 15,
+  "isolatedExecutions": 22,
+  "assertions": {
+    "total": 510,
+    "outcomes": {
+      "PASS": 504,
+      "FAIL": 6
+    }
+  },
+  "lanes": [
+    {
+      "id": "storage-sync",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "storage-sync/result.json",
+          "assertions": 88,
+          "outcomes": {
+            "PASS": 88
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "overlay-identity",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "overlay-identity-1/result.json",
+          "assertions": 14,
+          "outcomes": {
+            "PASS": 14
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "overlay-identity-2/result.json",
+          "assertions": 14,
+          "outcomes": {
+            "PASS": 14
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "messaging",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "messaging-1/result.json",
+          "assertions": 41,
+          "outcomes": {
+            "PASS": 38,
+            "FAIL": 3
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "messaging-2/result.json",
+          "assertions": 41,
+          "outcomes": {
+            "PASS": 38,
+            "FAIL": 3
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "transport-typescript",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "transport-typescript-1/result.json",
+          "assertions": 17,
+          "outcomes": {
+            "PASS": 17
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "transport-typescript-2/result.json",
+          "assertions": 17,
+          "outcomes": {
+            "PASS": 17
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "transport-go",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "transport-go-1/result.json",
+          "assertions": 17,
+          "outcomes": {
+            "PASS": 17
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "transport-go-2/result.json",
+          "assertions": 17,
+          "outcomes": {
+            "PASS": 17
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "boundary-typescript",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "boundary-typescript-1/result.json",
+          "assertions": 43,
+          "outcomes": {
+            "PASS": 43
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "boundary-typescript-2/result.json",
+          "assertions": 43,
+          "outcomes": {
+            "PASS": 43
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "boundary-go",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "boundary-go-1/result.json",
+          "assertions": 43,
+          "outcomes": {
+            "PASS": 43
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "boundary-go-2/result.json",
+          "assertions": 43,
+          "outcomes": {
+            "PASS": 43
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    },
+    {
+      "id": "rust",
+      "runs": [
+        {
+          "repetition": 1,
+          "resultPath": "rust-1/result.json",
+          "assertions": 36,
+          "outcomes": {
+            "PASS": 36
+          },
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "repetition": 2,
+          "resultPath": "rust-2/result.json",
+          "assertions": 36,
+          "outcomes": {
+            "PASS": 36
+          },
+          "exitCode": 0,
+          "timedOut": false
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "lane": "messaging",
+      "repetition": 1,
+      "resultPath": "messaging-1/result.json",
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "repetition": 1,
+      "resultPath": "messaging-1/result.json",
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "repetition": 1,
+      "resultPath": "messaging-1/result.json",
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "repetition": 2,
+      "resultPath": "messaging-2/result.json",
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "repetition": 2,
+      "resultPath": "messaging-2/result.json",
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "repetition": 2,
+      "resultPath": "messaging-2/result.json",
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    }
+  ],
+  "limitations": [
+    "Three unmodified upstream Go MessageBox predicates FAIL in each repetition; the separately identified go-adapted participant passes all14 predicates per repetition.",
+    "This component qualification does not establish native wallet or full BRC100 conformance.",
+    "Original aggregate findings use an inner run index of0; this summary disambiguates outer repetitions using retained result paths."
+  ]
+}

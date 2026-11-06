@@ -1,0 +1,76 @@
+{
+  "schema": "tpnil-storage-wallet-preflight@1",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "sourceCommitBeforeFinalTestCorrection": "43f0c31",
+  "patchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+  "description": "Appended offline preflight. Four upstream certificate Keyring expectations encoded the corrected FieldValue bug. The original failure is retained, followed by regression success with storedMasterKey expectations; runtime patch code did not change. Native5.1.0 static defaults inspected from SHA-verified exact archive.",
+  "results": {
+    "rootTests": {
+      "pass": 60,
+      "fail": 0
+    },
+    "synthesis": {
+      "files": 8,
+      "pass": 47,
+      "skip": 8,
+      "fail": 0
+    },
+    "typecheck": "PASS",
+    "catalog": "PASS",
+    "publishedJournals": "PASS",
+    "expandedGoRegressions": "PASS"
+  },
+  "files": [
+    {
+      "path": "check.log",
+      "sha256": "baa33431367858d930c5009e8d05cd2cda11023cb2f667ab89fa5cbbf0299d10",
+      "size": 233
+    },
+    {
+      "path": "native-static-inspection.json",
+      "sha256": "8456644904f094872e73310b50bc27dae2d16191bf5ae9cf1a46b2c41d457d41",
+      "size": 3716
+    },
+    {
+      "path": "patched-build-final.log",
+      "sha256": "1d8fe0a905e88248007914abf1e012ffc5b40ba9508f90d3e188e31a0cac8906",
+      "size": 799
+    },
+    {
+      "path": "pinned-native-artifact.log",
+      "sha256": "68bafbea5bd56f59f01d7a2e1f3769a803688616c897dff2ae00e437438e4499",
+      "size": 846
+    },
+    {
+      "path": "published-journals.log",
+      "sha256": "058fbbe610d6a2b16f433888e414255101c6daf8a2eac040383bfd9639f88a2d",
+      "size": 567
+    },
+    {
+      "path": "root-test.log",
+      "sha256": "08bf8c82651269941f1f0d8cbd5aa54d2dc924165fa2a5b8b877aa712387a309",
+      "size": 5450
+    },
+    {
+      "path": "synthesis-test.log",
+      "sha256": "407dbfecb7ab401b4326acb54e24f158211191df25fe5dda5646d16dbda22294",
+      "size": 342
+    },
+    {
+      "path": "synthesis-typecheck.log",
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "size": 52
+    },
+    {
+      "path": "upstream-certificate-regressions-corrected.log",
+      "sha256": "7ae4a7083430de605b587450dc0c76e4b76e17fbcedc79e060f69dd992385c7e",
+      "size": 68
+    },
+    {
+      "path": "upstream-certificate-regressions.log",
+      "sha256": "0d74f988fd70a571c623690d5b0f623e66ddc666ea822758d25c2fc4a07d85ed",
+      "size": 336816
+    }
+  ],
+  "archiveSha256": "1fdb4ae1970752d22502624e3afbd46d6fb32d57dfc2f8e88dd3b2d83b23bda8"
+}

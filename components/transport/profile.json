@@ -1,0 +1,31 @@
+{
+  "schema": "tpnil-transport-profile@1",
+  "id": "ITCVE-1-TRANSPORT-1",
+  "versions": { "walletRelay": "0.7.0", "paidHttp": "0.3.5", "sdk": "4.0.1" },
+  "dependencyLock": "components/transport/package-lock.json",
+  "fundingFixture": "fixtures/teranode/wab-funding-v1.json",
+  "assertions": [
+    "relay.origin-allowlist",
+    "relay.signed-qr-tamper",
+    "relay.pairing-and-identity",
+    "relay.desktop-token",
+    "relay.permission-denial",
+    "relay.binary-roundtrip",
+    "relay.reconnect",
+    "relay.session-revocation",
+    "402.challenge",
+    "402.malformed-payment",
+    "402.insufficient-value",
+    "402.real-wallet-payment",
+    "402.duplicate-rejected",
+    "402.restart-replay",
+    "402.automatic-retry",
+    "402.freshness",
+    "402.transaction-identities"
+  ],
+  "protocolInterface": "Published relay service and pairing client over HTTP/WebSocket, published BRC-121 client and middleware, real BRC-100 wallets and remote storage",
+  "replayStore": "SQLite WAL with synchronous FULL and BEGIN IMMEDIATE; single local filesystem, multiple independent processes",
+  "publicMainnetSpend": false,
+  "phoneCameraClaim": false,
+  "acceptance": "All required observations are retained. SUT FAIL is data; startup, evidence or cleanup failure invalidates execution. Native claims require the separate kernel-isolated exact-artifact admission."
+}

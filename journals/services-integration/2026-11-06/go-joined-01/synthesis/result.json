@@ -1,0 +1,70 @@
+{
+  "schema": "tpnil-native-synthesis@0.1.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "boundary": "API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim",
+  "adapters": [
+    "LCH 0.1.0 base64url-to-standard-base64 BRC-29 derivation and remittance boundary, applied to payer and payees",
+    "Overlay 2.7.0 historical GASP transaction-identity deduplication; all distinct transactions retain upstream conflict validation"
+  ],
+  "assertions": [
+    {
+      "id": "NATIVE-SYNTHESIS-UHRP",
+      "verdict": "PASS",
+      "outputs": 2,
+      "txid": "8b06691486ac1819f7b8d15f7523e78cbd8d8c79770e9b97d47bf5061e5c94ab"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-BOARD",
+      "verdict": "PASS",
+      "txid": "2dd087a39f3d1e5d2d7caa5572803a0722646197a7f5cfe945c67268fe07ea3a"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-LCH",
+      "verdict": "PASS",
+      "txid": "a3e8865ec6eecc87f041c734179ebcb12aede2edf399009268b324db9abff35d",
+      "receipts": 2,
+      "received": [
+        3,
+        5
+      ],
+      "recovered": true,
+      "plaintextSha256": "431ced6916a2a21a156e38701afe55bbd7f88969fbbfc56d7fe099d47f265460"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-REVISION",
+      "verdict": "PASS",
+      "previous": "2dd087a39f3d1e5d2d7caa5572803a0722646197a7f5cfe945c67268fe07ea3a:0",
+      "txid": "e7527cd710839cefd4522d920b27428cfe5800a934c355bfcb67ce10f672cabc",
+      "replica": true
+    }
+  ],
+  "transactions": [
+    {
+      "role": "uhrp-advertisements",
+      "txid": "8b06691486ac1819f7b8d15f7523e78cbd8d8c79770e9b97d47bf5061e5c94ab"
+    },
+    {
+      "role": "board-create",
+      "txid": "2dd087a39f3d1e5d2d7caa5572803a0722646197a7f5cfe945c67268fe07ea3a"
+    },
+    {
+      "role": "lch-payment",
+      "txid": "a3e8865ec6eecc87f041c734179ebcb12aede2edf399009268b324db9abff35d"
+    },
+    {
+      "role": "board-revision",
+      "txid": "e7527cd710839cefd4522d920b27428cfe5800a934c355bfcb67ce10f672cabc"
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "overlay",
+      "closed": true
+    },
+    {
+      "name": "replica",
+      "closed": true
+    }
+  ],
+  "result": "PASS"
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "tpnil-integrated-verification@1",
+  "verified": true,
+  "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+  "profile": "ITCVE-1@1.3.0",
+  "lanes": 8,
+  "findings": [
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "resultFile": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    }
+  ],
+  "childOraclesVerified": true
+}

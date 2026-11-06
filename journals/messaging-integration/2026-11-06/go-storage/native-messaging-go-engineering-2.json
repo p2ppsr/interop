@@ -1,0 +1,231 @@
+{
+  "schema": "tpnil-go-storage-messaging-smoke@1",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "nativeWalletQualification": false,
+  "caller": "Actual Toolbox reference wallet; no unchanged native app",
+  "components": {
+    "components": {
+      "overlay": "go",
+      "chaintracks": "go",
+      "storage": "go"
+    },
+    "go": {
+      "schema": "tpnil-go-services@1.0.0",
+      "compatibilityPatch": {
+        "schema": "tpnil-storage-sync-go-build@1.0.0",
+        "patchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+        "patchSha256": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+        "upstream": {
+          "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+          "version": "v0.191.4",
+          "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+        },
+        "replacementModule": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-sync-go-source",
+        "toolchain": "go1.27.3",
+        "binarySha256": "d4e02362b62dc7f1124b3d2a4a92a85ef10eb120e7b03b5eb4c84f1a6bb66efe"
+      },
+      "components": {
+        "overlay": "go",
+        "chaintracks": "go",
+        "storage": "go"
+      },
+      "binarySha256": "d4e02362b62dc7f1124b3d2a4a92a85ef10eb120e7b03b5eb4c84f1a6bb66efe",
+      "dependencies": {
+        "schema": "tpnil-itcve-go-components@1.0.0",
+        "toolchain": "go1.27.3",
+        "components": [
+          {
+            "module": "github.com/bsv-blockchain/go-overlay-services",
+            "version": "v1.3.8",
+            "commit": "b77904e276ea16558e8f7f3a104a8472b95586af",
+            "sum": "h1:3Wx5TppatVoCZf/h/+KsbxlagyDBSEDfFoK96YXc3kU="
+          },
+          {
+            "module": "github.com/bsv-blockchain/go-chaintracks",
+            "version": "v1.4.8",
+            "commit": "bb87d3d758176efab664cb73c0204ab5d87a621e",
+            "sum": "h1:DFJwbFt/+JxYp2q1ZNtYRalDf0SGCrQNy4UZAuohquo="
+          },
+          {
+            "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+            "version": "v0.191.4",
+            "commit": "0ea046b28d91e48ba0805ede1de767d578ed7e14",
+            "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+          }
+        ],
+        "replacements": [
+          {
+            "module": "k8s.io/kube-openapi",
+            "version": "v0.0.0-20260721132016-d427ff9ee9ad",
+            "sum": "h1:oXImqH8mQNk7PmvzKhmN3ddJoY6OnyM225MXwGHPm0A="
+          }
+        ],
+        "moduleFiles": {
+          "go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+          "go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a"
+        }
+      },
+      "goModSha256": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+      "goSumSha256": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a"
+    }
+  },
+  "result": "PASS",
+  "assertions": [
+    {
+      "id": "typescript/discovery",
+      "verdict": "PASS",
+      "txid": "79d7b664d2ff28e874e0c290c8ffb109e934bac441da2e4e961a7a82c5ed64a1"
+    },
+    {
+      "id": "typescript/native-paid-delivery",
+      "verdict": "PASS",
+      "txid": "9e704f3e88c39c17ec3b401f91aaa9b1137110cb2b48224be9f825d1e9b16d86",
+      "messageId": "5d0f0253f9f68dcfcc7bebebd7879d5bb447bc76beca48ba058f6d462ece5342",
+      "nativeIdentity": "037962d45b38e8bcf82fa8efa8432a01f20c9a53e24c7d3f11df197cb8e70926da",
+      "recipient": "0290999dbbf43034bffb1dd53eac1eb4c33a4ea1c4f48ba585cfde3830840f0555"
+    },
+    {
+      "id": "typescript/restart-ack-replay",
+      "verdict": "PASS",
+      "replayStatus": 409
+    },
+    {
+      "id": "go-adapted/discovery",
+      "verdict": "PASS",
+      "txid": "4e344cfc1003fe98c4c736736b7d325268d74f2ae175b317c954d15493bd0a7d"
+    },
+    {
+      "id": "go-adapted/native-paid-delivery",
+      "verdict": "PASS",
+      "txid": "a7df9fee1f6d23a524fa82d9d9486d4c8bb1251185453705ada885c9ac3ca50a",
+      "messageId": "0c9e7ebce605a413575256d0129e1f867b91a955aa1b261af5118e293f723f46",
+      "nativeIdentity": "037962d45b38e8bcf82fa8efa8432a01f20c9a53e24c7d3f11df197cb8e70926da",
+      "recipient": "0324653eac434488002cc06bbfb7f10fe18991e35f9fe4302dbea6d2353dc0ab1c"
+    },
+    {
+      "id": "go-adapted/restart-ack-replay",
+      "verdict": "PASS",
+      "replayStatus": 400
+    }
+  ],
+  "cleanup": [
+    {
+      "payerClosed": true
+    },
+    {
+      "servicesClosed": true
+    },
+    {
+      "component": "messaging-mongo",
+      "name": "tpnil-messaging-3217-1794003815897",
+      "image": "sha256:1f995ad6fdb93244a1addab1b58f934a0bc2f5643c38e02f5e9d7f0c7d227a7b",
+      "running": false,
+      "exitCode": 0,
+      "removed": true
+    }
+  ],
+  "archive": "native-messaging-go-engineering-2.tar.gz",
+  "archiveSha256": "cd76dd447b0c51db8ab4abcbd85478f131191a78cc3ba7b9e60b49ea4b513c75",
+  "files": [
+    {
+      "path": "native-messaging-go-engineering-2/CALLER.txt",
+      "sha256": "fbdbaa0bd710a56e70de5d5e3c7bde83448bc7656305300b63bb51060e7a326f",
+      "bytes": 163
+    },
+    {
+      "path": "native-messaging-go-engineering-2/component-identity.json",
+      "sha256": "0b7cbd20f73df03fa970c5ba48c5e6df0156cdc5ff740e9aaa0357768a8464d8",
+      "bytes": 2550
+    },
+    {
+      "path": "native-messaging-go-engineering-2/discovery-go-adapted/overlay.sqlite",
+      "sha256": "47f0f5255cbc05c2bded9e1b68a423f93a16ea83c82f59868c156bc699973ff4",
+      "bytes": 122880
+    },
+    {
+      "path": "native-messaging-go-engineering-2/discovery-typescript/overlay.sqlite",
+      "sha256": "ca6d7d3e1374824d23dd2d5f79553ce9626bcfbeffc2806f74202903b3d2c989",
+      "bytes": 122880
+    },
+    {
+      "path": "native-messaging-go-engineering-2/engineering-cleanup.json",
+      "sha256": "0bd6017998f20827a8730636e99a344a08f9fa405241cad7444ab7572556f769",
+      "bytes": 316
+    },
+    {
+      "path": "native-messaging-go-engineering-2/exchanges.json",
+      "sha256": "f1bf29ea04d8705a5dca5460997cab3df20ffe691db3b41f0a79657eb72daf08",
+      "bytes": 68647
+    },
+    {
+      "path": "native-messaging-go-engineering-2/funding.json",
+      "sha256": "4376bbb1f0784de3e8d201abd67133a8346abae6fd4891bdb8a2916cbcc1adbe",
+      "bytes": 532
+    },
+    {
+      "path": "native-messaging-go-engineering-2/go-adapted-native-payment.json",
+      "sha256": "bd0b0dfba5904d9b4eef092a0b51d9d3a15a68da125118f38861b42446900abb",
+      "bytes": 74126
+    },
+    {
+      "path": "native-messaging-go-engineering-2/go-adapted.log",
+      "sha256": "88795739b8b18430cf26c09a142b532174dd0fe8847e140e86422117d5c6d2f1",
+      "bytes": 1586
+    },
+    {
+      "path": "native-messaging-go-engineering-2/go-adapted.sqlite",
+      "sha256": "78f61915b852cede6df1ba297810cccc22be6eaca246d4a9582a20938c99d47f",
+      "bytes": 98304
+    },
+    {
+      "path": "native-messaging-go-engineering-2/go-services.log",
+      "sha256": "86470d38e3fbd23fe60ec2e8b9f98a47bf3f7752658e8d441c352df6ad8bdfa8",
+      "bytes": 516
+    },
+    {
+      "path": "native-messaging-go-engineering-2/result.json",
+      "sha256": "95381611e587a4b2c1bbe6f7202c0c85e6fd288daea4f25684f8eb05a1663fed",
+      "bytes": 50605
+    },
+    {
+      "path": "native-messaging-go-engineering-2/submissions.json",
+      "sha256": "e4c574572c38b7f73606c0b3c00f6f38f0d642396beedfb7fa9d38c436df9c40",
+      "bytes": 4843
+    },
+    {
+      "path": "native-messaging-go-engineering-2/typescript-native-payment.json",
+      "sha256": "f7e867334df99c60a2e2b6dde3e9a995eb071ce0da1fb8f533db60bb0ef6a815",
+      "bytes": 36609
+    },
+    {
+      "path": "native-messaging-go-engineering-2/typescript.sqlite",
+      "sha256": "e46633b4515c16311ec94498eca9d35803efaa661b2f2148129f31fbda8ba453",
+      "bytes": 172032
+    },
+    {
+      "path": "native-messaging-go-engineering-2/webroot/index.html",
+      "sha256": "9a7d62c2e13349799c055df8ff0bc3dafb56c3946fc63074c41d43c472cac02b",
+      "bytes": 48
+    },
+    {
+      "path": "native-messaging-go-engineering-2.log",
+      "sha256": "adde9ea5be21a33f7bc479d1b3b9ef8a78d4222828d74ca231a334a60ab4ee8e",
+      "bytes": 34867
+    },
+    {
+      "path": "native-messaging-go-engineering-2.verification.json",
+      "sha256": "a161624503351f0ceaad5fd95ceadf4e2bf713ae11f68e2a5c2eecac03e8d07f",
+      "bytes": 424
+    },
+    {
+      "path": "native-messaging-go-engineering-2.negative-tests.txt",
+      "sha256": "a5c4b41c5a35bc23fb01a8718e199c2c8df07988936eb787374186ac7d11e9b2",
+      "bytes": 86
+    },
+    {
+      "path": "native-messaging-go-engineering-2/engineering-driver.mjs",
+      "sha256": "26b222b5256751b863629e33581ef7d8c4fe9859e68b767424aa87cb54fb1eb6",
+      "bytes": 2800
+    }
+  ]
+}

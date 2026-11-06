@@ -1,0 +1,38 @@
+{
+  "schema": "tpnil-storage-sync-go-patch@1.0.0",
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+  "files": {
+    "pkg/internal/storage/repo/syncrepo/sync_basket.go": {
+      "before": "e2ef950d7cc27346de34a3ba75aa8bdfd8fc71cb59785b5fcd2e1411038b1871",
+      "after": "0df14d00fe1318a5b93d229f3ce295b87e54db14ac06ad1020e7d948cb53ccda"
+    },
+    "pkg/internal/storage/repo/syncrepo/sync_output.go": {
+      "before": "5093e148ccb97f739cc63f3eb54de4f034ab9b8e8b51a3763342a9f718d1549e",
+      "after": "6fb9a01ca9b0d900bf0423c24022d70002fedc908e0df5ef668d26a0fb0bacdd"
+    },
+    "pkg/storage/internal/sync/chunk_processor.go": {
+      "before": "c0781d16e1d818919f6474fddd6beb391edc983c52116cdda6ad9bd7bcad6ac3",
+      "after": "d8b764d2c7cfef604de82134a559b0cf99f073b88d77f30dd8fb1c4263dda972"
+    },
+    "pkg/storage/internal/actions/create.go": {
+      "before": "4dfe01a1ebb28407b2d5cb299696dd0ce37774da220365eed7a6812144ca6210",
+      "after": "b72ac2022b95601f1993dd7d3a61bc9794527822b539b62a4454319bbbea9ab9"
+    },
+    "pkg/storage/provider_create_action_test.go": {
+      "before": "1866b0714efe9067ccf7bf98bd49ada2d8dd52ec139cb9c07de951752e8bc17c",
+      "after": "eb51c2eb7574402512eb8da662280dfb53b6680bfb764f7a9630830cdd8a2426"
+    },
+    "pkg/storage/mappings.go": {
+      "before": "6c396b6786c05b139552b596c6883959049386ccadfd189c3a66ae5568c9e12a",
+      "after": "b490e548d332b64ace2e405e03c2d022ed84634b39ae6ac083d5d8017c049611"
+    },
+    "pkg/storage/provider_insert_certificate_auth_test.go": {
+      "before": "c369ee836f46e2374e28070c68d7695154e1bb988c0e0225264ece557d4f8248",
+      "after": "c1f8b8ee00bea26082b3fa7eb3a4c73b62a1e6a2b7ff9d5aa17575ac467797ff"
+    }
+  }
+}

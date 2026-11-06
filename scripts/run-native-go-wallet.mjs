@@ -10,7 +10,9 @@ if (!image || !outputArgument) throw new Error('Usage: run-native-go-wallet IMAG
 const output = path.resolve(outputArgument);
 if (fs.existsSync(output)) throw new Error('Native qualification output already exists');
 fs.mkdirSync(output, { recursive: true });
-const planFile = path.join(root, 'infra/native/yours-go/plan.json');
+const trustedIdentity = process.argv[4] === '--integrated-trusted';
+const integrated = trustedIdentity || process.argv[4] === '--integrated';
+const planFile = path.join(root, trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json');
 const plan = JSON.parse(fs.readFileSync(planFile));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const docker = args => execFileSync('docker', args, { encoding: 'utf8', timeout: 30000 });
@@ -40,7 +42,7 @@ for (let index = 1; index <= plan.repetitions; index++) {
   fs.mkdirSync(repetition, { mode: 0o755 });
   let id, error, removed = false;
   try {
-    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, image]).trim();
+    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, ...(trustedIdentity ? ['--env', 'TPNIL_NATIVE_IDENTITY_TRUST=1'] : []), image]).trim();
     save(`host-repetition-${index}-before.json`, receipt(JSON.parse(docker(['inspect', id]))[0]));
     const log = fs.openSync(path.join(repetition, 'console.log'), 'wx');
     const run = spawnSync('docker', ['start', '-a', id], { stdio: ['ignore', log, log], timeout: (plan.timeoutSecondsPerRepetition + 60) * 1000 });
@@ -63,5 +65,5 @@ for (let index = 1; index <= plan.repetitions; index++) {
   save('host-userns.json', { before: usernsBefore, active: usernsActive, restored, restoredSuccessfully: restored === usernsBefore });
   if (restored !== usernsBefore) throw new Error('Host user namespace policy restoration failed');
 }
-const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: 60000 });
+const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
 if (verify.status !== 0) throw new Error('Native conformance evidence verification failed');

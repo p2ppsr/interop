@@ -1,0 +1,44 @@
+{
+  "schema": "tpnil-native-synthesis@0.1.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "boundary": "API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim",
+  "assertions": [
+    {
+      "id": "NATIVE-SYNTHESIS-UHRP",
+      "verdict": "PASS",
+      "outputs": 2,
+      "txid": "5f312f7f28f222626ed681999d9858b66f943917d22604119d08e77bc2519677"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-BOARD",
+      "verdict": "PASS",
+      "txid": "892e58f280860a156e0fdd4ce9352528bda0baa6fcb49268be1a0a991868a1cf"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-EXECUTION",
+      "verdict": "FAIL",
+      "error": "WERR_INVALID_PARAMETER: The output.providedBy parameter must be consistent with the request. Storage reclassified requested output 0 as providedBy='storage' purpose='change'.\n    at verifyRequestedOutputsUnchanged (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/buildSignableTransaction.ts:248:13)\n    at buildSignableTransaction (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/buildSignableTransaction.ts:37:3)\n    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/createAction.ts:187:35)\n    at traceActionStep (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/createAction.ts:156:36)\n    at createNewTx (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/createAction.ts:183:37)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async createActionCore (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/createAction.ts:78:13)\n    at async createAction (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/signer/methods/createAction.ts:39:41)\n    at async Wallet.createAction (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/wallet-toolbox/src/Wallet.ts:1002:11)\n    at async createMultipayTransaction (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/lch/dist/walletPayment.js:42:20)"
+    }
+  ],
+  "transactions": [
+    {
+      "role": "uhrp-advertisements",
+      "txid": "5f312f7f28f222626ed681999d9858b66f943917d22604119d08e77bc2519677"
+    },
+    {
+      "role": "board-create",
+      "txid": "892e58f280860a156e0fdd4ce9352528bda0baa6fcb49268be1a0a991868a1cf"
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "overlay",
+      "closed": true
+    },
+    {
+      "name": "replica",
+      "closed": true
+    }
+  ],
+  "result": "FAIL"
+}

@@ -35,3 +35,15 @@ in [the component lock](synthesis/go/components.lock.json). The three pinned ser
 unchanged license texts remain in the resolved module archives; linking or downloading them supplies no additional rights.
 The digest-pinned MongoDB container used for component qualification retains
 its own license. Original laboratory host and adapter code remains Apache-2.0.
+
+## Integrated service and Rust dependencies
+
+`integrations/services/vendor/` retains selected ChainTracks routes (Open BSV v6)
+and Identity Services (Open BSV v4) at the per-file hashes and source revisions
+in `integrations/services/sources.json`, with unchanged upstream licenses.
+Additional npm closures are fixed by `integrations/services/package-lock.json`
+and `components/transport/package-lock.json`. Message Box preparation downloads
+the exact sources in `components/messaging/sources.lock.json`; upstream licenses
+remain controlling. The Rust participant links the SDK revision and dependencies
+fixed by `components/rust/Cargo.lock`. These pins and compatibility patches grant
+no new rights and imply no vendor endorsement.

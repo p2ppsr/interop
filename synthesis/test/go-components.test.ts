@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import http from 'node:http'
+import { createHash } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { MerklePath, PrivateKey, ProtoWallet, PushDrop, Transaction, Utils, type WalletInterface } from '@bsv/sdk'
 import { Setup } from '@bsv/wallet-toolbox'
@@ -49,6 +50,16 @@ it('requires frozen component identities and a binary digest for Go evidence', (
   expect(() => validateComponentIdentity({ components })).toThrow(/identity/)
   expect(() => validateComponentIdentity({ ...identity, go: { ...identity.go, binarySha256: '' } })).toThrow(/identity/)
   expect(() => validateComponentIdentity({ ...identity, go: { ...identity.go, goSumSha256: '00'.repeat(32) } })).toThrow(/identity/)
+  const patchBytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../infra/adapters/storage-sync/patch.lock.json'))
+  const patch = JSON.parse(patchBytes.toString())
+  const compatibilityPatch = { schema: 'tpnil-storage-sync-go-build@1.0.0', binarySha256: identity.go.binarySha256,
+    patchLockSha256: createHash('sha256').update(patchBytes).digest('hex'), patchSha256: patch.patchSha256, toolchain: lock.toolchain,
+    upstream: { module: patch.module, version: patch.version, sum: patch.sum } }
+  const prospective = { ...identity, go: { ...identity.go, compatibilityPatch } }
+  expect(() => validateComponentIdentity(prospective)).toThrow(/identity/)
+  expect(() => validateComponentIdentity(prospective, 'ITCVE-1@1.3.0')).not.toThrow()
+  expect(() => validateComponentIdentity(identity, 'ITCVE-1@1.3.0')).toThrow(/compatibility/)
+  expect(() => validateComponentIdentity({ ...prospective, go: { ...prospective.go, compatibilityPatch: { ...compatibilityPatch, patchSha256: '00'.repeat(32) } } }, 'ITCVE-1@1.3.0')).toThrow(/compatibility/)
 })
 
 // Explicit command/CI gate: the ordinary offline suite needs neither Docker nor Go.

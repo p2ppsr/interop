@@ -1,0 +1,82 @@
+{
+  "schema": "tpnil-native-synthesis@0.1.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "boundary": "API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim",
+  "adapters": [
+    "LCH 0.1.0 base64url-to-standard-base64 BRC-29 derivation and remittance boundary, applied to payer and payees",
+    "Overlay 2.7.0 historical GASP transaction-identity deduplication; all distinct transactions retain upstream conflict validation"
+  ],
+  "assertions": [
+    {
+      "id": "NATIVE-SYNTHESIS-UHRP",
+      "verdict": "PASS",
+      "outputs": 2,
+      "txid": "2ba8cbb9943be6a72440b3c737b94878f1119a1b521787759921707ef082f4a8"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-BOARD",
+      "verdict": "PASS",
+      "txid": "cb7802d975f56550924e4b9359942fb91323a48ff51c3139d82c5d892992a735"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-LCH",
+      "verdict": "PASS",
+      "txid": "8ad124d7ad4a4138cca9ef94b1cec69212f00c1ea88e7fb5b96231fa3bcf077a",
+      "receipts": 2,
+      "received": [
+        3,
+        5
+      ],
+      "recovered": true,
+      "plaintextSha256": "431ced6916a2a21a156e38701afe55bbd7f88969fbbfc56d7fe099d47f265460"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-REVISION",
+      "verdict": "PASS",
+      "previous": "cb7802d975f56550924e4b9359942fb91323a48ff51c3139d82c5d892992a735:0",
+      "txid": "5cf367dc6951acfc803b40395020d68832d221a916699141e6aa0a4777d6f2b8",
+      "replica": true
+    }
+  ],
+  "transactions": [
+    {
+      "role": "uhrp-advertisements",
+      "txid": "2ba8cbb9943be6a72440b3c737b94878f1119a1b521787759921707ef082f4a8"
+    },
+    {
+      "role": "board-create",
+      "txid": "cb7802d975f56550924e4b9359942fb91323a48ff51c3139d82c5d892992a735"
+    },
+    {
+      "role": "lch-payment",
+      "txid": "8ad124d7ad4a4138cca9ef94b1cec69212f00c1ea88e7fb5b96231fa3bcf077a"
+    },
+    {
+      "role": "board-revision",
+      "txid": "5cf367dc6951acfc803b40395020d68832d221a916699141e6aa0a4777d6f2b8"
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "overlay",
+      "closed": true
+    },
+    {
+      "name": "replica",
+      "closed": true
+    }
+  ],
+  "result": "PASS",
+  "interface": "Toolbox public wallet API engineering check; not native",
+  "funding": {
+    "txid": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+    "outputIndex": 0,
+    "satoshis": 5000000000,
+    "blockHeight": 1,
+    "blockHash": "6ebffaae4ded7763885b0db4343bfd50586cbaadafdecd5dd5d02e165d059a63",
+    "merkleRoot": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+    "profile": "TPNIL-TERANODE-REGTEST-1",
+    "profileSha256": "a78b57500264612b2926244854772a8cf1f220c8ad9c8a2adca6714a2e4ae77d",
+    "atomicBeefSha256": "a05ce3c06d577a24781a2956416311af9445065d43a761b186b5fc17471da7d4"
+  }
+}

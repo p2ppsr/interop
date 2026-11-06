@@ -12,7 +12,10 @@ import type { TeranodeWalletFundingFixture } from '../services.js'
 
 const root = '/work'
 const output = '/evidence'
-const planFile = path.join(root, 'infra/native/yours-go/plan.json')
+const integrated = process.env.TPNIL_NATIVE_INTEGRATED === '1'
+const trustedIdentity = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1'
+if (trustedIdentity && !integrated) throw new Error('Trusted identity qualification requires integrated native mode')
+const planFile = path.join(root, trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json')
 const plan = JSON.parse(fs.readFileSync(planFile, 'utf8'))
 fs.mkdirSync(output, { recursive: true })
 const save = (name: string, value: unknown) => fs.writeFileSync(path.join(output, name), JSON.stringify(value, null, 2) + '\n')
@@ -46,6 +49,10 @@ let mongo: ReturnType<typeof spawn> | undefined
 let failure: unknown
 const startedAt = new Date().toISOString()
 try {
+  if (integrated) {
+    if (trustedIdentity && sha256Hex(fs.readFileSync(path.join(root, plan.identityTrustProfile))) !== plan.identityTrustProfileSha256) throw new Error('Trusted identity profile differs from frozen plan')
+    if (sha256Hex(fs.readFileSync(path.join(root, plan.compatibilityPatch))) !== plan.compatibilityPatchSha256 || sha256Hex(fs.readFileSync(path.join(root, plan.boundaryProfile))) !== plan.boundaryProfileSha256) throw new Error('Integrated profile inputs differ from frozen plan')
+  }
   assertArtifact(path.join(root, 'out/sut-artifacts/yours-wallet-v5.1.0/pw-v5.1.0.zip'), plan.wallet)
   assertArtifact(path.join(root, 'fixtures/artifacts/todo-ts-236733c-webroot.tgz'), plan.application)
   const installed = JSON.parse(execFileSync('python3', [path.join(root, 'infra/native/yours-go/verify-installed.py')], { encoding: 'utf8', timeout: 30000 }))
@@ -70,7 +77,8 @@ try {
     headless: false,
     task: plan.task,
     amount: plan.amount,
-    nativeQualification: { fundingFixture: fixture, sandbox: true }
+    nativeQualification: { fundingFixture: fixture, sandbox: true },
+    ...(integrated ? { additionalScenario: (await import('./integrated.js')).runNativeIntegration, integratedProfile: 'ITCVE-1@1.3.0', go: { binary: '/opt/tpnil/itcve-go-storage-sync', storageSyncPatch: true } } as const : {})
   })
   verifyEvidenceBundle(output)
   save('network-after.json', await network())
@@ -81,7 +89,7 @@ try {
       return [fs.readFileSync(`/proc/${pid}/comm`, 'utf8').trim()]
     } catch { return [] }
   })
-  if (processes.some(name => /chrome|chromium|itcve-go-serv/.test(name))) throw new Error('Wallet or Go host process survived teardown')
+  if (processes.some(name => /chrome|chromium|itcve-go-|messagebox-go/.test(name))) throw new Error('Wallet or Go host process survived teardown')
   save('worker.json', { schema: 'tpnil-native-wallet-worker@1.0.0', completed: true, startedAt, endedAt: new Date().toISOString(), platform: process.platform, architecture: process.arch, os: os.release(), node: process.version, planSha256: sha256Hex(fs.readFileSync(planFile)), recordSha256: sha256Hex(fs.readFileSync(path.join(output, 'record.json'))), cleanWalletAndServiceShutdown: true, vectorOutcomes: record.vectors.map(vector => ({ id: vector.id, outcome: vector.outcome })), sandboxSha256: sha256Hex(fs.readFileSync(evidenceFile('native-sandbox.txt'))) })
 } catch (error) {
   failure = error

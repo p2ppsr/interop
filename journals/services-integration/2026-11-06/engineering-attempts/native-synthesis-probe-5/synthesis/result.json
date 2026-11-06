@@ -1,0 +1,67 @@
+{
+  "schema": "tpnil-native-synthesis@0.1.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "boundary": "API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim",
+  "adapters": [
+    "LCH 0.1.0 base64url-to-standard-base64 BRC-29 derivation and remittance boundary, applied to payer and payees"
+  ],
+  "assertions": [
+    {
+      "id": "NATIVE-SYNTHESIS-UHRP",
+      "verdict": "PASS",
+      "outputs": 2,
+      "txid": "f9105eaadbb152f200f2171d0bb46c5537f2b6a6ebc8c9e97976324a6357f573"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-BOARD",
+      "verdict": "PASS",
+      "txid": "e619912fdd884f14275e10fa1c642d76b0dfc3ae30d1439d8713174e23e65154"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-LCH",
+      "verdict": "PASS",
+      "txid": "761d5ae3b35dee593d28d1553c80888a8d8b3026a73a27cf07340d39bab639ef",
+      "receipts": 2,
+      "received": [
+        3,
+        5
+      ],
+      "recovered": true,
+      "plaintextSha256": "431ced6916a2a21a156e38701afe55bbd7f88969fbbfc56d7fe099d47f265460"
+    },
+    {
+      "id": "NATIVE-SYNTHESIS-EXECUTION",
+      "verdict": "FAIL",
+      "error": "Error: Replica did not converge on the native wallet revision\n    at runNativeSynthesis (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/synthesis.ts:164:125)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/src/native-synthesis-probe.ts:22:18)"
+    }
+  ],
+  "transactions": [
+    {
+      "role": "uhrp-advertisements",
+      "txid": "f9105eaadbb152f200f2171d0bb46c5537f2b6a6ebc8c9e97976324a6357f573"
+    },
+    {
+      "role": "board-create",
+      "txid": "e619912fdd884f14275e10fa1c642d76b0dfc3ae30d1439d8713174e23e65154"
+    },
+    {
+      "role": "lch-payment",
+      "txid": "761d5ae3b35dee593d28d1553c80888a8d8b3026a73a27cf07340d39bab639ef"
+    },
+    {
+      "role": "board-revision",
+      "txid": "04660867ed5083e0c9bf7d56dff0c71cd19f786a1e848da5d7ebf753f8e16cd9"
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "overlay",
+      "closed": true
+    },
+    {
+      "name": "replica",
+      "closed": true
+    }
+  ],
+  "result": "FAIL"
+}

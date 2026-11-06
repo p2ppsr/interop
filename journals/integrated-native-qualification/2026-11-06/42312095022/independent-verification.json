@@ -1,0 +1,72 @@
+{
+  "schema": "tpnil-native-independent-verification@1",
+  "verifiedAt": "2026-11-06T23:45:55.105918+00:00",
+  "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+  "checkerRevision": "196d2c113a4063996ae40800c6287224ae24bb63",
+  "executionAndOracleFilesMatchFrozenSource": true,
+  "command": "node scripts/verify-native-integrated.mjs out/native-ci-42312095022",
+  "exitCode": 0,
+  "originalZipFilesUnchanged": 124,
+  "qualifiedEnvironment": true,
+  "repetitionMatch": true,
+  "integrationOutcome": "PASS",
+  "baselineWalletOutcome": "FAIL",
+  "repetitions": [
+    {
+      "index": 1,
+      "integrationAssertions": 77,
+      "integrationOutcome": "PASS",
+      "rustAssertions": 48,
+      "rustOutcome": "PASS",
+      "trustAssertions": 8,
+      "wait": {
+        "endedAt": "2026-11-06T23:37:31.735Z",
+        "monotonicElapsedMs": 121000,
+        "requiredMs": 120000,
+        "startedAt": "2026-11-06T23:35:30.734Z"
+      },
+      "settingsCounts": [
+        0,
+        1,
+        0
+      ],
+      "cleanup": {
+        "attempted": true,
+        "restored": true
+      },
+      "baseline": {
+        "PASS": 4,
+        "FAIL": 2,
+        "BLOCKED": 2
+      }
+    },
+    {
+      "index": 2,
+      "integrationAssertions": 77,
+      "integrationOutcome": "PASS",
+      "rustAssertions": 48,
+      "rustOutcome": "PASS",
+      "trustAssertions": 8,
+      "wait": {
+        "endedAt": "2026-11-06T23:41:44.705Z",
+        "monotonicElapsedMs": 121000,
+        "requiredMs": 120000,
+        "startedAt": "2026-11-06T23:39:43.704Z"
+      },
+      "settingsCounts": [
+        0,
+        1,
+        0
+      ],
+      "cleanup": {
+        "attempted": true,
+        "restored": true
+      },
+      "baseline": {
+        "PASS": 4,
+        "FAIL": 2,
+        "BLOCKED": 2
+      }
+    }
+  ]
+}

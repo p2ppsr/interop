@@ -1,0 +1,14 @@
+{
+  "schema": "tpnil-rust-vectors@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "source": "Explicit expected SHA-256, secp256k1 generator, script boolean and malformed framing cases; mined funding is a separately retained fixture.",
+  "cases": [
+    {"id":"sha256-abc","request":{"op":"hash","hex":"616263"},"expected":{"sha256":"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"}},
+    {"id":"script-true","request":{"op":"script","unlocking":"","locking":"51"},"expected":{"valid":true}},
+    {"id":"script-false","request":{"op":"script","unlocking":"","locking":"00"},"expected":{"valid":false}},
+    {"id":"script-equality-positive","request":{"op":"script","unlocking":"52","locking":"5287"},"expected":{"valid":true}},
+    {"id":"script-equality-negative","request":{"op":"script","unlocking":"53","locking":"5287"},"expected":{"valid":false}},
+    {"id":"malformed-beef","request":{"op":"beef","hex":"01010101","txid":"0000000000000000000000000000000000000000000000000000000000000000"},"expectedError":true},
+    {"id":"malformed-transaction","request":{"op":"transaction","hex":"01000000"},"expectedError":true}
+  ]
+}
