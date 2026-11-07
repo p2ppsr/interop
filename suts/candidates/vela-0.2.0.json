@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "vela-0.2.0-oci",
+  "program": "ISI-4@1.0.0",
+  "itcve": "ITCVE-1@1.0.0",
+  "claim": "VENDOR_SUBMITTED_CANDIDATE",
+  "vendor": {
+    "name": "Bridget Doran",
+    "github": "hbgnostic",
+    "submissionTerms": "legal/ARTIFACT-SUBMISSION-AGREEMENT.md@2.2.0"
+  },
+  "artifact": {
+    "kind": "oci-image",
+    "reference": "ghcr.io/hbgnostic/vela-wallet:0.2.0-0b7da0a",
+    "visibility": "public",
+    "indexDigest": "sha256:66ca84c6c8a87a898e6ac3ebf12f44aeedc4f43b8825030cd56ed52b8990bc06",
+    "platforms": [
+      {
+        "platform": "linux/amd64",
+        "manifestDigest": "sha256:cfb5d5a66b32a71d3b560fac09643c9b7641b0bb92b19c654e654c670662fa5e"
+      },
+      {
+        "platform": "linux/arm64",
+        "manifestDigest": "sha256:facc172f16c5e7c9d7af26bca88a833dd64c817f509a7f8125e4f51de04de351"
+      }
+    ],
+    "source": "not public",
+    "walletLibraries": {
+      "@bsv/sdk": "4.0.1",
+      "@bsv/wallet-toolbox": "2.15.1",
+      "@bsv/message-box-client": "2.7.0"
+    },
+    "baseImage": "node:22-slim",
+    "previousCandidate": "suts/candidates/vela-0.1.0.json"
+  },
+  "dependencyLicenses": {
+    "npmPackages": 298,
+    "permissive": 286,
+    "openBsvLicense": {
+      "count": 12,
+      "packages": [
+        "@bsv/* (Open BSV License v6)",
+        "@bopen-io/templates (Open BSV License v4)"
+      ]
+    },
+    "baseImage": "Debian packages under their own licenses"
+  },
+  "interfaces": {
+    "brc100Http": {
+      "port": 3321,
+      "bind": "configurable; published to 127.0.0.1 in the documented run"
+    },
+    "dashboard": {
+      "port": 3400,
+      "auth": "VELA_DASHBOARD_KEY via ?key= or x-api-key"
+    }
+  },
+  "configuration": {
+    "required": [
+      "WALLET_STORAGE_URL",
+      "VELA_DASHBOARD_KEY"
+    ],
+    "optional": [
+      "WALLET_SEED",
+      "CHAIN",
+      "WALLET_SUBSTRATE_ORIGINS",
+      "WALLET_SUBSTRATE_ENFORCE_SPENDING",
+      "WALLET_SUBSTRATE_PER_APP_IDENTITY",
+      "VELA_MESSAGEBOX_HOSTS",
+      "BLOCK_HEADERS_URL",
+      "ARC_API_KEY"
+    ],
+    "storage": "remote BRC-100 StorageServer only; no local fallback",
+    "initialization": "setup page: create (24-word phrase) or restore (24 words or 64-hex seed); seed encrypted at rest (scrypt, AES-256-GCM), unlocked by password; WALLET_SEED skips setup"
+  },
+  "permissionModel": {
+    "prompts": false,
+    "connect": "exact origin allowlist (App Access); unlisted origins receive no CORS grant and are logged as blocked",
+    "spend": "BRC-73 monthly spending authorizations per site",
+    "coinProtocolSigning": "refused unless the origin is on WALLET_SUBSTRATE_ORIGINS (empty by default)",
+    "driverApi": [
+      "POST /api/access/add",
+      "POST /api/access/remove",
+      "POST /api/permissions/grant",
+      "GET /api/permissions"
+    ]
+  },
+  "documentation": "suts/candidates/vela-0.2.0-README.md",
+  "knownLimitations": [
+    "PeerPay receive covers the main identity only; Vela does not advertise a MessageBox host",
+    "No PeerPay send from the dashboard",
+    "App Access list and per-app identity choices are local to the /data volume",
+    "Recovery phrase restores in Vela; root key is HMAC-SHA256(seed, \"IDENTITY_KEY_V1\")"
+  ],
+  "admission": {
+    "status": "not-admitted",
+    "reason": "Vendor-submitted candidate. The publisher suggests technical intake start from 0.2.0 rather than 0.1.0."
+  },
+  "peerpayReceive": {
+    "identity": "main identity only",
+    "hostsChecked": "advertised host for the identity key, VELA_MESSAGEBOX_HOSTS, and https://messagebox.babbage.systems, https://messagebox.bsvblockchain.tech, https://messagebox.1sat.app, https://message-box-us-1.bsvb.tech",
+    "advertisesHost": false,
+    "accept": "re-fetch message; keep a copy in /data; derive the BRC-29 key from prefix, suffix and sender; refuse unless an output pays it; internalizeAction; then acknowledge",
+    "driverApi": [
+      "GET /api/peerpay?fresh=1",
+      "POST /api/peerpay/accept"
+    ]
+  }
+}
