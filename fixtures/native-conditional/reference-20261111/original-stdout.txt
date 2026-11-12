@@ -1,0 +1,862 @@
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+WalletStorageServer listening at http://127.0.0.1:0
+SNI enabled. Clients not supporting SNI may fail
+https server started on 55918
+{
+  "verification": {
+    "verified": true,
+    "assertions": [
+      {
+        "id": "fixture.call-inventory",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "fixture.population",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "transaction.defaults",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-default",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-filter",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-pagination",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-includes",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-default",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-filter",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-pagination",
+        "result": "FAIL",
+        "detail": "Expected values to be strictly equal:\n\n20 !== 11\n"
+      },
+      {
+        "id": "query.actions-includes",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "basket.ascii-299",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "basket.ascii-300",
+        "result": "FAIL",
+        "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.ascii-301",
+        "result": "FAIL",
+        "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.ascii-399",
+        "result": "FAIL",
+        "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.ascii-400",
+        "result": "FAIL",
+        "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.ascii-401",
+        "result": "FAIL",
+        "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.utf8-299",
+        "result": "FAIL",
+        "detail": "basket-utf8-299: malformed input was accepted\n+ actual - expected\n\n+ {\n+   outputs: [],\n+   totalOutputs: 0\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.utf8-300",
+        "result": "FAIL",
+        "detail": "basket-utf8-300: malformed input was accepted\n+ actual - expected\n\n+ {\n+   outputs: [],\n+   totalOutputs: 0\n+ }\n- undefined\n"
+      },
+      {
+        "id": "basket.utf8-301",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "basket.utf8-399",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "basket.utf8-400",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "basket.utf8-401",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "transaction.conflicting-inputs",
+        "result": "FAIL",
+        "detail": "conflict-control: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "transaction.known-proof-omission",
+        "result": "FAIL",
+        "detail": "known-proof-omission: {\"name\":\"WERR_INTERNAL\",\"message\":\"Every signableTransaction input must have a sourceTransaction\",\"code\":\"WERR_INTERNAL\",\"description\":\"Every signableTransaction input must have a sourceTransaction\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INTERNAL',\n+   description: 'Every signableTransaction input must have a sourceTransaction',\n+   isError: true,\n+   message: 'Every signableTransaction input must have a sourceTransaction',\n+   name: 'WERR_INTERNAL'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "transaction.signable-and-sign",
+        "result": "FAIL",
+        "detail": "signable: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).\",\"parameter\":\"inputs[0]\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).',\n+   isError: true,\n+   message: 'The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'inputs[0]'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "transaction.abort-release",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "transaction.batch-release",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.direct",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.default-pagination",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.filter",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.required-field",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.bad-signature",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.bad-keyring",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.alternate-revealer",
+        "result": "FAIL",
+        "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "certificate.wrong-revealer",
+        "result": "FAIL",
+        "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "certificate.selective-proof",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.verifier-separation",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.relinquishment",
+        "result": "FAIL",
+        "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+      },
+      {
+        "id": "certificate.issuance",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-signature",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-server-nonce",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-serial",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-type",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-subject",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-certifier",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-bad-fields",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-missing-certificate",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-missing-server-nonce",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-any-default",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-empty-tags",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-no-match",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-limit1",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-offset1",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-minus2",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-max-limit",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-only-locking-scripts",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-only-includeTags",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-only-includeLabels",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.outputs-only-includeCustomInstructions",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-any-default",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-empty-labels",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-no-match",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-overlap",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-limit1",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-offset1",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-max-limit",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeLabels",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeInputs",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeInputSourceLockingScripts",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeInputUnlockingScripts",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeOutputs",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-only-includeOutputLockingScripts",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "query.actions-scripts-without-parents",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.missing-revocationOutpoint",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.missing-signature",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.missing-keyringRevealer",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.missing-keyringForSubject",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.missing-field-key",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.proof-all",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.proof-unknown-field",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.proof-alternate-verifier",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "certificate.issuance-missing-url",
+        "result": "PASS",
+        "detail": "Independent fixed-policy predicate verified against original public observations."
+      },
+      {
+        "id": "coverage.remaining-obligations",
+        "result": "BLOCKED",
+        "detail": "privileged-secondary-keyring: Neither reviewed release wires a supported secondary privileged keyring. Ordinary-key crypto cannot replace it. abi-substrate: Neither reviewed release exposes an identified publisher-native Wallet Wire endpoint. finite-expiry-configuration: No supported finite-expiry control was identified; private state mutation is forbidden. Nonexpiring grants and monthly allowances are separate claims. conditional-inventory-remainder: The36-group/306-variant design inventory remains the accountability baseline. Transaction trust/batch/noSendChange/internalization branches, spent-token revocation semantics, discovery adversaries, permission calendar/concurrency cases and unresolved optional-field interpretations are explicitly unexecuted work for a later frozen attempt, not a claim that fixture implementation is an unsupported native capability."
+      }
+    ],
+    "assertionCount": 84,
+    "counts": {
+      "PASS": 69,
+      "FAIL": 14,
+      "BLOCKED": 1
+    },
+    "completeBRC100Conformance": false
+  },
+  "assertions": [
+    {
+      "id": "fixture.call-inventory",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "fixture.population",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "transaction.defaults",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-filter",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-pagination",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-includes",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-filter",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-pagination",
+      "result": "FAIL",
+      "detail": "Expected values to be strictly equal:\n\n20 !== 11\n"
+    },
+    {
+      "id": "query.actions-includes",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "basket.ascii-299",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "basket.ascii-300",
+      "result": "FAIL",
+      "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.ascii-301",
+      "result": "FAIL",
+      "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.ascii-399",
+      "result": "FAIL",
+      "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.ascii-400",
+      "result": "FAIL",
+      "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.ascii-401",
+      "result": "FAIL",
+      "detail": "basket-ascii-300: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.utf8-299",
+      "result": "FAIL",
+      "detail": "basket-utf8-299: malformed input was accepted\n+ actual - expected\n\n+ {\n+   outputs: [],\n+   totalOutputs: 0\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.utf8-300",
+      "result": "FAIL",
+      "detail": "basket-utf8-300: malformed input was accepted\n+ actual - expected\n\n+ {\n+   outputs: [],\n+   totalOutputs: 0\n+ }\n- undefined\n"
+    },
+    {
+      "id": "basket.utf8-301",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "basket.utf8-399",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "basket.utf8-400",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "basket.utf8-401",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "transaction.conflicting-inputs",
+      "result": "FAIL",
+      "detail": "conflict-control: {\"name\":\"WERR_INVALID_OPERATION\",\"message\":\"Maximum BEEF depth exceeded. Limit is 12\",\"code\":\"WERR_INVALID_OPERATION\",\"description\":\"Maximum BEEF depth exceeded. Limit is 12\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_OPERATION',\n+   description: 'Maximum BEEF depth exceeded. Limit is 12',\n+   isError: true,\n+   message: 'Maximum BEEF depth exceeded. Limit is 12',\n+   name: 'WERR_INVALID_OPERATION'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "transaction.known-proof-omission",
+      "result": "FAIL",
+      "detail": "known-proof-omission: {\"name\":\"WERR_INTERNAL\",\"message\":\"Every signableTransaction input must have a sourceTransaction\",\"code\":\"WERR_INTERNAL\",\"description\":\"Every signableTransaction input must have a sourceTransaction\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INTERNAL',\n+   description: 'Every signableTransaction input must have a sourceTransaction',\n+   isError: true,\n+   message: 'Every signableTransaction input must have a sourceTransaction',\n+   name: 'WERR_INTERNAL'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "transaction.signable-and-sign",
+      "result": "FAIL",
+      "detail": "signable: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).\",\"parameter\":\"inputs[0]\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).',\n+   isError: true,\n+   message: 'The inputs[0] parameter must be spendable output. output 470fa7e601cd574761ce4a8e19a86ee3c5878c22aa52b460b1f72bcfe59d38ab:3 appears to have been spent (spendable=false).',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'inputs[0]'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "transaction.abort-release",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "transaction.batch-release",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.direct",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.default-pagination",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.filter",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.required-field",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.bad-signature",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.bad-keyring",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.alternate-revealer",
+      "result": "FAIL",
+      "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "certificate.wrong-revealer",
+      "result": "FAIL",
+      "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "certificate.selective-proof",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.verifier-separation",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.relinquishment",
+      "result": "FAIL",
+      "detail": "certificate-alternate-revealer: {\"name\":\"WERR_INVALID_PARAMETER\",\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"code\":\"WERR_INVALID_PARAMETER\",\"description\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"parameter\":\"args\",\"isError\":true}\n+ actual - expected\n\n+ {\n+   code: 'WERR_INVALID_PARAMETER',\n+   description: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   isError: true,\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'WERR_INVALID_PARAMETER',\n+   parameter: 'args'\n+ }\n- undefined\n"
+    },
+    {
+      "id": "certificate.issuance",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-signature",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-server-nonce",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-serial",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-type",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-subject",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-certifier",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-bad-fields",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-missing-certificate",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-missing-server-nonce",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-any-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-empty-tags",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-no-match",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-limit1",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-offset1",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-minus2",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-max-limit",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-only-locking-scripts",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-only-includeTags",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-only-includeLabels",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.outputs-only-includeCustomInstructions",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-any-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-empty-labels",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-no-match",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-overlap",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-limit1",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-offset1",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-max-limit",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeLabels",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeInputs",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeInputSourceLockingScripts",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeInputUnlockingScripts",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeOutputs",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-only-includeOutputLockingScripts",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "query.actions-scripts-without-parents",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.missing-revocationOutpoint",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.missing-signature",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.missing-keyringRevealer",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.missing-keyringForSubject",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.missing-field-key",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.proof-all",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.proof-unknown-field",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.proof-alternate-verifier",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "certificate.issuance-missing-url",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified against original public observations."
+    },
+    {
+      "id": "coverage.remaining-obligations",
+      "result": "BLOCKED",
+      "detail": "privileged-secondary-keyring: Neither reviewed release wires a supported secondary privileged keyring. Ordinary-key crypto cannot replace it. abi-substrate: Neither reviewed release exposes an identified publisher-native Wallet Wire endpoint. finite-expiry-configuration: No supported finite-expiry control was identified; private state mutation is forbidden. Nonexpiring grants and monthly allowances are separate claims. conditional-inventory-remainder: The36-group/306-variant design inventory remains the accountability baseline. Transaction trust/batch/noSendChange/internalization branches, spent-token revocation semantics, discovery adversaries, permission calendar/concurrency cases and unresolved optional-field interpretations are explicitly unexecuted work for a later frozen attempt, not a claim that fixture implementation is an unsupported native capability."
+    }
+  ],
+  "errors": []
+}

@@ -38,14 +38,14 @@ export function nativeWalletBoundary(application: Page, preserveErrors = false):
 
 export async function runNativeIntegration({ application, services, evidence, profile = 'ITCVE-1@1.3.0', beforeTrustRestore }: {
   application: Page; services: ControlledWalletServices; evidence: EvidenceBundle
-  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0'
+  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0'
   beforeTrustRestore?: (boundaryReport: any) => Promise<void>
 }): Promise<void> {
   const root = path.resolve(import.meta.dirname, '../../../..')
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-joined-'))
   const payee = await createFixtureWallet(services, '78'.repeat(32))
   try {
-    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(profile))
+    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0'].includes(profile))
     const walletIdentity = (await wallet.getPublicKey({ identityKey: true })).publicKey
     const { qualifyRelay } = await import(pathToFileURL(path.join(root, 'components/transport/relay.mjs')).href)
     const { qualifyPaidHttp } = await import(pathToFileURL(path.join(root, 'components/transport/paid-http.mjs')).href)

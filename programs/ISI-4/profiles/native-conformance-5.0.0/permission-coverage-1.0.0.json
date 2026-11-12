@@ -1,0 +1,46 @@
+{
+  "schema": "tpnil-native-permission-coverage-policy@1.0.0",
+  "oracle": "tpnil-native-permission-coverage-oracle@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "interface": "Native public CWI, trusted visible permission controls, and actual browser close/relaunch on the same isolated profile",
+  "categories": ["protocol", "basket", "certificate", "counterparty-linkage", "specific-linkage"],
+  "configuration": {
+    "application": "https://todo.itcve.test",
+    "primary": "https://deny.itcve.test",
+    "alternate": "https://alternate.itcve.test",
+    "allowance": "https://allowance.itcve.test",
+    "protocol": [2, "tpnil coverage protocol v1"],
+    "keyID": "coverage grant persistence",
+    "linkageProtocol": [2, "tpnil coverage linkage v1"],
+    "linkageKeyID": "coverage linkage key",
+    "basket": "tpnil coverage persistence v1",
+    "basketAmount": 3,
+    "certificateTypeByte": 61,
+    "certificateSerialByte": 62,
+    "fields": { "name": "TPNIL permission coverage subject", "private": "Never disclosed by this permission scenario" },
+    "issuerKeyHex": "6464646464646464646464646464646464646464646464646464646464646464",
+    "peerKeyHex": "6565656565656565656565656565656565656565656565656565656565656565",
+    "verifierKeyHex": "6666666666666666666666666666666666666666666666666666666666666666",
+    "paymentRecipientKeyHex": "6868686868686868686868686868686868686868686868686868686868686868",
+    "allowanceSatoshis": 100,
+    "paymentAmounts": { "first": 31, "second": 37, "overflow": 53, "alternate": 59, "revoked": 61, "revokedRestart": 67 },
+    "requestTimeoutMs": 25000
+  },
+  "assertionSuffixes": [
+    "protocol-grant-cache", "basket-grant-cache", "certificate-grant-cache", "counterparty-linkage-grant-cache", "specific-linkage-grant-cache",
+    "protocol-origin-isolation", "basket-origin-isolation", "certificate-origin-isolation", "counterparty-linkage-origin-isolation", "specific-linkage-origin-isolation",
+    "restart-identity",
+    "protocol-restart-persistence", "basket-restart-persistence", "certificate-restart-persistence", "counterparty-linkage-restart-persistence", "specific-linkage-restart-persistence",
+    "revocation-ui",
+    "protocol-revocation-persistence", "basket-revocation-persistence", "certificate-revocation-persistence", "counterparty-linkage-revocation-persistence", "specific-linkage-revocation-persistence",
+    "manifest-selection", "standing-allowance", "cumulative-allowance-boundary", "allowance-origin-isolation", "allowance-revocation", "cleanup"
+  ],
+  "deniedPayments": ["allowance-overflow", "allowance-alternate", "allowance-revoked", "allowance-revoked-restart"],
+  "remainingCoverage": [
+    { "id": "privileged-keyring", "status": "NOT_CLAIMED", "reason": "This profile does not establish a distinct privileged keyring or privileged authorization lifecycle." },
+    { "id": "finite-expiry", "status": "NOT_CLAIMED", "reason": "No supported native UI for selecting finite grant expiry is exercised; neither clocks nor private grant stores are changed." },
+    { "id": "complete-wire-conformance", "status": "NOT_CLAIMED", "reason": "Public CWI observations do not establish every BRC wire encoding or framing requirement." },
+    { "id": "complete-conditional-permission-matrix", "status": "NOT_CLAIMED", "reason": "This finite scenario establishes the declared origin, restart, revocation and spending cases; all peer/verifier/key/field mutations and calendar-boundary cases remain separate obligations." }
+  ],
+  "completeBRC100Conformance": false
+}

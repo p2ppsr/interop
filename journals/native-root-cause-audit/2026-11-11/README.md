@@ -1,0 +1,13 @@
+# Native-wallet root-cause analysis — 2026-11-11
+
+This is **DERIVED_ROOT_CAUSE_ANALYSIS**, not a qualification result. [audit.json](audit.json) maps all 99 failed clause predicates from original native run 42711700295 to exact returned evidence, both repetitions, source-map hashes and line locators. Historical native evidence is unchanged: the clause layer remains 133 PASS / 99 FAIL / 1 BLOCKED; the entire original native oracle remains 180 PASS / 99 FAIL / 1 BLOCKED per repetition.
+
+The main groups are 42 boolean/default checks, 15 JavaScript exceptions before validation, 9 inactive privilege parameters, 9 optional input shapes, 6 counterparty defaults, 4 byte-domain errors, 4 integer/RPC errors and 3 descriptions transformed before validation. The remaining 7 are 2 reserved-namespace interpretations and one each uppercase normalization, public error serialization, sign-reference validation, listActions output contract, and final noSendChange identity.
+
+Official Yours 5.1.1 is pinned to release source 3c88f686da6789b99592974efe2d39cd22405589 and ZIP 454c8581b8d6ab120c9b2f2f74167f536b08e720bc12e75f3e9437d14a985878. Its strict SDK validators already address many historical source patterns; those are predictions requiring native execution, never inferred passes.
+
+[Yours PR #368](https://github.com/yours-org/yours-wallet/pull/368) contains the remaining raw-request and transport repairs at source f9faaabae1573b69eca746d317cab008aa8095ad, based on ccdd6f480906c06cfa1481ad3a66f4abc8a5cc9e. [CI 43140694759](https://github.com/yours-org/yours-wallet/actions/runs/43140694759) passed 100 tests / 573 assertions, typecheck, formatting, four bundles and artifact verification. The CI built PR merge 2d4a9af32d2098edf6a9d0086a4e5bfb7be1c4ff; its tree equals the candidate head. [candidate-ci-review.json](candidate-ci-review.json) retains the artifact/source-map proof. That candidate ZIP is d550a0fefb5b2ccec844c47b02610b4f388128e564e3011ad46c2014f30f3a74 and is **not** the official 5.1.1 release despite inheriting its manifest version.
+
+Prospective oracle 5 replays the same immutable native observations as 135 PASS / 97 FAIL / 1 BLOCKED, changing only `namespace.protocol.reserved` and `namespace.basket.reserved`. It recognizes an exact source-bound reserved P-module refusal; it does not accept generic unsupported errors or change the structured-error requirement. Original oracle 4 and its result remain frozen.
+
+No new native session is asserted by this analysis or the CI receipt. Privileged secondary-key support, finite permission expiry and unsupported native byte-wire transport remain distinct applicability limits; prospective conditional and permission scenarios require their own admitted native execution.

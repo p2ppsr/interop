@@ -33,7 +33,7 @@ test('published archive integrity binds every byte and complete file set without
   fs.appendFileSync(path.join(directory, 'qualification.json'), ' ')
   assert.throws(() => verifyIntegrationArchive(directory))
 }))
-for (const [profile, program] of [['ITCVE-1@1.4.0', 'ISI-4@2.0.0'], ['ITCVE-1@1.5.0', 'ISI-4@3.0.0'], ['ITCVE-1@2.0.0', 'ISI-4@4.0.0']]) test(`${profile} publication binds its program and preserves incomplete conformance`, () => temporary(directory => {
+for (const [profile, program] of [['ITCVE-1@1.4.0', 'ISI-4@2.0.0'], ['ITCVE-1@1.5.0', 'ISI-4@3.0.0'], ['ITCVE-1@2.0.0', 'ISI-4@4.0.0'], ['ITCVE-1@4.0.0', 'ISI-4@5.0.0']]) test(`${profile} publication binds its program and preserves incomplete conformance`, () => temporary(directory => {
   const source = 'ab'.repeat(20)
   fs.writeFileSync(path.join(directory, 'native-integrated.zip'), zip([{ name: 'result.json', body: '{}' }]))
   const qualification = { schema: 'tpnil-native-integrated-qualification@2', claim: 'EXPERIMENTAL_CONFORMANCE_RESULT', profile, program, source, qualifiedEnvironment: true, completeBRC100Conformance: false }

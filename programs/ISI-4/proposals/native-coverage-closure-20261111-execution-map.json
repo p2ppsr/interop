@@ -1,0 +1,5063 @@
+{
+  "schema": "tpnil-native-conditional-execution-map@1.0.0",
+  "inventory": "native-coverage-closure-20261111.json",
+  "inventorySha256": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+  "policy": "../profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json",
+  "policySha256": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+  "claim": "IMPLEMENTATION_ACCOUNTABILITY_ONLY",
+  "completeBRC100Conformance": false,
+  "nativeExecutionResults": null,
+  "variantRows": [
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "identity",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "child-key",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "encrypt",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "hmac",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "signature",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.distinct-keyring",
+      "variantId": "linkage",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "deny",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "approve",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "missing-reason",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "short-reason",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "overlong-reason",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.authorization",
+      "variantId": "grouped-grant-not-authority",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.cache-lifecycle",
+      "variantId": "cache-valid",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.cache-lifecycle",
+      "variantId": "cache-expired",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.cache-lifecycle",
+      "variantId": "manual-lock",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "privileged.cache-lifecycle",
+      "variantId": "restart",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ]
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "protocol-lock",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "protocol-restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "basket-lock",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "basket-restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "certificate-lock",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "certificate-restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "denial-not-grant",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.restart-persistence",
+      "variantId": "alternate-origin",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.revoke-persistence",
+      "variantId": "single-immediate",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.revoke-persistence",
+      "variantId": "single-restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.revoke-persistence",
+      "variantId": "origin-immediate",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.revoke-persistence",
+      "variantId": "origin-restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.revoke-persistence",
+      "variantId": "unaffected-scope",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "counterparty-deny",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "counterparty-allow",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "counterparty-cache",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "specific-deny",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "specific-allow",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-decisions",
+      "variantId": "specific-cache",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "origin",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "verifier",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "counterparty",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "protocol",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "level2-key",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "level1-key-policy",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "revoke",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.linkage-isolation",
+      "variantId": "restart",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.manifest-selection",
+      "variantId": "all-denied",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.manifest-selection",
+      "variantId": "subset-selected",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.manifest-selection",
+      "variantId": "spending-unchecked",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.manifest-selection",
+      "variantId": "spending-selected",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.manifest-selection",
+      "variantId": "alternate-origin",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "first-under-cap",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "second-under-cap",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "exact-cap",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "cumulative-over-cap-deny",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "single-over-cap-deny",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "revoke",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "restart",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.standing-allowance",
+      "variantId": "alternate-origin",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.allowance-boundaries",
+      "variantId": "concurrent-cap",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.allowance-boundaries",
+      "variantId": "abort-accounting",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.allowance-boundaries",
+      "variantId": "rejection-accounting",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.allowance-boundaries",
+      "variantId": "nosend-accounting",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.allowance-boundaries",
+      "variantId": "calendar-rollover",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "status": "SEPARATE_PERMISSION_MODULE",
+      "owner": "conformance-permission-coverage",
+      "scope": "This conditional module does not infer that separate public UI/restart/permission cases pass."
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "before",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "at-boundary",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "after",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "renewal-deny",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "renewal-approve",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "restart",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "permissions.finite-expiry",
+      "variantId": "expiry-zero",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "supported-finite-expiry"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-01-createAction",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-02-signAction",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-03-abortAction",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-04-listActions",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-05-internalizeAction",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-06-listOutputs",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-07-relinquishOutput",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-08-getPublicKey",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-09-revealCounterpartyKeyLinkage",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-10-revealSpecificKeyLinkage",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-11-encrypt",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-12-decrypt",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-13-createHmac",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-14-verifyHmac",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-15-createSignature",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-16-verifySignature",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-17-acquireCertificate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-18-listCertificates",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-19-proveCertificate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-20-relinquishCertificate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-21-discoverByIdentityKey",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-22-discoverByAttributes",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-23-isAuthenticated",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-24-waitForAuthentication",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-25-getHeight",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-26-getHeaderForHeight",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-27-getNetwork",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.call-parity",
+      "variantId": "code-28-getVersion",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "unknown-code",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "empty",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "truncated-origin",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "truncated-varint",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "truncated-field",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "invalid-boolean",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "invalid-utf8",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "invalid-byte-range",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "oversized-length",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "trailing-data",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "origin-spoof",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.frame-rejection",
+      "variantId": "error-frame",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "zero",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "varint-boundary",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "optional-absent",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "optional-false",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "empty-array",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "empty-object",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "utf8-multibyte",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "hex-leading-zero",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "base64-leading-zero",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "wire.encoding-boundaries",
+      "variantId": "signed-offset",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "dependencyIds": [
+        "native-wallet-wire"
+      ]
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-0",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-4",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-5",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-299",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-299"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-300",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-300"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-301",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-301"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-399",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-399"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-400",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-400"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.ascii-length",
+      "variantId": "bytes-401",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.ascii-401"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-299",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-299"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-300",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-300"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-301",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-301"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-399",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-399"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-400",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-400"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "utf8-401",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "basket.utf8-401"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "uppercase",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "double-space",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "trailing-basket",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "admin-prefix",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "default",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "basket.unicode-and-namespace",
+      "variantId": "reserved-p-prefix",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "signAndProcess-omitted-true",
+      "methods": [
+        "createAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.defaults"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "acceptDelayedBroadcast-omitted-true",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "returnTXIDOnly-omitted-false",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.defaults"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "noSend-omitted-false",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "randomizeOutputs-omitted-true",
+      "methods": [
+        "createAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "randomizeOutputs-false-order",
+      "methods": [
+        "createAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.defaults"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "version-default",
+      "methods": [
+        "createAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "lockTime-default",
+      "methods": [
+        "createAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.defaults",
+      "variantId": "sequenceNumber-default",
+      "methods": [
+        "createAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "all-unlockingScripts",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "signAndProcess-false",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.signable-and-sign"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "unlockingScriptLength",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.signable-and-sign"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "mixed-inputs",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "sign-reference",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.signable-and-sign"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "abort-reference",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.abort-release"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "abort-then-sign-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "sign-twice-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.signing-branches",
+      "variantId": "foreign-reference-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "input-absent-from-beef",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "input-index-out-of-range",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "duplicate-input",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.conflicting-inputs"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "already-spent-input",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "script-and-length-conflict",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "missing-script-and-length",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "spend-index-not-in-reference",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.consuming-conflicts",
+      "variantId": "script-length-mismatch",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "full-proof",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "fixture.population",
+        "transaction.signable-and-sign"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "known-wallet-trustSelf",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.known-proof-omission"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "explicit-knownTxids",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.known-proof-omission"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "unknown-without-trust",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "unknown-not-in-knownTxids",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "conflicting-proof",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "truncated-proof",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.proof-trust",
+      "variantId": "wrong-merkle-root",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "single-held",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.batch-release"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "two-dependent-held",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "outputless-flush",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.batch-release"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "create-sendWith",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.batch-release"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "sign-sendWith",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "returnTXIDOnly",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "sync-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "delayed-submit",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "unknown-batch-txid",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.batch-send",
+      "variantId": "duplicate-batch-entry",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "valid-full",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "valid-subset",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "empty-return-unexercised",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "unsigned-stale-txid",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "foreign-output",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "already-spent",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "out-of-range",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.nosend-change",
+      "variantId": "noSend-false",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "wallet-payment",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "basket-insertion",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "both-output-types",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "missing-paymentRemittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "missing-insertionRemittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "conflicting-remittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "wrong-derivation",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "output-index-out-of-range",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "replay",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "transaction.internalization",
+      "variantId": "relinquish-without-spend",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "any-default",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-any-default"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "any-explicit",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "all-explicit",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "empty-labels",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-empty-labels"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "no-match",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-no-match"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-filters",
+      "variantId": "overlapping-labels",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-overlap"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "defaults",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-default"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeLabels",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeLabels"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeInputs",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeInputs"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeInputSourceLockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeInputSourceLockingScripts"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeInputUnlockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeInputUnlockingScripts"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeOutputs",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeOutputs"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "includeOutputLockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-only-includeOutputLockingScripts"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "all-includes",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-includes"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.action-includes",
+      "variantId": "script-without-parent-include",
+      "methods": [
+        "listActions"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.actions-scripts-without-parents"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "any-default",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-any-default"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "any-explicit",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "all-explicit",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "empty-tags",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-empty-tags"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "no-match",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-no-match"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "spent-output-excluded",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "transaction.abort-release"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-filters",
+      "variantId": "relinquished-excluded",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "defaults",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-default"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "locking-scripts",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-only-locking-scripts"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "entire-transactions",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-includes"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "includeTags",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-only-includeTags"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "includeLabels",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-only-includeLabels"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "includeCustomInstructions",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-only-includeCustomInstructions"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.output-includes",
+      "variantId": "all-metadata",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-includes"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "default-limit10",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-default",
+        "query.actions-default",
+        "certificate.default-pagination"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "limit1",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-limit1",
+        "query.actions-limit1"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "offset0",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-pagination",
+        "query.actions-pagination"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "offset1",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-offset1",
+        "query.actions-offset1"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "last-page",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-pagination",
+        "query.actions-pagination"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "beyond-end",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-pagination",
+        "query.actions-pagination"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "max-limit10000",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-max-limit",
+        "query.actions-max-limit"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "output-offset-minus1",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-pagination"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "query.pagination",
+      "variantId": "output-offset-minus2",
+      "methods": [
+        "listOutputs"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "query.outputs-minus2"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "valid-issuance",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "wrong-auth-identity",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "missing-certificate",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-missing-certificate"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "missing-serverNonce",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-missing-server-nonce"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "invalid-serverNonce",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-server-nonce"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "invalid-serial-HMAC",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-serial"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "wrong-type",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-type"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "wrong-subject",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-subject"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "wrong-certifier",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-certifier"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "altered-field",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-fields"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.issuance",
+      "variantId": "invalid-signature",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-bad-signature"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-missing-serialNumber",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.required-field"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-missing-revocationOutpoint",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.missing-revocationOutpoint"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-missing-signature",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.missing-signature"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-missing-keyringRevealer",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.missing-keyringRevealer"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-missing-keyringForSubject",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.missing-keyringForSubject"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "issuance-missing-certifierUrl",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.issuance-missing-url"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "direct-with-issuance-fields",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.conditional-parameters",
+      "variantId": "issuance-with-direct-fields",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "certifier-revealer",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.direct"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "distinct-revealer",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.alternate-revealer"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "wrong-revealer",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.wrong-revealer"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "missing-field-key",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.missing-field-key"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "extra-field-key-policy",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "wrong-field-key",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.bad-keyring"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "tampered-field",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "tampered-signature",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.bad-signature"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.direct-keyrings",
+      "variantId": "wrong-subject",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "one-field",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.selective-proof"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "all-fields",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.proof-all"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "empty-fields-policy",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "unknown-field",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.proof-unknown-field"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "different-verifier",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.proof-alternate-verifier"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "wrong-certifier",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "wrong-serial",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "wrong-subject",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "tampered-signature",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.selective-proof",
+      "variantId": "duplicate-fields-policy",
+      "methods": [
+        "proveCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "issuer-filter",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "type-filter",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "combined-filter",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "empty-filter-policy",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "no-match",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.filter"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "relinquish-one",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE",
+      "predicateIds": [
+        "certificate.relinquishment"
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "relinquish-repeat-policy",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.inventory",
+      "variantId": "restart",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.revocation",
+      "variantId": "unspent-revocation",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.revocation",
+      "variantId": "spent-revocation",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.revocation",
+      "variantId": "wrong-outpoint",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.revocation",
+      "variantId": "relinquish-revoked",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "relinquishCertificate"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "identity-match",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "attribute-match",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "attribute-no-match",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "multiple-certifiers",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "untrusted-excluded",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "bad-signature",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "bad-keyring",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "default-seekPermission-false",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "certificate.discovery",
+      "variantId": "explicit-seekPermission-true",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "data-only",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "hash-only",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "neither-data-nor-hash",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "both-data-and-hash-policy",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "forSelf-false-default",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "forSelf-true",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "anyone-counterparty",
+      "methods": [
+        "createSignature",
+        "verifySignature"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    },
+    {
+      "caseId": "crypto.conditional-signatures",
+      "variantId": "identityKey-override",
+      "methods": [
+        "getPublicKey"
+      ],
+      "status": "NOT_EXECUTED",
+      "reason": "Requires a separately frozen public-API driver/oracle or explicit optional-field/normative applicability decision; this is unfinished coverage, not an unsupported-capability exemption."
+    }
+  ]
+}

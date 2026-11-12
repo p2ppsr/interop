@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/native-evidence-reevaluation.yml'
       - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0.json'
+      - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json'
+      - 'scripts/frozen-component-replay.mjs'
+      - 'scripts/verify-published-integrations.mjs'
       - 'components/rust/graph-oracle-3.0.0.json'
       - 'components/rust/src/graph_oracle_v3.rs'
       - 'scripts/native-reevaluation.mjs'
@@ -46,7 +49,7 @@ jobs:
         env:
           RUSTUP_TOOLCHAIN: 1.88.0
           CARGO_NET_OFFLINE: 'true'
-        run: node scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0.json out/native-integrated-reevaluation
+        run: node scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json out/native-integrated-reevaluation
       - name: Independently replay the separate reevaluation result
         env:
           RUSTUP_TOOLCHAIN: 1.88.0

@@ -1,4 +1,5 @@
 """Bind the executed read-only directories to the exact admitted archives."""
+import argparse
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
@@ -25,8 +26,19 @@ def verify(directory, expected):
         raise ValueError('Executed files differ from admitted archive')
     return hashlib.sha256(json.dumps(actual, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
-wallet = ROOT / 'out/sut-artifacts/yours-wallet-v5.1.0'
-with zipfile.ZipFile(wallet / 'pw-v5.1.0.zip') as archive:
+parser = argparse.ArgumentParser()
+parser.add_argument('--wallet-version', choices=['5.1.0', '5.1.1'], default='5.1.0')
+version = parser.parse_args().wallet_version
+wallet = ROOT / f'out/sut-artifacts/yours-wallet-v{version}'
+archive_path = wallet / f'pw-v{version}.zip'
+expected_archive = {
+    '5.1.0': ('d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52', 13513123),
+    '5.1.1': ('454c8581b8d6ab120c9b2f2f74167f536b08e720bc12e75f3e9437d14a985878', 13644482),
+}[version]
+archive_bytes = archive_path.read_bytes()
+if (hashlib.sha256(archive_bytes).hexdigest(), len(archive_bytes)) != expected_archive:
+    raise ValueError('Wallet archive differs from selected official release')
+with zipfile.ZipFile(archive_path) as archive:
     if sum(item.file_size for item in archive.infolist()) > 200_000_000:
         raise ValueError('Wallet archive budget exceeded')
     expected = {}

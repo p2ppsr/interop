@@ -183,6 +183,7 @@ export class ControlledWalletServices {
   private readonly webroot: string
   private readonly externalOverlayLookups = new Map<string, string>()
   private readonly externalStorageCounterparts = new Map<string, number>()
+  private readonly controlledRoutes = new Map<string, (request: IncomingMessage, response: ServerResponse) => Promise<void>>()
   private readonly ownedStorageCounterparts = new Map<string, ControlledWalletServices>()
   readonly storageEndpointEvents: Array<{ available: boolean; at: string }> = []
   private readonly wabPort?: number
@@ -219,7 +220,7 @@ export class ControlledWalletServices {
   }
 
   registerStorageCounterpart(host: string, endpoint: string, owner?: ControlledWalletServices): void {
-    if (!/^[a-z0-9-]+\.itcve\.test$/.test(host) || this.externalStorageCounterparts.has(host)) throw new Error('Invalid or duplicate storage counterpart hostname')
+    if (!/^[a-z0-9-]+\.itcve\.test$/.test(host) || this.externalStorageCounterparts.has(host) || this.controlledRoutes.has(host)) throw new Error('Invalid or duplicate storage counterpart hostname')
     const url = new URL(endpoint)
     if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !url.port || url.pathname !== '/' || url.search || url.hash || url.username || url.password) throw new Error('Storage counterpart must be an isolated loopback endpoint')
     if (owner && (owner === this || owner.storageUrl !== endpoint || [...this.ownedStorageCounterparts.values()].includes(owner))) throw new Error('Storage counterpart ownership differs from endpoint or is duplicated')
@@ -228,6 +229,19 @@ export class ControlledWalletServices {
   }
 
   unregisterStorageCounterpart(host: string): void { this.externalStorageCounterparts.delete(host) }
+
+  /** Optional, isolated native-coverage fixtures. Registration cannot redirect a
+   * production hostname or replace an existing storage/application service. */
+  registerControlledRoute(host: string, handler: (request: IncomingMessage, response: ServerResponse) => Promise<void>): () => void {
+    if (!['certifier.itcve.test', 'allowance.itcve.test'].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
+    this.controlledRoutes.set(host, handler)
+    let registered = true
+    return () => {
+      if (!registered) return
+      registered = false
+      if (this.controlledRoutes.get(host) === handler) this.controlledRoutes.delete(host)
+    }
+  }
 
   get submissions(): SubmittedTransaction[] { return this.ownedStorageCounterparts.size === 0 ? this.ownSubmissions : [...this.ownSubmissions, ...[...this.ownedStorageCounterparts.values()].flatMap(service => service.submissions)] }
 
@@ -525,9 +539,9 @@ export class ControlledWalletServices {
         : host === 'usercom.babbage.systems' || host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
           host === 'overlay-eu-1.bsvb.tech' || host === 'overlay-ap-1.bsvb.tech' || host === 'users.bapp.dev'
           ? 'controlled-service'
-        : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test'
+        : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test' || host === 'allowance.itcve.test' && this.controlledRoutes.has(host)
           ? 'controlled-application'
-          : host === 'api.1sat.app' || host === 'messagebox.1sat.app'
+          : host === 'api.1sat.app' || host === 'messagebox.1sat.app' || this.controlledRoutes.has(host)
             ? 'controlled-service'
             : 'blocked-egress'
       this.routes.push({
@@ -718,6 +732,7 @@ export class ControlledWalletServices {
     for (const counterpart of this.ownedStorageCounterparts.values()) await clean(() => counterpart.close())
     this.ownedStorageCounterparts.clear()
     this.externalStorageCounterparts.clear()
+    this.controlledRoutes.clear()
     await clean(async () => this.faucetWallet?.destroy())
     this.faucetWallet = undefined
     if (this.goStorageServer !== undefined) {
@@ -805,6 +820,12 @@ export class ControlledWalletServices {
         })
         .end()
       return
+    }
+    const controlledRoute = this.controlledRoutes.get(host)
+    if (controlledRoute) {
+      response.setHeader('access-control-allow-origin', '*')
+      response.setHeader('access-control-expose-headers', '*')
+      return controlledRoute(request, response)
     }
     if (host === 'api.1sat.app') return this.handleOneSat(request, response, url)
     if (host === 'usercom.babbage.systems' && request.method === 'POST' && url.pathname === '/signals') {

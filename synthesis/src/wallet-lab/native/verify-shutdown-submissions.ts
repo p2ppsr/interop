@@ -4,7 +4,8 @@ import { P2PKH, PrivateKey, Transaction } from '@bsv/sdk'
 import { canonicalJson } from '../../determinism.js'
 import { lifecyclePermissionConfig } from './conformance-permission-lifecycle-model.js'
 import { evaluateNativePermissionLifecycle } from './verify-conformance-permission-lifecycle.js'
-import { shutdownSubmissionPolicy, type ShutdownSubmission } from './shutdown-submissions.js'
+import { shutdownSubmissionPolicy, shutdownCoveragePolicy, type ShutdownSubmission } from './shutdown-submissions.js'
+import { coveragePaymentScript, permissionCoverageConfig } from './conformance-permission-coverage-model.js'
 
 const sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex')
 const equal = (a: unknown, b: unknown) => assert.equal(canonicalJson(a), canonicalJson(b))
@@ -19,21 +20,41 @@ function transaction(row: ShutdownSubmission): Transaction {
   return tx
 }
 
+/** Distinct amounts make these four denied requests unambiguous. A late repeat,
+ * rejected provider verdict, or suffix from a different owned provider is still
+ * a submission and cannot disappear at browser shutdown. */
+export function verifyCoverageDeniedPaymentsThroughShutdown(report: any, global: ShutdownSubmission[], final: ShutdownSubmission[]) {
+  const window = report.submissionWindow
+  assert.ok(Number.isSafeInteger(window.startIndex) && window.startIndex >= 0 && Number.isSafeInteger(window.endIndex) && window.endIndex >= window.startIndex && window.endIndex <= global.length)
+  assert.equal(window.endIndex, report.submissions.length)
+  equal(report.submissions, global.slice(0, window.endIndex))
+  equal(final.slice(0, global.length), global)
+  const denied = ['overflow', 'alternate', 'revoked', 'revokedRestart'].map(key => permissionCoverageConfig.paymentAmounts[key])
+  for (const row of final.slice(window.startIndex)) {
+    const tx = transaction(row)
+    assert.ok(!tx.outputs.some(output => denied.includes(output.satoshis) && output.lockingScript.toHex() === coveragePaymentScript), 'Denied coverage payment appears in the final post-shutdown ledger')
+  }
+  return { verified: true, checked: final.length - window.startIndex, deniedAmounts: denied }
+}
+
 /** The parent first verifies native transaction ownership/funding and child
  * outcomes. This independent closure binds their immutable reports to every
  * provider's post-close ledger and checks the otherwise-unobserved suffix. */
 export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, binding: {
   worker: any; recordBytes: Uint8Array; globalSubmissionsBytes: Uint8Array; permissionReportBytes: Uint8Array; counterpartsBytes: Uint8Array
+  permissionCoverageReportBytes?: Uint8Array
   expectedIdentity: string; readEvidence(name: string): Buffer; storageTransactions: Map<string, Transaction>
 }) {
   const report = JSON.parse(Buffer.from(receiptBytes).toString())
-  assert.equal(report.schema, shutdownSubmissionPolicy); assert.equal(report.policy, shutdownSubmissionPolicy)
-  assert.equal(report.profile, 'ITCVE-1@2.0.0'); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
+  assert.ok(['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0'].includes(report.profile)); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
+  const policy = report.profile === 'ITCVE-1@4.0.0' ? shutdownCoveragePolicy : shutdownSubmissionPolicy
+  assert.equal(report.schema, policy); assert.equal(report.policy, policy)
+  assert.deepEqual(Object.keys(report.bindings).sort(), ['record', 'global', 'module', 'counterparts', ...(report.profile === 'ITCVE-1@4.0.0' ? ['coverage'] : [])].sort())
   assert.equal(report.ordering, 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.')
   assert.deepEqual(report.errors, [])
   assert.equal(binding.worker.shutdownSubmissionsSha256, sha(receiptBytes)); assert.equal(binding.worker.cleanWalletAndServiceShutdown, true)
   const record = JSON.parse(Buffer.from(binding.recordBytes).toString())
-  assert.equal(binding.worker.recordSha256, sha(binding.recordBytes)); assert.equal(record.itcve, 'ITCVE-1@2.0.0')
+  assert.equal(binding.worker.recordSha256, sha(binding.recordBytes)); assert.equal(record.itcve, report.profile)
   for (const [name, expectedPath, bytes] of [
     ['record', 'record.json', binding.recordBytes], ['global', 'evidence/native-submissions.json', binding.globalSubmissionsBytes],
     ['module', 'evidence/conformance/permission-lifecycle.json', binding.permissionReportBytes], ['counterparts', 'evidence/conformance/service-counterparts.json', binding.counterpartsBytes]
@@ -99,5 +120,17 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
     }
     assert.ok(!tx.outputs.some(output => [lifecyclePermissionConfig.paymentSatoshis, lifecyclePermissionConfig.secondPaymentSatoshis].includes(output.satoshis as 5 | 7) && output.lockingScript.toHex() === script), 'Unapproved denied payment appears in the final post-shutdown ledger')
   }
-  return { verified: true, policy: shutdownSubmissionPolicy, initialCount: global.length, finalCount: final.length, tailCount: final.length - global.length, providers: ids.length, deniedPaymentsCheckedThroughShutdown: true }
+  let coverage
+  if (report.profile === 'ITCVE-1@4.0.0') {
+    assert.ok(binding.permissionCoverageReportBytes, 'New profile requires the complete permission coverage report')
+    const bytes = binding.permissionCoverageReportBytes
+    equal(report.bindings.coverage, { path: 'evidence/conformance/permission-coverage.json', bytes: bytes.length, sha256: sha(bytes) })
+    const module = JSON.parse(Buffer.from(bytes).toString())
+    assert.equal(module.identity, binding.expectedIdentity)
+    assert.ok(time(module.endedAt) <= time(report.initialCapturedAt))
+    const { verifyNativePermissionCoverage } = await import('./verify-conformance-permission-coverage.js')
+    await verifyNativePermissionCoverage(module, binding.readEvidence, binding.expectedIdentity)
+    coverage = verifyCoverageDeniedPaymentsThroughShutdown(module, global, final)
+  }
+  return { verified: true, policy, initialCount: global.length, finalCount: final.length, tailCount: final.length - global.length, providers: ids.length, deniedPaymentsCheckedThroughShutdown: true, ...(coverage ? { coverage } : {}) }
 }

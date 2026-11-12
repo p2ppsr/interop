@@ -1,0 +1,11 @@
+# Public TypeScript reference fixture
+
+This fixture is **LAB_SELF_TEST_ONLY**, using the real TypeScript SDK 2.7.1 and wallet-toolbox 2.13.0 with controlled services. It is not a native-wallet execution or qualification. The known public fixture key is 77 repeated 32; it has no production value.
+
+`report.json`, the original stdout/stderr, executed harness and both 95-file source manifests are exact retained bytes from engineering preflight 7 on 2026-11-11. The before/after source manifests match. [provenance.json](provenance.json) binds every retained original file, the command, dependencies and initial public funding operation. The harness is retained as provenance in its original execution layout; the CI regression suite replays the report offline and needs no browser, network, private state or ignored `out/` files.
+
+The original source-stage report contains 84 predicates: 69 PASS, 14 FAIL and 1 BLOCKED, 123 public calls, 13 signed transaction rows and 10 signed authenticated issuance exchanges. It is deliberately not an all-pass fixture. The strengthened verifier derives the same predicate statuses; [reviewed-outcomes.json](reviewed-outcomes.json) is a separate review result, not a replacement original report or a new execution.
+
+`native-conditional-verifier.test.ts` checks original digests, successful controls and specific mutated predicates. Its 20 in-memory adversarial mutations cover duplicate output/action identities, substituted included outputs, wrong filtered totals, corrupt/wrong-verifier proof material, changed payment/source/reference arguments, malformed Atomic BEEF, certificate substitution and invalid positive controls. No mutation is written into qualification evidence.
+
+The existing `query.actions-pagination` expectation that `totalActions` remains 11 after an offset beyond the last row is an explicit prospective **lab query-total interpretation**. The pinned BRC100 declares the result type and pagination parameters without an explicit total-before-offset sentence. This fixture records the resulting reference failure; it does not elevate that interpretation into a quoted BRC requirement. Certificate pagination verifies the default total 11, exact contents and union of pages, without adding a new page-total interpretation.

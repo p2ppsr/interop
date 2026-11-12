@@ -1,0 +1,320 @@
+--- a/pkg/wdk/storage_list_actions_args.go
++++ b/pkg/wdk/storage_list_actions_args.go
+@@ -35,9 +35,9 @@
+ 	Description string               `json:"description"`
+ 	Version     uint32               `json:"version"`
+ 	LockTime    uint32               `json:"lockTime"`
+-	Labels      []string             `json:"labels"`
+-	Inputs      []WalletActionInput  `json:"inputs"`
+-	Outputs     []WalletActionOutput `json:"outputs"`
++	Labels      []string             `json:"labels,omitzero"`
++	Inputs      []WalletActionInput  `json:"inputs,omitzero"`
++	Outputs     []WalletActionOutput `json:"outputs,omitzero"`
+ }
+ 
+ // WalletActionInput represents an input in a wallet action
+@@ -57,7 +57,7 @@
+ 	OutputIndex        uint32   `json:"outputIndex"`
+ 	OutputDescription  string   `json:"outputDescription"`
+ 	Basket             string   `json:"basket"`
+-	Tags               []string `json:"tags,omitempty"`
++	Tags               []string `json:"tags"`
+ 	LockingScript      string   `json:"lockingScript,omitempty"`
+ 	CustomInstructions string   `json:"customInstructions,omitempty"`
+ }
+--- a/pkg/storage/internal/actions/list_actions_mapping.go
++++ b/pkg/storage/internal/actions/list_actions_mapping.go
+@@ -97,7 +97,7 @@
+ 
+ func (l *listActions) fetchInputsOutputs(ctx context.Context, txIDs []uint, args *wdk.ListActionsArgs) (map[uint][]*pkgentity.Output, map[uint][]*pkgentity.Output, error) {
+ 	if args.IncludeInputs.Value() || args.IncludeOutputs.Value() {
+-		inputs, outputs, err := l.outputsRepo.FindInputsAndOutputsWithBaskets(ctx, txIDs, args.IncludeOutputLockingScripts.Value())
++		inputs, outputs, err := l.outputsRepo.FindInputsAndOutputsWithBaskets(ctx, txIDs, args.IncludeOutputLockingScripts.Value() || args.IncludeInputSourceLockingScripts.Value())
+ 		if err != nil {
+ 			return nil, nil, fmt.Errorf("failed to fetch inputs/outputs: %w", err)
+ 		}
+@@ -155,7 +155,11 @@
+ 		}
+ 
+ 		if args.IncludeOutputs.Value() {
+-			l.mapOutputsToAction(action, tx.ID, details.outputMap)
++			l.mapOutputsToAction(action, tx.ID, details.outputMap, args.IncludeOutputLockingScripts.Value())
++		}
++
++		if args.IncludeInputs.Value() {
++			action.Inputs = []wdk.WalletActionInput{}
+ 		}
+ 
+ 		if args.IncludeInputs.Value() && tx.TxID != nil {
+@@ -169,7 +173,7 @@
+ 
+ func (l *listActions) mapLabelsToAction(action *wdk.WalletAction, tx *pkgentity.Transaction, labelMap map[uint][]string, timeFilterRequested bool) {
+ 	if labels, ok := labelMap[tx.ID]; ok {
+-		action.Labels = slices.Clone(labels)
++		action.Labels = append([]string{}, labels...)
+ 	} else {
+ 		action.Labels = []string{}
+ 	}
+@@ -183,22 +187,27 @@
+ 	}
+ }
+ 
+-func (l *listActions) mapOutputsToAction(action *wdk.WalletAction, txID uint, outputMap map[uint][]*pkgentity.Output) {
++func (l *listActions) mapOutputsToAction(action *wdk.WalletAction, txID uint, outputMap map[uint][]*pkgentity.Output, includeLockingScripts bool) {
+ 	outputs := outputMap[txID]
+-	action.Outputs = l.mapToWalletActionOutputs(outputs)
+-}
+-
+-func (l *listActions) mapToWalletActionOutputs(outputs []*pkgentity.Output) []wdk.WalletActionOutput {
++	action.Outputs = l.mapToWalletActionOutputs(outputs, includeLockingScripts)
++}
++
++func (l *listActions) mapToWalletActionOutputs(outputs []*pkgentity.Output, includeLockingScripts bool) []wdk.WalletActionOutput {
+ 	result := make([]wdk.WalletActionOutput, 0, len(outputs))
+ 	for _, o := range outputs {
++		tags := append([]string{}, o.Tags...)
++		lockingScript := ""
++		if includeLockingScripts {
++			lockingScript = hex.EncodeToString(o.LockingScript)
++		}
+ 		result = append(result, wdk.WalletActionOutput{
+ 			Satoshis:           must.ConvertToUInt64(o.Satoshis),
+ 			Spendable:          o.Spendable,
+-			Tags:               o.Tags,
++			Tags:               tags,
+ 			OutputIndex:        o.Vout,
+ 			OutputDescription:  o.Description,
+ 			Basket:             optional.OfPtr(o.BasketName).OrZeroValue(),
+-			LockingScript:      hex.EncodeToString(o.LockingScript),
++			LockingScript:      lockingScript,
+ 			CustomInstructions: optional.OfPtr(o.CustomInstructions).OrZeroValue(),
+ 		})
+ 	}
+@@ -209,6 +218,10 @@
+ func (l *listActions) mapInputsToAction(action *wdk.WalletAction, tx *pkgentity.Transaction, inputMap map[uint][]*pkgentity.Output, rawTxMap map[string][]byte, args *wdk.ListActionsArgs) error {
+ 	rawTx := rawTxMap[*tx.TxID]
+ 	if rawTx == nil {
++		if len(inputMap[tx.ID]) > 0 {
++			return fmt.Errorf("cannot map input sequence without raw transaction")
++		}
++		action.Inputs = []wdk.WalletActionInput{}
+ 		return nil
+ 	}
+ 
+@@ -252,11 +265,11 @@
+ 			input.SourceLockingScript = hex.EncodeToString(o.LockingScript)
+ 		}
+ 
+-		if tx != nil && includeUnlockingScripts.Value() {
++		if tx != nil {
+ 			for _, txIn := range tx.Inputs {
+ 				if txIn.SourceTXID.String() == *o.TxID && txIn.SourceTxOutIndex == o.Vout {
+ 					input.SequenceNumber = txIn.SequenceNumber
+-					if txIn.UnlockingScript != nil {
++					if includeUnlockingScripts.Value() && txIn.UnlockingScript != nil {
+ 						input.UnlockingScript = txIn.UnlockingScript.String()
+ 					}
+ 					break
+--- a/pkg/storage/internal/actions/list_actions.go
++++ b/pkg/storage/internal/actions/list_actions.go
+@@ -55,7 +55,7 @@
+ 	var inputMap map[uint][]*pkgentity.Output
+ 	var outputMap map[uint][]*pkgentity.Output
+ 	if args.IncludeInputs.Value() || args.IncludeOutputs.Value() {
+-		inputMap, outputMap, err = l.outputsRepo.FindInputsAndOutputsForSelectedActions(ctx, userID, filter, args.IncludeOutputLockingScripts.Value())
++		inputMap, outputMap, err = l.outputsRepo.FindInputsAndOutputsForSelectedActions(ctx, userID, filter, args.IncludeOutputLockingScripts.Value() || args.IncludeInputSourceLockingScripts.Value())
+ 		if err != nil {
+ 			return nil, fmt.Errorf("failed to fetch inputs/outputs: %w", err)
+ 		}
+--- a/pkg/storage/internal/actions/create.go
++++ b/pkg/storage/internal/actions/create.go
+@@ -1021,6 +1021,7 @@
+ 			DerivationPrefix: to.Ptr(derivationPrefix),
+ 			DerivationSuffix: to.Ptr(derivationSuffix),
+ 			Purpose:          wdk.ChangePurpose,
++			Description:      "Change output",
+ 		})
+ 	}
+ 
+@@ -1046,6 +1047,7 @@
+ 				DerivationPrefix: to.Ptr(derivationPrefix),
+ 				DerivationSuffix: to.Ptr(derivationSuffix),
+ 				Purpose:          wdk.ChangePurpose,
++				Description:      "Change output",
+ 			})
+ 		}
+ 	}
+--- /dev/null
++++ b/pkg/wdk/list_actions_json_tpnil_test.go
+@@ -0,0 +1,30 @@
++package wdk
++
++import (
++	"encoding/json"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++func TestTPNILListActionsOptionalArraysPreserveRequestedEmpty(t *testing.T) {
++	for _, included := range []bool{false, true} {
++		action := WalletAction{Satoshis: -137}
++		if included {
++			action.Labels = []string{}
++			action.Inputs = []WalletActionInput{}
++			action.Outputs = []WalletActionOutput{}
++		}
++		bytes, err := json.Marshal(action)
++		require.NoError(t, err)
++		var value map[string]json.RawMessage
++		require.NoError(t, json.Unmarshal(bytes, &value))
++		for _, key := range []string{"labels", "inputs", "outputs"} {
++			if included {
++				require.Equal(t, "[]", string(value[key]), key)
++			} else {
++				require.NotContains(t, value, key)
++			}
++		}
++		require.Equal(t, "-137", string(value["satoshis"]), "signed net balance is not a shape-normalization target")
++	}
++}
+--- /dev/null
++++ b/pkg/storage/internal/actions/list_actions_tpnil_test.go
+@@ -0,0 +1,138 @@
++package actions
++
++import (
++	"context"
++	"encoding/json"
++	"fmt"
++	"strings"
++	"testing"
++
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	pkgentity "github.com/bsv-blockchain/go-wallet-toolbox/pkg/entity"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/satoshi"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/entity"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/logging"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/randomizer"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/go-softwarelab/common/pkg/to"
++	"github.com/stretchr/testify/require"
++)
++
++type tpnilListTransactions struct {
++	TransactionsRepo
++	rows []*pkgentity.Transaction
++}
++
++func (r tpnilListTransactions) ListAndCountActions(context.Context, int, entity.ListActionsFilter) ([]*pkgentity.Transaction, int64, error) {
++	return r.rows, int64(len(r.rows)), nil
++}
++func (r tpnilListTransactions) GetLabelsForSelectedActions(context.Context, int, entity.ListActionsFilter) (map[uint][]string, error) {
++	return map[uint][]string{}, nil
++}
++
++type tpnilListOutputs struct {
++	OutputRepo
++	input, output    *pkgentity.Output
++	requestedScripts []bool
++}
++
++func (r *tpnilListOutputs) FindInputsAndOutputsForSelectedActions(_ context.Context, _ int, _ entity.ListActionsFilter, scripts bool) (map[uint][]*pkgentity.Output, map[uint][]*pkgentity.Output, error) {
++	r.requestedScripts = append(r.requestedScripts, scripts)
++	input, output := *r.input, *r.output
++	if !scripts {
++		input.LockingScript = nil
++		output.LockingScript = nil
++	}
++	return map[uint][]*pkgentity.Output{1: {&input}}, map[uint][]*pkgentity.Output{1: {&output}}, nil
++}
++
++type tpnilKnownTransactions struct {
++	KnownTxRepo
++	txid string
++	raw  []byte
++}
++
++func (r tpnilKnownTransactions) FindKnownTxRawTxs(context.Context, []string) (map[string][]byte, error) {
++	return map[string][]byte{r.txid: r.raw}, nil
++}
++
++func TestTPNILListActionsIndependentScriptFlagsAndAlwaysSequence(t *testing.T) {
++	sourceTxID := strings.Repeat("11", 32)
++	// Real wire transaction with one source input, OP_TRUE unlock and non-default sequence.
++	tx, err := transaction.NewTransactionFromHex("0100000001" + sourceTxID + "00000000015178563412010100000000000000015100000000")
++	require.NoError(t, err)
++	txid := tx.TxID().String()
++	for mask := 0; mask < 8; mask++ {
++		t.Run(fmt.Sprint(mask), func(t *testing.T) {
++			inputScript, unlockScript, outputScript := mask&1 != 0, mask&2 != 0, mask&4 != 0
++			outputs := &tpnilListOutputs{input: &pkgentity.Output{TxID: &sourceTxID, Vout: 0, Satoshis: 200, Description: "Original input metadata", LockingScript: []byte{0x52}}, output: &pkgentity.Output{Vout: 0, Satoshis: 1, Description: "Original output metadata", LockingScript: []byte{0x51}, BasketName: to.Ptr("basket")}}
++			list := newListActions(logging.NewTestLogger(t), tpnilListTransactions{rows: []*pkgentity.Transaction{{ID: 1, TxID: &txid, Satoshis: -199, Description: "Original action metadata"}}}, outputs, tpnilKnownTransactions{txid: txid, raw: tx.Bytes()}, nil)
++			args := &wdk.ListActionsArgs{IncludeInputs: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeOutputs: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeLabels: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeInputSourceLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(inputScript)), IncludeInputUnlockingScripts: to.Ptr(primitives.BooleanDefaultFalse(unlockScript)), IncludeOutputLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(outputScript))}
++			result, err := list.ListActions(t.Context(), wdk.AuthID{UserID: to.Ptr(7)}, args)
++			require.NoError(t, err)
++			require.Len(t, result.Actions, 1)
++			row := result.Actions[0]
++			require.Equal(t, int64(-199), row.Satoshis)
++			require.Empty(t, row.Labels)
++			require.NotNil(t, row.Labels)
++			require.Equal(t, uint32(0x12345678), row.Inputs[0].SequenceNumber)
++			require.Equal(t, "Original input metadata", row.Inputs[0].InputDescription)
++			require.Equal(t, "Original output metadata", row.Outputs[0].OutputDescription)
++			require.Equal(t, []bool{inputScript || outputScript}, outputs.requestedScripts)
++			require.Equal(t, map[bool]string{true: "52", false: ""}[inputScript], row.Inputs[0].SourceLockingScript)
++			require.Equal(t, map[bool]string{true: "51", false: ""}[unlockScript], row.Inputs[0].UnlockingScript)
++			require.Equal(t, map[bool]string{true: "51", false: ""}[outputScript], row.Outputs[0].LockingScript)
++			bytes, err := json.Marshal(row.Outputs[0])
++			require.NoError(t, err)
++			var wire map[string]json.RawMessage
++			require.NoError(t, json.Unmarshal(bytes, &wire))
++			require.Equal(t, "[]", string(wire["tags"]))
++		})
++	}
++}
++
++func TestTPNILListActionsRequestedEmptyOutputsAndLabels(t *testing.T) {
++	list := &listActions{}
++	rows := []wdk.WalletAction{{Satoshis: 0}}
++	txs := []*pkgentity.Transaction{{ID: 1}}
++	require.NoError(t, list.mapInputsOutputsLabels(rows, txs, mapActionDetails{labelMap: map[uint][]string{}, outputMap: map[uint][]*pkgentity.Output{}}, &wdk.ListActionsArgs{IncludeOutputs: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeLabels: to.Ptr(primitives.BooleanDefaultFalse(true))}, false))
++	bytes, err := json.Marshal(rows[0])
++	require.NoError(t, err)
++	var wire map[string]json.RawMessage
++	require.NoError(t, json.Unmarshal(bytes, &wire))
++	require.Equal(t, "[]", string(wire["labels"]))
++	require.Equal(t, "[]", string(wire["outputs"]))
++	require.NotContains(t, wire, "inputs")
++	require.Equal(t, "0", string(wire["satoshis"]))
++}
++
++func TestTPNILListActionsGeneratedChangeDescriptionAndCallerMetadata(t *testing.T) {
++	creator := &create{random: randomizer.NewTestRandomizer()}
++	distribution := func(yield func(satoshi.Value) bool) { yield(satoshi.MustFrom(250)) }
++	outputs, err := creator.newOutputs(distribution, 1, "prefix", []wdk.ValidCreateActionOutput{{Satoshis: 1, OutputDescription: "Caller output description", LockingScript: "51"}}, nil, false, &wdk.ShapedChange{Satoshis: 100, Count: 1, Basket: "fuel"})
++	require.NoError(t, err)
++	require.Len(t, outputs, 3)
++	require.Equal(t, "Caller output description", outputs[0].Description)
++	for _, output := range outputs[1:] {
++		require.True(t, output.Change)
++		require.Equal(t, "Change output", output.Description)
++	}
++}
++
++func TestTPNILListActionsRequestedEmptyInputsAndNilLabels(t *testing.T) {
++	list := &listActions{}
++	txid := strings.Repeat("11", 32)
++	for _, id := range []*string{nil, &txid} {
++		rows := []wdk.WalletAction{{}}
++		require.NoError(t, list.mapInputsOutputsLabels(rows, []*pkgentity.Transaction{{ID: 1, TxID: id}}, mapActionDetails{labelMap: map[uint][]string{1: nil}}, &wdk.ListActionsArgs{IncludeInputs: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeLabels: to.Ptr(primitives.BooleanDefaultFalse(true))}, false))
++		bytes, err := json.Marshal(rows[0])
++		require.NoError(t, err)
++		var wire map[string]json.RawMessage
++		require.NoError(t, json.Unmarshal(bytes, &wire))
++		require.Equal(t, "[]", string(wire["inputs"]))
++		require.Equal(t, "[]", string(wire["labels"]))
++	}
++	row := wdk.WalletAction{}
++	require.ErrorContains(t, list.mapInputsToAction(&row, &pkgentity.Transaction{ID: 1, TxID: &txid}, map[uint][]*pkgentity.Output{1: {{}}}, nil, &wdk.ListActionsArgs{}), "sequence without raw transaction")
++}

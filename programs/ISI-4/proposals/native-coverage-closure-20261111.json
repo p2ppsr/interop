@@ -1,0 +1,3586 @@
+{
+  "schema": "tpnil-native-coverage-closure-inventory@1.0.0",
+  "id": "native-coverage-closure-20261111",
+  "status": "PROPOSAL_NOT_EXECUTED",
+  "claim": "COVERAGE_DESIGN_ONLY",
+  "completeBRC100Conformance": false,
+  "historicalInputsMutable": false,
+  "standards": [
+    {
+      "id": "brc100",
+      "repository": "bsv-blockchain/BRCs",
+      "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+      "path": "wallet/0100.md",
+      "bytes": 172505,
+      "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+      "url": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md"
+    },
+    {
+      "id": "brc69",
+      "repository": "bsv-blockchain/BRCs",
+      "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+      "path": "key-derivation/0069.md",
+      "bytes": 7615,
+      "sha256": "5980997e9050b0e61b9def699009b94f069d713ca3feed82f874cf7ecda4c40f",
+      "url": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/key-derivation/0069.md"
+    },
+    {
+      "id": "brc72",
+      "repository": "bsv-blockchain/BRCs",
+      "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+      "path": "key-derivation/0072.md",
+      "bytes": 6587,
+      "sha256": "36a95a3e16b80d37638d0500dc95151f45d806bfff9425f437896f6ce864e727",
+      "url": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/key-derivation/0072.md"
+    },
+    {
+      "id": "brc73",
+      "repository": "bsv-blockchain/BRCs",
+      "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+      "path": "wallet/0073.md",
+      "bytes": 6223,
+      "sha256": "aa1ba3c8d1ba9d5c17a6ad6714a2cc044c102ab8fe0ec8278dbcd561f3842d00",
+      "url": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0073.md"
+    },
+    {
+      "id": "brc116",
+      "repository": "bsv-blockchain/BRCs",
+      "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+      "path": "wallet/0116.md",
+      "bytes": 53197,
+      "sha256": "51d9831078dc8e7d8307c16a8502fbc5696983540c73aec6e5a45d81f658cb2b",
+      "url": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0116.md"
+    }
+  ],
+  "reviewedArtifacts": [
+    {
+      "version": "5.1.0",
+      "archiveSha256": "d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52",
+      "archiveBytes": 13513123,
+      "reviewKind": "STATIC_RELEASED_SOURCE_MAP_OBSERVATION_NOT_NATIVE_EXECUTION",
+      "observations": [
+        {
+          "mapMember": "build/assets/prompt-tab-Dv4h0zv3.js.map",
+          "source": "../../src/pages/requests/CounterpartyPermissionRequest.tsx",
+          "sourceContentSha256": "e1a2829999f3b6a0167f6cb332bb6052f33655d1dfd36e55d8d25c0505307035"
+        },
+        {
+          "mapMember": "build/assets/prompt-tab-Dv4h0zv3.js.map",
+          "source": "../../src/pages/requests/GroupedPermissionRequest.tsx",
+          "sourceContentSha256": "5b6e2050d9df1ec9aff1e49d325d3b338b6f2444e9a4ca272ece496469f40bba"
+        },
+        {
+          "mapMember": "build/assets/prompt-tab-Dv4h0zv3.js.map",
+          "source": "../../src/pages/requests/PermissionRequest.tsx",
+          "sourceContentSha256": "24dc32c8eeda40982941b7139f6799fd38934d53ed252e33410a4ca933ac2c58"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../node_modules/@1sat/wallet/dist/factory.js",
+          "sourceContentSha256": "79041dc962ffe6cd78d9a4f18aae6ed9394c79e733af31aef14704a732619306"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../src/cwi.ts",
+          "sourceContentSha256": "22ac18cff3a8f5ba118691dd9fb1d52ba9ce209d0bb6cc299c05d91cf147afe1"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../src/initWallet.ts",
+          "sourceContentSha256": "b0ae51c23eb063d3fd2b4df2f49236c410ce2934f946bc0f2f9bd207e3008956"
+        },
+        {
+          "mapMember": "build/content.js.map",
+          "source": "../src/content.ts",
+          "sourceContentSha256": "1a285d613e2c13a9a5b49646cbd1424510995ff73d105bd324015571a5d32bc4"
+        }
+      ],
+      "featureAssessment": {
+        "secondaryKeyring": "NOT_WIRED_IN_ACTIVE_FACTORY",
+        "finiteExpiryUi": "NO_SUPPORTED_CONTROL_IDENTIFIED",
+        "nativeWalletWireEndpoint": "NO_SUPPORTED_ENDPOINT_IDENTIFIED",
+        "manifestAllowances": "SUPPORTED_PUBLIC_FLOW_REQUIRES_NATIVE_CASES",
+        "certificateIssuance": "IMPLEMENTED_PUBLIC_PATH_REQUIRES_NATIVE_CASES"
+      },
+      "publisherUrl": "https://github.com/yours-org/yours-wallet/releases/download/v5.1.0/pw-v5.1.0.zip"
+    },
+    {
+      "version": "5.1.1",
+      "archiveSha256": "454c8581b8d6ab120c9b2f2f74167f536b08e720bc12e75f3e9437d14a985878",
+      "archiveBytes": 13644482,
+      "reviewKind": "STATIC_RELEASED_SOURCE_MAP_OBSERVATION_NOT_NATIVE_EXECUTION",
+      "observations": [
+        {
+          "mapMember": "build/assets/prompt-tab-DHOJRXAC.js.map",
+          "source": "../../src/pages/requests/CounterpartyPermissionRequest.tsx",
+          "sourceContentSha256": "e1a2829999f3b6a0167f6cb332bb6052f33655d1dfd36e55d8d25c0505307035"
+        },
+        {
+          "mapMember": "build/assets/prompt-tab-DHOJRXAC.js.map",
+          "source": "../../src/pages/requests/GroupedPermissionRequest.tsx",
+          "sourceContentSha256": "5b6e2050d9df1ec9aff1e49d325d3b338b6f2444e9a4ca272ece496469f40bba"
+        },
+        {
+          "mapMember": "build/assets/prompt-tab-DHOJRXAC.js.map",
+          "source": "../../src/pages/requests/PermissionRequest.tsx",
+          "sourceContentSha256": "24dc32c8eeda40982941b7139f6799fd38934d53ed252e33410a4ca933ac2c58"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../node_modules/@1sat/wallet/dist/factory.js",
+          "sourceContentSha256": "9b1784a1f0243824dae732918e554a49119bebb8afa3f0a1048ab763b13000ba"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../src/cwi.ts",
+          "sourceContentSha256": "22ac18cff3a8f5ba118691dd9fb1d52ba9ce209d0bb6cc299c05d91cf147afe1"
+        },
+        {
+          "mapMember": "build/background.js.map",
+          "source": "../src/initWallet.ts",
+          "sourceContentSha256": "4a719ddba632d41f07279a39bf05dc238055c8910eff032f0f62dcea7f87371d"
+        },
+        {
+          "mapMember": "build/content.js.map",
+          "source": "../src/content.ts",
+          "sourceContentSha256": "1a285d613e2c13a9a5b49646cbd1424510995ff73d105bd324015571a5d32bc4"
+        }
+      ],
+      "featureAssessment": {
+        "secondaryKeyring": "NOT_WIRED_IN_ACTIVE_FACTORY",
+        "finiteExpiryUi": "NO_SUPPORTED_CONTROL_IDENTIFIED",
+        "nativeWalletWireEndpoint": "NO_SUPPORTED_ENDPOINT_IDENTIFIED",
+        "manifestAllowances": "SUPPORTED_PUBLIC_FLOW_REQUIRES_NATIVE_CASES",
+        "certificateIssuance": "IMPLEMENTED_PUBLIC_PATH_REQUIRES_NATIVE_CASES"
+      },
+      "publisherUrl": "https://github.com/yours-org/yours-wallet/releases/download/v5.1.1/pw-v5.1.1.zip"
+    }
+  ],
+  "executionRequirements": {
+    "newMajorOracleAndProfileRequired": true,
+    "twoFreshNativeRepetitionsRequired": true,
+    "privateWalletStateMutationAllowed": false,
+    "publicMainnetSpendingAllowed": false,
+    "newPaidCapacityAuthorized": false,
+    "existing280ProjectionUnchanged": true,
+    "replayMustProduceNonemptyStructuredReceipts": true,
+    "economicAdmission": "Separate bounded work order and full-cost accounting before native dispatch; unknown operator/agent/storage/owned-capacity costs remain unknown."
+  },
+  "obligations": [
+    {
+      "id": "privileged-secondary-keyring",
+      "status": "OPEN",
+      "disposition": "WALLET_FEATURE_OR_NORMATIVE_INTERPRETATION_REQUIRED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 42,
+          "endLine": 42,
+          "clause": "secondary keyring"
+        },
+        {
+          "source": "brc100",
+          "startLine": 324,
+          "endLine": 324,
+          "clause": "when implemented"
+        },
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1005,
+          "clause": "privileged request parameters"
+        }
+      ],
+      "reason": "Both reviewed releases construct the active wallet without a privileged key manager; generic bundled classes are not an admitted secondary keyring."
+    },
+    {
+      "id": "all-permission-categories",
+      "status": "OPEN",
+      "disposition": "LAB_DRIVERS_AND_CONDITIONAL_FEATURE_ADMISSION_REQUIRED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 65,
+          "endLine": 80,
+          "clause": "security levels and permission scope"
+        },
+        {
+          "source": "brc100",
+          "startLine": 326,
+          "endLine": 326,
+          "clause": "originator authorization"
+        },
+        {
+          "source": "brc116",
+          "startLine": 453,
+          "endLine": 493,
+          "clause": "scope, renewal and finite-expiry policy"
+        }
+      ],
+      "reason": "Existing16 category/revocation predicates do not establish restart persistence, linkage consent, manifest allowances or finite-expiry enforcement."
+    },
+    {
+      "id": "abi-substrate",
+      "status": "OPEN",
+      "disposition": "NATIVE_ENDPOINT_OR_NORMATIVE_INTERPRETATION_REQUIRED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1524,
+          "endLine": 1605,
+          "clause": "Wallet Wire framing and call codes"
+        }
+      ],
+      "reason": "Both reviewed releases expose object-valued window.CWI events, with no identified native Wallet Wire processor/listener. Client-side SDK encoders do not satisfy this obligation."
+    },
+    {
+      "id": "basket-length-interpretation",
+      "status": "OPEN",
+      "disposition": "VERSIONED_INTERPRETATION_AND_NATIVE_CASES_REQUIRED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 351,
+          "endLine": 365,
+          "clause": "basket namespace prose"
+        },
+        {
+          "source": "brc100",
+          "startLine": 518,
+          "endLine": 524,
+          "clause": "basket typed maximum"
+        }
+      ],
+      "reason": "Pinned prose permits400 characters while the typed field specifies300. ASCII and UTF-8 namespace validity must be distinguished."
+    },
+    {
+      "id": "optional-transaction-and-certificate-paths",
+      "status": "OPEN",
+      "disposition": "LAB_FIXTURES_DRIVERS_AND_NATIVE_EXECUTION_REQUIRED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        },
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "reason": "Leaf wrong-type tests and one successful method call do not exercise conditional semantics, defaults, conflicts or state transitions."
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "released-secondary-keyring",
+      "owner": "WALLET",
+      "status": "MISSING_IN_REVIEWED_RELEASES",
+      "acceptance": "Released artifact/configuration must initialize a distinct secondary root through supported UI, enforce user presence/reason and destroy or expire cached privileged access."
+    },
+    {
+      "id": "supported-finite-expiry",
+      "owner": "WALLET",
+      "status": "MISSING_IN_REVIEWED_RELEASES",
+      "acceptance": "Supported user/admin UI must grant a finite deadline and expose it to the user. Private extension messages, IndexedDB edits and injected clocks are inadmissible native setup."
+    },
+    {
+      "id": "native-wallet-wire",
+      "owner": "WALLET",
+      "status": "MISSING_IN_REVIEWED_RELEASES",
+      "acceptance": "Publisher-supported byte endpoint must be bound to the exact native process/artifact, authenticate actual origin and invoke its real permissions/state. A lab CWI adapter is separate component evidence."
+    },
+    {
+      "id": "prospective-interpretations",
+      "owner": "TPNIL",
+      "status": "DRAFT",
+      "acceptance": "Maintainer decision, new major oracle/profile versions and frozen compatibility manifest precede scored evaluation; original clauses and results remain unchanged."
+    },
+    {
+      "id": "public-manifest-origin",
+      "owner": "LAB",
+      "status": "NOT_IMPLEMENTED",
+      "acceptance": "Serve pinned JSON at a declared isolated HTTPS origin/manifest.json; use metanet.groupPermissions and captured real grouped UI, without editing the compiled ToDo artifact."
+    },
+    {
+      "id": "native-restart-hook",
+      "owner": "LAB",
+      "status": "NOT_IMPLEMENTED",
+      "acceptance": "Close and relaunch Chromium on the same isolated profile with unchanged artifact, sandbox/CA/isolation and normal unlock UI. Preserve identity and continuous provider submission ledger; no private state reads/writes."
+    },
+    {
+      "id": "authenticated-certifier",
+      "owner": "LAB",
+      "status": "NOT_IMPLEMENTED",
+      "acceptance": "Controlled BRC-authenticated /signCertificate service implements nonce/HMAC/signature exchange and independently records plaintext expectations, encrypted fields and authenticated requester identity."
+    },
+    {
+      "id": "mined-revocation-state",
+      "owner": "LAB",
+      "status": "NOT_IMPLEMENTED",
+      "acceptance": "Use an ancestry-verified controlled revocation UTXO and spend it through a supported actor; zero-hash placeholders cannot prove revocation behavior."
+    },
+    {
+      "id": "native-stateful-matrix",
+      "owner": "LAB",
+      "status": "NOT_IMPLEMENTED",
+      "acceptance": "Isolated funded fixture sets and public operations, deterministic filters and independently decoded transactions, complete response/error/UI/submission receipts and two fresh native repetitions."
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "native-isolated",
+      "definition": "Fresh Linux/amd64 Chromium profile, exact released ZIP, admitted mainnet-format mined reserve, controlled Go services; no production funds or undeclared egress."
+    },
+    {
+      "id": "permission-origins",
+      "definition": "Separate primary/alternate/manifest origins, fixed public peers/verifiers, native UI dispatch proofs, all decisions and final ledgers retained."
+    },
+    {
+      "id": "crypto-peers",
+      "definition": "Known external peer/verifier private keys, never native roots; recompute BRC42/69/72 derivations, ECDH and proofs independently."
+    },
+    {
+      "id": "batch-ancestry",
+      "definition": "Distinct known spendable outputs descended from admitted mined reserve, exact signed BEEF and provider evidence; fresh consuming references for each negative case."
+    },
+    {
+      "id": "query-population",
+      "definition": "At least11 independently identified transactions/outputs/certificates with overlapping/disjoint labels/tags/types, unique descriptions and known inclusion relationships; no hidden store seeding."
+    },
+    {
+      "id": "certificate-issuance",
+      "definition": "Native issuance against authenticated controlled certifier plus separately signed direct certificates, two certifiers/types/verifiers and exactly known fields; independently validate encryption, signature and keyring."
+    },
+    {
+      "id": "revocation",
+      "definition": "Real controlled certificate revocation UTXO with proof and before/after spend evidence; relinquishment and revocation are different transitions."
+    },
+    {
+      "id": "wire-endpoint",
+      "definition": "Only a separately admitted publisher-native byte endpoint; retain raw frames, endpoint ownership, decoded observations and CWI parity comparison."
+    },
+    {
+      "id": "finite-expiry-ui",
+      "definition": "Supported UI grants finite UNIX-seconds expiry; observe monotonic real time before/at/after, normal unlock/restart and renewal. No clock mocking in scored native evidence."
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "privileged-applicability",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 42,
+          "endLine": 42,
+          "clause": "secondary keyring"
+        },
+        {
+          "source": "brc100",
+          "startLine": 324,
+          "endLine": 324,
+          "clause": "when implemented"
+        },
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1005,
+          "clause": "privileged request parameters"
+        }
+      ],
+      "proposal": "Record unsupported privileged keyring explicitly for these artifacts. A narrowed nonprivileged CWI profile may describe its executed scope but cannot set completeBRC100Conformance=true; full-keyring closure needs native feature admission or pinned clarification. Malformed boolean/reason contract tests remain applicable."
+    },
+    {
+      "id": "permission-lifecycle-applicability",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 80,
+          "endLine": 80,
+          "clause": "broad expiry wording"
+        },
+        {
+          "source": "brc116",
+          "startLine": 493,
+          "endLine": 493,
+          "clause": "finite expiry conditional"
+        },
+        {
+          "source": "brc116",
+          "startLine": 522,
+          "endLine": 536,
+          "clause": "calendar-month allowance"
+        },
+        {
+          "source": "brc116",
+          "startLine": 459,
+          "endLine": 462,
+          "clause": "canonical on-chain state"
+        },
+        {
+          "source": "brc116",
+          "startLine": 797,
+          "endLine": 799,
+          "clause": "optional on-chain persistence"
+        }
+      ],
+      "proposal": "Separate expiry0/calendar-month allowance from optional finite-expiry supported configurations. Record unimplemented finite-expiry enforcement as unsupported/unqualified, not passed. Resolve BRC116 mandatory canonical on-chain wording versus optional persistence before any full BRC116 claim; local IndexedDB tests establish only actual local-grant semantics."
+    },
+    {
+      "id": "wire-applicability",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1524,
+          "endLine": 1605,
+          "clause": "Wallet Wire framing and call codes"
+        }
+      ],
+      "proposal": "CWI qualification excludes native Wallet Wire execution explicitly and retains full BRC100 coverage false. A native endpoint needs its own admission; client encoder/component evidence cannot replace it."
+    },
+    {
+      "id": "basket-limit",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 351,
+          "endLine": 365,
+          "clause": "basket namespace prose"
+        },
+        {
+          "source": "brc100",
+          "startLine": 518,
+          "endLine": 524,
+          "clause": "basket typed maximum"
+        }
+      ],
+      "proposal": "For a new oracle, propose typed field maximum300 inclusive for all basket-bearing methods, strict namespace constraints, and ASCII boundary fixtures. Unicode invalid-name probes are separate; bytes and characters coincide for valid ASCII names. Preserve original301\u2013400 nonqualification. Maintainer adoption or pinned upstream clarification must precede scored evaluation."
+    },
+    {
+      "id": "broadcast-timing",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 655,
+          "endLine": 661,
+          "clause": "create timing inconsistency"
+        },
+        {
+          "source": "brc100",
+          "startLine": 724,
+          "endLine": 727,
+          "clause": "sign timing inconsistency"
+        }
+      ],
+      "proposal": "Propose direct acceptDelayedBroadcast definition controls: false synchronous, true background, including sendWith. Keep sync completion, eventual delayed submission and terminal rejected preservation separate. Contradictory sendWith prose cannot be silently resolved from SUT behavior."
+    },
+    {
+      "id": "inactive-conditional-fields",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 310,
+          "endLine": 318,
+          "clause": "malformed/conflicting parameters"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1149,
+          "endLine": 1215,
+          "clause": "data/hash"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "certificate branch requirements"
+        }
+      ],
+      "proposal": "Record per-case required, mutually exclusive, ignored or rejected semantics before execution. Do not infer all simultaneously supplied optional values are forbidden; cite the specific conflict. Wrong-type leaf tests retain historical outcomes."
+    },
+    {
+      "id": "revocation-semantics",
+      "status": "DRAFT_NOT_ADOPTED",
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "certificate revocation fields and relinquishment"
+        }
+      ],
+      "proposal": "Distinguish cryptographic signature validity, external spent revocation token, discovery acceptance and local certificate removal. Specify which public method must check revocation before assigning expected reject; certificate retention itself is not a revocation failure."
+    }
+  ],
+  "cases": [
+    {
+      "id": "privileged.distinct-keyring",
+      "obligationId": "privileged-secondary-keyring",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 42,
+          "endLine": 42,
+          "clause": "secondary keyring"
+        },
+        {
+          "source": "brc100",
+          "startLine": 324,
+          "endLine": 324,
+          "clause": "when implemented"
+        },
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1005,
+          "clause": "privileged request parameters"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ],
+      "interpretationIds": [
+        "privileged-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Enable supported secondary-key UI; compare normal and privileged operations with identical protocol/key/counterparty.",
+      "independentOracle": "Distinct identity/child keys; each crypto result verifies under the selected key universe and fails under the other.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "identity"
+        },
+        {
+          "id": "child-key"
+        },
+        {
+          "id": "encrypt"
+        },
+        {
+          "id": "hmac"
+        },
+        {
+          "id": "signature"
+        },
+        {
+          "id": "linkage"
+        }
+      ]
+    },
+    {
+      "id": "privileged.authorization",
+      "obligationId": "privileged-secondary-keyring",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 42,
+          "endLine": 42,
+          "clause": "secondary keyring"
+        },
+        {
+          "source": "brc100",
+          "startLine": 324,
+          "endLine": 324,
+          "clause": "when implemented"
+        },
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1005,
+          "clause": "privileged request parameters"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "released-secondary-keyring"
+      ],
+      "interpretationIds": [
+        "privileged-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Request privileged operations via public CWI using real presence UI and reason cases.",
+      "independentOracle": "Denial has no output/side effect; approval binds exact request and reason; no grouped grant or ordinary-key fallback.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "deny"
+        },
+        {
+          "id": "approve"
+        },
+        {
+          "id": "missing-reason"
+        },
+        {
+          "id": "short-reason"
+        },
+        {
+          "id": "overlong-reason"
+        },
+        {
+          "id": "grouped-grant-not-authority"
+        }
+      ]
+    },
+    {
+      "id": "privileged.cache-lifecycle",
+      "obligationId": "privileged-secondary-keyring",
+      "methods": [
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 42,
+          "endLine": 42,
+          "clause": "secondary keyring"
+        },
+        {
+          "source": "brc100",
+          "startLine": 324,
+          "endLine": 324,
+          "clause": "when implemented"
+        },
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1005,
+          "clause": "privileged request parameters"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "released-secondary-keyring",
+        "native-restart-hook"
+      ],
+      "interpretationIds": [
+        "privileged-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Repeat through supported cache window, lock/unlock and full browser restart.",
+      "independentOracle": "Cold/expired/locked access requires new user presence; public responses retain correct independent key identity.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "cache-valid"
+        },
+        {
+          "id": "cache-expired"
+        },
+        {
+          "id": "manual-lock"
+        },
+        {
+          "id": "restart"
+        }
+      ]
+    },
+    {
+      "id": "permissions.restart-persistence",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 65,
+          "endLine": 80,
+          "clause": "security levels and permission scope"
+        },
+        {
+          "source": "brc100",
+          "startLine": 326,
+          "endLine": 326,
+          "clause": "originator authorization"
+        },
+        {
+          "source": "brc116",
+          "startLine": 453,
+          "endLine": 493,
+          "clause": "scope, renewal and finite-expiry policy"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins"
+      ],
+      "dependencyIds": [
+        "native-restart-hook"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Grant each supported category in visible UI, then lock/unlock and relaunch the same isolated profile.",
+      "independentOracle": "Same identity; grants remain scoped; no new prompt for granted scope; denied/other-origin scope cannot inherit them.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "protocol-lock"
+        },
+        {
+          "id": "protocol-restart"
+        },
+        {
+          "id": "basket-lock"
+        },
+        {
+          "id": "basket-restart"
+        },
+        {
+          "id": "certificate-lock"
+        },
+        {
+          "id": "certificate-restart"
+        },
+        {
+          "id": "denial-not-grant"
+        },
+        {
+          "id": "alternate-origin"
+        }
+      ]
+    },
+    {
+      "id": "permissions.revoke-persistence",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 65,
+          "endLine": 80,
+          "clause": "security levels and permission scope"
+        },
+        {
+          "source": "brc100",
+          "startLine": 326,
+          "endLine": 326,
+          "clause": "originator authorization"
+        },
+        {
+          "source": "brc116",
+          "startLine": 453,
+          "endLine": 493,
+          "clause": "scope, renewal and finite-expiry policy"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins"
+      ],
+      "dependencyIds": [
+        "native-restart-hook"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Revoke individual grant and whole origin through Settings, then repeat before and after restart.",
+      "independentOracle": "Revoked requests require new consent immediately and after restart; unaffected category/origin continues.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "single-immediate"
+        },
+        {
+          "id": "single-restart"
+        },
+        {
+          "id": "origin-immediate"
+        },
+        {
+          "id": "origin-restart"
+        },
+        {
+          "id": "unaffected-scope"
+        }
+      ]
+    },
+    {
+      "id": "permissions.linkage-decisions",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 984,
+          "endLine": 1062,
+          "clause": "linkage methods"
+        },
+        {
+          "source": "brc72",
+          "startLine": 17,
+          "endLine": 62,
+          "clause": "encrypted linkage context"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins",
+        "crypto-peers"
+      ],
+      "dependencyIds": [],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Deny then approve each linkage request in its matching native prompt; repeat exact granted request.",
+      "independentOracle": "Deny discloses no linkage; approved bytes decrypt only for designated verifier and match independent peer-derived secret/proof; cached request keeps scope.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "counterparty-deny"
+        },
+        {
+          "id": "counterparty-allow"
+        },
+        {
+          "id": "counterparty-cache"
+        },
+        {
+          "id": "specific-deny"
+        },
+        {
+          "id": "specific-allow"
+        },
+        {
+          "id": "specific-cache"
+        }
+      ]
+    },
+    {
+      "id": "permissions.linkage-isolation",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 65,
+          "endLine": 80,
+          "clause": "security levels and permission scope"
+        },
+        {
+          "source": "brc100",
+          "startLine": 326,
+          "endLine": 326,
+          "clause": "originator authorization"
+        },
+        {
+          "source": "brc116",
+          "startLine": 453,
+          "endLine": 493,
+          "clause": "scope, renewal and finite-expiry policy"
+        },
+        {
+          "source": "brc72",
+          "startLine": 17,
+          "endLine": 62,
+          "clause": "verifier context"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "native-restart-hook"
+      ],
+      "interpretationIds": [
+        "permission-lifecycle-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Change one origin/verifier/counterparty/protocol/key context after grant, then revoke and restart.",
+      "independentOracle": "A prior grant never authorizes a distinct protected scope; compare Level1 versus Level2 key scope under frozen permission policy.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "origin"
+        },
+        {
+          "id": "verifier"
+        },
+        {
+          "id": "counterparty"
+        },
+        {
+          "id": "protocol"
+        },
+        {
+          "id": "level2-key"
+        },
+        {
+          "id": "level1-key-policy"
+        },
+        {
+          "id": "revoke"
+        },
+        {
+          "id": "restart"
+        }
+      ]
+    },
+    {
+      "id": "permissions.manifest-selection",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "waitForAuthentication",
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate",
+        "createAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc73",
+          "startLine": 37,
+          "endLine": 104,
+          "clause": "grouped permission declaration"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins"
+      ],
+      "dependencyIds": [
+        "public-manifest-origin"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Serve a fixed metanet.groupPermissions manifest; select a subset using real grouped UI and repeat omitted scopes.",
+      "independentOracle": "Only checked categories grant authority; manifest identity/hash and UI request bind to actual origin.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "all-denied"
+        },
+        {
+          "id": "subset-selected"
+        },
+        {
+          "id": "spending-unchecked"
+        },
+        {
+          "id": "spending-selected"
+        },
+        {
+          "id": "alternate-origin"
+        }
+      ]
+    },
+    {
+      "id": "permissions.standing-allowance",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "createAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc73",
+          "startLine": 80,
+          "endLine": 87,
+          "clause": "monthly allowance"
+        },
+        {
+          "source": "brc116",
+          "startLine": 513,
+          "endLine": 536,
+          "clause": "standing authorization and month accounting"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "public-manifest-origin",
+        "native-restart-hook"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Approve manifest spending allowance and execute cumulative public payments, then revoke/restart.",
+      "independentOracle": "Independently sum actual signed transactions and fees by origin; below/exact-cap allowed; over-cap requires consent; denial has no late submission; UI spent/remaining equals records.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "first-under-cap"
+        },
+        {
+          "id": "second-under-cap"
+        },
+        {
+          "id": "exact-cap"
+        },
+        {
+          "id": "cumulative-over-cap-deny"
+        },
+        {
+          "id": "single-over-cap-deny"
+        },
+        {
+          "id": "revoke"
+        },
+        {
+          "id": "restart"
+        },
+        {
+          "id": "alternate-origin"
+        }
+      ]
+    },
+    {
+      "id": "permissions.allowance-boundaries",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc116",
+          "startLine": 513,
+          "endLine": 536,
+          "clause": "calendar-month spending accounting"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "public-manifest-origin",
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "permission-lifecycle-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Compare failed/aborted/noSend operations and concurrent requests with accepted spends; test month transition in a separately scheduled real-time profile.",
+      "independentOracle": "No budget overrun from races; charge accounting follows prospective policy for failed/aborted/held actions; calendar reset uses real month boundary, not injected clock.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "concurrent-cap"
+        },
+        {
+          "id": "abort-accounting"
+        },
+        {
+          "id": "rejection-accounting"
+        },
+        {
+          "id": "nosend-accounting"
+        },
+        {
+          "id": "calendar-rollover"
+        }
+      ]
+    },
+    {
+      "id": "permissions.finite-expiry",
+      "obligationId": "all-permission-categories",
+      "methods": [
+        "getPublicKey",
+        "listOutputs",
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 80,
+          "endLine": 80,
+          "clause": "expiration wording"
+        },
+        {
+          "source": "brc116",
+          "startLine": 855,
+          "endLine": 862,
+          "clause": "optional finite expiry and nonexpiring spend"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "permission-origins",
+        "finite-expiry-ui"
+      ],
+      "dependencyIds": [
+        "supported-finite-expiry",
+        "native-restart-hook"
+      ],
+      "interpretationIds": [
+        "permission-lifecycle-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Grant finite expiry using supported UI; observe before/at/after deadline and renewal deny/approve, including restart.",
+      "independentOracle": "Independent real timestamps/deadline; expired permission stops authorizing and renewal is explicit; expiry0 remains nonexpiring; monthly spending is not timed expiry.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "before"
+        },
+        {
+          "id": "at-boundary"
+        },
+        {
+          "id": "after"
+        },
+        {
+          "id": "renewal-deny"
+        },
+        {
+          "id": "renewal-approve"
+        },
+        {
+          "id": "restart"
+        },
+        {
+          "id": "expiry-zero"
+        }
+      ]
+    },
+    {
+      "id": "wire.call-parity",
+      "obligationId": "abi-substrate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1524,
+          "endLine": 1605,
+          "clause": "Wallet Wire framing and call codes"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "wire-endpoint",
+        "batch-ancestry",
+        "certificate-issuance"
+      ],
+      "dependencyIds": [
+        "native-wallet-wire",
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "wire-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Invoke all28 codes on a publisher-native byte endpoint with valid state, then equivalent CWI requests.",
+      "independentOracle": "Decode raw bytes independently; state, permissions and response contracts agree with same native operations; no client-side encoder substituted for endpoint.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "code-01-createAction",
+          "callCode": 1,
+          "method": "createAction"
+        },
+        {
+          "id": "code-02-signAction",
+          "callCode": 2,
+          "method": "signAction"
+        },
+        {
+          "id": "code-03-abortAction",
+          "callCode": 3,
+          "method": "abortAction"
+        },
+        {
+          "id": "code-04-listActions",
+          "callCode": 4,
+          "method": "listActions"
+        },
+        {
+          "id": "code-05-internalizeAction",
+          "callCode": 5,
+          "method": "internalizeAction"
+        },
+        {
+          "id": "code-06-listOutputs",
+          "callCode": 6,
+          "method": "listOutputs"
+        },
+        {
+          "id": "code-07-relinquishOutput",
+          "callCode": 7,
+          "method": "relinquishOutput"
+        },
+        {
+          "id": "code-08-getPublicKey",
+          "callCode": 8,
+          "method": "getPublicKey"
+        },
+        {
+          "id": "code-09-revealCounterpartyKeyLinkage",
+          "callCode": 9,
+          "method": "revealCounterpartyKeyLinkage"
+        },
+        {
+          "id": "code-10-revealSpecificKeyLinkage",
+          "callCode": 10,
+          "method": "revealSpecificKeyLinkage"
+        },
+        {
+          "id": "code-11-encrypt",
+          "callCode": 11,
+          "method": "encrypt"
+        },
+        {
+          "id": "code-12-decrypt",
+          "callCode": 12,
+          "method": "decrypt"
+        },
+        {
+          "id": "code-13-createHmac",
+          "callCode": 13,
+          "method": "createHmac"
+        },
+        {
+          "id": "code-14-verifyHmac",
+          "callCode": 14,
+          "method": "verifyHmac"
+        },
+        {
+          "id": "code-15-createSignature",
+          "callCode": 15,
+          "method": "createSignature"
+        },
+        {
+          "id": "code-16-verifySignature",
+          "callCode": 16,
+          "method": "verifySignature"
+        },
+        {
+          "id": "code-17-acquireCertificate",
+          "callCode": 17,
+          "method": "acquireCertificate"
+        },
+        {
+          "id": "code-18-listCertificates",
+          "callCode": 18,
+          "method": "listCertificates"
+        },
+        {
+          "id": "code-19-proveCertificate",
+          "callCode": 19,
+          "method": "proveCertificate"
+        },
+        {
+          "id": "code-20-relinquishCertificate",
+          "callCode": 20,
+          "method": "relinquishCertificate"
+        },
+        {
+          "id": "code-21-discoverByIdentityKey",
+          "callCode": 21,
+          "method": "discoverByIdentityKey"
+        },
+        {
+          "id": "code-22-discoverByAttributes",
+          "callCode": 22,
+          "method": "discoverByAttributes"
+        },
+        {
+          "id": "code-23-isAuthenticated",
+          "callCode": 23,
+          "method": "isAuthenticated"
+        },
+        {
+          "id": "code-24-waitForAuthentication",
+          "callCode": 24,
+          "method": "waitForAuthentication"
+        },
+        {
+          "id": "code-25-getHeight",
+          "callCode": 25,
+          "method": "getHeight"
+        },
+        {
+          "id": "code-26-getHeaderForHeight",
+          "callCode": 26,
+          "method": "getHeaderForHeight"
+        },
+        {
+          "id": "code-27-getNetwork",
+          "callCode": 27,
+          "method": "getNetwork"
+        },
+        {
+          "id": "code-28-getVersion",
+          "callCode": 28,
+          "method": "getVersion"
+        }
+      ]
+    },
+    {
+      "id": "wire.frame-rejection",
+      "obligationId": "abi-substrate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1524,
+          "endLine": 1605,
+          "clause": "Wallet Wire framing and call codes"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "wire-endpoint"
+      ],
+      "dependencyIds": [
+        "native-wallet-wire"
+      ],
+      "interpretationIds": [
+        "wire-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Send malformed/truncated and origin-substitution frames at each applicable decoder boundary.",
+      "independentOracle": "Structured wire error and no native side effects; externally supplied origin cannot replace actual authenticated origin; complete raw frames retained.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "unknown-code"
+        },
+        {
+          "id": "empty"
+        },
+        {
+          "id": "truncated-origin"
+        },
+        {
+          "id": "truncated-varint"
+        },
+        {
+          "id": "truncated-field"
+        },
+        {
+          "id": "invalid-boolean"
+        },
+        {
+          "id": "invalid-utf8"
+        },
+        {
+          "id": "invalid-byte-range"
+        },
+        {
+          "id": "oversized-length"
+        },
+        {
+          "id": "trailing-data"
+        },
+        {
+          "id": "origin-spoof"
+        },
+        {
+          "id": "error-frame"
+        }
+      ]
+    },
+    {
+      "id": "wire.encoding-boundaries",
+      "obligationId": "abi-substrate",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction",
+        "listActions",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput",
+        "getPublicKey",
+        "revealCounterpartyKeyLinkage",
+        "revealSpecificKeyLinkage",
+        "encrypt",
+        "decrypt",
+        "createHmac",
+        "verifyHmac",
+        "createSignature",
+        "verifySignature",
+        "acquireCertificate",
+        "listCertificates",
+        "proveCertificate",
+        "relinquishCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "isAuthenticated",
+        "waitForAuthentication",
+        "getHeight",
+        "getHeaderForHeight",
+        "getNetwork",
+        "getVersion"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1582,
+          "endLine": 1709,
+          "clause": "serialization and optional values"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "wire-endpoint"
+      ],
+      "dependencyIds": [
+        "native-wallet-wire"
+      ],
+      "interpretationIds": [
+        "wire-applicability"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Exercise canonical scalars, optional sentinels, collections, binary/hex/base64 and Unicode strings.",
+      "independentOracle": "Independent encoder/decoder agrees byte-for-byte and rejects noncanonical/truncated forms according to frozen spec decisions.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "zero"
+        },
+        {
+          "id": "varint-boundary"
+        },
+        {
+          "id": "optional-absent"
+        },
+        {
+          "id": "optional-false"
+        },
+        {
+          "id": "empty-array"
+        },
+        {
+          "id": "empty-object"
+        },
+        {
+          "id": "utf8-multibyte"
+        },
+        {
+          "id": "hex-leading-zero"
+        },
+        {
+          "id": "base64-leading-zero"
+        },
+        {
+          "id": "signed-offset"
+        }
+      ]
+    },
+    {
+      "id": "basket.ascii-length",
+      "obligationId": "basket-length-interpretation",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 351,
+          "endLine": 365,
+          "clause": "basket namespace prose"
+        },
+        {
+          "source": "brc100",
+          "startLine": 518,
+          "endLine": 524,
+          "clause": "basket typed maximum"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "prospective-interpretations",
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "basket-limit"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Use ASCII namespace-valid names at each boundary in public create/insert/query/reload/remove operations.",
+      "independentOracle": "Exact basket retained for accepted names; invalid length returns named parameter error and leaves state/ledger unchanged; cross-method limits agree.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "bytes-0",
+          "utf8Bytes": 0,
+          "recipe": {
+            "prefix": "",
+            "fill": "a",
+            "totalBytes": 0
+          },
+          "draftExpected": "REJECT"
+        },
+        {
+          "id": "bytes-4",
+          "utf8Bytes": 4,
+          "recipe": {
+            "prefix": "tpni",
+            "fill": "a",
+            "totalBytes": 4
+          },
+          "draftExpected": "REJECT"
+        },
+        {
+          "id": "bytes-5",
+          "utf8Bytes": 5,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 5
+          },
+          "draftExpected": "ACCEPT"
+        },
+        {
+          "id": "bytes-299",
+          "utf8Bytes": 299,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 299
+          },
+          "draftExpected": "ACCEPT"
+        },
+        {
+          "id": "bytes-300",
+          "utf8Bytes": 300,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 300
+          },
+          "draftExpected": "ACCEPT"
+        },
+        {
+          "id": "bytes-301",
+          "utf8Bytes": 301,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 301
+          },
+          "draftExpected": "REJECT"
+        },
+        {
+          "id": "bytes-399",
+          "utf8Bytes": 399,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 399
+          },
+          "draftExpected": "REJECT"
+        },
+        {
+          "id": "bytes-400",
+          "utf8Bytes": 400,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 400
+          },
+          "draftExpected": "REJECT"
+        },
+        {
+          "id": "bytes-401",
+          "utf8Bytes": 401,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "totalBytes": 401
+          },
+          "draftExpected": "REJECT"
+        }
+      ]
+    },
+    {
+      "id": "basket.unicode-and-namespace",
+      "obligationId": "basket-length-interpretation",
+      "methods": [
+        "createAction",
+        "internalizeAction",
+        "listOutputs",
+        "relinquishOutput"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 351,
+          "endLine": 365,
+          "clause": "basket namespace prose"
+        },
+        {
+          "source": "brc100",
+          "startLine": 518,
+          "endLine": 524,
+          "clause": "basket typed maximum"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "prospective-interpretations",
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "basket-limit"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Submit namespace-invalid Unicode with exact UTF-8 boundary counts separately from ASCII length cases; test reserved/case/space names.",
+      "independentOracle": "Unicode is rejected for namespace validity even where length is below limit; it is never used as evidence that301\u2013400 ASCII is accepted or rejected.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "utf8-299",
+          "utf8Bytes": 299,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 299
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "utf8-300",
+          "utf8Bytes": 300,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 300
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "utf8-301",
+          "utf8Bytes": 301,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 301
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "utf8-399",
+          "utf8Bytes": 399,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 399
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "utf8-400",
+          "utf8Bytes": 400,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 400
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "utf8-401",
+          "utf8Bytes": 401,
+          "recipe": {
+            "prefix": "tpnil",
+            "fill": "a",
+            "suffix": "\u00e9",
+            "totalBytes": 401
+          },
+          "draftExpected": "REJECT_NAMESPACE"
+        },
+        {
+          "id": "uppercase"
+        },
+        {
+          "id": "double-space"
+        },
+        {
+          "id": "trailing-basket"
+        },
+        {
+          "id": "admin-prefix"
+        },
+        {
+          "id": "default"
+        },
+        {
+          "id": "reserved-p-prefix"
+        }
+      ]
+    },
+    {
+      "id": "transaction.defaults",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "broadcast-timing"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Omit each option versus its documented explicit default on independent matched funded fixtures.",
+      "independentOracle": "Decode signed transaction/BEEF and submission ledger; check response alternative, proof, input/output identity and metadata. Randomization does not require a particular permutation.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "signAndProcess-omitted-true",
+          "methods": [
+            "createAction"
+          ]
+        },
+        {
+          "id": "acceptDelayedBroadcast-omitted-true"
+        },
+        {
+          "id": "returnTXIDOnly-omitted-false"
+        },
+        {
+          "id": "noSend-omitted-false"
+        },
+        {
+          "id": "randomizeOutputs-omitted-true",
+          "methods": [
+            "createAction"
+          ]
+        },
+        {
+          "id": "randomizeOutputs-false-order",
+          "methods": [
+            "createAction"
+          ]
+        },
+        {
+          "id": "version-default",
+          "methods": [
+            "createAction"
+          ]
+        },
+        {
+          "id": "lockTime-default",
+          "methods": [
+            "createAction"
+          ]
+        },
+        {
+          "id": "sequenceNumber-default",
+          "methods": [
+            "createAction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transaction.signing-branches",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Create complete and partial inputs, then sign or abort fresh references.",
+      "independentOracle": "Mutually exclusive result forms match branch; final signed transaction spends exact input and verifies; abort restores reservation without spending.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "all-unlockingScripts"
+        },
+        {
+          "id": "signAndProcess-false"
+        },
+        {
+          "id": "unlockingScriptLength"
+        },
+        {
+          "id": "mixed-inputs"
+        },
+        {
+          "id": "sign-reference"
+        },
+        {
+          "id": "abort-reference"
+        },
+        {
+          "id": "abort-then-sign-reject"
+        },
+        {
+          "id": "sign-twice-reject"
+        },
+        {
+          "id": "foreign-reference-reject"
+        }
+      ]
+    },
+    {
+      "id": "transaction.consuming-conflicts",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Mutate a valid funded transaction fixture with one conflicting input/BEEF/reference/script relation.",
+      "independentOracle": "Structured parameter/conflict rejection; no spend or residual reservation; exact valid control executes.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "input-absent-from-beef"
+        },
+        {
+          "id": "input-index-out-of-range"
+        },
+        {
+          "id": "duplicate-input"
+        },
+        {
+          "id": "already-spent-input"
+        },
+        {
+          "id": "script-and-length-conflict"
+        },
+        {
+          "id": "missing-script-and-length"
+        },
+        {
+          "id": "spend-index-not-in-reference"
+        },
+        {
+          "id": "script-length-mismatch"
+        }
+      ]
+    },
+    {
+      "id": "transaction.proof-trust",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Provide full proof, then omit proof for publicly established known and unknown transactions with each trust option.",
+      "independentOracle": "Full evidence verifies to mined root; proof omission allowed only within declared known trust scope; untrusted omitted/contradictory ancestry cannot silently pass.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "full-proof"
+        },
+        {
+          "id": "known-wallet-trustSelf"
+        },
+        {
+          "id": "explicit-knownTxids"
+        },
+        {
+          "id": "unknown-without-trust"
+        },
+        {
+          "id": "unknown-not-in-knownTxids"
+        },
+        {
+          "id": "conflicting-proof"
+        },
+        {
+          "id": "truncated-proof"
+        },
+        {
+          "id": "wrong-merkle-root"
+        }
+      ]
+    },
+    {
+      "id": "transaction.batch-send",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "broadcast-timing"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Build chained noSend actions, retain signed change and release with sendWith using outputless batch form.",
+      "independentOracle": "No submission before send; sendWithResults binds every signed TXID/status; descendants retain ancestry, denied/invalid chains never gain authority.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "single-held"
+        },
+        {
+          "id": "two-dependent-held"
+        },
+        {
+          "id": "outputless-flush"
+        },
+        {
+          "id": "create-sendWith"
+        },
+        {
+          "id": "sign-sendWith"
+        },
+        {
+          "id": "returnTXIDOnly"
+        },
+        {
+          "id": "sync-reject"
+        },
+        {
+          "id": "delayed-submit"
+        },
+        {
+          "id": "unknown-batch-txid"
+        },
+        {
+          "id": "duplicate-batch-entry"
+        }
+      ]
+    },
+    {
+      "id": "transaction.nosend-change",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 659,
+          "endLine": 705,
+          "clause": "noSendChange validity"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Exercise final signed noSendChange subsets and invalid foreign/stale/spent/out-of-range inputs.",
+      "independentOracle": "Every returned/consumed outpoint belongs to final signed held transaction change, not unsigned TXID; actual accepted subset allowed; noSend=false forbids use.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "valid-full"
+        },
+        {
+          "id": "valid-subset"
+        },
+        {
+          "id": "empty-return-unexercised"
+        },
+        {
+          "id": "unsigned-stale-txid"
+        },
+        {
+          "id": "foreign-output"
+        },
+        {
+          "id": "already-spent"
+        },
+        {
+          "id": "out-of-range"
+        },
+        {
+          "id": "noSend-false"
+        }
+      ]
+    },
+    {
+      "id": "transaction.internalization",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 864,
+          "endLine": 905,
+          "clause": "remittance conditional fields"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "batch-ancestry"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Internalize independently signed payment/basket fixtures with exact metadata; vary remittance and selected output.",
+      "independentOracle": "BRC29-derived recipient/payment amount or basket state matches input bytes; mismatched/missing remittance errors before mutation; replay remains consistent.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "wallet-payment"
+        },
+        {
+          "id": "basket-insertion"
+        },
+        {
+          "id": "both-output-types"
+        },
+        {
+          "id": "missing-paymentRemittance"
+        },
+        {
+          "id": "missing-insertionRemittance"
+        },
+        {
+          "id": "conflicting-remittance"
+        },
+        {
+          "id": "wrong-derivation"
+        },
+        {
+          "id": "output-index-out-of-range"
+        },
+        {
+          "id": "replay"
+        },
+        {
+          "id": "relinquish-without-spend"
+        }
+      ]
+    },
+    {
+      "id": "query.action-filters",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Create overlapping labels and query omitted/any/all filters.",
+      "independentOracle": "Independent set membership and total count; no unrelated action leakage; absence of optional metadata follows flags.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "any-default"
+        },
+        {
+          "id": "any-explicit"
+        },
+        {
+          "id": "all-explicit"
+        },
+        {
+          "id": "empty-labels"
+        },
+        {
+          "id": "no-match"
+        },
+        {
+          "id": "overlapping-labels"
+        }
+      ]
+    },
+    {
+      "id": "query.action-includes",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Toggle every include flag independently and in supported combinations.",
+      "independentOracle": "Match input sourceOutpoint/value/scripts/sequence and output index/value/script/basket/tags to independently parsed transactions; flags do not change selection.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "defaults"
+        },
+        {
+          "id": "includeLabels"
+        },
+        {
+          "id": "includeInputs"
+        },
+        {
+          "id": "includeInputSourceLockingScripts"
+        },
+        {
+          "id": "includeInputUnlockingScripts"
+        },
+        {
+          "id": "includeOutputs"
+        },
+        {
+          "id": "includeOutputLockingScripts"
+        },
+        {
+          "id": "all-includes"
+        },
+        {
+          "id": "script-without-parent-include"
+        }
+      ]
+    },
+    {
+      "id": "query.output-filters",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Query basket plus overlapping/disjoint tags, absent/any/all mode and spent/relinquished states.",
+      "independentOracle": "Exact unspent set and total; no basket/tag cross-contamination; relinquishment removes membership without falsely spending chain output.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "any-default"
+        },
+        {
+          "id": "any-explicit"
+        },
+        {
+          "id": "all-explicit"
+        },
+        {
+          "id": "empty-tags"
+        },
+        {
+          "id": "no-match"
+        },
+        {
+          "id": "spent-output-excluded"
+        },
+        {
+          "id": "relinquished-excluded"
+        }
+      ]
+    },
+    {
+      "id": "query.output-includes",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Toggle include modes and metadata flags.",
+      "independentOracle": "Absent fields stay absent when omitted; scripts equal transaction outputs; entire-transactions BEEF covers all selected outputs with independently verified ancestry.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "defaults"
+        },
+        {
+          "id": "locking-scripts"
+        },
+        {
+          "id": "entire-transactions"
+        },
+        {
+          "id": "includeTags"
+        },
+        {
+          "id": "includeLabels"
+        },
+        {
+          "id": "includeCustomInstructions"
+        },
+        {
+          "id": "all-metadata"
+        }
+      ]
+    },
+    {
+      "id": "query.pagination",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listActions",
+        "listOutputs",
+        "listCertificates",
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Use at least11 known entries per relevant method to test default10, explicit pages and bounds without assuming unspecified sort order.",
+      "independentOracle": "Total reflects full filtered set, page sizes/membership/union contain no missing or duplicate records; listOutputs positive offset oldest-first and negative offset newest-first.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "default-limit10"
+        },
+        {
+          "id": "limit1"
+        },
+        {
+          "id": "offset0"
+        },
+        {
+          "id": "offset1"
+        },
+        {
+          "id": "last-page"
+        },
+        {
+          "id": "beyond-end"
+        },
+        {
+          "id": "max-limit10000"
+        },
+        {
+          "id": "output-offset-minus1",
+          "methods": [
+            "listOutputs"
+          ]
+        },
+        {
+          "id": "output-offset-minus2",
+          "methods": [
+            "listOutputs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "certificate.issuance",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "certificate-issuance"
+      ],
+      "dependencyIds": [
+        "authenticated-certifier",
+        "native-restart-hook"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Invoke acquisitionProtocol issuance against authenticated /signCertificate service.",
+      "independentOracle": "Native identity equals authenticated requester; nonce/serial HMAC and certifier signature verify independently; encrypted requested fields survive native list/restart.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "valid-issuance"
+        },
+        {
+          "id": "wrong-auth-identity"
+        },
+        {
+          "id": "missing-certificate"
+        },
+        {
+          "id": "missing-serverNonce"
+        },
+        {
+          "id": "invalid-serverNonce"
+        },
+        {
+          "id": "invalid-serial-HMAC"
+        },
+        {
+          "id": "wrong-type"
+        },
+        {
+          "id": "wrong-subject"
+        },
+        {
+          "id": "wrong-certifier"
+        },
+        {
+          "id": "altered-field"
+        },
+        {
+          "id": "invalid-signature"
+        }
+      ]
+    },
+    {
+      "id": "certificate.conditional-parameters",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "acquireCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "certificate-issuance"
+      ],
+      "dependencyIds": [
+        "authenticated-certifier"
+      ],
+      "interpretationIds": [
+        "inactive-conditional-fields"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Use valid direct and issuance controls, omitting one branch-required field or supplying conflicting branch values.",
+      "independentOracle": "Required-field/branch conflict is structured and names the field; failed acquisition is absent from public inventory; inactive-field policy fixed prospectively.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "direct-missing-serialNumber"
+        },
+        {
+          "id": "direct-missing-revocationOutpoint"
+        },
+        {
+          "id": "direct-missing-signature"
+        },
+        {
+          "id": "direct-missing-keyringRevealer"
+        },
+        {
+          "id": "direct-missing-keyringForSubject"
+        },
+        {
+          "id": "issuance-missing-certifierUrl"
+        },
+        {
+          "id": "direct-with-issuance-fields"
+        },
+        {
+          "id": "issuance-with-direct-fields"
+        }
+      ]
+    },
+    {
+      "id": "certificate.direct-keyrings",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "certificate-issuance",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "inactive-conditional-fields"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Acquire direct certificates with certifier and distinct authorized keyring revealer; mutate independent fields/keyring.",
+      "independentOracle": "Signed certificate and field encryption validate for native subject; unauthorized revealer, missing/wrong key or bad signature cannot persist a certificate.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "certifier-revealer"
+        },
+        {
+          "id": "distinct-revealer"
+        },
+        {
+          "id": "wrong-revealer"
+        },
+        {
+          "id": "missing-field-key"
+        },
+        {
+          "id": "extra-field-key-policy"
+        },
+        {
+          "id": "wrong-field-key"
+        },
+        {
+          "id": "tampered-field"
+        },
+        {
+          "id": "tampered-signature"
+        },
+        {
+          "id": "wrong-subject"
+        }
+      ]
+    },
+    {
+      "id": "certificate.selective-proof",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "certificate-issuance",
+        "crypto-peers"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [
+        "inactive-conditional-fields"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Prove selected field sets to two verifiers with visible scope consent.",
+      "independentOracle": "Only selected field keys disclosed; designated verifier decrypts exactly expected fields; other verifier cannot; certificate tuple/signature identify actual stored cert.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "one-field"
+        },
+        {
+          "id": "all-fields"
+        },
+        {
+          "id": "empty-fields-policy"
+        },
+        {
+          "id": "unknown-field"
+        },
+        {
+          "id": "different-verifier"
+        },
+        {
+          "id": "wrong-certifier"
+        },
+        {
+          "id": "wrong-serial"
+        },
+        {
+          "id": "wrong-subject"
+        },
+        {
+          "id": "tampered-signature"
+        },
+        {
+          "id": "duplicate-fields-policy"
+        }
+      ]
+    },
+    {
+      "id": "certificate.inventory",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population",
+        "certificate-issuance"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix",
+        "native-restart-hook"
+      ],
+      "interpretationIds": [
+        "inactive-conditional-fields"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Filter two certifiers and two types; relinquish one, repeat and restart.",
+      "independentOracle": "Exact intersections/counts/fields; no other issuer/type removed; persistence agrees with public API.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "issuer-filter"
+        },
+        {
+          "id": "type-filter"
+        },
+        {
+          "id": "combined-filter"
+        },
+        {
+          "id": "empty-filter-policy"
+        },
+        {
+          "id": "no-match"
+        },
+        {
+          "id": "relinquish-one"
+        },
+        {
+          "id": "relinquish-repeat-policy"
+        },
+        {
+          "id": "restart"
+        }
+      ]
+    },
+    {
+      "id": "certificate.revocation",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate",
+        "discoverByIdentityKey",
+        "discoverByAttributes",
+        "relinquishCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1355,
+          "endLine": 1365,
+          "clause": "relinquishment independent of revocation"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "certificate-issuance",
+        "revocation"
+      ],
+      "dependencyIds": [
+        "mined-revocation-state"
+      ],
+      "interpretationIds": [
+        "revocation-semantics"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Issue against real revocation outpoint, prove before spend, spend via controlled actor, then query/prove/relinquish.",
+      "independentOracle": "Independent UTXO/ancestry evidence distinguishes certificate cryptographic validity, revocation status and local retention; expected API response must follow the separately frozen revocation policy.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "unspent-revocation"
+        },
+        {
+          "id": "spent-revocation"
+        },
+        {
+          "id": "wrong-outpoint"
+        },
+        {
+          "id": "relinquish-revoked"
+        }
+      ]
+    },
+    {
+      "id": "certificate.discovery",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "discoverByIdentityKey",
+        "discoverByAttributes"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1369,
+          "endLine": 1457,
+          "clause": "discovery filters and fields"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "query-population",
+        "certificate-issuance"
+      ],
+      "dependencyIds": [
+        "native-stateful-matrix"
+      ],
+      "interpretationIds": [],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Publish controlled certificates under admitted trust settings and query identity/attributes before/after trust changes.",
+      "independentOracle": "Independently validate issuer, disclosed keyring/decrypted fields and trust metadata; reject untrusted/tampered records; pagination and default seekPermission=false retain real denial semantics.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "identity-match"
+        },
+        {
+          "id": "attribute-match"
+        },
+        {
+          "id": "attribute-no-match"
+        },
+        {
+          "id": "multiple-certifiers"
+        },
+        {
+          "id": "untrusted-excluded"
+        },
+        {
+          "id": "bad-signature"
+        },
+        {
+          "id": "bad-keyring"
+        },
+        {
+          "id": "default-seekPermission-false"
+        },
+        {
+          "id": "explicit-seekPermission-true"
+        }
+      ]
+    },
+    {
+      "id": "crypto.conditional-signatures",
+      "obligationId": "optional-transaction-and-certificate-paths",
+      "methods": [
+        "createSignature",
+        "verifySignature",
+        "getPublicKey"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 976,
+          "endLine": 1005,
+          "clause": "identity override"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1149,
+          "endLine": 1215,
+          "clause": "data/hash signature branches"
+        }
+      ],
+      "fixtureIds": [
+        "native-isolated",
+        "crypto-peers"
+      ],
+      "dependencyIds": [],
+      "interpretationIds": [
+        "inactive-conditional-fields"
+      ],
+      "executionStatus": "NOT_EXECUTED",
+      "action": "Exercise data versus direct hash and identity versus derivation with valid independent peers.",
+      "independentOracle": "Verify DER signatures under correct derived key and exact preimage/hash; identityKey=true override follows pinned contract; missing/conflicting required data follows prospective interpretation.",
+      "negativeControl": "Mutated/missing receipt or mismatched identity must fail the independent oracle.",
+      "variants": [
+        {
+          "id": "data-only",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "hash-only",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "neither-data-nor-hash",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "both-data-and-hash-policy",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "forSelf-false-default",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "forSelf-true",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "anyone-counterparty",
+          "methods": [
+            "createSignature",
+            "verifySignature"
+          ]
+        },
+        {
+          "id": "identityKey-override",
+          "methods": [
+            "getPublicKey"
+          ]
+        }
+      ]
+    }
+  ],
+  "methodAccountability": [
+    {
+      "method": "createAction",
+      "existingBoundaryPredicateIds": [
+        "createAction.serialized-outputs",
+        "createAction.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.manifest-selection",
+        "permissions.standing-allowance",
+        "permissions.allowance-boundaries",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "basket.ascii-length",
+        "basket.unicode-and-namespace",
+        "transaction.defaults",
+        "transaction.signing-branches",
+        "transaction.consuming-conflicts",
+        "transaction.proof-trust",
+        "transaction.batch-send",
+        "transaction.nosend-change"
+      ]
+    },
+    {
+      "method": "signAction",
+      "existingBoundaryPredicateIds": [
+        "signAction.serialized-spend",
+        "signAction.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.allowance-boundaries",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "transaction.defaults",
+        "transaction.signing-branches",
+        "transaction.consuming-conflicts",
+        "transaction.batch-send",
+        "transaction.nosend-change"
+      ]
+    },
+    {
+      "method": "abortAction",
+      "existingBoundaryPredicateIds": [
+        "abortAction.releases-reservation"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.allowance-boundaries",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "transaction.signing-branches"
+      ]
+    },
+    {
+      "method": "listActions",
+      "existingBoundaryPredicateIds": [
+        "listActions.metadata",
+        "listActions.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.standing-allowance",
+        "permissions.allowance-boundaries",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "transaction.batch-send",
+        "transaction.internalization",
+        "query.action-filters",
+        "query.action-includes",
+        "query.pagination"
+      ]
+    },
+    {
+      "method": "internalizeAction",
+      "existingBoundaryPredicateIds": [
+        "internalizeAction.mined-descendant-payment",
+        "internalizeAction.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "basket.ascii-length",
+        "basket.unicode-and-namespace",
+        "transaction.proof-trust",
+        "transaction.internalization"
+      ]
+    },
+    {
+      "method": "listOutputs",
+      "existingBoundaryPredicateIds": [
+        "listOutputs.metadata",
+        "listOutputs.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.restart-persistence",
+        "permissions.revoke-persistence",
+        "permissions.manifest-selection",
+        "permissions.finite-expiry",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "basket.ascii-length",
+        "basket.unicode-and-namespace",
+        "transaction.internalization",
+        "query.output-filters",
+        "query.output-includes",
+        "query.pagination"
+      ]
+    },
+    {
+      "method": "relinquishOutput",
+      "existingBoundaryPredicateIds": [
+        "relinquishOutput.removes-basket-membership"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "basket.ascii-length",
+        "basket.unicode-and-namespace",
+        "transaction.internalization"
+      ]
+    },
+    {
+      "method": "getPublicKey",
+      "existingBoundaryPredicateIds": [
+        "getPublicKey.identity",
+        "getPublicKey.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "permissions.restart-persistence",
+        "permissions.revoke-persistence",
+        "permissions.manifest-selection",
+        "permissions.finite-expiry",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "crypto.conditional-signatures"
+      ]
+    },
+    {
+      "method": "revealCounterpartyKeyLinkage",
+      "existingBoundaryPredicateIds": [
+        "revealCounterpartyKeyLinkage.independent-secret"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "permissions.linkage-decisions",
+        "permissions.linkage-isolation",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "revealSpecificKeyLinkage",
+      "existingBoundaryPredicateIds": [
+        "revealSpecificKeyLinkage.independent-secret"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "permissions.linkage-decisions",
+        "permissions.linkage-isolation",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "encrypt",
+      "existingBoundaryPredicateIds": [
+        "encrypt.bytes"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "decrypt",
+      "existingBoundaryPredicateIds": [
+        "decrypt.roundtrip",
+        "decrypt.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "createHmac",
+      "existingBoundaryPredicateIds": [
+        "createHmac.length"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "verifyHmac",
+      "existingBoundaryPredicateIds": [
+        "verifyHmac.valid",
+        "verifyHmac.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "createSignature",
+      "existingBoundaryPredicateIds": [
+        "createSignature.independent-verification"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "crypto.conditional-signatures"
+      ]
+    },
+    {
+      "method": "verifySignature",
+      "existingBoundaryPredicateIds": [
+        "verifySignature.valid",
+        "verifySignature.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "privileged.distinct-keyring",
+        "privileged.authorization",
+        "privileged.cache-lifecycle",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "crypto.conditional-signatures"
+      ]
+    },
+    {
+      "method": "acquireCertificate",
+      "existingBoundaryPredicateIds": [
+        "acquireCertificate.signed-fields",
+        "acquireCertificate.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "certificate.issuance",
+        "certificate.conditional-parameters",
+        "certificate.direct-keyrings",
+        "certificate.revocation"
+      ]
+    },
+    {
+      "method": "listCertificates",
+      "existingBoundaryPredicateIds": [
+        "listCertificates.issuer-scope",
+        "listCertificates.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "query.pagination",
+        "certificate.issuance",
+        "certificate.inventory"
+      ]
+    },
+    {
+      "method": "proveCertificate",
+      "existingBoundaryPredicateIds": [
+        "proveCertificate.selective-disclosure",
+        "proveCertificate.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.restart-persistence",
+        "permissions.revoke-persistence",
+        "permissions.manifest-selection",
+        "permissions.finite-expiry",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "certificate.direct-keyrings",
+        "certificate.selective-proof",
+        "certificate.revocation"
+      ]
+    },
+    {
+      "method": "relinquishCertificate",
+      "existingBoundaryPredicateIds": [
+        "relinquishCertificate.tombstone"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "certificate.inventory",
+        "certificate.revocation"
+      ]
+    },
+    {
+      "method": "discoverByIdentityKey",
+      "existingBoundaryPredicateIds": [
+        "discoverByIdentityKey.identity-service"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "query.pagination",
+        "certificate.revocation",
+        "certificate.discovery"
+      ]
+    },
+    {
+      "method": "discoverByAttributes",
+      "existingBoundaryPredicateIds": [
+        "discoverByAttributes.identity-service"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries",
+        "query.pagination",
+        "certificate.revocation",
+        "certificate.discovery"
+      ]
+    },
+    {
+      "method": "isAuthenticated",
+      "existingBoundaryPredicateIds": [
+        "isAuthenticated.true"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "waitForAuthentication",
+      "existingBoundaryPredicateIds": [
+        "waitForAuthentication.true"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "permissions.manifest-selection",
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "getHeight",
+      "existingBoundaryPredicateIds": [
+        "getHeight.controlled"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "getHeaderForHeight",
+      "existingBoundaryPredicateIds": [
+        "getHeaderForHeight.genesis",
+        "getHeaderForHeight.specified-rejection"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "getNetwork",
+      "existingBoundaryPredicateIds": [
+        "getNetwork.mainnet"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    },
+    {
+      "method": "getVersion",
+      "existingBoundaryPredicateIds": [
+        "getVersion.nonempty"
+      ],
+      "existingCoverageClaim": "METHOD_BASELINE_ONLY_NOT_FULL_CONDITIONAL_COVERAGE",
+      "proposedCaseIds": [
+        "wire.call-parity",
+        "wire.frame-rejection",
+        "wire.encoding-boundaries"
+      ]
+    }
+  ],
+  "coverageAccounting": {
+    "historicalNativePredicatesPerRepetition": 280,
+    "historicalClausePredicatesPerRepetition": 233,
+    "historicalClauseCoverageGate": "coverage.remaining-obligations",
+    "historicalBroaderObligations": 5,
+    "proposedCaseGroups": 36,
+    "proposedVariantRows": 306,
+    "executedNewCases": 0,
+    "note": "Variant rows are planning units, not passed assertions, execution counts or an adopted scored denominator. Conditional cases may require further decomposition during oracle design."
+  }
+}

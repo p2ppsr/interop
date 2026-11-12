@@ -45,8 +45,8 @@ export interface PermissionObservation {
 export interface WalletLabResult {
   schema: 'tpnil-isi4-wallet-run@1.0.0'
   claim: WalletLabClaim
-  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0'
-  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0'
+  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0' | 'ISI-4@5.0.0'
+  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0'
   profile: 'production-wallet-todo-controlled-services' | 'production-wallet-native-conformance' | 'desktop-wallet-todo-controlled-services' | 'desktop-wallet-todo-declared-fixture-hook'
   runId: string
   startedAt: string

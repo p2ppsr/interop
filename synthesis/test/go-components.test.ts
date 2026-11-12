@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest'
 import { MerklePath, PrivateKey, ProtoWallet, PushDrop, Transaction, Utils, type WalletInterface } from '@bsv/sdk'
 import { Setup } from '@bsv/wallet-toolbox'
 import { ControlledWalletServices, type TeranodeWalletFundingFixture } from '../src/wallet-lab/services.js'
-import { selectComponents, validateGoBuild, validateComponentIdentity } from '../src/wallet-lab/go-services.js'
+import { selectComponents, validateGoBuild, validateComponentIdentity, validateStorageSyncGoBuild, GoServices } from '../src/wallet-lab/go-services.js'
 
 function request(origin: string, route: string, host = 'fixture.itcve.test', body?: Buffer, headers: Record<string, string> = {}): Promise<{ status: number; bytes: Buffer }> {
   return new Promise((resolve, reject) => {
@@ -60,7 +60,7 @@ it('requires frozen component identities and a binary digest for Go evidence', (
   expect(() => validateComponentIdentity(prospective, 'ITCVE-1@1.3.0')).not.toThrow()
   const terminal = { ...prospective, go: { ...prospective.go, fixtureSubmissionPolicy: 'terminal-rejection-v1' } }
   expect(() => validateComponentIdentity(terminal, 'ITCVE-1@1.4.0')).not.toThrow()
-  for (const profile of ['ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'] as const) expect(() => validateComponentIdentity(terminal, profile)).toThrow(/ancestry export/)
+  for (const profile of ['ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0'] as const) expect(() => validateComponentIdentity(terminal, profile)).toThrow(/ancestry export/)
   const portabilityBytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../infra/adapters/storage-portability/patch.lock.json'))
   const portability = JSON.parse(portabilityBytes.toString())
   const coverage = { ...terminal, go: { ...terminal.go, compatibilityPatch: { ...compatibilityPatch, schema: 'tpnil-storage-portability-go-build@1.0.0', parentPatchLockSha256: portability.parentSha256, patchLockSha256: createHash('sha256').update(portabilityBytes).digest('hex'), patchSha256: portability.patchSha256 } } }
@@ -68,11 +68,35 @@ it('requires frozen component identities and a binary digest for Go evidence', (
     expect(() => validateComponentIdentity(coverage, profile)).not.toThrow()
     expect(() => validateComponentIdentity({ ...coverage, go: { ...coverage.go, compatibilityPatch: { ...coverage.go.compatibilityPatch, parentPatchLockSha256: '00'.repeat(32) } } }, profile)).toThrow(/compatibility/)
   }
+  expect(() => validateComponentIdentity(coverage, 'ITCVE-1@4.0.0')).toThrow(/listActions/)
+  const listActionsBytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../infra/adapters/storage-list-actions/patch.lock.json'))
+  const listActions = JSON.parse(listActionsBytes.toString())
+  const revised = { ...coverage, go: { ...coverage.go, compatibilityPatch: { ...coverage.go.compatibilityPatch, schema: 'tpnil-storage-list-actions-go-build@1.0.0', parentPatchLockSha256: listActions.parentSha256, patchLockSha256: createHash('sha256').update(listActionsBytes).digest('hex'), patchSha256: listActions.patchSha256 } } }
+  expect(() => validateComponentIdentity(revised, 'ITCVE-1@4.0.0')).not.toThrow()
+  for (const profile of [undefined, 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'] as const) expect(() => validateComponentIdentity(revised, profile)).toThrow()
+  for (const field of ['binarySha256', 'parentPatchLockSha256', 'patchLockSha256', 'patchSha256', 'toolchain'] as const) expect(() => validateComponentIdentity({ ...revised, go: { ...revised.go, compatibilityPatch: { ...revised.go.compatibilityPatch, [field]: 'wrong' } } }, 'ITCVE-1@4.0.0')).toThrow(/compatibility/)
   expect(() => validateComponentIdentity(terminal, 'ITCVE-1@1.3.0')).toThrow(/identity/)
   expect(() => validateComponentIdentity(terminal)).toThrow(/identity/)
   expect(() => validateComponentIdentity(prospective, 'ITCVE-1@1.4.0')).toThrow(/identity/)
   expect(() => validateComponentIdentity(identity, 'ITCVE-1@1.3.0')).toThrow(/compatibility/)
   expect(() => validateComponentIdentity({ ...prospective, go: { ...prospective.go, compatibilityPatch: { ...compatibilityPatch, patchSha256: '00'.repeat(32) } } }, 'ITCVE-1@1.3.0')).toThrow(/compatibility/)
+})
+
+it('requires the new binary and actual source replacement manifest only with its explicit selector', () => {
+  const lock = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../go/components.lock.json'), 'utf8'))
+  const patchBytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../infra/adapters/storage-list-actions/patch.lock.json'))
+  const patch = JSON.parse(patchBytes.toString())
+  const replacementModule = '/tmp/tpnil-reviewed-storage-source'
+  const build = { toolchain: lock.toolchain, dependencies: Object.fromEntries(lock.components.map((pin: { module: string; version: string; sum: string }) => [pin.module, { version: pin.version, sum: pin.sum }])) }
+  build.dependencies[patch.module] = { version: patch.version, sum: '', replacementModule, replacementVersion: '(devel)' }
+  const binarySha256 = 'ab'.repeat(32)
+  const manifest = { schema: 'tpnil-storage-list-actions-go-build@1.0.0', binarySha256, patchLockSha256: createHash('sha256').update(patchBytes).digest('hex'), parentPatchLockSha256: patch.parentSha256, patchSha256: patch.patchSha256, upstream: { module: patch.module, version: patch.version, sum: patch.sum }, toolchain: lock.toolchain, replacementModule }
+  expect(() => validateStorageSyncGoBuild(build, binarySha256, manifest, false, true)).not.toThrow()
+  expect(() => validateStorageSyncGoBuild(build, binarySha256, manifest)).toThrow(/manifest/)
+  expect(() => validateStorageSyncGoBuild(build, binarySha256, manifest, true)).toThrow(/manifest/)
+  expect(() => validateStorageSyncGoBuild(build, '00'.repeat(32), manifest, false, true)).toThrow(/manifest/)
+  expect(() => validateStorageSyncGoBuild(build, binarySha256, { ...manifest, replacementModule: '/tmp/unreviewed' }, false, true)).toThrow(/replacement/)
+  expect(() => new GoServices('/tmp/unused', selectComponents(), { storageListActionsPatch: true, storagePortabilityPatch: true })).toThrow(/Conflicting/)
 })
 
 // Explicit command/CI gate: the ordinary offline suite needs neither Docker nor Go.

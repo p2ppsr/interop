@@ -6,12 +6,19 @@ COPY programs/ISI-4/profiles/native-conformance-2.0.0 /work/programs/ISI-4/profi
 COPY programs/ISI-4/2.0.0 /work/programs/ISI-4/2.0.0
 COPY programs/ISI-4/3.0.0 /work/programs/ISI-4/3.0.0
 COPY programs/ISI-4/4.0.0 /work/programs/ISI-4/4.0.0
+COPY programs/ISI-4/5.0.0 /work/programs/ISI-4/5.0.0
+COPY programs/ISI-4/profiles/native-conformance-5.0.0 /work/programs/ISI-4/profiles/native-conformance-5.0.0
 COPY programs/ISI-4/profiles/native-conformance-4.0.0 /work/programs/ISI-4/profiles/native-conformance-4.0.0
 COPY programs/ISI-4/profiles/native-conformance-3.0.0 /work/programs/ISI-4/profiles/native-conformance-3.0.0
+COPY programs/ISI-4/proposals/native-coverage-closure-20261111.json programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json /work/programs/ISI-4/proposals/
+COPY scripts/prepare-storage-list-actions-go.mjs /work/scripts/
 COPY itcves/ITCVE-1/1.4.0 /work/itcves/ITCVE-1/1.4.0
 COPY itcves/ITCVE-1/1.5.0 /work/itcves/ITCVE-1/1.5.0
 COPY itcves/ITCVE-1/2.0.0 /work/itcves/ITCVE-1/2.0.0
+COPY itcves/ITCVE-1/4.0.0 /work/itcves/ITCVE-1/4.0.0
 COPY infra/adapters/storage-portability /work/infra/adapters/storage-portability
-COPY out/itcve-go-storage-portability out/itcve-go-storage-portability.json /opt/tpnil/
+COPY infra/adapters/storage-list-actions /work/infra/adapters/storage-list-actions
+ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
+COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1
 USER pwuser

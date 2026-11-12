@@ -12,7 +12,11 @@ import type { TeranodeWalletFundingFixture } from '../services.js'
 
 const root = '/work'
 const output = '/evidence'
+const walletVersion = process.env.TPNIL_NATIVE_WALLET_VERSION ?? '5.1.0'
+if (!['5.1.0', '5.1.1'].includes(walletVersion)) throw new Error('Unknown native wallet release')
+const wallet511 = walletVersion === '5.1.1'
 const closure = process.env.TPNIL_NATIVE_CLOSURE === '1'
+if (wallet511 && !closure) throw new Error('Yours5.1.1 requires its separately frozen closure profile')
 const coverage = closure || process.env.TPNIL_NATIVE_COVERAGE === '1'
 const conformance = process.env.TPNIL_NATIVE_CONFORMANCE === '1'
 if (coverage && !conformance) throw new Error('Coverage qualification requires conformance mode')
@@ -20,8 +24,10 @@ const integrated = process.env.TPNIL_NATIVE_INTEGRATED === '1'
 const trustedIdentity = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1'
 if (conformance && (!integrated || !trustedIdentity)) throw new Error('Conformance qualification requires integrated trusted native mode')
 if (trustedIdentity && !integrated) throw new Error('Trusted identity qualification requires integrated native mode')
-const planFile = path.join(root, closure ? 'infra/native/conformance/plan-coverage-closure.json' : coverage ? 'infra/native/conformance/plan-coverage.json' : conformance ? 'infra/native/conformance/plan.json' : trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json')
+const planFile = path.join(root, wallet511 ? 'infra/native/conformance/plan-5.1.1.json' : closure ? 'infra/native/conformance/plan-coverage-closure.json' : coverage ? 'infra/native/conformance/plan-coverage.json' : conformance ? 'infra/native/conformance/plan.json' : trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json')
 const plan = JSON.parse(fs.readFileSync(planFile, 'utf8'))
+if (plan.wallet.version !== walletVersion) throw new Error('Wallet release differs from selected plan')
+const walletRoot = path.join(root, 'out/sut-artifacts', `yours-wallet-v${walletVersion}`)
 fs.mkdirSync(output, { recursive: true })
 const save = (name: string, value: unknown) => fs.writeFileSync(path.join(output, name), JSON.stringify(value, null, 2) + '\n')
 const evidenceFile = (name: string): string => path.join(output, 'evidence', name)
@@ -61,9 +67,9 @@ try {
     if (trustedIdentity && sha256Hex(fs.readFileSync(path.join(root, plan.identityTrustProfile))) !== plan.identityTrustProfileSha256) throw new Error('Trusted identity profile differs from frozen plan')
     if (sha256Hex(fs.readFileSync(path.join(root, plan.compatibilityPatch))) !== plan.compatibilityPatchSha256 || sha256Hex(fs.readFileSync(path.join(root, plan.boundaryProfile))) !== plan.boundaryProfileSha256) throw new Error('Integrated profile inputs differ from frozen plan')
   }
-  assertArtifact(path.join(root, 'out/sut-artifacts/yours-wallet-v5.1.0/pw-v5.1.0.zip'), plan.wallet)
+  assertArtifact(path.join(walletRoot, `pw-v${walletVersion}.zip`), plan.wallet)
   assertArtifact(path.join(root, 'fixtures/artifacts/todo-ts-236733c-webroot.tgz'), plan.application)
-  const installed = JSON.parse(execFileSync('python3', [path.join(root, 'infra/native/yours-go/verify-installed.py')], { encoding: 'utf8', timeout: 30000 }))
+  const installed = JSON.parse(execFileSync('python3', [path.join(root, 'infra/native/yours-go/verify-installed.py'), '--wallet-version', walletVersion], { encoding: 'utf8', timeout: 30000 }))
   save('installed-artifacts.json', installed)
   fs.writeFileSync(path.join(output, 'browser-version.txt'), execFileSync(chromium.executablePath(), ['--version'], { encoding: 'utf8', timeout: 10000 }))
   fs.copyFileSync('/opt/tpnil/os-packages.txt', path.join(output, 'os-packages.txt'))
@@ -76,7 +82,7 @@ try {
   execFileSync('/opt/tpnil/itcve-mongo', [], { stdio: 'inherit', timeout: 45000 })
   const fixture = JSON.parse(fs.readFileSync(path.join(root, plan.fundingFixture), 'utf8')) as TeranodeWalletFundingFixture
   const record = await runYoursWallet({
-    extensionDirectory: path.join(root, 'out/sut-artifacts/yours-wallet-v5.1.0/unpacked/build'),
+    extensionDirectory: path.join(walletRoot, 'unpacked/build'),
     components: plan.components,
     webroot: path.join(root, 'out/sut-artifacts/todo-ts-236733c/webroot'),
     outputDirectory: output,
@@ -87,7 +93,7 @@ try {
     amount: plan.amount,
     nativeQualification: { fundingFixture: fixture, sandbox: true },
     ...(closure && plan.shutdownSubmissionPolicy ? { shutdownSubmissionPolicy: plan.shutdownSubmissionPolicy } : {}),
-    ...(conformance ? { prepareScenario: (await import('./conformance-reserves.js')).prepareNativeConformanceReserves, additionalScenario: async (context: import('../yours-driver.js').NativeScenarioContext) => (await import('./conformance.js')).runNativeConformance(context, coverage, closure), integratedProfile: closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0', go: { binary: '/opt/tpnil/itcve-go-storage-portability', storagePortabilityPatch: true, terminalRejectionReceipts: true } } as const : integrated ? { additionalScenario: (await import('./integrated.js')).runNativeIntegration, integratedProfile: 'ITCVE-1@1.3.0', go: { binary: '/opt/tpnil/itcve-go-storage-sync', storageSyncPatch: true } } as const : {})
+    ...(conformance ? { prepareScenario: (await import('./conformance-reserves.js')).prepareNativeConformanceReserves, additionalScenario: async (context: import('../yours-driver.js').NativeScenarioContext) => (await import('./conformance.js')).runNativeConformance(context, coverage, closure, wallet511 ? 'yours-5.1.1' : 'legacy'), integratedProfile: wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0', go: wallet511 ? { binary: '/opt/tpnil/itcve-go-storage-list-actions', storageListActionsPatch: true, terminalRejectionReceipts: true } : { binary: '/opt/tpnil/itcve-go-storage-portability', storagePortabilityPatch: true, terminalRejectionReceipts: true } } as const : integrated ? { additionalScenario: (await import('./integrated.js')).runNativeIntegration, integratedProfile: 'ITCVE-1@1.3.0', go: { binary: '/opt/tpnil/itcve-go-storage-sync', storageSyncPatch: true } } as const : {})
   })
   verifyEvidenceBundle(output)
   save('network-after.json', await network())

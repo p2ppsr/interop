@@ -1,0 +1,71 @@
+{
+  "schema": "tpnil-native-reserved-namespace-policy@1",
+  "oracle": "tpnil-brc100-clause-oracle@5.0.0",
+  "inherits": "tpnil-brc100-clause-oracle@4.0.0",
+  "source": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "gitBlobSha": "ec25ff75b7d5c584a892e52dbcef07dfae6d9747",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "bytes": 172505
+  },
+  "requirement": "Reserved protocol and basket names beginning with p-space must be refused. The refusal and the separate public error-structure requirement are independently scored.",
+  "sourceLines": [
+    341,
+    360
+  ],
+  "calls": [
+    {
+      "id": "namespace.protocol.reserved",
+      "method": "getPublicKey",
+      "args": {
+        "protocolID": [
+          0,
+          "p tpnil clauses"
+        ],
+        "keyID": "native clause key",
+        "counterparty": "02e5a018b3a2e155316109d9cdc5eab739759c0e07e0c00bf9fccb8237fe4d7f02"
+      }
+    },
+    {
+      "id": "namespace.basket.reserved",
+      "method": "listOutputs",
+      "args": {
+        "basket": "p tpnil clauses"
+      }
+    }
+  ],
+  "rejection": {
+    "name": "Error",
+    "message": "Unsupported P-module scheme: p tpnil",
+    "result": "absent"
+  },
+  "adjudicationEvidence": {
+    "run": 42711700295,
+    "originalOracle": "tpnil-brc100-clause-oracle@4.0.0",
+    "repetitions": [
+      1,
+      2
+    ],
+    "tracePointers": [
+      "/trace/449",
+      "/trace/453"
+    ],
+    "walletArchiveSha256": "d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52",
+    "sourceMap": "build/background.js.map",
+    "source": "../node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs",
+    "sourceSha256": "577bba7360dbf3f49faf2938c0cc3b14f77ca8b14a55ea2335efb5a6d35b7c5f",
+    "sourceLines": [
+      36100,
+      36103
+    ]
+  },
+  "preserved": [
+    "All oracle4 assertion IDs, positive controls, coverage obligations and noSendChange checks",
+    "The independent errors.structured predicate",
+    "Rejection of generic unsupported operations, engine exceptions, timeouts and transport errors",
+    "Historical observations, oracle identities and results without modification"
+  ],
+  "claim": "PROSPECTIVE_ORACLE_POLICY_NOT_NATIVE_QUALIFICATION"
+}

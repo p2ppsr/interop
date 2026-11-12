@@ -15,6 +15,7 @@ on:
           - integrated-native-conformance-coverage
           - integrated-native-conformance-closure
           - integrated-native-conformance-closure-rust-v3
+          - integrated-native-conformance-5.1.1
 permissions:
   contents: read
 jobs:
@@ -67,15 +68,21 @@ jobs:
           go-version: '1.27.3'
           cache-dependency-path: synthesis/go/go.sum
       - name: Prepare and verify immutable artifacts and Go host
+        env:
+          TPNIL_NATIVE_PROFILE: ${{ inputs.profile }}
         run: |
           set -euo pipefail
-          scripts/prepare-yours-wallet-run.sh
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-5.1.1 ]; then
+            scripts/prepare-yours-wallet-run.sh --conformance-5.1.1
+          else
+            scripts/prepare-yours-wallet-run.sh
+          fi
           npm ci --prefix synthesis --ignore-scripts
           npm run prepare:go
           cd synthesis/go
           go build -mod=readonly -trimpath -o ../../out/itcve-mongo ./cmd/itcve-mongo
       - name: Build the frozen native browser closure
-        run: docker build --iidfile out/native-go-image.id -f infra/native/yours-go/Dockerfile -t tpnil-native-go:${{ github.sha }} .
+        run: docker build --build-arg TPNIL_WALLET_VERSION=${{ inputs.profile == 'integrated-native-conformance-5.1.1' && '5.1.1' || '5.1.0' }} --iidfile out/native-go-image.id -f infra/native/yours-go/Dockerfile -t tpnil-native-go:${{ github.sha }} .
       - name: Install the pinned integrated service closure
         if: startsWith(inputs.profile, 'integrated-native')
         run: |
@@ -89,8 +96,14 @@ jobs:
       - name: Build the prospective conformance image
         if: startsWith(inputs.profile, 'integrated-native-conformance')
         run: |
-          node scripts/prepare-storage-portability-go.mjs
-          docker build --build-arg TPNIL_INTEGRATED_BASE=tpnil-native-integrated:${{ github.sha }} -f infra/native/conformance/Dockerfile -t tpnil-native-conformance:${{ github.sha }} .
+          storage_binary=itcve-go-storage-portability
+          if [[ "${{ inputs.profile }}" == "integrated-native-conformance-5.1.1" ]]; then
+            node scripts/prepare-storage-list-actions-go.mjs
+            storage_binary=itcve-go-storage-list-actions
+          else
+            node scripts/prepare-storage-portability-go.mjs
+          fi
+          docker build --build-arg TPNIL_STORAGE_BINARY="$storage_binary" --build-arg TPNIL_INTEGRATED_BASE=tpnil-native-integrated:${{ github.sha }} -f infra/native/conformance/Dockerfile -t tpnil-native-conformance:${{ github.sha }} .
       - name: Execute two clean isolated native repetitions and verify results
         if: inputs.profile == 'all-go-native'
         run: node scripts/run-native-go-wallet.mjs tpnil-native-go:${{ github.sha }} out/native-go-wallet
@@ -107,13 +120,14 @@ jobs:
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-coverage ]; then native_flag=--conformance-coverage; native_image=tpnil-native-conformance:${{ github.sha }}; fi
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-closure ]; then native_flag=--conformance-closure; native_image=tpnil-native-conformance:${{ github.sha }}; fi
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-closure-rust-v3 ]; then native_flag=--conformance-closure-rust-v3; native_image=tpnil-native-conformance:${{ github.sha }}; fi
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-5.1.1 ]; then native_flag=--conformance-5.1.1; native_image=tpnil-native-conformance:${{ github.sha }}; fi
           node scripts/run-native-go-wallet.mjs "$native_image" out/native-go-wallet "$native_flag"
           node scripts/verify-native-integrated.mjs out/native-go-wallet
       - name: Retain every attempt and qualification receipt
         if: always()
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
-          name: native-go-yours-wallet-5.1.0
+          name: native-go-yours-wallet-${{ inputs.profile == 'integrated-native-conformance-5.1.1' && '5.1.1' || '5.1.0' }}
           path: out/native-go-wallet
           if-no-files-found: error
           retention-days: 90
