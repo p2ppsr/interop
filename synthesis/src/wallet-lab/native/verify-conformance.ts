@@ -9,15 +9,17 @@ import { verifyNativePortability } from './verify-conformance-portability.js'
 import { verifyNativeClauseConformance } from './verify-conformance-clauses.js'
 import { validateComponentIdentity } from '../go-services.js'
 
-export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' = 'ITCVE-1@1.4.0') {
+export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' = 'ITCVE-1@1.4.0') {
   const read = (name: string) => JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance', `${name}.json`), 'utf8'))
   const report = read('result')
-  const candidate = profile === 'ITCVE-1@4.1.0'
+  const observer3 = profile === 'ITCVE-1@4.2.0'
+  const candidate = observer3 || profile === 'ITCVE-1@4.1.0'
   const release511 = candidate || profile === 'ITCVE-1@4.0.0'
   const closure = release511 || profile === 'ITCVE-1@2.0.0'
   const coverage = closure || profile === 'ITCVE-1@1.5.0'
-  assert.equal(report.schema, release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
+  assert.equal(report.schema, release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
   const fixtureRevision = clauseOracle === 'tpnil-brc100-clause-oracle@6.0.0' ? 2 : 1
+  if (observer3) assert.equal(fixtureRevision, 2, 'Observer3 requires its prospective fixture revision')
   assert.equal(clauseOracle, release511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
   assert.equal(read('clauses').oracle, clauseOracle, 'Clause report selected a different oracle from the frozen plan')
   if (release511) {
@@ -64,6 +66,7 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
   assert.equal(read('clauses').substrate, 'unchanged-native-window.CWI', 'Reference clauses cannot qualify a native wallet')
   const clauses = await verifyNativeClauseConformance(read('clauses'), JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'integrated/boundary.json'), 'utf8')))
   const conditional = release511 ? await (await import('./verify-conformance-conditional.js')).verifyNativeConditionalConformance(read('conditional')) : undefined
+  if (fixtureRevision === 2) assert.equal(read('transaction-states').oracle, `tpnil-native-transaction-states-oracle@${observer3 ? 2 : 1}.0.0`, 'Transaction state oracle differs from the selected profile')
   const transactionStates = fixtureRevision === 2 ? await (await import('./verify-transaction-states.js')).verifyNativeTransactionStates(read('transaction-states')) : undefined
   const certificateStates = fixtureRevision === 2 ? await (await import('./verify-certificate-states.js')).verifyNativeCertificateStates(read('certificate-states')) : undefined
   if (fixtureRevision === 2) {

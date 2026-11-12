@@ -1,0 +1,3 @@
+# ISI-4@5.2.0 — candidate observer lifecycle
+
+The eight native vectors and426 observations retain the source-located clause obligations, original99 comparison and expanded state/permission tests. Observer3 separately declares a positive-height controlled header, public discovery keyring verification, restarted-page and migrated-storage capture, and already-canceled invalid-sign cleanup. The exact engineering wallet is declared in the4.2.0 native plan; observed manifest/CWI5.1.1 is not a production-release identity. Complete coverage remains blocked while original obligations lack native evidence.

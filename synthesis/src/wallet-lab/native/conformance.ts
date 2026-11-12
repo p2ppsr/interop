@@ -1,3 +1,5 @@
+import type { IdentityTrustOracleOptions } from './identity-trust-oracle2.js'
+import type { ControlledHeaderFixture } from './controlled-header-fixture.js'
 import type { NativeScenarioContext } from '../yours-driver.js'
 import { aggregateOutcome, type VectorResult, type VectorOutcome } from '../model.js'
 import { runNativePermissionConformance } from './conformance-permissions.js'
@@ -14,15 +16,17 @@ function vector(id: VectorResult['id'], report: any, file: string, limitations: 
   return { id, outcome, assertions, limitations }
 }
 
-export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' = 'legacy', fixtureRevision: 1 | 2 = 1): Promise<{ vectors: VectorResult[] }> {
-  const candidate = nativeRevision === 'pr368-7e39006'
+export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' | 'pr368-observer3' = 'legacy', fixtureRevision: 1 | 2 = 1, headerFixture?: ControlledHeaderFixture, identityTrustOracle?: IdentityTrustOracleOptions['oracle']): Promise<{ vectors: VectorResult[] }> {
+  const observer3 = nativeRevision === 'pr368-observer3'
+  const candidate = observer3 || nativeRevision === 'pr368-7e39006'
+  if (observer3 && (fixtureRevision !== 2 || headerFixture !== 'tpnil-native-controlled-header@1.0.0' || identityTrustOracle !== 'tpnil-native-identity-trust-oracle@2.0.0')) throw new Error('Observer3 requires its prospective fixtures and identity trust oracle')
   const release511 = candidate || nativeRevision === 'yours-5.1.1'
   if (fixtureRevision === 2 && !release511) throw new Error('Fixture revision2 requires the explicit release511-family profile')
   if (release511 && !closure) throw new Error('Yours5.1.1 requires the complete native closure')
   coverage = coverage || closure
   const { application, services, evidence, baselineVectors } = context
-  const profile = candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
-  const program = candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
+  const profile = observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
+  const program = observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
   const wallet = nativeWalletBoundary(application, true)
   const permission = await context.manualPrompt(() => runNativePermissionConformance({ context: context.context, evidence, extensionId: context.extensionId, trustedClick: closure }))
   const lifecycle = await runConformanceLifecycle(wallet, services, { receiptMode: 'storage-rpc', oracle: lifecycleOracleId, submissionBinding: todoSubmissionBinding })
@@ -32,10 +36,10 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   let conditional: any
   let transactionStates: any
   let certificateStates: any
-  await runNativeIntegration({ application, services, evidence, profile, fixtureRevision, beforeTrustRestore: async boundaryReport => {
+  await runNativeIntegration({ application, services, evidence, profile, fixtureRevision, headerFixture, identityTrustOracle, beforeTrustRestore: async boundaryReport => {
     clauses = await runNativeClauseConformance({ wallet, evidence, boundaryReport, ...(release511 ? { oracle: fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' as const : 'tpnil-brc100-clause-oracle@5.0.0' as const } : coverage ? { oracle: 'tpnil-brc100-clause-oracle@4.0.0' as const } : {}) })
     if (release511) conditional = await runNativeConditionalConformance({ wallet, services, evidence, boundaryReport, fixtureRevision })
-    if (fixtureRevision === 2) transactionStates = await (await import('./conformance-transaction-states.js')).runNativeTransactionStates({ wallet, services, evidence, boundaryReport })
+    if (fixtureRevision === 2) transactionStates = await (await import('./conformance-transaction-states.js')).runNativeTransactionStates({ wallet, services, evidence, boundaryReport, oracleRevision: observer3 ? 2 : 1 })
     if (fixtureRevision === 2) certificateStates = await (await import('./conformance-certificate-states.js')).runNativeCertificateStates({ wallet, services, evidence, boundaryReport })
   } })
   if (!clauses) throw new Error('Native clause scenario did not execute')

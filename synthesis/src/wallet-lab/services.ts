@@ -383,8 +383,35 @@ export class ControlledWalletServices {
   }
 
   async nativeActionReferences(identity: string): Promise<Array<{ txid: string; reference: string }>> {
-    if (this.goServices === undefined || this.components.storage !== 'go') throw new Error('Native Go storage is absent')
-    return this.goServices.actionReferences(identity)
+    if (!/^(02|03)[0-9a-f]{64}$/.test(identity) || BigInt(`0x${identity.slice(2)}`) >= BigInt(`0x${new Curve().p.toString(16)}`) || !PublicKey.fromString(identity).validate()) throw new Error('Invalid action-reference identity')
+    const unique = new Map<string, { txid: string; reference: string }>()
+    const byReference = new Map<string, string>()
+    const visited = new Set<ControlledWalletServices>()
+    const collect = async (service: ControlledWalletServices): Promise<void> => {
+      if (visited.has(service)) return
+      visited.add(service)
+      if (service.goServices === undefined || service.components.storage !== 'go') throw new Error('Native Go storage is absent')
+      const rows: unknown = await service.goServices.actionReferences(identity)
+      if (!Array.isArray(rows) || rows.length > 2048) throw new Error('Action-reference snapshot exceeded its row budget or is not an array')
+      const local = new Set<string>()
+      for (const row of rows) {
+        if (row === null || typeof row !== 'object' || Object.keys(row).sort().join(',') !== 'reference,txid' ||
+          typeof row.txid !== 'string' || !/^[0-9a-f]{64}$/.test(row.txid) || local.has(row.txid) ||
+          typeof row.reference !== 'string' || row.reference.length === 0 || row.reference.length > 300 ||
+          Buffer.from(row.reference, 'base64').toString('base64') !== row.reference) throw new Error('Invalid or ambiguous stored action reference')
+        local.add(row.txid)
+        if ((unique.has(row.txid) && unique.get(row.txid)!.reference !== row.reference) ||
+          (byReference.has(row.reference) && byReference.get(row.reference) !== row.txid)) throw new Error('Counterparts disagree on action-reference identity')
+        unique.set(row.txid, { txid: row.txid, reference: row.reference })
+        byReference.set(row.reference, row.txid)
+        if (unique.size > 2048) throw new Error('Combined action-reference snapshot exceeded its row budget')
+      }
+      // Include retained owners after route withdrawal: their storage remains
+      // part of the run's evidence until the service is finally closed.
+      for (const counterpart of service.ownedStorageCounterparts.values()) await collect(counterpart)
+    }
+    await collect(this)
+    return [...unique.values()].sort((a, b) => a.txid < b.txid ? -1 : a.txid > b.txid ? 1 : 0)
   }
 
   async nativeTransactions(): Promise<Array<{ txid: string; rawTxHex: string }>> {

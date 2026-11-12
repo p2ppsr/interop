@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { Beef, Transaction, Utils } from '@bsv/sdk'
 import { specifiedError } from './conformance-clauses-model.js'
-import { stateConfig as c, stateCaseIds, fanoutArgs, transactionStatePolicy as policy, transactionStatePolicySha256, type StateCall, type StateReport } from './conformance-transaction-states-model.js'
+import { stateConfig as c, stateCaseIds, fanoutArgs, getTransactionStatePolicy, type StateCall, type StateReport } from './conformance-transaction-states-model.js'
 const fixture = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
 const tracker = { currentHeight: async () => fixture.fundingHeight + fixture.maturityDepth, isValidRootForHeight: async (root: string, height: number) => root === fixture.merkleRoot && height === fixture.fundingHeight }
 class Blocked extends Error {}
@@ -25,8 +25,9 @@ export function transactionStateRolePredicate(id: string): string {
   const value = caseId(id.replace(/-prepare$/, '')); assert.ok(value, `Unknown transaction state role ${id}`); return value
 }
 function inspect(report: StateReport) {
+  const { policy, policySha256 } = getTransactionStatePolicy(report.oracle === 'tpnil-native-transaction-states-oracle@2.0.0' ? 2 : 1)
   assert.equal(report.schema, 'tpnil-native-transaction-states@1.0.0'); assert.equal(report.oracle, policy.oracle)
-  assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.policySha256, transactionStatePolicySha256)
+  assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.policySha256, policySha256)
   assert.deepEqual(policy.assertionIds, ['fixture.fanout', ...stateCaseIds]); assert.equal(report.completeBRC100Conformance, false); assert.match(report.identity, /^(02|03)[a-f0-9]{64}$/)
   assert.deepEqual(report.errors, []); assert.ok(report.trace.length <= policy.bounds.maximumPublicCalls)
   assert.equal(new Set(report.trace.map(r => r.id)).size, report.trace.length)
@@ -89,10 +90,10 @@ function inspect(report: StateReport) {
   for (const r of report.trace) { assert.ok(Number.isSafeInteger(r.submissionStart) && r.submissionStart >= previous && Number.isSafeInteger(r.submissionEnd) && r.submissionEnd >= r.submissionStart && r.submissionEnd <= report.submissionEnd); previous = r.submissionEnd }
   assert.deepEqual(report.submissions.map(r => r.index), Array.from({ length: report.submissionEnd - report.submissionStart }, (_, i) => report.submissionStart + i))
   for (const s of report.submissions) { assert.ok(['ACCEPTED_BY_NETWORK', 'REJECTED'].includes(s.verdict)); assert.match(s.serializedHex, /^(?:[a-f0-9]{2})+$/); let tx: Transaction; try { tx = atomic([...Buffer.from(s.serializedHex, 'hex')]) } catch { tx = Transaction.fromHex(s.serializedHex) }; assert.equal(tx.id('hex'), s.txid); assert.equal(stored.get(s.txid)?.toHex(), tx.toHex(), 'Submission must be independently stored') }
-  return { row, fanout, stored }
+  return { row, fanout, stored, policy }
 }
 export async function deriveTransactionStateOutcomes(report: StateReport): Promise<StateReport['assertions']> {
-  const { row, fanout, stored } = inspect(report)
+  const { row, fanout, stored, policy } = inspect(report)
   const graph = new Map(stored); graph.set(fixture.txid, Transaction.fromAtomicBEEF([...Buffer.from(fixture.atomicBeefHex, 'hex')]))
   const hydrate = (tx: Transaction, visited = new Set<string>(), depth = 0): Transaction => {
     assert.ok(depth < 32, 'Historical proof depth retained'); const id = tx.id('hex'); assert.ok(!visited.has(id)); const next = new Set([...visited, id])
@@ -144,6 +145,22 @@ export async function deriveTransactionStateOutcomes(report: StateReport): Promi
   const submitted = (id: string, tx: Transaction) => { const r = row(id); assert.ok(report.submissions.some(s => s.txid === tx.id('hex') && s.index >= r.submissionStart && s.index < r.submissionEnd && s.verdict === 'ACCEPTED_BY_NETWORK')) }
   const noSpend = (index: number) => { for (const s of report.submissions) assert.ok(!stored.get(s.txid)!.inputs.some(i => (i.sourceTXID ?? i.sourceTransaction?.id('hex')) === fanout!.id('hex') && i.sourceOutputIndex === index), 'Rejected operation submitted a spend') }
   const rejected = (id: string, index?: number) => { const r = row(id); assert.equal(r.submissionEnd, r.submissionStart, 'Structured rejection must not emit a new submission'); assert.equal(r.result, undefined); assert.ok(specifiedError(r.error), 'Published parameter/state rejection required'); if (index !== undefined) { available(index); noSpend(index) } }
+  const malformedSignCleanup = (id: string, index: number) => {
+    prepared(`${id}-prepare`); rejected(id, index)
+    const cleanup = row(`${id}-abort`)
+    if (report.oracle !== 'tpnil-native-transaction-states-oracle@2.0.0') { assert.deepEqual(cleanup.result, { aborted: true }); return }
+    assert.ok(policy.malformedSignCleanup.cases.includes(id))
+    assert.equal(cleanup.submissionEnd, cleanup.submissionStart, 'Cleanup must not submit a transaction')
+    const source = row('source-after').result.outputs.find((o: any) => o.outpoint === `${fanout!.id('hex')}.${index}`)
+    assert.equal(source?.spendable, true, 'Automatic cancellation must release the exact source as publicly spendable')
+    if (cleanup.result !== undefined) {
+      assert.equal(cleanup.error, undefined); assert.deepEqual(cleanup.result, { aborted: true })
+    } else {
+      assert.ok(cleanup.error && typeof cleanup.error === 'object')
+      assert.ok(policy.malformedSignCleanup.alreadyClosedError.names.includes(cleanup.error.name), 'Unexpected cleanup error class')
+      assert.equal(cleanup.error.message, policy.malformedSignCleanup.alreadyClosedError.message, 'Cleanup error is not the source-bound already-closed reference response')
+    }
+  }
   const fixtureCheck = async () => {
     assert.ok(fanout); await txFor('fanout'); assert.ok(fanout.outputs.length >= c.sourceCount)
     const r = row('source-before'); assert.equal(r.error, undefined); assert.equal(r.result?.totalOutputs, c.sourceCount); assert.equal(r.result?.outputs?.length, c.sourceCount)
@@ -165,8 +182,8 @@ export async function deriveTransactionStateOutcomes(report: StateReport): Promi
     [caseId('already-spent-input')]: async () => { const tx = await txFor('direct-default'); intent(tx, [0]); submitted('direct-default', tx); rejected('already-spent-input'); const spends = new Set(report.submissions.filter(s => stored.get(s.txid)!.inputs.some(i => (i.sourceTXID ?? i.sourceTransaction?.id('hex')) === fanout!.id('hex') && i.sourceOutputIndex === 0)).map(s => s.txid)); assert.deepEqual([...spends], [tx.id('hex')]) },
     [caseId('script-and-length-conflict')]: async () => { if (row('script-and-length-conflict').error) rejected('script-and-length-conflict', 7); else { const tx = await txFor('script-and-length-conflict'); intent(tx, [7]); submitted('script-and-length-conflict', tx) } },
     [caseId('missing-script-and-length')]: () => rejected('missing-script-and-length', 8),
-    [caseId('spend-index-not-in-reference')]: () => { prepared('spend-index-not-in-reference-prepare'); rejected('spend-index-not-in-reference', 9); assert.deepEqual(row('spend-index-not-in-reference-abort').result, { aborted: true }) },
-    [caseId('script-length-mismatch')]: () => { prepared('script-length-mismatch-prepare'); rejected('script-length-mismatch', 10); assert.deepEqual(row('script-length-mismatch-abort').result, { aborted: true }) },
+    [caseId('spend-index-not-in-reference')]: () => malformedSignCleanup('spend-index-not-in-reference', 9),
+    [caseId('script-length-mismatch')]: () => malformedSignCleanup('script-length-mismatch', 10),
     [caseId('returnTXIDOnly')]: async () => { const a = await txFor('txid-only-create', true), b = await txFor('txid-only-sign', true); const p = prepared('txid-only-prepare'); intent(a, [11], true); intent(b, [12], true); assert.equal(b.version, p.version); assert.equal(b.lockTime, p.lockTime); assert.deepEqual(b.inputs.map(i => i.sequence), p.inputs.map(i => i.sequence)); assert.deepEqual(b.outputs.map(o => [o.satoshis, o.lockingScript.toHex()]), p.outputs.map(o => [o.satoshis, o.lockingScript.toHex()])); submitted('txid-only-create', a); submitted('txid-only-sign', b); assert.notEqual(a.id('hex'), b.id('hex')) },
     [caseId('truncated-proof')]: () => rejected('truncated-proof', 13),
     [caseId('unknown-without-trust')]: () => { assert.ok(!stored.has('a7'.repeat(32))); rejected('unknown-without-trust', 14) }

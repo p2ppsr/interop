@@ -1,10 +1,21 @@
 import fs from 'node:fs'
+import assert from 'node:assert/strict'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 export const transactionStatePolicyPath = 'programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json'
 const bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../..', transactionStatePolicyPath))
 export const transactionStatePolicy = JSON.parse(bytes.toString())
 export const transactionStatePolicySha256 = createHash('sha256').update(bytes).digest('hex')
+export function getTransactionStatePolicy(revision: 1 | 2 = 1) {
+  assert.ok(revision === 1 || revision === 2, 'Unsupported transaction state oracle revision')
+  if (revision === 1) return { policy: transactionStatePolicy, policySha256: transactionStatePolicySha256 }
+  const next = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json'))
+  const policy = JSON.parse(next.toString())
+  assert.equal(policy.oracle, 'tpnil-native-transaction-states-oracle@2.0.0')
+  assert.deepEqual(policy.malformedSignCleanup.cases, ['spend-index-not-in-reference', 'script-length-mismatch'])
+  assert.deepEqual(policy.malformedSignCleanup.alreadyClosedError, { names: ['Error', 'WERR_UNAUTHORIZED'], message: 'The action reference was not issued by this permissions manager.' })
+  return { policy, policySha256: createHash('sha256').update(next).digest('hex') }
+}
 export const stateConfig = { basket: 'tpnil transaction state sources', resultBasket: 'tpnil transaction state results', label: 'tpnil transaction state actions', sourceCount: 16, sourceSatoshis: 100, lockingScript: '7551' } as const
 export const stateCaseIds = [
   'transaction.defaults.noSend-omitted-false', 'transaction.defaults.randomizeOutputs-omitted-true',

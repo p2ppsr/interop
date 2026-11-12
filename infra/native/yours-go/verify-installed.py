@@ -27,22 +27,24 @@ def verify(directory, expected):
     return hashlib.sha256(json.dumps(actual, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--wallet-version', choices=['5.1.0', '5.1.1', '5.1.1-pr368.7e39006'], default='5.1.0')
+parser.add_argument('--wallet-version', choices=['5.1.0', '5.1.1', '5.1.1-pr368.7e39006', '5.1.1-pr368.cb3c2f2'], default='5.1.0')
 version = parser.parse_args().wallet_version
-candidate = version == '5.1.1-pr368.7e39006'
+candidate_directories = {'5.1.1-pr368.7e39006': 'yours-wallet-pr368-7e39006', '5.1.1-pr368.cb3c2f2': 'yours-wallet-pr368-cb3c2f2'}
+candidate = version in candidate_directories
 manifest_version = '5.1.1' if candidate else version
-wallet = ROOT / ('out/sut-artifacts/yours-wallet-pr368-7e39006' if candidate else f'out/sut-artifacts/yours-wallet-v{version}')
+wallet = ROOT / ('out/sut-artifacts/' + candidate_directories[version] if candidate else f'out/sut-artifacts/yours-wallet-v{version}')
 archive_path = wallet / f'pw-v{manifest_version}.zip'
 expected_archive = {
     '5.1.0': ('d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52', 13513123),
     '5.1.1': ('454c8581b8d6ab120c9b2f2f74167f536b08e720bc12e75f3e9437d14a985878', 13644482),
     '5.1.1-pr368.7e39006': ('b80e5a7572bdf11e568ecf41cbf439a0062605a5a2f196b53948b18e1b7fe10e', 13238310),
+    '5.1.1-pr368.cb3c2f2': ('0fff8b6ff51a0c54032e340bdc1878abf751f577ad94d6ee06146e336fd87cc3', 13243164),
 }[version]
 archive_bytes = archive_path.read_bytes()
 if (hashlib.sha256(archive_bytes).hexdigest(), len(archive_bytes)) != expected_archive:
     raise ValueError('Wallet archive differs from selected immutable artifact')
 if candidate:
-    candidate_manifest = json.loads((ROOT / 'fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json').read_text())
+    candidate_manifest = json.loads((ROOT / 'fixtures/artifacts' / candidate_directories[version] / 'provenance.json').read_text())
     if candidate_manifest['officialRelease'] is not False or candidate_manifest['claim'] != 'ENGINEERING_OBSERVATION_ONLY' or candidate_manifest['wallet']['version'] != version or candidate_manifest['manifestVersion'] != manifest_version or (candidate_manifest['wallet']['sha256'], candidate_manifest['wallet']['size']) != expected_archive:
         raise ValueError('Candidate provenance differs from selected immutable artifact')
 with zipfile.ZipFile(archive_path) as archive:

@@ -10,12 +10,16 @@ export const originalReevaluationPlanPath = 'infra/native/conformance/reevaluati
 export const previousReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json'
 export const previousReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-2'
 export const previousReevaluationPlanSha256 = '1c61f19354185589e5be2f2304f04778adea4e82866ebf8d160a14eec80c7f66'
-export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json'
-export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-3'
+export const retainedSource3PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json'
+export const retainedSource3PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-3'
+export const retainedSource3PlanSha256 = '2308c7f5fdbc717029e4a654f09b5938afb4992298e299ac26ae93ae95f560ea'
+export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-4.json'
+export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-4'
 export const originalReevaluationPlanSha256 = 'f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef'
 const revisions = {
   2: { id: previousReevaluationPlanId, path: previousReevaluationPlanPath, predecessor: { path: originalReevaluationPlanPath, sha256: originalReevaluationPlanSha256 } },
-  3: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } }
+  3: { id: retainedSource3PlanId, path: retainedSource3PlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } },
+  4: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource3PlanPath, sha256: retainedSource3PlanSha256 } }
 }
 export const reevaluationSchema = 'tpnil-native-integrated-reevaluation@1'
 export const reevaluationInputNames = ['paid-http.json','messaging.json','synthesis-transactions.json','identity-trust.json']

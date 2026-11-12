@@ -1,0 +1,51 @@
+{
+  "schema": "tpnil-positive-header-observer-correction-review@1",
+  "claim": "SOURCE_FIX_AND_REFERENCE_PREFLIGHT_ONLY",
+  "createdAt": "2026-11-12T05:18:45.721065+00:00",
+  "failedNativeSource": "585211c193d0288effeb466bda38fe6ef23ac94d",
+  "failedNativeRun": 43157437280,
+  "nativeArtifactUnchanged": true,
+  "nativeArtifactSha256": "dd38ec932fce7db5a8172382046fcc7e34c51542025ab864dcfa430181cab02e",
+  "newNativeExecutions": 0,
+  "changes": [
+    "New lazy versioned policy binds exact fundingHeight1,80-byte header and funding fixture SHA256.",
+    "Safe baseline public probe captures positive-header errors without skipping later method corpus. Legacy height0 still propagates its original error.",
+    "Method corpus substitutes controlled-mined for genesis only when explicitly selected, keeping42 assertions across28 methods and fixtureRevision2 signing/publication semantics.",
+    "Verifier independently derives positive request/header/hash from local pinned policy and rejects malformed identities, request substitutions, result/error mixtures and report metadata tampering.",
+    "Parent wiring/profile admission is owned separately; this receipt alone cannot qualify a new profile."
+  ],
+  "tests": {
+    "focusedHeaderCases": 16,
+    "historicalBoundaryTrustCases": 3,
+    "totalPassed": 19,
+    "typecheck": "PASS",
+    "diffCheck": "PASS",
+    "initialTypecheckFailureRetained": "Explicit baseline return type was added; no runtime logic change."
+  },
+  "referencePreflight": {
+    "path": "out/native-review-43157437280/header-reference-preflight.json",
+    "sha256": "7a46a917b0517a69d60a3ff57c1d600e50cf4fd98c4176e028b4af277f7233b5",
+    "scope": "Actual TypeScript Wallet Toolbox, authenticated remote storage and fixture-bound chain services; not native Chromium conformance."
+  },
+  "policyTextDelta": "After19-test pass, policy prose clarified42 assertions across28 methods; fixed values unchanged. Final policy used by actual reference preflight.",
+  "inputs": {
+    "synthesis/src/wallet-lab/native/controlled-header-fixture.ts": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+    "synthesis/src/wallet-lab/boundary-corpus.ts": "e55ebb5346d9c7eac8d579cbd07bcaba575390e3b0a2a7b0e5926921631a9bc4",
+    "synthesis/src/wallet-lab/verify-boundary.ts": "29785131fc2b051463b9c42e18fea854fe787b56da0e6a7aa946776d13265813",
+    "synthesis/src/wallet-lab/yours-driver.ts": "c200032451057686c0f5b291072e54f63dc479639a0f2603b88eabee9a89e4b1",
+    "synthesis/test/native-controlled-header.test.ts": "5e0be269756893077e2cccbd06b504012ebbbb451f6f197ef0c1200cf1f9d64a",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3"
+  },
+  "logs": {
+    "out/native-review-43157437280/controlled-header-tests-1.log": "14b5677beb5a226add36251fe7b947c0130c6505ebfd7d12f3feabeefe95cf0d",
+    "out/native-review-43157437280/controlled-header-typecheck-1.log": "43df9b49a169dcde04af3b2cc4e346b2aa7cf25a983458e93a9088a7bae1252e",
+    "out/native-review-43157437280/controlled-header-and-legacy-tests-2.log": "6a4f3f91cfe6488c30394991918ecbc6e20f1461ea983a444a6316508e5b94c9",
+    "out/native-review-43157437280/controlled-header-typecheck-2.log": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+    "out/native-review-43157437280/header-reference-preflight.log": "78524fa6adbd21fd14318a921819d4ec974f7ee136e82706e2e0c0bf5647b9fe"
+  },
+  "limitations": [
+    "No native retry dispatched by this review.",
+    "No full BRC100 or official-release qualification claim.",
+    "Caller must bind selected policy and boundary ID inventory in the separately frozen candidate observer plan."
+  ]
+}

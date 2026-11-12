@@ -1,0 +1,46 @@
+{
+  "schema": "tpnil-native-integrated-reevaluation-plan@1",
+  "id": "YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-4",
+  "original": {
+    "archive": "journals/integrated-native-attempts/2026-11-09/42711700295/native-integrated.zip",
+    "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+    "workflowRun": 42711700295,
+    "sha256": "c0645821afeea30cbc1c0c70f4ca10bfbe288ebfa570b719af5a709f145c3826",
+    "size": 4255642,
+    "members": 186,
+    "profile": "ITCVE-1@2.0.0",
+    "program": "ISI-4@4.0.0",
+    "planSha256": "eb08ea9808a3cd314d9060c16c466f47cbb36c64ebd3506064085276596432c6",
+    "qualificationSha256": "8a98103995b918aec867f414c36bc8ff71645ce1004e1ced3f4706257ea82ad7"
+  },
+  "rust": {
+    "corpus": "tpnil-rust-corpus@3",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "inputNames": [
+      "paid-http.json",
+      "messaging.json",
+      "synthesis-transactions.json",
+      "identity-trust.json"
+    ]
+  },
+  "expected": {
+    "repetitions": 2,
+    "nativeAssertions": 280,
+    "integratedAssertions": 77,
+    "rustAssertions": 48
+  },
+  "evaluatorSources": {
+    "scripts/reevaluate-native-integrated.mjs": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+    "scripts/verify-native-reevaluation.mjs": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+    "scripts/native-reevaluation.mjs": "c0cf3ffc829064eda27834bb74bb5f93b856a1a7f0425380f95d62a7558c0571",
+    "scripts/frozen-component-replay.mjs": "9f9201d3061b96dffa2822d631817f5518b64cd2a7721165c141989730dadcf8",
+    "scripts/verify-published-integrations.mjs": "b44399fb50c515d7364c81cddb6bf278c44da78ea23b6beb1f6731ba236f0c5f"
+  },
+  "sourceBindingRevision": 4,
+  "predecessor": {
+    "path": "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json",
+    "sha256": "2308c7f5fdbc717029e4a654f09b5938afb4992298e299ac26ae93ae95f560ea"
+  },
+  "scope": "Prospective source4 replay after additive candidate4.2 publication admission. The exact accepted original archive, all280 native assertions,77 integration assertions and48 Rust3 assertions per repetition are unchanged; original accepted plans and prior source revisions remain immutable. No new native sessions or retroactive wallet result changes."
+}

@@ -1,3 +1,5 @@
+import type { IdentityTrustOracleOptions } from './identity-trust-oracle2.js'
+import type { ControlledHeaderFixture } from './controlled-header-fixture.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
@@ -36,17 +38,19 @@ export function nativeWalletBoundary(application: Page, preserveErrors = false):
   } })
 }
 
-export async function runNativeIntegration({ application, services, evidence, profile = 'ITCVE-1@1.3.0', beforeTrustRestore, fixtureRevision = 1 }: {
+export async function runNativeIntegration({ application, services, evidence, profile = 'ITCVE-1@1.3.0', beforeTrustRestore, fixtureRevision = 1, headerFixture, identityTrustOracle }: {
   application: Page; services: ControlledWalletServices; evidence: EvidenceBundle
-  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0'
+  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0'
   fixtureRevision?: 1 | 2
+  headerFixture?: ControlledHeaderFixture
+  identityTrustOracle?: IdentityTrustOracleOptions['oracle']
   beforeTrustRestore?: (boundaryReport: any) => Promise<void>
 }): Promise<void> {
   const root = path.resolve(import.meta.dirname, '../../../..')
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-joined-'))
   const payee = await createFixtureWallet(services, '78'.repeat(32))
   try {
-    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(profile))
+    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(profile))
     const walletIdentity = (await wallet.getPublicKey({ identityKey: true })).publicKey
     const { qualifyRelay } = await import(pathToFileURL(path.join(root, 'components/transport/relay.mjs')).href)
     const { qualifyPaidHttp } = await import(pathToFileURL(path.join(root, 'components/transport/paid-http.mjs')).href)
@@ -86,10 +90,10 @@ export async function runNativeIntegration({ application, services, evidence, pr
       isValidRootForHeight: async (merkleRoot: string, height: number) => services.headers.get(height)?.merkleRoot === merkleRoot
     } })
     let boundary: any, publication: any
-    const trust = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1' ? new PublicSettingsTrust(wallet) : undefined
+    const trust = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1' ? new PublicSettingsTrust(wallet, identityTrustOracle ? { oracle: identityTrustOracle } : undefined) : undefined
     try {
       services.registerOverlayLookup(identityOverlay.origin, ['ls_identity'])
-      boundary = await runWalletBoundaryCorpus({ wallet, fixtureRevision, funder: funder as any, discoveryExpectation: trust ? 'published' : 'untrusted-excluded', prepareDiscovery: async certificate => {
+      boundary = await runWalletBoundaryCorpus({ wallet, fixtureRevision, headerFixture, funder: funder as any, discoveryExpectation: trust ? 'published' : 'untrusted-excluded', prepareDiscovery: async certificate => {
         publication = await publishIdentityCertificate({ wallet, origin: identityOverlay.origin, certificate, fixtureRevision })
         await trust?.enable(certificate)
       } })

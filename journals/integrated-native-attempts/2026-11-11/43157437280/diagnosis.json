@@ -1,0 +1,120 @@
+{
+  "schema": "tpnil-native-candidate-interrupted-attempt-review@1",
+  "verifiedArtifactAndDiagnosticBindings": true,
+  "claim": "UNQUALIFIED_ENGINEERING_ATTEMPT_DIAGNOSIS",
+  "workflowRun": 43157437280,
+  "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+  "candidate": {
+    "id": "yours-wallet-chromium-extension",
+    "version": "5.1.1-pr368.7e39006",
+    "sha256": "b80e5a7572bdf11e568ecf41cbf439a0062605a5a2f196b53948b18e1b7fe10e",
+    "size": 13238310
+  },
+  "profile": "ITCVE-1@4.1.0",
+  "program": "ISI-4@5.1.0",
+  "officialRelease": false,
+  "artifact": {
+    "id": 13916473615,
+    "sha256": "dd38ec932fce7db5a8172382046fcc7e34c51542025ab864dcfa430181cab02e",
+    "bytes": 171987,
+    "members": 40
+  },
+  "failure": {
+    "classification": "OBSERVER_INVALID_BASELINE_REQUEST",
+    "originalMessage": "page.evaluate: WERR_INVALID_PARAMETER: The height parameter must be at least 1 length.\n    at l0 (chrome-extension://gdbhbgddacaofochbpinolbflfpmgoaa/inject.js:110:46150)\n    at a (chrome-extension://gdbhbgddacaofochbpinolbflfpmgoaa/inject.js:110:46320)",
+    "sourcePath": "synthesis/src/wallet-lab/yours-driver.ts",
+    "sourceLine": 777,
+    "request": {
+      "method": "getHeaderForHeight",
+      "args": {
+        "height": 0
+      }
+    },
+    "shippedValidator": {
+      "artifactSha256": "b80e5a7572bdf11e568ecf41cbf439a0062605a5a2f196b53948b18e1b7fe10e",
+      "map": "build/background.js.map",
+      "mapSha256": "097d5af2969fcb8d490d95a1b9e30444d59e3a8488d07b3ade325491ce2e7de8",
+      "sourceIndex": 85,
+      "source": "../node_modules/@bsv/sdk/dist/esm/src/wallet/validationHelpers.js",
+      "sourceSha256": "a62bcedbdde10449b5b5ab8f21e0be3df81c33fc9923fed17258ecd285f4600c",
+      "startLine": 1234,
+      "excerpt": "function validateGetHeaderArgs(args) {\n    const value = validateRecord(args, 'args');\n    validateInteger(value.height, 'height', undefined, 1, MAX_UINT32);\n}"
+    },
+    "secondaryWorkerMessage": "Native wallet cleanup failed",
+    "secondaryCleanupBindingErrors": [
+      "Error: ENOENT: no such file or directory, open '/evidence/record.json'",
+      "Error: ENOENT: no such file or directory, open '/evidence/evidence/conformance/permission-lifecycle.json'",
+      "Error: ENOENT: no such file or directory, open '/evidence/evidence/conformance/service-counterparts.json'",
+      "Error: ENOENT: no such file or directory, open '/evidence/evidence/conformance/permission-coverage.json'"
+    ]
+  },
+  "observedExecution": {
+    "startedRepetitions": 1,
+    "completedRepetitions": 0,
+    "preliminaryVectorCount": 7,
+    "preliminaryAssertionCount": 14,
+    "rawPreliminaryCounts": {
+      "PASS": 12,
+      "FAIL": 2,
+      "BLOCKED": 0
+    },
+    "scope": "Unqualified diagnostic vectors retained before the baseline method-inventory exception; these are not426 scored conformance observations.",
+    "visiblePermissionPrompts": 20,
+    "completedCustomerEvidence": [
+      "create",
+      "cold-reload",
+      "redeem",
+      "controlled-rejection-and-recovery"
+    ],
+    "conformanceModulesStarted": 0,
+    "original99": {
+      "observed": 0,
+      "notObserved": 99,
+      "delta": null
+    },
+    "rust": {
+      "executed": false,
+      "outcome": null
+    },
+    "repetition2Started": false
+  },
+  "cleanup": {
+    "containerRemoved": true,
+    "containerExitCode": 1,
+    "kernelUsernsRestored": true,
+    "browserClosed": true,
+    "servicesClosed": true,
+    "profileRemoved": true,
+    "mongoClean": true,
+    "initialProviderRows": 8,
+    "finalProviderRows": 8,
+    "globalLedgerPrefixRows": 4,
+    "globalLedgerPrefixMatchesFinalProviderLedger": true,
+    "lateSubmissionsObserved": 0,
+    "completeShutdownQualification": false,
+    "deniedPermissionSafetyQualification": false
+  },
+  "isolationSubset": {
+    "frozenHostReceiptChecks": "PASS",
+    "networkMode": "none",
+    "nonroot": true,
+    "capabilitiesDropped": true,
+    "readonlyRoot": true,
+    "qualifiedEnvironment": false
+  },
+  "nativeQualification": false,
+  "fullConformanceOutcome": null,
+  "completeBRC100Conformance": false,
+  "newNativeSessionsForReview": 0,
+  "cost": {
+    "completedJobWallSeconds": 828,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "unknownCostsAreZero": false
+  },
+  "originalBytesUnchanged": true
+}

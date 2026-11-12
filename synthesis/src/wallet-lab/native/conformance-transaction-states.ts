@@ -3,13 +3,14 @@ import type { BoundaryWallet } from '../boundary-corpus.js'
 import type { ControlledWalletServices } from '../services.js'
 import type { EvidenceBundle } from '../evidence.js'
 import { captureClauseError } from './conformance-clauses.js'
-import { stateConfig as c, fanoutArgs, transactionStatePolicy as policy, transactionStatePolicySha256, type StateReport } from './conformance-transaction-states-model.js'
+import { stateConfig as c, fanoutArgs, getTransactionStatePolicy, type StateReport } from './conformance-transaction-states-model.js'
 import { deriveTransactionStateOutcomes } from './verify-transaction-states.js'
 
-export async function runNativeTransactionStates({ wallet, services, evidence, boundaryReport }: { wallet: BoundaryWallet; services: ControlledWalletServices; evidence: EvidenceBundle; boundaryReport: any }): Promise<StateReport> {
+export async function runNativeTransactionStates({ wallet, services, evidence, boundaryReport, oracleRevision = 1 }: { wallet: BoundaryWallet; services: ControlledWalletServices; evidence: EvidenceBundle; boundaryReport: any; oracleRevision?: 1 | 2 }): Promise<StateReport> {
+  const { policy, policySha256 } = getTransactionStatePolicy(oracleRevision)
   const identity = boundaryReport.trace.find((r: any) => r.method === 'getPublicKey' && r.args?.identityKey === true)?.result?.publicKey
   if (!identity) throw Error('Transaction states require the observed native identity')
-  const report: StateReport = { schema: 'tpnil-native-transaction-states@1.0.0', oracle: policy.oracle, claim: 'ENGINEERING_OBSERVATION_ONLY', policySha256: transactionStatePolicySha256, identity, trace: [], skipped: [], errors: [], submissionStart: services.submissions.length, submissionEnd: services.submissions.length, submissions: [], storageTransactions: [], assertions: [], result: 'BLOCKED', completeBRC100Conformance: false }
+  const report: StateReport = { schema: 'tpnil-native-transaction-states@1.0.0', oracle: policy.oracle, claim: 'ENGINEERING_OBSERVATION_ONLY', policySha256, identity, trace: [], skipped: [], errors: [], submissionStart: services.submissions.length, submissionEnd: services.submissions.length, submissions: [], storageTransactions: [], assertions: [], result: 'BLOCKED', completeBRC100Conformance: false }
   const call = async (id: string, method: string, args: any) => {
     if (report.trace.length >= policy.bounds.maximumPublicCalls) throw Error('Transaction-state public call budget exceeded')
     const row: any = { id, method, args: structuredClone(args), submissionStart: services.submissions.length, submissionEnd: services.submissions.length }; report.trace.push(row)

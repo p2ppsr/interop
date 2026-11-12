@@ -5,9 +5,9 @@ import path from 'node:path'
 import {createHash} from 'node:crypto'
 import {execFileSync} from 'node:child_process'
 import {checkNativeWalletSelector} from '../scripts/check-native-wallet-selector.mjs'
-import {selectNativeWalletProfile,nativeCandidateFlag,nativeCandidateVariant,nativeCandidatePlanPath,nativeWallet511Observer2Flag,nativeWallet511Observer2Variant,nativeWallet511Observer2PlanPath} from '../scripts/native-wallet-profiles.mjs'
+import {selectNativeWalletProfile,nativeCandidateFlag,nativeCandidateVariant,nativeCandidatePlanPath,nativeWallet511Observer2Flag,nativeWallet511Observer2Variant,nativeWallet511Observer2PlanPath,nativeCandidateObserver3Flag,nativeCandidateObserver3Variant,nativeCandidateObserver3PlanPath} from '../scripts/native-wallet-profiles.mjs'
 import {nativeRustBinding,selectNativeRustCorpus} from '../scripts/native-rust-compatibility.mjs'
-const root=path.resolve(import.meta.dirname,'..'),read=name=>fs.readFileSync(path.join(root,name)),json=name=>JSON.parse(read(name)),sha=b=>createHash('sha256').update(b).digest('hex')
+const root=path.resolve(import.meta.dirname,'..'),currentRead=name=>fs.readFileSync(path.join(root,name)),read=name=>execFileSync('git',['show',`585211c193d0288effeb466bda38fe6ef23ac94d:${name}`],{cwd:root,maxBuffer:64*1024*1024}),json=name=>JSON.parse(read(name)),sha=b=>createHash('sha256').update(b).digest('hex')
 const source='ab'.repeat(20),options={source,read,readCommitted:(_revision,name)=>read(name)}
 
 test('candidate is a distinct explicit engineering artifact while observed version stays unchanged',async()=>{
@@ -54,7 +54,7 @@ test('candidate and official binding substitutions, unknown selectors and retain
   await assert.rejects(checkNativeWalletSelector(nativeCandidateVariant,{...options,readCommitted:(_revision,name)=>name==='scripts/check-native-wallet-selector.mjs'?Buffer.from('changed selector'):read(name)}),/differs|changed/)
 })
 
-test('actual candidate ZIP installed-tree verification rejects changed files, missing files and official-release substitution',()=>{
+for(const short of ['7e39006','cb3c2f2']) test(`actual ${short} ZIP rejects changed files, missing files and official-release substitution`,()=>{
   const harness=String.raw`
 import sys,tempfile,pathlib,shutil,zipfile,tarfile,json
 root=pathlib.Path(sys.argv[1]);script=(root/'infra/native/yours-go/verify-installed.py').read_text()
@@ -80,6 +80,30 @@ with tempfile.TemporaryDirectory(prefix='tpnil-candidate-self-test-') as tmp:
  sys.argv=['verify-installed.py','--wallet-version','5.1.1'];official=base/'out/sut-artifacts/yours-wallet-v5.1.1';official.mkdir();shutil.copyfile(wallet/'pw-v5.1.1.zip',official/'pw-v5.1.1.zip');rejects()
  print(json.dumps({'labSelfTestOnly':True,'validCandidateVerified':True,'mutationsRejected':3}))
 `
-  const output=execFileSync('python3',['-c',harness,root],{encoding:'utf8'})
+  const output=execFileSync('python3',['-c',harness.replaceAll('7e39006',short),root],{encoding:'utf8'})
   assert.deepEqual(JSON.parse(output.trim().split('\n').at(-1)),{labSelfTestOnly:true,validCandidateVerified:true,mutationsRejected:3})
+})
+
+
+test('candidate observer3 explicitly binds a positive controlled header while preserving attempted plans',async()=>{
+  const selected=selectNativeWalletProfile(nativeCandidateObserver3Flag),plan=JSON.parse(currentRead(nativeCandidateObserver3PlanPath))
+  assert.equal(selected.observerRevision,3);assert.equal(selected.walletVersion,'5.1.1-pr368.cb3c2f2');assert.equal(selected.candidate,true)
+  assert.equal(plan.observerRevision,3);assert.equal(plan.expectedObservations,426)
+  assert.notDeepEqual(plan.wallet,json(nativeCandidatePlanPath).wallet)
+  assert.deepEqual(plan.wallet,JSON.parse(currentRead(plan.walletCandidate.manifest)).wallet)
+  assert.equal(plan.walletCandidate.sourceCommit,'cb3c2f20e016948b58823f6c8b624b9065f8a693')
+  assert.equal(plan.itcve,'ITCVE-1@4.2.0');assert.equal(plan.program,'ISI-4@5.2.0')
+  assert.equal(plan.headerFixture,'tpnil-native-controlled-header@1.0.0')
+  assert.equal(sha(currentRead(plan.headerFixturePolicy)),plan.headerFixturePolicySha256)
+  const boundary=JSON.parse(currentRead(plan.boundaryProfile)),oldBoundary=json(json(nativeCandidatePlanPath).boundaryProfile)
+  assert.deepEqual(boundary.assertions,oldBoundary.assertions.map(id=>id==='getHeaderForHeight.genesis'?'getHeaderForHeight.controlled-mined':id))
+  for(const file of [nativeCandidatePlanPath,nativeWallet511Observer2PlanPath,'infra/native/conformance/rust-graph-pr368-7e39006.json','infra/native/conformance/rust-graph-5.1.1-selector-2.json'])assert.deepEqual(currentRead(file),read(file))
+  const currentOptions={source,read:currentRead,readCommitted:(_revision,name)=>currentRead(name)}
+  const verified=await checkNativeWalletSelector(nativeCandidateObserver3Variant,currentOptions)
+  assert.equal(verified.rust.variant,nativeCandidateObserver3Variant)
+  await assert.rejects(checkNativeWalletSelector(nativeCandidateVariant,currentOptions),/differs/)
+  const lock={source,plan,planSha256:sha(currentRead(nativeCandidateObserver3PlanPath)),executionVariant:nativeCandidateObserver3Variant,rustCompatibility:verified.rust}
+  for(const mutate of [l=>l.executionVariant=nativeCandidateVariant,l=>delete l.plan.observerRevision,l=>l.plan.headerFixture='genesis',l=>l.rustCompatibility.manifest='infra/native/conformance/rust-graph-pr368-7e39006.json']) {
+    const changed=structuredClone(lock);mutate(changed);await assert.rejects(selectNativeRustCorpus(changed,{...currentOptions,graphPolicy:async()=>({corpus:'tpnil-rust-corpus@3',graphOracle:verified.rust.graphOracle})}))
+  }
 })

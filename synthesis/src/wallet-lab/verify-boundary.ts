@@ -4,6 +4,7 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { BigNumber, Point, PrivateKey, ProtoWallet, PublicKey, Schnorr, Signature, Transaction, Utils, VerifiableCertificate } from '@bsv/sdk'
 import { verifyIdentityPublication } from './native/verify-identity-publication.js'
+import { getControlledHeaderFixture, type ControlledHeaderFixture } from './native/controlled-header-fixture.js'
 const root = path.resolve(import.meta.dirname, '../../..')
 const read = (file: string) => JSON.parse(fs.readFileSync(file, 'utf8'))
 const profile = read(path.join(root, 'programs/ISI-4/profiles/brc100-boundary-1.0.0/profile.json'))
@@ -12,14 +13,26 @@ const fixture = read(path.join(root, 'fixtures/teranode/wab-funding-v1.json'))
 const tracker = { currentHeight: async () => 900100, isValidRootForHeight: async (root: string, height: number) => root === fixture.merkleRoot && height === fixture.fundingHeight }
 
 /** Recompute method predicates from returned bytes, public responses and errors. */
-export async function verifyBoundaryCorpus(c: any, publication: any) {
+export async function verifyBoundaryCorpus(c: any, publication: any, expectedHeaderFixture?: ControlledHeaderFixture) {
   assert.equal(c.schema, 'tpnil-brc100-boundary-corpus@1.0.0')
   assert.equal(c.claim, 'ENGINEERING_OBSERVATION_ONLY')
   assert.ok(c.fixtureRevision === undefined || c.fixtureRevision === 2, 'Unsupported boundary fixture revision')
-  assert.deepEqual(c.assertions.map((x: any) => x.id).sort(), [...profile.assertions].sort())
+  if (expectedHeaderFixture !== undefined) assert.equal(c.headerFixture, expectedHeaderFixture, 'Boundary header fixture differs from parent selection')
+  const controlledHeader = c.headerFixture === undefined ? undefined : getControlledHeaderFixture(c.headerFixture)
+  assert.equal(c.headerFixturePolicySha256, controlledHeader?.policySha256)
+  assert.equal(c.headerFundingFixtureSha256, controlledHeader?.fixtureSha256)
+  const assertionIds = profile.assertions.map((id: string) => controlledHeader && id === 'getHeaderForHeight.genesis' ? controlledHeader.assertionId : id)
+  assert.deepEqual(c.assertions.map((x: any) => x.id).sort(), [...assertionIds].sort())
   const trace = c.trace as any[]
   const first = (method: string) => trace.find(t => t.method === method)
   const all = (method: string) => trace.filter(t => t.method === method)
+  if (controlledHeader) {
+    const calls = all('getHeaderForHeight')
+    assert.equal(calls.length, 2, 'Expected one positive controlled header call and one negative control')
+    assert.deepEqual(calls[0].args, { height: controlledHeader.height }, 'Controlled header request differs from pinned funding height')
+    assert.deepEqual(calls[1].args, { height: -1 }, 'Controlled header negative request differs')
+    for (const call of calls) assert.notEqual(Object.hasOwn(call, 'result'), Object.hasOwn(call, 'error'), 'Header call must contain one result or error')
+  }
   if (c.fixtureRevision === 2) {
     for (const [description, index, inputDescription] of [['TPNIL boundary abort reservation', 1, 'Abort fixture token'], ['TPNIL boundary staged signature', 0, 'Signing fixture token']] as const) {
       const prepared = trace.filter(t => t.method === 'createAction' && t.args?.description === description)
@@ -90,6 +103,10 @@ export async function verifyBoundaryCorpus(c: any, publication: any) {
     'proveCertificate.selective-disclosure': async () => { const proof = rows('proveCertificate'); same(Object.keys(proof.keyringForVerifier), ['name']); const vc = VerifiableCertificate.fromCertificate(cert, proof.keyringForVerifier); assert.ok(await vc.verify()); same(await vc.decryptFields(verifier), { name: 'TPNIL boundary identity' }); assert.ok(all('proveCertificate')[1]?.result?.keyringForVerifier) },
     'identity-service.publish': async () => { if (c.fixtureRevision === 2) await verifyIdentityPublication(publication, cert, identity, tracker); assert.ok(publication?.txid); const tx = Transaction.fromAtomicBEEF(publication.beef); same(tx.id('hex'), publication.txid); same(tx.toHex(), publication.raw); assert.ok(publication.answer.outputs.some((r: any) => Transaction.fromBEEF(r.beef).id('hex') === publication.txid)) },
     'relinquishCertificate.tombstone': () => { same(rows('relinquishCertificate').relinquished, true); same(all('listCertificates')[1]?.result.totalCertificates, 0) }
+  }
+  if (controlledHeader) {
+    delete predicates['getHeaderForHeight.genesis']
+    predicates[controlledHeader.assertionId] = () => same(rows('getHeaderForHeight').header, controlledHeader.header)
   }
   for (const method of ['discoverByIdentityKey', 'discoverByAttributes']) predicates[`${method}.identity-service`] = () => {
     const found = rows(method).certificates.some((r: any) => r.serialNumber === cert.serialNumber && r.certifier === issuer && r.subject === identity)

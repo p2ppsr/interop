@@ -1,0 +1,62 @@
+{
+  "schema": "tpnil-controlled-header-reference-preflight@1",
+  "claim": "TYPESCRIPT_REFERENCE_ONLY_NOT_NATIVE_QUALIFICATION",
+  "nativeExecutions": 0,
+  "verified": true,
+  "selected": {
+    "id": "tpnil-native-controlled-header@1.0.0",
+    "assertionId": "getHeaderForHeight.controlled-mined",
+    "policySha256": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+    "fixtureSha256": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+    "height": 1,
+    "header": "0100000006226e46111a0b59caaf126043eb5bbf28c34f3a5e332a1fc7b2b73cf188910ff92c04a4c91f3bf86d4c180f010ffb83e794eb4f2cc092aed958e1c0b9061cf86db1b06affff7f2000000000"
+  },
+  "observation": {
+    "decrypted": [
+      84,
+      80,
+      78,
+      73,
+      76,
+      32,
+      98,
+      111,
+      117,
+      110,
+      100,
+      97,
+      114,
+      121,
+      32,
+      102,
+      105,
+      120,
+      116,
+      117,
+      114,
+      101
+    ],
+    "signatureVerified": true,
+    "hmacVerified": true,
+    "height": {
+      "height": 900100
+    },
+    "headerRequest": {
+      "height": 1
+    },
+    "header": {
+      "header": "0100000006226e46111a0b59caaf126043eb5bbf28c34f3a5e332a1fc7b2b73cf188910ff92c04a4c91f3bf86d4c180f010ffb83e794eb4f2cc092aed958e1c0b9061cf86db1b06affff7f2000000000"
+    }
+  },
+  "services": "Actual ControlledWalletServices and Wallet Toolbox Wallet with authenticated remote storage and fixture-bound chain services",
+  "cleanup": {
+    "walletClosed": true,
+    "servicesClosed": true,
+    "directoryRemoved": true
+  },
+  "inputs": {
+    "synthesis/src/wallet-lab/yours-driver.ts": "c200032451057686c0f5b291072e54f63dc479639a0f2603b88eabee9a89e4b1",
+    "synthesis/src/wallet-lab/native/controlled-header-fixture.ts": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3"
+  }
+}

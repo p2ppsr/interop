@@ -171,3 +171,13 @@ test('historical native receipts preserve their original profile, claim and opti
     assert.deepEqual(requireArchiveVerifierReceipt(JSON.stringify(qualification), bundle), qualification)
   }
 })
+
+test('observer3 publication requires its new profile/program pair and engineering limits', () => temporary(directory => {
+  const profile = { profile: 'ITCVE-1@4.2.0', program: 'ISI-4@5.2.0' }
+  publishCandidate(directory, profile)
+  assert.equal(verifyIntegrationArchive(directory).qualification.profile, profile.profile)
+  for (const change of [{ program: 'ISI-4@5.1.0' }, { claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' }, { completeBRC100Conformance: true }]) {
+    publishCandidate(directory, { ...profile, ...change })
+    assert.throws(() => verifyIntegrationArchive(directory))
+  }
+}))

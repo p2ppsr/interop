@@ -16,11 +16,20 @@ export const yoursPr368Artifact = Object.freeze({ id: 'yours-wallet-chromium-ext
 export const retiredYoursCandidateArtifacts = Object.freeze([
   Object.freeze({ id: 'yours-wallet-chromium-extension', version: '5.1.1-pr368.f9faa', sha256: 'd550a0fefb5b2ccec844c47b02610b4f388128e564e3011ad46c2014f30f3a74', size: 13233045 })
 ])
+export const yoursPr368Observer3Artifact = Object.freeze({"id": "yours-wallet-chromium-extension", "version": "5.1.1-pr368.cb3c2f2", "sha256": "0fff8b6ff51a0c54032e340bdc1878abf751f577ad94d6ee06146e336fd87cc3", "size": 13243164})
+export type YoursCandidateProfile = 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0'
+/** A new candidate is inadmissible until its exact acquired artifact is pinned.
+ * Executed 4.1 remains bound to its original artifact. */
+export const yoursCandidateArtifactsByProfile: Readonly<Partial<Record<YoursCandidateProfile, Readonly<ArtifactIdentity>>>> = Object.freeze({
+  'ITCVE-1@4.1.0': yoursPr368Artifact,
+  'ITCVE-1@4.2.0': yoursPr368Observer3Artifact
+})
 export function identifiesYoursCandidate(wallet: ArtifactIdentity): boolean {
-  return [yoursPr368Artifact, ...retiredYoursCandidateArtifacts].some(candidate => wallet.version === candidate.version || wallet.sha256 === candidate.sha256)
+  return [...Object.values(yoursCandidateArtifactsByProfile), ...retiredYoursCandidateArtifacts].some(candidate => wallet.version === candidate.version || wallet.sha256 === candidate.sha256)
 }
-export function matchesYoursCandidate(wallet: ArtifactIdentity): boolean {
-  return Object.entries(yoursPr368Artifact).every(([key, value]) => wallet[key as keyof ArtifactIdentity] === value)
+export function matchesYoursCandidate(wallet: ArtifactIdentity, profile: YoursCandidateProfile = 'ITCVE-1@4.1.0'): boolean {
+  const artifact = yoursCandidateArtifactsByProfile[profile]
+  return artifact !== undefined && Object.entries(artifact).every(([key, value]) => wallet[key as keyof ArtifactIdentity] === value)
 }
 
 export interface AssertionResult {
@@ -57,8 +66,8 @@ export interface PermissionObservation {
 export interface WalletLabResult {
   schema: 'tpnil-isi4-wallet-run@1.0.0'
   claim: WalletLabClaim
-  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0' | 'ISI-4@5.0.0' | 'ISI-4@5.1.0'
-  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0'
+  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0' | 'ISI-4@5.0.0' | 'ISI-4@5.1.0' | 'ISI-4@5.2.0'
+  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0'
   walletCandidate?: Record<string, unknown>
   profile: 'candidate-wallet-native-engineering' | 'production-wallet-todo-controlled-services' | 'production-wallet-native-conformance' | 'desktop-wallet-todo-controlled-services' | 'desktop-wallet-todo-declared-fixture-hook'
   runId: string

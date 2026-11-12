@@ -60,3 +60,13 @@ licensed packages, keep their original terms. No Apache relicensing, vendor
 endorsement, or broader submission acceptance is asserted.
 
 The earlier, unscored PR368 f9faa candidate remains byte-for-byte under `fixtures/artifacts/yours-wallet-pr368-f9faa/` with its own provenance and license inventory. It is retired from active native selection and cannot be relabeled as an official release.
+
+## Retained Yours PR368 cb3c2f2 candidate
+
+`fixtures/artifacts/yours-wallet-pr368-cb3c2f2/` retains the exact source-owned
+engineering build with public transaction option and cleanup-error corrections.
+Its own provenance binds CI, the original inner/outer archives, all45 members,
+source patches,134 package names/139 versions/145 installed locations and their
+license metadata/notices. Earlier7e39006 andf9faa intakes are unchanged. The new
+candidate is not an official release, vendor endorsement or native qualification;
+all original license terms continue to apply.

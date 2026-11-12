@@ -29,12 +29,12 @@ function assertClosure(plan, contents) {
   }
 }
 
-test('both prospective native workers receive every source-bound input in their container', () => {
+test('all frozen native workers receive every source-bound input in their container', () => {
   const contents = dockerfiles.map(name => fs.readFileSync(path.join(root, name), 'utf8'))
-  for (const name of ['plan-5.1.1-observer-2.json', 'plan-pr368-7e39006.json']) {
+  for (const name of ['plan-5.1.1-observer-2.json', 'plan-pr368-7e39006.json', 'plan-pr368-cb3c2f2-observer-3.json']) {
     const plan = JSON.parse(fs.readFileSync(path.join(root, 'infra/native/conformance', name)))
     assertClosure(plan, contents)
-    for (const missing of ['COPY synthesis/go/cmd ', 'COPY .github/workflows/', 'COPY scripts/native-wallet-profiles.mjs ']) {
+    for (const missing of ['COPY synthesis/go/cmd ', 'COPY .github/workflows/', 'COPY scripts/verify-native-trust.mjs ']) {
       const changed = contents.map(text => text.split('\n').filter(line => !line.startsWith(missing)).join('\n'))
       assert.throws(() => assertClosure(plan, changed), /absent from the container/)
     }

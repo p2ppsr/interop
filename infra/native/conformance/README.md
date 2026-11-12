@@ -43,3 +43,29 @@ read-only root filesystems, the native Chromium sandbox and scoped controlled
 CA trust. The per-repetition bound is 900 seconds, plus 60 seconds for the host
 deadline. It preserves every failed attempt, restores the runner namespace
 setting, removes containers, and verifies wallet, service and database cleanup.
+
+## Separately selected observer3 candidate
+
+`integrated-native-conformance-pr368-cb3c2f2-observer-3` selects the separately retained
+PR #368 engineering artifact at `cb3c2f2` under ITCVE-1 4.2.0 and ISI-4 5.2.0
+with a new frozen observer plan. Earlier official
+and candidate attempts remain bound to their original source and policies.
+The plan retains 426 native observations, two fresh repetitions and the existing
+900-second repetition/50-minute workflow limits. It is not an official wallet
+release or complete BRC100 qualification.
+
+The header probe now requests the exact positive funding height and header in
+`controlled-header-1.0.0.json`. Only the declared header predicate changes;
+errors remain recorded failures. Trust oracle 2 binds the specified
+`publiclyRevealedKeyring` field to the original signed certificate, public anyone
+proof and independent decryption. Final action-reference capture uses the active page
+after a browser restart. Every change requires fresh native observations;
+reference tests and corrected replay do not retroactively qualify an attempt.
+
+The predecessor official run 43157433977 stopped after its first 426 observations
+because final capture used a closed page. Its 381 PASS, 43 FAIL and two BLOCKED and
+original 99 diagnostic mapping of 89 PASS and 10 FAIL remain unqualified. Candidate
+run 43157437280 stopped at the invalid height-zero observer request before any
+of the 99 conformance predicates were observed. Both failures and actual costs
+are retained separately. The blocked coverage gate retains every unexecuted
+obligation in the 306-row accountability inventory.

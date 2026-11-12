@@ -1,0 +1,36 @@
+{
+  "schema": "tpnil-native-trust-observer-regression-fixture@1",
+  "claim": "UNQUALIFIED_ORIGINAL_OBSERVATIONS_FOR_VERIFIER_SELF_TEST",
+  "workflowRun": 43157433977,
+  "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+  "originalArtifact": {
+    "id": 13917452656,
+    "sha256": "b9aa072e62ffce8ba4d222f29341499a7e7c3568954ea35ff63a8c81da286afb",
+    "members": 134
+  },
+  "files": [
+    {
+      "path": "identity-trust.json.gz",
+      "bytes": 141576,
+      "sha256": "5bbae23fe9c9fe9f9fc926db5c6bb0fa1007ebd28416337a94090807aec41155",
+      "rawBytes": 625040,
+      "rawSha256": "b4bf435a559b4c241278c8cf28114c53b4b2079cb23d45d2a84471302c368df3",
+      "originalMember": "repetition-1/evidence/integrated/identity-trust.json"
+    },
+    {
+      "path": "boundary.json.gz",
+      "bytes": 52136,
+      "sha256": "da4758fd1ca750186edc11f96a252eb1a2ead7af1633334c005c9d391c4c991f",
+      "rawBytes": 264317,
+      "rawSha256": "c9f750b6c0bb7203320ac555dadfe77bc241c30b1f3923266fb35eeb605c92b2",
+      "originalMember": "repetition-1/evidence/integrated/boundary.json"
+    }
+  ],
+  "originalVerdict": "Frozen trust verifier rejects positive-discovery because it compares keyring instead of publiclyRevealedKeyring. The overall attempt failed on a stale closed browser page after conformance, before record generation.",
+  "rules": [
+    "Original bytes remain unchanged.",
+    "Tests annotate a separate in-memory copy with prospective oracle2 metadata; that derived sample is neither a new native run nor environment qualification.",
+    "Legacy replay must continue rejecting this original sample."
+  ],
+  "completeBRC100Conformance": false
+}

@@ -48,8 +48,8 @@ test('reports regressions without hiding them behind improved failure totals', (
   assert.equal(report.regressions.length, 1); assert.equal(report.originalFailureOutcomes.PASS, 1)
 })
 
-test('keeps candidate engineering identity and rejects mixed artifacts or release claims', () => {
-  const records = fixture().map(record => ({ ...record, itcve: 'ITCVE-1@4.1.0', claim: 'ENGINEERING_OBSERVATION_ONLY', walletCandidate: { officialRelease: false }, artifacts: { ...record.artifacts, wallet: { ...record.artifacts.wallet, version: '5.1.1-pr368.7e39006' } } }))
+for (const [profile, version] of [['ITCVE-1@4.1.0', '5.1.1-pr368.7e39006'], ['ITCVE-1@4.2.0', '5.1.1-pr368.cb3c2f2']]) test(`keeps ${profile} candidate identity and rejects mixed artifacts or release claims`, () => {
+  const records = fixture().map(record => ({ ...record, itcve: profile, claim: 'ENGINEERING_OBSERVATION_ONLY', walletCandidate: { officialRelease: false }, artifacts: { ...record.artifacts, wallet: { ...record.artifacts.wallet, version } } }))
   const report = compareNativeConformance(baseline, records, {})
   assert.equal(report.candidate.recordClaim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.candidate.walletCandidate.officialRelease, false)
   for (const mutate of [

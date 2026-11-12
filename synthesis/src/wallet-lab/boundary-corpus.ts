@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { BigNumber, P2PKH, Point, Schnorr, PrivateKey, ProtoWallet, PublicKey, Signature, Transaction, Utils, VerifiableCertificate } from '@bsv/sdk'
 import { issueFixtureCertificateForSubject } from './certificate-fixture.js'
+import { getControlledHeaderFixture, type ControlledHeaderFixture } from './native/controlled-header-fixture.js'
 
 export interface BoundaryWallet { [method: string]: (args: any) => Promise<any> }
 export interface BoundaryCorpusOptions {
@@ -10,12 +11,14 @@ export interface BoundaryCorpusOptions {
   prepareDiscovery?: (certificate: Record<string, unknown>) => Promise<void>
   discoveryExpectation?: 'published' | 'untrusted-excluded'
   fixtureRevision?: 1 | 2
+  headerFixture?: ControlledHeaderFixture
 }
 const requiredMethods = ['createAction', 'signAction', 'abortAction', 'listActions', 'internalizeAction', 'listOutputs', 'relinquishOutput', 'getPublicKey', 'revealCounterpartyKeyLinkage', 'revealSpecificKeyLinkage', 'encrypt', 'decrypt', 'createHmac', 'verifyHmac', 'createSignature', 'verifySignature', 'acquireCertificate', 'listCertificates', 'proveCertificate', 'relinquishCertificate', 'discoverByIdentityKey', 'discoverByAttributes', 'isAuthenticated', 'waitForAuthentication', 'getHeight', 'getHeaderForHeight', 'getNetwork', 'getVersion']
 
 /** Prospective BRC-100 method corpus. All SUT operations use its public boundary.
  * A failed native method remains a failed observation; reference behavior cannot replace it. */
-export async function runWalletBoundaryCorpus({ wallet: implementation, funder, prepareDiscovery, discoveryExpectation = 'published', fixtureRevision = 1 }: BoundaryCorpusOptions) {
+export async function runWalletBoundaryCorpus({ wallet: implementation, funder, prepareDiscovery, discoveryExpectation = 'published', fixtureRevision = 1, headerFixture }: BoundaryCorpusOptions) {
+  const controlledHeader = headerFixture === undefined ? undefined : getControlledHeaderFixture(headerFixture)
   const trace: Array<Record<string, unknown>> = [], assertions: Array<{ id: string; result: 'PASS' | 'FAIL' | 'BLOCKED'; detail: string }> = []
   const wallet = new Proxy({} as BoundaryWallet, { get: (_target, method) => async (args: unknown = {}) => {
     const entry: Record<string, unknown> = { method, args: structuredClone(args) }; trace.push(entry)
@@ -37,9 +40,9 @@ export async function runWalletBoundaryCorpus({ wallet: implementation, funder, 
   await check('isAuthenticated.true', async () => assert.equal((await wallet.isAuthenticated!({})).authenticated, true))
   await check('waitForAuthentication.true', async () => assert.equal((await wallet.waitForAuthentication!({})).authenticated, true))
   await check('getHeight.controlled', async () => assert.equal((await wallet.getHeight!({})).height, 900_100))
-  await check('getHeaderForHeight.genesis', async () => {
-    const { header } = await wallet.getHeaderForHeight!({ height: 0 })
-    assert.equal(header, `01000000${'00'.repeat(32)}3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c`)
+  await check(controlledHeader?.assertionId ?? 'getHeaderForHeight.genesis', async () => {
+    const { header } = await wallet.getHeaderForHeight!({ height: controlledHeader?.height ?? 0 })
+    assert.equal(header, controlledHeader?.header ?? `01000000${'00'.repeat(32)}3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c`)
   })
   const encrypted = await check('encrypt.bytes', async () => {
     const { ciphertext } = await wallet.encrypt!({ ...context, plaintext: message }); assert.ok(Array.isArray(ciphertext) && ciphertext.length > message.length); return ciphertext
@@ -169,5 +172,6 @@ export async function runWalletBoundaryCorpus({ wallet: implementation, funder, 
   return { schema: 'tpnil-brc100-boundary-corpus@1.0.0', claim: 'ENGINEERING_OBSERVATION_ONLY', assertions, trace, coverage,
     result: assertions.some(item => item.result === 'FAIL') ? 'FAIL' : assertions.some(item => item.result === 'BLOCKED') ? 'BLOCKED' : 'PASS',
     discoveryExpectation, ...(fixtureRevision === 2 ? { fixtureRevision } : {}),
+    ...(controlledHeader ? { headerFixture: controlledHeader.id, headerFixturePolicySha256: controlledHeader.policySha256, headerFundingFixtureSha256: controlledHeader.fixtureSha256 } : {}),
     boundary: 'Executable method corpus; full BRC-100 clause/substrate/permission coverage remains separate from method execution.' }
 }

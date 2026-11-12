@@ -46,10 +46,10 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
   expectedIdentity: string; readEvidence(name: string): Buffer; storageTransactions: Map<string, Transaction>
 }) {
   const report = JSON.parse(Buffer.from(receiptBytes).toString())
-  assert.ok(['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(report.profile)); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
-  const policy = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(report.profile) ? shutdownCoveragePolicy : shutdownSubmissionPolicy
+  assert.ok(['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(report.profile)); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
+  const policy = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(report.profile) ? shutdownCoveragePolicy : shutdownSubmissionPolicy
   assert.equal(report.schema, policy); assert.equal(report.policy, policy)
-  assert.deepEqual(Object.keys(report.bindings).sort(), ['record', 'global', 'module', 'counterparts', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(report.profile) ? ['coverage'] : [])].sort())
+  assert.deepEqual(Object.keys(report.bindings).sort(), ['record', 'global', 'module', 'counterparts', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(report.profile) ? ['coverage'] : [])].sort())
   assert.equal(report.ordering, 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.')
   assert.deepEqual(report.errors, [])
   assert.equal(binding.worker.shutdownSubmissionsSha256, sha(receiptBytes)); assert.equal(binding.worker.cleanWalletAndServiceShutdown, true)
@@ -121,7 +121,7 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
     assert.ok(!tx.outputs.some(output => [lifecyclePermissionConfig.paymentSatoshis, lifecyclePermissionConfig.secondPaymentSatoshis].includes(output.satoshis as 5 | 7) && output.lockingScript.toHex() === script), 'Unapproved denied payment appears in the final post-shutdown ledger')
   }
   let coverage
-  if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(report.profile)) {
+  if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(report.profile)) {
     assert.ok(binding.permissionCoverageReportBytes, 'New profile requires the complete permission coverage report')
     const bytes = binding.permissionCoverageReportBytes
     equal(report.bindings.coverage, { path: 'evidence/conformance/permission-coverage.json', bytes: bytes.length, sha256: sha(bytes) })

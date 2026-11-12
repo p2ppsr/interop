@@ -25,16 +25,17 @@ assert.equal(admission.status,0,'Native artifact, isolation, trust, funding and 
 const base=read('qualification.json'),lock=read('run-lock.json')
 const rustPolicy=await selectNativeRustCorpus(lock)
 assert.equal(base.qualifiedEnvironment,true)
-const candidate=base.itcve==='ITCVE-1@4.1.0'
+const candidate=['ITCVE-1@4.1.0','ITCVE-1@4.2.0'].includes(base.itcve)
+const observer3=lock.executionVariant==='integrated-native-conformance-pr368-cb3c2f2-observer-3'
 const observer2=lock.executionVariant==='integrated-native-conformance-5.1.1-observer-2'
 const wallet511=candidate||base.itcve==='ITCVE-1@4.0.0'
 if(candidate) { assert.equal(base.claim,'ENGINEERING_OBSERVATION_ONLY'); assert.equal(lock.plan.walletCandidate?.officialRelease,false) }
 const closure=wallet511||base.itcve==='ITCVE-1@2.0.0'
 const coverage=closure||base.itcve==='ITCVE-1@1.5.0'
 const conformance=coverage||base.itcve==='ITCVE-1@1.4.0'
-assert.equal(base.itcve,candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0')
+assert.equal(base.itcve,observer3?'ITCVE-1@4.2.0':candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0')
 const trustedIdentity=lock.plan.identityTrust==='public-settings-token'
-assert.deepEqual(lock.plan,sourceRead(candidate?'infra/native/conformance/plan-pr368-7e39006.json':observer2?'infra/native/conformance/plan-5.1.1-observer-2.json':wallet511?'infra/native/conformance/plan-5.1.1.json':closure?'infra/native/conformance/plan-coverage-closure.json':coverage?'infra/native/conformance/plan-coverage.json':conformance?'infra/native/conformance/plan.json':trustedIdentity?'infra/native/integrated/plan-trusted.json':'infra/native/integrated/plan.json'))
+assert.deepEqual(lock.plan,sourceRead(observer3?'infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json':candidate?'infra/native/conformance/plan-pr368-7e39006.json':observer2?'infra/native/conformance/plan-5.1.1-observer-2.json':wallet511?'infra/native/conformance/plan-5.1.1.json':closure?'infra/native/conformance/plan-coverage-closure.json':coverage?'infra/native/conformance/plan-coverage.json':conformance?'infra/native/conformance/plan.json':trustedIdentity?'infra/native/integrated/plan-trusted.json':'infra/native/integrated/plan.json'))
 const trustProfile=trustedIdentity?sourceRead('infra/native/integrated/trust-profile.json'):null
 const transport=sourceRead('components/transport/profile.json')
 const boundaryProfile=sourceRead(lock.plan.boundaryProfile??'programs/ISI-4/profiles/brc100-boundary-1.0.0/profile.json')
@@ -46,7 +47,7 @@ const repetitions=[]
 for(let index=1;index<=2;index++) {
   const prefix=`repetition-${index}/evidence/integrated`,directory=path.join(output,prefix)
   const record=read(`repetition-${index}/record.json`),report=read(`${prefix}/result.json`)
-  assert.equal(report.schema,'tpnil-native-integration@1');assert.equal(report.profile,candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0')
+  assert.equal(report.schema,'tpnil-native-integration@1');assert.equal(report.profile,observer3?'ITCVE-1@4.2.0':candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0')
   assert.deepEqual(report.assertions.map(x=>x.id).sort(),[...required].sort())
   assert.ok(report.assertions.every(x=>['PASS','FAIL','BLOCKED'].includes(x.result)))
   for(const file of fs.readdirSync(directory)) {
@@ -75,7 +76,7 @@ for(let index=1;index<=2;index++) {
   execute('verify-native-messaging.mjs',[directory])
   execute('verify-native-synthesis.mjs',[directory,'--integrated',identity])
   execute('verify-wallet-boundary.mjs',[directory,'--integrated'])
-  if(trustedIdentity) execute('verify-native-trust.mjs',[directory])
+  if(trustedIdentity) execute('verify-native-trust.mjs',[directory,...(observer3?['--oracle-2']:[])])
   const rustDirectory=path.join(output,`rust-repetition-${index}`)
   const rustInputs=['paid-http.json','messaging.json','synthesis-transactions.json',...(trustedIdentity?['identity-trust.json']:[])].map(file=>path.join(directory,file))
   if(!fs.existsSync(path.join(rustDirectory,'result.json'))) execute('run-rust.mjs',[rustDirectory,...rustInputs,...rustPolicy.cliFlags])
@@ -86,7 +87,7 @@ for(let index=1;index<=2;index++) {
 }
 assert.notEqual(repetitions[0].identity,repetitions[1].identity)
 assert.deepEqual(repetitions[0].assertions,repetitions[1].assertions)
-const result={schema:conformance?'tpnil-native-integrated-qualification@2':'tpnil-native-integrated-qualification@1',claim:candidate?'ENGINEERING_OBSERVATION_ONLY':'EXPERIMENTAL_CONFORMANCE_RESULT',...(trustedIdentity?{identityTrust:'public-settings-token'}:{}),scope:candidate?'Exact CI-built Yours PR368 7e39006 engineering candidate under the same isolated native UI/CWI, Go services,426 predicates and Rust3 oracle; no unchanged production-release qualification or complete BRC100 claim.':conformance?`Unchanged Yours${lock.plan.wallet.version} native ToDo UI and public CWI, visible consent, controlled rejection/recovery, native Wallet Backup counterpart replacement, integrated component graph and pinned clause predicates. Remaining BRC100 obligations and real SUT failures remain explicit; no complete BRC100 or certification claim.`:trustedIdentity?'Unchanged Yours5.1.0 public CWI: relay/paid HTTP, discovered TS/Go Message Box payments, Board/UHRP/CHIRP/LCH graph, BRC100 method corpus and positive identity discovery after public settings-token authorization, cache expiry and settings restoration. Original ToDo vectors separately retained; no complete BRC100, phone/camera or native Board UI claim.':'Unchanged Yours5.1.0 public CWI: relay/paid HTTP, discovered TS/Go Message Box payments, Board/UHRP/CHIRP/LCH graph and BRC100 method corpus on declared Go compatibility storage. Original ToDo vectors separately retained; no complete BRC100, trusted-positive native discovery, phone/camera or native Board UI claim.',profile:candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0',source:lock.source,qualifiedEnvironment:true,repetitionMatch:true,repetitions,outcome:repetitions[0].assertions.every(x=>x.result==='PASS')?'PASS':'FAIL',baselineWalletOutcome:base.outcome}
+const result={schema:conformance?'tpnil-native-integrated-qualification@2':'tpnil-native-integrated-qualification@1',claim:candidate?'ENGINEERING_OBSERVATION_ONLY':'EXPERIMENTAL_CONFORMANCE_RESULT',...(trustedIdentity?{identityTrust:'public-settings-token'}:{}),scope:candidate?`Exact CI-built Yours PR368 ${observer3?'cb3c2f2':'7e39006'} engineering candidate under the same isolated native UI/CWI, Go services,426 predicates and Rust3 oracle; no unchanged production-release qualification or complete BRC100 claim.`:conformance?`Unchanged Yours${lock.plan.wallet.version} native ToDo UI and public CWI, visible consent, controlled rejection/recovery, native Wallet Backup counterpart replacement, integrated component graph and pinned clause predicates. Remaining BRC100 obligations and real SUT failures remain explicit; no complete BRC100 or certification claim.`:trustedIdentity?'Unchanged Yours5.1.0 public CWI: relay/paid HTTP, discovered TS/Go Message Box payments, Board/UHRP/CHIRP/LCH graph, BRC100 method corpus and positive identity discovery after public settings-token authorization, cache expiry and settings restoration. Original ToDo vectors separately retained; no complete BRC100, phone/camera or native Board UI claim.':'Unchanged Yours5.1.0 public CWI: relay/paid HTTP, discovered TS/Go Message Box payments, Board/UHRP/CHIRP/LCH graph and BRC100 method corpus on declared Go compatibility storage. Original ToDo vectors separately retained; no complete BRC100, trusted-positive native discovery, phone/camera or native Board UI claim.',profile:observer3?'ITCVE-1@4.2.0':candidate?'ITCVE-1@4.1.0':wallet511?'ITCVE-1@4.0.0':closure?'ITCVE-1@2.0.0':coverage?'ITCVE-1@1.5.0':conformance?'ITCVE-1@1.4.0':'ITCVE-1@1.3.0',source:lock.source,qualifiedEnvironment:true,repetitionMatch:true,repetitions,outcome:repetitions[0].assertions.every(x=>x.result==='PASS')?'PASS':'FAIL',baselineWalletOutcome:base.outcome}
 if(conformance) {
   result.program=base.program
   result.vectors=base.vectors

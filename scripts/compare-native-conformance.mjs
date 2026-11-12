@@ -36,10 +36,10 @@ function matchingRepetitions(records) {
 export function compareNativeConformance(baseline, candidate, bindings) {
   const before = matchingRepetitions(baseline), after = matchingRepetitions(candidate)
   assert.equal(baseline[0].itcve, 'ITCVE-1@2.0.0'); assert.equal(baseline[1].itcve, 'ITCVE-1@2.0.0')
-  assert.ok(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0'].includes(candidate[0].itcve)); assert.equal(candidate[1].itcve, candidate[0].itcve)
+  assert.ok(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(candidate[0].itcve)); assert.equal(candidate[1].itcve, candidate[0].itcve)
   for (const records of [baseline, candidate]) assert.deepEqual(records[0].artifacts.wallet, records[1].artifacts.wallet, 'Repetitions use different wallet artifacts')
-  if (candidate[0].itcve === 'ITCVE-1@4.1.0') {
-    for (const record of candidate) { assert.equal(record.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(record.walletCandidate?.officialRelease, false); assert.equal(record.artifacts.wallet.version, '5.1.1-pr368.7e39006') }
+  if (['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(candidate[0].itcve)) {
+    for (const record of candidate) { assert.equal(record.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(record.walletCandidate?.officialRelease, false); assert.equal(record.artifacts.wallet.version, record.itcve === 'ITCVE-1@4.2.0' ? '5.1.1-pr368.cb3c2f2' : '5.1.1-pr368.7e39006') }
     assert.deepEqual(candidate[0].walletCandidate, candidate[1].walletCandidate)
   }
   assert.equal(before.size, 280)
