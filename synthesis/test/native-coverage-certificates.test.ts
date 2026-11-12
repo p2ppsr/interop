@@ -1,23 +1,22 @@
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
-import { execFile } from 'node:child_process'
-import { promisify } from 'node:util'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, onTestFailed } from 'vitest'
 import { Transaction } from '@bsv/sdk'
+import { runReferenceChild } from './reference-child.js'
 import { certificateCoverageIds, type CertificateCoverageReport } from '../src/wallet-lab/native/coverage-certificates-model.js'
 import { deriveCertificateCoverageOutcomes, verifyCertificateCoverage, verifyCertificateCoverageParentBindings } from '../src/wallet-lab/native/coverage-certificates-verify.js'
 
 // Self-contained LAB_SELF_TEST_ONLY: actual reference wallet, remote storage,
 // authenticated issuer and OverlayExpress, never synthetic native UI receipts.
-describe('prospective certificate coverage evidence', () => {
+describe.skipIf(process.env.TPNIL_CERTIFICATE_COVERAGE_TESTS !== '1')('prospective certificate coverage evidence', () => {
   const root = path.resolve(import.meta.dirname, '../..')
-  const directory = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'tpnil-certificate-coverage-'))
+  let directory: string | undefined, referenceCompleted = false, suiteFailed = false
   let report: CertificateCoverageReport, binding: Parameters<typeof verifyCertificateCoverageParentBindings>[1]
   beforeAll(async () => {
-    const output = await promisify(execFile)(process.execPath, ['--import', path.join(root, 'synthesis/node_modules/tsx/dist/loader.mjs'),
-      path.join(root, 'synthesis/src/wallet-lab/native/coverage-certificates-reference.ts'), directory], { cwd: root, timeout: 120000, maxBuffer: 16 * 1024 * 1024 })
-    fs.writeFileSync(path.join(directory, 'stdout.log'), output.stdout); fs.writeFileSync(path.join(directory, 'stderr.log'), output.stderr)
+    const evidenceRoot = path.join(root, 'out/test-evidence'); fs.mkdirSync(evidenceRoot, { recursive: true })
+    directory = fs.mkdtempSync(path.join(fs.realpathSync(evidenceRoot), 'certificate-coverage-'))
+    await runReferenceChild(process.execPath, ['--import', path.join(root, 'synthesis/node_modules/tsx/dist/loader.mjs'),
+      path.join(root, 'synthesis/src/wallet-lab/native/coverage-certificates-reference.ts'), directory], { cwd: root, directory, timeout: 120000, maxBuffer: 16 * 1024 * 1024 })
     report = JSON.parse(fs.readFileSync(path.join(directory, 'report.json'), 'utf8'))
     const ledger = JSON.parse(fs.readFileSync(path.join(directory, 'parent-ledgers.json'), 'utf8'))
     const transactions = new Map<string, Transaction>()
@@ -25,8 +24,10 @@ describe('prospective certificate coverage evidence', () => {
     for (const row of report.trace) if (['createAction', 'signAction'].includes(row.method) && row.result?.tx) add(Transaction.fromAtomicBEEF(row.result.tx))
     const fixture = JSON.parse(fs.readFileSync(path.join(root, 'fixtures/teranode/wab-funding-v1.json'), 'utf8'))
     binding = { ...ledger, finalSubmissions: structuredClone(ledger.globalSubmissions), browserContexts: [], storageTransactions: new Map(ledger.storageTransactions.map((row: any) => [row.txid, Transaction.fromHex(row.rawTxHex)])), resolvedTransactions: transactions, trustedMinedRoot: { txid: fixture.txid, rawHex: fixture.rawHex } }
+    referenceCompleted = true
   }, 150000)
-  afterAll(() => fs.rmSync(directory, { recursive: true, force: true }))
+  beforeEach(() => { onTestFailed(() => { suiteFailed = true }) })
+  afterAll(() => { if (referenceCompleted && !suiteFailed && directory) fs.rmSync(directory, { recursive: true, force: true }) })
   const mutation = async (id: string, change: (value: CertificateCoverageReport) => void) => {
     const value = structuredClone(report); change(value)
     const outcomes = await deriveCertificateCoverageOutcomes(value)
@@ -43,8 +44,8 @@ describe('prospective certificate coverage evidence', () => {
     expect(await verifyCertificateCoverageParentBindings(report, binding)).toEqual({ verified: true, finalLedgerChecked: true })
   })
   it('retains immutable source hashes through reference execution', () => {
-    expect(fs.readFileSync(path.join(directory, 'source-after.json'), 'utf8')).toBe(fs.readFileSync(path.join(directory, 'source-before.json'), 'utf8'))
-    expect(JSON.parse(fs.readFileSync(path.join(directory, 'cleanup.json'), 'utf8')).failures).toEqual([])
+    expect(fs.readFileSync(path.join(directory!, 'source-after.json'), 'utf8')).toBe(fs.readFileSync(path.join(directory!, 'source-before.json'), 'utf8'))
+    expect(JSON.parse(fs.readFileSync(path.join(directory!, 'cleanup.json'), 'utf8')).failures).toEqual([])
   })
   it('replays sorted canonical object keys without changing details', async () => {
     const value = JSON.parse(JSON.stringify(report, (_key, value) => value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.keys(value).sort().map(key => [key, value[key]])) : value))

@@ -1,0 +1,575 @@
+[
+  {
+    "schema": "tpnil-storage-sync-go-build@1.0.0",
+    "patchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+    "patchSha256": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+    "upstream": {
+      "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+      "version": "v0.191.4",
+      "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+    },
+    "replacementModule": "/home/runner/work/interop/interop/out/storage-sync-go-source",
+    "toolchain": "go1.27.3",
+    "binarySha256": "2121bd0d8b7ffc4c03790843e0893138deec7be6dfe2ae28e5fc1b9ca6ed6402"
+  },
+  {
+    "schema": "tpnil-storage-portability-go-build@1.0.0",
+    "patchLockSha256": "b9f229391f4fd8a953fd76b6c73cc7585818d91fe6c1802e9fc8667a86c1fcef",
+    "parentPatchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+    "patchSha256": "5e1fff193191565fa0032f2b9954bf07054c9806a78e6103049a14122a947e0c",
+    "upstream": {
+      "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+      "version": "v0.191.4",
+      "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+    },
+    "replacementModule": "/home/runner/work/interop/interop/out/storage-portability-go-source",
+    "toolchain": "go1.27.3",
+    "binarySha256": "e7f98da681a6a5ade3ea276e3179db81f3a9e5a92b49489495cfa1fb8d62d0e6"
+  },
+  {
+    "schema": "tpnil-integrated-verification@2",
+    "verified": true,
+    "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+    "profile": "ITCVE-1@3.0.0",
+    "lanes": 9,
+    "findings": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  {
+    "schema": "tpnil-integrated-verification@2",
+    "verified": true,
+    "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+    "profile": "ITCVE-1@3.0.0",
+    "lanes": 9,
+    "findings": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ],
+    "childOraclesVerified": true
+  },
+  {
+    "verifiedPublishedIntegrationArchives": 14,
+    "verifiedPublishedIntegrationAttempts": 17,
+    "semantic": true,
+    "bundles": [
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-06/42304588035",
+        "source": "9b94f0ec358093c164119b5973b3e42eded4999d",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17049881
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-06/42305420953",
+        "source": "c768a577cd4bf2798deaf1fda07e942d590ae424",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17031880
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-06/42309037195",
+        "source": "28916cb6355f120c790a0cd97a5d97d7d52116c2",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 16953552
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-06/42312093738",
+        "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17059480
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42661301489",
+        "source": "ec6cff827e6bc29d0c53951a5ed6a9cae72e724b",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17015666
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42666966132",
+        "source": "60c87315cccdfef86523b03a9ce2390bae639dae",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17030100
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42674635670",
+        "source": "def98acc4d5dcf37b9ef7d52d9dbd13fe70023b8",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17018201
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42680171419",
+        "source": "3f9cbead7c05a17b663f9c2c52b93abdf04eac69",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17015740
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42689603169",
+        "source": "d02414f58d888e3d11913dedd888a3e5871bf29f",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 17026354
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42697115971",
+        "source": "cc3cf756272b8d3826612d71e8f6356239fed6fa",
+        "files": 8,
+        "semantic": true,
+        "extracted": {
+          "entries": 141,
+          "bytes": 16919085
+        },
+        "assertions": {
+          "total": 510,
+          "outcomes": {
+            "PASS": 504,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 22
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42711677744",
+        "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+        "files": 9,
+        "semantic": true,
+        "extracted": {
+          "entries": 193,
+          "bytes": 29882551
+        },
+        "assertions": {
+          "total": 590,
+          "outcomes": {
+            "PASS": 584,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 30
+      },
+      {
+        "kind": "component",
+        "path": "journals/integrated-component-qualification/2026-11-09/42720213646",
+        "source": "8055aabb731df2c2a4020c885445ae621b57e492",
+        "files": 50,
+        "semantic": true,
+        "extracted": {
+          "entries": 193,
+          "bytes": 29807765
+        },
+        "assertions": {
+          "total": 590,
+          "outcomes": {
+            "PASS": 584,
+            "FAIL": 6
+          }
+        },
+        "isolatedExecutions": 30
+      },
+      {
+        "kind": "native",
+        "path": "journals/integrated-native-qualification/2026-11-06/42312095022",
+        "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+        "files": 9,
+        "semantic": true,
+        "extracted": {
+          "entries": 124,
+          "bytes": 5826350
+        },
+        "repetitions": 2,
+        "assertions": {
+          "total": 154,
+          "outcomes": {
+            "PASS": 154
+          }
+        }
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-06/42304592193",
+        "source": "9b94f0ec358093c164119b5973b3e42eded4999d",
+        "files": 3,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-06/42305419944",
+        "source": "c768a577cd4bf2798deaf1fda07e942d590ae424",
+        "files": 3,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-06/42309035783",
+        "source": "28916cb6355f120c790a0cd97a5d97d7d52116c2",
+        "files": 5,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42667035861",
+        "source": "60c87315cccdfef86523b03a9ce2390bae639dae",
+        "files": 14,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42674638927",
+        "source": "def98acc4d5dcf37b9ef7d52d9dbd13fe70023b8",
+        "files": 15,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42680240116",
+        "source": "3f9cbead7c05a17b663f9c2c52b93abdf04eac69",
+        "files": 16,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42690318194",
+        "source": "d02414f58d888e3d11913dedd888a3e5871bf29f",
+        "files": 35,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42697283161",
+        "source": "cc3cf756272b8d3826612d71e8f6356239fed6fa",
+        "files": 36,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42711700295",
+        "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+        "files": 50,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-09/42720214271",
+        "source": "8055aabb731df2c2a4020c885445ae621b57e492",
+        "files": 14,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-11/43143722884",
+        "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+        "files": 84,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-11/43157433977",
+        "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+        "files": 183,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-11/43157437280",
+        "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+        "files": 180,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-native-attempts/2026-11-11/43165501159",
+        "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+        "files": 352,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-component-attempts/2026-11-09/42663404897",
+        "source": "8f23d1c638fd97d176e12c6d634e65401c03e82f",
+        "files": 10,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-component-attempts/2026-11-09/42705007019",
+        "source": "3505d92a01fe7aeef7bb90fa1ed52f6eda003c54",
+        "files": 9,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "attempt",
+        "path": "journals/integrated-component-attempts/2026-11-09/42706097914",
+        "source": "4e7c1e1050bbb29a31093e19dfd4e8c089d12451",
+        "files": 12,
+        "semantic": false,
+        "reason": "Failed observer attempt issues no wallet qualification"
+      },
+      {
+        "kind": "reevaluation",
+        "path": "journals/native-integrated-reevaluation/2026-11-11/43059172140",
+        "source": "9cded11fae9c8a48fc23894157bbab0b561077e5",
+        "files": 19,
+        "semantic": true,
+        "extracted": {
+          "entries": 220,
+          "bytes": 30324581
+        },
+        "originalNativeSource": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+        "newNativeSessions": 0,
+        "repetitions": 2,
+        "nativeOutcome": "FAIL",
+        "rustAssertions": 96
+      }
+    ]
+  },
+  {
+    "verified": true,
+    "mutationsRejected": 5,
+    "validFailurePreserved": true
+  },
+  {
+    "verified": true,
+    "result": "PASS",
+    "projection": {
+      "profile": "ISI-3/descendant-storage@2.0.0",
+      "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+      "projectionManifestSha256": "3549779398c8c562cd01e7253377b6c4c9b5a2f636028940ff7ddf817a6c9fb2",
+      "storageProjection": {
+        "profile": "ISI-3/storage-http-sync@2.0.0",
+        "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+        "projectionManifestSha256": "02d213f1215ecdde54b813e04d93b9a8be8464063fbfdefb07c1a3ad4b740062"
+      }
+    },
+    "directions": 4,
+    "freshExecutions": 8,
+    "independentIdentities": 8,
+    "assertions": 80,
+    "binarySha256": "e7f98da681a6a5ade3ea276e3179db81f3a9e5a92b49489495cfa1fb8d62d0e6",
+    "sourceCommit": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+    "claim": "ENGINEERING_REFERENCE_STORAGE_QUALIFICATION_ONLY"
+  }
+]

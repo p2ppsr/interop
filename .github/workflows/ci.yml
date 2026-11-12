@@ -39,6 +39,14 @@ jobs:
       - run: node scripts/check-journal-history.mjs "$BASE_SHA"
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - name: Retain failed reference test diagnostics
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: offline-reference-test-failures
+          path: out/test-evidence
+          if-no-files-found: warn
+          retention-days: 90
   go-components:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -90,6 +98,10 @@ jobs:
           node scripts/prepare-storage-sync-go.mjs
           node scripts/prepare-storage-portability-go.mjs
           node scripts/prepare-messaging.mjs
+      - name: Verify all certificate reference and mutation cases
+        env:
+          TPNIL_CERTIFICATE_COVERAGE_TESTS: '1'
+        run: npm test --prefix synthesis -- native-coverage-certificates.test.ts
       - name: Verify actual Go shutdown and atomic listener lifecycle
         run: npm test --prefix synthesis -- native-shutdown-submissions.test.ts wallet-services-listeners.test.ts
       - name: Verify trust and adapter regressions
@@ -127,3 +139,11 @@ jobs:
           path: out/integrated-lab
           if-no-files-found: warn
           retention-days: 7
+      - name: Retain failed reference test diagnostics
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: integrated-reference-test-failures
+          path: out/test-evidence
+          if-no-files-found: warn
+          retention-days: 90
