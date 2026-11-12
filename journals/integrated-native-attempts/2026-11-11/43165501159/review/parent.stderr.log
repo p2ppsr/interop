@@ -1,0 +1,39 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: transaction-states/input-absent-from-beef: transaction spends outside independently declared native payments
+    at verifyObservedNativeTransactionBindings (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts:92:12)
+    at async verifyNativeTransactionStateBindings (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts:139:24)
+    at async verifyNativeWallet (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify.ts:336:40)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify.ts:367:18) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Native artifact, isolation, trust, funding and cleanup admission failed
+
+1 !== 0
+
+    at file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/scripts/verify-native-integrated.mjs:24:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

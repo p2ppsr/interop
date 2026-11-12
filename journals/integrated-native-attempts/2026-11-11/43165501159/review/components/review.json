@@ -1,0 +1,65 @@
+{
+  "schema": "tpnil-partial-component-independent-replay@1",
+  "claim": "PARTIAL_COMPONENT_REPLAY_NOT_ENVIRONMENT_QUALIFICATION",
+  "qualifiedEnvironment": false,
+  "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "run": 43165501159,
+  "children": [
+    {
+      "repetition": 1,
+      "script": "verify-transport.mjs",
+      "args": [
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/components/transport-1"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 189,
+      "stderrBytes": 0,
+      "receipt": {
+        "verified": true,
+        "assertions": 17,
+        "paidTransactions": [
+          "f8155099681a3583abab3e5d875e73d5b88deb8253e1e46a1910f8964c0af91e",
+          "15b6e0735bbbed0f5f865f1a9cc996bdd40b85512d2b6279d8d2db9cf40e0508"
+        ]
+      }
+    },
+    {
+      "repetition": 1,
+      "script": "verify-native-messaging.mjs",
+      "args": [
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/attempt-2026-11-12T06-43-00Z/original/repetition-1/evidence/integrated"
+      ],
+      "exitCode": 0,
+      "stdoutBytes": 424,
+      "stderrBytes": 0,
+      "receipt": {
+        "verified": true,
+        "assertions": 6,
+        "nativeIdentity": "0253ffe251e4a5a0ec51de7dc941b5f53bb869c78858fa824f50931935e86723ab",
+        "paymentTransactions": [
+          "8966b8244fccd58d10857ea5b2002fb7bef3e1082ee6ed3ae0fa76f1c65bf297",
+          "dc71a1c2b5e20075fd583608ffcec5ce3d88b57390562c3d4284eb35b4ff6342"
+        ],
+        "nativeArtifactQualification": "Requires the enclosing unchanged-native-wallet admission and provenance envelope"
+      }
+    },
+    {
+      "repetition": 1,
+      "script": "verify-native-synthesis.mjs",
+      "args": [
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/attempt-2026-11-12T06-43-00Z/original/repetition-1/evidence/integrated",
+        "--integrated",
+        "0253ffe251e4a5a0ec51de7dc941b5f53bb869c78858fa824f50931935e86723ab"
+      ],
+      "exitCode": 1,
+      "stdoutBytes": 0,
+      "stderrBytes": 1414
+    }
+  ],
+  "rust": "NOT_EXECUTED_IN_ORIGINAL",
+  "result": "NOT_VERIFIED",
+  "failure": {
+    "name": "AssertionError",
+    "message": "verify-native-synthesis.mjs failed\n\n1 !== 0\n"
+  }
+}
