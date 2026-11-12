@@ -1,4 +1,26 @@
 import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+// A file present only in an operator's ignored working files is not published
+// evidence. Check the actual Git index, which is the committed tree in CI and
+// the proposed next tree during local staging.
+const tracked = new Set(execFileSync('git', ['ls-files', '-z', '--', 'journals/'], { encoding: 'utf8' }).split('\0').filter(Boolean));
+const integrationSchemas = new Set(['tpnil-integrated-component-archive@1', 'tpnil-integrated-native-archive@1', 'tpnil-integration-attempt@1', 'tpnil-native-integrated-reevaluation-archive@1']);
+const indexBytes = name => execFileSync('git', ['show', `:${name}`], { maxBuffer: 256 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+for (const name of tracked) {
+  if (!/\/(?:attempt|provenance)\.json$/.test(name)) continue;
+  const manifest = JSON.parse(indexBytes(name));
+  if (!integrationSchemas.has(manifest.schema)) continue;
+  for (const item of manifest.files) {
+    const relative = manifest.schema === 'tpnil-integration-attempt@1' ? item.name : item.path;
+    if (typeof relative !== 'string' || path.posix.isAbsolute(relative) || relative.split('/').some(part => !part || part === '..' || part === '.')) throw new Error('Unsafe journal inventory path');
+    const target = path.posix.join(path.posix.dirname(name), relative);
+    if (!tracked.has(target)) throw new Error(`Journal inventory file is absent from Git index: ${target}`);
+    const bytes = indexBytes(target);
+    if (bytes.length !== item.size || createHash('sha256').update(bytes).digest('hex') !== item.sha256) throw new Error(`Journal inventory bytes differ in Git index: ${target}`);
+  }
+}
 const [base] = process.argv.slice(2);
 if (!base || /^0+$/.test(base)) {
   console.log('No prior revision: initial journal history');

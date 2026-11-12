@@ -1,0 +1,38 @@
+
+ RUN  v4.1.12 /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis
+
+stdout | test/native-conditional-transaction-bindings.test.ts
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+
+ ❯ test/native-conditional-transaction-bindings.test.ts (6 tests | 1 failed) 227ms
+     × does not let malformed metadata or trailing bytes hide a recoverable unbound transaction 46ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/native-conditional-transaction-bindings.test.ts > prospective malformed native response admission > does not let malformed metadata or trailing bytes hide a recoverable unbound transaction
+AssertionError: expected [ …(5) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "wrong claimed txid with absent storage",
++   "non-string claimed txid with absent storage",
++   "trailing bytes with absent storage",
++   "wrong claimed txid with missing funding roots",
++   "foreign faucet transaction with native claimed txid",
++ ]
+
+ ❯ test/native-conditional-transaction-bindings.test.ts:79:22
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  18:57:20
+   Duration  651ms (transform 89ms, setup 0ms, import 357ms, tests 227ms, environment 0ms)
+

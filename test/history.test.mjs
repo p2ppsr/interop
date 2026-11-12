@@ -5,6 +5,27 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ROOT } from '../src/core.mjs';
+import { createHash } from 'node:crypto';
+
+test('publication guard rejects locally present but ignored evidence and incorrect staged bytes', t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-publication-index-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const git = (...args) => execFileSync('git', args, { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  git('init', '-b', 'main'); git('config', 'user.name', 'TPNIL test fixture'); git('config', 'user.email', 'fixture@example.test'); git('config', 'commit.gpgsign', 'false');
+  fs.writeFileSync(path.join(dir, '.gitignore'), '*.log\n');
+  const folder = 'journals/integrated-native-attempts/fixture/run';
+  fs.mkdirSync(path.join(dir, folder), { recursive: true });
+  const bytes = Buffer.from('retained original failed execution\n'), file = path.join(dir, folder, 'failure.log');
+  fs.writeFileSync(file, bytes);
+  fs.writeFileSync(path.join(dir, folder, 'attempt.json'), JSON.stringify({ schema: 'tpnil-integration-attempt@1', files: [{ name: 'failure.log', size: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') }] }));
+  git('add', '.'); git('commit', '-m', 'fixture omitted ignored log');
+  const base = git('rev-parse', 'HEAD').trim();
+  const check = () => execFileSync(process.execPath, [path.join(ROOT, 'scripts/check-journal-history.mjs'), base], { cwd: dir, stdio: 'pipe' });
+  assert.throws(check, /absent from Git index/);
+  git('add', '-f', folder + '/failure.log'); assert.doesNotThrow(check);
+  fs.writeFileSync(file, 'different staged bytes'); git('add', '-f', folder + '/failure.log'); assert.throws(check, /bytes differ in Git index/);
+  fs.writeFileSync(file, bytes); git('add', '-f', folder + '/failure.log'); assert.doesNotThrow(check);
+});
 
 test('history guard permits additions but rejects modifications, deletions and type changes', t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-history-'));
