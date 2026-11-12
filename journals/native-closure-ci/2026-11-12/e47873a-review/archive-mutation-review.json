@@ -1,0 +1,65 @@
+{
+  "schema": "tpnil-ci-archive-adversarial-review@1",
+  "verified": true,
+  "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+  "manifestSha256": "1304e87b20ee409e5080e5c1c47429fbb9308c008495210dc17a29da4d4736cc",
+  "controls": [
+    {
+      "case": "valid-control",
+      "exitCode": 0,
+      "expected": "PASS",
+      "stdout": "{\"verified\": true, \"claim\": \"CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY\", \"files\": 146, \"artifactMembers\": 483, \"jobSeconds\": 1497, \"completedCohortJobSeconds\": 21214, \"newNativeSessions\": 0, \"foundation\": \"failure\", \"retainedReevaluation\": \"success\", \"nativeConformanceClosed\": false}\n",
+      "stderr": ""
+    },
+    {
+      "case": "zip-corruption",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-q5d55qch/archive/verify.py\", line 9, in <module>\n    b=(root/p).read_bytes();assert len(b)==e['bytes']and hashlib.sha256(b).hexdigest()==e['sha256'];assert e['encoding']in['identity','gzip'];raw=gzip.decompress(b)if e['encoding']=='gzip'else b\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "missing-core-log-rebound-inventory",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-0cswj5v2/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-mpiwwvu9/review.py\", line 22, in <module>\n    raw=(folder/f\"job-{j['id']}.log\").read_text();assert source in raw;logs[j['name']]=clean(raw)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 787, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-mpiwwvu9/43207730680/job-131147052248.log'\n\n"
+    },
+    {
+      "case": "zero-cost-rebound-summary",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-asxx_p9g/archive/verify.py\", line 15, in <module>\n    assert json.loads((d/'summary.json').read_text())==summary,'Summary differs from raw CI evidence'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Summary differs from raw CI evidence\n"
+    },
+    {
+      "case": "false-component-child-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-plocww2z/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-rbu43uml/review.py\", line 56, in <module>\n    ij=objects(integrated);sem=[v for v in ij if v.get('childOraclesVerified')is True];assert len(sem)==1 and sem[0]['source']==source and len(sem[0]['findings'])==6\n                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "false-required-certificate-count",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-j0indft6/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-bwm2rqzw/review.py\", line 55, in <module>\n    for text in ['39 passed (39)','14 passed (14)','\u2139 tests 8','\u2139 pass 8','\u2139 tests 15','\u2139 pass 15','test result: ok. 1 passed','test result: ok. 14 passed']:assert text in integrated,text\n                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^\nAssertionError: 39 passed (39)\n\n"
+    },
+    {
+      "case": "false-retained-replay-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-e5_1g1h9/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-ahw8vxsi/review.py\", line 60, in <module>\n    rj=objects(reeval);verified=[v for v in rj if v.get('claim')=='RETAINED_NATIVE_EVIDENCE_REEVALUATION'and v.get('verified')is True];assert len(verified)==1;v=verified[0];assert v['evaluatorSource']==source and v['newNativeSessions']==0 and v['repetitions']==2\n                                                                                                                                              ^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "relabel-failed-foundation-as-success",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-v3ted1m2/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-e478-1t4erhrz/review.py\", line 17, in <module>\n    assert metadata['conclusion']==('failure'if run==43207730680 else'success')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    }
+  ],
+  "nativeSessions": 0
+}

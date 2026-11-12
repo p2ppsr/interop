@@ -1,0 +1,66 @@
+{
+  "observedAt": "2026-11-12T11:18:25.101237+00:00",
+  "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+  "runs": [
+    {
+      "run": 43207730665,
+      "name": "Retained native evidence reevaluation",
+      "status": "in_progress",
+      "conclusion": null,
+      "jobs": [
+        {
+          "id": 131147051626,
+          "name": "retained-native-evidence",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 112,
+          "maximumSeconds": 1200,
+          "overBound": false,
+          "currentStep": "Retain exact verifier dependency preparation",
+          "failedSteps": []
+        }
+      ]
+    },
+    {
+      "run": 43207730680,
+      "name": "Foundation checks",
+      "status": "in_progress",
+      "conclusion": null,
+      "jobs": [
+        {
+          "id": 131147051825,
+          "name": "go-components",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 112,
+          "maximumSeconds": 1200,
+          "overBound": false,
+          "currentStep": "Verify Go host, all mixed stacks, faults and recovery",
+          "failedSteps": []
+        },
+        {
+          "id": 131147052248,
+          "name": "offline-core",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 112,
+          "maximumSeconds": 600,
+          "overBound": false,
+          "currentStep": "Run npm test --prefix synthesis",
+          "failedSteps": []
+        },
+        {
+          "id": 131147052254,
+          "name": "integrated-components",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 111,
+          "maximumSeconds": 2400,
+          "overBound": false,
+          "currentStep": "Prepare exact component closures",
+          "failedSteps": []
+        }
+      ]
+    }
+  ]
+}

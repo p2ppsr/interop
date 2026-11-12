@@ -1,0 +1,35 @@
+{
+  "schema": "tpnil-independent-portability-archive-recovery-review@1",
+  "claim": "SOURCE_REVIEW_ONLY_NO_NEW_NATIVE_QUALIFICATION",
+  "result": "PASS",
+  "reviewedAt": "2026-11-12T11:47:42.434694+00:00",
+  "resolvedFindings": [
+    "The complete immutable d059 Git tree is now materialized and every regular-file blob/mode checked before a child imports the historical verifier and historical producer constants. Current producer is not executed.",
+    "Installed synthesis hidden lock, required packages, integrity/resolution/dependency metadata and actual package versions are now checked via the existing oracle4 dependency validator before reuse."
+  ],
+  "remainingScope": "Retained source and installed package metadata are checked; original engineering artifact remains2FAIL+1PASS. This does not change native qualification.",
+  "checks": [
+    "Exact four archived source identities pinned by byte size/SHA256/Git blob",
+    "Historical immutable transitive source closure1520 files, bounded owned temporary materialization and final removal",
+    "Exact Node version, synthesis package/lock and installed metadata, synthesized candidate caller source never used",
+    "Child process must produce one nonempty verified PASS9 receipt; silent exit/malformed output cannot pass",
+    "164 native runtime inputs remain exact; no source6 helper/plan edits"
+  ],
+  "files": [
+    {
+      "path": "scripts/verify-native-portability-archive.mjs",
+      "sha256": "a072ac73aece34b759749685696837b021e044b3516a03dcb3d99460d28dd181"
+    },
+    {
+      "path": "test/native-portability-archive.test.mjs",
+      "sha256": "eed4dde52f9019489f00ffddd48aa2522bab8f680f255cfe989c10524df4e814"
+    },
+    {
+      "path": "scripts/verify-native-nosend-oracle4-archive.mjs",
+      "sha256": "1a8200aeaa1206fc9477d72e27ddd65332fb2e5482fc289c6da15237384a847a"
+    }
+  ],
+  "nativeInputsVerified": 164,
+  "nativePlanSha256": "b7b2dcd4ed50df0cd5ce3b9d4c2828b1be3953d6da4a34a3f9cd31fceb57b1cd",
+  "nativeSessions": 0
+}

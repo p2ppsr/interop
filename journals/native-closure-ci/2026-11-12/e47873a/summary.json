@@ -1,0 +1,263 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+  "workflows": [
+    {
+      "id": 43207730680,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43207730680",
+      "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+      "conclusion": "failure",
+      "jobSeconds": 1381,
+      "jobs": [
+        {
+          "id": 131147051825,
+          "name": "go-components",
+          "startedAt": "2026-11-12T11:16:33Z",
+          "completedAt": "2026-11-12T11:21:36Z",
+          "jobSeconds": 303,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131147052248,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T11:16:33Z",
+          "completedAt": "2026-11-12T11:20:02Z",
+          "jobSeconds": 209,
+          "conclusion": "failure",
+          "failedSteps": [
+            "Run node scripts/verify-native-portability-archive.mjs"
+          ],
+          "skippedSteps": [
+            "Run python3 scripts/verify-native-clause-journal.py",
+            "Run python3 scripts/verify-native-clause-journal.py journals/native-clause-reference/2026-11-09/oracle-3.0.0",
+            "Run python3 -m unittest discover -s test -p 'test_*.py' -v",
+            "Run npm run demo",
+            "Run node bin/tpnil.mjs verify out/demo",
+            "Run node scripts/check-journal-history.mjs \"$BASE_SHA\"",
+            "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
+          ]
+        },
+        {
+          "id": 131147052254,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T11:16:34Z",
+          "completedAt": "2026-11-12T11:31:03Z",
+          "jobSeconds": 869,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    },
+    {
+      "id": 43207730665,
+      "name": "Retained native evidence reevaluation",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43207730665",
+      "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+      "conclusion": "success",
+      "jobSeconds": 116,
+      "jobs": [
+        {
+          "id": 131147051626,
+          "name": "retained-native-evidence",
+          "startedAt": "2026-11-12T11:16:33Z",
+          "completedAt": "2026-11-12T11:18:29Z",
+          "jobSeconds": 116,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 180,
+      "fail": 0,
+      "skipped": 1,
+      "total": 181
+    },
+    "synthesis": {
+      "pass": 1051,
+      "fail": 0,
+      "skipped": 92,
+      "total": 1143,
+      "passedFiles": 66,
+      "failedFiles": 0,
+      "skippedFiles": 4,
+      "totalFiles": 70,
+      "completeSuitePassed": true
+    },
+    "goComponents": {
+      "pass": 13
+    },
+    "certificateReferenceAndMutationsSeparateJob": {
+      "pass": 39,
+      "required": true
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": "SKIPPED_AFTER_ARCHIVE_BINDING_FAILURE",
+    "typecheck": "PASS",
+    "catalog": "PASS",
+    "standards": "PASS"
+  },
+  "failure": {
+    "stage": "offline-core verify-native-portability-archive.mjs",
+    "kind": "HISTORICAL_ARCHIVE_CURRENT_SOURCE_HASH_COUPLING",
+    "sourceFile": "synthesis/src/wallet-lab/native/conformance-portability.ts",
+    "expectedRetainedSourceSha256": "137f7e786080f2088f0516317dccac08a4201bdc7b3a2a0039d23bc0ad7e33ea",
+    "actualCurrentSourceSha256": "185f854de99df08499817b93dd902c01fb8acada93587708a8745170991ced78",
+    "testSuiteFailure": false,
+    "skippedAfterFailure": [
+      "clause journals1/3",
+      "Python unittest",
+      "demo/verify",
+      "journal history"
+    ],
+    "laterLocalCorrectionReclassifiesThisCI": false
+  },
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 18,
+    "totalBundles": 32
+  },
+  "descendantMatrix": {
+    "verified": true,
+    "directions": 4,
+    "result": "PASS"
+  },
+  "retainedReevaluation": {
+    "plan": "YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-6",
+    "planSha256": "2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f",
+    "newNativeSessions": 0,
+    "originalMembersUnchanged": true,
+    "nativeOutcome": "FAIL",
+    "integrationOutcome": "PASS",
+    "rustOutcome": "PASS",
+    "repetitions": 2,
+    "nativeCountsPerRepetition": {
+      "PASS": 180,
+      "FAIL": 99,
+      "BLOCKED": 1
+    },
+    "integrationCountsPerRepetition": {
+      "PASS": 77,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "rustCountsPerRepetition": {
+      "PASS": 48,
+      "FAIL": 0,
+      "BLOCKED": 0
+    }
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "currentCandidateNativeSessions": 0,
+  "nativeE478Admission": "BLOCKED_BY_FOUNDATION_FAILURE_NOT_DISPATCHED",
+  "cost": {
+    "knownJobWallSeconds": 1497,
+    "completedCohortJobSecondsBeforeIncrement": 19717,
+    "completedCohortJobSecondsAfterIncrement": 21214,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "unusedNativeAllowanceIsActualCost": false,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "b49c0be22769277ffec834163657d580d2c2fc44",
+      "path": "artifacts/ops/itcve-native-closure-20261111/attempt-6-observer-recovery-order/work-order.json",
+      "sha256": "bbe080f5022ed92132624ca85790c9e2830b5307bb710a0fe4b3fc6911d6d819",
+      "source": "e47873a952c4fbb25bae241aadf41863104ae977"
+    }
+  },
+  "scope": [
+    "All raw API snapshots, complete job logs, original artifact ZIPs and member byte inventories retained.",
+    "Nonempty producer and independent CI verifier receipts checked, including exact retained native/Rust counts. This archive does not rerun frozen artifact semantic verifiers locally.",
+    "Historical portability source-binding failure remains failed. Subsequent local skipped checks and correction evidence are separate and cannot convert this CI sample.",
+    "No current candidate native qualification or new native execution; e478 native allowance unused.",
+    "Three failed HTTPS git transports and one successful SSH source push are preserved separately; these are not workflow retries. API/download read errors are likewise not workflow retries."
+  ]
+}
