@@ -45,17 +45,17 @@ export function coverageExtensionRequests(report: CoverageExtensionReport): Exte
   if (!/^[a-f0-9]{64}$/.test(native?.txid ?? '') || !Array.isArray(native?.tx) || !/^[a-f0-9]{64}$/.test(external?.txid ?? '') || !Array.isArray(external?.tx)) return requests
   const inventory = { basket: c.validBasket, include: 'locking scripts', includeTags: true, includeCustomInstructions: true, limit: 100 }
   put('basket.before', 'listOutputs', inventory)
-  if (revision === 2) put('basket.normalized-before', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
+  if (revision >= 2) put('basket.normalized-before', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
   for (const [index, variant] of basketVariants.entries()) put(`basket.${variant.id}.createAction`, 'createAction', { description: `TPNIL coverage basket ${variant.id}`, labels: [c.label], inputBEEF: native.tx, inputs: [{ outpoint: `${native.txid}.${index}`, unlockingScript: '51', inputDescription: 'Coverage isolated source' }], outputs: [{ satoshis: 2, lockingScript: '51', outputDescription: 'Coverage named output', basket: variant.value, tags: ['coverage created'], customInstructions: 'coverage:created' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
   put('basket.after-create', 'listOutputs', inventory)
-  if (revision === 2) put('basket.normalized-after-create', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
+  if (revision >= 2) put('basket.normalized-after-create', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
   for (const [index, variant] of basketVariants.entries()) put(`basket.${variant.id}.internalizeAction`, 'internalizeAction', { tx: external.tx, outputs: [{ outputIndex: index, protocol: 'basket insertion', insertionRemittance: { basket: variant.value, tags: [`coverage inserted ${index}`], customInstructions: `coverage:inserted:${index}` } }], labels: [c.label], description: `TPNIL coverage insertion ${variant.id}` })
   put('basket.after-internalize', 'listOutputs', inventory)
-  if (revision === 2) put('basket.normalized-after-internalize', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
+  if (revision >= 2) put('basket.normalized-after-internalize', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
   for (const variant of basketVariants) put(`basket.${variant.id}.listOutputs`, 'listOutputs', { ...inventory, basket: variant.value })
   for (const [index, variant] of basketVariants.entries()) put(`basket.${variant.id}.relinquishOutput`, 'relinquishOutput', { basket: variant.value, output: `${native.txid}.${6 + index}` })
   put('basket.after-relinquish', 'listOutputs', inventory)
-  if (revision === 2) put('basket.normalized-after-relinquish', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
+  if (revision >= 2) put('basket.normalized-after-relinquish', 'listOutputs', { ...inventory, basket: normalizedExtensionBasket })
   put('basket.sources-after', 'listOutputs', { basket: c.sourceBasket, include: 'locking scripts', includeTags: true, includeCustomInstructions: true, limit: 100 })
   return requests
 }

@@ -239,7 +239,11 @@ export function nativePortabilityControls(application: Page, walletPage: Page, p
     async activateAndRemoveSource(url) {
       await walletPage.getByRole('button').filter({ hasText: new URL(url).host }).first().click()
       await walletPage.getByRole('button', { name: 'Make Active', exact: true }).click()
-      await walletPage.getByText(`Active: ${new URL(url).host}`, { exact: true }).waitFor({ timeout: 60_000 })
+      // The success snackbar is transient. The exact selected provider's durable
+      // detail card and disappearance of its activation control prove the handoff.
+      const detail = walletPage.getByText(url, { exact: true })
+      await detail.waitFor({ timeout: 60_000 })
+      await walletPage.getByRole('button', { name: 'Make Active', exact: true }).waitFor({ state: 'hidden', timeout: 60_000 })
       await walletPage.getByText('In use', { exact: true }).first().waitFor({ timeout: 30_000 }); await snapshot('replacement-active')
       await backups()
       await walletPage.getByRole('button').filter({ hasText: 'wallet.1sat.app' }).first().click()

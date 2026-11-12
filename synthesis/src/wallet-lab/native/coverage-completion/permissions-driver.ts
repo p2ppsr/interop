@@ -10,7 +10,7 @@ import { permissionExtensionImage } from '../coverage-permissions-ui.js'
 import { config,program,manifest,canonical,digest,type Action,type Anchor,type Report,type CallSpec } from './permissions-model.js'
 const now=()=>new Date().toISOString()
 export interface Ports {
- mode:Report['mode'];extensionId:string;contextBaseSequence:number;contextProfileBinding:string
+ promptScopeRevision?:2;mode:Report['mode'];extensionId:string;contextBaseSequence:number;contextProfileBinding:string
  freshness():Promise<Report['freshness']>
  installManifests(anchor:Anchor):Promise<{records:Report['manifests'];close():void}>
  request(spec:CallSpec):Promise<Extract<Report['observations'][number],{kind:'call'}>['value']>
@@ -21,7 +21,7 @@ export interface Ports {
 /** Public observations only. The independent parent supplies whole-run
  * identities, browser chain, fixture/funding and authorization joins. */
 export async function captureNativePermissionSequence(anchor:Anchor,ports:Ports):Promise<Report>{
- const actions=program(anchor),initial=ports.submissions(),report:Report={schema:'tpnil-native-permission-sequence@1.0.0',claim:'ENGINEERING_OBSERVATION_ONLY',mode:ports.mode,nativeAdmission:false,identity:anchor.identity,extensionId:ports.extensionId,programSha256:digest(actions),anchor:structuredClone(anchor),startedAt:now(),endedAt:'',observations:[],freshness:{kind:'UNAVAILABLE',origins:Object.values(config.origins),at:now()},manifests:[],contextBaseSequence:ports.contextBaseSequence,contextProfileBinding:ports.contextProfileBinding,errors:[],cleanup:{pagesClosed:false,routesUnregistered:false},submissionStart:initial.length,submissionEnd:initial.length,submissionPrefix:initial,submissionSuffix:[]}
+ const actions=program(anchor),initial=ports.submissions(),report:Report={...(ports.promptScopeRevision?{promptScopeRevision:ports.promptScopeRevision}:{}),schema:'tpnil-native-permission-sequence@1.0.0',claim:'ENGINEERING_OBSERVATION_ONLY',mode:ports.mode,nativeAdmission:false,identity:anchor.identity,extensionId:ports.extensionId,programSha256:digest(actions),anchor:structuredClone(anchor),startedAt:now(),endedAt:'',observations:[],freshness:{kind:'UNAVAILABLE',origins:Object.values(config.origins),at:now()},manifests:[],contextBaseSequence:ports.contextBaseSequence,contextProfileBinding:ports.contextProfileBinding,errors:[],cleanup:{pagesClosed:false,routesUnregistered:false},submissionStart:initial.length,submissionEnd:initial.length,submissionPrefix:initial,submissionSuffix:[]}
  let installed:Awaited<ReturnType<Ports['installManifests']>>|undefined
  try{
   report.freshness=await ports.freshness();installed=await ports.installManifests(anchor);report.manifests=installed.records
@@ -49,7 +49,7 @@ export function nativePermissionSequencePorts(context:NativeScenarioContext,cont
   return operation(page)
  })
  return{
-  mode:'NATIVE_OBSERVATION',extensionId:context.extensionId,contextBaseSequence,contextProfileBinding,
+  ...(services.submissionOrdering?{promptScopeRevision:2 as const}:{}),mode:'NATIVE_OBSERVATION',extensionId:context.extensionId,contextBaseSequence,contextProfileBinding,
   submissions:()=>structuredClone(services.submissions.map(row=>({txid:row.txid,beefHex:Buffer.from(row.bytes).toString('hex'),verdict:row.verdict}))),
   async freshness(){return withSettings(async p=>{return{kind:'PUBLIC_UI_OBSERVATION',origins:Object.values(config.origins),at:now(),body:await p.locator('body').innerText(),image:await permissionExtensionImage(context,p,'conformance/sequence-fresh-origins.png')}})},
   async installManifests(anchor){const records:Report['manifests']=[],remove:Array<()=>void>=[];for(const[key,origin]of Object.entries(config.origins)){

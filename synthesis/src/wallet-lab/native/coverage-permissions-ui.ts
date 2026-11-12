@@ -11,6 +11,15 @@ export async function permissionExtensionImage(context: NativeScenarioContext, p
 /** Observe the exact visible control, including icon-only revoke buttons and
  * the wallet's div-based Lock Wallet control. Never invokes wallet internals. */
 export async function observeExtensionControl(context: NativeScenarioContext, page: Page, locator: Locator, id: string, settle?: () => Promise<void>): Promise<ExtensionControl> {
+  await locator.waitFor({ state: 'visible', timeout: 10_000 })
+  // Playwright's click waits for navigation; capture must wait for the same target first.
+  let previous = '', stable = 0
+  for (let i = 0; i < 100 && stable < 3; i++) {
+    const body = await page.locator('body').innerText()
+    stable = body === previous ? stable + 1 : 1; previous = body
+    if (stable < 3) await new Promise(resolve => setTimeout(resolve, 50))
+  }
+  if (stable < 3) throw new Error('Visible control screen did not settle before capture')
   const nonce = randomUUID(), binding = `__tpnilExtensionControl_${nonce.replaceAll('-', '')}`
   const receipt: ExtensionControl = { id, nonce, url: page.url(), startedAt: now(), endedAt: '', beforeBody: await page.locator('body').innerText(), afterBody: '', before: await permissionExtensionImage(context, page, `conformance/extension-ui-${id}-before.png`), after: undefined as any, dispatch: null, automation: { status: 'rejected', message: 'Not attempted' } }
   let receive!: () => void

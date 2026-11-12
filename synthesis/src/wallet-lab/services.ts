@@ -69,6 +69,8 @@ export interface ControlledServicesOptions {
   walletStorageRootKeyHex?: string
   submitVerdicts?: Array<'ACCEPTED_BY_NETWORK' | 'REJECTED'>
   wabPort?: number
+  /** Explicit prospective global ordering; older profiles retain provider order. */
+  submissionOrdering?: 'tpnil-owned-submission-order@1'
 }
 
 export interface TeranodeWalletFundingFixture {
@@ -197,6 +199,12 @@ export class ControlledWalletServices {
   private readonly externalStorageCounterparts = new Map<string, number>()
   private readonly controlledRoutes = new Map<string, (request: IncomingMessage, response: ServerResponse) => Promise<void>>()
   private readonly ownedStorageCounterparts = new Map<string, ControlledWalletServices>()
+  readonly submissionOrdering?: 'tpnil-owned-submission-order@1'
+  private submissionParent?: ControlledWalletServices
+  private readonly submissionJournal: Array<{ owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }> = []
+  private readonly submissionEvents = new Set<object>()
+  private readonly submissionListeners = new Set<(event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => void>()
+  private readonly submissionSubscriptions = new Map<ControlledWalletServices, (event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => void>()
   readonly storageEndpointEvents: Array<{ available: boolean; at: string }> = []
   private readonly wabPort?: number
   private routeSequence = 0
@@ -215,6 +223,8 @@ export class ControlledWalletServices {
   }>()
 
   constructor(options: ControlledServicesOptions) {
+    if (options.submissionOrdering !== undefined && options.submissionOrdering !== 'tpnil-owned-submission-order@1') throw new Error('Unsupported owned submission ordering')
+    this.submissionOrdering = options.submissionOrdering
     this.components = selectComponents(options.components)
     this.goOptions = options.go
     this.typescriptDescendantExport = options.typescriptDescendantExport === true
@@ -228,7 +238,7 @@ export class ControlledWalletServices {
 
   /** Prospective native replacement route; authentication remains end to end. */
   createStorageCounterpart(webroot: string, walletStorageRootKeyHex: string): ControlledWalletServices {
-    return new ControlledWalletServices({ webroot, walletStorageRootKeyHex, components: { storage: this.components.storage }, ...(this.goOptions ? { go: { ...this.goOptions } } : {}), ...(this.typescriptDescendantExport ? { typescriptDescendantExport: true } : {}) })
+    return new ControlledWalletServices({ webroot, walletStorageRootKeyHex, components: { storage: this.components.storage }, ...(this.goOptions ? { go: { ...this.goOptions } } : {}), ...(this.typescriptDescendantExport ? { typescriptDescendantExport: true } : {}), ...(this.submissionOrdering ? { submissionOrdering: this.submissionOrdering } : {}) })
   }
 
   registerStorageCounterpart(host: string, endpoint: string, owner?: ControlledWalletServices): void {
@@ -236,8 +246,22 @@ export class ControlledWalletServices {
     const url = new URL(endpoint)
     if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !url.port || url.pathname !== '/' || url.search || url.hash || url.username || url.password) throw new Error('Storage counterpart must be an isolated loopback endpoint')
     if (owner && (owner === this || owner.storageUrl !== endpoint || [...this.ownedStorageCounterparts.values()].includes(owner))) throw new Error('Storage counterpart ownership differs from endpoint or is duplicated')
+    if (owner && this.submissionOrdering) {
+      if (owner.submissionOrdering !== this.submissionOrdering || owner.submissionParent) throw new Error('Submission journal requires one compatible owner')
+      for (let ancestor: ControlledWalletServices | undefined = this; ancestor; ancestor = ancestor.submissionParent) if (ancestor === owner) throw new Error('Cyclic storage counterpart ownership')
+    }
     this.externalStorageCounterparts.set(host, Number(url.port))
-    if (owner) this.ownedStorageCounterparts.set(host, owner)
+    if (owner) {
+      this.ownedStorageCounterparts.set(host, owner)
+      if (this.submissionOrdering) {
+        owner.submissionParent = this
+        // Prior owned history is adopted at registration. Future events are
+        // appended synchronously at their producer, never sorted on read.
+        for (const event of owner.submissionJournal) this.appendSubmissionEvent(event)
+        const listener = (event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => this.appendSubmissionEvent(event)
+        owner.submissionListeners.add(listener); this.submissionSubscriptions.set(owner, listener)
+      }
+    }
   }
 
   unregisterStorageCounterpart(host: string): void { this.externalStorageCounterparts.delete(host) }
@@ -261,27 +285,51 @@ export class ControlledWalletServices {
     }
   }
 
-  get submissions(): SubmittedTransaction[] { return this.ownedStorageCounterparts.size === 0 ? this.ownSubmissions : [...this.ownSubmissions, ...[...this.ownedStorageCounterparts.values()].flatMap(service => service.submissions)] }
+  get submissions(): SubmittedTransaction[] {
+    if (this.submissionOrdering) return this.submissionJournal.map(event => event.submission)
+    return this.ownedStorageCounterparts.size === 0 ? this.ownSubmissions : [...this.ownSubmissions, ...[...this.ownedStorageCounterparts.values()].flatMap(service => service.submissions)]
+  }
 
   /** Read-only prospective observer. Retained provider references survive close()
    * clearing ownership maps; each provider's actual receipt order is preserved. */
   observeSubmissionClosure() {
-    const providers: Array<{ id: string; rows: SubmittedTransaction[] }> = []
+    const providers: Array<{ id: string; owner: ControlledWalletServices; rows: SubmittedTransaction[] }> = []
     const collect = (service: ControlledWalletServices, id: string) => {
-      providers.push({ id, rows: service.ownSubmissions })
+      providers.push({ id, owner: service, rows: service.ownSubmissions })
       for (const [host, counterpart] of service.ownedStorageCounterparts) collect(counterpart, `${id}/${host}`)
     }
     collect(this, 'source')
     const snapshot = (row: SubmittedTransaction) => ({ txid: row.txid, verdict: row.verdict, beefHex: Buffer.from(row.bytes).toString('hex') })
     const initialProviders = providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) }))
+    const ids = new Map(providers.map(provider => [provider.owner, provider.id]))
+    const captureJournal = () => {
+      const provenance = this.submissionJournal.map(event => {
+        const provider = ids.get(event.owner)
+        if (!provider || event.owner.ownSubmissions[event.providerIndex] !== event.submission) throw new Error('Owned submission journal changed provider identity or local position')
+        return { provider, providerIndex: event.providerIndex }
+      })
+      return { submissions: this.submissionJournal.map(event => snapshot(event.submission)), provenance }
+    }
+    const initialJournal = this.submissionOrdering ? captureJournal() : undefined
     return {
       initialProviders,
-      initialSubmissions: initialProviders.flatMap(provider => provider.submissions),
-      readFinalProviders: () => providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) }))
+      initialSubmissions: initialJournal?.submissions ?? initialProviders.flatMap(provider => provider.submissions),
+      readFinalProviders: () => providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) })),
+      ...(initialJournal ? { journal: { ordering: this.submissionOrdering!, initialProvenance: initialJournal.provenance, readFinal: captureJournal } } : {})
     }
   }
 
-  recordSubmission(submission: SubmittedTransaction): void { this.ownSubmissions.push(submission) }
+  private appendSubmissionEvent(event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }): void {
+    if (this.submissionEvents.has(event)) throw new Error('Repeated owned submission event')
+    this.submissionEvents.add(event); this.submissionJournal.push(event)
+    for (const listener of this.submissionListeners) listener(event)
+  }
+
+  recordSubmission(submission: SubmittedTransaction): void {
+    const providerIndex = this.ownSubmissions.length
+    this.ownSubmissions.push(submission)
+    if (this.submissionOrdering) this.appendSubmissionEvent({ owner: this, providerIndex, submission })
+  }
 
   get storageCounterpartIdentities(): Record<string, unknown> {
     return Object.fromEntries([...this.ownedStorageCounterparts].map(([host, service]) => [host, service.componentIdentity]))
@@ -403,7 +451,7 @@ export class ControlledWalletServices {
     }
     remoteServices.postBeef = async (beef, txids) => txids.map(txid => {
       const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
-      this.ownSubmissions.push({ txid, bytes, verdict: 'ACCEPTED_BY_NETWORK' })
+      this.recordSubmission({ txid, bytes, verdict: 'ACCEPTED_BY_NETWORK' })
       return {
         name: 'tpnil-controlled-submission',
         status: 'success' as const,
@@ -822,7 +870,7 @@ export class ControlledWalletServices {
       txids.map(txid => {
         const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
         const verdict = this.verdicts.consume(txid, bytes)
-        this.ownSubmissions.push({ txid, bytes, verdict })
+        this.recordSubmission({ txid, bytes, verdict })
         this.routes.push({
           sequence: ++this.routeSequence,
           method: 'POST',
@@ -916,6 +964,8 @@ export class ControlledWalletServices {
     }
     const clean = async (operation: () => Promise<unknown>): Promise<void> => { try { await operation() } catch (error) { failures.push(error) } }
     for (const counterpart of this.ownedStorageCounterparts.values()) await clean(() => counterpart.close())
+    for (const [owner, listener] of this.submissionSubscriptions) owner.submissionListeners.delete(listener)
+    this.submissionSubscriptions.clear()
     this.ownedStorageCounterparts.clear()
     this.externalStorageCounterparts.clear()
     this.controlledRoutes.clear()
@@ -1003,7 +1053,7 @@ export class ControlledWalletServices {
       for await (const chunk of request) { size += chunk.length; if (size > 4 * 1024 * 1024) throw new Error('Submission exceeds limit'); chunks.push(Buffer.from(chunk)) }
       const tx = Transaction.fromHex(Buffer.concat(chunks).toString('utf8'))
       const verdict = this.verdicts.consume(tx.id('hex'), tx.toUint8Array())
-      this.ownSubmissions.push({ txid: tx.id('hex'), bytes: tx.toUint8Array(), verdict })
+      this.recordSubmission({ txid: tx.id('hex'), bytes: tx.toUint8Array(), verdict })
       sendJson(response, verdict === 'REJECTED' ? 400 : 200, { txid: tx.id('hex'), verdict })
       return
     }
@@ -1203,7 +1253,7 @@ export class ControlledWalletServices {
         const txid = beef.atomicTxid
         if (txid === undefined) throw new Error('Atomic transaction id is absent')
         const verdict = this.verdicts.consume(txid, bytes)
-        this.ownSubmissions.push({ txid, bytes, verdict })
+        this.recordSubmission({ txid, bytes, verdict })
         sendJson(response, verdict === 'REJECTED' ? 400 : 200, {
           txid,
           txStatus: verdict,
@@ -1249,7 +1299,7 @@ export class ControlledWalletServices {
       const beef = Beef.fromBinary(bytes)
       const txid = beef.atomicTxid ?? Transaction.fromBEEF(bytes).id('hex')
       const verdict = this.verdicts.consume(txid, bytes)
-      this.ownSubmissions.push({ txid, bytes, verdict })
+      this.recordSubmission({ txid, bytes, verdict })
       sendJson(response, verdict === 'REJECTED' ? 400 : 200, {
         txid,
         txStatus: verdict,

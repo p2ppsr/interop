@@ -11,8 +11,8 @@ import { verifyNativePortability } from './verify-conformance-portability.js'
 import { verifyNativeClauseConformance } from './verify-conformance-clauses.js'
 import { validateComponentIdentity } from '../go-services.js'
 
-export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' = 'ITCVE-1@1.4.0') {
-  const completion = profile === 'ITCVE-1@4.5.0'
+export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' = 'ITCVE-1@1.4.0') {
+  const completion = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '')
   const read = (name: string) => decodeCoverageObservation<any>(JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance', `${name}.json`), 'utf8')), completion && ['coverage-extension', 'coverage-certificates'].includes(name) ? coverageObservationEncoding : undefined)
   const report = read('result')
   const recovery = completion || profile === 'ITCVE-1@4.4.0'
@@ -23,7 +23,7 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
   const release511 = candidate || profile === 'ITCVE-1@4.0.0'
   const closure = release511 || profile === 'ITCVE-1@2.0.0'
   const coverage = closure || profile === 'ITCVE-1@1.5.0'
-  assert.equal(report.schema, release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
+  assert.equal(report.schema, release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, profile === 'ITCVE-1@4.6.0' ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
   const fixtureRevision = ['tpnil-brc100-clause-oracle@6.0.0', 'tpnil-brc100-clause-oracle@7.0.0'].includes(clauseOracle) ? 2 : 1
   if (observer3 || expanded) assert.equal(fixtureRevision, 2, 'Observer3 requires its prospective fixture revision')
   assert.equal(clauseOracle, completion ? 'tpnil-brc100-clause-oracle@7.0.0' : release511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')

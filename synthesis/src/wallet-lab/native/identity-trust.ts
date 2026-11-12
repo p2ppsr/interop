@@ -28,7 +28,8 @@ export class PublicSettingsTrust {
   private readonly boundary: any
   private readonly manager: WalletSettingsManager
   private writeAttempted = false
-  constructor(wallet: any, options: IdentityTrustOracleOptions = {}) {
+  constructor(wallet: any, options: IdentityTrustOracleOptions & { initialDiscoveryConsent?: 'explicit-allow-v1' } = {}) {
+    if (options.initialDiscoveryConsent) this.observation.initialDiscoveryConsent = options.initialDiscoveryConsent
     if (options.oracle !== undefined) {
       const selected = getIdentityTrustOracle2Policy(options.oracle)
       this.observation.oracle = options.oracle
@@ -55,8 +56,8 @@ export class PublicSettingsTrust {
       this.observation.originalOutputs = await this.outputs()
       assert.ok(this.observation.originalOutputs.totalOutputs <= 1, 'Ambiguous original settings tokens')
       assert.ok(!this.observation.originalSettings.trustSettings.trustedCertifiers.some((c: any) => c.identityKey === issuer), 'Fixture issuer was already trusted')
-      this.observation.initialIdentity = await this.boundary.discoverByIdentityKey({ identityKey: certificate.subject, forceRefresh: true })
-      this.observation.initialAttributes = await this.boundary.discoverByAttributes({ attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true })
+      this.observation.initialIdentity = await this.boundary.discoverByIdentityKey({ identityKey: certificate.subject, forceRefresh: true, ...(this.observation.initialDiscoveryConsent ? { seekPermission: true } : {}) })
+      this.observation.initialAttributes = await this.boundary.discoverByAttributes({ attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true, ...(this.observation.initialDiscoveryConsent ? { seekPermission: true } : {}) })
       const excluded = [this.observation.initialIdentity, this.observation.initialAttributes].every(r => !r.certificates.some((c: any) => isFixture(c, certificate)))
       this.record('initial-exclusion', excluded, 'Both public discovery methods exclude the published, initially untrusted fixture issuer.')
       assert.ok(excluded)

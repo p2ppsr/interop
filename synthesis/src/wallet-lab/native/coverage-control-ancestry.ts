@@ -12,7 +12,7 @@ export async function hydrateCoverageControlAncestry(report: TransactionCoverage
   profile: string; identity: string; fixture: { txid: string; rawHex: string; fundingHeight: number; maturityDepth: number; merkleRoot: string }
   storageTransactions: ReadonlyMap<string, Transaction>; resolvedTransactions: Map<string, Transaction>
 }) {
-  assert.equal(binding.profile, 'ITCVE-1@4.5.0', 'Constructed control ancestry requires the explicit prospective profile')
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile), 'Constructed control ancestry requires the explicit prospective profile')
   assert.equal(report.identity, binding.identity)
   const child = await verifyNativeTransactionCoverage(report)
   const one = (id: string) => { const rows = report.trace.filter(row => row.id === id); assert.ok(rows.length <= 1); return rows[0] }

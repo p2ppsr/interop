@@ -6,6 +6,7 @@ if test "$#" -gt 1; then echo 'Unknown wallet preparation profile' >&2; exit 2; 
 wallet_candidate=false
 wallet_candidate_directory=
 case "${1:-}" in
+  --conformance-pr368-coverage-4) wallet_version=5.1.1; wallet_sha=553b6df9a43714c5b4c708fac2a00eed2c77e4c26047edcd70456df5eaeaf0da; wallet_size=13246448; wallet_candidate=true; wallet_candidate_directory=yours-wallet-pr368-e360e67 ;;
   --conformance-pr368-coverage-3) wallet_version=5.1.1; wallet_sha=9da87d79ac7ac70e3c5dee50451b2f0456b51f5e480b1be0925cd24a7707e184; wallet_size=13245082; wallet_candidate=true; wallet_candidate_directory=yours-wallet-pr368-3e8a97f ;;
   --conformance-pr368-coverage-1|--conformance-pr368-coverage-2) wallet_version=5.1.1; wallet_sha=cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105; wallet_size=13244753; wallet_candidate=true; wallet_candidate_directory=yours-wallet-pr368-4a954ac ;;
   '') wallet_version=5.1.0; wallet_sha=d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52; wallet_size=13513123; wallet_asset=568839867 ;;

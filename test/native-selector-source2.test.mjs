@@ -7,7 +7,11 @@ import {execFileSync} from 'node:child_process'
 import {nativeRustBinding, nativeCandidateCoverage3CompatibilityPath, nativeCompletionCompatibilitySources} from '../scripts/native-rust-compatibility.mjs'
 import {nativeCandidateCoverage3PlanPath, nativeCandidateCoverage3OriginalPlanPath, selectNativeWalletProfile} from '../scripts/native-wallet-profiles.mjs'
 
-const root=path.resolve(import.meta.dirname,'..'),read=name=>fs.readFileSync(path.join(root,name)),sha=bytes=>createHash('sha256').update(bytes).digest('hex')
+const root=path.resolve(import.meta.dirname,'..'),sha=bytes=>createHash('sha256').update(bytes).digest('hex')
+// Historical selector tests run on their recorded source closure. Current4.6
+// source has a separate selector/compatibility test and cannot readmit4.5.
+const frozenSource='784733b9cfdb1e29f0e4922d6ca90e768144bfee',cache=new Map()
+const read=name=>{if(!cache.has(name))cache.set(name,execFileSync('git',['show',`${frozenSource}:${name}`],{cwd:root,maxBuffer:32*1024*1024}));return cache.get(name)}
 const source='69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7'
 const plan=JSON.parse(read(nativeCandidateCoverage3PlanPath))
 const original=JSON.parse(read(nativeCandidateCoverage3OriginalPlanPath))
@@ -16,6 +20,7 @@ const graphPolicy=()=>({corpus:'tpnil-rust-corpus@3',graphOracle:{id:graph.schem
 
 test('source2 preserves the exact executed plan, Rust manifest, profile, catalog and source7 evaluator',()=>{
   for(const name of [nativeCandidateCoverage3OriginalPlanPath,'infra/native/conformance/rust-graph-pr368-coverage-3.json','infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json','itcves/ITCVE-1/4.5.0/profile.json','programs/ISI-4/5.5.0/catalog.json']) assert.deepEqual(read(name),execFileSync('git',['show',`${source}:${name}`],{cwd:root,maxBuffer:16*1024*1024}))
+  for(const name of [nativeCandidateCoverage3PlanPath,nativeCandidateCoverage3CompatibilityPath,'itcves/ITCVE-1/4.5.0/profile.json','programs/ISI-4/5.5.0/catalog.json'])assert.deepEqual(fs.readFileSync(path.join(root,name)),read(name))
   const reevaluation=JSON.parse(read('infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json'))
   for(const [name,digest] of Object.entries(reevaluation.evaluatorSources)) assert.equal(sha(read(name)),digest)
   assert.equal(plan.itcve,'ITCVE-1@4.5.0');assert.equal(plan.expectedObservations,698)

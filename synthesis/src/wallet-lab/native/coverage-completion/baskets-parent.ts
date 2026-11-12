@@ -17,7 +17,7 @@ export function basketAssertions(checked: Awaited<ReturnType<typeof verifyBasket
 }
 
 export interface BasketParentBinding {
-  profile: 'ITCVE-1@4.5.0'
+  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
   identity: string
   fixture: any
   storageTransactions: Map<string, Transaction>
@@ -32,7 +32,7 @@ export interface BasketParentBinding {
  * all provider shutdown ledgers and mined graph. This joins this fixed program
  * to those independent observations and forbids spending protected outputs. */
 export async function verifyBasketParent(report: any, binding: BasketParentBinding) {
-  assert.equal(binding.profile, 'ITCVE-1@4.5.0')
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
   const checked = await verifyBasketObservations(report)

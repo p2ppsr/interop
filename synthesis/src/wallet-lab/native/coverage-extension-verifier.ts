@@ -42,7 +42,7 @@ function snapshotObservation(value: NativeOutputSnapshotObservation, identity: s
  * Every active/pending output and its metadata on every owned provider must be
  * unchanged. A missing control remains BLOCKED, never a fabricated PASS. */
 export function verifyCoverageExtensionOutputPersistence(report: CoverageExtensionReport, callId: string) {
-  assert.equal(selectedCoverageExtensionPolicy(report.oracle).revision, 2)
+  assert.ok(selectedCoverageExtensionPolicy(report.oracle).revision >= 2)
   const calls = report.trace.filter(row => row.id === callId); assert.equal(calls.length, 1); const call = calls[0]!
   assert.equal(call.actor, 'wallet'); assert.equal(call.method, 'internalizeAction')
   const captures = (report.outputSnapshots ?? []).filter(row => row.callId === callId)
@@ -62,7 +62,7 @@ export function verifyCoverageExtensionOutputPersistence(report: CoverageExtensi
 export function verifyCoverageExtensionSnapshotBindings(report: CoverageExtensionReport, binding: {
   identity: string; outputSnapshotObservations: readonly NativeOutputSnapshotObservation[]; outputProviderRegistry: NativeOutputProviderRegistry
 }) {
-  assert.equal(selectedCoverageExtensionPolicy(report.oracle).revision, 2); assert.equal(report.identity, binding.identity)
+  assert.ok(selectedCoverageExtensionPolicy(report.oracle).revision >= 2); assert.equal(report.identity, binding.identity)
   assert.ok(Array.isArray(binding.outputSnapshotObservations) && Array.isArray(binding.outputProviderRegistry) && binding.outputProviderRegistry.length > 0)
   const registry = new Map(binding.outputProviderRegistry.map(provider => [provider.id, provider])); assert.equal(registry.size, binding.outputProviderRegistry.length); assert.equal(binding.outputProviderRegistry[0]!.id, 'source')
   const providerKeys = new Set<string>(); for (const provider of binding.outputProviderRegistry) { assertSnapshotIdentity(provider.identityKey); assert.ok(!providerKeys.has(provider.identityKey)); providerKeys.add(provider.identityKey) }
@@ -166,7 +166,7 @@ export async function deriveCoverageExtensionOutcomes(report: CoverageExtensionR
   }
   tests[key('crypto.forSelf-false-default')] = async () => { await control('verifySignature'); await control('createSignature'); assert.equal(result(row('crypto.default-positive')).valid, true); assert.notEqual(e.ownChild.toString(), e.peerChild.toString()); reject(row('crypto.default-negative'), 'signature', true) }
   tests[key('crypto.neither-data-nor-hash')] = async () => { await control('createSignature'); await control('verifySignature'); for (const id of ['crypto.missing-create', 'crypto.missing-verify']) { const r = row(id); reject(r, 'data'); assert.ok(/hash/i.test(r.error.message), 'Rejection must identify the data/hash alternative') } }
-  tests[key('crypto.identityKey-override')] = async () => { await control('getPublicKey'); assert.equal(result(row('crypto.identity-true')).publicKey, report.identity); assert.equal(result(row('crypto.identity-false')).publicKey, e.ownChild.toString()); assert.notEqual(e.ownChild.toString(), report.identity) }
+  tests[key('crypto.identityKey-override')] = async () => { await control('getPublicKey'); assert.equal(result(row('crypto.identity-true')).publicKey, report.identity); revision === 3 ? reject(row('crypto.identity-false'), 'identityKey') : assert.equal(result(row('crypto.identity-false')).publicKey, e.ownChild.toString()); assert.notEqual(e.ownChild.toString(), report.identity) }
   const fixtureCache = new Map<string, Promise<Transaction>>()
   const verifyFixture = async (actor: 'wallet' | 'funder') => {
     const current = row(actor === 'wallet' ? 'fixture-native' : 'fixture-external'), value = result(current), tx = atomic(value.tx)
@@ -201,7 +201,7 @@ export async function deriveCoverageExtensionOutcomes(report: CoverageExtensionR
   for (const [index, variant] of basketVariants.entries()) for (const method of basketMethods) tests[key(`basket.${variant.id}.${method}`)] = async () => {
     const native = await nativeFixture('wallet'), external = await nativeFixture('funder'), current = row(`basket.${variant.id}.${method}`)
     listing(row('basket.before'), await membership('before'))
-    const normalized = revision === 2 && variant.id === 'uppercase', inventoryRow = (stage: string) => row(`basket.${normalized ? 'normalized-' : ''}${stage}`)
+    const normalized = revision >= 2 && variant.id === 'uppercase', inventoryRow = (stage: string) => row(`basket.${normalized ? 'normalized-' : ''}${stage}`)
     if (normalized) listing(inventoryRow('before'), await membership('before', true))
     if (variant.id !== 'bytes-5' && !normalized) {
       reject(current, 'basket')
@@ -210,7 +210,7 @@ export async function deriveCoverageExtensionOutcomes(report: CoverageExtensionR
       assert.ok(/invalid|must|required|length|lowercase|consecutive|suffix|cannot|characters|not allowed/i.test(current.error.message), 'Named basket validation required')
       if (method === 'createAction') { const source = result(row('basket.sources-after')).outputs.find((o: any) => o.outpoint === `${native.id('hex')}.${index}`); assert.ok(source); assert.equal(source.satoshis, c.sourceSatoshis); assert.equal(source.lockingScript, c.lockingScript); assert.equal(source.spendable, true); noScopedSpend(source.outpoint) }
       if (method === 'relinquishOutput') { const expected = (await membership('after-relinquish')).find(o => o.outpoint === `${native.id('hex')}.${6 + index}`)!; const source = result(row('basket.after-relinquish')).outputs.find((o: any) => o.outpoint === expected.outpoint); assert.ok(source); for (const property of ['outpoint', 'satoshis', 'lockingScript', 'tags', 'customInstructions'] as const) assert.deepEqual(source[property], expected[property]); noScopedSpend(expected.outpoint) }
-      if (method === 'internalizeAction') { if (revision === 2) verifyCoverageExtensionOutputPersistence(report, current.id); noScopedSpend(`${external.id('hex')}.${index}`) }
+      if (method === 'internalizeAction') { if (revision >= 2) verifyCoverageExtensionOutputPersistence(report, current.id); noScopedSpend(`${external.id('hex')}.${index}`) }
     } else if (method === 'createAction') { await created(normalized); listing(inventoryRow('after-create'), await membership('after-create', normalized)) }
     else if (method === 'internalizeAction') { assert.equal(result(current).accepted, true); assert.equal(current.submissionEnd, current.submissionStart); listing(inventoryRow('after-internalize'), await membership('after-internalize', normalized)); noScopedSpend(`${external.id('hex')}.${index}`) }
     else if (method === 'listOutputs') listing(current, await membership('after-internalize', normalized))
@@ -281,7 +281,7 @@ export async function verifyCoverageExtensionParentBindings(report: CoverageExte
   outputSnapshotObservations?: readonly NativeOutputSnapshotObservation[]; outputProviderRegistry?: NativeOutputProviderRegistry
 }) {
   const child = await verifyNativeCoverageExtension(report)
-  const snapshotBindings = selectedCoverageExtensionPolicy(report.oracle).revision === 2 ? verifyCoverageExtensionSnapshotBindings(report, { identity: binding.identity, outputSnapshotObservations: binding.outputSnapshotObservations!, outputProviderRegistry: binding.outputProviderRegistry! }) : undefined
+  const snapshotBindings = selectedCoverageExtensionPolicy(report.oracle).revision >= 2 ? verifyCoverageExtensionSnapshotBindings(report, { identity: binding.identity, outputSnapshotObservations: binding.outputSnapshotObservations!, outputProviderRegistry: binding.outputProviderRegistry! }) : undefined
   assert.equal(report.identity, binding.identity); assert.deepEqual(report.anchors, clean({ boundary: binding.boundary, clauses: binding.clauses, ...(binding.trust === undefined ? {} : { trust: binding.trust }) }))
   assert.ok(binding.finalSubmissions.length >= binding.submissions.length); assert.deepEqual(binding.finalSubmissions.slice(0, binding.submissions.length), binding.submissions, 'Final ledger must retain exact preclose prefix')
   assert.deepEqual(report.submissionPrefix, binding.submissions.slice(0, report.submissionStart)); assert.deepEqual(report.submissions, binding.submissions.slice(report.submissionStart, report.submissionEnd))
@@ -294,7 +294,7 @@ export async function verifyCoverageExtensionParentBindings(report: CoverageExte
   const add = (predicateId: string, outpoint: () => string) => { const outcome = child.assertions.find(r => r.id === predicateId)!; if (outcome.result === 'PASS') claims.push({ predicateId, outpoint: outpoint() }); else unprovenClaims.push({ predicateId, result: outcome.result }) }
   const native = () => atomic(report.trace.find(r => r.id === 'fixture-native')?.result?.tx).id('hex'), external = () => atomic(report.trace.find(r => r.id === 'fixture-external')?.result?.tx).id('hex')
   for (const [index, variant] of basketVariants.entries()) {
-    if (variant.id !== 'bytes-5' && !(selectedCoverageExtensionPolicy(report.oracle).revision === 2 && variant.id === 'uppercase')) add(`coverage-extension.basket.${variant.id}.createAction`, () => `${native()}.${index}`)
+    if (variant.id !== 'bytes-5' && !(selectedCoverageExtensionPolicy(report.oracle).revision >= 2 && variant.id === 'uppercase')) add(`coverage-extension.basket.${variant.id}.createAction`, () => `${native()}.${index}`)
     add(`coverage-extension.basket.${variant.id}.internalizeAction`, () => `${external()}.${index}`)
     add(`coverage-extension.basket.${variant.id}.relinquishOutput`, () => `${native()}.${6 + index}`)
   }

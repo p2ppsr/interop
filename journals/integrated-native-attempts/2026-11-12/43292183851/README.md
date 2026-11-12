@@ -1,0 +1,9 @@
+# Native attempt 11: completed observations, failed admission
+
+[Run 43292183851](https://github.com/p2ppsr/interop/actions/runs/43292183851) at exact source `784733b9cfdb1e29f0e4922d6ca90e768144bfee` completed both 698-observation repetitions with candidate3e8a97f and Go10. Raw counts are 604 PASS / 81 FAIL / 13 BLOCKED, then 607 PASS / 78 FAIL / 13 BLOCKED. Both original-99 mappings contain98 PASS and one signed-satoshi FAIL. Seven individual outcomes differ between repetitions. These raw counts do not qualify the environment.
+
+The parent first rejected five permission-sequence hosts emitted by the worker but omitted from the frozen plan. The original plan and failure remain unchanged. Both containers exited0, were removed and the host namespace policy was restored. No native or integrated qualification and no Rust execution were produced. Native predicate failures and blocked completion modules remain investigation findings.
+
+The Linux image audit passes all71433final entries, complete runtime configuration and exactly two added layers. Its original ZIP is separate from the original540-member native ZIP. The native ZIP exceeds Git's single-file limit; two ordered parts retain its exact108085405bytes and GitHub digest. Run `python3 verify.py` to check every physical file, reconstruct the original ZIP in a temporary directory and verify every original member. The script performs no wallet or semantic qualification.
+
+The first read-only transfer timed out after55seconds. Its42418176-byte prefix is preserved by length/hash against the recovered exact ZIP rather than duplicated. The subsequent full transfer succeeded; no workflow retry occurred. Job use2609seconds plus prerequisite CI1562 closes order12 at4171seconds and completed cohort use40149. Full monetary and effort costs remain unknown.

@@ -22,6 +22,7 @@ on:
           - integrated-native-conformance-pr368-coverage-1
           - integrated-native-conformance-pr368-coverage-2
           - integrated-native-conformance-pr368-coverage-3
+          - integrated-native-conformance-pr368-coverage-4
 permissions:
   contents: read
 jobs:
@@ -61,7 +62,7 @@ jobs:
   all-go-native:
     if: inputs.profile == 'all-go-native' || startsWith(inputs.profile, 'integrated-native')
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ inputs.profile == 'integrated-native-conformance-pr368-coverage-3' && 90 || (inputs.profile == 'integrated-native-conformance-pr368-coverage-1' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2') && 70 || (startsWith(inputs.profile, 'integrated-native-conformance-pr368-') || inputs.profile == 'integrated-native-conformance-5.1.1-observer-2') && 50 || 40 }}
+    timeout-minutes: ${{ (inputs.profile == 'integrated-native-conformance-pr368-coverage-3' || inputs.profile == 'integrated-native-conformance-pr368-coverage-4') && 90 || (inputs.profile == 'integrated-native-conformance-pr368-coverage-1' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2') && 70 || (startsWith(inputs.profile, 'integrated-native-conformance-pr368-') || inputs.profile == 'integrated-native-conformance-5.1.1-observer-2') && 50 || 40 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -82,8 +83,8 @@ jobs:
           TPNIL_NATIVE_PROFILE: ${{ inputs.profile }}
         run: |
           set -euo pipefail
-          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ]; then
-            scripts/prepare-yours-wallet-run.sh --conformance-pr368-coverage-3
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ] || [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-4 ]; then
+            scripts/prepare-yours-wallet-run.sh "--conformance-pr368-coverage-${TPNIL_NATIVE_PROFILE##*-}"
           elif [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-2 ]; then
             scripts/prepare-yours-wallet-run.sh --conformance-pr368-coverage-2
           elif [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-1 ]; then
@@ -111,7 +112,8 @@ jobs:
           if [[ "$TPNIL_NATIVE_PROFILE" == integrated-native-conformance-pr368-* ]]; then wallet_version=5.1.1-pr368.7e39006; wallet_directory=yours-wallet-pr368-7e39006; fi
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-cb3c2f2-observer-3 ]; then wallet_version=5.1.1-pr368.cb3c2f2; wallet_directory=yours-wallet-pr368-cb3c2f2; fi
           if [[ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-1 || "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-2 ]]; then wallet_version=5.1.1-pr368.4a954ac; wallet_directory=yours-wallet-pr368-4a954ac; fi
-          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ]; then wallet_version=5.1.1-pr368.3e8a97f; wallet_directory=yours-wallet-pr368-3e8a97f; fi
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ] || [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-4 ]; then wallet_version=5.1.1-pr368.3e8a97f; wallet_directory=yours-wallet-pr368-3e8a97f; fi
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-4 ]; then wallet_version=5.1.1-pr368.e360e67; wallet_directory=yours-wallet-pr368-e360e67; fi
           docker build --build-arg TPNIL_WALLET_VERSION="$wallet_version" --build-arg TPNIL_WALLET_ARTIFACT_DIRECTORY="$wallet_directory" --iidfile out/native-go-image.id -f infra/native/yours-go/Dockerfile -t tpnil-native-go:${{ github.sha }} .
       - name: Install the pinned integrated service closure
         if: startsWith(inputs.profile, 'integrated-native')
@@ -127,7 +129,7 @@ jobs:
         if: startsWith(inputs.profile, 'integrated-native-conformance')
         run: |
           storage_binary=itcve-go-storage-portability
-          if [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-3 ]; then
+          if [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-3 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-4 ]; then
             node scripts/prepare-storage-caller-known-inputs-go.mjs
             storage_binary=itcve-go-storage-caller-known-inputs
           elif [[ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-1 || "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-2 ]]; then
@@ -174,14 +176,14 @@ jobs:
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-cb3c2f2-observer-3 ]; then native_flag=--conformance-pr368-cb3c2f2-observer-3; fi
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-1 ]; then native_flag=--conformance-pr368-coverage-1; fi
           if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-2 ]; then native_flag=--conformance-pr368-coverage-2; fi
-          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ]; then native_flag=--conformance-pr368-coverage-3; fi
+          if [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-3 ] || [ "$TPNIL_NATIVE_PROFILE" = integrated-native-conformance-pr368-coverage-4 ]; then native_flag="--conformance-pr368-coverage-${TPNIL_NATIVE_PROFILE##*-}"; fi
           node scripts/run-native-go-wallet.mjs "$native_image" out/native-go-wallet "$native_flag"
           node scripts/verify-native-integrated.mjs out/native-go-wallet
       - name: Retain every attempt and qualification receipt
         if: always()
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
-          name: native-go-yours-wallet-${{ inputs.profile == 'integrated-native-conformance-pr368-coverage-3' && 'pr368-coverage3' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2' && 'pr368-coverage2' || inputs.profile == 'integrated-native-conformance-pr368-coverage-1' && 'pr368-coverage1' || inputs.profile == 'integrated-native-conformance-pr368-cb3c2f2-observer-3' && 'pr368-cb3c2f2' || inputs.profile == 'integrated-native-conformance-pr368-7e39006' && 'pr368-7e39006' || startsWith(inputs.profile, 'integrated-native-conformance-5.1.1') && '5.1.1' || '5.1.0' }}
+          name: native-go-yours-wallet-${{ inputs.profile == 'integrated-native-conformance-pr368-coverage-4' && 'pr368-coverage4' || inputs.profile == 'integrated-native-conformance-pr368-coverage-3' && 'pr368-coverage3' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2' && 'pr368-coverage2' || inputs.profile == 'integrated-native-conformance-pr368-coverage-1' && 'pr368-coverage1' || inputs.profile == 'integrated-native-conformance-pr368-cb3c2f2-observer-3' && 'pr368-cb3c2f2' || inputs.profile == 'integrated-native-conformance-pr368-7e39006' && 'pr368-7e39006' || startsWith(inputs.profile, 'integrated-native-conformance-5.1.1') && '5.1.1' || '5.1.0' }}
           path: out/native-go-wallet
           if-no-files-found: error
           retention-days: 90

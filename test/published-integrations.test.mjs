@@ -5,7 +5,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { crc32 } from 'node:zlib'
-import { extractZipSafely, verifyIntegrationArchive, verifyPublishedIntegrations, verifyArchiveSemantics, componentArchiveSummary, requireArchiveVerifierReceipt } from '../scripts/verify-published-integrations.mjs'
+import { extractZipSafely, readIntegrationArchive, verifyIntegrationArchive, verifyPublishedIntegrations, verifyArchiveSemantics, componentArchiveSummary, requireArchiveVerifierReceipt } from '../scripts/verify-published-integrations.mjs'
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
 function temporary(run) { const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-test-')); try { return run(directory) } finally { fs.rmSync(directory, { recursive: true, force: true }) } }
@@ -28,6 +28,45 @@ function bundle(directory, archive = zip([{ name: 'result.json', body: '{}' }]))
   const provenance = { schema: 'tpnil-integrated-component-archive@1', source, files: ['qualification.json', 'integrated-lab.zip'].map(name => { const bytes = fs.readFileSync(path.join(directory, name)); return { path: name, size: bytes.length, sha256: hash(bytes) } }) }
   fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify(provenance)); return provenance
 }
+function splitNativeBundle(directory) {
+  const source = 'ab'.repeat(20), bytes = zip([{ name: 'observed.json', body: '{"retained":true}' }])
+  const qualification = { schema: 'tpnil-native-integrated-qualification@2', claim: 'ENGINEERING_OBSERVATION_ONLY', profile: 'ITCVE-1@4.5.0', program: 'ISI-4@5.5.0', source, qualifiedEnvironment: true, completeBRC100Conformance: false }
+  fs.writeFileSync(path.join(directory, 'qualification.json'), JSON.stringify(qualification))
+  const parts = ['native-integrated.zip.part-000', 'native-integrated.zip.part-001'], cut = Math.floor(bytes.length / 2)
+  fs.writeFileSync(path.join(directory, parts[0]), bytes.subarray(0, cut)); fs.writeFileSync(path.join(directory, parts[1]), bytes.subarray(cut))
+  const manifest = { schema: 'tpnil-integrated-native-archive@1', source, files: ['qualification.json', ...parts].map(name => { const b = fs.readFileSync(path.join(directory, name)); return { path: name, size: b.length, sha256: hash(b) } }), archiveParts: { path: 'native-integrated.zip', size: bytes.length, sha256: hash(bytes), parts } }
+  fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify(manifest))
+  return { manifest, bytes, qualification }
+}
+test('completion archives reassemble the exact original ZIP from digest-bound parts', () => temporary(directory => {
+  const { manifest, bytes } = splitNativeBundle(directory)
+  assert.equal(verifyIntegrationArchive(directory).kind, 'native')
+  assert.deepEqual(readIntegrationArchive(directory, 'native-integrated.zip', manifest), bytes)
+  const extracted = path.join(directory, 'extracted'); fs.mkdirSync(extracted)
+  assert.deepEqual(extractZipSafely(readIntegrationArchive(directory, 'native-integrated.zip', manifest), extracted), { entries: 1, bytes: 17 })
+  assert.equal(fs.readFileSync(path.join(extracted, 'observed.json'), 'utf8'), '{"retained":true}')
+}))
+test('split archive checks reject changed bytes, reordered parts and ambiguous unsplit copies', () => temporary(directory => {
+  const { manifest, bytes } = splitNativeBundle(directory), spec = manifest.archiveParts
+  spec.parts.reverse(); assert.throws(() => readIntegrationArchive(directory, 'native-integrated.zip', manifest)); spec.parts.reverse()
+  const name = spec.parts[0], file = path.join(directory, name), before = fs.readFileSync(file), changed = Buffer.from(before); changed[0] ^= 1
+  fs.writeFileSync(file, changed); manifest.files.find(row => row.path === name).sha256 = hash(changed)
+  assert.throws(() => readIntegrationArchive(directory, 'native-integrated.zip', manifest), /Reassembled/)
+  fs.writeFileSync(file, before); manifest.files.find(row => row.path === name).sha256 = hash(before)
+  fs.writeFileSync(path.join(directory, 'native-integrated.zip'), bytes)
+  assert.throws(() => readIntegrationArchive(directory, 'native-integrated.zip', manifest), /Both split/)
+}))
+test('split archives preserve size bounds and the versioned completion scope', () => temporary(directory => {
+  const { manifest, qualification } = splitNativeBundle(directory), size = manifest.archiveParts.size
+  manifest.archiveParts.size = 512 * 1024 * 1024 + 1
+  assert.throws(() => readIntegrationArchive(directory, 'native-integrated.zip', manifest))
+  manifest.archiveParts.size = size
+  qualification.profile = 'ITCVE-1@4.4.0'; qualification.program = 'ISI-4@5.4.0'
+  fs.writeFileSync(path.join(directory, 'qualification.json'), JSON.stringify(qualification))
+  const entry = manifest.files.find(row => row.path === 'qualification.json'), raw = fs.readFileSync(path.join(directory, 'qualification.json')); entry.size = raw.length; entry.sha256 = hash(raw)
+  fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify(manifest))
+  assert.throws(() => verifyIntegrationArchive(directory))
+}))
 test('published archive integrity binds every byte and complete file set without external dependencies', () => temporary(directory => {
   bundle(directory); assert.equal(verifyIntegrationArchive(directory).kind, 'component')
   fs.appendFileSync(path.join(directory, 'qualification.json'), ' ')

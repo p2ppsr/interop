@@ -53,7 +53,7 @@ export async function runNativeCompletionSuite(context: NativeScenarioContext) {
   }
   await execute('partialTrace', () => runNativePartialTrace(context))
   context.evidence.addJson('conformance/completion-suite.json', { schema: 'tpnil-native-completion-suite@1.0.0',
-    profile: 'ITCVE-1@4.5.0', claim: 'ENGINEERING_OBSERVATION_ONLY', modules: Object.keys(reports), errors,
+    profile: context.services.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0', claim: 'ENGINEERING_OBSERVATION_ONLY', modules: Object.keys(reports), errors,
     completeBRC100Conformance: false })
   return reports
 }

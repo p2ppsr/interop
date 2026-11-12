@@ -1,8 +1,10 @@
 # Native conformance closure: 12 November 2026
 
-**Attempts 7 and 8 stopped before wallet execution. Attempt 9 lost runner communication with no completed native evidence.** Attempt 7 exceeded the selector's default Git output buffer while reading a pinned 3.2 MB fixture. The corrected selector passed in attempt 8, which was interrupted by a runner shutdown during final image export; the initiating cause is unknown. Through attempt 8, attempt 6 remains the last completed native corpus capture: each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations, with 432 PASS, 27 FAIL and 76 BLOCKED. Its independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile has passed local and CI execution checks but has no completed native result. These checks do not establish complete BRC-100 conformance.
+**Attempt11 completed both698-observation native captures and failed admission.** The exact4.5 profile records604PASS/81FAIL/13BLOCKED, then607PASS/78FAIL/13BLOCKED. Both repetitions map the original99 failures to98PASS and one signed-satoshi `listActions` FAIL. Seven outcomes differ. The independent parent first rejects five worker destinations absent from the frozen plan; no native/integrated qualification or Rust result was produced. [The complete original attempt](../journals/integrated-native-attempts/2026-11-12/43292183851/README.md) remains unchanged.
 
-The original Yours 5.1.0 baseline remains unchanged: each repetition contains 280 observations, with 180 PASS, 99 FAIL and one BLOCKED. Attempt 6 maps those **original 99 findings** to **97 PASS and two FAIL**: the signed-value `listActions` conflict and an unexercised managed-change fixture. Attempt 4 previously recorded 98 PASS and one FAIL under its own frozen fixture. Two improvements are explicitly versioned namespace-oracle corrections; aggregate differences across the changed wallet, Go stack and fixtures are not counts of individual wallet fixes. The [earlier results report](native-conformance-results-2026-11-09.md) and every original failed artifact retain their original outcomes.
+The original5.1.0 baseline remains280 observations,180PASS/99FAIL/oneBLOCKED. Two improvements are explicitly versioned namespace-oracle corrections. Counts across changed wallet/component/fixture versions do not identify individual causal wallet fixes. Complete BRC100 coverage remains blocked by recorded capability and interpretation requirements.
+
+The optional [4.6 profile](../itcves/ITCVE-1/4.6.0/README.md) binds the exact [e360e67 wallet candidate](../fixtures/artifacts/yours-wallet-pr368-e360e67/README.md), append-only producer receipts and extension oracle3. All698 predicate identities remain present. Its source and prospective fixes are separately frozen; fresh native qualification is required.
 
 ## Retained profiles and attempts
 
@@ -37,6 +39,7 @@ The completed qualification-workflow attempts below are all retained as failed o
 | 7: [43253674251](https://github.com/p2ppsr/interop/actions/runs/43253674251), candidate `3e8a97f`, source `69386ef`; [archive](../journals/integrated-native-attempts/2026-11-12/43253674251/README.md) | Zero native sessions or observations; the 698-predicate corpus and original-99 comparison were not executed. | The committed-source selector raised `ENOBUFS` reading the 3,181,608-byte pagination fixture through the default 1 MiB output buffer. All build and native steps were skipped. No artifact ZIP, qualification or Rust result exists. | 22 |
 | 8: [43262928941](https://github.com/p2ppsr/interop/actions/runs/43262928941), candidate `3e8a97f`, source `664e853`; [archive](../journals/integrated-native-attempts/2026-11-12/43262928941/README.md) | Zero native sessions or observations; original-99 comparison not executed. | Source admission, Linux Go build and all 64 Docker instructions passed. Runner shutdown interrupted image export with exit 143. Native, integrated execution and upload steps were skipped. No native artifact, qualification or Rust result exists; shutdown origin remains unknown. | 1,052 |
 | 9: [43268040660](https://github.com/p2ppsr/interop/actions/runs/43268040660), candidate `3e8a97f`, source `664e853`; [archive](../journals/integrated-native-attempts/2026-11-12/43268040660/README.md) | No completed native capture or original-99 comparison is available; execution after communication loss is unknown. | Hosted runner lost communication. Last reported active step was image export; terminal steps remain pending. No artifact or cleanup receipt is available, job logs return 404, and workflow logs are empty. No qualification or Rust result can be admitted. | 3,784 |
+| 10: [43285086155](https://github.com/p2ppsr/interop/actions/runs/43285086155), candidate `3e8a97f`, source `dad2a6e`; [archive](../journals/integrated-native-attempts/2026-11-12/43285086155/README.md) | Zero native sessions or observations; original-99 comparison not executed. | Final image export completed in 5.9 seconds. The image audit rejected an out-of-scope expected `/opt` parent; wallet execution was skipped. Both complete Linux inventories and original logs are retained. No native qualification or Rust result exists. | 877 |
 
 Attempt 4's six native failures were the signed-satoshi `listActions` response shape, two over-limit UTF-8 baskets, incomplete returned transaction proof, exact fee-inclusive allowance cap, and cumulative allowance. Its three accepted payments actually debited 114 satoshis against a 100-satoshi allowance. Each separate 77-predicate integration report contained 74 PASS and three BLOCKED because the uppercase Board protocol fixture prevented Board, LCH and revision execution. Those failures and absent results remain unchanged by the prospective fixes.
 
@@ -279,3 +282,27 @@ observations584PASS/six retained upstream Go Messaging FAIL. Its three original
 ZIPs/262members and complete logs are retained. CI1677seconds plus native877
 seconds bring completed cohort use to**35978job-seconds**. All full monetary
 and effort costs remain unknown.
+
+The [source5 Foundation run](https://github.com/p2ppsr/interop/actions/runs/43289524357)
+passed on exact source `784733b9cfdb1e29f0e4922d6ca90e768144bfee`:
+216 core PASS / one SKIP, 1675 synthesis PASS / 120 SKIP, five Python passes
+and 13 Go matrix passes. Its integrated report retains 584 PASS and six
+upstream Go Messaging FAIL findings; evidence verification passed. The
+[CI archive](../journals/native-closure-ci/2026-11-12/784733b/README.md) retains
+all three original ZIPs, 262 members and complete logs. Its 1562 job-seconds
+bring completed cohort use to **37540 job-seconds before native attempt 11**.
+
+
+## Attempt11 diagnosis and prospective4.6 correction
+
+The source5 Linux audit passes71433 filesystem entries, complete inherited runtime configuration and two added image layers. Both native containers exited0, were removed and host namespace policy was restored. Native job2609seconds plus Foundation1562 closes that order at4171seconds and completed cohort40149. Full monetary and effort costs remain unknown.
+
+The failed attempt exposed an aggregate submission-order defect: provider concatenation inserted later root receipts before previously observed counterpart positions. The4.6 owned producer journal synchronously records every event, preserves provider-local arrays and exact provenance, and verifies all prefixes through shutdown. Original policy1/2 and failed histories remain unchanged. This correction retains every receipt; it does not waive application-payment, ancestor or denied-spend checks.
+
+Native UI capture now waits for the target control and a settled screen before recording its pre-click body. Exact trusted click/body equality remains mandatory. Active-provider observation compares rendered badge case and durable provider state rather than requiring a transient success snackbar. The permission observer separately binds generated single-protocol requests and the complete fetched manifest. Linkage scope explicitly includes the revealed peer and verifier.
+
+Extension oracle3 corrects one normative error: the pinned contract permits literal `identityKey:true` or omission, so `false` must reject. Ordinary child derivation and true identity retrieval remain independent controls. The prior oracle2 acceptance and every old result remain immutable.
+
+Wallet candidatee360e67 adds per-origin action creation serialization while preserving all other pending debits, complete peer-scoped linkage grants, bounded protocol indexes and discovery's omitted consent defaultfalse. Positive trust setup requests consent explicitly; fresh-origin default-denial tests retain their original requests. [CI43306868169](https://github.com/yours-org/yours-wallet/actions/runs/43306868169) passes269tests/1839expectations and all4 bundles in103job-seconds. Intake verifies352files,45 inner members, patch postimages, source attribution and139 package-version license records. Completed cohort40252; costs remain unknown.
+
+The separate source8 retained-evidence reevaluation preserves the exact original186-member archive and280native/77integrated/48Rust criteria. It allocates no native session. New profile execution and full independent replay remain required before publication of a qualification.

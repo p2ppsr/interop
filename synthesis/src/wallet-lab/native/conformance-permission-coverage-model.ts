@@ -79,6 +79,7 @@ export interface CoverageRevocation {
   before: CoverageScreenshot; confirmation: CoverageScreenshot; after: CoverageScreenshot
 }
 export interface NativePermissionCoverageReport {
+  linkagePermissionScope?: 'peer-protocol-key-v2'
   schema: 'tpnil-native-permission-coverage@1.0.0'; oracle: ReturnType<typeof permissionCoverageSelection>['oracle']; policySha256: string
   claim: 'ENGINEERING_OBSERVATION_ONLY'; identity: string; extensionId: string; startedAt: string; endedAt: string
   fundingPrelude?: { evidencePath: 'conformance/permission-prelude.json'; sha256: string }

@@ -63,11 +63,11 @@ export async function verifyNativeTrust(report: any, boundary: any, options: Ide
   }
   const predicates: Record<string, () => Promise<void> | void> = {
     'identity-trust.initial-exclusion': () => {
-      assert.ok(cert)
+      assert.ok(cert); assert.ok(report.initialDiscoveryConsent === undefined || report.initialDiscoveryConsent === 'explicit-allow-v1')
       assert.ok(!report.originalSettings.trustSettings.trustedCertifiers.some((r: any) => r.identityKey === cert.certifier))
       for (const [method, response] of [['discoverByIdentityKey', report.initialIdentity], ['discoverByAttributes', report.initialAttributes]]) {
         const row = findTrace(method, response); assert.ok(row)
-        assert.deepEqual(row.args[0], method === 'discoverByIdentityKey' ? { identityKey: cert.subject, forceRefresh: true } : { attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true })
+        assert.deepEqual(row.args[0], method === 'discoverByIdentityKey' ? { identityKey: cert.subject, forceRefresh: true, ...(report.initialDiscoveryConsent === 'explicit-allow-v1' ? { seekPermission: true } : {}) } : { attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true, ...(report.initialDiscoveryConsent === 'explicit-allow-v1' ? { seekPermission: true } : {}) })
         assert.ok(Array.isArray(response.certificates)); assert.ok(!response.certificates.some((r: any) => match(r, cert)))
       }
     },

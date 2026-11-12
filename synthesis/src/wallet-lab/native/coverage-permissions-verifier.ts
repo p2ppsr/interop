@@ -28,7 +28,7 @@ function signedBytes(value: any): Transaction {
   assert.match(value.txid, /^[a-f0-9]{64}$/); const tx = decodePermissionExtensionAtomic(value.tx); assert.equal(tx.id('hex'), value.txid); return tx
 }
 
-export function verifyPermissionExtensionPromptScope(step: Report['steps'][number], prompt: Report['steps'][number]['prompts'][number]): void {
+export function verifyPermissionExtensionPromptScope(step: Report['steps'][number], prompt: Report['steps'][number]['prompts'][number], linkagePermissionScope?: 'peer-protocol-key-v2'): void {
   const lines = prompt.body.split('\n').map(line => line.trim()).filter(Boolean)
   const after = (label: string) => { assert.equal(lines.filter(line => line === label).length, 1, `Exact visible ${label} required`); return lines[lines.indexOf(label) + 1] }
   const origin = new URL(step.origin).host
@@ -50,7 +50,7 @@ export function verifyPermissionExtensionPromptScope(step: Report['steps'][numbe
   }
   if (step.method === 'getPublicKey' || step.method === 'revealSpecificKeyLinkage') {
     assert.equal(lines[0], 'Protocol Permission')
-    assert.equal(after('Protocol'), step.method === 'getPublicKey' ? step.args.protocolID[1] : `specific key linkage revelation ${step.args.protocolID[1]} ${step.args.keyID}`)
+    assert.equal(after('Protocol'), step.method === 'getPublicKey' ? step.args.protocolID[1] : linkagePermissionScope === 'peer-protocol-key-v2' ? `specific key linkage revelation ${step.args.counterparty} ${step.args.protocolID[1]} ${step.args.keyID}` : `specific key linkage revelation ${step.args.protocolID[1]} ${step.args.keyID}`)
     assert.equal(after('Counterparty'), step.method === 'getPublicKey' ? step.args.counterparty : step.args.verifier)
     assert.equal(after('Security'), 'Level 2 · this app and this recipient only')
   } else if (step.method === 'listOutputs') { assert.equal(lines[0], 'Basket Access'); assert.equal(after('Basket'), step.args.basket) }
@@ -166,7 +166,7 @@ export async function evaluatePermissionExtension(report: Report, anchor: Native
   }, identity)
   const prompt = (id: string, decision: 'allow' | 'deny') => {
     const s = step(id); assert.equal(s.prompts.length, 1, `${id} needs its own decision`); const v = s.prompts[0]!
-    assert.equal(v.decision, decision); assert.equal(v.pendingBeforeDecision, true); assert.ok(v.body.includes(new URL(s.origin).host)); assert.ok(v.url.startsWith(`chrome-extension://${report.extensionId}/prompt.html`)); verifyPermissionExtensionPromptScope(s, v); verifyPermissionClick(v.trustedClick, v, s); image(v.screenshot)
+    assert.equal(v.decision, decision); assert.equal(v.pendingBeforeDecision, true); assert.ok(v.body.includes(new URL(s.origin).host)); assert.ok(v.url.startsWith(`chrome-extension://${report.extensionId}/prompt.html`)); verifyPermissionExtensionPromptScope(s, v, report.linkagePermissionScope); verifyPermissionClick(v.trustedClick, v, s); image(v.screenshot)
     return v
   }
   const deny = (id: string) => { const s = step(id); assert.equal(s.outcome.status, 'rejected'); assert.equal(s.outcome.value, undefined); assert.match(s.outcome.error?.message ?? '', /permission.*denied|denied by user|user has denied|no user consent/i); assert.doesNotMatch(s.outcome.error.message, /timeout|timed out|unsupported|not implemented|network|fetch failed|insufficient|invalid parameter/i); prompt(id, 'deny') }

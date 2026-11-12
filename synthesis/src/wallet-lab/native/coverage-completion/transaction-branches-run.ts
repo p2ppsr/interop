@@ -30,7 +30,7 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
         const allowed = [{ id: 'source', providerUrl: 'https://wallet.1sat.app' }, { id: 'source/replacement-wallet.itcve.test', providerUrl: 'https://replacement-wallet.itcve.test' }]
         const cards = await page.locator('button.w-full').allInnerTexts()
         const candidates = allowed.map(provider => { const matches = cards.filter(card => card.split('\n').map(line => line.trim()).includes(new URL(provider.providerUrl).host)); assert.ok(matches.length <= 1); return { ...provider, present: matches.length === 1, card: matches[0] ?? null } })
-        const activeCards = cards.filter(card => card.split('\n').map(line => line.trim()).includes('In use'))
+        const activeCards = cards.filter(card => card.split('\n').map(line => line.trim().toLowerCase()).includes('in use'))
         assert.equal(activeCards.length, 1)
         const selected = candidates.filter(provider => provider.card === activeCards[0]); assert.equal(selected.length, 1)
         const { id, providerUrl } = selected[0]!
@@ -44,7 +44,7 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
           if (!current) throw Error('Exact remote provider detail card is absent')
           return (current as HTMLElement).innerText
         })
-        assert.ok(card.split('\n').map(line => line.trim()).includes('In use')); assert.ok(!card.includes('Backup copy'))
+        assert.ok(card.split('\n').map(line => line.trim().toLowerCase()).includes('in use')); assert.ok(!card.includes('Backup copy'))
         const screenshot = `conformance/transaction-branches-active-provider-${stage}.png`, bytes = await page.screenshot()
         context.evidence.addBytes(screenshot, bytes)
         return { kind: 'NATIVE_REMOTE_BACKUP_UI', id, providerUrl, candidates, activeCards, mainScreenshot, mainScreenshotSha256: createHash('sha256').update(mainBytes).digest('hex'),

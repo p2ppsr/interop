@@ -1,5 +1,6 @@
 ARG TPNIL_INTEGRATED_BASE
 FROM scratch AS conformance_files
+COPY fixtures/artifacts/yours-wallet-pr368-e360e67/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-e360e67/provenance.json
 COPY fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json
 COPY fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json
 COPY infra/native/conformance /work/infra/native/conformance
@@ -65,6 +66,10 @@ COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 
 COPY synthesis/test/native-permission-startup.test.ts synthesis/test/native-failure.test.ts /work/synthesis/test/
 COPY synthesis/test/fixtures/native5-identity-prompt.json /work/synthesis/test/fixtures/native5-identity-prompt.json
+
+COPY programs/ISI-4/5.6.0 /work/programs/ISI-4/5.6.0
+COPY itcves/ITCVE-1/4.6.0 /work/itcves/ITCVE-1/4.6.0
+COPY programs/ISI-4/profiles/native-coverage-extension-3.0.0 /work/programs/ISI-4/profiles/native-coverage-extension-3.0.0
 
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root

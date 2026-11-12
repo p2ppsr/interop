@@ -26,7 +26,7 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
       if (candidate.present) { assert.equal(typeof candidate.card, 'string'); assert.ok(candidate.card.split('\n').map((s: string) => s.trim()).includes(new URL(candidate.providerUrl).host)) }
       else assert.equal(candidate.card, null)
     }
-    const active = observation.candidates.filter((row: any) => row.present && row.card.split('\n').map((s: string) => s.trim()).includes('In use'))
+    const active = observation.candidates.filter((row: any) => row.present && row.card.split('\n').map((s: string) => s.trim()).some((line: string) => line.toLowerCase() === 'in use'))
     assert.equal(active.length, 1); assert.equal(active[0].id, selected.id); assert.deepEqual(observation.activeCards, [active[0].card])
     assert.equal(observation.mainScreenshot, `conformance/transaction-branches-provider-cards-${stage}.png`)
     const mainBytes = read(observation.mainScreenshot); assert.equal(mainBytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
@@ -34,7 +34,7 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
     assert.equal(observation.url, `chrome-extension://${contexts.contexts[0].extensionId}/index.html`)
     const lines = observation.card.split('\n').map((line: string) => line.trim())
     assert.ok(lines.includes(new URL(selected.providerUrl).host) && lines.includes(observation.providerUrl))
-    assert.equal(lines.filter((line: string) => line === 'In use').length, 1); assert.ok(!lines.includes('Backup copy'))
+    assert.equal(lines.filter((line: string) => line.toLowerCase() === 'in use').length, 1); assert.ok(!lines.includes('Backup copy'))
     assert.equal(observation.screenshot, `conformance/transaction-branches-active-provider-${stage}.png`)
     const bytes = read(observation.screenshot); assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
     assert.equal(createHash('sha256').update(bytes).digest('hex'), observation.screenshotSha256)
@@ -56,7 +56,7 @@ export async function evaluateTransactionBranches(report: any) {
     providerRegistry: report.providerRegistry, routes: report.finalRoutes, unknownSource: report.unknownSource })
 }
 export async function verifyTransactionBranchParent(report: any, binding: BasketParentBinding) {
-  assert.equal(binding.profile, 'ITCVE-1@4.5.0'); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
   assert.deepEqual(report.fixture, binding.fixture)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), registry = nativeCompletionProviders(read)
   verifyTransactionActiveProvider(report, read)

@@ -27,14 +27,15 @@ def verify(directory, expected):
     return hashlib.sha256(json.dumps(actual, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--wallet-version', choices=['5.1.0', '5.1.1', '5.1.1-pr368.7e39006', '5.1.1-pr368.cb3c2f2', '5.1.1-pr368.4a954ac', '5.1.1-pr368.3e8a97f'], default='5.1.0')
+parser.add_argument('--wallet-version', choices=['5.1.1-pr368.e360e67', '5.1.0', '5.1.1', '5.1.1-pr368.7e39006', '5.1.1-pr368.cb3c2f2', '5.1.1-pr368.4a954ac', '5.1.1-pr368.3e8a97f'], default='5.1.0')
 version = parser.parse_args().wallet_version
-candidate_directories = {'5.1.1-pr368.3e8a97f': 'yours-wallet-pr368-3e8a97f', '5.1.1-pr368.7e39006': 'yours-wallet-pr368-7e39006', '5.1.1-pr368.cb3c2f2': 'yours-wallet-pr368-cb3c2f2', '5.1.1-pr368.4a954ac': 'yours-wallet-pr368-4a954ac'}
+candidate_directories = {'5.1.1-pr368.e360e67': 'yours-wallet-pr368-e360e67', '5.1.1-pr368.3e8a97f': 'yours-wallet-pr368-3e8a97f', '5.1.1-pr368.7e39006': 'yours-wallet-pr368-7e39006', '5.1.1-pr368.cb3c2f2': 'yours-wallet-pr368-cb3c2f2', '5.1.1-pr368.4a954ac': 'yours-wallet-pr368-4a954ac'}
 candidate = version in candidate_directories
 manifest_version = '5.1.1' if candidate else version
 wallet = ROOT / ('out/sut-artifacts/' + candidate_directories[version] if candidate else f'out/sut-artifacts/yours-wallet-v{version}')
 archive_path = wallet / f'pw-v{manifest_version}.zip'
 expected_archive = {
+    '5.1.1-pr368.e360e67': ('553b6df9a43714c5b4c708fac2a00eed2c77e4c26047edcd70456df5eaeaf0da', 13246448),
     '5.1.1-pr368.3e8a97f': ('9da87d79ac7ac70e3c5dee50451b2f0456b51f5e480b1be0925cd24a7707e184', 13245082),
     '5.1.1-pr368.4a954ac': ('cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105', 13244753),
     '5.1.0': ('d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52', 13513123),

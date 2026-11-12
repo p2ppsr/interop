@@ -68,5 +68,5 @@ for (let index = 1; index <= plan.repetitions; index++) {
   save('host-userns.json', { before: usernsBefore, active: usernsActive, restored, restoredSuccessfully: restored === usernsBefore });
   if (restored !== usernsBefore) throw new Error('Host user namespace policy restoration failed');
 }
-const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: [1, 2, 3].includes(coverageRevision) ? 180000 : 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
+const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: [1, 2, 3, 4].includes(coverageRevision) ? 180000 : 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
 if (verify.status !== 0) throw new Error('Native conformance evidence verification failed');

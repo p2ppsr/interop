@@ -44,11 +44,11 @@ export function verifyPermissionFundingPrelude(report: NativePermissionCoverageR
   return p
 }
 
-export interface PermissionCoverageContextOptions { profile: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' }
+export interface PermissionCoverageContextOptions { profile: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' }
 export async function evaluateNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string, options?: PermissionCoverageContextOptions) {
   const revision = report.oracle === 'tpnil-native-permission-coverage-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-permission-coverage-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-permission-coverage-oracle@3.0.0' ? 3 : report.oracle === 'tpnil-native-permission-coverage-oracle@4.0.0' ? 4 : report.oracle === 'tpnil-native-permission-coverage-oracle@5.0.0' ? 5 : undefined
   assert.ok(revision, 'Unknown permission coverage oracle')
-  if (options) { assert.ok(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(options.profile)); assert.equal(revision, 5, 'Expanded browser prefix requires permission oracle5') }
+  if (options) { assert.ok(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.profile)); assert.equal(report.linkagePermissionScope, options.profile === 'ITCVE-1@4.6.0' ? 'peer-protocol-key-v2' : undefined); assert.equal(revision, 5, 'Expanded browser prefix requires permission oracle5') }
   const { config, oracle, policy, policySha256, assertionIds, stepOrder } = permissionCoverageSelection(revision)
   const coverageManifest = coverageManifestForRevision(revision)
   const step = (id: string) => { const rows = report.steps.filter(row => row.id === id); assert.equal(rows.length, 1, `Exactly one ${id} observation required`); return rows[0]! }
@@ -95,7 +95,7 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
       else if (category === 'spending') { assert.equal(lines[0], 'Spending Authorization'); assert.equal(after('Reason'), row.args.description); assert.ok(p.body.includes(`Native coverage allowance recipient (${row.args.outputs[0].satoshis} satoshis)`)) }
       else {
         assert.equal(lines[0], 'Protocol Permission')
-        const protocol = category === 'counterparty-linkage' ? `counterparty key linkage revelation ${coveragePeer}` : category === 'specific-linkage' ? `specific key linkage revelation ${config.linkageProtocol[1]} ${config.linkageKeyID}` : config.protocol[1]
+        const protocol = category === 'counterparty-linkage' ? `counterparty key linkage revelation ${coveragePeer}` : category === 'specific-linkage' ? report.linkagePermissionScope === 'peer-protocol-key-v2' ? `specific key linkage revelation ${coveragePeer} ${config.linkageProtocol[1]} ${config.linkageKeyID}` : `specific key linkage revelation ${config.linkageProtocol[1]} ${config.linkageKeyID}` : config.protocol[1]
         assert.equal(after('Protocol'), protocol); assert.equal(after('Counterparty'), category === 'protocol' ? coveragePeer : coverageVerifier)
       }
     }

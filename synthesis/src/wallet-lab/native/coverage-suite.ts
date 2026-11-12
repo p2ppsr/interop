@@ -16,8 +16,8 @@ import { coverageObservationEncoding } from './coverage-observation.js'
 /** Explicit prospective profile only. Every browser restart changes the public
  * boundary page; resolve it afresh for each call. No wallet implementation state
  * or test-only private wallet API is accessed. */
-export async function runNativeCoverageSuite(context: NativeScenarioContext, anchor: NativePermissionCoverageReport, profile?: 'ITCVE-1@4.5.0') {
-  const observationEncoding = profile === 'ITCVE-1@4.5.0' ? coverageObservationEncoding : undefined
+export async function runNativeCoverageSuite(context: NativeScenarioContext, anchor: NativePermissionCoverageReport, profile?: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0') {
+  const observationEncoding = profile ? coverageObservationEncoding : undefined
   const { services, evidence } = context
   const root = path.resolve(import.meta.dirname, '../../../..')
   const wallet: any = new Proxy({}, { get: (_target, method) => typeof method !== 'string' || method === 'then' ? undefined : (args: unknown) => nativeWalletBoundary(context.application, true)[method](args) })
@@ -33,7 +33,7 @@ export async function runNativeCoverageSuite(context: NativeScenarioContext, anc
     const clauseReport = JSON.parse(evidence.readBytes('conformance/clauses.json').toString())
     const trustReport = JSON.parse(evidence.readBytes('integrated/identity-trust.json').toString())
     await execute('transactions', () => runNativeTransactionCoverage({ wallet, funder: funder as any, identity: anchor.identity, services, evidence }, profile ? 3 : 2))
-    await execute('extension', () => runNativeCoverageExtension({ wallet, funder: funder as any, services, evidence, boundaryReport, clauseReport, trustReport, observationEncoding }))
+    await execute('extension', () => runNativeCoverageExtension({ wallet, funder: funder as any, services, evidence, boundaryReport, clauseReport, trustReport, observationEncoding, observationRevision: profile === 'ITCVE-1@4.6.0' ? 3 : 2 }))
   } finally { await funder.destroy() }
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-certificate-coverage-'))
   const observer = createCoveragePermissionObserver(context), unregister: Array<() => void> = []

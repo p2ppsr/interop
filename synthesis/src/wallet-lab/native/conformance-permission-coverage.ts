@@ -25,6 +25,7 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
   const manifestBytes = Buffer.from(canonicalJson(coverageManifest))
   const observer = createCoveragePermissionObserver(context)
   const report: NativePermissionCoverageReport = {
+    ...(services.submissionOrdering ? { linkagePermissionScope: 'peer-protocol-key-v2' as const } : {}),
     schema: 'tpnil-native-permission-coverage@1.0.0', oracle, policySha256,
     ...(revision === 5 ? { fundingPrelude: { evidencePath: 'conformance/permission-prelude.json' as const, sha256: sha(evidence.readBytes('conformance/permission-prelude.json')) } } : {}),
     claim: 'ENGINEERING_OBSERVATION_ONLY', identity: '', extensionId, startedAt: now(), endedAt: '',

@@ -17,8 +17,9 @@ function vector(id: VectorResult['id'], report: any, file: string, limitations: 
   return { id, outcome, assertions, limitations }
 }
 
-export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' | 'pr368-observer3' | 'pr368-coverage1' | 'pr368-coverage2' | 'pr368-coverage3' = 'legacy', fixtureRevision: 1 | 2 = 1, headerFixture?: ControlledHeaderFixture, identityTrustOracle?: IdentityTrustOracleOptions['oracle']): Promise<{ vectors: VectorResult[] }> {
-  const completion = nativeRevision === 'pr368-coverage3'
+export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' | 'pr368-observer3' | 'pr368-coverage1' | 'pr368-coverage2' | 'pr368-coverage3' | 'pr368-coverage4' = 'legacy', fixtureRevision: 1 | 2 = 1, headerFixture?: ControlledHeaderFixture, identityTrustOracle?: IdentityTrustOracleOptions['oracle']): Promise<{ vectors: VectorResult[] }> {
+  const followup = nativeRevision === 'pr368-coverage4'
+  const completion = followup || nativeRevision === 'pr368-coverage3'
   const recovery = completion || nativeRevision === 'pr368-coverage2'
   const expanded = recovery || nativeRevision === 'pr368-coverage1'
   const observer3 = nativeRevision === 'pr368-observer3'
@@ -29,8 +30,8 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   if (release511 && !closure) throw new Error('Yours5.1.1 requires the complete native closure')
   coverage = coverage || closure
   const { application, services, evidence, baselineVectors } = context
-  const profile = completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
-  const program = completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
+  const profile = followup ? 'ITCVE-1@4.6.0' : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
+  const program = followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
   const wallet = nativeWalletBoundary(application, true)
   const permission = await context.manualPrompt(() => runNativePermissionConformance({ context: context.context, evidence, extensionId: context.extensionId, trustedClick: closure }))
   const lifecycle = await runConformanceLifecycle(wallet, services, { receiptMode: 'storage-rpc', oracle: lifecycleOracleId, submissionBinding: todoSubmissionBinding })
@@ -50,7 +51,7 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   const permissionLifecycle = coverage ? await context.manualPrompt(async () => (await import('./conformance-permission-lifecycle.js')).runNativePermissionLifecycle(context, { trustedClick: closure })) : undefined
   if (permissionLifecycle) evidence.addJson('conformance/permission-lifecycle.json', permissionLifecycle)
   const permissionCoverage = expanded ? JSON.parse(evidence.readBytes('conformance/permission-coverage.json').toString()) : release511 ? await context.manualPrompt(async () => (await import('./conformance-permission-coverage.js')).runNativePermissionCoverage(context, fixtureRevision === 2 ? 3 : 1)) : undefined
-  const extensions = expanded ? await (await import('./coverage-suite.js')).runNativeCoverageSuite(context, permissionCoverage!, completion ? 'ITCVE-1@4.5.0' : undefined) : undefined
+  const extensions = expanded ? await (await import('./coverage-suite.js')).runNativeCoverageSuite(context, permissionCoverage!, completion ? profile as 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' : undefined) : undefined
   const completions = completion ? await runNativeCompletionSuite(context) : undefined
   const vectors = structuredClone(baselineVectors)
   vectors[4] = vector('ISI-4-V005', permission, 'conformance/permissions.json', ['Visible native permission UI and public CWI; other wallet substrates retain separate admission.'])

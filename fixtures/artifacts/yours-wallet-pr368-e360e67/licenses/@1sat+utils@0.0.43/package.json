@@ -1,0 +1,41 @@
+{
+  "name": "@1sat/utils",
+  "version": "0.0.43",
+  "description": "Utility functions for 1Sat Ordinals SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "1sat",
+    "bsv",
+    "ordinals",
+    "utils"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@1sat/types": "0.0.53",
+    "@ipld/dag-cbor": "^10.0.2",
+    "image-meta": "^0.2.2"
+  },
+  "peerDependencies": {
+    "@bsv/sdk": "^2.6.0"
+  },
+  "devDependencies": {
+    "@bsv/sdk": "^2.6.0",
+    "typescript": "^5.9.3"
+  }
+}

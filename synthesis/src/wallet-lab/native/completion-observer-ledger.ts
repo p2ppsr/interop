@@ -12,7 +12,7 @@ import { nativeCompletionProviders } from './coverage-completion/providers.js'
 export const completionInventoryLedgerFile = 'native-completion-inventory-ledger.json'
 export const completionInventoryClosureFile = 'completion-inventory-closure.json'
 const digest = (bytes: Buffer) => ({ bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') })
-type Source = Pick<ControlledWalletServices, 'nativeOutputProviderRegistry' | 'nativeCertificateInventoryObservations' | 'nativeTransactionKnowledgeInventoryObservations' | 'nativeActionQueryObservations' | 'nativeFinalActionQueryLedgers'>
+type Source = { submissionOrdering?: ControlledWalletServices['submissionOrdering'] } & Pick<ControlledWalletServices, 'nativeOutputProviderRegistry' | 'nativeCertificateInventoryObservations' | 'nativeTransactionKnowledgeInventoryObservations' | 'nativeActionQueryObservations' | 'nativeFinalActionQueryLedgers'>
 
 /** Capture ownership before close() deliberately clears route/provider maps.
  * Keep reading the original append-only arrays through their defensive getters.
@@ -20,6 +20,7 @@ type Source = Pick<ControlledWalletServices, 'nativeOutputProviderRegistry' | 'n
 export function observeCompletionInventoryClosure(source: Source): Source {
   const registry = structuredClone(source.nativeOutputProviderRegistry)
   return {
+    submissionOrdering: source.submissionOrdering,
     get nativeOutputProviderRegistry() { return structuredClone(registry) },
     get nativeCertificateInventoryObservations() { return source.nativeCertificateInventoryObservations },
     get nativeTransactionKnowledgeInventoryObservations() { return source.nativeTransactionKnowledgeInventoryObservations },
@@ -32,7 +33,7 @@ export function observeCompletionInventoryClosure(source: Source): Source {
  * Failed observations are retained; only the independent parent admits them. */
 export function captureCompletionInventoryLedger(source: Source) {
   return {
-    schema: 'tpnil-native-completion-inventory-ledger@1.0.0', profile: 'ITCVE-1@4.5.0',
+    schema: 'tpnil-native-completion-inventory-ledger@1.0.0', profile: source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0',
     registry: source.nativeOutputProviderRegistry,
     certificates: source.nativeCertificateInventoryObservations,
     transactionKnowledge: source.nativeTransactionKnowledgeInventoryObservations,
@@ -53,7 +54,7 @@ export function closeCompletionInventoryLedger(directory: string, source: Source
     try { bindings[name] = digest(fs.readFileSync(path.join(directory, name))) }
     catch (error) { errors.push(error); bindings[name] = { error: String(error) } }
   }
-  const report = { schema: 'tpnil-native-completion-inventory-closure@1.0.0', profile: 'ITCVE-1@4.5.0',
+  const report = { schema: 'tpnil-native-completion-inventory-closure@1.0.0', profile: source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0',
     final, actionLedgers, bindings, errors: errors.map(String), capturedAt: new Date().toISOString() }
   fs.writeFileSync(path.join(directory, completionInventoryClosureFile), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' })
   return { report, errors }
@@ -68,10 +69,10 @@ export function verifyCompletionInventoryClosure(options: {
   const initial = JSON.parse(options.initialBytes.toString()), closure = JSON.parse(options.closureBytes.toString())
   const shutdown = JSON.parse(options.shutdownBytes.toString()), record = JSON.parse(options.recordBytes.toString())
   const registry = nativeCompletionProviders(options.readEvidence)
-  assert.equal(record.itcve, 'ITCVE-1@4.5.0')
-  assert.equal(shutdown.profile, 'ITCVE-1@4.5.0')
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(record.itcve))
+  assert.equal(shutdown.profile, record.itcve)
   assert.equal(closure.schema, 'tpnil-native-completion-inventory-closure@1.0.0')
-  assert.equal(closure.profile, 'ITCVE-1@4.5.0'); assert.deepEqual(closure.errors, [])
+  assert.equal(closure.profile, record.itcve); assert.deepEqual(closure.errors, [])
   for (const key of ['initialProviders', 'providers']) assert.deepEqual(shutdown[key].map((provider: any) => provider.id), registry.map(provider => provider.id))
   assert.deepEqual(closure.bindings, {
     'record.json': digest(options.recordBytes),
@@ -79,7 +80,7 @@ export function verifyCompletionInventoryClosure(options: {
     'shutdown-submissions.json': digest(options.shutdownBytes)
   })
   const verify = (ledger: any) => {
-    assert.equal(ledger.schema, 'tpnil-native-completion-inventory-ledger@1.0.0'); assert.equal(ledger.profile, 'ITCVE-1@4.5.0')
+    assert.equal(ledger.schema, 'tpnil-native-completion-inventory-ledger@1.0.0'); assert.equal(ledger.profile, record.itcve)
     assert.deepEqual(ledger.registry, registry)
     for (const kind of ['certificates', 'transactionKnowledge', 'actionQueries'] as const) {
       const rows = ledger[kind]; assert.ok(Array.isArray(rows) && rows.length > 0 && rows.length <= 2048)

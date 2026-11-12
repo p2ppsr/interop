@@ -40,6 +40,7 @@ export interface ExtensionSettings {
 }
 export type ExtensionStep = CoveragePermissionCall & { submissionStart: number; submissionEnd: number }
 export interface NativePermissionExtensionReport {
+  linkagePermissionScope?: 'peer-protocol-key-v2'
   schema: 'tpnil-native-permission-extension@1.0.0'; oracle: string; policySha256: string
   identityPermission?: 'explicit-allow-v1'
   claim: 'ENGINEERING_OBSERVATION_ONLY'; completeBRC100Conformance: false; identity: string; extensionId: string
