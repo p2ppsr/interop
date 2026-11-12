@@ -90,3 +90,12 @@ describe('prospective complete shutdown permission ancestry', () => {
     await expect(verifyFinalPermissionSubmissionAncestry(b)).rejects.toThrow()
   })
 })
+
+it('requires explicit expanded profile for permission5 and retains every denied ancestor guard', async () => {
+  const b: any = binding(); b.coverageReport.oracle = 'tpnil-native-permission-coverage-oracle@5.0.0'
+  await expect(verifyFinalPermissionSubmissionAncestry(b)).rejects.toThrow()
+  b.profile = 'ITCVE-1@4.3.0'; expect((await verifyFinalPermissionSubmissionAncestry(b)).verified).toBe(true)
+  const { child } = await hiddenPayment(coveragePaymentScript, 53); b.finalSubmissions.push(receipt(child))
+  await expect(verifyFinalPermissionSubmissionAncestry(b)).rejects.toThrow('Denied coverage payment')
+  for (const revision of [3, 4]) { const wrong: any = binding(); wrong.coverageReport.oracle = `tpnil-native-permission-coverage-oracle@${revision}.0.0`; wrong.profile = 'ITCVE-1@4.3.0'; await expect(verifyFinalPermissionSubmissionAncestry(wrong)).rejects.toThrow() }
+})

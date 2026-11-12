@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import {execFileSync} from 'node:child_process'
-import {validateReevaluationPlan,validateReevaluationLock,originalReevaluationPlanPath,previousReevaluationPlanPath,previousReevaluationPlanId,previousReevaluationPlanSha256,currentReevaluationPlanPath,currentReevaluationPlanId,retainedSource3PlanPath,retainedSource3PlanId,retainedSource3PlanSha256,originalReevaluationPlanSha256,evaluatorSourceNames,sha256} from '../scripts/native-reevaluation.mjs'
+import {validateReevaluationPlan,validateReevaluationLock,originalReevaluationPlanPath,previousReevaluationPlanPath,previousReevaluationPlanId,previousReevaluationPlanSha256,currentReevaluationPlanPath,currentReevaluationPlanId,retainedSource3PlanPath,retainedSource3PlanId,retainedSource3PlanSha256,retainedSource4PlanPath,retainedSource4PlanId,retainedSource4PlanSha256,originalReevaluationPlanSha256,evaluatorSourceNames,sha256} from '../scripts/native-reevaluation.mjs'
 const root=path.resolve(import.meta.dirname,'..'),read=name=>fs.readFileSync(path.join(root,name)),parse=name=>JSON.parse(read(name))
 const acceptedSource='9a9e99f1fb5a10fc8b6726aaa6a0d7dc239ec47e'
 const previousSource='6b174e0b903225923999a44fb1de7d67cc4e2959'
@@ -17,8 +17,9 @@ test('prospective reevaluation binds current source without rewriting accepted p
  assert.equal(sha256(read(originalReevaluationPlanPath)),originalReevaluationPlanSha256)
  assert.deepEqual(read(previousReevaluationPlanPath),execFileSync('git',['show',`${previousSource}:${previousReevaluationPlanPath}`],{cwd:root}))
  assert.equal(sha256(read(previousReevaluationPlanPath)),previousReevaluationPlanSha256)
- assert.equal(current.id,currentReevaluationPlanId);assert.equal(current.sourceBindingRevision,4)
- assert.deepEqual(current.predecessor,{path:retainedSource3PlanPath,sha256:retainedSource3PlanSha256})
+ assert.equal(current.id,currentReevaluationPlanId);assert.equal(current.sourceBindingRevision,5)
+ assert.deepEqual(current.predecessor,{path:retainedSource4PlanPath,sha256:retainedSource4PlanSha256})
+ assert.deepEqual(read(retainedSource4PlanPath),execFileSync('git',['show',`69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99:${retainedSource4PlanPath}`],{cwd:root}))
  assert.deepEqual(read(retainedSource3PlanPath),execFileSync('git',['show',`585211c193d0288effeb466bda38fe6ef23ac94d:${retainedSource3PlanPath}`],{cwd:root}))
  for(const key of ['original','rust','expected']){assert.deepEqual(current[key],previous[key]);assert.deepEqual(current[key],original[key])}
  validateReevaluationPlan(current,root)
@@ -45,15 +46,15 @@ test('source revision rejects predecessor substitution, revision downgrade and c
  }
 })
 
-test('prospective run lock binds all four plan revisions to its real committed evaluator source',()=>temporary(directory=>{
+test('prospective run lock binds all five plan revisions to its real committed evaluator source',()=>temporary(directory=>{
  const plan=parse(currentReevaluationPlanPath)
- for(const file of [currentReevaluationPlanPath,retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath,...evaluatorSourceNames,plan.rust.manifest])write(directory,file,read(file))
+ for(const file of [currentReevaluationPlanPath,retainedSource4PlanPath,retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath,...evaluatorSourceNames,plan.rust.manifest])write(directory,file,read(file))
  const git=(...args)=>execFileSync('git',args,{cwd:directory,encoding:'utf8'});git('init','-q');git('add','.');git('-c','user.name=TPNIL fixture','-c','user.email=fixture@example.invalid','commit','-qm','Prospective reevaluation source fixture')
  const lock={schema:'tpnil-native-integrated-reevaluation-run-lock@1',planPath:currentReevaluationPlanPath,plan,planSha256:sha256(read(currentReevaluationPlanPath)),evaluatorSource:git('rev-parse','HEAD').trim(),sourceDirty:false}
  validateReevaluationLock(lock,directory)
  assert.throws(()=>validateReevaluationLock({...lock,planPath:originalReevaluationPlanPath},directory))
  assert.throws(()=>validateReevaluationLock({...lock,planPath:previousReevaluationPlanPath},directory))
- for(const file of [retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath]) {
+ for(const file of [retainedSource4PlanPath,retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath]) {
   fs.appendFileSync(path.join(directory,file),' ')
   assert.throws(()=>validateReevaluationLock(lock,directory),/Accepted predecessor plan changed/)
   write(directory,file,read(file))
@@ -72,4 +73,12 @@ test('source3 remains valid under its exact executed source and all predecessors
  for(const file of [...evaluatorSourceNames,plan.rust.manifest,retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath])write(directory,file,execFileSync('git',['show',`585211c193d0288effeb466bda38fe6ef23ac94d:${file}`],{cwd:root}))
  validateReevaluationPlan(plan,directory)
  assert.equal(plan.id,retainedSource3PlanId);assert.equal(sha256(read(retainedSource3PlanPath)),retainedSource3PlanSha256)
+}))
+
+
+test('source4 remains valid under its exact executed source and all predecessors',()=>temporary(directory=>{
+ const plan=parse(retainedSource4PlanPath)
+ for(const file of [...evaluatorSourceNames,plan.rust.manifest,retainedSource4PlanPath,retainedSource3PlanPath,previousReevaluationPlanPath,originalReevaluationPlanPath])write(directory,file,execFileSync('git',['show',`69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99:${file}`],{cwd:root}))
+ validateReevaluationPlan(plan,directory)
+ assert.equal(plan.id,retainedSource4PlanId);assert.equal(sha256(read(retainedSource4PlanPath)),retainedSource4PlanSha256)
 }))

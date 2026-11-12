@@ -8,7 +8,7 @@ import { canonicalJson } from '../../determinism.js'
 import { verifyPermissionCallNonces, verifyPermissionClick, type PermissionClickReceipt } from './permission-click.js'
 import { coverageSpendingSummary } from './permission-coverage-observer.js'
 import { assertNoDeniedPermissionPayment } from './verify-conformance-permission-lifecycle.js'
-import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageVerifier, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageSelection, type CoverageRevocation, type CoverageStep, type NativePermissionCoverageReport, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
+import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifestForRevision, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageVerifier, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageSelection, type CoverageRevocation, type CoverageStep, type NativePermissionCoverageReport, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
 
 const funding = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
 const same = (left: unknown, right: unknown) => assert.equal(canonicalJson(left), canonicalJson(right))
@@ -30,10 +30,27 @@ export function verifyCoverageRevocationClick(receipt: PermissionClickReceipt, r
     const ordered = [row.startedAt, receipt.armedAt, receipt.attemptStartedAt, event.dispatchedAt, event.receivedAt, receipt.completedAt, row.endedAt].map(time); assert.ok(ordered.every((value, i) => !i || ordered[i - 1]! <= value)); assert.equal(receipt.automation.status, 'fulfilled')
   }
 
-export async function evaluateNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string) {
-  const revision = report.oracle === 'tpnil-native-permission-coverage-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-permission-coverage-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-permission-coverage-oracle@3.0.0' ? 3 : undefined
+/** This authenticates the prelude's content and timing; the parent must still
+ * join its exact rows to the provider snapshot and independently admitted roots. */
+export function verifyPermissionFundingPrelude(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, identity: string) {
+  assert.ok(report.fundingPrelude, 'Fresh managed funding prelude is required')
+  assert.equal(report.fundingPrelude.evidencePath, 'conformance/permission-prelude.json')
+  const bytes = readEvidence(report.fundingPrelude.evidencePath); assert.equal(sha(bytes), report.fundingPrelude.sha256)
+  const p = JSON.parse(bytes.toString()); assert.equal(p.schema, 'tpnil-native-permission-prelude@1.0.0'); assert.equal(p.prerequisite, 'fresh-managed-funding'); assert.equal(p.identity, identity); assert.equal(p.outputObservationSequence, 0)
+  assert.ok(time(p.startedAt) <= time(p.endedAt) && time(p.endedAt) <= time(report.startedAt), 'Fresh funding snapshot must precede permission execution')
+  assert.ok(Number.isSafeInteger(p.submissionStart) && p.submissionStart >= 0); assert.equal(p.submissionEnd, p.submissionStart); assert.equal(p.submissionEnd, report.submissionWindow.startIndex)
+  assert.ok(Array.isArray(p.initialOutputs)); assert.equal(p.initialOutputs.length, 3); assert.equal(new Set(p.initialOutputs.map((o: any) => o.outpoint)).size, 3)
+  for (const output of p.initialOutputs) { assert.match(output.outpoint, /^[0-9a-f]{64}\.[0-9]+$/); assert.equal(output.satoshis, 10000); assert.equal(output.spendable, true); assert.equal(output.basketName, 'default'); assert.match(output.lockingScript, /^76a914[0-9a-f]{40}88ac$/) }
+  return p
+}
+
+export interface PermissionCoverageContextOptions { profile: 'ITCVE-1@4.3.0' }
+export async function evaluateNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string, options?: PermissionCoverageContextOptions) {
+  const revision = report.oracle === 'tpnil-native-permission-coverage-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-permission-coverage-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-permission-coverage-oracle@3.0.0' ? 3 : report.oracle === 'tpnil-native-permission-coverage-oracle@4.0.0' ? 4 : report.oracle === 'tpnil-native-permission-coverage-oracle@5.0.0' ? 5 : undefined
   assert.ok(revision, 'Unknown permission coverage oracle')
+  if (options) { assert.equal(options.profile, 'ITCVE-1@4.3.0'); assert.equal(revision, 5, 'Expanded browser prefix requires permission oracle5') }
   const { config, oracle, policy, policySha256, assertionIds, stepOrder } = permissionCoverageSelection(revision)
+  const coverageManifest = coverageManifestForRevision(revision)
   const step = (id: string) => { const rows = report.steps.filter(row => row.id === id); assert.equal(rows.length, 1, `Exactly one ${id} observation required`); return rows[0]! }
   const success = (id: string) => { const row = step(id); assert.equal(row.outcome.status, 'fulfilled', `${id}: ${row.outcome.error?.message ?? row.outcome.message ?? row.outcome.status}`); assert.equal(row.outcome.error, undefined); return row.outcome.value }
   const image = (value: any, expectedName: string) => {
@@ -42,6 +59,8 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
   }
   const originFor = (id: string) => id === 'identity' || id.startsWith('setup-') ? config.application : id.endsWith('-alternate-deny') || id === 'allowance-alternate' ? config.alternate : id.startsWith('manifest-') || id.startsWith('allowance-') ? config.allowance : config.primary
   const common = () => {
+    if (revision === 5) verifyPermissionFundingPrelude(report, readEvidence, expectedIdentity)
+    else assert.equal(report.fundingPrelude, undefined, 'Legacy permission reports cannot claim a new funding prerequisite')
     assert.equal(report.schema, 'tpnil-native-permission-coverage@1.0.0'); assert.equal(report.oracle, oracle); assert.equal(report.policySha256, policySha256)
     assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false); same(report.remainingCoverage, policy.remainingCoverage)
     assert.equal(report.identity, expectedIdentity); assert.equal(PublicKey.fromString(expectedIdentity).toString(), expectedIdentity); assert.match(report.extensionId, /^[a-p]{32}$/)
@@ -68,7 +87,7 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
     if (grouped) {
       assert.ok(category === 'grouped' || category === 'spending' && id.includes('revoked'))
       assert.ok(p.body.replace(/\s+/g, ' ').includes(`${new URL(row.origin).host} is requesting the following permissions`))
-      assert.ok(p.body.includes('100 satoshis')); assert.ok(p.body.includes(config.basket)); assert.ok(p.body.includes(coverageCertificateType)); assert.ok(p.body.includes(config.protocol[1]))
+      assert.ok(p.body.includes(`${config.allowanceSatoshis} satoshis`)); assert.ok(p.body.includes(config.basket)); assert.ok(p.body.includes(coverageCertificateType)); assert.ok(p.body.includes(config.protocol[1]))
     } else {
       assert.equal(after('Origin'), new URL(row.origin).host)
       if (category === 'basket') { assert.equal(lines[0], 'Basket Access'); assert.equal(after('Basket'), config.basket) }
@@ -107,7 +126,7 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
       assert.equal(submitted.toHex(), tx.toHex())
       if (role === 'setup-basket') same(row.args, { description: 'TPNIL permission coverage basket fixture', outputs: [{ satoshis: config.basketAmount, lockingScript: '51', basket: config.basket, outputDescription: 'Native permission coverage fixture', customInstructions: 'tpnil:permission-coverage:1' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
       else {
-        const kind = role === 'allowance-first' ? 'first' : role === 'allowance-second' ? 'second' : role === 'allowance-third' && revision === 3 ? 'third' : undefined
+        const kind = role === 'allowance-first' ? 'first' : role === 'allowance-second' ? 'second' : role === 'allowance-third' && revision >= 3 ? 'third' : undefined
         assert.ok(kind, `Unknown accepted allowance role ${role}`); same(row.args, coveragePaymentArgs(kind, revision))
       }
       assert.equal(tx.outputs[0]!.satoshis, row.args.outputs[0].satoshis); assert.equal(tx.outputs[0]!.lockingScript.toHex(), row.args.outputs[0].lockingScript)
@@ -151,7 +170,7 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
   }
   const restarts = () => {
     assert.equal(report.restarts.length, 2)
-    const contexts = JSON.parse(readEvidence('native-browser-contexts.json').toString()); assert.equal(contexts.schema, 'tpnil-native-browser-contexts@1'); assert.equal(contexts.contexts.length, 3)
+    const contexts = JSON.parse(readEvidence('native-browser-contexts.json').toString()); assert.equal(contexts.schema, 'tpnil-native-browser-contexts@1'); assert.equal(contexts.contexts.length, options ? 5 : 3); if (options) contexts.contexts = contexts.contexts.slice(0, 3)
     const profileBinding = contexts.contexts[0].profileBinding; assert.match(profileBinding, /^[a-f0-9]{64}$/)
     const boundaries = [['allowance-first', 'protocol-restart'], ['allowance-revoked', 'protocol-revoked-restart']]
     for (const [index, receipt] of report.restarts.entries()) {
@@ -185,7 +204,7 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
     for (const row of report.manifest.requests) { assert.equal(row.method, 'GET'); assert.equal(row.path, '/manifest.json'); assert.equal(row.responseSha256, report.manifest.sha256); assert.ok(time(report.startedAt) <= time(row.servedAt) && time(row.servedAt) <= time(report.endedAt)) }
     const row = step('manifest-grant'); assert.equal(row.method, 'waitForAuthentication'); same(row.args, {}); assert.equal(success(row.id).authenticated, true)
     const p = prompt(row.id, 'allow', 'grouped'); assert.equal(p.selections.length, 1)
-    const selection = p.selections[0]!, event = selection.dispatch; assert.ok(event); assert.equal(selection.callNonce, row.requestNonce); assert.match(selection.nonce, /^[a-f0-9-]{36}$/); assert.equal(selection.url, p.url); assert.equal(selection.before, false); assert.equal(selection.after, true); assert.match(selection.label, /spend up to/); assert.match(selection.label, /100 satoshis/)
+    const selection = p.selections[0]!, event = selection.dispatch; assert.ok(event); assert.equal(selection.callNonce, row.requestNonce); assert.match(selection.nonce, /^[a-f0-9-]{36}$/); assert.equal(selection.url, p.url); assert.equal(selection.before, false); assert.equal(selection.after, true); assert.match(selection.label, /spend up to/); assert.ok(selection.label.includes(`${config.allowanceSatoshis} satoshis`))
     assert.equal(event.nonce, selection.nonce); assert.equal(event.label, selection.label); assert.equal(event.url, p.url); assert.equal(event.type, 'change'); assert.equal(event.checked, true); assert.equal(event.isTrusted, true); assert.equal(event.expectedPage, true); assert.equal(event.expectedMainFrame, true)
     const ordered = [row.startedAt, selection.startedAt, event.dispatchedAt, event.receivedAt, selection.endedAt, p.clickedAt].map(time); assert.ok(ordered.every((value, i) => !i || ordered[i - 1]! <= value))
     for (const category of ['protocol', 'basket', 'certificate'] as const) await positive(category, `manifest-${category}`, true)
@@ -205,11 +224,11 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
     ...permissionCoverageCategories.map(category => () => { restarts(); revocations(); for (const suffix of ['revoked', 'revoked-restart']) { categoryArgs(category, `${category}-${suffix}`); rejected(`${category}-${suffix}`, category) } }),
     manifest,
     async () => { await manifest(); restarts(); const first = await spent('allowance-first'), second = await spent('allowance-second'); assert.ok(first > 0 && first + second <= config.allowanceSatoshis) },
-    ...(revision === 3 ? [async () => { await manifest(); restarts(); const total = await spent('allowance-first') + await spent('allowance-second') + await spent('allowance-third'); assert.equal(config.allowanceSatoshis, 100); assert.equal(total, 100, 'The three signed payments including actual fees must reach the fixed100-satoshi cap exactly'); revocations(); same(coverageSpendingSummary(report.revocations[1]!.cardBody, config.allowanceSatoshis), { cap: 100, spent: total, remaining: 0 }) }] : []),
-    async () => { const first = await spent('allowance-first'), second = await spent('allowance-second'), third = revision === 3 ? await spent('allowance-third') : 0; assert.ok(config.paymentAmounts.overflow < config.allowanceSatoshis); assert.ok(first + second + third <= config.allowanceSatoshis && first + second + third + config.paymentAmounts.overflow > config.allowanceSatoshis); denyPayment('allowance-overflow') },
+    ...(revision >= 3 ? [async () => { await manifest(); restarts(); const total = await spent('allowance-first') + await spent('allowance-second') + await spent('allowance-third'); assert.equal(config.allowanceSatoshis, revision === 4 ? 114 : 100); assert.equal(total, config.allowanceSatoshis, `The three signed payments including actual fees must reach the fixed${config.allowanceSatoshis}-satoshi cap exactly`); revocations(); same(coverageSpendingSummary(report.revocations[1]!.cardBody, config.allowanceSatoshis), { cap: config.allowanceSatoshis, spent: total, remaining: 0 }) }] : []),
+    async () => { const first = await spent('allowance-first'), second = await spent('allowance-second'), third = revision >= 3 ? await spent('allowance-third') : 0; assert.ok(config.paymentAmounts.overflow < config.allowanceSatoshis); assert.ok(first + second + third <= config.allowanceSatoshis && first + second + third + config.paymentAmounts.overflow > config.allowanceSatoshis); denyPayment('allowance-overflow') },
     () => denyPayment('allowance-alternate'),
     () => { revocations(); restarts(); denyPayment('allowance-revoked'); denyPayment('allowance-revoked-restart') },
-    () => { same(report.cleanup, { pagesClosed: true, settingsClosed: true, routeUnregistered: true }); same(report.errors, []); same(report.transactions.map(row => row.role), ['setup-basket', 'allowance-first', 'allowance-second', ...(revision === 3 ? ['allowance-third'] : [])]) }
+    () => { same(report.cleanup, { pagesClosed: true, settingsClosed: true, routeUnregistered: true }); same(report.errors, []); same(report.transactions.map(row => row.role), ['setup-basket', 'allowance-first', 'allowance-second', ...(revision >= 3 ? ['allowance-third'] : [])]) }
   ]
   assert.equal(predicates.length, assertionIds.length)
   return await Promise.all(predicates.map(async (predicate, index) => {
@@ -218,8 +237,8 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
   }))
 }
 
-export async function verifyNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string) {
-  const assertions = await evaluateNativePermissionCoverage(report, readEvidence, expectedIdentity)
+export async function verifyNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string, options?: PermissionCoverageContextOptions) {
+  const assertions = await evaluateNativePermissionCoverage(report, readEvidence, expectedIdentity, options)
   same(report.assertions.map(({ id, result }) => ({ id, result })), assertions.map(({ id, result }) => ({ id, result })))
   const result = assertions.every(row => row.result === 'PASS') ? 'PASS' : 'FAIL'; assert.equal(report.result, result)
   return { verified: true, result, assertions }

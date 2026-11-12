@@ -7,11 +7,12 @@ import {fileURLToPath} from 'node:url'
 import {selectNativeWalletProfile} from './native-wallet-profiles.mjs'
 import {nativeRustBinding} from './native-rust-compatibility.mjs'
 const root=path.resolve(import.meta.dirname,'..'),sha=bytes=>createHash('sha256').update(bytes).digest('hex')
-const flags={'all-go-native':undefined,'integrated-native':'--integrated','integrated-native-trusted':'--integrated-trusted','integrated-native-conformance':'--conformance','integrated-native-conformance-coverage':'--conformance-coverage','integrated-native-conformance-closure':'--conformance-closure','integrated-native-conformance-closure-rust-v3':'--conformance-closure-rust-v3','integrated-native-conformance-5.1.1':'--conformance-5.1.1','integrated-native-conformance-5.1.1-observer-2':'--conformance-5.1.1-observer-2','integrated-native-conformance-pr368-7e39006':'--conformance-pr368-7e39006','integrated-native-conformance-pr368-cb3c2f2-observer-3':'--conformance-pr368-cb3c2f2-observer-3'}
+const flags={'integrated-native-conformance-pr368-coverage-1':'--conformance-pr368-coverage-1','all-go-native':undefined,'integrated-native':'--integrated','integrated-native-trusted':'--integrated-trusted','integrated-native-conformance':'--conformance','integrated-native-conformance-coverage':'--conformance-coverage','integrated-native-conformance-closure':'--conformance-closure','integrated-native-conformance-closure-rust-v3':'--conformance-closure-rust-v3','integrated-native-conformance-5.1.1':'--conformance-5.1.1','integrated-native-conformance-5.1.1-observer-2':'--conformance-5.1.1-observer-2','integrated-native-conformance-pr368-7e39006':'--conformance-pr368-7e39006','integrated-native-conformance-pr368-cb3c2f2-observer-3':'--conformance-pr368-cb3c2f2-observer-3'}
 /** Builtin-only source check before dependency installation or paid builds. */
 export async function checkNativeWalletSelector(variant,{source=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),read=name=>fs.readFileSync(path.join(root,name)),readCommitted=(revision,name)=>execFileSync('git',['show',`${revision}:${name}`],{cwd:root,stdio:['ignore','pipe','pipe']})}={}) {
   assert.ok(Object.hasOwn(flags,variant),'Unknown native execution variant')
   const selected=selectNativeWalletProfile(flags[variant]),bytes=read(selected.planPath),plan=JSON.parse(bytes)
+  if(selected.coverageRevision) assert.equal(plan.admissionState, 'FROZEN', 'Expanded candidate source is not frozen')
   assert.equal(sha(readCommitted(source,selected.planPath)),sha(bytes),'Plan is not committed at selected execution source')
   for(const [name,digest] of Object.entries(plan.conformanceInputs??{})) {
     assert.equal(sha(read(name)),digest,`Current conformance input differs: ${name}`)

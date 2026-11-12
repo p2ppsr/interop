@@ -131,7 +131,7 @@ export async function verifyTransactionStateFinalSubmissions(report: StateReport
 }
 
 export async function verifyNativeTransactionStateBindings(report: StateReport, binding: Binding & {
-  resolvedTransactions: Map<string, Transaction>; submissions: Submission[]; finalSubmissions: Submission[]; identity: string
+  resolvedTransactions: Map<string, Transaction>; submissions: Submission[]; finalSubmissions: Submission[]; identity: string; ownershipFromIndependentGraph?: boolean
 }) {
   verifyTransactionStateSnapshots(report, binding.storageTransactions, binding.submissions, binding.identity)
   const child = await verifyNativeTransactionStates(report)
@@ -139,6 +139,7 @@ export async function verifyNativeTransactionStateBindings(report: StateReport, 
   const transactions = await verifyObservedNativeTransactionBindings(report.trace, child.assertions, binding, {
     rolePrefix: 'transaction-states', predicateFor: call => transactionStateRolePredicate(call.id),
     resolvedTransactions: binding.resolvedTransactions,
+    ownershipFromIndependentGraph: binding.ownershipFromIndependentGraph,
     isTxidOnly: call => ['txid-only-create', 'txid-only-sign'].includes(call.id)
   })
   return { ...transactions, finalSubmissionBinding }

@@ -1,0 +1,13 @@
+# Prospective transaction coverage oracle 2
+
+This separately selected revision retains the 22 planning rows and the original 160-call, 24-transaction, 5,000-satoshi fee bounds. Revision 1 remains the default, with its policy and original reports unchanged. Its exact executed source is retained under the predecessor reference's `source-preserved-before-oracle2/` directory.
+
+The conflicting-proof predicate requires both ordinary valid nonduplicate BEEF controls and rejection of the originally referenced contradictory BUMP. Identical serialized transaction entries are an optional encoding compatibility observation: the pinned BRCs do not require accepting them. Their raw responses remain in the transcript, and accepted stages still require successful abort.
+
+Only independently proven progress of an earlier wallet-signed delayed transaction may explain a `sending` to `unproven` inventory change or a receipt during a positive control's stage/abort window. The actual signed intent, complete source graph, accepted receipt bytes, actor, and observation window are checked. Every other inventory field remains exact. Invalid-call windows still require zero submissions; the full final ledger protects rejected or relinquished inputs, including unmined ancestors and rejected submissions.
+
+The retained local execution uses the actual patched Yours wallet library at `4a954ac6bb0cb4403fb8ed548efd0cd8d1ba11b1` with the Go input-ancestry adapter. It is not a browser/native execution. The final explicit offline replay yields 21 PASS and one BLOCKED interpretation across 121 public calls. It independently counts 23 constructed transactions and 414 satoshis of actual fees and binds the observed post-close provider ledger. The conflicting-remittance exclusivity interpretation remains open.
+
+`reference/manifest.json` binds every compressed byte. Four original samples remain separate: delayed-status observer failure; a real positive-control `database is locked` failure; a passing sample whose ledger was captured before close; and a positive-control-window observer failure with complete final closure. The final replay changes only verdicts and policy binding, preserving the last sample's raw calls, responses, windows, and ledger. The SQLite extended error code was not captured and is not inferred.
+
+The 80 current/legacy tests cover source and policy identity, ordinary positive controls, optional duplicate rejection, hostile accepted proofs, unknown/unsigned/foreign or mismatched delayed transactions, late/rejected receipts, metadata changes, and protected late spends hidden in direct transactions or ancestors. No native verdict, full-conformance claim, monetary cost, or performance improvement is inferred from this reference.

@@ -54,7 +54,7 @@ test('candidate and official binding substitutions, unknown selectors and retain
   await assert.rejects(checkNativeWalletSelector(nativeCandidateVariant,{...options,readCommitted:(_revision,name)=>name==='scripts/check-native-wallet-selector.mjs'?Buffer.from('changed selector'):read(name)}),/differs|changed/)
 })
 
-for(const short of ['7e39006','cb3c2f2']) test(`actual ${short} ZIP rejects changed files, missing files and official-release substitution`,()=>{
+for(const short of ['7e39006','cb3c2f2','4a954ac']) test(`actual ${short} ZIP rejects changed files, missing files and official-release substitution`,()=>{
   const harness=String.raw`
 import sys,tempfile,pathlib,shutil,zipfile,tarfile,json
 root=pathlib.Path(sys.argv[1]);script=(root/'infra/native/yours-go/verify-installed.py').read_text()
@@ -86,24 +86,29 @@ with tempfile.TemporaryDirectory(prefix='tpnil-candidate-self-test-') as tmp:
 
 
 test('candidate observer3 explicitly binds a positive controlled header while preserving attempted plans',async()=>{
-  const selected=selectNativeWalletProfile(nativeCandidateObserver3Flag),plan=JSON.parse(currentRead(nativeCandidateObserver3PlanPath))
+  const frozenSource='69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99'
+  const frozenRead=name=>execFileSync('git',['show',`${frozenSource}:${name}`],{cwd:root,maxBuffer:64*1024*1024})
+  const frozenOptions={source:frozenSource,read:frozenRead,readCommitted:(_revision,name)=>frozenRead(name)}
+  const selected=selectNativeWalletProfile(nativeCandidateObserver3Flag),plan=JSON.parse(frozenRead(nativeCandidateObserver3PlanPath))
   assert.equal(selected.observerRevision,3);assert.equal(selected.walletVersion,'5.1.1-pr368.cb3c2f2');assert.equal(selected.candidate,true)
   assert.equal(plan.observerRevision,3);assert.equal(plan.expectedObservations,426)
   assert.notDeepEqual(plan.wallet,json(nativeCandidatePlanPath).wallet)
-  assert.deepEqual(plan.wallet,JSON.parse(currentRead(plan.walletCandidate.manifest)).wallet)
+  assert.deepEqual(plan.wallet,JSON.parse(frozenRead(plan.walletCandidate.manifest)).wallet)
   assert.equal(plan.walletCandidate.sourceCommit,'cb3c2f20e016948b58823f6c8b624b9065f8a693')
   assert.equal(plan.itcve,'ITCVE-1@4.2.0');assert.equal(plan.program,'ISI-4@5.2.0')
   assert.equal(plan.headerFixture,'tpnil-native-controlled-header@1.0.0')
-  assert.equal(sha(currentRead(plan.headerFixturePolicy)),plan.headerFixturePolicySha256)
-  const boundary=JSON.parse(currentRead(plan.boundaryProfile)),oldBoundary=json(json(nativeCandidatePlanPath).boundaryProfile)
+  assert.equal(sha(frozenRead(plan.headerFixturePolicy)),plan.headerFixturePolicySha256)
+  const boundary=JSON.parse(frozenRead(plan.boundaryProfile)),oldBoundary=json(json(nativeCandidatePlanPath).boundaryProfile)
   assert.deepEqual(boundary.assertions,oldBoundary.assertions.map(id=>id==='getHeaderForHeight.genesis'?'getHeaderForHeight.controlled-mined':id))
   for(const file of [nativeCandidatePlanPath,nativeWallet511Observer2PlanPath,'infra/native/conformance/rust-graph-pr368-7e39006.json','infra/native/conformance/rust-graph-5.1.1-selector-2.json'])assert.deepEqual(currentRead(file),read(file))
   const currentOptions={source,read:currentRead,readCommitted:(_revision,name)=>currentRead(name)}
-  const verified=await checkNativeWalletSelector(nativeCandidateObserver3Variant,currentOptions)
+  for(const file of [nativeCandidateObserver3PlanPath,'infra/native/conformance/rust-graph-pr368-cb3c2f2-observer-3.json','itcves/ITCVE-1/4.2.0/profile.json','programs/ISI-4/5.2.0/catalog.json'])assert.deepEqual(currentRead(file),frozenRead(file))
+  const verified=await checkNativeWalletSelector(nativeCandidateObserver3Variant,frozenOptions)
+  await assert.rejects(checkNativeWalletSelector(nativeCandidateObserver3Variant,currentOptions),/differs/)
   assert.equal(verified.rust.variant,nativeCandidateObserver3Variant)
   await assert.rejects(checkNativeWalletSelector(nativeCandidateVariant,currentOptions),/differs/)
-  const lock={source,plan,planSha256:sha(currentRead(nativeCandidateObserver3PlanPath)),executionVariant:nativeCandidateObserver3Variant,rustCompatibility:verified.rust}
+  const lock={source:frozenSource,plan,planSha256:sha(frozenRead(nativeCandidateObserver3PlanPath)),executionVariant:nativeCandidateObserver3Variant,rustCompatibility:verified.rust}
   for(const mutate of [l=>l.executionVariant=nativeCandidateVariant,l=>delete l.plan.observerRevision,l=>l.plan.headerFixture='genesis',l=>l.rustCompatibility.manifest='infra/native/conformance/rust-graph-pr368-7e39006.json']) {
-    const changed=structuredClone(lock);mutate(changed);await assert.rejects(selectNativeRustCorpus(changed,{...currentOptions,graphPolicy:async()=>({corpus:'tpnil-rust-corpus@3',graphOracle:verified.rust.graphOracle})}))
+    const changed=structuredClone(lock);mutate(changed);await assert.rejects(selectNativeRustCorpus(changed,{...frozenOptions,graphPolicy:async()=>({corpus:'tpnil-rust-corpus@3',graphOracle:verified.rust.graphOracle})}))
   }
 })

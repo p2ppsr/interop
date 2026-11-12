@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
+import fs from 'node:fs'
 import test from 'node:test'
 import { compareNativeConformance } from '../scripts/compare-native-conformance.mjs'
 
@@ -57,5 +58,33 @@ for (const [profile, version] of [['ITCVE-1@4.1.0', '5.1.1-pr368.7e39006'], ['IT
     rows => { rows[1].itcve = 'ITCVE-1@4.0.0' },
     rows => { rows[0].claim = 'EXPERIMENTAL_CONFORMANCE_RESULT' },
     rows => { rows[0].walletCandidate.officialRelease = true }
+  ]) { const changed = structuredClone(records); mutate(changed); assert.throws(() => compareNativeConformance(baseline, changed, {})) }
+})
+
+
+test('expanded4.3 comparison binds exact4a intake and all535 observations without changing the original99 denominator', () => {
+  const plan = JSON.parse(fs.readFileSync(path.join(root, 'infra/native/conformance/plan-pr368-coverage-1.json')))
+  // LAB_SELF_TEST_ONLY: synthetic additional outcomes exercise arithmetic and
+  // identity gates; this test never emits native qualification.
+  const records = fixture().map(record => {
+    record.itcve = 'ITCVE-1@4.3.0'; record.claim = 'ENGINEERING_OBSERVATION_ONLY'
+    record.walletCandidate = structuredClone(plan.walletCandidate); record.artifacts.wallet = structuredClone(plan.wallet)
+    for (let i = 0; i < 254; i++) record.vectors[7].assertions.push({ id: `lab-self-test/additional-${i}`, outcome: i === 0 ? 'FAIL' : 'PASS' })
+    return record
+  })
+  const report = compareNativeConformance(baseline, records, {})
+  assert.equal(report.candidate.profile, 'ITCVE-1@4.3.0'); assert.equal(report.denominator.originalFailures, 99)
+  assert.equal(report.additionalCoverage.assertions, 255); assert.equal(report.additionalCoverage.counts.FAIL, 1)
+  assert.equal(report.claim, 'DERIVED_RECORD_COMPARISON_ONLY'); assert.equal(report.completeBRC100Conformance, false)
+  for (const mutate of [
+    rows => rows.forEach(row => row.vectors[7].assertions.pop()),
+    rows => rows.forEach(row => { row.artifacts.wallet.version = '5.1.1-pr368.cb3c2f2' }),
+    rows => rows.forEach(row => { row.artifacts.wallet.sha256 = '0'.repeat(64) }),
+    rows => rows.forEach(row => { row.artifacts.wallet.size++ }),
+    rows => rows.forEach(row => { row.walletCandidate.sourceCommit = '0'.repeat(40) }),
+    rows => rows.forEach(row => { row.walletCandidate.manifestSha256 = '0'.repeat(64) }),
+    rows => rows.forEach(row => { row.walletCandidate.manifest = 'other/provenance.json' }),
+    rows => rows.forEach(row => { row.walletCandidate.officialRelease = true }),
+    rows => rows.forEach(row => { row.claim = 'EXPERIMENTAL_CONFORMANCE_RESULT' })
   ]) { const changed = structuredClone(records); mutate(changed); assert.throws(() => compareNativeConformance(baseline, changed, {})) }
 })

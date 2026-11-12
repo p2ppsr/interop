@@ -69,3 +69,43 @@ run 43157437280 stopped at the invalid height-zero observer request before any
 of the 99 conformance predicates were observed. Both failures and actual costs
 are retained separately. The blocked coverage gate retains every unexecuted
 obligation in the 306-row accountability inventory.
+
+## Expanded candidate coverage
+
+`integrated-native-conformance-pr368-coverage-1` selects ITCVE-1 4.3.0 / ISI-4
+5.3.0 and the retained PR368 candidate `4a954ac`. Its separate plan contains
+535 predicates: the previous 426 identities plus 15 permission, 22 transaction,
+61 namespace/cryptographic/query and 11 certificate observations. The plan must
+be frozen at the exact committed execution source before dispatch. Two fresh
+repetitions each have a 1500-second limit; the complete workflow has a 70-minute
+limit and requires a separately recorded bounded work order.
+
+The four modules run through the native CWI boundary. Permission coverage adds
+visible lock/unlock, individual revocation, linkage scope, grouped permission
+selection and fee-inclusive spending controls. Transaction coverage adds held
+batches, explicit change selection, proof rejection and payment/basket merges.
+Namespace checks observe every owned storage provider before and after rejected
+internalization. Certificate coverage uses independent issuers, authenticated
+issuance, signed identity publications, fresh origins and a real profile restart.
+The parent checks all five browser contexts, exact source/provider identities,
+signed transaction ownership, and the complete ledger after shutdown. Fixture
+wallet calls remain explicitly distinct from native wallet observations.
+
+The single Go host incorporates separately retained batch-subject, dust-debit,
+merged-credit, input-ancestry and SQLite snapshot-retry patches. These are
+source-owned compatibility changes, not an unmodified upstream-Go claim.
+Earlier layer locks, failed tests and native attempts remain immutable. The new
+Board and identity fixtures use valid normalized namespaces. Permission oracle 5
+runs before other customer transactions, with exactly the three declared upfront
+10,000-satoshi payments. An independent storage snapshot and the final transaction
+graph bind this prerequisite. Its 100-satoshi grant covers payments of 11, 13 and
+7 satoshis plus their actual signed fees. The parent requires the measured total
+to equal the grant and verifies both permission modules finish before ToDo starts.
+Earlier allowance results and the unexecuted, state-dependent 114-satoshi oracle
+4 experiment remain retained separately.
+
+The exact candidate CI artifact is engineering evidence, not an official release.
+An added predicate, reference-library run or corrected local replay cannot clear
+the comprehensive coverage gate. The original 99 comparison keeps its denominator;
+signed action-value interpretation, unobserved capabilities and calendar cases
+remain separate open obligations until their own acceptance evidence exists.

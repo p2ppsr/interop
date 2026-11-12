@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { BOARD_TOPIC, decodeAndVerifyBoardToken, encodeBoardToken } from '../src/board.js'
+import { BOARD_TOPIC, boardProtocol, decodeAndVerifyBoardToken, encodeBoardToken } from '../src/board.js'
 import { ReferenceCHIRPNetwork } from '../src/content.js'
 import { sha256Hex } from '../src/determinism.js'
 import { createFixtureWallet } from '../src/lch-reference/fixtureWallet.js'
@@ -16,6 +16,32 @@ import {
 import { StorageUtils } from '@bsv/sdk'
 
 describe('TPNIL synthesis building blocks', () => {
+  it('uses the explicitly selected valid namespace across Board derivation, signatures and decoding', async () => {
+    const backing = createFixtureWallet(305), seen: string[] = []
+    const wallet = new Proxy(backing, { get(target, name) {
+      const method = Reflect.get(target, name)
+      if (typeof method !== 'function') return method
+      return async (args: any, ...rest: any[]) => {
+        if (args?.protocolID) {
+          seen.push(args.protocolID[1])
+          if (!/^[a-z0-9 ]+$/.test(args.protocolID[1])) throw new Error('Invalid protocol namespace')
+        }
+        return method.call(target, args, ...rest)
+      }
+    } })
+    const input = { id: sha256Hex('validated-board'), key: 'board/validated', revision: 1, previous: null, createdAt: 1, body: 'valid namespace', attachment: { assetId: sha256Hex('asset'), lch: 'AA', mediaType: 'image/png', plaintextSha256: sha256Hex('plain') } }
+    await expect(encodeBoardToken(wallet, input)).rejects.toThrow('Invalid protocol namespace')
+    const token = await encodeBoardToken(wallet, input, 'validated-v2')
+    expect(await decodeAndVerifyBoardToken(token.lockingScript, 'validated-v2')).toEqual(token.record)
+    // ProtoWallet normalizes the invoice namespace internally: the fixture
+    // correction preserves existing cryptographic identities and token bytes.
+    expect(await decodeAndVerifyBoardToken(token.lockingScript)).toEqual(token.record)
+    const old = await encodeBoardToken(backing, input)
+    expect(await decodeAndVerifyBoardToken(old.lockingScript)).toEqual(old.record)
+    expect(await decodeAndVerifyBoardToken(old.lockingScript, 'validated-v2')).toEqual(old.record)
+    expect(old.lockingScriptHex).toEqual(token.lockingScriptHex)
+    expect(seen.slice(1).every(name => name === boardProtocol('validated-v2')[1])).toBe(true)
+  })
   it('executes the complete reference golden path deterministically at the semantic boundary', async () => {
     const options = {
       seed: 'tpnil-synthesis-test',

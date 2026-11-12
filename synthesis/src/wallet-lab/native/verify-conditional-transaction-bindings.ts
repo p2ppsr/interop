@@ -39,7 +39,7 @@ export async function verifyObservedNativeTransactionBindings(
   trace: readonly ObservedNativeTransactionCall[],
   assertions: readonly { id: string; result: string }[],
   binding: Binding,
-  options: { rolePrefix: string; predicateFor: (call: ObservedNativeTransactionCall) => string; resolvedTransactions?: Map<string, Transaction>; isTxidOnly?: (call: ObservedNativeTransactionCall) => boolean }
+  options: { rolePrefix: string; predicateFor: (call: ObservedNativeTransactionCall) => string; resolvedTransactions?: Map<string, Transaction>; isTxidOnly?: (call: ObservedNativeTransactionCall) => boolean; ownershipFromIndependentGraph?: boolean }
 ) {
   assert.match(options.rolePrefix, /^[a-z][a-z0-9-]*$/)
   await verifyCoverageNativeTransactions([], binding)
@@ -89,7 +89,24 @@ export async function verifyObservedNativeTransactionBindings(
     const stored = binding.storageTransactions.get(actualTxid)
     assert.ok(stored, `${role}: independent native storage bytes absent`)
     assert.equal(stored.id('hex'), actualTxid); assert.equal(stored.toHex(), tx.toHex(), `${role}: independent native storage bytes differ`)
-    assert.ok(spendsOnlyDeclaredNativePayments(tx, binding.declaredNativePayments), `${role}: transaction spends outside independently declared native payments`)
+    // A malformed public proof must remain a wallet counterexample. The
+    // prospective observer can still establish who funded its exact signed
+    // body from the parent's independently reconstructed storage graph.
+    // Never hydrate the public BEEF itself: that would erase INVALID_PROOF.
+    let owned = tx
+    if (options.ownershipFromIndependentGraph) {
+      const resolved = options.resolvedTransactions?.get(actualTxid)
+      assert.ok(resolved, `${role}: returned transaction lacks independent ownership ancestry`)
+      assert.equal(resolved.id('hex'), actualTxid)
+      assert.equal(resolved.toHex(), tx.toHex(), `${role}: independent ownership body differs`)
+      const ownershipGraph = Beef.fromBinary(resolved.toAtomicBEEF())
+      const mined = ownershipGraph.findTxid(binding.fixture.txid)
+      assert.ok(mined?.tx && mined.bumpIndex !== undefined && mined.tx.toHex() === binding.fixture.rawHex,
+        `${role}: independent ownership graph lacks the admitted mined root`)
+      assert.ok(await ownershipGraph.verify(tracker), `${role}: independent ownership ancestry is invalid`)
+      owned = resolved
+    }
+    assert.ok(spendsOnlyDeclaredNativePayments(owned, binding.declaredNativePayments), `${role}: transaction spends outside independently declared native payments`)
     if (validBytes !== result.tx.length || !reader.eof() || typeof result.txid !== 'string' || !/^[a-f0-9]{64}$/.test(result.txid) || graph.atomicTxid !== actualTxid || result.txid !== actualTxid) {
       invalid('MALFORMED_RETURN', 'Returned Atomic BEEF has invalid metadata or trailing bytes; its recoverable transaction was independently bound'); continue
     }

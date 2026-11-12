@@ -10,7 +10,7 @@ import { canonicalJson } from '../../determinism.js'
 import { createCoveragePermissionObserver, waitForCoverageRevocationSnapshot } from './permission-coverage-observer.js'
 import { observePermissionClick } from './permission-click.js'
 import { evaluateNativePermissionCoverage } from './verify-conformance-permission-coverage.js'
-import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, permissionCoverageCategories, permissionCoverageSelection, type NativePermissionCoverageReport, type CoverageRevocation, type CoverageStep, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
+import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifestForRevision, coveragePaymentArgs, permissionCoverageCategories, permissionCoverageSelection, type NativePermissionCoverageReport, type CoverageRevocation, type CoverageStep, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
 
 const now = () => new Date().toISOString()
 const sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex')
@@ -18,13 +18,15 @@ const clean = (value: any) => JSON.parse(JSON.stringify(value))
 
 /** Caller owns manualPrompt suspension. This scenario uses only native public
  * CWI and visible UI; browser restart is the source-owned driver hook. */
-export async function runNativePermissionCoverage(context: NativeScenarioContext, revision: 1 | 2 | 3 = 1): Promise<NativePermissionCoverageReport> {
+export async function runNativePermissionCoverage(context: NativeScenarioContext, revision: 1 | 2 | 3 | 4 | 5 = 1): Promise<NativePermissionCoverageReport> {
   const { evidence, services, extensionId } = context
   const { config, oracle, policy, policySha256 } = permissionCoverageSelection(revision)
+  const coverageManifest = coverageManifestForRevision(revision)
   const manifestBytes = Buffer.from(canonicalJson(coverageManifest))
   const observer = createCoveragePermissionObserver(context)
   const report: NativePermissionCoverageReport = {
     schema: 'tpnil-native-permission-coverage@1.0.0', oracle, policySha256,
+    ...(revision === 5 ? { fundingPrelude: { evidencePath: 'conformance/permission-prelude.json' as const, sha256: sha(evidence.readBytes('conformance/permission-prelude.json')) } } : {}),
     claim: 'ENGINEERING_OBSERVATION_ONLY', identity: '', extensionId, startedAt: now(), endedAt: '',
     steps: [], restarts: [], revocations: [], manifest: { value: coverageManifest, sha256: sha(manifestBytes), requests: [] },
     transactions: [], submissions: [], submissionWindow: { startIndex: services.submissions.length, endIndex: services.submissions.length },
@@ -40,7 +42,7 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
     // An unresolved earlier request must never lend its popup or eventual grant
     // to a later nonce. Preserve the failed observation and stop this scenario.
     if (!['fulfilled', 'rejected'].includes(row.outcome.status)) throw new Error(`${id}: ${row.outcome.message ?? row.outcome.status}`)
-    if (row.outcome.status === 'fulfilled' && ['setup-basket', 'allowance-first', 'allowance-second', ...(revision === 3 ? ['allowance-third'] : [])].includes(id) && Array.isArray(row.outcome.value?.tx)) report.transactions.push({ role: id, txid: row.outcome.value.txid, atomicBeef: row.outcome.value.tx })
+    if (row.outcome.status === 'fulfilled' && ['setup-basket', 'allowance-first', 'allowance-second', ...(revision >= 3 ? ['allowance-third'] : [])].includes(id) && Array.isArray(row.outcome.value?.tx)) report.transactions.push({ role: id, txid: row.outcome.value.txid, atomicBeef: row.outcome.value.tx })
     return row
   }
   const value = (row: CoverageStep) => { if (row.outcome.status !== 'fulfilled') throw new Error(`${row.id}: ${row.outcome.error?.message ?? row.outcome.message ?? row.outcome.status}`); return row.outcome.value }
@@ -110,7 +112,7 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
     await restart()
     for (const name of permissionCoverageCategories) await category(name, 'restart', config.primary)
     await request('allowance-second', config.allowance, 'createAction', coveragePaymentArgs('second', revision))
-    if (revision === 3) await request('allowance-third', config.allowance, 'createAction', coveragePaymentArgs('third', revision))
+    if (revision >= 3) await request('allowance-third', config.allowance, 'createAction', coveragePaymentArgs('third', revision))
     await request('allowance-overflow', config.allowance, 'createAction', coveragePaymentArgs('overflow', revision), { decision: 'deny' })
     await request('allowance-alternate', config.alternate, 'createAction', coveragePaymentArgs('alternate', revision), { decision: 'deny' })
     await revoke('revoke-primary', config.primary)

@@ -11,6 +11,7 @@ import type { RouteObservation } from './model.js'
 import { ControlledOverlayServices, type OverlayObservation, type UmpRecord } from './overlay-services.js'
 import { applyTypeScriptDescendantExport } from '../storage-sync/descendant-export.js'
 import { SubmissionVerdicts, type SubmissionTarget } from './submission-verdicts.js'
+import { assertSnapshotIdentity, validateNativeOutputSnapshot, type OwnedNativeOutputSnapshots, type NativeOutputSnapshotObservation, type NativeOutputProviderRegistry } from './native-output-snapshot.js'
 
 export interface HeaderRecord {
   version: number
@@ -171,6 +172,7 @@ export class ControlledWalletServices {
   readonly headers = new Map<number, HeaderRecord>([[0, genesisHeader]])
   readonly routes: RouteObservation[] = []
   private readonly ownSubmissions: SubmittedTransaction[] = []
+  private readonly ownOutputSnapshotObservations: NativeOutputSnapshotObservation[] = []
   readonly walletBridgeObservations: WalletBridgeObservation[] = []
   readonly storageRpcObservations: StorageRpcObservation[] = []
   /** Exact public Go storage receipts; prospective terminal-rejection profile only. */
@@ -182,6 +184,7 @@ export class ControlledWalletServices {
   private readonly verdicts: SubmissionVerdicts
   private readonly webroot: string
   private readonly externalOverlayLookups = new Map<string, string>()
+  private readonly scopedOverlayLookups = new Map<string, (question: any) => Promise<unknown>>()
   private readonly externalStorageCounterparts = new Map<string, number>()
   private readonly controlledRoutes = new Map<string, (request: IncomingMessage, response: ServerResponse) => Promise<void>>()
   private readonly ownedStorageCounterparts = new Map<string, ControlledWalletServices>()
@@ -233,7 +236,12 @@ export class ControlledWalletServices {
   /** Optional, isolated native-coverage fixtures. Registration cannot redirect a
    * production hostname or replace an existing storage/application service. */
   registerControlledRoute(host: string, handler: (request: IncomingMessage, response: ServerResponse) => Promise<void>): () => void {
-    if (!['certifier.itcve.test', 'allowance.itcve.test'].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
+    const extended = (this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch) ? [
+      'permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked',
+      'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection',
+      'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'
+    ].map(name => `${name}.itcve.test`) : []
+    if (!['certifier.itcve.test', 'allowance.itcve.test', ...extended].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
     this.controlledRoutes.set(host, handler)
     let registered = true
     return () => {
@@ -292,6 +300,19 @@ export class ControlledWalletServices {
       if (!/^ls_[a-z0-9_]+$/.test(service)) throw new Error('Invalid overlay lookup service name')
       if (this.externalOverlayLookups.has(service) && this.externalOverlayLookups.get(service) !== url.origin) throw new Error('Overlay lookup provider already registered')
       this.externalOverlayLookups.set(service, url.origin)
+    }
+  }
+
+  /** Temporarily intercept only the identity fixture's wire lookup. Existing
+   * real provider registrations remain intact and become active on cleanup. */
+  installIdentityCoverageLookup(answer: (question: any) => Promise<unknown>): () => void {
+    if (!(this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch) || this.scopedOverlayLookups.has('ls_identity') || typeof answer !== 'function') throw new Error('Invalid or duplicate scoped identity lookup')
+    this.scopedOverlayLookups.set('ls_identity', answer)
+    let open = true
+    return () => {
+      if (!open) return
+      if (this.scopedOverlayLookups.get('ls_identity') !== answer) throw new Error('Scoped identity lookup ownership changed')
+      this.scopedOverlayLookups.delete('ls_identity'); open = false
     }
   }
 
@@ -424,6 +445,51 @@ export class ControlledWalletServices {
       unique.set(transaction.txid, transaction)
     }
     return [...unique.values()]
+  }
+
+  /** Read every retained owned provider, including a withdrawn old endpoint.
+   * Provider-local IDs and metadata stay separate: sync may legitimately leave
+   * an older provider behind, and must never hide a rejected request's write. */
+  get nativeOutputSnapshotObservations(): NativeOutputSnapshotObservation[] { return structuredClone(this.ownOutputSnapshotObservations) }
+  get nativeOutputProviderRegistry(): NativeOutputProviderRegistry {
+    const providers: NativeOutputProviderRegistry = [], seen = new Set<ControlledWalletServices>()
+    const collect = (service: ControlledWalletServices, id: string) => {
+      if (seen.has(service)) throw new Error('Duplicate or cyclic output provider registry')
+      seen.add(service); providers.push({ id, identityKey: service.identityKey, componentIdentity: service.componentIdentity })
+      if (providers.length > 16) throw new Error('Owned output provider registry budget exceeded')
+      for (const [host, counterpart] of service.ownedStorageCounterparts) collect(counterpart, `${id}/${host}`)
+    }
+    collect(this, 'source'); return structuredClone(providers)
+  }
+  async nativeOutputSnapshots(identity: string): Promise<OwnedNativeOutputSnapshots> {
+    const observation: NativeOutputSnapshotObservation = { sequence: this.ownOutputSnapshotObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '' }
+    this.ownOutputSnapshotObservations.push(observation)
+    try {
+      const snapshots = await this.collectNativeOutputSnapshots(identity)
+      observation.snapshots = structuredClone(snapshots)
+      return snapshots
+    } catch (error) {
+      observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }
+      throw error
+    } finally { observation.endedAt = new Date().toISOString() }
+  }
+  private async collectNativeOutputSnapshots(identity: string): Promise<OwnedNativeOutputSnapshots> {
+    assertSnapshotIdentity(identity)
+    const providers: OwnedNativeOutputSnapshots['providers'] = [], seen = new Set<ControlledWalletServices>(), keys = new Set<string>()
+    const collect = async (service: ControlledWalletServices, id: string): Promise<void> => {
+      if (seen.has(service)) throw new Error('Duplicate or cyclic owned output provider')
+      seen.add(service)
+      if (!service.goServices || service.components.storage !== 'go') throw new Error('Owned native output provider is not Go storage')
+      if (keys.has(service.identityKey)) throw new Error('Duplicate owned storage identity')
+      keys.add(service.identityKey)
+      const snapshot = await service.goServices.outputSnapshot(identity)
+      validateNativeOutputSnapshot(snapshot, identity, service.identityKey)
+      providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      if (providers.length > 16) throw new Error('Owned output provider budget exceeded')
+      for (const [host, counterpart] of service.ownedStorageCounterparts) await collect(counterpart, `${id}/${host}`)
+    }
+    await collect(this, 'source')
+    return { schema: 'tpnil-native-owned-output-snapshots@1.0.0', identityKey: identity, providers }
   }
 
   async payNativeWallet(publicKey: string, satoshis: number): Promise<{ txid: string; tx: number[] }> {
@@ -881,7 +947,15 @@ export class ControlledWalletServices {
         for await (const chunk of request) { size += chunk.length; if (size > 4 * 1024 * 1024) throw new Error('Lookup exceeds limit'); chunks.push(Buffer.from(chunk)) }
         const body = Buffer.concat(chunks)
         const question = JSON.parse(body.toString()) as { service?: string; query?: { service?: string } }
-        const lookupOrigin = this.externalOverlayLookups.get(question.service === 'ls_slap' ? question.query?.service ?? '' : question.service ?? '')
+        const lookupName = question.service === 'ls_slap' ? question.query?.service ?? '' : question.service ?? ''
+        const scopedLookup = this.scopedOverlayLookups.get(lookupName)
+        if (scopedLookup) {
+          const answer = await scopedLookup(question)
+          this.routes.push({ sequence: ++this.routeSequence, method: 'POST', host, pathname: url.pathname, disposition: 'controlled-service', status: 200 })
+          sendJson(response, 200, answer)
+          return
+        }
+        const lookupOrigin = this.externalOverlayLookups.get(lookupName)
         if (lookupOrigin !== undefined) {
           const result = await fetch(`${lookupOrigin}/lookup`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, redirect: 'error', signal: AbortSignal.timeout(15_000) })
           const answer = await result.json()

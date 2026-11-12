@@ -1,0 +1,13 @@
+{
+  "schema": "tpnil-native-coverage-certificates-policy@1.0.0",
+  "oracle": "tpnil-native-coverage-certificates-oracle@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "completeBRC100Conformance": false,
+  "status": "PROSPECTIVE_NOT_NATIVE_EXECUTED",
+  "bounds": { "publicCalls": 96, "signedTransactions": 12, "issuanceRequests": 2, "nativeRestarts": 1, "permissionCalls": 8 },
+  "assertions": ["fixture-authentication", "wrong-auth-identity", "inventory-restart", "relinquish-revoked", "attribute-no-match", "multiple-certifiers", "bad-signature", "bad-keyring", "default-seekPermission-false", "explicit-seekPermission-true", "cleanup"],
+  "source": { "repository": "bsv-blockchain/BRCs", "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743", "path": "wallet/0100.md", "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082", "lines": [1217, 1457] },
+  "scope": "Two independent issuers; signed public identity PushDrop outputs; two malicious lookup response records whose output transactions remain consensus-valid; public trust settings with exact restoration; actual spent revocation token and local relinquishment. Native restart and permission predicates require actual browser/UI receipts. Reference executions cannot satisfy those predicates.",
+  "interpretation": "Discovery rejection must filter the malformed certificate while preserving both independently authenticated valid controls. A lookup-service response is not proof of overlay admission. Permission default semantics are tested only after an explicit true/deny call establishes that permission is required for that fresh origin. Revocation does not invalidate the issuer signature or imply unspecified proof/discovery revocation policy.",
+  "finalLedgerRequired": true
+}

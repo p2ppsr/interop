@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
-import { Transaction, UnlockingScript } from '@bsv/sdk'
+import { Beef, Transaction, UnlockingScript } from '@bsv/sdk'
 import { describe, expect, it } from 'vitest'
 import { conditionalConfig as config, conditionalPolicy, conditionalPolicySha256, type ConditionalReport } from '../src/wallet-lab/native/conformance-conditional-model.js'
 import { deriveConditionalOutcomes } from '../src/wallet-lab/native/verify-conformance-conditional.js'
@@ -115,5 +115,30 @@ describe('shared native TXID-only admission', () => {
     const result = await verifyObservedNativeTransactionBindings([altered], [{ id: 'returnTXIDOnly', result: 'FAIL' }], binding, options())
     expect(result.invalidNativeResponses[0]?.kind).toBe('MALFORMED_RETURN')
     await expect(verifyObservedNativeTransactionBindings([altered], [{ id: 'returnTXIDOnly', result: 'FAIL' }], { ...binding, storageTransactions: new Map() }, options())).rejects.toThrow('storage bytes absent')
+  })
+})
+
+describe('prospective independent ownership of incomplete public proof', () => {
+  const incomplete = new Beef()
+  const target = Transaction.fromAtomicBEEF(native.tx)
+  for (const input of target.inputs) incomplete.mergeTxidOnly(input.sourceTXID!)
+  incomplete.mergeRawTx(target.toBinary())
+  const call = { id: 'incomplete-proof', method: 'createAction', args: {}, result: { txid: native.txid, tx: incomplete.toBinaryAtomic(native.txid) } }
+  const options = { rolePrefix: 'transaction-states', predicateFor: () => 'input-absent-from-beef', ownershipFromIndependentGraph: true, resolvedTransactions: new Map([[native.txid, target]]) }
+  const failed = [{ id: 'input-absent-from-beef', result: 'FAIL' }]
+  it('binds the exact body to independent owned ancestry while retaining invalid public proof', async () => {
+    const observed = await verifyObservedNativeTransactionBindings([call], failed, binding, options)
+    expect(observed.transactions).toEqual([])
+    expect(observed.invalidNativeResponses).toMatchObject([{ predicateId: 'input-absent-from-beef', kind: 'INVALID_PROOF' }])
+    expect(observed.allReturnedTransactionsProven).toBe(false)
+    await expect(verifyObservedNativeTransactionBindings([call], failed, binding, { ...options, ownershipFromIndependentGraph: false })).rejects.toThrow('outside independently declared')
+  })
+  it('requires exact independent storage, rooted graph and ownership even for a failed response', async () => {
+    await expect(verifyObservedNativeTransactionBindings([call], failed, binding, { ...options, resolvedTransactions: new Map() })).rejects.toThrow('independent ownership ancestry')
+    await expect(verifyObservedNativeTransactionBindings([call], failed, binding, { ...options, resolvedTransactions: new Map([[native.txid, funding]]) })).rejects.toThrow()
+    await expect(verifyObservedNativeTransactionBindings([call], failed, binding, { ...options, resolvedTransactions: new Map([[native.txid, Transaction.fromHex(target.toHex())]]) })).rejects.toThrow()
+    await expect(verifyObservedNativeTransactionBindings([call], failed, { ...binding, storageTransactions: new Map() }, options)).rejects.toThrow('storage bytes absent')
+    await expect(verifyObservedNativeTransactionBindings([call], failed, { ...binding, declaredNativePayments: [] }, options)).rejects.toThrow('outside independently declared')
+    await expect(verifyObservedNativeTransactionBindings([call], [{ id: 'input-absent-from-beef', result: 'PASS' }], binding, options)).rejects.toThrow('lacks its independently recomputed')
   })
 })

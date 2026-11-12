@@ -1,0 +1,32 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-merge-accounting-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-dust-accounting/patch.lock.json",
+  "parentSha256": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+  "files": {
+    "pkg/storage/internal/actions/internalize.go": {
+      "before": "9a6a1258ff77357d10ce47f80ea375828634c2316ae67abe8d1c107ce39c3a3d",
+      "after": "d3ce7032d888aebb36f7f32c2779ff2e4958aa7510d9fbcb5cd57aae15ff86e9"
+    },
+    "pkg/storage/internal/actions/repos.interface.go": {
+      "before": "7f620d0c63b0a5e454e3d8f3f8988b3cba4d2f31b5b0d5491cacaf8dbc8d108c",
+      "after": "b4852a8cffbbdb7633e0316bc35ecab94406754fff32a9c497d2ea78001e9a5b"
+    },
+    "pkg/internal/storage/repo/transactions.go": {
+      "before": "68c2cc8c7a8408d93ffe1caa1d1cea58d7ae9ab4b71d09a6ad305d67bd0791ec",
+      "after": "20fc02352acff2370de768180a8a970cb0f410fd2749cd109ab4e08bbaaab892"
+    },
+    "pkg/internal/storage/repo/native_merge_accounting_tpnil_test.go": {
+      "before": null,
+      "after": "763e90cd1914344e3afb9cd27b80b1252293da7312501e86f00cdc1e8ca4011f"
+    },
+    "pkg/storage/native_merge_accounting_tpnil_test.go": {
+      "before": null,
+      "after": "42ed6fd80c4145cf0dd36ccfc8b1f9bbd82235e6ab0e078c7ff055bf8fb3eb3c"
+    }
+  }
+}

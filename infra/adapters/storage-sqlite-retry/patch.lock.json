@@ -1,0 +1,24 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-sqlite-retry-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-input-ancestry/patch.lock.json",
+  "parentSha256": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+  "files": {
+    "pkg/internal/storage/dbretry/dbretry.go": {
+      "before": "97c46472de80e2e4bdac34fdfc5422df09994b2bee28c559d6c9ba2a448bc010",
+      "after": "b9e695740f0b0dfe0e7fb98bcd7e9587f4bf85e758d02d8d50bf327872c64c02"
+    },
+    "pkg/internal/storage/dbretry/native_sqlite_retry_tpnil_test.go": {
+      "before": null,
+      "after": "9e95cbc991f5e95418ce5970f657d23d95c83543c921a4d157b2a47e0c6005d8"
+    },
+    "pkg/internal/storage/database/native_snapshot_retry_tpnil_test.go": {
+      "before": null,
+      "after": "f52031e02c3b767c958aa69f5e5b8a691185108c0beb85bd35de339fb8b709f6"
+    }
+  }
+}

@@ -10,7 +10,7 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const [image, outputArgument] = process.argv.slice(2);
 if (!image || !outputArgument) throw new Error('Usage: run-native-go-wallet IMAGE NEW_OUTPUT');
 if (process.argv.length > 5) throw new Error('Unknown native qualification profile flag');
-const { wallet511, walletVersion, observerRevision, rustV3, closure, coverage, conformance, trustedIdentity, integrated, planPath } = selectNativeWalletProfile(process.argv[4]);
+const { wallet511, walletVersion, observerRevision, coverageRevision, rustV3, closure, coverage, conformance, trustedIdentity, integrated, planPath } = selectNativeWalletProfile(process.argv[4]);
 const output = path.resolve(outputArgument);
 if (fs.existsSync(output)) throw new Error('Native qualification output already exists');
 fs.mkdirSync(output, { recursive: true });
@@ -45,7 +45,7 @@ for (let index = 1; index <= plan.repetitions; index++) {
   fs.mkdirSync(repetition, { mode: 0o755 });
   let id, error, removed = false;
   try {
-    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, ...(trustedIdentity ? ['--env', 'TPNIL_NATIVE_IDENTITY_TRUST=1'] : []), ...(conformance ? ['--env', 'TPNIL_NATIVE_CONFORMANCE=1'] : []), ...(coverage ? ['--env', 'TPNIL_NATIVE_COVERAGE=1'] : []), ...(closure ? ['--env', 'TPNIL_NATIVE_CLOSURE=1'] : []), ...(wallet511 ? ['--env', `TPNIL_NATIVE_WALLET_VERSION=${walletVersion}`] : []), ...(observerRevision ? ['--env', `TPNIL_NATIVE_OBSERVER_REVISION=${observerRevision}`] : []), image]).trim();
+    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, ...(trustedIdentity ? ['--env', 'TPNIL_NATIVE_IDENTITY_TRUST=1'] : []), ...(conformance ? ['--env', 'TPNIL_NATIVE_CONFORMANCE=1'] : []), ...(coverage ? ['--env', 'TPNIL_NATIVE_COVERAGE=1'] : []), ...(closure ? ['--env', 'TPNIL_NATIVE_CLOSURE=1'] : []), ...(wallet511 ? ['--env', `TPNIL_NATIVE_WALLET_VERSION=${walletVersion}`] : []), ...(observerRevision ? ['--env', `TPNIL_NATIVE_OBSERVER_REVISION=${observerRevision}`] : []), ...(coverageRevision ? ['--env', `TPNIL_NATIVE_COVERAGE_REVISION=${coverageRevision}`] : []), image]).trim();
     save(`host-repetition-${index}-before.json`, receipt(JSON.parse(docker(['inspect', id]))[0]));
     const log = fs.openSync(path.join(repetition, 'console.log'), 'wx');
     const run = spawnSync('docker', ['start', '-a', id], { stdio: ['ignore', log, log], timeout: (plan.timeoutSecondsPerRepetition + 60) * 1000 });
@@ -68,5 +68,5 @@ for (let index = 1; index <= plan.repetitions; index++) {
   save('host-userns.json', { before: usernsBefore, active: usernsActive, restored, restoredSuccessfully: restored === usernsBefore });
   if (restored !== usernsBefore) throw new Error('Host user namespace policy restoration failed');
 }
-const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
+const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: coverageRevision === 1 ? 180000 : 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
 if (verify.status !== 0) throw new Error('Native conformance evidence verification failed');

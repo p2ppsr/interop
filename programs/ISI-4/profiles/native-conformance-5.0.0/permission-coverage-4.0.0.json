@@ -1,0 +1,123 @@
+{
+  "schema": "tpnil-native-permission-coverage-policy@4.0.0",
+  "oracle": "tpnil-native-permission-coverage-oracle@4.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "interface": "Native public CWI, trusted visible permission controls, and actual browser close/relaunch on the same isolated profile",
+  "categories": [
+    "protocol",
+    "basket",
+    "certificate",
+    "counterparty-linkage",
+    "specific-linkage"
+  ],
+  "configuration": {
+    "application": "https://todo.itcve.test",
+    "primary": "https://deny.itcve.test",
+    "alternate": "https://alternate.itcve.test",
+    "allowance": "https://allowance.itcve.test",
+    "protocol": [
+      2,
+      "tpnil coverage protocol v1"
+    ],
+    "keyID": "coverage grant persistence",
+    "linkageProtocol": [
+      2,
+      "tpnil coverage linkage v1"
+    ],
+    "linkageKeyID": "coverage linkage key",
+    "basket": "tpnil coverage persistence v1",
+    "basketAmount": 3,
+    "certificateTypeByte": 61,
+    "certificateSerialByte": 62,
+    "fields": {
+      "name": "TPNIL permission coverage subject",
+      "private": "Never disclosed by this permission scenario"
+    },
+    "issuerKeyHex": "6464646464646464646464646464646464646464646464646464646464646464",
+    "peerKeyHex": "6565656565656565656565656565656565656565656565656565656565656565",
+    "verifierKeyHex": "6666666666666666666666666666666666666666666666666666666666666666",
+    "paymentRecipientKeyHex": "6868686868686868686868686868686868686868686868686868686868686868",
+    "allowanceSatoshis": 114,
+    "paymentAmounts": {
+      "first": 11,
+      "second": 13,
+      "third": 7,
+      "overflow": 53,
+      "alternate": 59,
+      "revoked": 61,
+      "revokedRestart": 67
+    },
+    "requestTimeoutMs": 25000
+  },
+  "assertionSuffixes": [
+    "protocol-grant-cache",
+    "basket-grant-cache",
+    "certificate-grant-cache",
+    "counterparty-linkage-grant-cache",
+    "specific-linkage-grant-cache",
+    "protocol-origin-isolation",
+    "basket-origin-isolation",
+    "certificate-origin-isolation",
+    "counterparty-linkage-origin-isolation",
+    "specific-linkage-origin-isolation",
+    "restart-identity",
+    "protocol-restart-persistence",
+    "basket-restart-persistence",
+    "certificate-restart-persistence",
+    "counterparty-linkage-restart-persistence",
+    "specific-linkage-restart-persistence",
+    "revocation-ui",
+    "protocol-revocation-persistence",
+    "basket-revocation-persistence",
+    "certificate-revocation-persistence",
+    "counterparty-linkage-revocation-persistence",
+    "specific-linkage-revocation-persistence",
+    "manifest-selection",
+    "standing-allowance",
+    "exact-fee-inclusive-cap",
+    "cumulative-allowance-boundary",
+    "allowance-origin-isolation",
+    "allowance-revocation",
+    "cleanup"
+  ],
+  "deniedPayments": [
+    "allowance-overflow",
+    "allowance-alternate",
+    "allowance-revoked",
+    "allowance-revoked-restart"
+  ],
+  "remainingCoverage": [
+    {
+      "id": "privileged-keyring",
+      "status": "NOT_CLAIMED",
+      "reason": "This profile does not establish a distinct privileged keyring or privileged authorization lifecycle."
+    },
+    {
+      "id": "finite-expiry",
+      "status": "NOT_CLAIMED",
+      "reason": "No supported native UI for selecting finite grant expiry is exercised; neither clocks nor private grant stores are changed."
+    },
+    {
+      "id": "complete-wire-conformance",
+      "status": "NOT_CLAIMED",
+      "reason": "Public CWI observations do not establish every BRC wire encoding or framing requirement."
+    },
+    {
+      "id": "complete-conditional-permission-matrix",
+      "status": "NOT_CLAIMED",
+      "reason": "This finite scenario establishes the declared origin, restart, revocation and spending cases; all peer/verifier/key/field mutations and calendar-boundary cases remain separate obligations."
+    }
+  ],
+  "completeBRC100Conformance": false,
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json",
+    "sha256": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+    "retainedResults": "Policies1\u20133 and their original observations, including cap100 native failure43165501159, remain unchanged."
+  },
+  "revisionRationale": {
+    "exactCap": "The grouped manifest grants a fixed114-satoshi monthly cap before any payment. Output amounts remain11,13,7. Independently derive each actual fee from retained signed transaction inputs minus all outputs and require total debit exactly114; never assume a uniform fee or adjust the cap after execution. Prior native evidence measured34+50+30=114, including discarded dust in the second fee. A different future total is a fixture FAIL, never adaptive success. The trusted revocation-card snapshot must independently show cap114, spent114 and remaining0.",
+    "uiObservation": "Before revocation, wait for the expanded standing-allowance card to show the exact cap, spent amount and consistent remaining balance, then capture a stable body/card pair. Require exact beforeBody equality with the trusted click; no normalization or ignored suffix.",
+    "sutBoundary": "All three accepted payments must settle with no new permission prompt, including the third payment at the exact cap. The 53, 59, 61 and 67-satoshi denied markers and recipient remain unchanged. The 7-satoshi accepted payment uses the coverage recipient key 68, distinct from the legacy 7-satoshi denial marker. No private grant store, wallet clock or post-outcome allowance is changed.",
+    "storageAccounting": "This prospective fixture accompanies separately source-tested correct discarded-dust accounting. It does not repair or reinterpret policy3 cap100: that observed third payment exceeded its grant. The separate source regression must reject third payment30 after actual prior debits34+50 under cap100."
+  }
+}

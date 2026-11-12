@@ -1,0 +1,275 @@
+--- a/pkg/storage/internal/actions/internalize.go
++++ b/pkg/storage/internal/actions/internalize.go
+@@ -176,7 +176,7 @@
+ 
+ 	err = in.uow.Do(ctx, func(txCtx context.Context, repos Providers) error {
+ 		var uowErr error
+-		storedTx, uowErr := repos.TransactionsRepo().FindTransactionByUserIDAndTxID(txCtx, userID, txID)
++		storedTx, uowErr := repos.TransactionsRepo().FindTransactionByUserIDAndTxIDForUpdate(txCtx, userID, txID)
+ 		if uowErr != nil {
+ 			return fmt.Errorf("failed to find transaction by userID and txID: %w", uowErr)
+ 		}
+@@ -237,7 +237,7 @@
+ 				slog.String("description", string(args.Description)),
+ 			)
+ 
+-			uowErr = in.upsertExistingTx(txCtx, storedTx, outputs, args.Labels, repos)
++			uowErr = in.upsertExistingTx(txCtx, storedTx, outputs, cumulativeSatoshis, args.Labels, repos)
+ 			if uowErr != nil {
+ 				return fmt.Errorf("failed to upsert outputs (isMerge): %w", uowErr)
+ 			}
+@@ -420,8 +420,19 @@
+ 	return slices.Map(input, func(s ArgType) ResultType { return ResultType(s) })
+ }
+ 
+-func (in *internalize) upsertExistingTx(ctx context.Context, existingTx *pkgentity.Transaction, outputs []*OutputToInternalize, labels []primitives.StringUnder300, repos Providers) error {
+-	err := repos.TransactionsRepo().AddLabels(ctx, existingTx.UserID, existingTx.ID, convertStringLikeSlice[string](labels)...)
++func (in *internalize) upsertExistingTx(ctx context.Context, existingTx *pkgentity.Transaction, outputs []*OutputToInternalize, delta satoshi.Value, labels []primitives.StringUnder300, repos Providers) error {
++	// makeOutputs computes only newly managed value (or reclassification debit).
++	// Repeated managed outputs contribute zero. Locking the existing transaction
++	// before reading its outputs serializes merges on row-locking databases; the
++	// compare-and-set also rejects stale accounting before any output is saved.
++	next, err := satoshi.Add(existingTx.Satoshis, delta)
++	if err != nil {
++		return fmt.Errorf("merged transaction balance overflow: %w", err)
++	}
++	if err = repos.TransactionsRepo().SetTransactionSatoshis(ctx, existingTx.UserID, existingTx.ID, existingTx.Satoshis, next.Int64()); err != nil {
++		return fmt.Errorf("failed to update merged transaction balance: %w", err)
++	}
++	err = repos.TransactionsRepo().AddLabels(ctx, existingTx.UserID, existingTx.ID, convertStringLikeSlice[string](labels)...)
+ 	if err != nil {
+ 		return fmt.Errorf("failed to replace labels for existing transaction: %w", err)
+ 	}
+--- a/pkg/storage/internal/actions/repos.interface.go
++++ b/pkg/storage/internal/actions/repos.interface.go
+@@ -41,6 +41,8 @@
+ 	CreateTransaction(ctx context.Context, transaction *entity.NewTx) error
+ 	FindTransactions(ctx context.Context, spec *pkgentity.TransactionReadSpecification, opts ...queryopts.Options) ([]*pkgentity.Transaction, error)
+ 	FindTransactionByUserIDAndTxID(ctx context.Context, userID int, txID string) (*pkgentity.Transaction, error)
++	FindTransactionByUserIDAndTxIDForUpdate(ctx context.Context, userID int, txID string) (*pkgentity.Transaction, error)
++	SetTransactionSatoshis(ctx context.Context, userID int, transactionID uint, previous, next int64) error
+ 	FindTransactionByReference(ctx context.Context, userID int, reference string) (*pkgentity.Transaction, error)
+ 	FindReferencesByTxIDs(ctx context.Context, txIDs []string) (map[string]string, error)
+ 	SpendTransaction(ctx context.Context, updatedTx entity.UpdatedTx, txNote history.Builder) error
+--- a/pkg/internal/storage/repo/transactions.go
++++ b/pkg/internal/storage/repo/transactions.go
+@@ -6,6 +6,7 @@
+ 	"errors"
+ 	"fmt"
+ 
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/satoshi"
+ 	"github.com/go-softwarelab/common/pkg/is"
+ 	"github.com/go-softwarelab/common/pkg/slices"
+ 	"github.com/go-softwarelab/common/pkg/to"
+@@ -13,6 +14,7 @@
+ 	"gorm.io/gen"
+ 	"gorm.io/gen/field"
+ 	"gorm.io/gorm"
++	"gorm.io/gorm/clause"
+ 
+ 	pkgentity "github.com/bsv-blockchain/go-wallet-toolbox/pkg/entity"
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/database/genquery"
+@@ -1092,3 +1094,51 @@
+ 
+ 	return conds
+ }
++
++// FindTransactionByUserIDAndTxIDForUpdate is used only inside internalization's
++// existing unit of work. PostgreSQL/MySQL lock the row before output decisions;
++// SQLite serializes conflicting writes and rolls back a stale unit of work.
++func (txs *Transactions) FindTransactionByUserIDAndTxIDForUpdate(ctx context.Context, userID int, txID string) (*pkgentity.Transaction, error) {
++	var row models.Transaction
++	err := txs.db.WithContext(ctx).Clauses(clause.Locking{Strength: "UPDATE"}).Scopes(scopes.UserID(userID)).Where("tx_id = ?", txID).First(&row).Error
++	if errors.Is(err, gorm.ErrRecordNotFound) {
++		return nil, nil
++	}
++	if err != nil {
++		return nil, fmt.Errorf("failed to lock transaction for merge: %w", err)
++	}
++	return txs.mapModelToTransactionEntity(&row), nil
++}
++
++// SetTransactionSatoshis cannot change another owner's row or overwrite a
++// concurrent balance. The caller's unit of work includes all output mutations.
++func (txs *Transactions) SetTransactionSatoshis(ctx context.Context, userID int, transactionID uint, previous, next int64) error {
++	if userID <= 0 || transactionID == 0 {
++		return fmt.Errorf("invalid transaction owner")
++	}
++	if _, err := satoshi.From(previous); err != nil {
++		return err
++	}
++	if _, err := satoshi.From(next); err != nil {
++		return err
++	}
++	query := txs.db.WithContext(ctx).Model(&models.Transaction{}).Where("id = ? AND user_id = ? AND satoshis = ?", transactionID, userID, previous)
++	if previous == next {
++		var count int64
++		if err := query.Count(&count).Error; err != nil {
++			return err
++		}
++		if count != 1 {
++			return fmt.Errorf("merged transaction accounting changed or owner differs")
++		}
++		return nil
++	}
++	result := query.Update("satoshis", next)
++	if result.Error != nil {
++		return fmt.Errorf("failed to update transaction satoshis: %w", result.Error)
++	}
++	if result.RowsAffected != 1 {
++		return fmt.Errorf("merged transaction accounting changed or owner differs")
++	}
++	return nil
++}
+--- /dev/null
++++ b/pkg/internal/storage/repo/native_merge_accounting_tpnil_test.go
+@@ -0,0 +1,68 @@
++package repo_test
++
++import (
++	"errors"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/dbretry"
++	storageentity "github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/entity"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/repo"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/testabilities/dbfixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/stretchr/testify/require"
++	"gorm.io/gorm"
++	"sync"
++	"testing"
++)
++
++func TestTPNILMergedCreditOwnerCASAndRollback(t *testing.T) {
++	db, cleanup := dbfixtures.TestDatabase(t)
++	defer cleanup()
++	ctx := t.Context()
++	repos := repo.NewSQLRepositories(db.DB, dbretry.NoRetry())
++	alice, err := repos.CreateUser(ctx, "merge-alice", "storage")
++	require.NoError(t, err)
++	bob, err := repos.CreateUser(ctx, "merge-bob", "storage")
++	require.NoError(t, err)
++	require.NoError(t, repos.CreateTransaction(ctx, &storageentity.NewTx{UserID: alice.ID, Status: wdk.TxStatusCompleted, Reference: "merge-accounting-owner", Satoshis: 1000, Version: 1}))
++	row, err := repos.FindTransactionByReference(ctx, alice.ID, "merge-accounting-owner")
++	require.NoError(t, err)
++	require.NotNil(t, row)
++	check := func(want int64) {
++		t.Helper()
++		current, err := repos.FindTransactionByReference(ctx, alice.ID, "merge-accounting-owner")
++		require.NoError(t, err)
++		require.Equal(t, want, current.Satoshis)
++	}
++	require.Error(t, repos.SetTransactionSatoshis(ctx, bob.ID, row.ID, 1000, 2000))
++	check(1000)
++	require.NoError(t, repos.SetTransactionSatoshis(ctx, alice.ID, row.ID, 1000, 2000))
++	check(2000)
++	require.Error(t, repos.SetTransactionSatoshis(ctx, alice.ID, row.ID, 1000, 3000))
++	check(2000)
++	require.NoError(t, repos.SetTransactionSatoshis(ctx, alice.ID, row.ID, 2000, 2000))
++	check(2000)
++	sentinel := errors.New("later output update failed")
++	err = db.DB.Transaction(func(tx *gorm.DB) error {
++		scoped := repo.NewSQLRepositories(tx, dbretry.NoRetry())
++		if err := scoped.SetTransactionSatoshis(ctx, alice.ID, row.ID, 2000, 3000); err != nil {
++			return err
++		}
++		return sentinel
++	})
++	require.ErrorIs(t, err, sentinel)
++	check(2000)
++	var group sync.WaitGroup
++	success := make(chan bool, 12)
++	for i := 0; i < 12; i++ {
++		group.Go(func() { success <- repos.SetTransactionSatoshis(ctx, alice.ID, row.ID, 2000, 3000) == nil })
++	}
++	group.Wait()
++	close(success)
++	count := 0
++	for ok := range success {
++		if ok {
++			count++
++		}
++	}
++	require.Equal(t, 1, count, "stale concurrent accounting cannot credit twice")
++	check(3000)
++}
+--- /dev/null
++++ b/pkg/storage/native_merge_accounting_tpnil_test.go
+@@ -0,0 +1,78 @@
++package storage_test
++
++import (
++	"encoding/json"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures/testusers"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/testabilities"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	vectors "github.com/bsv-blockchain/universal-test-vectors/pkg/testabilities"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++func TestTPNILMergedPaymentsAccountEveryNewCreditOnce(t *testing.T) {
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	tx := vectors.GivenTX().WithInput(5000).WithP2PKHOutput(1000).WithP2PKHOutput(1000).WithP2PKHOutput(7).TX()
++	bytes, err := tx.AtomicBEEF(false)
++	require.NoError(t, err)
++	args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
++	args.Tx = bytes
++	args.Labels = []primitives.StringUnder300{"merge accounting"}
++	stop := given.StartedRPCServerFor(provider)
++	defer stop()
++	check := func(want int64) {
++		t.Helper()
++		rows, err := provider.TransactionEntity().Read().UserID().Equals(testusers.Alice.ID).TxID().Equals(tx.TxID().String()).Find(t.Context())
++		require.NoError(t, err)
++		require.Len(t, rows, 1)
++		require.Equal(t, want, rows[0].Satoshis)
++		response := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: args.Labels, Limit: 10}})
++		require.Nil(t, response.Error)
++		var result struct {
++			Actions []struct {
++				Satoshis int64 `json:"satoshis"`
++			}
++		}
++		require.NoError(t, json.Unmarshal(response.Result, &result))
++		require.Len(t, result.Actions, 1)
++		require.Equal(t, want, result.Actions[0].Satoshis)
++	}
++	first, err := provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), args)
++	require.NoError(t, err)
++	require.False(t, first.IsMerge)
++	check(1000)
++	payment := func(index uint32) *wdk.InternalizeOutput {
++		return &wdk.InternalizeOutput{OutputIndex: index, Protocol: wdk.WalletPaymentProtocol, PaymentRemittance: args.Outputs[0].PaymentRemittance}
++	}
++	second := args
++	second.Outputs = []*wdk.InternalizeOutput{payment(1), {OutputIndex: 2, Protocol: wdk.BasketInsertionProtocol, InsertionRemittance: &wdk.BasketInsertion{Basket: "merge custom"}}}
++	merged, err := provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), second)
++	require.NoError(t, err)
++	require.True(t, merged.IsMerge)
++	require.Equal(t, int64(1000), merged.Satoshis)
++	check(2000)
++	repeated, err := provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), second)
++	require.NoError(t, err)
++	require.Zero(t, repeated.Satoshis)
++	check(2000)
++	recovered := args
++	recovered.Outputs = []*wdk.InternalizeOutput{payment(2)}
++	_, err = provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), recovered)
++	require.NoError(t, err)
++	check(2007)
++	_, err = provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), recovered)
++	require.NoError(t, err)
++	check(2007)
++	// An invalid subsequent merge cannot partially credit or erase earlier credits.
++	invalid := args
++	invalid.Outputs = []*wdk.InternalizeOutput{payment(99)}
++	_, err = provider.InternalizeAction(t.Context(), testusers.Alice.AuthID(), invalid)
++	require.Error(t, err)
++	check(2007)
++	denied := callJSONRPC(t, given.ServerURL(), testusers.Bob, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: args.Labels, Limit: 10}})
++	require.NotNil(t, denied.Error)
++}

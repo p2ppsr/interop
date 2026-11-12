@@ -5,7 +5,7 @@ import { randomBytes } from 'node:crypto'
 import { Transaction, PushDrop, ProtoWallet, PrivateKey, type WalletInterface } from '@bsv/sdk'
 import { createFixtureWallet } from '../../storage-sync/fixture-wallet.js'
 import { toBase64Url, toHex, encodeDeterministicCbor } from '@bsv/lch'
-import { BOARD_TOPIC, BOARD_PROTOCOL, encodeBoardToken, decodeAndVerifyBoardToken } from '../../board.js'
+import { BOARD_TOPIC, boardProtocol, encodeBoardToken, decodeAndVerifyBoardToken, type BoardFixtureVersion } from '../../board.js'
 import { CHIRPContentStore, ReferenceCHIRPNetwork } from '../../content.js'
 import { canonicalJson, sha256Hex } from '../../determinism.js'
 import { ReferenceLCHClient } from '../../lch-reference/referenceClient.js'
@@ -21,7 +21,11 @@ import { lchWalletBoundary } from './lch-wallet.js'
  * ChainTracks, signatures, transactions and multilateral settlement are real.
  * This records public-wallet API behavior, not a browser application's usability.
  */
-export async function runNativeSynthesis(wallet: WalletInterface, services: ControlledWalletServices, output: string): Promise<Record<string, unknown>> {
+export async function runNativeSynthesis(wallet: WalletInterface, services: ControlledWalletServices, output: string, fixtureVersion: BoardFixtureVersion = 'legacy-v1'): Promise<Record<string, unknown>> {
+  const protocol = boardProtocol(fixtureVersion)
+  const decodeBoard = (script: string) => decodeAndVerifyBoardToken(script, fixtureVersion)
+  const encodeBoard = (input: Parameters<typeof encodeBoardToken>[1]) => encodeBoardToken(wallet, input, fixtureVersion)
+  const basket = (legacy: string) => fixtureVersion === 'validated-v2' ? legacy.replaceAll('-', ' ') : legacy
   await fs.mkdir(output, { recursive: true })
   if ((await fs.readdir(output)).length) throw new Error('Native synthesis evidence directory must be empty')
   const assertions: Record<string, unknown>[] = []
@@ -52,7 +56,7 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
     return tx
   }
   const configure = (node: any) => {
-    for (const [topic, name, decoder] of [[BOARD_TOPIC, 'ls_tpnil_synthesis_board', decodeAndVerifyBoardToken], [UHRP_TOPIC, UHRP_LOOKUP, decodeAndVerifyUHRPAdvertisement]] as const) {
+    for (const [topic, name, decoder] of [[BOARD_TOPIC, 'ls_tpnil_synthesis_board', decodeBoard], [UHRP_TOPIC, UHRP_LOOKUP, decodeAndVerifyUHRPAdvertisement]] as const) {
       node.configureTopicManager(topic, {
         async identifyAdmissibleOutputs(beef: number[], previousCoins: number[]) {
           const tx = Transaction.fromBEEF(beef), admitted: number[] = []
@@ -68,7 +72,7 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
                 let source = input.sourceTransaction
                 if (!source) { const prior = await node.engine.storage.findOutput(id, Number(index), topic, undefined, true); if (prior?.beef) source = Transaction.fromBEEF(prior.beef) }
                 if (!source) continue
-                const previous = await decodeAndVerifyBoardToken(source.outputs[Number(index)]!.lockingScript.toHex())
+                const previous = await decodeBoard(source.outputs[Number(index)]!.lockingScript.toHex())
                 if (previous.key !== record.key || previous.revision + 1 !== record.revision || previous.author !== record.author) continue
               } else if (topic === BOARD_TOPIC && record.revision !== 1) continue
               admitted.push(i)
@@ -79,7 +83,7 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
         async identifyNeededInputs(beef: number[]) {
           if (topic !== BOARD_TOPIC) return []
           const needed = []
-          for (const output of Transaction.fromBEEF(beef).outputs) try { const record = await decodeAndVerifyBoardToken(output.lockingScript.toHex()); if (record.previous) { const [txid, index] = record.previous.split(':'); needed.push({ txid, outputIndex: Number(index) }) } } catch {}
+          for (const output of Transaction.fromBEEF(beef).outputs) try { const record = await decodeBoard(output.lockingScript.toHex()); if (record.previous) { const [txid, index] = record.previous.split(':'); needed.push({ txid, outputIndex: Number(index) }) } } catch {}
           return needed
         },
         async getDocumentation() { return 'TPNIL signed Board/UHRP application policy, bound to complete transactions.' },
@@ -120,7 +124,7 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
     const adOutputs: any[] = []
     for (const publication of content.publications()) for (const location of publication.locations) {
       const ad = await encodeUHRPAdvertisement(wallet, { uhrpUrl: publication.chirpURL, hostedFileLocation: location, expiryTime: Number(now() + 86400n), fileSize: Number(publication.logicalLength) })
-      adOutputs.push({ lockingScript: ad.lockingScriptHex, satoshis: 1, outputDescription: 'Native signed UHRP location', basket: 'tpnil-uhrp' })
+      adOutputs.push({ lockingScript: ad.lockingScriptHex, satoshis: 1, outputDescription: 'Native signed UHRP location', basket: basket('tpnil-uhrp') })
     }
     const advertisements = finalized(await wallet.createAction({ description: 'TPNIL native UHRP advertisements', outputs: adOutputs, options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }))
     await saveTransaction('uhrp-advertisements', advertisements)
@@ -132,8 +136,8 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
     })
     assertions.push({ id: 'NATIVE-SYNTHESIS-UHRP', verdict: 'PASS', outputs: adOutputs.length, txid: advertisements.id('hex') })
     const key = `native-board/${assetId}`
-    const first = await encodeBoardToken(wallet, { id: sha256Hex(`${assetId}:1`), key, revision: 1, previous: null, createdAt: Number(now()), body: 'Native wallet synthesis post', attachment: { assetId, lch: toBase64Url(published.lch), mediaType: 'image/png', plaintextSha256 } })
-    const firstTx = finalized(await wallet.createAction({ description: 'TPNIL native synthesis post', outputs: [{ lockingScript: first.lockingScriptHex, satoshis: 1, outputDescription: 'Signed synthesis board post', basket: 'tpnil-synthesis-board' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }))
+    const first = await encodeBoard({ id: sha256Hex(`${assetId}:1`), key, revision: 1, previous: null, createdAt: Number(now()), body: 'Native wallet synthesis post', attachment: { assetId, lch: toBase64Url(published.lch), mediaType: 'image/png', plaintextSha256 } })
+    const firstTx = finalized(await wallet.createAction({ description: 'TPNIL native synthesis post', outputs: [{ lockingScript: first.lockingScriptHex, satoshis: 1, outputDescription: 'Signed synthesis board post', basket: basket('tpnil-synthesis-board') }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }))
     await saveTransaction('board-create', firstTx)
     const firstIndex = firstTx.outputs.findIndex(o => o.lockingScript.toHex() === first.lockingScriptHex)
     if (firstIndex < 0) throw new Error('Native board output absent')
@@ -153,13 +157,13 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
     assertions.push({ id: 'NATIVE-SYNTHESIS-LCH', verdict: 'PASS', txid: payment.id('hex'), receipts: acquired.receipts.length, received, recovered: acquired.recovered, plaintextSha256 })
     contentNetwork.resetHosts()
     const firstOutpoint = `${firstTx.id('hex')}:${firstIndex}`
-    const update = await encodeBoardToken(wallet, { id: sha256Hex(`${assetId}:2`), key, revision: 2, previous: firstOutpoint, createdAt: Number(now()), body: 'Native wallet synthesis post verified', attachment: first.record.attachment })
-    const partial = await wallet.createAction({ description: 'TPNIL native synthesis revision', inputBEEF: firstTx.toBEEF(), inputs: [{ outpoint: `${firstTx.id('hex')}.${firstIndex}`, unlockingScriptLength: 74, inputDescription: 'Previous synthesis board token' }], outputs: [{ lockingScript: update.lockingScriptHex, satoshis: 1, outputDescription: 'Revised synthesis board post', basket: 'tpnil-synthesis-board' }], options: { signAndProcess: false, randomizeOutputs: false } })
+    const update = await encodeBoard({ id: sha256Hex(`${assetId}:2`), key, revision: 2, previous: firstOutpoint, createdAt: Number(now()), body: 'Native wallet synthesis post verified', attachment: first.record.attachment })
+    const partial = await wallet.createAction({ description: 'TPNIL native synthesis revision', inputBEEF: firstTx.toBEEF(), inputs: [{ outpoint: `${firstTx.id('hex')}.${firstIndex}`, unlockingScriptLength: 74, inputDescription: 'Previous synthesis board token' }], outputs: [{ lockingScript: update.lockingScriptHex, satoshis: 1, outputDescription: 'Revised synthesis board post', basket: basket('tpnil-synthesis-board') }], options: { signAndProcess: false, randomizeOutputs: false } })
     if (!partial.signableTransaction) throw new Error('Native revision lacks signable transaction')
     const unsigned = Transaction.fromAtomicBEEF(partial.signableTransaction.tx)
     const inputIndex = unsigned.inputs.findIndex(input => input.sourceTXID === firstTx.id('hex') && input.sourceOutputIndex === firstIndex)
     if (inputIndex < 0) throw new Error('Native revision omitted the original token input')
-    const signature = await new PushDrop(wallet).unlock(BOARD_PROTOCOL, first.record.id, 'anyone').sign(unsigned, inputIndex)
+    const signature = await new PushDrop(wallet).unlock(protocol, first.record.id, 'anyone').sign(unsigned, inputIndex)
     const revision = finalized(await wallet.signAction({ reference: partial.signableTransaction.reference, spends: { [inputIndex]: { unlockingScript: signature.toHex() } }, options: { acceptDelayedBroadcast: false } }))
     await saveTransaction('board-revision', revision); await submit(overlay.origin, revision, [BOARD_TOPIC])
     await syncPeer(replica, overlay.origin, BOARD_TOPIC)
@@ -174,7 +178,7 @@ export async function runNativeSynthesis(wallet: WalletInterface, services: Cont
     for (const payee of payees) await payee.destroy()
   }
   await fs.writeFile(path.join(output, 'events.json'), JSON.stringify(observations, null, 2) + '\n')
-  const result = { schema: 'tpnil-native-synthesis@0.1.0', claim: 'ENGINEERING_OBSERVATION_ONLY', boundary: 'API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim', adapters: ['LCH 0.1.0 base64url-to-standard-base64 BRC-29 derivation and remittance boundary, applied to payer and payees', 'Overlay 2.7.0 historical GASP transaction-identity deduplication; all distinct transactions retain upstream conflict validation'], assertions, transactions: transactions.map(({ role, txid }) => ({ role, txid })), cleanup, result: cleanup.some((item: any) => !item.closed) ? 'BLOCKED' : assertions.some(a => a.verdict === 'FAIL') ? 'FAIL' : 'PASS' }
+  const result = { schema: 'tpnil-native-synthesis@0.1.0', ...(fixtureVersion === 'validated-v2' ? { fixtureVersion, boardProtocol: protocol } : {}), claim: 'ENGINEERING_OBSERVATION_ONLY', boundary: 'API-driven unchanged native wallet with controlled Board, CHIRP hosts and LCH application; actual OverlayExpress, configured ChainTracks and Wallet Storage; no browser UI usability claim', adapters: ['LCH 0.1.0 base64url-to-standard-base64 BRC-29 derivation and remittance boundary, applied to payer and payees', 'Overlay 2.7.0 historical GASP transaction-identity deduplication; all distinct transactions retain upstream conflict validation'], assertions, transactions: transactions.map(({ role, txid }) => ({ role, txid })), cleanup, result: cleanup.some((item: any) => !item.closed) ? 'BLOCKED' : assertions.some(a => a.verdict === 'FAIL') ? 'FAIL' : 'PASS' }
   await fs.writeFile(path.join(output, 'result.json'), JSON.stringify(result, null, 2) + '\n')
   return result
 }

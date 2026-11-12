@@ -1,0 +1,11 @@
+# Prospective caller-input response ancestry correction
+
+This immutable child of `storage-merge-accounting` completes the response BEEF for caller-selected outputs already owned by the authenticated wallet. It preserves all preceding layers and historical native observations.
+
+With `trustSelf: known`, storage may recover a caller's omitted source from its own records. Previously, the response expanded ancestry only for automatically allocated inputs. Caller-selected owned inputs could remain transaction-ID-only entries even when the caller requested full transaction bytes and supplied no `knownTxids`. A raw source-transaction fallback made signing possible, but did not make the returned graph independently verifiable. A warm reference client's cache could mask the omission; a fresh client exposed it.
+
+The correction includes both managed-change and custom owned caller-input IDs when constructing the response graph. It leaves the compact persisted input BEEF and input authorization unchanged. Explicit `knownTxids` omissions and the existing combined `trustSelf`/`returnTXIDOnly` optimization remain effective. Caller-provided external proof validation and the declared ancestry-depth limits are unchanged.
+
+The regression reproduces omitted source bodies with both absent and empty input BEEF. It also tests ordinary complete input BEEF, explicit known transaction IDs and transaction-ID-only responses. The preparer runs the complete inherited storage, RPC, accounting, services, HTTP, mapping and validation suites. A real TypeScript client against the Go host additionally exercises a signed custom input after recreating the client against the same storage; exact source manifests, raw traces and failed attempts are retained under `out/storage-input-ancestry-review`.
+
+Run `node scripts/prepare-storage-input-ancestry-go.mjs`. The output is `out/itcve-go-storage-input-ancestry`, with manifest schema `tpnil-storage-input-ancestry-go-build@1.0.0`. Patch ancestry, generated single-process host and build inputs are hash-bound. This layer requires explicit prospective admission and does not relabel older native profiles. Local reference results are engineering evidence, not native wallet qualification.

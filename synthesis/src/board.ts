@@ -3,6 +3,12 @@ import { canonicalJson, utf8 } from './determinism.js'
 
 export const BOARD_TOPIC = 'tm_tpnil_synthesis_board'
 export const BOARD_PROTOCOL = [2, 'TPNIL synthesis board'] as [2, string]
+export type BoardFixtureVersion = 'legacy-v1' | 'validated-v2'
+export function boardProtocol(version: BoardFixtureVersion): [2, string] {
+  if (version === 'legacy-v1') return [...BOARD_PROTOCOL]
+  if (version === 'validated-v2') return [2, 'tpnil synthesis board']
+  throw new Error('Unsupported Board fixture version')
+}
 const MAGIC = 'TPNIL_BOARD_V1'
 const MAX_FIELD_BYTES = 480
 
@@ -38,12 +44,14 @@ export function fixtureWallet(privateKey: number): ProtoWallet {
 
 export async function encodeBoardToken(
   wallet: WalletInterface,
-  input: Omit<BoardRecord, 'schema' | 'author' | 'signingKey'>
+  input: Omit<BoardRecord, 'schema' | 'author' | 'signingKey'>,
+  version: BoardFixtureVersion = 'legacy-v1'
 ): Promise<EncodedBoardToken> {
+  const protocol = boardProtocol(version)
   const author = (await wallet.getPublicKey({ identityKey: true })).publicKey
   const signingKey = (
     await wallet.getPublicKey({
-      protocolID: BOARD_PROTOCOL,
+      protocolID: protocol,
       keyID: input.id,
       counterparty: 'anyone',
       forSelf: true
@@ -63,7 +71,7 @@ export async function encodeBoardToken(
   const fields = [Array.from(utf8(MAGIC)), ...recordFields]
   const lockingScript = await new PushDrop(wallet).lock(
     fields,
-    BOARD_PROTOCOL,
+    protocol,
     record.id,
     'anyone',
     true,
@@ -72,7 +80,7 @@ export async function encodeBoardToken(
   return { record, lockingScript, lockingScriptHex: lockingScript.toHex() }
 }
 
-export async function decodeAndVerifyBoardToken(script: LockingScript | string): Promise<BoardRecord> {
+export async function decodeAndVerifyBoardToken(script: LockingScript | string, version: BoardFixtureVersion = 'legacy-v1'): Promise<BoardRecord> {
   const lockingScript = typeof script === 'string' ? LockingScript.fromHex(script) : script
   const decoded = PushDrop.decode(lockingScript)
   if (decoded.fields.length < 3) throw new Error('Board token must contain record fields and one signature')
@@ -89,7 +97,7 @@ export async function decodeAndVerifyBoardToken(script: LockingScript | string):
   const lockingKey = decoded.lockingPublicKey.toString()
   if (lockingKey !== record.signingKey) throw new Error('Board signing key does not match the token lock')
   await new ProtoWallet('anyone').verifySignature({
-    protocolID: BOARD_PROTOCOL,
+    protocolID: boardProtocol(version),
     keyID: record.id,
     counterparty: record.author,
     data: [...magicBytes, ...recordBytes],

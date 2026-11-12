@@ -1,0 +1,59 @@
+{
+  "schema": "tpnil-transaction-coverage-reference@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "actualNative": false,
+  "sourceBase": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "prospectiveSourceInputs": "source-before.json.gz",
+  "sourceStableAcrossRun": true,
+  "sourceInputCount": 111,
+  "reference": {
+    "wallet": "@bsv/wallet-toolbox@2.13.0",
+    "sdk": "@bsv/sdk@2.7.1",
+    "storage": "actual Go storage-native-contracts binary; authenticated TypeScript RPC",
+    "calls": 122,
+    "counts": {
+      "PASS": 18,
+      "FAIL": 3,
+      "BLOCKED": 1
+    },
+    "signedTransactions": 24,
+    "aggregateFeesSatoshis": 485
+  },
+  "failuresPreserved": [
+    "transaction.proof-trust/conflicting-proof",
+    "transaction.batch-send/sign-sendWith",
+    "transaction.internalization/both-output-types"
+  ],
+  "interpretationPreserved": "transaction.internalization/conflicting-remittance",
+  "parentSafetyVerified": true,
+  "nativeQualification": null,
+  "monetaryCostUSD": null,
+  "files": {
+    "report.json.gz": {
+      "sha256": "611194511707a976737a74bc97b093b79e18963eb4f99eda06be8ab1ccf694f0",
+      "uncompressedSha256": "1200d32ca16e027af1cadea724350e8f9a4c8538b6d1d57083ae9781168da8eb",
+      "uncompressedBytes": 531032
+    },
+    "submissions.json.gz": {
+      "sha256": "377a0c3d866c37774b1aabe352aacbe5bf6a0667139d14988df06a9ca4934edd",
+      "uncompressedSha256": "ef6d19832a6c7abb5345c57dc5d5924e2e9837e84706da5a863369028b46577b",
+      "uncompressedBytes": 10152
+    },
+    "source-before.json.gz": {
+      "sha256": "798835075786b8792a25c2aa0dd9a51968b9ddbbd56edf5f1169045dd18c9de7",
+      "uncompressedSha256": "c8edd3322caff538ca0f2d0569173615ebaeca264d3458748a1a63173c03d30e",
+      "uncompressedBytes": 13877
+    },
+    "source-after.json.gz": {
+      "sha256": "798835075786b8792a25c2aa0dd9a51968b9ddbbd56edf5f1169045dd18c9de7",
+      "uncompressedSha256": "c8edd3322caff538ca0f2d0569173615ebaeca264d3458748a1a63173c03d30e",
+      "uncompressedBytes": 13877
+    },
+    "verification.json.gz": {
+      "sha256": "da905ecc014444da752ea78b176e526f9fa408fbc05d9bb7e38bb7521cd79338",
+      "uncompressedSha256": "c78e2e4ba8311f16721c5b6c67b4ec3f2b49a758e7d501ac03ef004b74cc8da0",
+      "uncompressedBytes": 11388
+    }
+  },
+  "scope": "Application-scoped public queries only; no default-basket query or permission bypass. Contradictory referenced root fixture has a separate identical-proof duplicate positive control."
+}

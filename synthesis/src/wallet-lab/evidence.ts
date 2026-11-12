@@ -50,6 +50,13 @@ export class EvidenceBundle {
     this.files.set(name, Uint8Array.from(value))
   }
 
+  /** Read an already captured observation without exposing mutable storage. */
+  readBytes(name: string): Buffer {
+    const value = this.files.get(name)
+    if (value === undefined) throw new Error(`Evidence has not been captured: ${name}`)
+    return Buffer.from(value)
+  }
+
   flush(): WalletLabResult['evidence'] {
     fs.mkdirSync(this.directory, { recursive: true })
     const evidence = [...this.files.entries()]

@@ -181,3 +181,16 @@ test('observer3 publication requires its new profile/program pair and engineerin
     assert.throws(() => verifyIntegrationArchive(directory))
   }
 }))
+
+
+test('expanded publication requires its4.3/5.3 pair and engineering limits', () => temporary(directory => {
+  const profile = { profile: 'ITCVE-1@4.3.0', program: 'ISI-4@5.3.0' }
+  const qualification = publishCandidate(directory, profile), bundle = verifyIntegrationArchive(directory)
+  assert.equal(bundle.qualification.profile, profile.profile)
+  assert.deepEqual(requireArchiveVerifierReceipt(JSON.stringify(qualification), bundle), qualification)
+  for (const change of [{ program: 'ISI-4@5.2.0' }, { program: 'ISI-4@5.1.0' }, { claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' }, { completeBRC100Conformance: true }]) {
+    publishCandidate(directory, { ...profile, ...change })
+    assert.throws(() => verifyIntegrationArchive(directory))
+  }
+  for (const change of [{ profile: 'ITCVE-1@4.2.0' }, { program: 'ISI-4@5.2.0' }, { claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' }]) assert.throws(() => requireArchiveVerifierReceipt(JSON.stringify({ ...qualification, ...change }), bundle))
+}))

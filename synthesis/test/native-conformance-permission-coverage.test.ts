@@ -5,11 +5,11 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { Beef, KeyDeriver, LockingScript, MasterCertificate, P2PKH, PrivateKey, ProtoWallet, Transaction } from '@bsv/sdk'
 import { canonicalJson } from '../src/determinism.js'
 import { issueFixtureCertificateForSubject } from '../src/wallet-lab/certificate-fixture.js'
-import { coverageCategoryCall, coverageCertificateSerial, coverageCertificateType, coverageManifest, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageStepOrder, coverageVerifier, permissionCoverageAssertionIds, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageOracle, permissionCoveragePolicy, permissionCoveragePolicySha256, permissionCoverageSelection } from '../src/wallet-lab/native/conformance-permission-coverage-model.js'
+import { coverageCategoryCall, coverageCertificateSerial, coverageCertificateType, coverageManifest, coverageManifestForRevision, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageStepOrder, coverageVerifier, permissionCoverageAssertionIds, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageOracle, permissionCoveragePolicy, permissionCoveragePolicySha256, permissionCoverageSelection } from '../src/wallet-lab/native/conformance-permission-coverage-model.js'
 import { coverageSpendingSummary, waitForCoverageRevocationSnapshot } from '../src/wallet-lab/native/permission-coverage-observer.js'
 import { lifecyclePermissionConfig } from '../src/wallet-lab/native/conformance-permission-lifecycle-model.js'
 import { assertNoDeniedPermissionPayment } from '../src/wallet-lab/native/verify-conformance-permission-lifecycle.js'
-import { assertNoCoverageDeniedPayments, evaluateNativePermissionCoverage, verifyNativePermissionCoverage, verifyCoverageRevocationClick } from '../src/wallet-lab/native/verify-conformance-permission-coverage.js'
+import { assertNoCoverageDeniedPayments, evaluateNativePermissionCoverage, verifyNativePermissionCoverage, verifyCoverageRevocationClick, verifyPermissionFundingPrelude } from '../src/wallet-lab/native/verify-conformance-permission-coverage.js'
 
 // LAB_SELF_TEST_ONLY. Constructed adversarial observer records exercise the
 // verifier; only the crypto and transaction bytes below are actual SDK results.
@@ -25,24 +25,29 @@ function click(url: string, body: string, button: string, callNonce: string, at:
   const nonce = randomUUID()
   return { schema: 'tpnil-native-permission-click@2', nonce, callNonce, popupUrl: url, button, armedAt: at, attemptStartedAt: at, completedAt: at, automation: { status: 'fulfilled', endedAt: at }, dispatch: { nonce, url, body, button, type: 'click', isTrusted: true, visible: true, disabled: false, mouseButton: 0, eventPhase: 1, dispatchedAt: at, receivedAt: at, expectedPage: true, expectedMainFrame: true } }
 }
-function prompt(row: any, category: string, decision: string, grouped = false) {
+function prompt(row: any, category: string, decision: string, grouped = false, cap = 100) {
   const origin = new URL(row.origin).host, at = row.startedAt
   const title = category === 'basket' ? 'Basket Access' : category === 'certificate' ? 'Certificate Access' : category === 'spending' ? 'Spending Authorization' : 'Protocol Permission'
   const protocol = category === 'counterparty-linkage' ? `counterparty key linkage revelation ${coveragePeer}` : category === 'specific-linkage' ? `specific key linkage revelation ${config.linkageProtocol[1]} ${config.linkageKeyID}` : config.protocol[1]
   const detail = category === 'basket' ? `Basket\n${config.basket}` : category === 'certificate' ? `Cert Type\n${coverageCertificateType}\nFields\nname` : category === 'spending' ? `Reason\n${row.args.description}\nNative coverage allowance recipient (${row.args.outputs[0].satoshis} satoshis)` : `Protocol\n${protocol}\nCounterparty\n${category === 'protocol' ? coveragePeer : coverageVerifier}`
-  const body = grouped ? `Permission Request\n${origin} is requesting the following permissions\n${config.basket}\n${coverageCertificateType}\n${config.protocol[1]}\nThis app wants to spend up to 0.00000100 BSV (100 satoshis)` : `${title}\nOrigin\n${origin}\n${detail}`
+  const body = grouped ? `Permission Request\n${origin} is requesting the following permissions\n${config.basket}\n${coverageCertificateType}\n${config.protocol[1]}\nThis app wants to spend up to ${(cap / 100_000_000).toFixed(8)} BSV (${cap} satoshis)` : `${title}\nOrigin\n${origin}\n${detail}`
   const url = `chrome-extension://${extensionId}/prompt.html?fixture=${row.id}`, button = grouped ? decision === 'allow' ? 'Allow Selected' : 'Deny All' : decision === 'allow' ? 'Allow' : 'Deny'
   const result: any = { url, body, button, decision, observedAt: at, pendingBeforeDecision: true, clickedAt: at, clickCompletedAt: at, trustedClick: click(url, body, button, row.requestNonce, at), selections: [], screenshot: png(`conformance/coverage-${row.id}-0.png`) }
   if (grouped && decision === 'allow') {
-    const nonce = randomUUID(), label = 'This app wants to spend up to 0.00000100 BSV (100 satoshis)'
+    const nonce = randomUUID(), label = `This app wants to spend up to ${(cap / 100_000_000).toFixed(8)} BSV (${cap} satoshis)`
     result.selections.push({ nonce, callNonce: row.requestNonce, label, url, before: false, after: true, startedAt: at, endedAt: at, dispatch: { nonce, label, url, checked: true, type: 'change', isTrusted: true, expectedPage: true, expectedMainFrame: true, dispatchedAt: at, receivedAt: at } })
   }
   row.prompts.push(result)
 }
-async function fixture(revision: 1 | 2 | 3 = 1, fee = 1, thirdFee = fee) {
-  const selected = permissionCoverageSelection(revision), config = selected.config
+async function fixture(revision: 1 | 2 | 3 | 4 | 5 = 1, fee = 1, thirdFee = fee, secondFee = fee) {
+  const selected = permissionCoverageSelection(revision), config = selected.config, coverageManifest = coverageManifestForRevision(revision)
   artifacts.clear()
   const report: any = { schema: 'tpnil-native-permission-coverage@1.0.0', oracle: selected.oracle, policySha256: selected.policySha256, claim: 'ENGINEERING_OBSERVATION_ONLY', identity, extensionId, startedAt: now(), endedAt: '', steps: [], restarts: [], revocations: [], manifest: { value: structuredClone(coverageManifest), sha256: sha(Buffer.from(canonicalJson(coverageManifest))), requests: [] }, transactions: [], submissions: [], submissionWindow: { startIndex: 0, endIndex: 0 }, errors: [], cleanup: { pagesClosed: true, settingsClosed: true, routeUnregistered: true }, remainingCoverage: permissionCoveragePolicy.remainingCoverage, completeBRC100Conformance: false }
+  if (revision === 5) {
+    const prelude = { schema: 'tpnil-native-permission-prelude@1.0.0', prerequisite: 'fresh-managed-funding', identity, startedAt: report.startedAt, endedAt: report.startedAt, submissionStart: 0, submissionEnd: 0, outputObservationSequence: 0, initialOutputs: [1, 2, 3].map(n => ({ outpoint: `${String(n).repeat(64)}.0`, satoshis: 10000, spendable: true, basketName: 'default', lockingScript: new P2PKH().lock(nativeKey.toPublicKey().toAddress()).toHex() })) }
+    const bytes = Buffer.from(JSON.stringify(prelude)); artifacts.set('conformance/permission-prelude.json', bytes)
+    report.fundingPrelude = { evidencePath: 'conformance/permission-prelude.json', sha256: sha(bytes) }
+  }
   const funding = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
   const root = Transaction.fromAtomicBEEF([...Buffer.from(funding.atomicBeefHex, 'hex')])
   const fundingKey = new KeyDeriver(PrivateKey.fromHex('77'.repeat(32))).derivePrivateKey([2, '3241645161d8'], `${funding.payment.derivationPrefix} ${funding.payment.derivationSuffix}`, funding.payment.senderIdentityKey)
@@ -53,9 +58,9 @@ async function fixture(revision: 1 | 2 | 3 = 1, fee = 1, thirdFee = fee) {
     tx.addOutput({ satoshis: source.outputs[index]!.satoshis! - amount - actualFee, lockingScript: new P2PKH().lock(nativeKey.toPublicKey().toAddress()) })
     await tx.sign(); return tx
   }
-  const basketTx = await spend(root, 0, fundingKey, config.basketAmount, '51'), firstTx = await spend(basketTx, 1, nativeKey, config.paymentAmounts.first, coveragePaymentScript), secondTx = await spend(firstTx, 1, nativeKey, config.paymentAmounts.second, coveragePaymentScript)
-  const thirdTx = revision === 3 ? await spend(secondTx, 1, nativeKey, config.paymentAmounts.third, coveragePaymentScript, thirdFee) : undefined
-  const totalSpent = config.paymentAmounts.first + config.paymentAmounts.second + 2 * fee + (revision === 3 ? config.paymentAmounts.third + thirdFee : 0)
+  const basketTx = await spend(root, 0, fundingKey, config.basketAmount, '51'), firstTx = await spend(basketTx, 1, nativeKey, config.paymentAmounts.first, coveragePaymentScript), secondTx = await spend(firstTx, 1, nativeKey, config.paymentAmounts.second, coveragePaymentScript, secondFee)
+  const thirdTx = revision >= 3 ? await spend(secondTx, 1, nativeKey, config.paymentAmounts.third, coveragePaymentScript, thirdFee) : undefined
+  const totalSpent = config.paymentAmounts.first + config.paymentAmounts.second + fee + secondFee + (revision >= 3 ? config.paymentAmounts.third + thirdFee : 0)
   report.setupOutpoint = `${basketTx.id('hex')}.0`
   const cert = await issueFixtureCertificateForSubject(new ProtoWallet(PrivateKey.fromHex(config.issuerKeyHex)), identity, config.fields, coverageCertificateType, async () => report.setupOutpoint, coverageCertificateSerial)
   report.certificate = JSON.parse(JSON.stringify(cert)); report.certificateMasterKeyring = report.certificate.masterKeyring; delete report.certificate.masterKeyring
@@ -68,7 +73,7 @@ async function fixture(revision: 1 | 2 | 3 = 1, fee = 1, thirdFee = fee) {
     artifacts.set(receipt.sandboxEvidence, Buffer.from('PID namespaces Yes\nSeccomp-BPF sandbox Yes')); png(`conformance/restart-${sequence}-unlocked.png`)
   }
   const revoke = (id: string, origin: string) => {
-    const at = now(), requestNonce = randomUUID(), url = `chrome-extension://${extensionId}/index.html`, body = `${new URL(origin).host}\n${config.basket}\n${config.protocol[1]}${revision >= 2 && origin === config.allowance ? `\nSpending\nUp to 100 sats · ${totalSpent} sats spent this month · ${Math.max(0, 100 - totalSpent)} sats remaining` : ''}`
+    const at = now(), requestNonce = randomUUID(), url = `chrome-extension://${extensionId}/index.html`, body = `${new URL(origin).host}\n${config.basket}\n${config.protocol[1]}${revision >= 2 && origin === config.allowance ? `\nSpending\nUp to ${config.allowanceSatoshis} sats · ${totalSpent} sats spent this month · ${Math.max(0, config.allowanceSatoshis - totalSpent)} sats remaining` : ''}`
     const confirmation = `Revoke all access for ${new URL(origin).host}? This revokes every permission granted to this app.`
     report.revocations.push({ id, origin, pageUrl: url, requestNonce, startedAt: at, endedAt: at, beforeBody: body, cardBody: body, confirmationBody: confirmation, afterBody: 'Permissions', afterOriginCardCount: 0, revoke: click(url, body, 'Revoke All Access', requestNonce, at), confirm: click(url, confirmation, 'Confirm', requestNonce, at), before: png(`conformance/coverage-${id}-before.png`), confirmation: png(`conformance/coverage-${id}-confirmation.png`), after: png(`conformance/coverage-${id}-after.png`) })
   }
@@ -81,14 +86,14 @@ async function fixture(revision: 1 | 2 | 3 = 1, fee = 1, thirdFee = fee) {
     let result: any
     if (id === 'identity') { row.method = 'getPublicKey'; row.args = { identityKey: true }; result = { publicKey: identity } }
     else if (id === 'setup-certificate') { row.method = 'acquireCertificate'; row.args = { ...report.certificate, acquisitionProtocol: 'direct', keyringRevealer: 'certifier', keyringForSubject: cert.masterKeyring }; result = report.certificate }
-    else if (id === 'manifest-grant') { row.method = 'waitForAuthentication'; result = { authenticated: true }; prompt(row, 'grouped', 'allow', true); report.manifest.requests.push({ method: 'GET', path: '/manifest.json', servedAt: row.startedAt, responseSha256: report.manifest.sha256 }) }
+    else if (id === 'manifest-grant') { row.method = 'waitForAuthentication'; result = { authenticated: true }; prompt(row, 'grouped', 'allow', true, config.allowanceSatoshis); report.manifest.requests.push({ method: 'GET', path: '/manifest.json', servedAt: row.startedAt, responseSha256: report.manifest.sha256 }) }
     else if (id === 'setup-basket' || id.startsWith('allowance-')) {
       row.method = 'createAction'
       const kinds: any = { 'allowance-first': 'first', 'allowance-second': 'second', 'allowance-third': 'third', 'allowance-overflow': 'overflow', 'allowance-alternate': 'alternate', 'allowance-revoked': 'revoked', 'allowance-revoked-restart': 'revokedRestart' }
       row.args = id === 'setup-basket' ? { description: 'TPNIL permission coverage basket fixture', outputs: [{ satoshis: config.basketAmount, lockingScript: '51', basket: config.basket, outputDescription: 'Native permission coverage fixture', customInstructions: 'tpnil:permission-coverage:1' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } } : coveragePaymentArgs(kinds[id], revision)
       const tx = id === 'setup-basket' ? basketTx : id === 'allowance-first' ? firstTx : id === 'allowance-second' ? secondTx : id === 'allowance-third' ? thirdTx : undefined
       if (tx) { result = { txid: tx.id('hex'), tx: tx.toAtomicBEEF() }; report.transactions.push({ role: id, txid: result.txid, atomicBeef: result.tx }); report.submissions.push({ txid: result.txid, verdict: 'ACCEPTED_BY_NETWORK', beefHex: Buffer.from(result.tx).toString('hex') }) }
-      else prompt(row, 'spending', 'deny', id.includes('revoked'))
+      else prompt(row, 'spending', 'deny', id.includes('revoked'), config.allowanceSatoshis)
     } else if (category && category !== 'grant') {
       Object.assign(row, coverageCategoryCall(category as any, report.certificate))
       if (id.endsWith('-grant')) prompt(row, category, 'allow')
@@ -217,7 +222,7 @@ describe('permission policy2 fee budget and exact settled UI observation', () =>
     expect(old.config.paymentAmounts).toMatchObject({ first: 31, second: 37 })
     expect(next.config.paymentAmounts).toEqual({ first: 11, second: 13, overflow: 53, alternate: 59, revoked: 61, revokedRestart: 67 })
     expect(next.config.allowanceSatoshis).toBe(100); expect(next.policy.assertionSuffixes).toEqual(old.policy.assertionSuffixes)
-    expect(() => permissionCoverageSelection(4 as any)).toThrow()
+    expect(() => permissionCoverageSelection(6 as any)).toThrow()
   })
   it('includes the actual23-satoshi fees in two signed payments:34+36=70', async () => {
     const report = await fixture(2, 23)
@@ -309,5 +314,101 @@ describe('permission policy3 fixed exact fee-inclusive cap', () => {
     const delayed = new Transaction(); delayed.addOutput({ satoshis: 7, lockingScript: LockingScript.fromHex(legacyScript) })
     report.submissions.push({ txid: delayed.id('hex'), beefHex: delayed.toHex(), verdict: 'REJECTED_INVALID_TX' })
     expect(() => assertNoDeniedPermissionPayment(report.submissions, legacyScript, 7)).toThrow()
+  })
+})
+
+
+describe('prospective revision4 exact cap with observed variable fees', () => {
+  const exactId = 'permission-coverage.exact-fee-inclusive-cap'
+  it('preserves policy3 and declares114 before any payment with unchanged amounts and29 predicates', () => {
+    const old = permissionCoverageSelection(3), selected = permissionCoverageSelection(4)
+    expect(selected.policy.predecessor.sha256).toBe(old.policySha256)
+    expect(old.config.allowanceSatoshis).toBe(100); expect(selected.config.allowanceSatoshis).toBe(114)
+    expect(selected.config.paymentAmounts).toEqual(old.config.paymentAmounts)
+    expect(selected.assertionIds).toEqual(old.assertionIds); expect(selected.assertionIds).toHaveLength(29)
+    expect(selected.stepOrder).toEqual(old.stepOrder)
+    expect(coverageManifestForRevision(3)).toEqual(coverageManifest)
+    expect(coverageManifestForRevision(4).metanet.groupPermissions.spendingAuthorization.amount).toBe(114)
+  })
+  it('independently verifies34+50+30 with unequal actual23/37/23 fees and exact trusted UI usage', async () => {
+    const report = await fixture(4, 23, 23, 37)
+    expect(report.assertions.filter((row: any) => row.result !== 'PASS')).toEqual([])
+    expect(report.steps).toHaveLength(44)
+    expect(report.manifest.value.metanet.groupPermissions.spendingAuthorization.amount).toBe(114)
+    expect((await verifyNativePermissionCoverage(report, read, identity)).result).toBe('PASS')
+  })
+  it('rejects the same114 signed debit under unchanged policy3 cap100', async () => {
+    const report = await fixture(3, 23, 23, 37)
+    expect(report.assertions.find((row: any) => row.id === exactId).result).toBe('FAIL')
+    expect(report.assertions.find((row: any) => row.id === 'permission-coverage.cumulative-allowance-boundary').result).toBe('FAIL')
+  })
+  it.each([22, 24])('retains an actual fee delta%s as fixtureFAIL without adapting its cap', async thirdFee => {
+    const report = await fixture(4, 23, thirdFee, 37)
+    expect(report.assertions.find((row: any) => row.id === exactId).result).toBe('FAIL')
+    expect(report.manifest.value.metanet.groupPermissions.spendingAuthorization.amount).toBe(114)
+  })
+  it.each([
+    ['downgraded manifest', (r: any) => { r.manifest.value = structuredClone(coverageManifest); r.manifest.sha256 = sha(Buffer.from(canonicalJson(coverageManifest))); r.manifest.requests.forEach((x: any) => x.responseSha256 = r.manifest.sha256) }],
+    ['adapted cap', (r: any) => { r.manifest.value.metanet.groupPermissions.spendingAuthorization.amount = 115; r.manifest.sha256 = sha(Buffer.from(canonicalJson(r.manifest.value))); r.manifest.requests.forEach((x: any) => x.responseSha256 = r.manifest.sha256) }],
+    ['downgraded oracle', (r: any) => { r.oracle = permissionCoverageSelection(3).oracle; r.policySha256 = permissionCoverageSelection(3).policySha256 }],
+    ['false signed-fee metadata', (r: any) => { step(r, 'allowance-third').outcome.value.fee = 0; const row = r.revocations[1]; row.cardBody = row.cardBody.replace('114 sats spent this month · 0 sats remaining', '100 sats spent this month · 14 sats remaining'); row.beforeBody = row.cardBody; row.revoke.dispatch.body = row.cardBody }],
+  ])('rejects%s even with rehashed or trusted-looking local metadata', async (_name, mutate) => {
+    const report = await fixture(4, 23, 23, 37); mutate(report)
+    const results = await evaluateNativePermissionCoverage(report, read, identity)
+    expect(results.find(row => row.id === exactId)?.result).toBe('FAIL')
+  })
+})
+
+it('validates permission5 initial restart prefix only with explicit five-context expanded parent scope', async () => {
+  const report = await fixture(5, 23)
+  const initial = JSON.parse(read('native-browser-contexts.json').toString())
+  const expanded = { ...initial, contexts: [...initial.contexts, { futureModule: 'permission-extension' }, { futureModule: 'certificate-extension' }] }
+  const readExpanded = (name: string) => name === 'native-browser-contexts.json' ? Buffer.from(JSON.stringify(expanded)) : read(name)
+  await expect(verifyNativePermissionCoverage(report, readExpanded, identity)).rejects.toThrow()
+  expect((await verifyNativePermissionCoverage(report, readExpanded, identity, { profile: 'ITCVE-1@4.3.0' })).result).toBe('PASS')
+  // The parent separately validates the full chain. This child must reject a
+  // missing later context and every mutation of its original three receipts.
+  expanded.contexts.pop()
+  await expect(verifyNativePermissionCoverage(report, readExpanded, identity, { profile: 'ITCVE-1@4.3.0' })).rejects.toThrow()
+  expanded.contexts.push({ futureModule: 'certificate-extension' }); expanded.contexts[1].restart.identity = coveragePeer
+  await expect(verifyNativePermissionCoverage(report, readExpanded, identity, { profile: 'ITCVE-1@4.3.0' })).rejects.toThrow()
+  const old = await fixture(3, 23, 37)
+  await expect(verifyNativePermissionCoverage(old, readExpanded, identity, { profile: 'ITCVE-1@4.3.0' })).rejects.toThrow('oracle5')
+})
+
+
+describe('prospective permission5 with independently bound fresh managed funding', () => {
+  it('preserves policy4 and fixes cap100 before allthree payments', async () => {
+    expect(permissionCoverageSelection(4).config.allowanceSatoshis).toBe(114)
+    expect(permissionCoverageSelection(5).config.allowanceSatoshis).toBe(100)
+    const report = await fixture(5, 23); expect(report.result).toBe('PASS'); expect(report.steps).toHaveLength(44); expect(report.assertions).toHaveLength(29)
+    expect(report.manifest.value.metanet.groupPermissions.spendingAuthorization.amount).toBe(100)
+    expect(verifyPermissionFundingPrelude(report, read, identity).initialOutputs.map((r: any) => r.satoshis)).toEqual([10000, 10000, 10000])
+    expect((await verifyNativePermissionCoverage(report, read, identity)).result).toBe('PASS')
+  })
+  it.each(['missing', 'digest', 'identity', 'extra', 'missing-output', 'duplicate', 'small', 'spent', 'foreign-basket', 'script', 'late', 'submission', 'observation', 'prerequisite'])('rejects a%s fresh-funding prerequisite', async mode => {
+    const report = await fixture(5, 23), p = JSON.parse(read('conformance/permission-prelude.json').toString())
+    if (mode === 'missing') delete report.fundingPrelude
+    if (mode === 'identity') p.identity = coveragePeer
+    if (mode === 'extra') p.initialOutputs.push({ ...p.initialOutputs[0], outpoint: `${'a'.repeat(64)}.0` })
+    if (mode === 'missing-output') p.initialOutputs.pop()
+    if (mode === 'duplicate') p.initialOutputs[1] = p.initialOutputs[0]
+    if (mode === 'small') p.initialOutputs[0].satoshis = 84
+    if (mode === 'spent') p.initialOutputs[0].spendable = false
+    if (mode === 'foreign-basket') p.initialOutputs[0].basketName = 'other'
+    if (mode === 'script') p.initialOutputs[0].lockingScript = '51'
+    if (mode === 'late') p.endedAt = new Date(Date.parse(report.startedAt) + 1).toISOString()
+    if (mode === 'submission') p.submissionEnd++
+    if (mode === 'observation') p.outputObservationSequence = 1
+    if (mode === 'prerequisite') p.prerequisite = 'historical-utxo-pool'
+    const bytes = Buffer.from(JSON.stringify(p)); artifacts.set('conformance/permission-prelude.json', bytes)
+    if (report.fundingPrelude) report.fundingPrelude.sha256 = mode === 'digest' ? '00'.repeat(32) : sha(bytes)
+    expect((await evaluateNativePermissionCoverage(report, read, identity)).every(r => r.result === 'FAIL')).toBe(true)
+  })
+  it('never reuses empirical114 or changes the fixed cap after an actual fee delta', async () => {
+    const report = await fixture(5, 23, 23, 37)
+    expect(report.manifest.value.metanet.groupPermissions.spendingAuthorization.amount).toBe(100)
+    expect(report.assertions.find((r: any) => r.id.endsWith('exact-fee-inclusive-cap')).result).toBe('FAIL')
+    expect(report.assertions.find((r: any) => r.id.endsWith('cumulative-allowance-boundary')).result).toBe('FAIL')
   })
 })

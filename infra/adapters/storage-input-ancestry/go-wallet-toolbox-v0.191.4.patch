@@ -1,0 +1,103 @@
+--- a/pkg/storage/internal/actions/create.go
++++ b/pkg/storage/internal/actions/create.go
+@@ -706,7 +706,7 @@
+ 		slog.Int("inputsCount", len(resultInputs)),
+ 	)
+ 
+-	beef, err := c.mergeAllocatedUTXOs(ctx, processedInputs.Beef, funding.AllocatedUTXOs, params.KnownTxIDs, params.TrustSelf && params.ReturnTXIDOnly)
++	beef, err := c.mergeAllocatedUTXOs(ctx, processedInputs.Beef, funding.AllocatedUTXOs, append(append([]uint{}, processedInputs.KnownOutputIDs...), processedInputs.ChangeOutputIDs...), params.KnownTxIDs, params.TrustSelf && params.ReturnTXIDOnly)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("failed to create BEEF with allocated UTXOs: %w", err)
+ 	}
+@@ -1212,12 +1212,22 @@
+ 	ctx context.Context,
+ 	inputBeef *transaction.Beef,
+ 	allocatedUTXOs []*funder.UTXO,
++	providedOwnedOutputIDs []uint,
+ 	knownTxIDs primitives.TXIDHexStrings,
+ 	trimSelfKnown bool,
+ ) (primitives.ExplicitByteArray, error) {
+-	txIDs, err := c.outputRepo.FindTxIDsByOutputIDs(ctx, seq.Map(seq.FromSlice(allocatedUTXOs), func(utxo *funder.UTXO) uint {
+-		return utxo.OutputID
+-	}))
++	// The response must cover every owned input, including caller-selected
++	// outputs whose ancestry was omitted under trustSelf. Their raw source
++	// fallback is sufficient for signing, but does not make the returned BEEF
++	// independently verifiable. Keep the compact persisted input blob intact;
++	// expand only this response, honoring the caller's explicit knownTxIDs and
++	// the existing trustSelf + returnTXIDOnly optimization below.
++	outputIDs := make([]uint, 0, len(allocatedUTXOs)+len(providedOwnedOutputIDs))
++	for _, utxo := range allocatedUTXOs {
++		outputIDs = append(outputIDs, utxo.OutputID)
++	}
++	outputIDs = append(outputIDs, providedOwnedOutputIDs...)
++	txIDs, err := c.outputRepo.FindTxIDsByOutputIDs(ctx, seq.FromSlice(outputIDs))
+ 	if err != nil {
+ 		return nil, fmt.Errorf("failed to find allocated outputs: %w", err)
+ 	}
+--- /dev/null
++++ b/pkg/storage/native_input_ancestry_tpnil_test.go
+@@ -0,0 +1,63 @@
++package storage_test
++
++import (
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	sdk "github.com/bsv-blockchain/go-sdk/wallet"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures/testusers"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/testabilities"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/go-softwarelab/common/pkg/to"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++func TestTPNILProvidedOwnedInputResponseAncestry(t *testing.T) {
++	for _, mode := range []string{"nil-input-beef", "empty-input-beef", "complete-input-beef", "explicit-known-txid", "trusted-return-txid-only"} {
++		t.Run(mode, func(t *testing.T) {
++			given, cleanup := testabilities.Given(t)
++			defer cleanup()
++			provider := given.Provider().GORM()
++			source, _ := given.Faucet(provider, testusers.Alice).TopUp(100000)
++			args := fixtures.DefaultValidCreateActionArgs()
++			args.IsSignAction = true
++			args.Options.TrustSelf = to.Ptr(sdk.TrustSelfKnown)
++			args.Outputs = nil
++			args.Inputs = []wdk.ValidCreateActionInput{{Outpoint: wdk.OutPoint{TxID: source.ID().String(), Vout: 0}, UnlockingScriptLength: to.Ptr(primitives.PositiveInteger(108)), InputDescription: "owned caller input with omitted ancestry"}}
++			if mode == "empty-input-beef" {
++				raw, err := transaction.NewBeefV2().Bytes()
++				require.NoError(t, err)
++				args.InputBEEF = raw
++			}
++			if mode == "complete-input-beef" {
++				args.InputBEEF = source.BEEF().Bytes()
++			}
++			if mode == "explicit-known-txid" {
++				args.Options.KnownTxids = []primitives.TXIDHexString{primitives.TXIDHexString(source.ID().String())}
++			}
++			if mode == "trusted-return-txid-only" {
++				args.Options.ReturnTXIDOnly = to.Ptr(primitives.BooleanDefaultFalse(true))
++			}
++			result, err := provider.CreateAction(t.Context(), testusers.Alice.AuthID(), args)
++			require.NoError(t, err)
++			beef, err := transaction.NewBeefFromBytes(result.InputBeef)
++			require.NoError(t, err)
++			stored := beef.Transactions[*source.ID()]
++			require.NotNil(t, stored)
++			if mode == "explicit-known-txid" || mode == "trusted-return-txid-only" {
++				require.Equal(t, transaction.TxIDOnly, stored.DataFormat, "explicit requested optimization must be preserved")
++				return
++			}
++			require.NotNil(t, stored.Transaction, "default response must include the owned source body, not merely a raw fallback outside the BEEF")
++			require.Equal(t, source.TX().Hex(), stored.Transaction.Hex())
++			require.GreaterOrEqual(t, len(beef.Transactions), 2, "unmined source requires ancestry")
++			for _, input := range stored.Transaction.Inputs {
++				parent := beef.Transactions[*input.SourceTXID]
++				require.NotNil(t, parent, "unmined parent must be represented in the response graph")
++				require.NotNil(t, parent.Transaction, "unmined parent must not be silently omitted without knownTxids")
++				require.NotNil(t, parent.Transaction.MerklePath, "fixture parent reaches its independently supplied mined anchor")
++			}
++		})
++	}
++}

@@ -1,0 +1,28 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-batch-subjects-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-native-contracts/patch.lock.json",
+  "parentSha256": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+  "files": {
+    "pkg/services/services.go": {
+      "before": "2e8ee4862d61c54097d69c53507ee2d323f71282a91b7c6d1eb329b51abe1ab2",
+      "after": "07c54d20740b498ea020ac1c908b79fa14fd7f7a735b9a25becf4cf2b0e15095"
+    },
+    "pkg/internal/txutils/validate_beef_subjects.go": {
+      "before": null,
+      "after": "ea4a89580317adbe83f3cce607b926258cc592345a640ab7414b03618029e030"
+    },
+    "pkg/services/batch_subjects_tpnil_test.go": {
+      "before": null,
+      "after": "584e7af17593a9b3cb7c426c4fbfd79e2bdb53f7ad659e4bfda1708405aee349"
+    },
+    "pkg/storage/provider_no_send_test.go": {
+      "before": "a75b4800837342bf8c61b10edd9590e6045a3453efc87a5c27dba5e8d967acd6",
+      "after": "35a49147272ebc327249a99eb02609bdb09f1daba80d9b2f8b8098b550f52152"
+    }
+  }
+}

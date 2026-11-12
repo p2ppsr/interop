@@ -1,0 +1,387 @@
+--- a/pkg/services/services.go
++++ b/pkg/services/services.go
+@@ -726,16 +726,16 @@
+ 
+ 	allResults := make([]*wdk.PostFromBEEFServiceResult, 0)
+ 
+-	txutils.BindBumpsAndTransactions(beef, s.logger)
+-
+-	// check if beef contains only one child transaction
+-	if err := txutils.ValidateSingleLeafTx(beef); err != nil {
++	// Validate the whole explicit subject set before binding or submission.
++	if err := txutils.ValidateBEEFSubjects(beef, txIDs); err != nil {
+ 		// Return error as service error for each txID, not as Go error
+ 		return []*wdk.PostFromBEEFServiceResult{{
+ 			Name:  "PostFromBEEF Validation",
+ 			Error: err,
+ 		}}, nil
+ 	}
++
++	txutils.BindBumpsAndTransactions(beef, s.logger)
+ 
+ 	// Hydrate only the subject txs' direct inputs — EF conversion needs each
+ 	// input's source output, nothing deeper. The broadcast path may carry a
+@@ -745,6 +745,14 @@
+ 		return nil, fmt.Errorf("failed to hydrate beef for script verification: %w", err)
+ 	}
+ 
++	// Complete EF preparation for every subject before the first provider call.
++	// A malformed later subject must not erase earlier submission outcomes.
++	type preparedSubject struct {
++		txID  string
++		rawTx []byte
++		efHex string
++	}
++	prepared := make([]preparedSubject, 0, len(txIDs))
+ 	for _, txID := range txIDs {
+ 		tx := beef.FindTransaction(txID)
+ 		if tx == nil {
+@@ -762,10 +770,11 @@
+ 			return nil, fmt.Errorf("failed to get efhex from tx %s: %w", tx.TxID().String(), err)
+ 		}
+ 
+-		if err != nil {
+-			return nil, fmt.Errorf("failed to convert tx %s to EF: %w", txID, err)
+-		}
+-
++		prepared = append(prepared, preparedSubject{txID: txID, rawTx: rawTx, efHex: efHex})
++	}
++
++	for _, subject := range prepared {
++		txID, rawTx, efHex := subject.txID, subject.rawTx, subject.efHex
+ 		// Arcade-first routing with circuit-breaker failover.
+ 		if s.broadcastRouter != nil {
+ 			allResults = append(allResults, s.broadcastRouter.broadcast(ctx, efHex, rawTx, txID)...)
+--- /dev/null
++++ b/pkg/internal/txutils/validate_beef_subjects.go
+@@ -0,0 +1,85 @@
++package txutils
++
++import (
++	"fmt"
++	"sort"
++
++	"github.com/bsv-blockchain/go-sdk/chainhash"
++	"github.com/bsv-blockchain/go-sdk/transaction"
++)
++
++// ValidateBEEFSubjects validates the complete broadcast subject set before any
++// provider can receive a transaction. Every graph leaf must be selected, but a
++// selected ancestor is also valid (e.g. a held parent and its child). It does not
++// reorder/deduplicate the caller's slice or trim shared ancestry and proofs.
++// ValidateSingleLeafTx remains unchanged for consumers with that contract.
++func ValidateBEEFSubjects(beef *transaction.Beef, txIDs []string) error {
++	if beef == nil || len(beef.Transactions) == 0 || len(txIDs) == 0 {
++		return fmt.Errorf("expected a nonempty BEEF and broadcast subject set")
++	}
++	selected := make(map[chainhash.Hash]struct{}, len(txIDs))
++	for _, id := range txIDs {
++		hash, err := chainhash.NewHashFromHex(id)
++		if err != nil {
++			return fmt.Errorf("invalid broadcast subject %q: %w", id, err)
++		}
++		entry, exists := beef.Transactions[*hash]
++		if !exists || entry == nil || entry.Transaction == nil {
++			return fmt.Errorf("broadcast subject %s has no full transaction body in BEEF", id)
++		}
++		if *entry.Transaction.TxID() != *hash {
++			return fmt.Errorf("broadcast subject %s differs from its transaction body", id)
++		}
++		selected[*hash] = struct{}{}
++	}
++	for hash, entry := range beef.Transactions {
++		if entry == nil || (entry.Transaction != nil && *entry.Transaction.TxID() != hash) {
++			return fmt.Errorf("BEEF transaction entry %s has inconsistent identity", hash.String())
++		}
++	}
++	parents := referencedParentTxIDs(beef)
++	var missing []string
++	leaves := 0
++	for hash := range beef.Transactions {
++		if _, referenced := parents[hash]; referenced {
++			continue
++		}
++		leaves++
++		if _, requested := selected[hash]; !requested {
++			missing = append(missing, hash.String())
++		}
++	}
++	if leaves == 0 {
++		return fmt.Errorf("BEEF has no broadcast leaf")
++	}
++	if len(missing) > 0 {
++		sort.Strings(missing)
++		return fmt.Errorf("BEEF contains unrequested broadcast leaves: %v", missing)
++	}
++	// BindBumpsAndTransactions requires bodies for BUMP entries present in the
++	// graph. Reject malformed/stub proof targets instead of dereferencing nil.
++	// Referenced TxID-only ancestors without such a proof remain unchanged.
++	for _, bump := range beef.BUMPs {
++		if bump == nil {
++			return fmt.Errorf("BEEF contains a nil BUMP")
++		}
++		for _, layer := range bump.Path {
++			for _, element := range layer {
++				if element == nil {
++					return fmt.Errorf("BEEF contains a nil BUMP path element")
++				}
++			}
++		}
++		if len(bump.Path) == 0 {
++			continue
++		}
++		for _, element := range bump.Path[0] {
++			if element.Txid != nil && *element.Txid && element.Hash != nil {
++				if entry, exists := beef.Transactions[*element.Hash]; exists && entry.Transaction == nil {
++					return fmt.Errorf("BUMP target %s has no transaction body", element.Hash.String())
++				}
++			}
++		}
++	}
++	return nil
++}
+--- /dev/null
++++ b/pkg/services/batch_subjects_tpnil_test.go
+@@ -0,0 +1,231 @@
++package services_test
++
++import (
++	"bytes"
++	"context"
++	"encoding/json"
++	"fmt"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/defs"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/txutils"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/services"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	vectors "github.com/bsv-blockchain/universal-test-vectors/pkg/testabilities"
++	"github.com/stretchr/testify/require"
++	"io"
++	"log/slog"
++	"net/http"
++	"net/http/httptest"
++	"strings"
++	"sync"
++	"testing"
++)
++
++type batchHTTPProvider struct {
++	url    string
++	client *http.Client
++}
++
++func (p *batchHTTPProvider) PostTX(ctx context.Context, raw []byte) (*wdk.PostedTxID, error) {
++	req, err := http.NewRequestWithContext(ctx, http.MethodPost, p.url, bytes.NewReader(raw))
++	if err != nil {
++		return nil, err
++	}
++	response, err := p.client.Do(req)
++	if err != nil {
++		return nil, err
++	}
++	defer response.Body.Close()
++	if response.StatusCode != 200 {
++		return nil, fmt.Errorf("provider HTTP %d", response.StatusCode)
++	}
++	var result wdk.PostedTxID
++	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
++		return nil, err
++	}
++	return &result, nil
++}
++func batchHTTPServices(t *testing.T, failed string, terminal bool) (*services.WalletServices, func() []string) {
++	t.Helper()
++	var mu sync.Mutex
++	seen := []string{}
++	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		raw, err := io.ReadAll(io.LimitReader(r.Body, 1<<20))
++		if err != nil {
++			http.Error(w, err.Error(), 400)
++			return
++		}
++		tx, err := transaction.NewTransactionFromBytes(raw)
++		if err != nil {
++			http.Error(w, err.Error(), 400)
++			return
++		}
++		id := tx.TxID().String()
++		mu.Lock()
++		seen = append(seen, id)
++		mu.Unlock()
++		if id == failed && !terminal {
++			http.Error(w, "Controlled provider failure", 503)
++			return
++		}
++		result := wdk.PostedTxID{TxID: id, Result: wdk.PostedTxIDResultSuccess}
++		if id == failed {
++			result.Result = wdk.PostedTxIDResultError
++		}
++		w.Header().Set("Content-Type", "application/json")
++		_ = json.NewEncoder(w).Encode(result)
++	}))
++	t.Cleanup(server.Close)
++	provider := &batchHTTPProvider{url: server.URL, client: server.Client()}
++	logger := slog.New(slog.NewTextHandler(io.Discard, nil))
++	svc := services.New(logger, defs.WalletServices{Chain: defs.NetworkMainnet}, services.WithHttpClient(server.Client()), services.WithCustomImplementation("tpnil-batch-http", services.ToImplementation(provider)))
++	return svc, func() []string { mu.Lock(); defer mu.Unlock(); return append([]string{}, seen...) }
++}
++func batchBEEF(t *testing.T, subjects ...*transaction.Transaction) *transaction.Beef {
++	t.Helper()
++	beef := transaction.NewBeefV2()
++	for _, tx := range subjects {
++		_, err := beef.MergeTransaction(tx)
++		require.NoError(t, err)
++	}
++	return beef
++}
++func independentBatchTx(amount uint64) *transaction.Transaction {
++	return vectors.GivenTX().WithInput(amount).WithP2PKHOutput(amount - 2).TX()
++}
++func assertBatchSuccess(t *testing.T, results wdk.PostFromBeefResult, ids []string) {
++	t.Helper()
++	require.Len(t, results, len(ids))
++	for i, id := range ids {
++		require.NoError(t, results[i].Error)
++		require.NotNil(t, results[i].PostedBEEFResult)
++		require.Len(t, results[i].PostedBEEFResult.TxIDResults, 1)
++		require.Equal(t, id, results[i].PostedBEEFResult.TxIDResults[0].TxID)
++		require.Equal(t, wdk.PostedTxIDResultSuccess, results[i].PostedBEEFResult.TxIDResults[0].Result)
++	}
++}
++func TestTPNILBatchSubjectsHTTP(t *testing.T) {
++	t.Run("independent subjects retain requested order", func(t *testing.T) {
++		a, b := independentBatchTx(101), independentBatchTx(103)
++		beef := batchBEEF(t, a, b)
++		ids := []string{b.TxID().String(), a.TxID().String()}
++		require.Error(t, txutils.ValidateSingleLeafTx(beef), "single-leaf contract remains strict")
++		svc, seen := batchHTTPServices(t, "", false)
++		results, err := svc.PostFromBEEF(t.Context(), beef, ids)
++		require.NoError(t, err)
++		assertBatchSuccess(t, results, ids)
++		require.Equal(t, ids, seen())
++	})
++	t.Run("shared-parent siblings preserve shared proof", func(t *testing.T) {
++		parent := vectors.GivenTX().WithInput(100).WithP2PKHOutput(40).WithP2PKHOutput(50).TX()
++		proof, err := transaction.NewMerklePathFromCoinbaseTxid(parent.TxID(), 900000)
++		require.NoError(t, err)
++		parent.MerklePath = proof
++		a := vectors.GivenTX().WithInputFromUTXO(parent, 0).WithP2PKHOutput(38).TX()
++		b := vectors.GivenTX().WithInputFromUTXO(parent, 1).WithP2PKHOutput(48).TX()
++		beef := batchBEEF(t, a, b)
++		originalProof := proof.Hex()
++		ids := []string{a.TxID().String(), b.TxID().String()}
++		svc, seen := batchHTTPServices(t, "", false)
++		results, err := svc.PostFromBEEF(t.Context(), beef, ids)
++		require.NoError(t, err)
++		assertBatchSuccess(t, results, ids)
++		require.Equal(t, ids, seen())
++		require.Equal(t, originalProof, beef.FindTransaction(parent.TxID().String()).MerklePath.Hex())
++		require.Len(t, beef.BUMPs, 1)
++	})
++	t.Run("dependent parent and child are both subjects", func(t *testing.T) {
++		parent := independentBatchTx(110)
++		child := vectors.GivenTX().WithInputFromUTXO(parent, 0).WithP2PKHOutput(105).TX()
++		beef := batchBEEF(t, child)
++		ids := []string{parent.TxID().String(), child.TxID().String()}
++		svc, seen := batchHTTPServices(t, "", false)
++		results, err := svc.PostFromBEEF(t.Context(), beef, ids)
++		require.NoError(t, err)
++		assertBatchSuccess(t, results, ids)
++		require.Equal(t, ids, seen())
++	})
++	t.Run("duplicate requests keep legacy ordered processing", func(t *testing.T) {
++		a := independentBatchTx(115)
++		ids := []string{a.TxID().String(), a.TxID().String()}
++		svc, seen := batchHTTPServices(t, "", false)
++		results, err := svc.PostFromBEEF(t.Context(), batchBEEF(t, a), ids)
++		require.NoError(t, err)
++		assertBatchSuccess(t, results, ids)
++		require.Equal(t, ids, seen())
++	})
++	for _, name := range []string{"unknown later subject", "omitted independent leaf", "unrelated extra leaf", "txid-only subject", "empty subjects", "nil graph", "inconsistent body identity", "nil BUMP", "nil BUMP bottom element", "nil BUMP upper element"} {
++		t.Run(name+" rejects before any HTTP", func(t *testing.T) {
++			a, b := independentBatchTx(120), independentBatchTx(122)
++			beef := batchBEEF(t, a, b)
++			ids := []string{a.TxID().String(), b.TxID().String()}
++			switch name {
++			case "unknown later subject":
++				ids[1] = strings.Repeat("a7", 32)
++			case "omitted independent leaf":
++				ids = ids[:1]
++			case "unrelated extra leaf":
++				_, err := beef.MergeTransaction(independentBatchTx(124))
++				require.NoError(t, err)
++			case "txid-only subject":
++				beef.RemoveExistingTxid(b.TxID())
++				beef.MergeTxidOnly(b.TxID())
++			case "empty subjects":
++				ids = nil
++			case "nil graph":
++				beef = nil
++			case "nil BUMP":
++				beef.BUMPs = append(beef.BUMPs, nil)
++			case "nil BUMP bottom element":
++				beef.BUMPs = append(beef.BUMPs, &transaction.MerklePath{Path: [][]*transaction.PathElement{{nil}}})
++			case "nil BUMP upper element":
++				beef.BUMPs = append(beef.BUMPs, &transaction.MerklePath{Path: [][]*transaction.PathElement{{}, {nil}}})
++			case "inconsistent body identity":
++				beef.Transactions[*b.TxID()].Transaction = a
++			}
++			svc, seen := batchHTTPServices(t, "", false)
++			results, err := svc.PostFromBEEF(t.Context(), beef, ids)
++			require.NoError(t, err)
++			require.Len(t, results, 1)
++			require.Equal(t, "PostFromBEEF Validation", results[0].Name)
++			require.Error(t, results[0].Error)
++			require.Empty(t, seen())
++		})
++	}
++	t.Run("missing later direct source cannot partially submit", func(t *testing.T) {
++		a, b := independentBatchTx(130), independentBatchTx(132)
++		missing, err := chainhash.NewHashFromHex(strings.Repeat("b7", 32))
++		require.NoError(t, err)
++		b.Inputs[0].SourceTXID = missing
++		b.Inputs[0].SourceTransaction = nil
++		beef := batchBEEF(t, a, b)
++		svc, seen := batchHTTPServices(t, "", false)
++		_, err = svc.PostFromBEEF(t.Context(), beef, []string{a.TxID().String(), b.TxID().String()})
++		require.Error(t, err)
++		require.Contains(t, err.Error(), "hydrate")
++		require.Empty(t, seen())
++	})
++	for _, terminal := range []bool{false, true} {
++		t.Run(fmt.Sprintf("provider failure terminal=%t retains every per-item result", terminal), func(t *testing.T) {
++			a, b, c := independentBatchTx(140), independentBatchTx(142), independentBatchTx(144)
++			ids := []string{a.TxID().String(), b.TxID().String(), c.TxID().String()}
++			svc, seen := batchHTTPServices(t, b.TxID().String(), terminal)
++			results, err := svc.PostFromBEEF(t.Context(), batchBEEF(t, a, b, c), ids)
++			require.NoError(t, err)
++			require.Equal(t, ids, seen())
++			require.Len(t, results, 3)
++			for _, i := range []int{0, 2} {
++				assertBatchSuccess(t, results[i:i+1], ids[i:i+1])
++			}
++			if terminal {
++				require.NoError(t, results[1].Error)
++				require.Equal(t, b.TxID().String(), results[1].PostedBEEFResult.TxIDResults[0].TxID)
++				require.Equal(t, wdk.PostedTxIDResultError, results[1].PostedBEEFResult.TxIDResults[0].Result)
++			} else {
++				require.Error(t, results[1].Error)
++				require.Nil(t, results[1].PostedBEEFResult)
++			}
++		})
++	}
++}
+--- a/pkg/storage/provider_no_send_test.go
++++ b/pkg/storage/provider_no_send_test.go
+@@ -313,5 +313,7 @@
+ 	)
+ 
+ 	// then:
+-	then.ProcessedWithServiceError(thirdProcessActionResult, thirdTxID)
++	// All independent leaves and their selected ancestors are explicit batch subjects.
++	// Each per-item result and stored status must report the accepted broadcast.
++	then.ProcessedSuccessfully(thirdProcessActionResult, thirdTxID)
+ }

@@ -3,14 +3,16 @@ import path from 'node:path'
 import assert from 'node:assert/strict'
 import { Transaction, PrivateKey } from '@bsv/sdk'
 import { decodeDeterministicCbor, LCHReader, objectId, toHex, validatePaymentReceipt, verifySignedObject, PublicBRC77Verifier } from '@bsv/lch'
-import { decodeAndVerifyBoardToken } from '../../board.js'
+import { boardProtocol, decodeAndVerifyBoardToken, type BoardFixtureVersion } from '../../board.js'
 import { decodeAndVerifyUHRPAdvertisement } from '../../uhrp.js'
 import { referenceImage } from '../../run.js'
 import { sha256Hex } from '../../determinism.js'
 
-export async function verifyNativeSynthesis(directory: string, integrated = false, walletIdentity?: string) {
+export async function verifyNativeSynthesis(directory: string, integrated = false, walletIdentity?: string, fixtureVersion: BoardFixtureVersion = 'legacy-v1') {
   const read = async (name: string) => JSON.parse(await fs.readFile(path.join(directory, integrated ? (name === 'result' ? 'synthesis.json' : `synthesis-${name}.json`) : `${name}.json`), 'utf8'))
   const result = await read('result'), rows = await read('transactions'), lch = await read('lch'), events = await read('events')
+  if (fixtureVersion === 'validated-v2') { assert.equal(result.fixtureVersion, fixtureVersion); assert.deepEqual(result.boardProtocol, boardProtocol(fixtureVersion)) }
+  else assert.equal(result.fixtureVersion, undefined)
   assert.equal(result.schema, 'tpnil-native-synthesis@0.1.0')
   assert.equal(result.claim, 'ENGINEERING_OBSERVATION_ONLY')
   assert.equal(result.result, 'PASS')
@@ -58,7 +60,7 @@ export async function verifyNativeSynthesis(directory: string, integrated = fals
   const first = txs.get('board-create')!, revision = txs.get('board-revision')!
   async function board(tx: Transaction) {
     const records = []
-    for (const [index, output] of tx.outputs.entries()) try { records.push({ index, record: await decodeAndVerifyBoardToken(output.lockingScript.toHex()) }) } catch {}
+    for (const [index, output] of tx.outputs.entries()) try { records.push({ index, record: await decodeAndVerifyBoardToken(output.lockingScript.toHex(), fixtureVersion) }) } catch {}
     assert.equal(records.length, 1); return records[0]!
   }
   const a = await board(first), b = await board(revision)
@@ -82,4 +84,4 @@ export async function verifyNativeSynthesis(directory: string, integrated = fals
   return { verified: true, outcome: 'PASS', transactions: rows.length, receipts: lch.receipts.length, walletIdentity: a.record.author }
 }
 
-if (process.argv[1]?.endsWith('verify-synthesis.ts')) console.log(JSON.stringify(await verifyNativeSynthesis(path.resolve(process.argv[2]!), process.argv[3] === '--integrated', process.argv[4])))
+if (process.argv[1]?.endsWith('verify-synthesis.ts')) console.log(JSON.stringify(await verifyNativeSynthesis(path.resolve(process.argv[2]!), process.argv[3] === '--integrated', process.argv[4], process.argv[5] === '--validated-board-v2' ? 'validated-v2' : 'legacy-v1')))

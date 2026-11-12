@@ -13,11 +13,13 @@ export const permissionCoveragePolicySha256 = createHash('sha256').update(bytes)
 export const permissionCoverageOracle = 'tpnil-native-permission-coverage-oracle@1.0.0' as const
 const revision2Bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json'))
 const revision3Bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json'))
-export function permissionCoverageSelection(revision: 1 | 2 | 3 = 1) {
-  if (revision !== 1 && revision !== 2 && revision !== 3) throw new Error(`Unsupported permission coverage revision ${revision}`)
-  const selectedBytes = revision === 1 ? bytes : revision === 2 ? revision2Bytes : revision3Bytes
+const revision4Bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json'))
+const revision5Bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json'))
+export function permissionCoverageSelection(revision: 1 | 2 | 3 | 4 | 5 = 1) {
+  if (revision !== 1 && revision !== 2 && revision !== 3 && revision !== 4 && revision !== 5) throw new Error(`Unsupported permission coverage revision ${revision}`)
+  const selectedBytes = revision === 1 ? bytes : revision === 2 ? revision2Bytes : revision === 3 ? revision3Bytes : revision === 4 ? revision4Bytes : revision5Bytes
   const policy = revision === 1 ? permissionCoveragePolicy : JSON.parse(selectedBytes.toString())
-  return { revision, oracle: policy.oracle as 'tpnil-native-permission-coverage-oracle@1.0.0' | 'tpnil-native-permission-coverage-oracle@2.0.0' | 'tpnil-native-permission-coverage-oracle@3.0.0', policy, config: policy.configuration, policySha256: createHash('sha256').update(selectedBytes).digest('hex'), assertionIds: policy.assertionSuffixes.map((id: string) => `permission-coverage.${id}`) as string[], stepOrder: revision === 3 ? coverageStepOrder.flatMap(id => id === 'allowance-second' ? [id, 'allowance-third'] : [id]) : coverageStepOrder }
+  return { revision, oracle: policy.oracle as 'tpnil-native-permission-coverage-oracle@1.0.0' | 'tpnil-native-permission-coverage-oracle@2.0.0' | 'tpnil-native-permission-coverage-oracle@3.0.0' | 'tpnil-native-permission-coverage-oracle@4.0.0' | 'tpnil-native-permission-coverage-oracle@5.0.0', policy, config: policy.configuration, policySha256: createHash('sha256').update(selectedBytes).digest('hex'), assertionIds: policy.assertionSuffixes.map((id: string) => `permission-coverage.${id}`) as string[], stepOrder: revision >= 3 ? coverageStepOrder.flatMap(id => id === 'allowance-second' ? [id, 'allowance-third'] : [id]) : coverageStepOrder }
 }
 export const permissionCoverageCategories = ['protocol', 'basket', 'certificate', 'counterparty-linkage', 'specific-linkage'] as const
 export type PermissionCoverageCategory = typeof permissionCoverageCategories[number]
@@ -39,6 +41,13 @@ export const coverageManifest = {
     spendingAuthorization: { amount: permissionCoverageConfig.allowanceSatoshis, description: 'A cumulative monthly allowance of 100 fixture satoshis' }
   } }
 }
+/** Prospective grant bytes selected before execution; historical manifest remains exact. */
+export function coverageManifestForRevision(revision: 1 | 2 | 3 | 4 | 5 = 1): typeof coverageManifest {
+  if (revision < 4) return coverageManifest
+  const manifest = structuredClone(coverageManifest), cap = permissionCoverageSelection(revision).config.allowanceSatoshis
+  manifest.metanet.groupPermissions.spendingAuthorization = { amount: cap, description: `A cumulative monthly allowance of ${cap} fixture satoshis` }
+  return manifest
+}
 export const coverageStepOrder = [
   'identity', 'setup-basket', 'setup-certificate',
   ...permissionCoverageCategories.flatMap(id => [`${id}-grant`, `${id}-cached`, `${id}-alternate-deny`]),
@@ -56,9 +65,9 @@ export function coverageCategoryCall(category: PermissionCoverageCategory, certi
   if (category === 'counterparty-linkage') return { method: 'revealCounterpartyKeyLinkage', args: { counterparty: coveragePeer, verifier: coverageVerifier } }
   return { method: 'revealSpecificKeyLinkage', args: { counterparty: coveragePeer, verifier: coverageVerifier, protocolID: c.linkageProtocol, keyID: c.linkageKeyID } }
 }
-export function coveragePaymentArgs(kind: 'first' | 'second' | 'third' | 'overflow' | 'alternate' | 'revoked' | 'revokedRestart', revision: 1 | 2 | 3 = 1) {
+export function coveragePaymentArgs(kind: 'first' | 'second' | 'third' | 'overflow' | 'alternate' | 'revoked' | 'revokedRestart', revision: 1 | 2 | 3 | 4 | 5 = 1) {
   const config = permissionCoverageSelection(revision).config
-  if (kind === 'third' && revision !== 3) throw new Error('The third allowance payment requires permission coverage revision3')
+  if (kind === 'third' && revision < 3) throw new Error('The third allowance payment requires permission coverage revision3 or later')
   return { description: `TPNIL coverage allowance ${kind}`, outputs: [{ satoshis: config.paymentAmounts[kind], lockingScript: coveragePaymentScript, outputDescription: 'Native coverage allowance recipient' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }
 }
 export type CoverageScreenshot = { name: string; sha256: string; size: number }
@@ -72,6 +81,7 @@ export interface CoverageRevocation {
 export interface NativePermissionCoverageReport {
   schema: 'tpnil-native-permission-coverage@1.0.0'; oracle: ReturnType<typeof permissionCoverageSelection>['oracle']; policySha256: string
   claim: 'ENGINEERING_OBSERVATION_ONLY'; identity: string; extensionId: string; startedAt: string; endedAt: string
+  fundingPrelude?: { evidencePath: 'conformance/permission-prelude.json'; sha256: string }
   steps: CoverageStep[]; restarts: NativeBrowserRestartReceipt[]; revocations: CoverageRevocation[]
   certificate?: any; certificateMasterKeyring?: Record<string, string>; setupOutpoint?: string
   manifest: { value: typeof coverageManifest; sha256: string; requests: Array<{ method: string; path: string; servedAt: string; responseSha256: string }> }

@@ -1,0 +1,313 @@
+{
+  "schema": "tpnil-native-permission-extension-policy@1.0.0",
+  "oracle": "tpnil-native-permission-extension-oracle@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "completeBRC100Conformance": false,
+  "planningRows": [
+    "permissions.restart-persistence/protocol-lock",
+    "permissions.restart-persistence/basket-lock",
+    "permissions.restart-persistence/certificate-lock",
+    "permissions.revoke-persistence/single-restart",
+    "permissions.linkage-isolation/verifier",
+    "permissions.linkage-isolation/counterparty",
+    "permissions.linkage-isolation/protocol",
+    "permissions.linkage-isolation/level2-key",
+    "permissions.manifest-selection/subset-selected",
+    "permissions.manifest-selection/spending-unchecked",
+    "permissions.standing-allowance/single-over-cap-deny",
+    "permissions.allowance-boundaries/concurrent-cap",
+    "permissions.allowance-boundaries/abort-accounting",
+    "permissions.allowance-boundaries/rejection-accounting",
+    "permissions.allowance-boundaries/nosend-accounting"
+  ],
+  "assertions": [
+    "permission-extension.restart-persistence.protocol-lock",
+    "permission-extension.restart-persistence.basket-lock",
+    "permission-extension.restart-persistence.certificate-lock",
+    "permission-extension.revoke-persistence.single-restart",
+    "permission-extension.linkage-isolation.verifier",
+    "permission-extension.linkage-isolation.counterparty",
+    "permission-extension.linkage-isolation.protocol",
+    "permission-extension.linkage-isolation.level2-key",
+    "permission-extension.manifest-selection.subset-selected",
+    "permission-extension.manifest-selection.spending-unchecked",
+    "permission-extension.standing-allowance.single-over-cap-deny",
+    "permission-extension.allowance-boundaries.concurrent-cap",
+    "permission-extension.allowance-boundaries.abort-accounting",
+    "permission-extension.allowance-boundaries.rejection-accounting",
+    "permission-extension.allowance-boundaries.nosend-accounting"
+  ],
+  "maximumCalls": 90,
+  "maximumSignedApplicationTransactions": 12,
+  "maximumApplicationFees": 1500,
+  "configuration": {
+    "primary": "https://permission-extension.itcve.test",
+    "alternate": "https://permission-extension-alt.itcve.test",
+    "subset": "https://permission-extension-subset.itcve.test",
+    "unchecked": "https://permission-extension-unchecked.itcve.test",
+    "overcap": "https://permission-extension-overcap.itcve.test",
+    "concurrent": "https://permission-extension-concurrent.itcve.test",
+    "abort": "https://permission-extension-abort.itcve.test",
+    "rejection": "https://permission-extension-rejection.itcve.test",
+    "nosend": "https://permission-extension-nosend.itcve.test",
+    "cap": 100,
+    "concurrentAmount": 75,
+    "overcapAmount": 101,
+    "accountingAmount": 11,
+    "paymentRecipientKeyHex": "0000000000000000000000000000000000000000000000000000000000000006"
+  },
+  "interpretation": {
+    "cache": "Actual same-process lock/unlock is distinct from process restart. Category grants remain isolated by origin and scope.",
+    "concurrency": "Two overlapping public calls on the same granted100-satoshi origin; at most one may settle without fresh consent, exactly one is denied. No prompt/result can cross-bind.",
+    "accounting": "Visible monthly usage is compared with independently verified signed external value plus fee. Aborted or terminally rejected actions cannot consume accepted-payment allowance. A held noSend action is explicitly compared before/after public abort; held reservation versus settled spend is reported separately instead of assuming broadcast.",
+    "scope": "Permissions require actual trusted UI evidence. Reference wallets and simulated controls never supply native verdicts."
+  },
+  "sources": {
+    "permissions.restart-persistence/protocol-lock": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      }
+    ],
+    "permissions.restart-persistence/basket-lock": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      }
+    ],
+    "permissions.restart-persistence/certificate-lock": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      }
+    ],
+    "permissions.revoke-persistence/single-restart": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      }
+    ],
+    "permissions.linkage-isolation/verifier": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      },
+      {
+        "source": "brc72",
+        "startLine": 17,
+        "endLine": 62,
+        "clause": "verifier context"
+      }
+    ],
+    "permissions.linkage-isolation/counterparty": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      },
+      {
+        "source": "brc72",
+        "startLine": 17,
+        "endLine": 62,
+        "clause": "verifier context"
+      }
+    ],
+    "permissions.linkage-isolation/protocol": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      },
+      {
+        "source": "brc72",
+        "startLine": 17,
+        "endLine": 62,
+        "clause": "verifier context"
+      }
+    ],
+    "permissions.linkage-isolation/level2-key": [
+      {
+        "source": "brc100",
+        "startLine": 65,
+        "endLine": 80,
+        "clause": "security levels and permission scope"
+      },
+      {
+        "source": "brc100",
+        "startLine": 326,
+        "endLine": 326,
+        "clause": "originator authorization"
+      },
+      {
+        "source": "brc116",
+        "startLine": 453,
+        "endLine": 493,
+        "clause": "scope, renewal and finite-expiry policy"
+      },
+      {
+        "source": "brc72",
+        "startLine": 17,
+        "endLine": 62,
+        "clause": "verifier context"
+      }
+    ],
+    "permissions.manifest-selection/subset-selected": [
+      {
+        "source": "brc73",
+        "startLine": 37,
+        "endLine": 104,
+        "clause": "grouped permission declaration"
+      }
+    ],
+    "permissions.manifest-selection/spending-unchecked": [
+      {
+        "source": "brc73",
+        "startLine": 37,
+        "endLine": 104,
+        "clause": "grouped permission declaration"
+      }
+    ],
+    "permissions.standing-allowance/single-over-cap-deny": [
+      {
+        "source": "brc73",
+        "startLine": 80,
+        "endLine": 87,
+        "clause": "monthly allowance"
+      },
+      {
+        "source": "brc116",
+        "startLine": 513,
+        "endLine": 536,
+        "clause": "standing authorization and month accounting"
+      }
+    ],
+    "permissions.allowance-boundaries/concurrent-cap": [
+      {
+        "source": "brc116",
+        "startLine": 513,
+        "endLine": 536,
+        "clause": "calendar-month spending accounting"
+      }
+    ],
+    "permissions.allowance-boundaries/abort-accounting": [
+      {
+        "source": "brc116",
+        "startLine": 513,
+        "endLine": 536,
+        "clause": "calendar-month spending accounting"
+      }
+    ],
+    "permissions.allowance-boundaries/rejection-accounting": [
+      {
+        "source": "brc116",
+        "startLine": 513,
+        "endLine": 536,
+        "clause": "calendar-month spending accounting"
+      }
+    ],
+    "permissions.allowance-boundaries/nosend-accounting": [
+      {
+        "source": "brc116",
+        "startLine": 513,
+        "endLine": 536,
+        "clause": "calendar-month spending accounting"
+      }
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "tpnil-transaction-coverage-reference@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "actualNative": false,
+  "sourceBase": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "prospectiveSourceInputs": "source-inventory.json.gz",
+  "sourceStableAcrossRun": true,
+  "sourceInputCount": 123,
+  "reference": {
+    "wallet": "@bsv/wallet-toolbox@2.13.0",
+    "sdk": "@bsv/sdk@2.7.1",
+    "storage": "actual prospective Go storage-batch-subjects binary; authenticated TypeScript RPC",
+    "calls": 122,
+    "counts": {
+      "PASS": 19,
+      "FAIL": 2,
+      "BLOCKED": 1
+    },
+    "signedTransactions": 24,
+    "aggregateFeesSatoshis": 424
+  },
+  "failuresPreserved": [
+    "transaction.proof-trust/conflicting-proof",
+    "transaction.internalization/both-output-types"
+  ],
+  "interpretationPreserved": "transaction.internalization/conflicting-remittance",
+  "parentSafetyVerified": true,
+  "nativeQualification": null,
+  "monetaryCostUSD": null,
+  "files": {
+    "report.json.gz": {
+      "sha256": "1c146b77a68ab0e68cfea1ef7c7e8fbb0ceb89f17387e252d6f933f78013763e",
+      "uncompressedSha256": "7244435606dddb1e94e0e082333f63c7b1694b11a609c3c341fbe45b16341444",
+      "uncompressedBytes": 527953
+    },
+    "submissions.json.gz": {
+      "sha256": "4f8ccf7b669d7239c0c1a368cbd47b6f9ea878c060ce6df6c72a71a34bf21d6e",
+      "uncompressedSha256": "8aa9fe6e24e13e4785e30f53871cd22653ffc0bd187ba3bdd000bb1246d968d0",
+      "uncompressedBytes": 10861
+    },
+    "source-before.json.gz": {
+      "sha256": "4bdc22f0ba8b3212ee2efed2e9a411aa0debb1952a2d72de31417e16259479de",
+      "uncompressedSha256": "78c1487bfb88f4cd96ec255bdfae3f52358579c9aa858212b5b31ba698622427",
+      "uncompressedBytes": 25068
+    },
+    "source-after.json.gz": {
+      "sha256": "4bdc22f0ba8b3212ee2efed2e9a411aa0debb1952a2d72de31417e16259479de",
+      "uncompressedSha256": "78c1487bfb88f4cd96ec255bdfae3f52358579c9aa858212b5b31ba698622427",
+      "uncompressedBytes": 25068
+    },
+    "source-inventory.json.gz": {
+      "sha256": "90b69013150fe69e938f855f896fc8c429eeff449a629006f5cf6cdfec39deb7",
+      "uncompressedSha256": "967fcdf2592886d87d735535c43326a582e472f66a1845797cbd7cc2c6769017",
+      "uncompressedBytes": 15562
+    },
+    "verification.json.gz": {
+      "sha256": "4e32682155fd66a340489bf3d9cd82bee9a888c822058ed5134a32fed487613e",
+      "uncompressedSha256": "14de78621d4cb2e02710dc12a91db92620793915033ecde053e80491ddebe3c0",
+      "uncompressedBytes": 11550
+    }
+  },
+  "scope": "Application-scoped public queries only; no default-basket query or permission bypass. Contradictory referenced root fixture has a separate identical-proof duplicate positive control.",
+  "predecessor": {
+    "path": "../reference/provenance.json",
+    "sha256": "7eeacf5680f24944d465284daef558c1dd3bd65839c4cee8a669fc44bfd249c6",
+    "retained": "Original18P3F1B remains unchanged. Intermediate100call15P3F4B retained in ignoredout/storage-batch-subjects-review/attempt-1794466546151."
+  },
+  "fixtureCorrection": "Existing native100-sat fanout sources5/6/7/8 and independently created foreign100-sat source8 guarantee surplus for held change; no extra funding transaction/depth."
+}

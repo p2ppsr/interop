@@ -1,6 +1,7 @@
 ARG TPNIL_INTEGRATED_BASE
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root
+COPY fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json
 COPY infra/native/conformance /work/infra/native/conformance
 COPY fixtures/artifacts/yours-wallet-pr368-cb3c2f2/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-cb3c2f2/provenance.json
 COPY infra/native/integrated/Dockerfile /work/infra/native/integrated/Dockerfile
@@ -14,21 +15,39 @@ COPY programs/ISI-4/4.0.0 /work/programs/ISI-4/4.0.0
 COPY programs/ISI-4/5.0.0 /work/programs/ISI-4/5.0.0
 COPY programs/ISI-4/5.1.0 /work/programs/ISI-4/5.1.0
 COPY programs/ISI-4/5.2.0 /work/programs/ISI-4/5.2.0
+COPY programs/ISI-4/5.3.0 /work/programs/ISI-4/5.3.0
 COPY programs/ISI-4/profiles/native-conformance-5.0.0 /work/programs/ISI-4/profiles/native-conformance-5.0.0
 COPY programs/ISI-4/profiles/native-conformance-4.0.0 /work/programs/ISI-4/profiles/native-conformance-4.0.0
 COPY programs/ISI-4/profiles/native-conformance-3.0.0 /work/programs/ISI-4/profiles/native-conformance-3.0.0
 COPY programs/ISI-4/proposals/native-coverage-closure-20261111.json programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json /work/programs/ISI-4/proposals/
 COPY scripts/prepare-storage-native-contracts-go.mjs scripts/prepare-storage-list-actions-go.mjs scripts/check-native-wallet-selector.mjs /work/scripts/
-COPY scripts/verify-native-trust.mjs scripts/native-wallet-profiles.mjs scripts/native-rust-compatibility.mjs scripts/run-native-go-wallet.mjs scripts/verify-native-integrated.mjs scripts/prepare-yours-wallet-run.sh /work/scripts/
+COPY scripts/verify-native-trust.mjs scripts/verify-native-synthesis.mjs scripts/native-wallet-profiles.mjs scripts/native-rust-compatibility.mjs scripts/run-native-go-wallet.mjs scripts/verify-native-integrated.mjs scripts/prepare-yours-wallet-run.sh /work/scripts/
 COPY itcves/ITCVE-1/1.4.0 /work/itcves/ITCVE-1/1.4.0
 COPY itcves/ITCVE-1/1.5.0 /work/itcves/ITCVE-1/1.5.0
 COPY itcves/ITCVE-1/2.0.0 /work/itcves/ITCVE-1/2.0.0
 COPY itcves/ITCVE-1/4.0.0 /work/itcves/ITCVE-1/4.0.0
 COPY itcves/ITCVE-1/4.1.0 /work/itcves/ITCVE-1/4.1.0
 COPY itcves/ITCVE-1/4.2.0 /work/itcves/ITCVE-1/4.2.0
+COPY itcves/ITCVE-1/4.3.0 /work/itcves/ITCVE-1/4.3.0
 COPY infra/adapters/storage-portability /work/infra/adapters/storage-portability
 COPY infra/adapters/storage-list-actions /work/infra/adapters/storage-list-actions
 COPY infra/adapters/storage-native-contracts /work/infra/adapters/storage-native-contracts
+COPY programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-transactions-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-extension-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-extension-1.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json
+COPY infra/adapters/storage-batch-subjects /work/infra/adapters/storage-batch-subjects
+COPY scripts/prepare-storage-batch-subjects-go.mjs /work/scripts/
+COPY infra/adapters/storage-dust-accounting /work/infra/adapters/storage-dust-accounting
+COPY scripts/prepare-storage-dust-accounting-go.mjs /work/scripts/
+COPY infra/adapters/storage-merge-accounting /work/infra/adapters/storage-merge-accounting
+COPY scripts/prepare-storage-merge-accounting-go.mjs /work/scripts/
+COPY infra/adapters/storage-input-ancestry /work/infra/adapters/storage-input-ancestry
+COPY scripts/prepare-storage-input-ancestry-go.mjs /work/scripts/
+COPY infra/adapters/storage-sqlite-retry /work/infra/adapters/storage-sqlite-retry
+COPY scripts/prepare-storage-sqlite-retry-go.mjs /work/scripts/
 ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
 COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1

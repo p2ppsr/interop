@@ -1,0 +1,13 @@
+# Prospective certificate coverage
+
+This module is separate from committed ITCVE-1@4.2.0 / ISI-5@5.2.0. It adds nine remaining certificate cases and two explicit fixture/cleanup gates. It does not claim native qualification or full BRC-100 conformance.
+
+The producer makes two independently authenticated issuer exchanges, issues certificates from two separate fixture keys, obtains real public selective proofs, signs four identity PushDrop outputs, and submits them to the actual identity overlay engine. The engine must admit the two valid outputs and reject the malformed signature/keyring outputs. A separately controlled malicious lookup response then presents each rejected output alongside both valid controls. The verifier checks actual returned bytes, issuer and publisher signatures, decryption, query, trust settings and exact results. An authenticated early rejection of the wrong server is also admitted without requiring a wallet to continue issuance.
+
+The dedicated revocation token is created and spent through the public wallet API. Local relinquishment is checked independently of chain revocation, with the original certificate inventory retained. No claim is made about unspecified post-revocation proof or discovery semantics.
+
+The native integration supplies a scoped lookup transport, closes and restores that transport, performs one same-profile browser restart, and provides actual fresh-origin CWI permission observations. Missing native UI/restart receipts remain BLOCKED in reference runs. The parent must bind the full browser chain, stored transactions, global route/submission prefix and all final reachable transaction ancestry. The two fresh origins are `certificate-identity.itcve.test` and `certificate-attribute.itcve.test`; these require explicit prospective host admission before native execution.
+
+The hard bounds are 96 recorded public calls and 12 signed transactions, including any independently admitted native permission-token grants. The fixture itself uses five signed transactions. Internal permission-token mints are not implicitly exempt from the strict parent transaction binding; native integration must supply independently scoped grant evidence before admitting those rows. This module does not request new funding.
+
+`coverage-certificates-reference.ts OUTPUT go` runs the real TypeScript reference wallet against the prepared Go storage binary, authenticated issuer and OverlayExpress. The self-contained tests use TypeScript storage, explicitly label their storage-response stand-in, and never fabricate native browser/UI evidence. All reference runs are `LAB_SELF_TEST_ONLY`. Failed preflights and independent false-PASS counterexamples remain separate from later corrected results.
