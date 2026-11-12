@@ -40,7 +40,7 @@ export function nativeWalletBoundary(application: Page, preserveErrors = false):
 
 export async function runNativeIntegration({ application, services, evidence, profile = 'ITCVE-1@1.3.0', beforeTrustRestore, fixtureRevision = 1, headerFixture, identityTrustOracle }: {
   application: Page; services: ControlledWalletServices; evidence: EvidenceBundle
-  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
+  profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
   fixtureRevision?: 1 | 2
   headerFixture?: ControlledHeaderFixture
   identityTrustOracle?: IdentityTrustOracleOptions['oracle']
@@ -50,7 +50,7 @@ export async function runNativeIntegration({ application, services, evidence, pr
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-joined-'))
   const payee = await createFixtureWallet(services, '78'.repeat(32))
   try {
-    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? ''))
+    const wallet = nativeWalletBoundary(application, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? ''))
     const walletIdentity = (await wallet.getPublicKey({ identityKey: true })).publicKey
     const { qualifyRelay } = await import(pathToFileURL(path.join(root, 'components/transport/relay.mjs')).href)
     const { qualifyPaidHttp } = await import(pathToFileURL(path.join(root, 'components/transport/paid-http.mjs')).href)
@@ -71,7 +71,7 @@ export async function runNativeIntegration({ application, services, evidence, pr
       return { id: `messaging/${id}`, result: actual?.verdict ?? 'BLOCKED', detail: actual ?? messaging.assertions.find((item: any) => item.id === `${implementation}/execution`) }
     }))
     const synthesisDirectory = path.join(temporary, 'synthesis')
-    const synthesis = await runNativeSynthesis(wallet, services, synthesisDirectory, ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? 'validated-v2' : 'legacy-v1') as any
+    const synthesis = await runNativeSynthesis(wallet, services, synthesisDirectory, ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? 'validated-v2' : 'legacy-v1') as any
     evidence.addJson('integrated/synthesis.json', synthesis)
     for (const file of ['transactions.json', 'lch.json', 'events.json']) {
       const target = path.join(synthesisDirectory, file)
@@ -90,11 +90,11 @@ export async function runNativeIntegration({ application, services, evidence, pr
       isValidRootForHeight: async (merkleRoot: string, height: number) => services.headers.get(height)?.merkleRoot === merkleRoot
     } })
     let boundary: any, publication: any
-    const trust = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1' ? new PublicSettingsTrust(wallet, identityTrustOracle ? { oracle: identityTrustOracle, ...(profile === 'ITCVE-1@4.6.0' ? { initialDiscoveryConsent: 'explicit-allow-v1' as const } : {}) } : undefined) : undefined
+    const trust = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1' ? new PublicSettingsTrust(wallet, identityTrustOracle ? { oracle: identityTrustOracle, ...(['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile) ? { initialDiscoveryConsent: 'explicit-allow-v1' as const } : {}) } : undefined) : undefined
     try {
       services.registerOverlayLookup(identityOverlay.origin, ['ls_identity'])
       boundary = await runWalletBoundaryCorpus({ wallet, fixtureRevision, headerFixture, funder: funder as any, discoveryExpectation: trust ? 'published' : 'untrusted-excluded', prepareDiscovery: async certificate => {
-        publication = await publishIdentityCertificate({ wallet, origin: identityOverlay.origin, certificate, fixtureRevision, ...(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? { namespaceFixture: 'validated-v2' } : {}) })
+        publication = await publishIdentityCertificate({ wallet, origin: identityOverlay.origin, certificate, fixtureRevision, ...(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? { namespaceFixture: 'validated-v2' } : {}) })
         await trust?.enable(certificate)
       } })
       evidence.addJson('integrated/boundary.json', boundary)

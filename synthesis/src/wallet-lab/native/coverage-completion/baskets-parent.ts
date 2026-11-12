@@ -1,10 +1,12 @@
+import {nativeCompletionProfile} from '../completion-profile.js'
+import {verifyPriorFixtureReplay} from '../prior-fixture-replay.js'
 // SPDX-License-Identifier: Apache-2.0
 import assert from 'node:assert/strict'
 import { Transaction } from '@bsv/sdk'
 import { verifyCoverageModuleFunding } from '../verify-coverage-suite.js'
 import { observedSubmissionTransactions } from '../verify-transaction-state-bindings.js'
 import { config, operations, variants } from './baskets-model.js'
-import { atomic, call, membership, snapshotPair, validateOwned, verifyBasketObservations } from './baskets-verifier.js'
+import { atomic, call, membership, snapshotPair, validateOwned, verifyBasketObservations, tracker } from './baskets-verifier.js'
 import { nativeCompletionProviders } from './providers.js'
 
 export function basketAssertions(checked: Awaited<ReturnType<typeof verifyBasketObservations>>) {
@@ -17,7 +19,7 @@ export function basketAssertions(checked: Awaited<ReturnType<typeof verifyBasket
 }
 
 export interface BasketParentBinding {
-  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
+  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
   identity: string
   fixture: any
   storageTransactions: Map<string, Transaction>
@@ -32,10 +34,10 @@ export interface BasketParentBinding {
  * all provider shutdown ledgers and mined graph. This joins this fixed program
  * to those independent observations and forbids spending protected outputs. */
 export async function verifyBasketParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
-  const checked = await verifyBasketObservations(report)
+  const checked = await verifyBasketObservations(report, nativeCompletionProfile(binding.profile).basketRevision)
   assert.equal(checked.fixtureValid, true, checked.fixtureError ?? 'Missing fixtures')
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
   const registry = nativeCompletionProviders(read)
@@ -58,7 +60,8 @@ export async function verifyBasketParent(report: any, binding: BasketParentBindi
   for (const row of report.trace) {
     assert.ok(row.submissionStart >= end && row.submissionEnd <= report.submissionEnd)
     end = row.submissionEnd
-    if (!['fixture-native', 'fixture-external'].includes(row.id)) assert.equal(row.submissionStart, row.submissionEnd, 'Non-broadcast basket operation emitted a submission')
+    if (binding.profile === 'ITCVE-1@4.7.0' && (row.id === 'control.internalizeAction' || operations.some(op => op.id === row.id && op.accepted && op.method === 'internalizeAction'))) await verifyPriorFixtureReplay(row, call(report, 'fixture-external'), binding.globalSubmissions, tracker)
+    else if (!['fixture-native', 'fixture-external'].includes(row.id)) assert.equal(row.submissionStart, row.submissionEnd, 'Non-broadcast basket operation emitted a submission')
   }
   const funding = await verifyCoverageModuleFunding(report.trace, binding)
   const returned = new Map<string, Transaction>()

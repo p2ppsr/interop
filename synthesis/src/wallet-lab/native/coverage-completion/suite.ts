@@ -1,3 +1,4 @@
+import {nativeCompletionProfile, type NativeCompletionProfile} from '../completion-profile.js'
 // SPDX-License-Identifier: Apache-2.0
 import assert from 'node:assert/strict'
 import type { NativeScenarioContext } from '../../yours-driver.js'
@@ -53,12 +54,12 @@ export async function runNativeCompletionSuite(context: NativeScenarioContext) {
   }
   await execute('partialTrace', () => runNativePartialTrace(context))
   context.evidence.addJson('conformance/completion-suite.json', { schema: 'tpnil-native-completion-suite@1.0.0',
-    profile: context.services.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0', claim: 'ENGINEERING_OBSERVATION_ONLY', modules: Object.keys(reports), errors,
+    profile: context.integratedProfile ?? (context.services.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0'), claim: 'ENGINEERING_OBSERVATION_ONLY', modules: Object.keys(reports), errors,
     completeBRC100Conformance: false })
   return reports
 }
 
-export async function verifyCompletionReports(read: (name: string) => Buffer) {
+export async function verifyCompletionReports(read: (name: string) => Buffer, profile: NativeCompletionProfile = 'ITCVE-1@4.5.0') {
   const results: Record<string, any> = {}
   for (const module of completionModules) {
     const report: any = decodeCoverageObservation(JSON.parse(read(`conformance/${module.file}.json`).toString()), module.encoded ? coverageObservationEncoding : undefined)
@@ -67,7 +68,7 @@ export async function verifyCompletionReports(read: (name: string) => Buffer) {
       const checked = await evaluatePermissionSequence(report, read)
       assertions = checked.outcomes.map(row => ({ id: row.id, result: row.structuralAndCryptographicChecks === 'SATISFIED' ? 'PASS' : row.result,
         detail: row.structuralAndCryptographicChecks === 'SATISFIED' ? 'Scoped public sequence and cryptographic predicates matched; native admission also requires the complete parent evidence.' : row.detail }))
-    } else if (module.name === 'baskets') assertions = basketAssertions(await verifyBasketObservations(report))
+    } else if (module.name === 'baskets') assertions = basketAssertions(await verifyBasketObservations(report, nativeCompletionProfile(profile).basketRevision))
     else if (module.name === 'pagination') assertions = paginationAssertions(await evaluatePagination(report))
     else if (module.name === 'certificateRejections') assertions = certificateRejectionAssertions(await evaluateCertificateRejections(report))
     else if (module.name === 'transactionBranches') assertions = transactionBranchAssertions(await evaluateTransactionBranches(report))
@@ -87,7 +88,7 @@ export async function verifyCompletionParent(binding: BasketParentBinding, prere
   const preceding = decodeCoverageObservation<any>(json('coverage-certificates'), coverageObservationEncoding)
   const funding = await verifyCompletionFunding(fundingReport, binding)
   const funded = { ...binding, declaredNativePayments: funding.declaredNativePayments }
-  const reports = await verifyCompletionReports(binding.readEvidence)
+  const reports = await verifyCompletionReports(binding.readEvidence, binding.profile)
   const at = (value: string) => { const number = Date.parse(value); assert.equal(new Date(number).toISOString(), value); return number }
   assert.ok(at(preceding.trace.at(-1).endedAt) <= at(fundingReport.startedAt), 'Completion funding precedes original certificate coverage completion')
   assert.ok(preceding.submissionEnd <= fundingReport.submissionStart)

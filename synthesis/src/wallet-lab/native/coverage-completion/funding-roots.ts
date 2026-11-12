@@ -31,7 +31,7 @@ async function verifiedPublicPayment(bytes: any, claimedId: string, binding: Bas
 /** This is only a narrow funding-root admission, not a transaction-module or
  * native qualification. It is safe before unrelated final-ledger traversal. */
 export async function deriveTransactionCoveragePaymentRoots(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
   const selected = getTransactionCoveragePolicy(3)
   assert.equal(report.schema, 'tpnil-native-coverage-transactions@3.0.0')
   assert.equal(report.oracle, selected.policy.oracle); assert.equal(report.policySha256, selected.policySha256)
@@ -94,7 +94,7 @@ export async function deriveTransactionCoveragePaymentRoots(report: any, binding
 /** The one50000 public payment has its own strict original BEEF check before
  * the complete fixed funding sequence is checked against independent storage. */
 export async function deriveCompletionReserveRoot(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
   const payments = report.trace.filter((row: any) => row.id === 'completion-payment')
   assert.equal(payments.length, 1)
   await verifiedPublicPayment(payments[0].result?.tx, payments[0].result?.txid, binding)
@@ -105,7 +105,7 @@ export async function deriveCompletionReserveRoot(report: any, binding: BasketPa
  * Descendants, public report root lists and unrelated fixture outputs are never
  * added. Complete module and final-ledger parents remain mandatory later. */
 export async function deriveCompletionNativeFundingRoots(binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
   assert.equal(new Set(binding.declaredNativePayments).size, binding.declaredNativePayments.length)
   const transactionReport = JSON.parse(binding.readEvidence('conformance/coverage-transactions.json').toString())
   const incoming = await deriveTransactionCoveragePaymentRoots(transactionReport, binding)

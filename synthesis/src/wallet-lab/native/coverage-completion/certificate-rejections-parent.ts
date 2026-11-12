@@ -19,7 +19,7 @@ export function certificateRejectionAssertions(checked: Awaited<ReturnType<typeo
  * a permission grant. Complete native source/identity/provider/shutdown admission
  * is supplied by the enclosing parent, which also owns later module ledgers. */
 export async function verifyCertificateRejectionParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
   const registry = nativeCompletionProviders(read), ledger = json('native-completion-inventory-ledger.json')
   equal(json('native-output-provider-registry.json'), registry); equal(report.providerRegistry, registry); equal(ledger.registry, registry)

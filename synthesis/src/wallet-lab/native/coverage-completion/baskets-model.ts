@@ -30,3 +30,6 @@ export const policy={schema:'tpnil-native-basket-boundaries-policy@1.0.0',claim:
  limits:['39 named mutation observations; planning-row acceptance requires the existing public listOutputs observations as well.','Reacquiring the public CWI handle establishes no browser restart or persisted-state claim.','Relinquishment retains the selected Go profile output metadata; the BRC membership obligation remains separate.','Complete native source, browser, funding, owned storage and final-provider ledger joins are mandatory.','No module refill: inputs derive from the completion profile declared native payments.']}
 export const policySha256=hash(JSON.stringify(policy))
 export function sourceCheck(){return {policy:policy.schema,policySha256}}
+
+export const replayPolicy={...policy,schema:'tpnil-native-basket-boundaries-policy@2.0.0',priorFixtureReplay:{maximumReceiptsPerSuccessfulImport:1,serialization:'EXACT_PREVIOUSLY_ACCEPTED_RAW_TRANSACTION',creationWindow:'DECLARED_EXTERNAL_FIXTURE',args:'EXACT_FIXTURE_ATOMIC_BEEF',invalidCalls:'ZERO_RECEIPTS_AND_UNCHANGED_COMPLETE_STATE',finalLedger:'ALL_RECEIPTS_AND_ANCESTRY_RETAINED'}}
+export function selectedBasketPolicy(revision:1|2=1){const selected=revision===2?replayPolicy:policy;return {policy:selected,sha256:hash(JSON.stringify(selected))}}

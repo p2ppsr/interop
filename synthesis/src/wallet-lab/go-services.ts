@@ -115,25 +115,25 @@ export function selectComponents(value: ComponentSelection = {}): Required<Compo
   }
   return { overlay: 'typescript', chaintracks: 'typescript', storage: 'typescript', ...value }
 }
-export function validateComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'): void {
+export function validateComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'): void {
   const components = selectComponents(value.components as ComponentSelection)
   if (!Object.values(components).includes('go')) throw new Error('Go profile omitted Go selection')
   const go = value.go as Record<string, unknown> | undefined
   if (go?.schema !== 'tpnil-go-services@1.0.0' || canonicalJson(go.components) !== canonicalJson(components) ||
       typeof go.binarySha256 !== 'string' || !/^[a-f0-9]{64}$/.test(go.binarySha256) ||
-      (!['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') && go.compatibilityPatch !== undefined) ||
-      (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? go.fixtureSubmissionPolicy !== 'terminal-rejection-v1' : go.fixtureSubmissionPolicy !== undefined) ||
+      (!['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') && go.compatibilityPatch !== undefined) ||
+      (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? go.fixtureSubmissionPolicy !== 'terminal-rejection-v1' : go.fixtureSubmissionPolicy !== undefined) ||
       go.goModSha256 !== componentLock.moduleFiles['go.mod'] || go.goSumSha256 !== componentLock.moduleFiles['go.sum'] ||
       canonicalJson(go.dependencies) !== canonicalJson(componentLock))
     throw new Error('Go service component identity is incomplete or differs from lock')
-  if (profile === 'ITCVE-1@1.3.0' || ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '')) {
+  if (profile === 'ITCVE-1@1.3.0' || ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '')) {
     const manifest = go.compatibilityPatch as Record<string, unknown> | undefined
-    const release511 = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '')
+    const release511 = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '')
     const batchSubjects = false
     const dustAccounting = false
     const mergeAccounting = false
     const inputAncestry = false
-    const callerKnownInputs = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '')
+    const callerKnownInputs = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '')
     if (callerKnownInputs && manifest?.schema !== 'tpnil-storage-caller-known-inputs-go-build@1.0.0') throw new Error('Completion profile requires caller-known-inputs compatibility build')
     const sqliteRetry = profile === 'ITCVE-1@4.3.0' || profile === 'ITCVE-1@4.4.0'
     if (sqliteRetry && manifest?.schema !== 'tpnil-storage-sqlite-retry-go-build@1.0.0') throw new Error('Coverage profile requires SQLite retry compatibility build')

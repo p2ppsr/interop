@@ -2,7 +2,7 @@ import type { BoundaryWallet } from '../boundary-corpus.js'
 import type { ControlledWalletServices } from '../services.js'
 import type { EvidenceBundle } from '../evidence.js'
 import { captureClauseError } from './conformance-clauses.js'
-import { coverageExtensionPolicy as policy, coverageExtensionPolicySha256, selectedCoverageExtensionPolicy, coverageExtensionOracle2, coverageExtensionOracle3, extensionConfig as c, type CoverageExtensionReport } from './coverage-extension-model.js'
+import { coverageExtensionPolicy as policy, coverageExtensionPolicySha256, selectedCoverageExtensionPolicy, coverageExtensionOracle2, coverageExtensionOracle3, coverageExtensionOracle4, extensionConfig as c, type CoverageExtensionReport } from './coverage-extension-model.js'
 import { coverageExtensionRequests, extensionCryptoEnvironment } from './coverage-extension-requests.js'
 import { deriveCoverageExtensionOutcomes } from './coverage-extension-verifier.js'
 import { writeCoverageObservation, type CoverageObservationEncoding } from './coverage-observation.js'
@@ -10,9 +10,9 @@ import { writeCoverageObservation, type CoverageObservationEncoding } from './co
 /** Standalone prospective extension. Caller supplies an already funded external
  * fixture wallet; no admission, funding, UI or existing profile is changed. */
 export async function runNativeCoverageExtension({ wallet, funder, services, evidence, boundaryReport, clauseReport, trustReport, observationRevision = 2, observationEncoding }: {
-  wallet: BoundaryWallet; funder: BoundaryWallet; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; boundaryReport: any; clauseReport: any; trustReport?: any; observationRevision?: 1 | 2 | 3; observationEncoding?: CoverageObservationEncoding
+  wallet: BoundaryWallet; funder: BoundaryWallet; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; boundaryReport: any; clauseReport: any; trustReport?: any; observationRevision?: 1 | 2 | 3 | 4; observationEncoding?: CoverageObservationEncoding
 }): Promise<CoverageExtensionReport> {
-  const selected = selectedCoverageExtensionPolicy(observationRevision === 3 ? coverageExtensionOracle3 : observationRevision === 2 ? coverageExtensionOracle2 : policy.oracle), activePolicy = selected.policy
+  const selected = selectedCoverageExtensionPolicy(observationRevision === 4 ? coverageExtensionOracle4 : observationRevision === 3 ? coverageExtensionOracle3 : observationRevision === 2 ? coverageExtensionOracle2 : policy.oracle), activePolicy = selected.policy
   const identity = boundaryReport.trace.find((r: any) => r.method === 'getPublicKey' && r.args?.identityKey === true)?.result?.publicKey ?? ''
   const snapshot = () => services.submissions.map(value => ({ txid: value.txid, beefHex: Buffer.from(value.bytes).toString('hex'), verdict: value.verdict }))
   const report: CoverageExtensionReport = { schema: 'tpnil-native-coverage-extension@1.0.0', oracle: activePolicy.oracle, policySha256: selected.sha256,

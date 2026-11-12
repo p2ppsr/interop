@@ -19,7 +19,7 @@ const time = (value: string) => {
 
 export interface PermissionSequenceParent {
   identity: string
-  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
+  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
   globalSubmissions: any[]
   finalSubmissions: any[]
   storageTransactions: Map<string, Transaction>
@@ -32,8 +32,8 @@ export interface PermissionSequenceParent {
  * isolation, complete provider registry and shutdown remain parent obligations.
  * A mode label or a coherent self-test cannot replace these concrete joins. */
 export async function verifyPermissionSequenceParent(report: Report, binding: PermissionSequenceParent) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile))
-  assert.equal(report.promptScopeRevision, binding.profile === 'ITCVE-1@4.6.0' ? 2 : undefined)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
+  assert.equal(report.promptScopeRevision, ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile) ? 2 : undefined)
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
   assert.equal(report.freshness.kind, 'PUBLIC_UI_OBSERVATION')

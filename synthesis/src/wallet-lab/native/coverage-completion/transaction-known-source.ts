@@ -112,7 +112,7 @@ export async function hydrateTransactionCompletionFixture(report: any, binding: 
   profile: string; identity: string; fixture: any; storageTransactions: ReadonlyMap<string, Transaction>; resolvedTransactions: Map<string, Transaction>;
   globalSubmissions: any[]; declaredNativePayments: string[]; readEvidence(name: string): Buffer
 }) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile)); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.identity, binding.identity)
   const isolated = report.unknownSource
   if (!isolated) return { verified: true as const, admitted: [], unavailable: 'Isolated source preparation unavailable' }
   assert.equal(isolated.schema, knownSourcePolicy.schema); assert.deepEqual(isolated.policy, knownSourcePolicy)

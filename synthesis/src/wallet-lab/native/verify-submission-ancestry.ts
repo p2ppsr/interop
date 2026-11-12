@@ -12,7 +12,7 @@ type Submission = { txid: string; beefHex: string; verdict: string }
  * have been independently verified. Earlier valid grants can be ancestors of
  * later spends; their target may not be replayed outside the grant window. */
 export async function verifyFinalPermissionSubmissionAncestry(binding: {
-  profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
+  profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
   globalSubmissions: Submission[]; finalSubmissions: Submission[]
   permissionReport: any; coverageReport: any; identity: string
   storageTransactions: Map<string, Transaction>; resolvedTransactions: Map<string, Transaction>
@@ -22,7 +22,7 @@ export async function verifyFinalPermissionSubmissionAncestry(binding: {
   const { globalSubmissions: global, finalSubmissions: final, permissionReport: permission, coverageReport: coverage } = binding
   assert.deepEqual(final.slice(0, global.length), global, 'Final ancestry ledger differs from the verified global prefix')
   assert.equal(permission.identity, binding.identity); assert.equal(coverage.identity, binding.identity)
-  if (binding.profile !== undefined) assert.ok(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile ?? ''))
+  if (binding.profile !== undefined) assert.ok(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile ?? ''))
   assert.equal(coverage.oracle, binding.profile ? 'tpnil-native-permission-coverage-oracle@5.0.0' : 'tpnil-native-permission-coverage-oracle@3.0.0')
   for (const report of [permission, coverage]) {
     const window = report.submissionWindow

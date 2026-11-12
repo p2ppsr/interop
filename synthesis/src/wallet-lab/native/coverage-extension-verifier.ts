@@ -1,3 +1,4 @@
+import {verifyPriorFixtureReplay} from './prior-fixture-replay.js'
 import assert from 'node:assert/strict'
 import { createDecipheriv, createHash } from 'node:crypto'
 import { Beef, BigNumber, Point, PrivateKey, ProtoWallet, PublicKey, Schnorr, Signature, Transaction, Utils } from '@bsv/sdk'
@@ -166,7 +167,7 @@ export async function deriveCoverageExtensionOutcomes(report: CoverageExtensionR
   }
   tests[key('crypto.forSelf-false-default')] = async () => { await control('verifySignature'); await control('createSignature'); assert.equal(result(row('crypto.default-positive')).valid, true); assert.notEqual(e.ownChild.toString(), e.peerChild.toString()); reject(row('crypto.default-negative'), 'signature', true) }
   tests[key('crypto.neither-data-nor-hash')] = async () => { await control('createSignature'); await control('verifySignature'); for (const id of ['crypto.missing-create', 'crypto.missing-verify']) { const r = row(id); reject(r, 'data'); assert.ok(/hash/i.test(r.error.message), 'Rejection must identify the data/hash alternative') } }
-  tests[key('crypto.identityKey-override')] = async () => { await control('getPublicKey'); assert.equal(result(row('crypto.identity-true')).publicKey, report.identity); revision === 3 ? reject(row('crypto.identity-false'), 'identityKey') : assert.equal(result(row('crypto.identity-false')).publicKey, e.ownChild.toString()); assert.notEqual(e.ownChild.toString(), report.identity) }
+  tests[key('crypto.identityKey-override')] = async () => { await control('getPublicKey'); assert.equal(result(row('crypto.identity-true')).publicKey, report.identity); revision >= 3 ? reject(row('crypto.identity-false'), 'identityKey') : assert.equal(result(row('crypto.identity-false')).publicKey, e.ownChild.toString()); assert.notEqual(e.ownChild.toString(), report.identity) }
   const fixtureCache = new Map<string, Promise<Transaction>>()
   const verifyFixture = async (actor: 'wallet' | 'funder') => {
     const current = row(actor === 'wallet' ? 'fixture-native' : 'fixture-external'), value = result(current), tx = atomic(value.tx)
@@ -212,7 +213,7 @@ export async function deriveCoverageExtensionOutcomes(report: CoverageExtensionR
       if (method === 'relinquishOutput') { const expected = (await membership('after-relinquish')).find(o => o.outpoint === `${native.id('hex')}.${6 + index}`)!; const source = result(row('basket.after-relinquish')).outputs.find((o: any) => o.outpoint === expected.outpoint); assert.ok(source); for (const property of ['outpoint', 'satoshis', 'lockingScript', 'tags', 'customInstructions'] as const) assert.deepEqual(source[property], expected[property]); noScopedSpend(expected.outpoint) }
       if (method === 'internalizeAction') { if (revision >= 2) verifyCoverageExtensionOutputPersistence(report, current.id); noScopedSpend(`${external.id('hex')}.${index}`) }
     } else if (method === 'createAction') { await created(normalized); listing(inventoryRow('after-create'), await membership('after-create', normalized)) }
-    else if (method === 'internalizeAction') { assert.equal(result(current).accepted, true); assert.equal(current.submissionEnd, current.submissionStart); listing(inventoryRow('after-internalize'), await membership('after-internalize', normalized)); noScopedSpend(`${external.id('hex')}.${index}`) }
+    else if (method === 'internalizeAction') { if (revision === 4) await verifyPriorFixtureReplay(current, row('fixture-external'), [...report.submissionPrefix,...report.submissions], tracker); else { assert.equal(result(current).accepted, true); assert.equal(current.submissionEnd, current.submissionStart); } listing(inventoryRow('after-internalize'), await membership('after-internalize', normalized)); noScopedSpend(`${external.id('hex')}.${index}`) }
     else if (method === 'listOutputs') listing(current, await membership('after-internalize', normalized))
     else { assert.deepEqual(result(current), { relinquished: true }); assert.equal(current.submissionEnd, current.submissionStart); listing(inventoryRow('after-relinquish'), await membership('after-relinquish', normalized)); noScopedSpend(`${native.id('hex')}.${6 + index}`) }
   }

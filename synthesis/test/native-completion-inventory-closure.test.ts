@@ -5,7 +5,7 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { PrivateKey } from '@bsv/sdk'
 import { expect, it } from 'vitest'
-import { closeCompletionInventoryLedger, observeCompletionInventoryClosure, completionInventoryClosureFile, completionInventoryLedgerFile, verifyCompletionInventoryClosure } from '../src/wallet-lab/native/completion-observer-ledger.js'
+import { closeCompletionInventoryLedger, observeCompletionInventoryClosure, captureCompletionInventoryLedger, completionInventoryClosureFile, completionInventoryLedgerFile, verifyCompletionInventoryClosure } from '../src/wallet-lab/native/completion-observer-ledger.js'
 
 // LAB_SELF_TEST_ONLY: structural closure controls. Source/build, real storage,
 // browser and transaction admission remain separate mandatory native gates.
@@ -121,4 +121,13 @@ it('retains retired ownership while still observing late ledger appends', () => 
   expect(observed.nativeCertificateInventoryObservations).toHaveLength(1)
   observed.nativeOutputProviderRegistry.pop()
   expect(observed.nativeOutputProviderRegistry).toHaveLength(2)
+})
+
+it('preserves explicit4.7 identity across retired ownership and late journal capture',()=>{
+ const source:any={submissionOrdering:'tpnil-owned-submission-order@1',nativeOutputProviderRegistry:[{id:'source'},{id:'retired'}],nativeCertificateInventoryObservations:[],nativeTransactionKnowledgeInventoryObservations:[],nativeActionQueryObservations:[],nativeFinalActionQueryLedgers:[]}
+ const observer=observeCompletionInventoryClosure(source,'ITCVE-1@4.7.0')
+ source.nativeOutputProviderRegistry=[];source.nativeCertificateInventoryObservations.push({sequence:0})
+ const captured=captureCompletionInventoryLedger(observer)
+ expect(captured.profile).toBe('ITCVE-1@4.7.0');expect(captured.registry).toHaveLength(2);expect(captured.certificates).toHaveLength(1)
+ expect(captureCompletionInventoryLedger({...source,submissionOrdering:'tpnil-owned-submission-order@1'}).profile).toBe('ITCVE-1@4.6.0')
 })

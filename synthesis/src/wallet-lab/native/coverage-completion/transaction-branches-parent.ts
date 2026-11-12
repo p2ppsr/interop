@@ -56,7 +56,7 @@ export async function evaluateTransactionBranches(report: any) {
     providerRegistry: report.providerRegistry, routes: report.finalRoutes, unknownSource: report.unknownSource })
 }
 export async function verifyTransactionBranchParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
   assert.deepEqual(report.fixture, binding.fixture)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), registry = nativeCompletionProviders(read)
   verifyTransactionActiveProvider(report, read)

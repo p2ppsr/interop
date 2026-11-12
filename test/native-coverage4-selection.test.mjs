@@ -9,7 +9,8 @@ import { checkNativeWalletSelector } from '../scripts/check-native-wallet-select
 import { nativeRustBinding } from '../scripts/native-rust-compatibility.mjs'
 
 const root = path.resolve(import.meta.dirname, '..')
-const read = name => fs.readFileSync(path.join(root, name))
+const frozen = new Map()
+const read = name => { if (!frozen.has(name)) frozen.set(name, execFileSync('git', ['show', `113e235cd382ca0fe492bde833a961ce804df36f:${name}`], { cwd: root, maxBuffer: 32 * 1024 * 1024 })); return Buffer.from(frozen.get(name)) }
 const plan = JSON.parse(read(nativeCandidateCoverage4PlanPath))
 const worker = read('synthesis/src/wallet-lab/native/worker.ts').toString()
 const startup = worker.slice(worker.indexOf("const root = '/work'"), worker.indexOf('fs.mkdirSync(output,')) + '\n;({planFile,walletRoot,walletVersion,completion,plan})'

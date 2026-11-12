@@ -12,14 +12,15 @@ import { nativeCompletionProviders } from './coverage-completion/providers.js'
 export const completionInventoryLedgerFile = 'native-completion-inventory-ledger.json'
 export const completionInventoryClosureFile = 'completion-inventory-closure.json'
 const digest = (bytes: Buffer) => ({ bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') })
-type Source = { submissionOrdering?: ControlledWalletServices['submissionOrdering'] } & Pick<ControlledWalletServices, 'nativeOutputProviderRegistry' | 'nativeCertificateInventoryObservations' | 'nativeTransactionKnowledgeInventoryObservations' | 'nativeActionQueryObservations' | 'nativeFinalActionQueryLedgers'>
+type Source = { integratedProfile?: string; submissionOrdering?: ControlledWalletServices['submissionOrdering'] } & Pick<ControlledWalletServices, 'nativeOutputProviderRegistry' | 'nativeCertificateInventoryObservations' | 'nativeTransactionKnowledgeInventoryObservations' | 'nativeActionQueryObservations' | 'nativeFinalActionQueryLedgers'>
 
 /** Capture ownership before close() deliberately clears route/provider maps.
  * Keep reading the original append-only arrays through their defensive getters.
  * The parent also joins these retained owner IDs to the final shutdown receipt. */
-export function observeCompletionInventoryClosure(source: Source): Source {
+export function observeCompletionInventoryClosure(source: Source, profile?: string): Source {
   const registry = structuredClone(source.nativeOutputProviderRegistry)
   return {
+    integratedProfile: profile ?? source.integratedProfile,
     submissionOrdering: source.submissionOrdering,
     get nativeOutputProviderRegistry() { return structuredClone(registry) },
     get nativeCertificateInventoryObservations() { return source.nativeCertificateInventoryObservations },
@@ -31,9 +32,9 @@ export function observeCompletionInventoryClosure(source: Source): Source {
 
 /** Snapshot retained control observations without making another storage call.
  * Failed observations are retained; only the independent parent admits them. */
-export function captureCompletionInventoryLedger(source: Source) {
+export function captureCompletionInventoryLedger(source: Source, profile?: string) {
   return {
-    schema: 'tpnil-native-completion-inventory-ledger@1.0.0', profile: source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0',
+    schema: 'tpnil-native-completion-inventory-ledger@1.0.0', profile: profile ?? source.integratedProfile ?? (source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0'),
     registry: source.nativeOutputProviderRegistry,
     certificates: source.nativeCertificateInventoryObservations,
     transactionKnowledge: source.nativeTransactionKnowledgeInventoryObservations,
@@ -54,7 +55,7 @@ export function closeCompletionInventoryLedger(directory: string, source: Source
     try { bindings[name] = digest(fs.readFileSync(path.join(directory, name))) }
     catch (error) { errors.push(error); bindings[name] = { error: String(error) } }
   }
-  const report = { schema: 'tpnil-native-completion-inventory-closure@1.0.0', profile: source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0',
+  const report = { schema: 'tpnil-native-completion-inventory-closure@1.0.0', profile: source.integratedProfile ?? (source.submissionOrdering ? 'ITCVE-1@4.6.0' : 'ITCVE-1@4.5.0'),
     final, actionLedgers, bindings, errors: errors.map(String), capturedAt: new Date().toISOString() }
   fs.writeFileSync(path.join(directory, completionInventoryClosureFile), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' })
   return { report, errors }
@@ -69,7 +70,7 @@ export function verifyCompletionInventoryClosure(options: {
   const initial = JSON.parse(options.initialBytes.toString()), closure = JSON.parse(options.closureBytes.toString())
   const shutdown = JSON.parse(options.shutdownBytes.toString()), record = JSON.parse(options.recordBytes.toString())
   const registry = nativeCompletionProviders(options.readEvidence)
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(record.itcve))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(record.itcve))
   assert.equal(shutdown.profile, record.itcve)
   assert.equal(closure.schema, 'tpnil-native-completion-inventory-closure@1.0.0')
   assert.equal(closure.profile, record.itcve); assert.deepEqual(closure.errors, [])

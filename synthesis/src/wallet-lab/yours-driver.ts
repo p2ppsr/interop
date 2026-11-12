@@ -32,7 +32,7 @@ import { bindTodoSubmissionWindow, todoProtocol, todoSubmissionBinding, type Tod
 import { getControlledHeaderFixture, type ControlledHeaderFixture } from './native/controlled-header-fixture.js'
 
 export function nativeControlledDestinations(profile?: string): string[] {
-  return [...(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? ['permission-sequence', 'permission-sequence-alt', 'permission-sequence-denied', 'permission-sequence-group', 'permission-sequence-group-alt'].map(name => `${name}.itcve.test`) : []), 'wallet.1sat.app', 'api.1sat.app', 'messagebox.1sat.app', 'todo.itcve.test', 'alternate.itcve.test', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? ['deny.itcve.test', 'usercom.babbage.systems', 'overlay.itcve.test', 'overlay-us-1.bsvb.tech', 'overlay-eu-1.bsvb.tech', 'overlay-ap-1.bsvb.tech', 'users.bapp.dev', 'replacement-wallet.itcve.test', 'certifier.itcve.test', 'allowance.itcve.test'] : []), ...(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(profile ?? '') ? ['permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked', 'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection', 'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'].map(name => `${name}.itcve.test`) : [])]
+  return [...(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? ['permission-sequence', 'permission-sequence-alt', 'permission-sequence-denied', 'permission-sequence-group', 'permission-sequence-group-alt'].map(name => `${name}.itcve.test`) : []), 'wallet.1sat.app', 'api.1sat.app', 'messagebox.1sat.app', 'todo.itcve.test', 'alternate.itcve.test', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? ['deny.itcve.test', 'usercom.babbage.systems', 'overlay.itcve.test', 'overlay-us-1.bsvb.tech', 'overlay-eu-1.bsvb.tech', 'overlay-ap-1.bsvb.tech', 'users.bapp.dev', 'replacement-wallet.itcve.test', 'certifier.itcve.test', 'allowance.itcve.test'] : []), ...(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? ['permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked', 'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection', 'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'].map(name => `${name}.itcve.test`) : [])]
 }
 
 interface CwiBoundary {
@@ -99,6 +99,7 @@ interface ListOutputProjection {
 }
 
 export interface NativeScenarioContext {
+  integratedProfile?: YoursRunOptions['integratedProfile']
   application: Page; context: BrowserContext; extensionId: string; password: string
   services: ControlledWalletServices; evidence: EvidenceBundle; baselineVectors: VectorResult[]
   manualPrompt: <T>(operation: () => Promise<T>) => Promise<T>
@@ -122,7 +123,7 @@ export interface YoursRunOptions {
   shutdownSubmissionPolicy?: 'tpnil-native-shutdown-submissions@1.0.0' | 'tpnil-native-shutdown-submissions@2.0.0' | 'tpnil-native-shutdown-submissions@3.0.0'
   submissionOrdering?: 'tpnil-owned-submission-order@1'
   walletCandidate?: Record<string, unknown>
-  integratedProfile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0'
+  integratedProfile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
   go?: import('./go-services.js').GoServiceOptions
   prepareScenario?: (context: NativeScenarioContext) => Promise<void>
   additionalScenario?: (context: NativeScenarioContext) => Promise<void | { vectors: VectorResult[] }>
@@ -201,10 +202,10 @@ async function waitForTodoOutputs(
 
 export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLabResult> {
   const startedAt = new Date().toISOString()
-  if (options.integratedProfile === 'ITCVE-1@4.1.0' || options.integratedProfile === 'ITCVE-1@4.2.0' || options.integratedProfile === 'ITCVE-1@4.3.0' || options.integratedProfile === 'ITCVE-1@4.4.0' || ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+  if (options.integratedProfile === 'ITCVE-1@4.1.0' || options.integratedProfile === 'ITCVE-1@4.2.0' || options.integratedProfile === 'ITCVE-1@4.3.0' || options.integratedProfile === 'ITCVE-1@4.4.0' || ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
     if (options.walletCandidate?.officialRelease !== false || !matchesYoursCandidate(options.walletArtifact, options.integratedProfile)) throw new Error('Candidate native profile requires its explicit artifact and engineering metadata')
   } else if (identifiesYoursCandidate(options.walletArtifact) || options.walletCandidate !== undefined) throw new Error('Candidate build cannot enter an official release profile')
-  const expectedWalletVersion = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? 'yours-wallet-5.1.1' : 'yours-wallet-5.1.0'
+  const expectedWalletVersion = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'yours-wallet-5.1.1' : 'yours-wallet-5.1.0'
   const task = options.task ?? 'TPNIL controlled task'
   const amount = options.amount ?? 2
   const extensionDirectory = path.resolve(options.extensionDirectory)
@@ -212,15 +213,15 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
   const outputDirectory = path.resolve(options.outputDirectory)
   const runId = path.basename(outputDirectory)
   const evidence = new EvidenceBundle(outputDirectory)
-  if (options.go?.storageSyncPatch && !['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) throw new Error('Patched native services require the prospective integrated profile')
-  if (options.go?.terminalRejectionReceipts && !['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) throw new Error('Terminal submission receipts require the prospective conformance profile')
-  if (options.shutdownSubmissionPolicy && options.shutdownSubmissionPolicy !== (options.integratedProfile === 'ITCVE-1@4.6.0' ? 'tpnil-native-shutdown-submissions@3.0.0' : ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? 'tpnil-native-shutdown-submissions@2.0.0' : 'tpnil-native-shutdown-submissions@1.0.0')) throw new Error('Unknown or mismatched shutdown submission policy')
-  if (options.shutdownSubmissionPolicy && !['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) throw new Error('Shutdown submission receipts require prospective coverage mode')
+  if (options.go?.storageSyncPatch && !['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) throw new Error('Patched native services require the prospective integrated profile')
+  if (options.go?.terminalRejectionReceipts && !['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) throw new Error('Terminal submission receipts require the prospective conformance profile')
+  if (options.shutdownSubmissionPolicy && options.shutdownSubmissionPolicy !== (['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'tpnil-native-shutdown-submissions@3.0.0' : ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'tpnil-native-shutdown-submissions@2.0.0' : 'tpnil-native-shutdown-submissions@1.0.0')) throw new Error('Unknown or mismatched shutdown submission policy')
+  if (options.shutdownSubmissionPolicy && !['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) throw new Error('Shutdown submission receipts require prospective coverage mode')
   let submissionClosure: ReturnType<ControlledWalletServices['observeSubmissionClosure']> | undefined
   let initialSubmissionCaptureAt: string | undefined
   let completionInventoryObserver: ReturnType<typeof import('./native/completion-observer-ledger.js').observeCompletionInventoryClosure> | undefined
-  if (options.integratedProfile === 'ITCVE-1@4.6.0' && options.submissionOrdering !== 'tpnil-owned-submission-order@1') throw new Error('Completion requires explicit owned submission ordering')
-  if (options.submissionOrdering && options.integratedProfile !== 'ITCVE-1@4.6.0') throw new Error('Owned submission ordering requires the completion profile')
+  if (['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') && options.submissionOrdering !== 'tpnil-owned-submission-order@1') throw new Error('Completion requires explicit owned submission ordering')
+  if (options.submissionOrdering && !['ITCVE-1@4.6.0','ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) throw new Error('Owned submission ordering requires the completion profile')
   const services = new ControlledWalletServices({ webroot, components: options.components, go: options.go, submissionOrdering: options.submissionOrdering })
   const permissions: PermissionObservation[] = []
   const consoleErrors: string[] = []
@@ -357,7 +358,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       await securityPage.close()
     }
     const extensionId = new URL(worker.url()).host
-    if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+    if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
       browserContexts.push({ sequence: 0, profileBinding, extensionId, openedAt: new Date().toISOString() })
       evidence.addJson('native-browser-contexts.json', { schema: 'tpnil-native-browser-contexts@1', contexts: browserContexts })
     }
@@ -378,7 +379,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     await application.goto('https://todo.itcve.test/')
     await waitForText(application, 'ToDo List', 30_000)
     const restartBrowser = async (): Promise<{ application: Page; context: BrowserContext; receipt: NativeBrowserRestartReceipt }> => {
-      if (!['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') || !manualPromptActive || !context) throw new Error('Browser restart requires the declared native coverage scenario with automatic prompts suspended')
+      if (!['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') || !manualPromptActive || !context) throw new Error('Browser restart requires the declared native coverage scenario with automatic prompts suspended')
       await Promise.allSettled([...activeAutomaticPrompts])
       const oldContext = context, oldPages = oldContext.pages(), sequence = browserContexts.length
       const startedAt = new Date().toISOString()
@@ -518,15 +519,15 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     progress('controlled funding internalized')
 
     if (options.prepareScenario !== undefined) {
-      await options.prepareScenario({ application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt: async () => { throw new Error('Preparation does not own manual permission UI') } })
+      await options.prepareScenario({ integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt: async () => { throw new Error('Preparation does not own manual permission UI') } })
       evidence.addJson('conformance/scenario-start.json', { startedAt: new Date().toISOString(), stage: 'before-all-customer-scenarios' })
       progress('declared initial conformance reserves internalized before customer scenarios')
     }
 
-    if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+    if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
       if (!options.prepareScenario) throw new Error('Expanded permissions require declared upfront funding')
-      const preludeContext: NativeScenarioContext = { application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt, restartBrowser }
-      await (await import('./native/permission-prelude.js')).runNativePermissionPrelude(preludeContext, ['ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? { identityPermission: 'explicit-allow-v1' } : undefined)
+      const preludeContext: NativeScenarioContext = { integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt, restartBrowser }
+      await (await import('./native/permission-prelude.js')).runNativePermissionPrelude(preludeContext, ['ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? { identityPermission: 'explicit-allow-v1' } : undefined)
       application = activeNativeApplication(preludeContext.context, preludeContext.application)
       context = preludeContext.context
       progress('fresh funded native permission prelude completed before ToDo scenarios')
@@ -691,7 +692,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       submission?: { txid: string; verdict: 'ACCEPTED_BY_NETWORK' | 'REJECTED'; sha256: string }
       submissionWindow?: TodoSubmissionWindow
     }> => {
-      services.enqueueVerdict(verdict, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? { kind: 'todo-output', protocol: todoProtocol, amount: 2 } : undefined)
+      services.enqueueVerdict(verdict, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? { kind: 'todo-output', protocol: todoProtocol, amount: 2 } : undefined)
       const submissionsBefore = services.submissions.length
       const phaseStartedAt = new Date().toISOString()
       const casePage = await context!.newPage()
@@ -725,7 +726,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         while (Date.now() < deadline) {
           body = await within(`immediate ${verdict} page observation`, 5_000,
             casePage.locator('body').innerText())
-          if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+          if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
             const candidate = bindTodoSubmissionWindow(services.submissions, submissionsBefore, name, phaseStartedAt, new Date().toISOString())
             if (candidate.selection !== 'none') break
           } else if (services.submissions.length > submissionsBefore) break
@@ -743,7 +744,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       } finally {
         await casePage.close().catch(() => undefined)
       }
-      const submissionWindow = ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')
+      const submissionWindow = ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')
         ? bindTodoSubmissionWindow(services.submissions, submissionsBefore, name, phaseStartedAt, new Date().toISOString()) : undefined
       const observed = submissionWindow === undefined
         ? services.submissions.length > submissionsBefore ? services.submissions.at(-1) : undefined
@@ -771,7 +772,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     const rejectedPassed = rejected.submission?.verdict === 'REJECTED' && rejectedStatePreserved
     const recoveryPassed = recovered.submission?.verdict === 'ACCEPTED_BY_NETWORK' && recoveredStateAdvanced
     evidence.addJson('broadcast-lifecycle.json', {
-      ...(['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? { submissionBinding: todoSubmissionBinding } : {}),
+      ...(['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? { submissionBinding: todoSubmissionBinding } : {}),
       accepted,
       rejected,
       recovered,
@@ -837,9 +838,9 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     if (options.additionalScenario !== undefined) {
       progress('additional integrated component scenario: starting')
       const baselineVectors = structuredClone(vectors)
-      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) evidence.addJson('conformance/baseline-vectors.json', baselineVectors)
-      const additional = await options.additionalScenario({ application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors, manualPrompt, ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? { restartBrowser } : {}) })
-      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) evidence.addJson('conformance/baseline-vectors.json', baselineVectors)
+      const additional = await options.additionalScenario({ integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors, manualPrompt, ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? { restartBrowser } : {}) })
+      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
         if (!additional || additional.vectors.length !== 8 || additional.vectors.some((vector, i) => vector.id !== `ISI-4-V00${i + 1}`)) throw new Error('Conformance scenario omitted required vector outcomes')
         vectors.splice(0, vectors.length, ...additional.vectors)
         evidence.addJson('conformance/service-counterparts.json', services.storageCounterpartIdentities)
@@ -853,15 +854,15 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         const { publicKey: identity } = await activeNativeApplication(context, application).evaluate(() => (window as any).CWI.getPublicKey({ identityKey: true, seekPermission: false }))
         evidence.addJson('native-action-references.json', { identity, references: await services.nativeActionReferences(identity) })
       }
-      if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+      if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
         evidence.addJson('native-output-snapshot-observations.json', services.nativeOutputSnapshotObservations)
         evidence.addJson('native-output-provider-registry.json', services.nativeOutputProviderRegistry)
       }
-      if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+      if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
         const { captureCompletionInventoryLedger, completionInventoryLedgerFile } = await import('./native/completion-observer-ledger.js')
         const identity = JSON.parse(evidence.readBytes('integrated/result.json').toString()).walletIdentity
         await services.nativeActionQueryCuts(identity)
-        evidence.addJson(completionInventoryLedgerFile, captureCompletionInventoryLedger(services))
+        evidence.addJson(completionInventoryLedgerFile, captureCompletionInventoryLedger(services, options.integratedProfile))
       }
       if (options.shutdownSubmissionPolicy) {
         submissionClosure = services.observeSubmissionClosure()
@@ -874,10 +875,10 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     const resultWithoutEvidence: Omit<WalletLabResult, 'evidence'> = {
       schema: 'tpnil-isi4-wallet-run@1.0.0',
       claim: Object.values(services.components).includes('go') ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT',
-      program: options.integratedProfile === 'ITCVE-1@4.6.0' ? 'ISI-4@5.6.0' : options.integratedProfile === 'ITCVE-1@4.5.0' ? 'ISI-4@5.5.0' : options.integratedProfile === 'ITCVE-1@4.4.0' ? 'ISI-4@5.4.0' : ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? 'ISI-4@5.3.0' : options.integratedProfile === 'ITCVE-1@4.2.0' ? 'ISI-4@5.2.0' : options.integratedProfile === 'ITCVE-1@4.1.0' ? 'ISI-4@5.1.0' : options.integratedProfile === 'ITCVE-1@4.0.0' ? 'ISI-4@5.0.0' : options.integratedProfile === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : options.integratedProfile === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : options.integratedProfile === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0',
+      program: options.integratedProfile === 'ITCVE-1@4.7.0' ? 'ISI-4@5.7.0' : ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'ISI-4@5.6.0' : options.integratedProfile === 'ITCVE-1@4.5.0' ? 'ISI-4@5.5.0' : options.integratedProfile === 'ITCVE-1@4.4.0' ? 'ISI-4@5.4.0' : ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'ISI-4@5.3.0' : options.integratedProfile === 'ITCVE-1@4.2.0' ? 'ISI-4@5.2.0' : options.integratedProfile === 'ITCVE-1@4.1.0' ? 'ISI-4@5.1.0' : options.integratedProfile === 'ITCVE-1@4.0.0' ? 'ISI-4@5.0.0' : options.integratedProfile === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : options.integratedProfile === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : options.integratedProfile === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0',
       itcve: options.integratedProfile ?? (Object.values(services.components).includes('go') ? 'ITCVE-1@1.1.0' : 'ITCVE-1@1.0.0'),
       ...(options.walletCandidate ? { walletCandidate: options.walletCandidate } : {}),
-      profile: ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? 'candidate-wallet-native-engineering' : ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '') ? 'production-wallet-native-conformance' : 'production-wallet-todo-controlled-services',
+      profile: ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'candidate-wallet-native-engineering' : ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '') ? 'production-wallet-native-conformance' : 'production-wallet-todo-controlled-services',
       runId,
       startedAt,
       endedAt: new Date().toISOString(),
@@ -942,10 +943,10 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
   } finally {
     if (promptPoll !== undefined) clearInterval(promptPoll)
     const cleanupFailures: unknown[] = [], evidenceFailures: unknown[] = []
-    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
       try {
         const { observeCompletionInventoryClosure } = await import('./native/completion-observer-ledger.js')
-        completionInventoryObserver = observeCompletionInventoryClosure(services)
+        completionInventoryObserver = observeCompletionInventoryClosure(services, options.integratedProfile)
       } catch (error) { evidenceFailures.push(error) }
     }
     if (options.shutdownSubmissionPolicy) {
@@ -954,7 +955,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         initialSubmissionCaptureAt ??= new Date().toISOString()
         const { closeWithSubmissionReceipt } = await import('./native/shutdown-submissions.js')
         return await closeWithSubmissionReceipt({ directory: outputDirectory, observer: submissionClosure, initialCapturedAt: initialSubmissionCaptureAt,
-          profile: options.integratedProfile as 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0',
+          profile: options.integratedProfile as 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0',
           ...closers })
       }, {
         closeBrowser: async () => { if (!context) throw new Error('Native browser context is absent'); await context.close() },
@@ -968,7 +969,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       try { await services.close() } catch (error) { cleanupFailures.push(error) }
       try { fs.rmSync(profileDirectory, { recursive: true, force: true }) } catch (error) { cleanupFailures.push(error) }
     }
-    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(options.integratedProfile ?? '')) {
+    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(options.integratedProfile ?? '')) {
       try {
         const { closeCompletionInventoryLedger } = await import('./native/completion-observer-ledger.js')
         evidenceFailures.push(...closeCompletionInventoryLedger(outputDirectory, completionInventoryObserver ?? services).errors)

@@ -16,7 +16,7 @@ export function paginationAssertions(checked: Awaited<ReturnType<typeof evaluate
 }
 
 export async function verifyPaginationParent(report: Report & { assertions: unknown }, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
   assert.deepEqual(json('native-output-provider-registry.json'), nativeCompletionProviders(read))
   const anchorName = 'conformance/basket-boundaries.json', anchorBytes = read(anchorName), basket = JSON.parse(anchorBytes.toString())
