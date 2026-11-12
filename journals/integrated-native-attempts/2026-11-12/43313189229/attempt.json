@@ -2,7 +2,7 @@
   "schema": "tpnil-integration-attempt@1",
   "source": "113e235cd382ca0fe492bde833a961ce804df36f",
   "workflowRun": 43313189229,
-  "claim": "CANCELED_BEFORE_NATIVE_EXECUTION",
+  "claim": "OBSERVER_VERIFICATION_ERROR",
   "failureClassification": "PROSPECTIVE_FIXTURE_REPLAY_ORACLE_REPAIR_REQUIRED",
   "walletExecuted": false,
   "newNativeSessions": 0,
@@ -80,6 +80,23 @@
       "name": "verify.py",
       "size": 1203,
       "sha256": "885deeee026574b3ac2816504d1aaade64c26f8bac4e2e97c25b71c234944db3"
+    },
+    {
+      "name": "original-attempt-cancellation-v1.json",
+      "size": 2568,
+      "sha256": "ea52f5293ad69b55a33b247a17afec632eaacb6ddbdf636b3343fca56a6f8fe6"
+    },
+    {
+      "name": "PUBLICATION-CORRECTION.md",
+      "size": 1051,
+      "sha256": "6b0f8c6dcebdbf0b6fd92b410997a3ca5e43c8b9699327bc444ca2edb8dd851b"
     }
-  ]
+  ],
+  "publicationCorrection": {
+    "kind": "ARCHIVE_INDEX_VOCABULARY_ONLY",
+    "originalManifest": "original-attempt-cancellation-v1.json",
+    "originalManifestSha256": "ea52f5293ad69b55a33b247a17afec632eaacb6ddbdf636b3343fca56a6f8fe6",
+    "originalBytesPreserved": true,
+    "nativeOutcomeChanged": false
+  }
 }

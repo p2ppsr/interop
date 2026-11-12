@@ -1,0 +1,5 @@
+# Canceled-attempt publication index correction
+
+The original attempt manifest is retained byte-for-byte in `original-attempt-cancellation-v1.json`, SHA-256 ea52f5293ad69b55a33b247a17afec632eaacb6ddbdf636b3343fca56a6f8fe6. Its new cancellation-specific claim label is outside the existing integration-archive verifier vocabulary. The publication index now uses `OBSERVER_VERIFICATION_ERROR` for the diagnosed prospective oracle error that caused cancellation before native execution. The added inventory references this original manifest and this correction.
+
+No run, source, call, receipt, skipped-step observation, cost, verdict or qualification field changes. All original files retain their bytes. Native attempt12 remains canceled, both wallet steps skipped, zero native sessions and654job-seconds. The first rejected publication sample is retained in the source7 recovery evidence; it is not a native failure or a native qualification. Run `python3 verify.py` to verify the complete corrected inventory and original terminal skipped-step proof.
