@@ -6,9 +6,9 @@ The JSON companion contains one ordered row for every original case/variant pair
 
 | Current implementation status | Planning rows |
 | --- | ---: |
-| `BLOCKED_NATIVE_CAPABILITY` | 72 |
+| `BLOCKED_NATIVE_CAPABILITY` | 69 |
 | `BLOCKED_PUBLIC_OBSERVABILITY` | 1 |
-| `FEASIBLE_NOT_IMPLEMENTED` | 63 |
+| `FEASIBLE_NOT_IMPLEMENTED` | 66 |
 | `IMPLEMENTED_AWAITING_NATIVE` | 31 |
 | `INTERPRETATION_REQUIRED` | 14 |
 | `PARTIAL_IMPLEMENTATION_AWAITING_NATIVE` | 124 |
@@ -30,7 +30,7 @@ The original official5.1.1 attempt43143722884 remains a failed observer attempt 
 | Original case group | Variants | Current statuses |
 | --- | ---: | --- |
 | `privileged.distinct-keyring` | 6 | BLOCKED_NATIVE_CAPABILITY: 6 |
-| `privileged.authorization` | 6 | BLOCKED_NATIVE_CAPABILITY: 6 |
+| `privileged.authorization` | 6 | BLOCKED_NATIVE_CAPABILITY: 3; FEASIBLE_NOT_IMPLEMENTED: 3 |
 | `privileged.cache-lifecycle` | 4 | BLOCKED_NATIVE_CAPABILITY: 4 |
 | `permissions.restart-persistence` | 8 | FEASIBLE_NOT_IMPLEMENTED: 3; IMPLEMENTED_AWAITING_NATIVE: 3; PARTIAL_IMPLEMENTATION_AWAITING_NATIVE: 2 |
 | `permissions.revoke-persistence` | 5 | FEASIBLE_NOT_IMPLEMENTED: 1; IMPLEMENTED_AWAITING_NATIVE: 2; PARTIAL_IMPLEMENTATION_AWAITING_NATIVE: 2 |
@@ -72,6 +72,7 @@ The following lists are exact planning IDs, not blanket unsupported labels. Part
 
 ### FEASIBLE_NOT_IMPLEMENTED
 
+- `privileged.authorization`: `missing-reason`, `short-reason`, `overlong-reason`.
 - `permissions.restart-persistence`: `protocol-lock`, `basket-lock`, `certificate-lock`.
 - `permissions.revoke-persistence`: `single-restart`.
 - `permissions.linkage-isolation`: `verifier`, `counterparty`, `protocol`, `level2-key`.
@@ -108,7 +109,7 @@ The following lists are exact planning IDs, not blanket unsupported labels. Part
 ### BLOCKED_NATIVE_CAPABILITY
 
 - `privileged.distinct-keyring`: `identity`, `child-key`, `encrypt`, `hmac`, `signature`, `linkage`.
-- `privileged.authorization`: `deny`, `approve`, `missing-reason`, `short-reason`, `overlong-reason`, `grouped-grant-not-authority`.
+- `privileged.authorization`: `deny`, `approve`, `grouped-grant-not-authority`.
 - `privileged.cache-lifecycle`: `cache-valid`, `cache-expired`, `manual-lock`, `restart`.
 - `permissions.finite-expiry`: `before`, `at-boundary`, `after`, `renewal-deny`, `renewal-approve`, `restart`.
 - `wire.call-parity`: `code-01-createAction`, `code-02-signAction`, `code-03-abortAction`, `code-04-listActions`, `code-05-internalizeAction`, `code-06-listOutputs`, `code-07-relinquishOutput`, `code-08-getPublicKey`, `code-09-revealCounterpartyKeyLinkage`, `code-10-revealSpecificKeyLinkage`, `code-11-encrypt`, `code-12-decrypt`, `code-13-createHmac`, `code-14-verifyHmac`, `code-15-createSignature`, `code-16-verifySignature`, `code-17-acquireCertificate`, `code-18-listCertificates`, `code-19-proveCertificate`, `code-20-relinquishCertificate`, `code-21-discoverByIdentityKey`, `code-22-discoverByAttributes`, `code-23-isAuthenticated`, `code-24-waitForAuthentication`, `code-25-getHeight`, `code-26-getHeaderForHeight`, `code-27-getNetwork`, `code-28-getVersion`.
@@ -123,7 +124,7 @@ The following lists are exact planning IDs, not blanket unsupported labels. Part
 
 - `permissions.allowance-boundaries`: `calendar-rollover`.
 
-The finite-expiry `expiry-zero` row is separated from unavailable finite-deadline controls: normal indefinite grants exist, but the literal expiry0 representation is not publicly established. Calendar rollover is a real-time observation requirement, not a claim that the wallet lacks monthly accounting.
+Malformed privileged-reason requests remain feasible public validation work even though a functioning privileged keyring is unavailable; those three rows are not hidden behind the capability blocker. The finite-expiry `expiry-zero` row is separated from unavailable finite-deadline controls: normal indefinite grants exist, but the literal expiry0 representation is not publicly established. Calendar rollover is a real-time observation requirement, not a claim that the wallet lacks monthly accounting.
 
 Permission partial mappings preserve the remaining distinctions: process restart does not substitute for an isolated lock/unlock; initial deny-then-approve is not inferred from post-revocation denial; basket-only individual revocation does not establish every category; selected spending does not establish unchecked/subset manifest behavior. Existing identity/discovery and clause leaf observations do not silently complete the broader certificate, cryptographic or transaction planning variants.
 

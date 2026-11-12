@@ -5,7 +5,7 @@
   "completeBRC100Conformance": false,
   "historicalInputsMutable": false,
   "nativeResultsInherited": false,
-  "snapshotAt": "2026-11-12T04:43:45.034033+00:00",
+  "snapshotAt": "2026-11-12T04:46:47.239074+00:00",
   "inputs": {
     "programs/ISI-4/proposals/native-coverage-closure-20261111.json": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
     "programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
@@ -73,9 +73,9 @@
     "REQUIRES_REAL_TIME_WINDOW": "Feasible only with a bounded real calendar-boundary observation or separately admitted supported time control; no private clock mutation."
   },
   "counts": {
-    "BLOCKED_NATIVE_CAPABILITY": 72,
+    "BLOCKED_NATIVE_CAPABILITY": 69,
     "BLOCKED_PUBLIC_OBSERVABILITY": 1,
-    "FEASIBLE_NOT_IMPLEMENTED": 63,
+    "FEASIBLE_NOT_IMPLEMENTED": 66,
     "IMPLEMENTED_AWAITING_NATIVE": 31,
     "INTERPRETATION_REQUIRED": 14,
     "PARTIAL_IMPLEMENTATION_AWAITING_NATIVE": 124,
@@ -99,7 +99,8 @@
       "caseId": "privileged.authorization",
       "variantRows": 6,
       "statusCounts": {
-        "BLOCKED_NATIVE_CAPABILITY": 6
+        "BLOCKED_NATIVE_CAPABILITY": 3,
+        "FEASIBLE_NOT_IMPLEMENTED": 3
       }
     },
     {
@@ -751,12 +752,12 @@
         "verifySignature"
       ],
       "originalStatus": "BLOCKED_NATIVE_CAPABILITY",
-      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "status": "FEASIBLE_NOT_IMPLEMENTED",
       "nativeVerdict": null,
       "predicateBindings": [],
-      "scope": "Denial has no output/side effect; approval binds exact request and reason; no grouped grant or ordinary-key fallback.",
-      "remainingWork": "Released artifact/configuration must initialize a distinct secondary root through supported UI, enforce user presence/reason and destroy or expire cached privileged access.",
-      "owner": "WALLET",
+      "scope": "The public privileged-reason validation subset is applicable independently of a working secondary keyring. This does not establish successful privileged authorization or a distinct root.",
+      "remainingWork": "Add exact privileged:true missing/short/overlong reason requests and independently attribute the structured error to privilegedReason. Shipped SDK source85 validatePrivilege lines129-134 validates length5..50 and requires a reason when privileged=true before key selection; successful privileged-operation controls remain blocked on the secondary keyring.",
+      "owner": "LAB",
       "sourceRefs": [
         {
           "source": "brc100",
@@ -779,7 +780,17 @@
       ],
       "dependencyIds": [
         "released-secondary-keyring"
-      ]
+      ],
+      "validationSource": {
+        "artifact": "official Yours5.1.1",
+        "map": "build/background.js.map",
+        "sourceIndex": 85,
+        "sourceSha256": "a62bcedbdde10449b5b5ab8f21e0be3df81c33fc9923fed17258ecd285f4600c",
+        "lines": [
+          129,
+          134
+        ]
+      }
     },
     {
       "caseId": "privileged.authorization",
@@ -796,12 +807,12 @@
         "verifySignature"
       ],
       "originalStatus": "BLOCKED_NATIVE_CAPABILITY",
-      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "status": "FEASIBLE_NOT_IMPLEMENTED",
       "nativeVerdict": null,
       "predicateBindings": [],
-      "scope": "Denial has no output/side effect; approval binds exact request and reason; no grouped grant or ordinary-key fallback.",
-      "remainingWork": "Released artifact/configuration must initialize a distinct secondary root through supported UI, enforce user presence/reason and destroy or expire cached privileged access.",
-      "owner": "WALLET",
+      "scope": "The public privileged-reason validation subset is applicable independently of a working secondary keyring. This does not establish successful privileged authorization or a distinct root.",
+      "remainingWork": "Add exact privileged:true missing/short/overlong reason requests and independently attribute the structured error to privilegedReason. Shipped SDK source85 validatePrivilege lines129-134 validates length5..50 and requires a reason when privileged=true before key selection; successful privileged-operation controls remain blocked on the secondary keyring.",
+      "owner": "LAB",
       "sourceRefs": [
         {
           "source": "brc100",
@@ -824,7 +835,17 @@
       ],
       "dependencyIds": [
         "released-secondary-keyring"
-      ]
+      ],
+      "validationSource": {
+        "artifact": "official Yours5.1.1",
+        "map": "build/background.js.map",
+        "sourceIndex": 85,
+        "sourceSha256": "a62bcedbdde10449b5b5ab8f21e0be3df81c33fc9923fed17258ecd285f4600c",
+        "lines": [
+          129,
+          134
+        ]
+      }
     },
     {
       "caseId": "privileged.authorization",
@@ -841,12 +862,12 @@
         "verifySignature"
       ],
       "originalStatus": "BLOCKED_NATIVE_CAPABILITY",
-      "status": "BLOCKED_NATIVE_CAPABILITY",
+      "status": "FEASIBLE_NOT_IMPLEMENTED",
       "nativeVerdict": null,
       "predicateBindings": [],
-      "scope": "Denial has no output/side effect; approval binds exact request and reason; no grouped grant or ordinary-key fallback.",
-      "remainingWork": "Released artifact/configuration must initialize a distinct secondary root through supported UI, enforce user presence/reason and destroy or expire cached privileged access.",
-      "owner": "WALLET",
+      "scope": "The public privileged-reason validation subset is applicable independently of a working secondary keyring. This does not establish successful privileged authorization or a distinct root.",
+      "remainingWork": "Add exact privileged:true missing/short/overlong reason requests and independently attribute the structured error to privilegedReason. Shipped SDK source85 validatePrivilege lines129-134 validates length5..50 and requires a reason when privileged=true before key selection; successful privileged-operation controls remain blocked on the secondary keyring.",
+      "owner": "LAB",
       "sourceRefs": [
         {
           "source": "brc100",
@@ -869,7 +890,17 @@
       ],
       "dependencyIds": [
         "released-secondary-keyring"
-      ]
+      ],
+      "validationSource": {
+        "artifact": "official Yours5.1.1",
+        "map": "build/background.js.map",
+        "sourceIndex": 85,
+        "sourceSha256": "a62bcedbdde10449b5b5ab8f21e0be3df81c33fc9923fed17258ecd285f4600c",
+        "lines": [
+          129,
+          134
+        ]
+      }
     },
     {
       "caseId": "privileged.authorization",
