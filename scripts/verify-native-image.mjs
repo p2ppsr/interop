@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import {createHash} from 'node:crypto'
 import {execFileSync} from 'node:child_process'
 import {fileURLToPath} from 'node:url'
+import {isDeepStrictEqual} from 'node:util'
 const root=path.resolve(import.meta.dirname,'..'),sha=b=>createHash('sha256').update(b).digest('hex')
 export function overlayInventory(base,overlay){
   const result=structuredClone(base)
@@ -17,7 +18,11 @@ export function overlayInventory(base,overlay){
   }
   return result
 }
-export function compareInventory(expected,actual){assert.deepEqual(actual,expected,'Image filesystem differs from the complete base plus declared COPY overlay')}
+export function compareInventory(expected,actual){
+  const differences=[]
+  for(const name of new Set([...Object.keys(expected),...Object.keys(actual)]))if(!isDeepStrictEqual(expected[name],actual[name]))differences.push({path:name,expected:expected[name]??null,actual:actual[name]??null})
+  assert.equal(differences.length,0,`Image filesystem differs in ${differences.length} entries: ${JSON.stringify(differences.slice(0,20))}`)
+}
 export function compareConfig(base,actual){
   const expected=structuredClone(base)
   const env=new Map(expected.Env.map(s=>{const i=s.indexOf('=');return[s.slice(0,i),s.slice(i+1)]}))
@@ -31,7 +36,7 @@ export function copyOverlay(dockerfile,storageBinary){
   const directory=name=>{if(!result[name])result[name]={type:'directory',mode:0o755,uid:0,gid:0}}
   function put(src,dest){
     let parent=path.posix.dirname(dest)
-    while(parent!=='/'){directory(parent);parent=path.posix.dirname(parent)}
+    while(parent==='/work'||parent.startsWith('/work/')||parent==='/opt/tpnil'||parent.startsWith('/opt/tpnil/')){directory(parent);parent=path.posix.dirname(parent)}
     const st=fs.lstatSync(src);assert.ok(!st.isSymbolicLink(),`Unadmitted source symlink: ${src}`)
     const common={mode:st.mode&0o7777,uid:0,gid:0}
     if(st.isDirectory()){
@@ -63,6 +68,7 @@ export function verifyImage(baseImage,image,storageBinary,output){
   assert.equal(after.Os,'linux');assert.equal(after.Architecture,'amd64')
   // Image names and build-history fields are outside Config. Every runtime
   // Config field, including command, entrypoint, user and workdir, is compared.
+  for(const[name,data]of [['base-image.json',before],['final-image.json',after]])fs.writeFileSync(path.join(output,name),JSON.stringify(data,null,2)+'\n',{flag:'wx'})
   compareConfig(before.Config,after.Config)
   assert.deepEqual(after.RootFS.Layers.slice(0,before.RootFS.Layers.length),before.RootFS.Layers)
   assert.equal(after.RootFS.Layers.length-before.RootFS.Layers.length,2)
@@ -73,12 +79,13 @@ export function verifyImage(baseImage,image,storageBinary,output){
     inventories.push(JSON.parse(fs.readFileSync(name)))
   }
   const overlay=copyOverlay(fs.readFileSync(path.join(root,'infra/native/conformance/Dockerfile'),'utf8'),storageBinary)
+  fs.writeFileSync(path.join(output,'overlay.json'),JSON.stringify(overlay,null,2)+'\n',{flag:'wx'})
   compareInventory(overlayInventory(inventories[0],overlay),inventories[1])
   const receipt={schema:'tpnil-native-image-filesystem-audit@1',verified:true,baseImageId:before.Id,imageId:after.Id,baseLayers:before.RootFS.Layers.length,finalLayers:after.RootFS.Layers.length,addedLayers:2,baseEntries:Object.keys(inventories[0]).length,overlayEntries:Object.keys(overlay).length,finalEntries:Object.keys(inventories[1]).length,runtimeConfigEqualWithDeclaredEnvironment:true,compared:['all paths in /work and /opt/tpnil','file bytes','file and directory modes','uid/gid','symlink targets','complete inherited runtime Config'],excluded:['inode numbers','build timestamps'],claim:'IMAGE_PACKAGING_ONLY_NOT_NATIVE_QUALIFICATION'}
-  for(const [name,data]of [['base-image.json',before],['final-image.json',after],['overlay.json',overlay],['audit.json',receipt]])fs.writeFileSync(path.join(output,name),JSON.stringify(data,null,2)+'\n',{flag:'wx'})
+  for(const [name,data]of [['audit.json',receipt]])fs.writeFileSync(path.join(output,name),JSON.stringify(data,null,2)+'\n',{flag:'wx'})
   return receipt
 }
-if(process.argv[1]&&fileURLToPath(import.meta.url)===fs.realpathSync(process.argv[1])){
+if(process.argv[1]&&fs.existsSync(process.argv[1])&&fileURLToPath(import.meta.url)===fs.realpathSync(process.argv[1])){
   const [base,image,binary,output]=process.argv.slice(2);assert.ok(base&&image&&binary&&output)
   console.log(JSON.stringify(verifyImage(base,image,binary,path.resolve(output))))
 }

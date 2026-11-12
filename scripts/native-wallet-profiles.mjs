@@ -1,7 +1,7 @@
 export const nativeCandidateCoverage3OriginalPlanPath = 'infra/native/conformance/plan-pr368-coverage-3.json'
 export const nativeCandidateCoverage3Flag = '--conformance-pr368-coverage-3'
 export const nativeCandidateCoverage3Variant = 'integrated-native-conformance-pr368-coverage-3'
-export const nativeCandidateCoverage3PlanPath = 'infra/native/conformance/plan-pr368-coverage-3-source-4.json'
+export const nativeCandidateCoverage3PlanPath = 'infra/native/conformance/plan-pr368-coverage-3-source-5.json'
 export const nativeCandidateCoverage3Version = '5.1.1-pr368.3e8a97f'
 export const nativeCandidateCoverage3Directory = 'yours-wallet-pr368-3e8a97f'
 export const nativeCandidateCoverage2Flag = '--conformance-pr368-coverage-2'

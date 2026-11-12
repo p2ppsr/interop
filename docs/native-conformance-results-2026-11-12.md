@@ -1,6 +1,6 @@
 # Native conformance closure: 12 November 2026
 
-**Attempts 7, 8 and 9 stopped before any native wallet session.** Attempt 7 exceeded the selector's default Git output buffer while reading a pinned 3.2 MB fixture. The corrected selector passed in attempt 8, which was interrupted by a runner shutdown during final image export; the initiating cause is unknown. Through attempt 8, attempt 6 remains the last completed native corpus capture: each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations, with 432 PASS, 27 FAIL and 76 BLOCKED. Its independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile has passed local and CI execution checks but has no completed native result. These checks do not establish complete BRC-100 conformance.
+**Attempts 7 and 8 stopped before wallet execution. Attempt 9 lost runner communication with no completed native evidence.** Attempt 7 exceeded the selector's default Git output buffer while reading a pinned 3.2 MB fixture. The corrected selector passed in attempt 8, which was interrupted by a runner shutdown during final image export; the initiating cause is unknown. Through attempt 8, attempt 6 remains the last completed native corpus capture: each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations, with 432 PASS, 27 FAIL and 76 BLOCKED. Its independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile has passed local and CI execution checks but has no completed native result. These checks do not establish complete BRC-100 conformance.
 
 The original Yours 5.1.0 baseline remains unchanged: each repetition contains 280 observations, with 180 PASS, 99 FAIL and one BLOCKED. Attempt 6 maps those **original 99 findings** to **97 PASS and two FAIL**: the signed-value `listActions` conflict and an unexercised managed-change fixture. Attempt 4 previously recorded 98 PASS and one FAIL under its own frozen fixture. Two improvements are explicitly versioned namespace-oracle corrections; aggregate differences across the changed wallet, Go stack and fixtures are not counts of individual wallet fixes. The [earlier results report](native-conformance-results-2026-11-09.md) and every original failed artifact retain their original outcomes.
 
@@ -36,6 +36,7 @@ The completed qualification-workflow attempts below are all retained as failed o
 | 6: [43216478235](https://github.com/p2ppsr/interop/actions/runs/43216478235), candidate `4a954ac`, source `1f9fe0f`; [archive](../journals/integrated-native-attempts/2026-11-12/43216478235/README.md) | Both repetitions: 535 = 432 PASS / 27 FAIL / 76 BLOCKED. Original 99: 97 PASS / 2 FAIL. Each raw integration report contains 77 PASS. | Independent parent rejects unresolved unmined ancestry. Ten component child replays pass, but no full native or integrated qualification and no Rust execution are admitted. | 2,285 |
 | 7: [43253674251](https://github.com/p2ppsr/interop/actions/runs/43253674251), candidate `3e8a97f`, source `69386ef`; [archive](../journals/integrated-native-attempts/2026-11-12/43253674251/README.md) | Zero native sessions or observations; the 698-predicate corpus and original-99 comparison were not executed. | The committed-source selector raised `ENOBUFS` reading the 3,181,608-byte pagination fixture through the default 1 MiB output buffer. All build and native steps were skipped. No artifact ZIP, qualification or Rust result exists. | 22 |
 | 8: [43262928941](https://github.com/p2ppsr/interop/actions/runs/43262928941), candidate `3e8a97f`, source `664e853`; [archive](../journals/integrated-native-attempts/2026-11-12/43262928941/README.md) | Zero native sessions or observations; original-99 comparison not executed. | Source admission, Linux Go build and all 64 Docker instructions passed. Runner shutdown interrupted image export with exit 143. Native, integrated execution and upload steps were skipped. No native artifact, qualification or Rust result exists; shutdown origin remains unknown. | 1,052 |
+| 9: [43268040660](https://github.com/p2ppsr/interop/actions/runs/43268040660), candidate `3e8a97f`, source `664e853`; [archive](../journals/integrated-native-attempts/2026-11-12/43268040660/README.md) | No completed native capture or original-99 comparison is available; execution after communication loss is unknown. | Hosted runner lost communication. Last reported active step was image export; terminal steps remain pending. No artifact or cleanup receipt is available, job logs return 404, and workflow logs are empty. No qualification or Rust result can be admitted. | 3,784 |
 
 Attempt 4's six native failures were the signed-satoshi `listActions` response shape, two over-limit UTF-8 baskets, incomplete returned transaction proof, exact fee-inclusive allowance cap, and cumulative allowance. Its three accepted payments actually debited 114 satoshis against a 100-satoshi allowance. Each separate 77-predicate integration report contained 74 PASS and three BLOCKED because the uppercase Board protocol fixture prevented Board, LCH and revision execution. Those failures and absent results remain unchanged by the prospective fixes.
 
@@ -212,7 +213,6 @@ unchanged source7 evidence. It introduces no source or criteria changes and
 makes no new conformance claim. Full monetary, operator, development-agent,
 storage and allocated-capacity costs remain unknown.
 
-This draft stops at attempt8. Native attempt9, run43268040660 on the same664e source, is pending; its row, observed cost and qualification outcome must come only from its original terminal evidence and independent replay. No result is forecast here.
 
 
 ## Image export recovery
@@ -254,3 +254,28 @@ unit fixture dependency and explicit source selection. The test uses owned,
 inert fixture bytes and removes them afterward. The production Linux audit
 still requires the actual compiled storage binary and manifest. Its217core
 tests and type/catalog checks pass; Linux execution remains required.
+
+
+## Staged-image Linux result
+
+[Attempt10](https://github.com/p2ppsr/interop/actions/runs/43285086155) completed
+the two-layer image export in **5.9seconds**, then its filesystem audit rejected
+an extra expected `/opt` parent entry outside the collector's `/work` and
+`/opt/tpnil` roots. Both full Linux inventories were retained:70985base entries
+and71431final entries. Wallet execution was skipped and no native result was
+produced. The original failed audit remains FAIL.
+
+A separately labelled engineering replay reconstructs the exact Linux build
+manifest from original CI output, binds the dynamic binary hash and manifest
+hash, and checks every retained entry after the exact scope correction. It
+passes and rejects a seeded deletion. This is packaging evidence, not native
+qualification. The prospective source5 audit aligns the collector/overlay
+roots, retains image/configuration/overlay diagnostics before comparisons, and
+bounds error output. All698native criteria remain unchanged.
+
+The preceding [source4 Foundation](https://github.com/p2ppsr/interop/actions/runs/43282017592)
+passed:216core PASS/1SKIP,1675synthesis PASS/120SKIP,Python5,Go13; integrated
+observations584PASS/six retained upstream Go Messaging FAIL. Its three original
+ZIPs/262members and complete logs are retained. CI1677seconds plus native877
+seconds bring completed cohort use to**35978job-seconds**. All full monetary
+and effort costs remain unknown.

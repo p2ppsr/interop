@@ -11,6 +11,9 @@ test('image audit preserves every inherited path and rejects altered bytes, mode
   const actual=structuredClone(expected);change(actual);assert.throws(()=>compareInventory(expected,actual))
  }
  assert.throws(()=>overlayInventory(base,{'/work/link/escape':file}),/symlink/)
+ const many=Object.fromEntries(Array.from({length:1000},(_,i)=>['/work/file-'+i,file]))
+ assert.throws(()=>compareInventory(many,{}),error=>{assert.ok(error.message.length<16000,'Audit failures must retain bounded diagnostics');return true})
+
 })
 test('image audit permits exactly the declared environment additions and retains all runtime config',()=>{
  const base={User:'pwuser',WorkingDir:'/work',Cmd:['node','worker'],Env:['HOME=/tmp/home']}
@@ -29,6 +32,7 @@ test('complete source overlay includes every staged file and the exact two gener
  let names
  try{names=Object.keys(copyOverlay(text.replaceAll('out/${TPNIL_STORAGE_BINARY}',path.relative(process.cwd(),fixture)+'/${TPNIL_STORAGE_BINARY}'),binary))}
  finally{fs.rmSync(fixture,{recursive:true})}
+ assert.ok(names.every(n=>n==='/work'||n.startsWith('/work/')||n==='/opt/tpnil'||n.startsWith('/opt/tpnil/')),'Overlay scope must equal collector scope')
  assert.ok(names.includes('/work/synthesis/test/fixtures/native-pagination/report.json.gz'))
  assert.ok(names.includes('/work/scripts/verify-native-image.mjs'))
  assert.ok(names.includes('/opt/tpnil/itcve-go-storage-caller-known-inputs'))
