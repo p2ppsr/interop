@@ -127,18 +127,19 @@ export function verifyIntegrationArchive(directory) {
   const qualification = readJson(path.join(directory, 'qualification.json'))
   assert.equal(qualification.source, manifest.source)
   const exactHistory = kind === 'component' && qualification.profile === 'ITCVE-1@3.0.0'
-  const wallet511 = kind === 'native' && qualification.profile === 'ITCVE-1@4.0.0'
+  const candidate = kind === 'native' && qualification.profile === 'ITCVE-1@4.1.0'
+  const wallet511 = candidate || kind === 'native' && qualification.profile === 'ITCVE-1@4.0.0'
   const closure = wallet511 || kind === 'native' && qualification.profile === 'ITCVE-1@2.0.0'
   const coverage = closure || kind === 'native' && qualification.profile === 'ITCVE-1@1.5.0'
   const conformance = coverage || (kind === 'native' && qualification.profile === 'ITCVE-1@1.4.0')
-  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
+  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
   const archive = kind === 'component' ? 'integrated-lab.zip' : 'native-integrated.zip'
   assert(names.includes(archive))
   if (kind === 'component') { assert.equal(qualification.schema, exactHistory ? 'tpnil-integrated-component-qualification@2' : 'tpnil-integrated-component-qualification@1'); assert.equal(qualification.claim, 'INFRASTRUCTURE_QUALIFICATION_ONLY') }
   else {
     assert.equal(qualification.schema, conformance ? 'tpnil-native-integrated-qualification@2' : 'tpnil-native-integrated-qualification@1')
-    assert.equal(qualification.claim, 'EXPERIMENTAL_CONFORMANCE_RESULT'); assert.equal(qualification.qualifiedEnvironment, true)
-    if (conformance) { assert.equal(qualification.program, wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
+    assert.equal(qualification.claim, candidate ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT'); assert.equal(qualification.qualifiedEnvironment, true)
+    if (conformance) { assert.equal(qualification.program, candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
   }
   if (qualification.workflowRun !== undefined) assert.equal(qualification.workflowRun, manifest.workflowRun)
   if (qualification.artifact !== undefined) {
@@ -164,6 +165,16 @@ export function componentArchiveSummary(directory) {
   }) }))
   return { source: lock.source, profile: result.profile, laneCount: lanes.length, laneRuns, isolatedExecutions, assertions: { total: all.length, outcomes: outcomes(all) }, lanes, findings }
 }
+export function requireArchiveVerifierReceipt(stdout, bundle) {
+  const expected = bundle.kind === 'native'
+    ? { schema: bundle.qualification.schema, source: bundle.source, qualifiedEnvironment: true,
+        profile: bundle.qualification.profile, claim: bundle.qualification.claim,
+        ...(bundle.qualification.program === undefined ? {} : { program: bundle.qualification.program }) }
+    : bundle.kind === 'component'
+      ? { verified: true, childOraclesVerified: true, source: bundle.source, profile: bundle.qualification.profile }
+      : { verified: true, claim: 'RETAINED_NATIVE_EVIDENCE_REEVALUATION', evaluatorSource: bundle.source }
+  return requireVerifierReceipt(stdout, expected)
+}
 export function verifyArchiveSemantics(bundle, { root = repository } = {}) {
   if (bundle.kind === 'attempt') return { semantic: false, reason: 'Failed observer attempt issues no wallet qualification' }
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-integration-'))
@@ -176,7 +187,7 @@ export function verifyArchiveSemantics(bundle, { root = repository } = {}) {
     const replayRoot=prepareFrozenComponentReplay(root,bundle.source,frozenSource).root
     const child = spawnSync(process.execPath, [path.join(replayRoot, 'scripts', script), temporary], { cwd: replayRoot, env:{...process.env,RUSTUP_TOOLCHAIN:'1.88.0',TPNIL_REPLAY_GIT_ROOT:process.env.TPNIL_REPLAY_GIT_ROOT??root}, encoding: 'utf8', timeout: 600000, maxBuffer: 16 * 1024 * 1024 })
     assert.equal(child.status, 0, `${script} failed: ${child.stderr}\n${child.stdout}`)
-    requireVerifierReceipt(child.stdout,bundle.kind==='native'?{schema:bundle.qualification.schema,source:bundle.source,qualifiedEnvironment:true}:bundle.kind==='component'?{verified:true,childOraclesVerified:true,source:bundle.source,profile:bundle.qualification.profile}:{verified:true,claim:'RETAINED_NATIVE_EVIDENCE_REEVALUATION',evaluatorSource:bundle.source})
+    requireArchiveVerifierReceipt(child.stdout, bundle)
     if (bundle.kind === 'component') {
       const summary = componentArchiveSummary(temporary)
       for (const [name, value] of Object.entries(summary)) assert.deepEqual(bundle.qualification[name], value, `Published component ${name} differs from verified evidence`)

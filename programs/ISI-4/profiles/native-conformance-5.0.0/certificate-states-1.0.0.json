@@ -1,0 +1,103 @@
+{
+  "schema": "tpnil-native-certificate-state-policy@1.0.0",
+  "oracle": "tpnil-native-certificate-states-oracle@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "completeBRC100Conformance": false,
+  "publicCallBound": 26,
+  "newFundingOperations": 0,
+  "browserRestarts": 0,
+  "assertions": [
+    {
+      "id": "certificate-states.fixture-authentication"
+    },
+    {
+      "id": "certificate-states.fixture-acquisition"
+    },
+    {
+      "id": "certificate-states.acquire-tampered-field"
+    },
+    {
+      "id": "certificate-states.acquire-wrong-subject"
+    },
+    {
+      "id": "certificate-states.direct-extra-url"
+    },
+    {
+      "id": "certificate-states.issuance-direct-fields"
+    },
+    {
+      "id": "certificate-states.proof-control"
+    },
+    {
+      "id": "certificate-states.proof-tuple-mismatches"
+    },
+    {
+      "id": "certificate-states.inventory-issuer"
+    },
+    {
+      "id": "certificate-states.inventory-type"
+    },
+    {
+      "id": "certificate-states.inventory-combined"
+    },
+    {
+      "id": "certificate-states.inventory-empty"
+    },
+    {
+      "id": "certificate-states.inventory-no-match"
+    },
+    {
+      "id": "certificate-states.cleanup"
+    }
+  ],
+  "sourceRefs": [
+    {
+      "locator": "out/native-conformance-20261109/brc100.md",
+      "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+      "startLine": 1217,
+      "endLine": 1364,
+      "meaning": "BRC100 acquire/list/prove/relinquish public contract",
+      "upstream": "https://github.com/bitcoin-sv/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md"
+    },
+    {
+      "locator": "out/native-closure-20261111/yours-5.1.1/sources/85/source.js",
+      "sha256": "a62bcedbdde10449b5b5ab8f21e0be3df81c33fc9923fed17258ecd285f4600c",
+      "startLine": 835,
+      "endLine": 1024,
+      "meaning": "Official5.1.1 shipped SDK certificate validation source",
+      "artifact": "yours-wallet5.1.1 ZIP SHA256454c8581b8d6ab120c9b2f2f74167f536b08e720bc12e75f3e9437d14a985878; background.js.map source85"
+    },
+    {
+      "locator": "out/native-closure-20261111/identity-discovery-review/150.js",
+      "sha256": "528f6ac49d5a35a004bd84852157e72f348fd625f76c80c715af71f8134930c2",
+      "startLine": 9208,
+      "endLine": 9229,
+      "meaning": "Official5.1.1 shipped toolbox exact proof tuple storage lookup",
+      "artifact": "same officialZIP; background.js.map source150"
+    }
+  ],
+  "interpretations": {
+    "direct-extra-url": "Pinned SDK compatibility observation: direct acquisition ignores a valid inactive certifierUrl and returns the exact direct certificate without HTTP. BRC100 marks the URL required for issuance but does not independently prohibit it on direct requests.",
+    "issuance-direct-fields": "Pinned SDK compatibility observation: issuance validation rejects populated direct-only fields before HTTP; this is not asserted to be a universal BRC100 mutual-exclusion rule. The fixed request contains all five direct-only fields, so it does not establish individual rejection of every such field.",
+    "empty-filters": "Pinned SDK/storage interpretation: empty certifiers or types arrays impose no constraint in that dimension. Compare exact authenticated baseline plus fresh fixtures, not an assumed empty wallet.",
+    "proof-tuple": "The full supplied certificate tuple (type, serial, issuer, subject, revocation outpoint and signature) identifies one stored certificate. Four negatives change only issuer, serial, subject or a syntactically valid signature; successful designated-verifier selective disclosure is a required control.",
+    "revocation": "The real existing boundary output is cryptographically bound as a certificate revocation reference. This module does not spend it or claim any revocation-state checking by acquisition, proof, or discovery."
+  },
+  "invariants": [
+    "Four issuer-signed, independently decrypted external fixtures with fixed types, subjects, serials, fields and an ancestry-bound revocation outpoint.",
+    "Three successful direct acquisitions are separately required; failure cannot be hidden by passing negative calls.",
+    "Every inventory is complete below limit10000, unique by certificate tuple, and compared by all signed certificate fields.",
+    "Before/after inventories prove rejected mutations and proof mismatches do not alter public certificate state.",
+    "All calls retain exact arguments, errors, submission boundaries and controlled-HTTP boundaries.",
+    "Cleanup affirmatively relinquishes only the three added certificates and restores the entire authenticated baseline.",
+    "No private wallet storage mutation, no new funding, no HTTP issuance, no browser restart.",
+    "The parent binds exact boundary anchor and native identity, full scoped route and submission prefix/range to independent global ledgers, and every unique /certificate-state endpoint attempt across the entire run. OPTIONS and authentication traffic count as HTTP even without a handler receipt."
+  ],
+  "remainingUnqualified": [
+    "Wrong authenticated issuance peer identity; new authenticated peer fixture required.",
+    "Extra field key, empty/duplicate disclosure field and repeated relinquishment policies require separately admitted compatibility interpretations.",
+    "Inventory restart persistence is not established by this module.",
+    "Revocation spent-state semantics across acquisition/proof/discovery and malformed revocation reference require a separate frozen policy and controlled chain transition.",
+    "Multiple-certifier discovery, malicious overlay certificate/keyring records, and discovery permission default/explicit consent require source-bound trust/lookup/UI fixtures."
+  ]
+}

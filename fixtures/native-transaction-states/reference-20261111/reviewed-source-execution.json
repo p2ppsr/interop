@@ -1,0 +1,114 @@
+{
+  "claim": "LAB_SELF_TEST_ONLY",
+  "actualNative": false,
+  "verified": true,
+  "assertionCount": 19,
+  "counts": {
+    "PASS": 19,
+    "FAIL": 0,
+    "BLOCKED": 0
+  },
+  "calls": 29,
+  "signedTransactions": 7,
+  "elapsedMs": 666.3795829999999,
+  "assertions": [
+    {
+      "id": "fixture.fanout",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.defaults.noSend-omitted-false",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.defaults.randomizeOutputs-omitted-true",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.defaults.version-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.defaults.lockTime-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.defaults.sequenceNumber-default",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.signing-branches.all-unlockingScripts",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.signing-branches.mixed-inputs",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.signing-branches.abort-then-sign-reject",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.input-absent-from-beef",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.input-index-out-of-range",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.already-spent-input",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.script-and-length-conflict",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.missing-script-and-length",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.spend-index-not-in-reference",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.consuming-conflicts.script-length-mismatch",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.batch-send.returnTXIDOnly",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.proof-trust.truncated-proof",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    },
+    {
+      "id": "transaction.proof-trust.unknown-without-trust",
+      "result": "PASS",
+      "detail": "Independent fixed-policy predicate verified."
+    }
+  ],
+  "sourceManifestSha256": "f517aacbe4028bec91b50daf272a65b67a48494c7c9efb061c00666f10fdbda9",
+  "verifierSha256": "fad38863f2a33e8a720ee54b051159c705c720e3fd2e1b0971a2d724fa5e3181",
+  "receiptScope": "Fresh public TS-to-Go execution after stronger staged-to-signed linkage predicates; original report.json and original verification remain unchanged."
+}

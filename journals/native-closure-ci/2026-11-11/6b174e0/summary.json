@@ -1,0 +1,121 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@1",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "createdAt": "2026-11-12T03:15:21.157752+00:00",
+  "archiveDateBasis": "2026-11-11 operator work-order date; GitHub timestamps are UTC2026-11-12",
+  "workflows": [
+    {
+      "id": 43143699101,
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43143699101",
+      "name": "Foundation checks",
+      "conclusion": "failure",
+      "jobSeconds": 1228,
+      "failure": "offline-core historical oracle4 replay compared current changed clause selectors against original checkerSources; raw failed sample preserved",
+      "tests": {
+        "core": {
+          "tests": 133,
+          "pass": 133,
+          "fail": 0,
+          "skipped": 0
+        },
+        "synthesis": [
+          {
+            "pass": 438,
+            "skipped": 10,
+            "total": 448
+          }
+        ],
+        "goComponents": [
+          {
+            "pass": 12,
+            "skipped": 0,
+            "total": 12
+          }
+        ],
+        "actualShutdownAndListener": [
+          {
+            "pass": 14,
+            "skipped": 0,
+            "total": 14
+          }
+        ],
+        "transport": {
+          "tests": 8,
+          "pass": 8,
+          "fail": 0,
+          "skipped": 0
+        },
+        "services": {
+          "tests": 14,
+          "pass": 14,
+          "fail": 0,
+          "skipped": 0
+        },
+        "rustDefault": {
+          "pass": 1,
+          "fail": 0,
+          "ignored": 0
+        },
+        "rustGraphV3": {
+          "pass": 14,
+          "fail": 0,
+          "ignored": 0
+        },
+        "python": {
+          "pass": null,
+          "executed": false,
+          "reason": "Prior frozen oracle4 replay failed before Python step"
+        }
+      },
+      "componentObservations": {
+        "total": 590,
+        "PASS": 584,
+        "FAIL": 6,
+        "knownGoMessageBoxFindings": true
+      },
+      "publishedReplay": {
+        "archives": 14,
+        "attempts": 13,
+        "semantic": true
+      },
+      "postFailureOfflineSteps": "Skipped; not represented as passing"
+    },
+    {
+      "id": 43143699270,
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43143699270",
+      "name": "Retained native evidence reevaluation",
+      "conclusion": "success",
+      "jobSeconds": 113,
+      "rustTests": 14,
+      "newNativeSessions": 0,
+      "nativeOutcome": "FAIL",
+      "integrationOutcome": "PASS",
+      "rustOutcome": "PASS",
+      "repetitions": 2,
+      "nativeAssertionsPerRepetition": {
+        "PASS": 180,
+        "FAIL": 99,
+        "BLOCKED": 1
+      },
+      "integrationAssertionsPerRepetition": {
+        "PASS": 77,
+        "FAIL": 0,
+        "BLOCKED": 0
+      },
+      "rustAssertionsPerRepetition": {
+        "PASS": 48,
+        "FAIL": 0,
+        "BLOCKED": 0
+      }
+    }
+  ],
+  "scope": [
+    "Raw API snapshots and complete job logs only; native qualification artifacts are not acquired by this archive.",
+    "Integrated component CI success preserves six known Go Message Box findings.",
+    "Retained reevaluation reuses original5.1.0 native observations; this archive does not score official5.1.1 or any candidate wallet.",
+    "Historical source-coupling correction is separate source work; the failed workflow is never relabeled."
+  ],
+  "nativeWalletConformanceClosed": false,
+  "completeBRC100Conformance": false
+}

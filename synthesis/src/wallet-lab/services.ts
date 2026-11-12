@@ -382,6 +382,11 @@ export class ControlledWalletServices {
     return wallet
   }
 
+  async nativeActionReferences(identity: string): Promise<Array<{ txid: string; reference: string }>> {
+    if (this.goServices === undefined || this.components.storage !== 'go') throw new Error('Native Go storage is absent')
+    return this.goServices.actionReferences(identity)
+  }
+
   async nativeTransactions(): Promise<Array<{ txid: string; rawTxHex: string }>> {
     if (this.goServices === undefined || this.components.storage !== 'go') throw new Error('Native Go storage is absent')
     const transactions = await this.goServices.transactions()

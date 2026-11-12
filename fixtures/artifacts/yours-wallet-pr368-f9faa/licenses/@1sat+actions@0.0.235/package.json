@@ -1,0 +1,49 @@
+{
+  "name": "@1sat/actions",
+  "version": "0.0.235",
+  "description": "Action definitions for the 1Sat SDK",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "bun test"
+  },
+  "keywords": [
+    "1sat",
+    "bsv",
+    "actions",
+    "wallet",
+    "ordinals"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@1sat/client": "0.0.64",
+    "@1sat/templates": "0.0.44",
+    "@1sat/types": "0.0.53",
+    "@1sat/utils": "0.0.43",
+    "@1sat/wallet": "0.0.121",
+    "@bsv/message-box-client": "^2.5.0",
+    "@ipld/dag-cbor": "^10.0.2",
+    "xdelta3-wasm": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@bsv/sdk": "^2.6.0"
+  },
+  "devDependencies": {
+    "@1sat/wallet-remote": "0.0.78",
+    "@bsv/sdk": "^2.6.0",
+    "typescript": "^5.9.3"
+  }
+}

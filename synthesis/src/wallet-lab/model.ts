@@ -11,6 +11,18 @@ export interface ArtifactIdentity {
   releaseUrl?: string
 }
 
+export const yoursPr368Artifact = Object.freeze({ id: 'yours-wallet-chromium-extension', version: '5.1.1-pr368.7e39006', sha256: 'b80e5a7572bdf11e568ecf41cbf439a0062605a5a2f196b53948b18e1b7fe10e', size: 13238310 })
+/** Retired engineering artifacts remain candidates even after their active selector changes. */
+export const retiredYoursCandidateArtifacts = Object.freeze([
+  Object.freeze({ id: 'yours-wallet-chromium-extension', version: '5.1.1-pr368.f9faa', sha256: 'd550a0fefb5b2ccec844c47b02610b4f388128e564e3011ad46c2014f30f3a74', size: 13233045 })
+])
+export function identifiesYoursCandidate(wallet: ArtifactIdentity): boolean {
+  return [yoursPr368Artifact, ...retiredYoursCandidateArtifacts].some(candidate => wallet.version === candidate.version || wallet.sha256 === candidate.sha256)
+}
+export function matchesYoursCandidate(wallet: ArtifactIdentity): boolean {
+  return Object.entries(yoursPr368Artifact).every(([key, value]) => wallet[key as keyof ArtifactIdentity] === value)
+}
+
 export interface AssertionResult {
   id: string
   outcome: VectorOutcome
@@ -45,9 +57,10 @@ export interface PermissionObservation {
 export interface WalletLabResult {
   schema: 'tpnil-isi4-wallet-run@1.0.0'
   claim: WalletLabClaim
-  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0' | 'ISI-4@5.0.0'
-  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0'
-  profile: 'production-wallet-todo-controlled-services' | 'production-wallet-native-conformance' | 'desktop-wallet-todo-controlled-services' | 'desktop-wallet-todo-declared-fixture-hook'
+  program: 'ISI-4@1.0.0' | 'ISI-4@2.0.0' | 'ISI-4@3.0.0' | 'ISI-4@4.0.0' | 'ISI-4@5.0.0' | 'ISI-4@5.1.0'
+  itcve: 'ITCVE-1@1.0.0' | 'ITCVE-1@1.1.0' | 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0'
+  walletCandidate?: Record<string, unknown>
+  profile: 'candidate-wallet-native-engineering' | 'production-wallet-todo-controlled-services' | 'production-wallet-native-conformance' | 'desktop-wallet-todo-controlled-services' | 'desktop-wallet-todo-declared-fixture-hook'
   runId: string
   startedAt: string
   endedAt: string

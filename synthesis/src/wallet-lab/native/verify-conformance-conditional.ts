@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { Beef, Certificate, MasterCertificate, PrivateKey, ProtoWallet, Transaction, Utils, VerifiableCertificate, verifyNonce } from '@bsv/sdk'
 import { conditionalIssuerKey, conditionalIssuanceModes, type ConditionalIssuanceMode } from './conformance-conditional-issuer.js'
-import { conditionalQueryCases, conditionalBasket, conditionalConfig as config, conditionalPolicy, conditionalPolicySha256, type ConditionalReport } from './conformance-conditional-model.js'
+import { conditionalQueryCases, conditionalBasket, conditionalConfig as config, conditionalPolicySelection, type ConditionalReport } from './conformance-conditional-model.js'
 import { specifiedError } from './conformance-clauses-model.js'
 
 const fixture = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
@@ -14,6 +14,10 @@ const cert = (value: any) => new Certificate(value.type, value.serialNumber, val
 const certificateFields = ['type', 'serialNumber', 'subject', 'certifier', 'revocationOutpoint', 'signature', 'fields'] as const
 const certificateValue = (value: any) => Object.fromEntries(certificateFields.map(key => [key, value[key]]))
 const unique = (values: unknown[], label: string) => assert.equal(new Set(values).size, values.length, `${label} contains duplicate identities`)
+// Evidence serialization sorts object keys. Diagnostic text must be stable
+// across that boundary too, without changing malformed public values or verdicts.
+const jsonDetail = (value: unknown) => JSON.stringify(value, (_key, nested) => nested !== null && typeof nested === 'object' && !Array.isArray(nested)
+  ? Object.fromEntries(Object.keys(nested).sort().map(key => [key, nested[key]])) : nested)
 function atomicGraph(bytes: unknown): Beef {
   assert.ok(Array.isArray(bytes) && bytes.length > 0, 'Missing Atomic BEEF bytes')
   for (let i = 0; i < bytes.length; i++) assert.ok(Object.hasOwn(bytes, i) && Number.isInteger(bytes[i]) && bytes[i] >= 0 && bytes[i] <= 255, 'Atomic BEEF must be a dense byte array')
@@ -89,6 +93,9 @@ export async function verifyConditionalIssuance(report: ConditionalReport, mode:
 
 /** Derive verdicts from fixed policy, public calls and independent bytes. */
 export async function deriveConditionalOutcomes(report: ConditionalReport): Promise<ConditionalReport['assertions']> {
+  const revision = report.oracle === 'tpnil-native-conditional-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-conditional-oracle@2.0.0' ? 2 : undefined
+  assert.ok(revision, 'Unknown conditional oracle')
+  const { policy: conditionalPolicy, policySha256: conditionalPolicySha256 } = conditionalPolicySelection(revision)
   assert.equal(report.schema, 'tpnil-native-conditional@1.0.0')
   assert.equal(report.oracle, conditionalPolicy.oracle)
   assert.equal(report.policySha256, conditionalPolicySha256)
@@ -134,7 +141,7 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
     assert.ok(Number.isSafeInteger(value.submissionStart) && value.submissionStart >= 0 && Number.isSafeInteger(value.submissionEnd) && value.submissionEnd >= value.submissionStart && value.submissionEnd <= report.submissions.length)
     return value
   }
-  const value = (id: string) => { const call = row(id); assert.equal(call.error, undefined, `${id}: ${JSON.stringify(call.error)}`); assert.ok(call.result !== undefined, `${id}: response missing`); return call.result }
+  const value = (id: string) => { const call = row(id); assert.equal(call.error, undefined, `${id}: ${jsonDetail(call.error)}`); assert.ok(call.result !== undefined, `${id}: response missing`); return call.result }
   const population = () => {
     const rows = Array.from({ length: config.population }, (_, i) => row(`population-${i}`))
     if (rows.some(row => !row.result?.tx || !row.result?.txid)) throw new Blocked('Native funded population prerequisite failed')
@@ -147,11 +154,30 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
       return { index, row, tx, outputIndex, outpoint: `${tx.id('hex')}.${outputIndex}` }
     })
   }
-  const reject = (id: string, token: string | string[]) => { const call = row(id); assert.equal(call.result, undefined, `${id}: malformed input was accepted`); assert.ok((Array.isArray(token) ? token : [token]).some(token => specifiedError(call.error, token)), `${id}: not an attributable parameter/crypto rejection: ${JSON.stringify(call.error)}`) }
+  const reject = (id: string, token: string | string[]) => { const call = row(id); assert.equal(call.result, undefined, `${id}: malformed input was accepted`); assert.ok((Array.isArray(token) ? token : [token]).some(token => specifiedError(call.error, token)), `${id}: not an attributable parameter/crypto rejection: ${jsonDetail(call.error)}`) }
   const outputSet = (id: string) => sorted(value(id).outputs.map((o: any) => o.outpoint))
   const actionSet = (id: string) => sorted(value(id).actions.map((a: any) => a.txid))
   const expectedOutputs = () => sorted(population().map(p => p.outpoint))
   const expectedActions = () => sorted(population().map(p => p.tx.id('hex')))
+  const associatedOutputLabels = (output: any, expected: ReturnType<typeof population>[number]) => {
+    assert.deepEqual(actionSet('actions-includes'), expectedActions())
+    assert.ok(Array.isArray(report.actionReferences), 'Independent stored action references are required')
+    assert.deepEqual(sorted(report.actionReferences.map(row => row.txid)), expectedActions())
+    unique(report.actionReferences.map(row => row.reference), 'Stored action references')
+    for (const binding of report.actionReferences) {
+      assert.equal(typeof binding.reference, 'string'); assert.ok(binding.reference.length > 0)
+      assert.equal(Buffer.from(binding.reference, 'base64').toString('base64'), binding.reference, 'Action reference must be canonical base64')
+    }
+    const reference = report.actionReferences.find(row => row.txid === expected.tx.id('hex'))!.reference
+    const synthetic = `reference ${Buffer.from(reference, 'base64').toString('hex')}`
+    const actions = value('actions-includes').actions.filter((action: any) => action.txid === expected.tx.id('hex')); assert.equal(actions.length, 1)
+    const labels = actions[0].labels
+    for (const [name, entries] of [['Output labels', output.labels], ['Action labels', labels]] as const) { assert.ok(Array.isArray(entries) && entries.every(label => typeof label === 'string')); unique(entries, name) }
+    assert.deepEqual(labels.filter((label: string) => label.startsWith('reference ')), [synthetic], 'BRC153 annotation must bind the independent stored reference')
+    assert.ok(output.labels.every((label: string) => !label.startsWith('reference ')), 'BRC153 reference annotation is listActions-only')
+    assert.ok(expected.row.args.labels.every((label: string) => output.labels.includes(label) && labels.includes(label)))
+    assert.deepEqual(sorted(output.labels), sorted(labels.filter((label: string) => label !== synthetic)))
+  }
   const direct = () => {
     if (report.certificates.length !== config.population) throw new Blocked('Direct certificate fixture prerequisite failed')
     const p = population(); unique(report.certificates.map(c => c.serialNumber), 'Direct certificate serials')
@@ -248,7 +274,9 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
       for (const o of value('outputs-metadata').outputs) {
         const expected = p.find(p => p.outpoint === o.outpoint)!; assert.ok(expected)
         assert.equal(o.lockingScript, config.lockingScript); assert.equal(o.customInstructions, `conditional:${expected.index}`)
-        assert.deepEqual(sorted(o.tags), sorted(expected.row.args.outputs[0].tags)); assert.deepEqual(sorted(o.labels), sorted(expected.row.args.labels))
+        assert.deepEqual(sorted(o.tags), sorted(expected.row.args.outputs[0].tags))
+        if (revision === 1) assert.deepEqual(sorted(o.labels), sorted(expected.row.args.labels))
+        else associatedOutputLabels(o, expected)
       }
       assert.deepEqual(outputSet('outputs-beef'), expectedOutputs())
       const graph = Beef.fromBinary(value('outputs-beef').BEEF); assert.ok(await graph.verify(tracker))
@@ -275,7 +303,7 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
     'transaction.conflicting-inputs': () => { aborted('conflict-control', 'conflict-control-abort'); const base = signingArgs(); assert.deepEqual(row('conflicting-inputs').args, { ...base, inputs: [base.inputs[0], base.inputs[0]] }); reject('conflicting-inputs', 'input') },
     'transaction.known-proof-omission': () => { aborted('known-proof-omission', 'known-proof-abort', 0, true) },
     'transaction.signable-and-sign': async () => {
-      const prepared = signable('signable'), signed = value('signed')
+      const prepared = signable('signable', revision === 2 ? 2 : 0), signed = value('signed')
       assert.deepEqual(row('signed').args, { reference: prepared.result.signableTransaction.reference, spends: { 0: { unlockingScript: '51' } }, options: { acceptDelayedBroadcast: false } })
       const tx = atomicTransaction(signed.tx, signed.txid)
       assert.equal(tx.version, prepared.tx.version); assert.equal(tx.lockTime, prepared.tx.lockTime)
@@ -283,7 +311,7 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
       assert.deepEqual(tx.inputs.map(i => ({ txid: i.sourceTXID, index: i.sourceOutputIndex, sequence: i.sequence })), prepared.tx.inputs.map(i => ({ txid: i.sourceTXID, index: i.sourceOutputIndex, sequence: i.sequence })))
       assert.equal(tx.inputs[0]!.unlockingScript?.toHex(), '51'); assert.ok(await tx.verify(tracker))
     },
-    'transaction.abort-release': () => { const p = population(); aborted('abort-prepare', 'aborted', 1); const output = value('after-abort').outputs.find((o: any) => o.outpoint === p[1]!.outpoint); assert.equal(output?.spendable, true); assert.ok(!outputSet('after-abort').includes(p[0]!.outpoint)) },
+    'transaction.abort-release': async () => { if (revision === 2) await assertions['transaction.signable-and-sign']!(); const p = population(); aborted('abort-prepare', 'aborted', 1); const output = value('after-abort').outputs.find((o: any) => o.outpoint === p[1]!.outpoint); assert.equal(output?.spendable, true); assert.ok(!outputSet('after-abort').includes(p[revision === 2 ? 2 : 0]!.outpoint)) },
     'transaction.batch-release': async () => {
       population(); const held = value('batch-held'), released = value('batch-release'), transaction = atomicTransaction(held.tx, held.txid)
       assert.deepEqual(row('batch-held').args, { description: 'TPNIL conditional held batch', outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'TPNIL conditional held output' }], options: { noSend: true, randomizeOutputs: false } })
@@ -335,7 +363,7 @@ export async function deriveConditionalOutcomes(report: ConditionalReport): Prom
         const item = p.find(p => p.outpoint === o.outpoint)!
         assert.equal(o.lockingScript, args.include === 'locking scripts' ? config.lockingScript : undefined)
         assert.deepEqual(o.tags && sorted(o.tags), args.includeTags ? sorted(item.row.args.outputs[0].tags) : undefined)
-        if (args.includeLabels) assert.ok(item.row.args.labels.every((label: string) => o.labels.includes(label))); else assert.equal(o.labels, undefined)
+        if (args.includeLabels) { if (revision === 2) associatedOutputLabels(o, item); else assert.ok(item.row.args.labels.every((label: string) => o.labels.includes(label))) } else assert.equal(o.labels, undefined)
         assert.equal(o.customInstructions, args.includeCustomInstructions ? `conditional:${item.index}` : undefined)
       }
     } else {

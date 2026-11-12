@@ -5,7 +5,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { crc32 } from 'node:zlib'
-import { extractZipSafely, verifyIntegrationArchive, verifyPublishedIntegrations, verifyArchiveSemantics, componentArchiveSummary } from '../scripts/verify-published-integrations.mjs'
+import { extractZipSafely, verifyIntegrationArchive, verifyPublishedIntegrations, verifyArchiveSemantics, componentArchiveSummary, requireArchiveVerifierReceipt } from '../scripts/verify-published-integrations.mjs'
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
 function temporary(run) { const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-test-')); try { return run(directory) } finally { fs.rmSync(directory, { recursive: true, force: true }) } }
@@ -113,3 +113,61 @@ test('component3 cannot be published as a native qualification',()=>temporary(di
   const q={schema:'tpnil-native-integrated-qualification@2',claim:'EXPERIMENTAL_CONFORMANCE_RESULT',profile:'ITCVE-1@3.0.0',program:'ISI-4@4.0.0',source:provenance.source,qualifiedEnvironment:true,completeBRC100Conformance:false}
   fs.writeFileSync(path.join(directory,'qualification.json'),JSON.stringify(q));provenance.schema='tpnil-integrated-native-archive@1';provenance.files=['qualification.json','native-integrated.zip'].map(name=>{const b=fs.readFileSync(path.join(directory,name));return {path:name,size:b.length,sha256:hash(b)}});fs.writeFileSync(path.join(directory,'provenance.json'),JSON.stringify(provenance));assert.throws(()=>verifyIntegrationArchive(directory))
 }))
+
+function publishCandidate(directory, change = {}) {
+  const qualification = { schema: 'tpnil-native-integrated-qualification@2', claim: 'ENGINEERING_OBSERVATION_ONLY', profile: 'ITCVE-1@4.1.0', program: 'ISI-4@5.1.0', source: 'ab'.repeat(20), qualifiedEnvironment: true, completeBRC100Conformance: false, ...change }
+  fs.writeFileSync(path.join(directory, 'qualification.json'), JSON.stringify(qualification))
+  fs.writeFileSync(path.join(directory, 'native-integrated.zip'), zip([{ name: 'result.json', body: '{}' }]))
+  const files = ['qualification.json', 'native-integrated.zip'].map(name => { const bytes = fs.readFileSync(path.join(directory, name)); return { path: name, size: bytes.length, sha256: hash(bytes) } })
+  fs.writeFileSync(path.join(directory, 'provenance.json'), JSON.stringify({ schema: 'tpnil-integrated-native-archive@1', source: qualification.source, files }))
+  return qualification
+}
+
+test('candidate publication admits only its engineering claim, exact program and incomplete conformance', () => temporary(directory => {
+  publishCandidate(directory)
+  assert.equal(verifyIntegrationArchive(directory).qualification.profile, 'ITCVE-1@4.1.0')
+  for (const change of [
+    { claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' }, { claim: 'INFRASTRUCTURE_QUALIFICATION_ONLY' },
+    { program: 'ISI-4@5.0.0' }, { program: 'ISI-4@4.0.0' }, { program: undefined },
+    { profile: 'ITCVE-1@4.0.0' }, { profile: 'ITCVE-1@2.0.0' },
+    { schema: 'tpnil-native-integrated-qualification@1' }, { completeBRC100Conformance: true }
+  ]) {
+    publishCandidate(directory, change)
+    assert.throws(() => verifyIntegrationArchive(directory), JSON.stringify(change))
+  }
+  publishCandidate(directory, { profile: 'ITCVE-1@4.0.0', program: 'ISI-4@5.0.0' })
+  assert.throws(() => verifyIntegrationArchive(directory), 'Official release profile cannot inherit a candidate engineering claim')
+}))
+
+test('native child receipt binds profile, program and claim and rejects jointly relabeled candidate metadata', () => temporary(directory => {
+  const candidate = publishCandidate(directory), bundle = verifyIntegrationArchive(directory)
+  const stdout = value => 'independent verifier diagnostic\n' + JSON.stringify(value) + '\n'
+  assert.deepEqual(requireArchiveVerifierReceipt(stdout(candidate), bundle), candidate)
+  for (const field of ['profile', 'program', 'claim']) {
+    const missing = { ...candidate }; delete missing[field]
+    assert.throws(() => requireArchiveVerifierReceipt(stdout(missing), bundle), new RegExp(field))
+  }
+  for (const change of [
+    { profile: 'ITCVE-1@4.0.0' }, { program: 'ISI-4@5.0.0' }, { claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' }
+  ]) assert.throws(() => requireArchiveVerifierReceipt(stdout({ ...candidate, ...change }), bundle))
+  // Recomputing all manifest digests cannot turn the frozen candidate receipt
+  // into a release receipt, even when the relabeled outer tuple is well formed.
+  const official = publishCandidate(directory, { profile: 'ITCVE-1@4.0.0', program: 'ISI-4@5.0.0', claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' })
+  const releaseBundle = verifyIntegrationArchive(directory)
+  assert.throws(() => requireArchiveVerifierReceipt(stdout(candidate), releaseBundle), /profile/)
+  assert.throws(() => requireArchiveVerifierReceipt(stdout(official), bundle), /profile/)
+  assert.deepEqual(requireArchiveVerifierReceipt(stdout(official), releaseBundle), official)
+  assert.throws(() => requireArchiveVerifierReceipt('', bundle), /complete JSON receipt/)
+  assert.throws(() => requireArchiveVerifierReceipt('{"nested":\n  ' + JSON.stringify(candidate), bundle), /complete JSON receipt/)
+}))
+
+test('historical native receipts preserve their original profile, claim and optional program', () => {
+  const directory = new URL('../journals/integrated-native-qualification/', import.meta.url)
+  const qualifications = fs.readdirSync(directory, { recursive: true }).filter(name => name.endsWith('/qualification.json'))
+  assert.ok(qualifications.length > 0)
+  for (const name of qualifications) {
+    const qualification = JSON.parse(fs.readFileSync(new URL(name, directory)))
+    const bundle = { kind: 'native', source: qualification.source, qualification }
+    assert.deepEqual(requireArchiveVerifierReceipt(JSON.stringify(qualification), bundle), qualification)
+  }
+})

@@ -51,11 +51,11 @@ try {
     if (!response.ok) throw new Error(`Identity lookup HTTP ${response.status}`)
     return answer as any
   } } }) as unknown as NonNullable<typeof wallet>['lookupResolver']
-  corpus = await runWalletBoundaryCorpus({ wallet: wallet as unknown as BoundaryWallet, funder: funder as unknown as BoundaryWallet, prepareDiscovery: async certificate => {
+  corpus = await runWalletBoundaryCorpus({ fixtureRevision: process.argv.includes('--fixture-revision-2') ? 2 : 1, wallet: wallet as unknown as BoundaryWallet, funder: funder as unknown as BoundaryWallet, prepareDiscovery: async certificate => {
     const settings = await wallet!.settingsManager.get()
     settings.trustSettings.trustedCertifiers.push({ identityKey: PrivateKey.fromHex('36'.repeat(32)).toPublicKey().toString(), name: 'TPNIL controlled issuer', description: 'Pinned boundary fixture certifier', trust: 4 })
     await wallet!.settingsManager.set(settings)
-    publication = await publishIdentityCertificate({ wallet, origin: overlay.origin, certificate })
+    publication = await publishIdentityCertificate({ wallet, origin: overlay.origin, certificate, fixtureRevision: process.argv.includes('--fixture-revision-2') ? 2 : 1 })
   } })
   if (process.argv.includes('--clauses')) {
     const evidence = new EvidenceBundle(path.join(output, 'clauses'))

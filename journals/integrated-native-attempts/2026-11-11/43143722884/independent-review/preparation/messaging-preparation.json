@@ -1,0 +1,86 @@
+{
+  "schema": "tpnil-native-messaging-verifier-preparation@1",
+  "mode": "native-verifier-only",
+  "serviceRuntimePrepared": false,
+  "startedAt": "2026-11-11T16:26:47.129Z",
+  "completedAt": "2026-11-11T16:26:53.373Z",
+  "source": {
+    "commit": "9cded11fae9c8a48fc23894157bbab0b561077e5",
+    "dirty": false,
+    "files": {
+      "scripts/prepare-messaging.mjs": "77c7661e713e12391d072c9fb621861ed46584d16e03a64ae186e3cabb746d87",
+      "scripts/messaging-preparation.mjs": "b7e7ba0854f79625e2b9d0eef7ab36fe71635f026c6542b379ee7c93ad1ecdbd",
+      "components/messaging/identity.mjs": "2efcc48bb74b954c9101d75e99f814f3c989406143f3ce3ab25f61ae4641dbc8",
+      "components/messaging/sources.lock.json": "11d2a834b5364f9132330acd1013fb09cd9037086937dbdd2b63ebd761d6372d"
+    }
+  },
+  "runtime": {
+    "node": "24.22.1",
+    "npm": "11.19.1",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "component": {
+    "id": "typescript-messagebox",
+    "repository": "bsv-blockchain/ts-stack",
+    "commit": "eb131148c3e95749162e7c8263e444e255c7db1f",
+    "path": "infra/message-box-server",
+    "license": "Open BSV",
+    "archiveSha256": "112672e0c2aaebc15d7eb0f9e7ecf1b9e3a9497134db9af5931494c61e0004ed"
+  },
+  "archive": {
+    "path": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f.tgz",
+    "sha256": "112672e0c2aaebc15d7eb0f9e7ecf1b9e3a9497134db9af5931494c61e0004ed",
+    "bytes": 83414602
+  },
+  "package": {
+    "path": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server",
+    "jsonSha256": "5ad985aed28c664dd59c4468c13a0ff9eb4b575538d9972dcb7a267f60d6ffa5",
+    "lockSha256": "9a8b47c0539b82e87f6b08a464c6bc55ab92b4c52ab842b90a0174a744704a6e",
+    "sourceTreeSha256": "4bc0c070e3b29ede2fdd02b59aaf92319eb9f708dd2ca495653debe5258d5a52"
+  },
+  "sdk": {
+    "name": "@bsv/sdk",
+    "version": "4.0.1",
+    "resolved": "https://registry.npmjs.org/@bsv/sdk/-/sdk-4.0.1.tgz",
+    "integrity": "sha512-aLaRa38h+ck5OhqRlNiQ9oUIOuB+vSZwWzkgWlXzr/9qwK5F0pbtog5PM+1Wo2GNIzxVAEnvxYCLL5SU55cW0w==",
+    "packageSha256": "f24429a17276be77147c73fd296b9738a3b966a80b95a1b13a73a1d66cc3f02e",
+    "entry": "node_modules/@bsv/sdk/dist/cjs/mod.js",
+    "entrySha256": "39ad80d8ef59012a60d462e2eb788137d42b89124604171b64f2f54224101a53",
+    "publicKeyCheck": "PASS"
+  },
+  "commands": [
+    {
+      "command": "tar",
+      "args": [
+        "-xzf",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f.tgz",
+        "-C",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier",
+        "ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server"
+      ]
+    },
+    {
+      "command": "npm",
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ]
+    }
+  ],
+  "paths": {
+    "typescript-messagebox": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server"
+  },
+  "verifierEnvironment": {
+    "TPNIL_MESSAGING_PATHS": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/messaging-native-verifier/paths.json"
+  },
+  "capabilities": {
+    "offlineNativeMessagingVerification": true,
+    "serviceBuild": false,
+    "nativeSqliteRebuild": false,
+    "goBuild": false,
+    "discoveryPreparation": false
+  }
+}

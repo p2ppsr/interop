@@ -7,10 +7,10 @@ import type { Page } from 'playwright'
 import type { NativeScenarioContext } from '../yours-driver.js'
 import { issueFixtureCertificateForSubject } from '../certificate-fixture.js'
 import { canonicalJson } from '../../determinism.js'
-import { createCoveragePermissionObserver } from './permission-coverage-observer.js'
+import { createCoveragePermissionObserver, waitForCoverageRevocationSnapshot } from './permission-coverage-observer.js'
 import { observePermissionClick } from './permission-click.js'
 import { evaluateNativePermissionCoverage } from './verify-conformance-permission-coverage.js'
-import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageOracle, permissionCoveragePolicy, permissionCoveragePolicySha256, type NativePermissionCoverageReport, type CoverageRevocation, type CoverageStep, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
+import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, permissionCoverageCategories, permissionCoverageSelection, type NativePermissionCoverageReport, type CoverageRevocation, type CoverageStep, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
 
 const now = () => new Date().toISOString()
 const sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex')
@@ -18,17 +18,18 @@ const clean = (value: any) => JSON.parse(JSON.stringify(value))
 
 /** Caller owns manualPrompt suspension. This scenario uses only native public
  * CWI and visible UI; browser restart is the source-owned driver hook. */
-export async function runNativePermissionCoverage(context: NativeScenarioContext): Promise<NativePermissionCoverageReport> {
+export async function runNativePermissionCoverage(context: NativeScenarioContext, revision: 1 | 2 | 3 = 1): Promise<NativePermissionCoverageReport> {
   const { evidence, services, extensionId } = context
+  const { config, oracle, policy, policySha256 } = permissionCoverageSelection(revision)
   const manifestBytes = Buffer.from(canonicalJson(coverageManifest))
   const observer = createCoveragePermissionObserver(context)
   const report: NativePermissionCoverageReport = {
-    schema: 'tpnil-native-permission-coverage@1.0.0', oracle: permissionCoverageOracle, policySha256: permissionCoveragePolicySha256,
+    schema: 'tpnil-native-permission-coverage@1.0.0', oracle, policySha256,
     claim: 'ENGINEERING_OBSERVATION_ONLY', identity: '', extensionId, startedAt: now(), endedAt: '',
     steps: [], restarts: [], revocations: [], manifest: { value: coverageManifest, sha256: sha(manifestBytes), requests: [] },
     transactions: [], submissions: [], submissionWindow: { startIndex: services.submissions.length, endIndex: services.submissions.length },
     errors: [], cleanup: { pagesClosed: false, settingsClosed: false, routeUnregistered: false }, assertions: [], result: 'FAIL',
-    remainingCoverage: permissionCoveragePolicy.remainingCoverage, completeBRC100Conformance: false
+    remainingCoverage: policy.remainingCoverage, completeBRC100Conformance: false
   }
   let settings: Page | undefined, unregister: (() => void) | undefined
   const request = async (id: string, origin: string, method: string, args: any, options?: Parameters<typeof observer.request>[4]) => {
@@ -39,7 +40,7 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
     // An unresolved earlier request must never lend its popup or eventual grant
     // to a later nonce. Preserve the failed observation and stop this scenario.
     if (!['fulfilled', 'rejected'].includes(row.outcome.status)) throw new Error(`${id}: ${row.outcome.message ?? row.outcome.status}`)
-    if (row.outcome.status === 'fulfilled' && ['setup-basket', 'allowance-first', 'allowance-second'].includes(id) && Array.isArray(row.outcome.value?.tx)) report.transactions.push({ role: id, txid: row.outcome.value.txid, atomicBeef: row.outcome.value.tx })
+    if (row.outcome.status === 'fulfilled' && ['setup-basket', 'allowance-first', 'allowance-second', ...(revision === 3 ? ['allowance-third'] : [])].includes(id) && Array.isArray(row.outcome.value?.tx)) report.transactions.push({ role: id, txid: row.outcome.value.txid, atomicBeef: row.outcome.value.tx })
     return row
   }
   const value = (row: CoverageStep) => { if (row.outcome.status !== 'fulfilled') throw new Error(`${row.id}: ${row.outcome.error?.message ?? row.outcome.message ?? row.outcome.status}`); return row.outcome.value }
@@ -59,7 +60,8 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
     await header.click({ timeout: 10_000 })
     const card = header.locator('..')
     await card.getByRole('button', { name: 'Revoke All Access', exact: true }).waitFor({ timeout: 10_000 })
-    const row: CoverageRevocation = { id, origin, pageUrl: settings.url(), requestNonce: randomUUID(), startedAt: now(), endedAt: '', beforeBody: await settings.locator('body').innerText(), cardBody: await card.innerText(), confirmationBody: '', afterBody: '', afterOriginCardCount: -1, revoke: undefined as any, confirm: undefined as any, before: await image(settings, `conformance/coverage-${id}-before.png`), confirmation: undefined as any, after: undefined as any }
+    const snapshot = revision >= 2 ? await waitForCoverageRevocationSnapshot(settings, card, origin === config.allowance ? config.allowanceSatoshis : undefined) : { beforeBody: await settings.locator('body').innerText(), cardBody: await card.innerText() }
+    const row: CoverageRevocation = { id, origin, pageUrl: settings.url(), requestNonce: randomUUID(), startedAt: now(), endedAt: '', ...snapshot, confirmationBody: '', afterBody: '', afterOriginCardCount: -1, revoke: undefined as any, confirm: undefined as any, before: await image(settings, `conformance/coverage-${id}-before.png`), confirmation: undefined as any, after: undefined as any }
     report.revocations.push(row)
     row.revoke = await observePermissionClick(settings, 'Revoke All Access', row.requestNonce)
     await settings.getByRole('button', { name: 'Confirm', exact: true }).waitFor({ timeout: 10_000 })
@@ -104,19 +106,20 @@ export async function runNativePermissionCoverage(context: NativeScenarioContext
     for (const name of ['protocol', 'basket', 'certificate'] as const) {
       const call = coverageCategoryCall(name, report.certificate); await request(`manifest-${name}`, config.allowance, call.method, call.args)
     }
-    await request('allowance-first', config.allowance, 'createAction', coveragePaymentArgs('first'))
+    await request('allowance-first', config.allowance, 'createAction', coveragePaymentArgs('first', revision))
     await restart()
     for (const name of permissionCoverageCategories) await category(name, 'restart', config.primary)
-    await request('allowance-second', config.allowance, 'createAction', coveragePaymentArgs('second'))
-    await request('allowance-overflow', config.allowance, 'createAction', coveragePaymentArgs('overflow'), { decision: 'deny' })
-    await request('allowance-alternate', config.alternate, 'createAction', coveragePaymentArgs('alternate'), { decision: 'deny' })
+    await request('allowance-second', config.allowance, 'createAction', coveragePaymentArgs('second', revision))
+    if (revision === 3) await request('allowance-third', config.allowance, 'createAction', coveragePaymentArgs('third', revision))
+    await request('allowance-overflow', config.allowance, 'createAction', coveragePaymentArgs('overflow', revision), { decision: 'deny' })
+    await request('allowance-alternate', config.alternate, 'createAction', coveragePaymentArgs('alternate', revision), { decision: 'deny' })
     await revoke('revoke-primary', config.primary)
     await revoke('revoke-allowance', config.allowance)
     for (const name of permissionCoverageCategories) await category(name, 'revoked', config.primary, 'deny')
-    await request('allowance-revoked', config.allowance, 'createAction', coveragePaymentArgs('revoked'), { decision: 'deny' })
+    await request('allowance-revoked', config.allowance, 'createAction', coveragePaymentArgs('revoked', revision), { decision: 'deny' })
     await restart()
     for (const name of permissionCoverageCategories) await category(name, 'revoked-restart', config.primary, 'deny')
-    await request('allowance-revoked-restart', config.allowance, 'createAction', coveragePaymentArgs('revokedRestart'), { decision: 'deny' })
+    await request('allowance-revoked-restart', config.allowance, 'createAction', coveragePaymentArgs('revokedRestart', revision), { decision: 'deny' })
   } catch (error) { report.errors.push(error instanceof Error ? error.message : String(error)) }
   finally {
     try { report.cleanup.pagesClosed = (await observer.close()).pagesClosed } catch (error) { report.errors.push(String(error)) }

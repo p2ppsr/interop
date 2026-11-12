@@ -25,15 +25,42 @@ export function verifyConformanceRepetitionAgreement(semanticProjections: readon
   assert.equal(semanticProjections[0], semanticProjections[1], 'Conformance repetitions differ in per-assertion identities or outcomes')
 }
 
+/** Bind BRC153 annotations to a separately captured, authenticated storage snapshot.
+ * This evidence is observer-side and never substitutes for a public wallet call. */
+export function verifyNativeActionReferenceBinding(conditional: any, finalReferences: any, walletIdentity: string): void {
+  assert.equal(finalReferences.identity, conditional.identity)
+  assert.equal(finalReferences.identity, walletIdentity)
+  const validateRows = (rows: any): Map<string, string> => {
+    assert.ok(Array.isArray(rows) && rows.length <= 2048)
+    const byTxid = new Map<string, string>()
+    for (const row of rows) {
+      assert.deepEqual(Object.keys(row).sort(), ['reference', 'txid'])
+      assert.match(row.txid, /^[0-9a-f]{64}$/)
+      assert.equal(typeof row.reference, 'string'); assert.ok(row.reference.length > 0 && row.reference.length <= 300)
+      assert.equal(Buffer.from(row.reference, 'base64').toString('base64'), row.reference)
+      assert.ok(!byTxid.has(row.txid), 'Duplicate stored action reference')
+      byTxid.set(row.txid, row.reference)
+    }
+    return byTxid
+  }
+  const final = validateRows(finalReferences.references)
+  for (const [txid, reference] of validateRows(conditional.actionReferences)) assert.equal(final.get(txid), reference, 'Conditional reference differs from final identity-scoped storage snapshot')
+}
+
 export async function verifyNativeWallet(directory: string) {
   const read = (name: string) => JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8'))
   const lock = read('run-lock.json'), plan = lock.plan
   assert.equal(lock.schema, 'tpnil-native-wallet-run-lock@1.0.0')
-  const wallet511 = plan.itcve === 'ITCVE-1@4.0.0'
+  const candidate = plan.itcve === 'ITCVE-1@4.1.0'
+  const observer2 = lock.executionVariant === 'integrated-native-conformance-5.1.1-observer-2'
+  if (observer2) { assert.equal(plan.itcve, 'ITCVE-1@4.0.0'); assert.equal(plan.observerRevision, 2) }
+  else assert.equal(plan.observerRevision, undefined)
+  const fixtureRevision = candidate || observer2 ? 2 : 1
+  const wallet511 = candidate || plan.itcve === 'ITCVE-1@4.0.0'
   const closure = wallet511 || plan.itcve === 'ITCVE-1@2.0.0'
   const coverage = closure || plan.itcve === 'ITCVE-1@1.5.0'
   const conformance = coverage || plan.itcve === 'ITCVE-1@1.4.0'
-  if (conformance) assert.equal(plan.clauseOracle, wallet511 ? 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
+  if (conformance) assert.equal(plan.clauseOracle, wallet511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
   if (coverage) {
     assert.equal(plan.permissionOracle, closure ? 'tpnil-native-permission-oracle@2.0.0' : undefined)
     assert.equal(plan.permissionLifecycleOracle, closure ? 'tpnil-native-permission-lifecycle-oracle@2.0.0' : 'tpnil-native-permission-lifecycle-oracle@1.0.0')
@@ -41,7 +68,7 @@ export async function verifyNativeWallet(directory: string) {
   }
   const trustedIdentity = conformance || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY'
   const integrated = trustedIdentity || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0'
-  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
+  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(candidate ? '../../../../infra/native/conformance/plan-pr368-7e39006.json' : observer2 ? '../../../../infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
   assert.equal(canonicalJson(plan), canonicalJson(frozen))
   assert.equal(plan.id, conformance ? frozen.id : trustedIdentity ? 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY' : integrated ? 'YOURS-5.1.0-GO-ITCVE-1.3.0' : 'YOURS-5.1.0-GO-ITCVE-1.2.0')
   if (integrated) {
@@ -73,11 +100,12 @@ export async function verifyNativeWallet(directory: string) {
     assert.equal(after.state.ExitCode, 0); assert.equal(after.state.OOMKilled, false); assert.equal(cleanup.removed, true)
     const rep = path.join(directory, `repetition-${index}`)
     const record = verifyEvidenceBundle(rep)
-    assert.equal(record.itcve, wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
+    assert.equal(record.itcve, candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
     const evidence = (name: string) => JSON.parse(fs.readFileSync(path.join(rep, 'evidence', name), 'utf8'))
     const installed = read(`repetition-${index}/installed-artifacts.json`)
     assert.equal(installed.exactArchiveContents, true)
     assert.match(installed.walletDirectorySha256, /^[a-f0-9]{64}$/); assert.match(installed.applicationDirectorySha256, /^[a-f0-9]{64}$/)
+    if (candidate) { assert.equal(plan.walletCandidate.officialRelease, false); assert.deepEqual(record.walletCandidate, plan.walletCandidate); assert.equal(record.claim, 'ENGINEERING_OBSERVATION_ONLY') }
     assert.deepEqual(record.artifacts.wallet, plan.wallet); assert.deepEqual(record.artifacts.application, plan.application)
     assert.deepEqual(record.configuration.serviceComponents?.components, plan.components)
     assert.deepEqual(record.vectors.map(vector => vector.id), Array.from({ length: 8 }, (_, i) => `ISI-4-V00${i+1}`))
@@ -90,8 +118,19 @@ export async function verifyNativeWallet(directory: string) {
         assert.ok(['controlled-wallet-storage', 'controlled-service', 'controlled-application', 'blocked-egress'].includes(route.disposition))
         if (route.disposition !== 'blocked-egress') assert.ok(plan.controlledDestinations.includes(route.host), `Undeclared controlled destination: ${route.host}`)
       }
-      assert.equal(plan.conditionalOracle, 'tpnil-native-conditional-oracle@1.0.0')
-      assert.equal(plan.permissionCoverageOracle, 'tpnil-native-permission-coverage-oracle@1.0.0')
+      assert.equal(plan.conditionalOracle, `tpnil-native-conditional-oracle@${fixtureRevision}.0.0`)
+      assert.equal(evidence('conformance/conditional.json').oracle, plan.conditionalOracle)
+      assert.equal(evidence('integrated/boundary.json').fixtureRevision, fixtureRevision === 2 ? 2 : undefined)
+      assert.equal(plan.permissionCoverageOracle, `tpnil-native-permission-coverage-oracle@${fixtureRevision === 2 ? 3 : 1}.0.0`)
+      assert.equal(evidence('conformance/permission-coverage.json').oracle, plan.permissionCoverageOracle)
+      if (fixtureRevision === 2) {
+        assert.equal(plan.expectedObservations, 426)
+        assert.equal(record.vectors.reduce((count, vector) => count + vector.assertions.length, 0), plan.expectedObservations)
+        assert.equal(plan.transactionStateOracle, 'tpnil-native-transaction-states-oracle@1.0.0')
+        assert.equal(plan.certificateStateOracle, 'tpnil-native-certificate-states-oracle@1.0.0')
+        assert.equal(evidence('conformance/transaction-states.json').oracle, plan.transactionStateOracle)
+        assert.equal(evidence('conformance/certificate-states.json').oracle, plan.certificateStateOracle)
+      }
     }
     assert.equal(record.observations.walletVersion, wallet511 ? 'yours-wallet-5.1.1' : 'yours-wallet-5.1.0'); assert.equal(record.observations.walletNetwork, 'mainnet'); assert.equal(record.observations.authenticated, true)
     assert.match(fs.readFileSync(path.join(rep, 'browser-version.txt'), 'utf8'), /151\.0\.7922\.34/)
@@ -174,7 +213,7 @@ export async function verifyNativeWallet(directory: string) {
     let inputs = 0; for (const input of spend.inputs) { const sourceOutput = input.sourceTransaction?.outputs[input.sourceOutputIndex!]; assert.ok(sourceOutput?.satoshis !== undefined); inputs += sourceOutput.satoshis }
     const outputs = spend.outputs.reduce((sum, item) => sum + (item.satoshis ?? 0), 0); assert.ok(inputs >= outputs)
     let vectors: VectorResult[] = structuredClone(conformance ? evidence('conformance/baseline-vectors.json') : record.vectors)
-    if (conformance) { assert.equal(record.program, wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, 'production-wallet-native-conformance') }
+    if (conformance) { assert.equal(record.program, candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, candidate ? 'candidate-wallet-native-engineering' : 'production-wallet-native-conformance') }
     for (const vector of vectors.slice(0, 4)) assert.equal(vector.outcome, 'PASS')
     const permission = evidence('permissions.json')
     const explicitDenial = (value: { rejected?: boolean; independentlyPrompted?: boolean; message?: string }) =>
@@ -197,6 +236,8 @@ export async function verifyNativeWallet(directory: string) {
       }
     }
     let conditionalTransactionBindings: Awaited<ReturnType<typeof import('./verify-conditional-transaction-bindings.js').verifyConditionalTransactionBindings>> | undefined
+    let transactionStateBindings: Awaited<ReturnType<typeof import('./verify-transaction-state-bindings.js').verifyNativeTransactionStateBindings>> | undefined
+    let submissionAncestryBindings: Awaited<ReturnType<typeof import('./verify-submission-ancestry.js').verifyFinalPermissionSubmissionAncestry>> | undefined
     const acceptedCount = lifecycle.accepted.outputs?.totalOutputs
     const accepted = lifecycle.accepted.submission?.verdict === 'ACCEPTED_BY_NETWORK' && lifecycle.accepted.body.includes('Task successfully created!')
     const rejected = lifecycle.rejected.submission?.verdict === 'REJECTED' && acceptedCount !== undefined && lifecycle.rejected.outputs?.totalOutputs === acceptedCount
@@ -233,6 +274,7 @@ export async function verifyNativeWallet(directory: string) {
         const rows = [...permissionLifecycle.transactions]
         if (wallet511) {
           const conditional = evidence('conformance/conditional.json'), permissionCoverage = evidence('conformance/permission-coverage.json')
+          if (fixtureRevision === 2) verifyNativeActionReferenceBinding(conditional, evidence('native-action-references.json'), evidence('integrated/result.json').walletIdentity)
           assert.deepEqual(conditional.submissions, submissions.slice(0, conditional.submissions.length).map((row: any, index: number) => ({ index, txid: row.txid, serializedHex: row.beefHex, verdict: row.verdict })), 'Conditional module ledger differs from the global receipt prefix')
           assert.deepEqual(permissionCoverage.submissions, submissions.slice(0, permissionCoverage.submissions.length), 'Permission coverage ledger differs from the global receipt prefix')
           const { verifyConditionalTransactionBindings } = await import('./verify-conditional-transaction-bindings.js')
@@ -254,6 +296,23 @@ export async function verifyNativeWallet(directory: string) {
             expectedIdentity: evidence('integrated/result.json').walletIdentity,
             readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name)), storageTransactions
           })
+          if (fixtureRevision === 2) {
+            const { verifyNativeTransactionStateBindings } = await import('./verify-transaction-state-bindings.js')
+            const shutdown = JSON.parse(fs.readFileSync(path.join(rep, 'shutdown-submissions.json'), 'utf8'))
+            transactionStateBindings = await verifyNativeTransactionStateBindings(evidence('conformance/transaction-states.json'), {
+              storageTransactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], fixture,
+              resolvedTransactions: transactions, submissions, finalSubmissions: shutdown.submissions,
+              identity: evidence('integrated/result.json').walletIdentity
+            })
+            const { verifyFinalPermissionSubmissionAncestry, finalSubmissionAncestryPolicy } = await import('./verify-submission-ancestry.js')
+            assert.equal(plan.finalSubmissionAncestryPolicy, finalSubmissionAncestryPolicy)
+            submissionAncestryBindings = await verifyFinalPermissionSubmissionAncestry({
+              globalSubmissions: submissions, finalSubmissions: shutdown.submissions,
+              permissionReport: permissionLifecycle, coverageReport: evidence('conformance/permission-coverage.json'),
+              identity: evidence('integrated/result.json').walletIdentity, storageTransactions, resolvedTransactions: transactions, trustedMinedRoot: fixture,
+              readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name))
+            })
+          }
         }
       }
       const { verifyNativeConformance } = await import('./verify-conformance.js')
@@ -262,12 +321,12 @@ export async function verifyNativeWallet(directory: string) {
       vectors = prospective.vectors
       conformanceSemanticProjections.push(prospective.semanticProjection)
     }
-    results.push({ record, vectors, recordSha256: worker.recordSha256, independent: { ...(conditionalTransactionBindings ? { conditionalTransactionBindings } : {}), funding: funding.id('hex'), ...(conformance ? { preScenarioReserves: nativeFundingRoots.slice(1), recoveryScope: 'unaffected-preexisting-funds' } : {}), create: create.id('hex'), redemption: spend.id('hex'), valueConserved: true, fee: inputs - outputs } })
+    results.push({ record, vectors, recordSha256: worker.recordSha256, independent: { ...(conditionalTransactionBindings ? { conditionalTransactionBindings } : {}), ...(transactionStateBindings ? { transactionStateBindings } : {}), ...(submissionAncestryBindings ? { submissionAncestryBindings } : {}), funding: funding.id('hex'), ...(conformance ? { preScenarioReserves: nativeFundingRoots.slice(1), recoveryScope: 'unaffected-preexisting-funds' } : {}), create: create.id('hex'), redemption: spend.id('hex'), valueConserved: true, fee: inputs - outputs } })
   }
   assert.equal(canonicalJson(results[0]!.vectors.map(vector => vector.outcome)), canonicalJson(results[1]!.vectors.map(vector => vector.outcome)))
   assert.equal(canonicalJson(results[0]!.record.semanticProjection), canonicalJson(results[1]!.record.semanticProjection))
   if (conformance) verifyConformanceRepetitionAgreement(conformanceSemanticProjections)
-  return { schema: conformance ? 'tpnil-native-wallet-qualification@2.0.0' : 'tpnil-native-wallet-qualification@1.0.0', claim: 'EXPERIMENTAL_CONFORMANCE_RESULT', itcve: plan.itcve, program: plan.program, lane: plan.lane, planSha256: lock.planSha256, source: lock.source, image: lock.image, qualifiedEnvironment: true, artifact: plan.wallet, vectors: results[0]!.vectors, outcome: aggregateOutcome(results[0]!.vectors), repetitionMatch: true, repetitions: results.map((result, index) => ({ runId: `repetition-${index + 1}`, recordSha256: result.recordSha256, independent: result.independent })) }
+  return { schema: conformance ? 'tpnil-native-wallet-qualification@2.0.0' : 'tpnil-native-wallet-qualification@1.0.0', claim: candidate ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT', ...(candidate ? { walletCandidate: plan.walletCandidate } : {}), itcve: plan.itcve, program: plan.program, lane: plan.lane, planSha256: lock.planSha256, source: lock.source, image: lock.image, qualifiedEnvironment: true, artifact: plan.wallet, vectors: results[0]!.vectors, outcome: aggregateOutcome(results[0]!.vectors), repetitionMatch: true, repetitions: results.map((result, index) => ({ runId: `repetition-${index + 1}`, recordSha256: result.recordSha256, independent: result.independent })) }
 }
 if (process.argv[1]?.endsWith('/native/verify.ts')) {
   const directory = path.resolve(process.argv[2] ?? '')

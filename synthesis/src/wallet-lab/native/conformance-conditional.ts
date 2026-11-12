@@ -4,18 +4,19 @@ import type { EvidenceBundle } from '../evidence.js'
 import type { ControlledWalletServices } from '../services.js'
 import { issueFixtureCertificateForSubject } from '../certificate-fixture.js'
 import { captureClauseError } from './conformance-clauses.js'
-import { conditionalQueryCases, conditionalBasket, conditionalConfig as config, conditionalPolicy, conditionalPolicySha256, type ConditionalReport } from './conformance-conditional-model.js'
+import { conditionalQueryCases, conditionalBasket, conditionalConfig as config, conditionalPolicySelection, type ConditionalReport } from './conformance-conditional-model.js'
 import { createConditionalIssuer, conditionalIssuanceModes } from './conformance-conditional-issuer.js'
 import { deriveConditionalOutcomes } from './verify-conformance-conditional.js'
 
 /** Additional stateful public-API observations; never changes wallet private state. */
-export async function runNativeConditionalConformance({ wallet, services, evidence, boundaryReport }: {
-  wallet: BoundaryWallet; services: ControlledWalletServices; evidence: EvidenceBundle; boundaryReport: any
+export async function runNativeConditionalConformance({ wallet, services, evidence, boundaryReport, fixtureRevision = 1 }: {
+  wallet: BoundaryWallet; services: ControlledWalletServices; evidence: EvidenceBundle; boundaryReport: any; fixtureRevision?: 1 | 2
 }): Promise<ConditionalReport> {
+  const { oracle, policy, policySha256 } = conditionalPolicySelection(fixtureRevision)
   const identity = boundaryReport.trace.find((row: any) => row.method === 'getPublicKey' && row.args?.identityKey === true)?.result?.publicKey
   if (!identity) throw Error('Conditional corpus requires the independently observed native identity')
-  const report: ConditionalReport = { schema: 'tpnil-native-conditional@1.0.0', oracle: 'tpnil-native-conditional-oracle@1.0.0', claim: 'ENGINEERING_OBSERVATION_ONLY', policySha256: conditionalPolicySha256, identity,
-    trace: [], certificates: [], issuer: {}, errors: [], transactions: [], submissions: [], assertions: [], remainingCoverage: structuredClone(conditionalPolicy.remainingCoverage), completeBRC100Conformance: false, result: 'BLOCKED' }
+  const report: ConditionalReport = { schema: 'tpnil-native-conditional@1.0.0', oracle, claim: 'ENGINEERING_OBSERVATION_ONLY', policySha256, identity,
+    trace: [], certificates: [], issuer: {}, errors: [], transactions: [], submissions: [], assertions: [], remainingCoverage: structuredClone(policy.remainingCoverage), completeBRC100Conformance: false, result: 'BLOCKED' }
   const issuer = createConditionalIssuer()
   const unregister = services.registerControlledRoute('certifier.itcve.test', issuer.handle)
   async function call(id: string, method: string, args: any) {
@@ -56,8 +57,8 @@ export async function runNativeConditionalConformance({ wallet, services, eviden
       await call(`basket-query-${length}`, 'listOutputs', { basket, include: 'locking scripts' })
       await call(`basket-utf8-${length}`, 'listOutputs', { basket: conditionalBasket(length, true) })
     }
-    const first = population[0]?.result, second = population[1]?.result
-    if (first?.tx && first.txid && second?.tx && second.txid) {
+    const first = population[0]?.result, second = population[1]?.result, signingSource = population[fixtureRevision === 2 ? 2 : 0]?.result
+    if (first?.tx && first.txid && second?.tx && second.txid && signingSource?.tx && signingSource.txid) {
       const sourceOutpoint = (value: any) => {
         const index = Transaction.fromAtomicBEEF(value.tx).outputs.findIndex(output => output.satoshis === config.satoshis && output.lockingScript.toHex() === config.lockingScript)
         if (index < 0) throw Error('Conditional fixture output absent')
@@ -73,7 +74,8 @@ export async function runNativeConditionalConformance({ wallet, services, eviden
       const omitted = new Beef(); omitted.mergeTxidOnly(first.txid)
       const trusted = await call('known-proof-omission', 'createAction', { ...base, inputBEEF: omitted.toBinary(), options: { ...base.options, trustSelf: 'known', knownTxids: [first.txid] } })
       if (trusted.result?.signableTransaction?.reference) await call('known-proof-abort', 'abortAction', { reference: trusted.result.signableTransaction.reference })
-      const prepared = await call('signable', 'createAction', base)
+      const signing = fixtureRevision === 2 ? { ...base, inputBEEF: signingSource.tx, inputs: [{ ...source, outpoint: sourceOutpoint(signingSource) }] } : base
+      const prepared = await call('signable', 'createAction', signing)
       if (prepared.result?.signableTransaction?.reference) await call('signed', 'signAction', { reference: prepared.result.signableTransaction.reference, spends: { 0: { unlockingScript: '51' } }, options: { acceptDelayedBroadcast: false } })
       const abort = await call('abort-prepare', 'createAction', { ...base, inputBEEF: second.tx, inputs: [{ ...source, outpoint: secondOutpoint }] })
       if (abort.result?.signableTransaction?.reference) await call('aborted', 'abortAction', { reference: abort.result.signableTransaction.reference })
@@ -132,6 +134,10 @@ export async function runNativeConditionalConformance({ wallet, services, eviden
     }
   } catch (error) { report.errors.push(error instanceof Error ? error.message : String(error)) }
   finally { unregister() }
+  if (fixtureRevision === 2) {
+    const txids = new Set(population.map(row => row.result?.txid).filter((txid): txid is string => typeof txid === 'string'))
+    report.actionReferences = (await services.nativeActionReferences(identity)).filter(row => txids.has(row.txid))
+  }
   report.issuer = { identity: issuer.identity, receipts: issuer.receipts, exchanges: issuer.exchanges, authMessages: issuer.authMessages }
   report.submissions = services.submissions.map((row, index) => ({ index, txid: row.txid, serializedHex: Buffer.from(row.bytes).toString('hex'), verdict: row.verdict }))
   const identities = new Set<string>()

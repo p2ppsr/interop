@@ -14,13 +14,15 @@ function vector(id: VectorResult['id'], report: any, file: string, limitations: 
   return { id, outcome, assertions, limitations }
 }
 
-export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' = 'legacy'): Promise<{ vectors: VectorResult[] }> {
-  const release511 = nativeRevision === 'yours-5.1.1'
+export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' = 'legacy', fixtureRevision: 1 | 2 = 1): Promise<{ vectors: VectorResult[] }> {
+  const candidate = nativeRevision === 'pr368-7e39006'
+  const release511 = candidate || nativeRevision === 'yours-5.1.1'
+  if (fixtureRevision === 2 && !release511) throw new Error('Fixture revision2 requires the explicit release511-family profile')
   if (release511 && !closure) throw new Error('Yours5.1.1 requires the complete native closure')
   coverage = coverage || closure
   const { application, services, evidence, baselineVectors } = context
-  const profile = release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
-  const program = release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
+  const profile = candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
+  const program = candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
   const wallet = nativeWalletBoundary(application, true)
   const permission = await context.manualPrompt(() => runNativePermissionConformance({ context: context.context, evidence, extensionId: context.extensionId, trustedClick: closure }))
   const lifecycle = await runConformanceLifecycle(wallet, services, { receiptMode: 'storage-rpc', oracle: lifecycleOracleId, submissionBinding: todoSubmissionBinding })
@@ -28,14 +30,18 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   const portability = await runNativePortability({ application, services, evidence, password: context.password, oracle: coverage ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' })
   let clauses: any
   let conditional: any
-  await runNativeIntegration({ application, services, evidence, profile, beforeTrustRestore: async boundaryReport => {
-    clauses = await runNativeClauseConformance({ wallet, evidence, boundaryReport, ...(release511 ? { oracle: 'tpnil-brc100-clause-oracle@5.0.0' as const } : coverage ? { oracle: 'tpnil-brc100-clause-oracle@4.0.0' as const } : {}) })
-    if (release511) conditional = await runNativeConditionalConformance({ wallet, services, evidence, boundaryReport })
+  let transactionStates: any
+  let certificateStates: any
+  await runNativeIntegration({ application, services, evidence, profile, fixtureRevision, beforeTrustRestore: async boundaryReport => {
+    clauses = await runNativeClauseConformance({ wallet, evidence, boundaryReport, ...(release511 ? { oracle: fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' as const : 'tpnil-brc100-clause-oracle@5.0.0' as const } : coverage ? { oracle: 'tpnil-brc100-clause-oracle@4.0.0' as const } : {}) })
+    if (release511) conditional = await runNativeConditionalConformance({ wallet, services, evidence, boundaryReport, fixtureRevision })
+    if (fixtureRevision === 2) transactionStates = await (await import('./conformance-transaction-states.js')).runNativeTransactionStates({ wallet, services, evidence, boundaryReport })
+    if (fixtureRevision === 2) certificateStates = await (await import('./conformance-certificate-states.js')).runNativeCertificateStates({ wallet, services, evidence, boundaryReport })
   } })
   if (!clauses) throw new Error('Native clause scenario did not execute')
   const permissionLifecycle = coverage ? await context.manualPrompt(async () => (await import('./conformance-permission-lifecycle.js')).runNativePermissionLifecycle(context, { trustedClick: closure })) : undefined
   if (permissionLifecycle) evidence.addJson('conformance/permission-lifecycle.json', permissionLifecycle)
-  const permissionCoverage = release511 ? await context.manualPrompt(async () => (await import('./conformance-permission-coverage.js')).runNativePermissionCoverage(context)) : undefined
+  const permissionCoverage = release511 ? await context.manualPrompt(async () => (await import('./conformance-permission-coverage.js')).runNativePermissionCoverage(context, fixtureRevision === 2 ? 3 : 1)) : undefined
   const vectors = structuredClone(baselineVectors)
   vectors[4] = vector('ISI-4-V005', permission, 'conformance/permissions.json', ['Visible native permission UI and public CWI; other wallet substrates retain separate admission.'])
   if (permissionLifecycle) {
@@ -53,6 +59,14 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   if (conditional) {
     const added = vector('ISI-4-V008', conditional, 'conformance/conditional.json')
     vectors[7] = { ...vectors[7]!, assertions: [...vectors[7]!.assertions, ...added.assertions.map(row => ({ ...row, id: `conditional/${row.id}` }))], outcome: aggregateOutcome([vectors[7]!, added]) }
+  }
+  if (transactionStates) {
+    const added = vector('ISI-4-V008', transactionStates, 'conformance/transaction-states.json')
+    vectors[7] = { ...vectors[7]!, assertions: [...vectors[7]!.assertions, ...added.assertions.map(row => ({ ...row, id: `transaction-states/${row.id}` }))], outcome: aggregateOutcome([vectors[7]!, added]) }
+  }
+  if (certificateStates) {
+    const added = vector('ISI-4-V008', certificateStates, 'conformance/certificate-states.json')
+    vectors[7] = { ...vectors[7]!, assertions: [...vectors[7]!.assertions, ...added.assertions], outcome: aggregateOutcome([vectors[7]!, added]) }
   }
   evidence.addJson('conformance/result.json', { schema: release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0', profile, program, claim: 'ENGINEERING_OBSERVATION_ONLY', vectors, outcome: aggregateOutcome(vectors) })
   return { vectors }

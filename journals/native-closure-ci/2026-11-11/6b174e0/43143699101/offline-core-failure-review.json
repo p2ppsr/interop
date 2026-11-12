@@ -1,0 +1,30 @@
+{
+  "schema": "tpnil-foundation-failure-stage-review@1",
+  "run": 43143699101,
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "job": 130936462660,
+  "failureStep": "node journals/native-nosend-change/2026-11-09/oracle4-preflight/replay.mjs",
+  "cause": "Historical preflight hashes mutable current clause selector source; new oracle5 edits changed two checker inputs. No historical artifact mismatch detected.",
+  "changedBindings": [
+    "synthesis/src/wallet-lab/native/conformance-clauses.ts",
+    "synthesis/src/wallet-lab/native/verify-conformance-clauses.ts"
+  ],
+  "coreNodeTestCounts": [
+    [
+      "133",
+      "133",
+      "0",
+      "0"
+    ]
+  ],
+  "synthesisVitestCounts": [
+    [
+      "438",
+      "10",
+      "448"
+    ]
+  ],
+  "fullLogSha256": "0ebd7bf6532c8c967095c60f87837d1f5114ffa216d86ca77e87696bf3fc3257",
+  "otherJobs": "Still running; final workflow cost incomplete",
+  "sourceChangesMadeByReviewer": false
+}

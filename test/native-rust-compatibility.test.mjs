@@ -10,7 +10,8 @@ const root=path.resolve(import.meta.dirname,'..'),sha=b=>createHash('sha256').up
 const planPath='infra/native/conformance/plan-coverage-closure.json',plan=JSON.parse(read(planPath)),planSha256=sha(read(planPath)),source='ab'.repeat(20)
 const graphPath='components/rust/graph-oracle-3.0.0.json',graphManifest=JSON.parse(read(graphPath))
 const graphOracle={id:graphManifest.schema,manifest:graphPath,manifestSha256:sha(read(graphPath)),operation:graphManifest.operation,cargoFeature:graphManifest.cargoFeature}
-const options={read,readCommitted:(revision,file)=>{assert.equal(revision,source);return read(file)},graphPolicy:()=>({corpus:'tpnil-rust-corpus@3',graphOracle})}
+const historicalRead=file=>nativeRustCompatibilitySources.includes(file)?execFileSync('git',['show',`6b174e0b903225923999a44fb1de7d67cc4e2959:${file}`],{cwd:root}):read(file)
+const options={read:historicalRead,readCommitted:(revision,file)=>{assert.equal(revision,source);return historicalRead(file)},graphPolicy:()=>({corpus:'tpnil-rust-corpus@3',graphOracle})}
 async function lock(){return {source,plan,planSha256,executionVariant:nativeRustV3Variant,rustCompatibility:await nativeRustBinding(plan,planSha256,source,options)}}
 
 test('native callers without explicit binding retain corpus2 without loading optional dependencies',async()=>{
@@ -32,14 +33,14 @@ test('compatibility metadata is bound to its original Git source, preventing c33
 test('every selector/runner/verifier/workflow input must exist unchanged at execution source',async()=>{
   const original=await lock()
   for(const changed of [nativeRustCompatibilityPath,nativeRustOriginalCompatibilityPath,planPath,graphPath,...nativeRustCompatibilitySources,...Object.keys(graphManifest.sources)]) {
-    await assert.rejects(selectNativeRustCorpus(original,{...options,readCommitted:(revision,file)=>file===changed?Buffer.concat([read(file),Buffer.from(' changed')]):options.readCommitted(revision,file)}))
+    await assert.rejects(selectNativeRustCorpus(original,{...options,readCommitted:(revision,file)=>file===changed?Buffer.concat([historicalRead(file),Buffer.from(' changed')]):options.readCommitted(revision,file)}))
   }
 })
 test('compatibility source inventory and Rust/native policy substitutions fail closed',async()=>{
   const original=await lock()
   for(const mutate of [m=>delete m.sources['scripts/run-native-go-wallet.mjs'],m=>m.nativePlan.profile='ITCVE-1@1.5.0',m=>m.rustCorpus='tpnil-rust-corpus@2',m=>m.graphOracle.operation='spends']){
     const manifest=JSON.parse(read(nativeRustCompatibilityPath));mutate(manifest);const bytes=Buffer.from(JSON.stringify(manifest));
-    const changedRead=file=>file===nativeRustCompatibilityPath?bytes:read(file)
+    const changedRead=file=>file===nativeRustCompatibilityPath?bytes:historicalRead(file)
     await assert.rejects(selectNativeRustCorpus(original,{...options,read:changedRead,readCommitted:(_revision,file)=>changedRead(file)}))
   }
 })

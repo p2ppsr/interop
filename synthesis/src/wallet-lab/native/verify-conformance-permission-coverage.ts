@@ -6,8 +6,9 @@ import { createHash } from 'node:crypto'
 import { Beef, BigNumber, KeyDeriver, Point, PrivateKey, ProtoWallet, PublicKey, Schnorr, Transaction, VerifiableCertificate } from '@bsv/sdk'
 import { canonicalJson } from '../../determinism.js'
 import { verifyPermissionCallNonces, verifyPermissionClick, type PermissionClickReceipt } from './permission-click.js'
+import { coverageSpendingSummary } from './permission-coverage-observer.js'
 import { assertNoDeniedPermissionPayment } from './verify-conformance-permission-lifecycle.js'
-import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageStepOrder, coverageVerifier, permissionCoverageAssertionIds, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageOracle, permissionCoveragePolicy, permissionCoveragePolicySha256, type CoverageRevocation, type CoverageStep, type NativePermissionCoverageReport, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
+import { coverageCertificateSerial, coverageCertificateType, coverageCategoryCall, coverageManifest, coveragePaymentArgs, coveragePaymentScript, coveragePeer, coverageVerifier, permissionCoverageCategories, permissionCoverageConfig as config, permissionCoverageSelection, type CoverageRevocation, type CoverageStep, type NativePermissionCoverageReport, type PermissionCoverageCategory } from './conformance-permission-coverage-model.js'
 
 const funding = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
 const same = (left: unknown, right: unknown) => assert.equal(canonicalJson(left), canonicalJson(right))
@@ -23,7 +24,16 @@ export function assertNoCoverageDeniedPayments(submissions: Array<{ txid: string
   for (const kind of Object.values(deniedKinds)) assertNoDeniedPermissionPayment(submissions, coveragePaymentScript, config.paymentAmounts[kind])
 }
 
+export function verifyCoverageRevocationClick(receipt: PermissionClickReceipt, row: CoverageRevocation, button: string, body: string) {
+    assert.equal(receipt.schema, 'tpnil-native-permission-click@2'); assert.equal(receipt.callNonce, row.requestNonce); assert.equal(receipt.popupUrl, row.pageUrl); assert.equal(receipt.button, button); assert.match(receipt.nonce, /^[a-f0-9-]{36}$/)
+    const event = receipt.dispatch; assert.ok(event); assert.equal(event.nonce, receipt.nonce); assert.equal(event.url, row.pageUrl); assert.equal(event.button, button); assert.equal(event.body, body); assert.equal(event.type, 'click'); assert.equal(event.isTrusted, true); assert.equal(event.visible, true); assert.equal(event.disabled, false); assert.equal(event.mouseButton, 0); assert.equal(event.eventPhase, 1); assert.equal(event.expectedPage, true); assert.equal(event.expectedMainFrame, true)
+    const ordered = [row.startedAt, receipt.armedAt, receipt.attemptStartedAt, event.dispatchedAt, event.receivedAt, receipt.completedAt, row.endedAt].map(time); assert.ok(ordered.every((value, i) => !i || ordered[i - 1]! <= value)); assert.equal(receipt.automation.status, 'fulfilled')
+  }
+
 export async function evaluateNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string) {
+  const revision = report.oracle === 'tpnil-native-permission-coverage-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-permission-coverage-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-permission-coverage-oracle@3.0.0' ? 3 : undefined
+  assert.ok(revision, 'Unknown permission coverage oracle')
+  const { config, oracle, policy, policySha256, assertionIds, stepOrder } = permissionCoverageSelection(revision)
   const step = (id: string) => { const rows = report.steps.filter(row => row.id === id); assert.equal(rows.length, 1, `Exactly one ${id} observation required`); return rows[0]! }
   const success = (id: string) => { const row = step(id); assert.equal(row.outcome.status, 'fulfilled', `${id}: ${row.outcome.error?.message ?? row.outcome.message ?? row.outcome.status}`); assert.equal(row.outcome.error, undefined); return row.outcome.value }
   const image = (value: any, expectedName: string) => {
@@ -32,10 +42,10 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
   }
   const originFor = (id: string) => id === 'identity' || id.startsWith('setup-') ? config.application : id.endsWith('-alternate-deny') || id === 'allowance-alternate' ? config.alternate : id.startsWith('manifest-') || id.startsWith('allowance-') ? config.allowance : config.primary
   const common = () => {
-    assert.equal(report.schema, 'tpnil-native-permission-coverage@1.0.0'); assert.equal(report.oracle, permissionCoverageOracle); assert.equal(report.policySha256, permissionCoveragePolicySha256)
-    assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false); same(report.remainingCoverage, permissionCoveragePolicy.remainingCoverage)
+    assert.equal(report.schema, 'tpnil-native-permission-coverage@1.0.0'); assert.equal(report.oracle, oracle); assert.equal(report.policySha256, policySha256)
+    assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false); same(report.remainingCoverage, policy.remainingCoverage)
     assert.equal(report.identity, expectedIdentity); assert.equal(PublicKey.fromString(expectedIdentity).toString(), expectedIdentity); assert.match(report.extensionId, /^[a-p]{32}$/)
-    same(report.steps.map(row => row.id), coverageStepOrder); verifyPermissionCallNonces(report.steps)
+    same(report.steps.map(row => row.id), stepOrder); verifyPermissionCallNonces(report.steps)
     assert.ok(time(report.startedAt) <= time(report.endedAt)); assert.equal(report.submissionWindow.endIndex, report.submissions.length)
     assert.ok(Number.isSafeInteger(report.submissionWindow.startIndex) && report.submissionWindow.startIndex >= 0 && report.submissionWindow.startIndex <= report.submissionWindow.endIndex)
     for (const [index, row] of report.steps.entries()) {
@@ -96,7 +106,10 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
       try { submitted = Transaction.fromAtomicBEEF(bytes) } catch { submitted = Transaction.fromBinary(bytes) }
       assert.equal(submitted.toHex(), tx.toHex())
       if (role === 'setup-basket') same(row.args, { description: 'TPNIL permission coverage basket fixture', outputs: [{ satoshis: config.basketAmount, lockingScript: '51', basket: config.basket, outputDescription: 'Native permission coverage fixture', customInstructions: 'tpnil:permission-coverage:1' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
-      else same(row.args, coveragePaymentArgs(role === 'allowance-first' ? 'first' : 'second'))
+      else {
+        const kind = role === 'allowance-first' ? 'first' : role === 'allowance-second' ? 'second' : role === 'allowance-third' && revision === 3 ? 'third' : undefined
+        assert.ok(kind, `Unknown accepted allowance role ${role}`); same(row.args, coveragePaymentArgs(kind, revision))
+      }
       assert.equal(tx.outputs[0]!.satoshis, row.args.outputs[0].satoshis); assert.equal(tx.outputs[0]!.lockingScript.toHex(), row.args.outputs[0].lockingScript)
       return tx
     })())
@@ -151,19 +164,15 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
       const screenshot = readEvidence(`conformance/restart-${index + 1}-unlocked.png`); assert.equal(screenshot.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
     }
   }
-  const uiClick = (receipt: PermissionClickReceipt, row: CoverageRevocation, button: string, body: string) => {
-    assert.equal(receipt.schema, 'tpnil-native-permission-click@2'); assert.equal(receipt.callNonce, row.requestNonce); assert.equal(receipt.popupUrl, row.pageUrl); assert.equal(receipt.button, button); assert.match(receipt.nonce, /^[a-f0-9-]{36}$/)
-    const event = receipt.dispatch; assert.ok(event); assert.equal(event.nonce, receipt.nonce); assert.equal(event.url, row.pageUrl); assert.equal(event.button, button); assert.equal(event.body, body); assert.equal(event.type, 'click'); assert.equal(event.isTrusted, true); assert.equal(event.visible, true); assert.equal(event.disabled, false); assert.equal(event.mouseButton, 0); assert.equal(event.eventPhase, 1); assert.equal(event.expectedPage, true); assert.equal(event.expectedMainFrame, true)
-    const ordered = [row.startedAt, receipt.armedAt, receipt.attemptStartedAt, event.dispatchedAt, event.receivedAt, receipt.completedAt, row.endedAt].map(time); assert.ok(ordered.every((value, i) => !i || ordered[i - 1]! <= value)); assert.equal(receipt.automation.status, 'fulfilled')
-  }
   const revocations = () => {
     same(report.revocations.map(row => row.id), ['revoke-primary', 'revoke-allowance'])
     const nonces = new Set<string>()
     for (const [index, row] of report.revocations.entries()) {
       assert.equal(row.origin, index ? config.allowance : config.primary); assert.equal(row.pageUrl, `chrome-extension://${report.extensionId}/index.html`); assert.match(row.requestNonce, /^[a-f0-9-]{36}$/)
       assert.equal(row.cardBody.split('\n')[0], new URL(row.origin).host); assert.ok(row.cardBody.includes(config.basket)); assert.ok(row.cardBody.includes(config.protocol[1]))
+      if (revision >= 2) { assert.ok(row.beforeBody.includes(row.cardBody)); if (index) assert.ok(coverageSpendingSummary(row.cardBody, config.allowanceSatoshis), 'Standing allowance monthly usage must be visible before revocation') }
       assert.ok(row.confirmationBody.includes(`Revoke all access for ${new URL(row.origin).host}? This revokes every permission granted to this app.`)); assert.equal(row.afterOriginCardCount, 0)
-      uiClick(row.revoke, row, 'Revoke All Access', row.beforeBody); uiClick(row.confirm, row, 'Confirm', row.confirmationBody); assert.ok(time(row.revoke.completedAt) <= time(row.confirm.attemptStartedAt))
+      verifyCoverageRevocationClick(row.revoke, row, 'Revoke All Access', row.beforeBody); verifyCoverageRevocationClick(row.confirm, row, 'Confirm', row.confirmationBody); assert.ok(time(row.revoke.completedAt) <= time(row.confirm.attemptStartedAt))
       for (const nonce of [row.requestNonce, row.revoke.nonce, row.confirm.nonce]) { assert.ok(!nonces.has(nonce)); nonces.add(nonce) }
       for (const kind of ['before', 'confirmation', 'after'] as const) image(row[kind], `conformance/coverage-${row.id}-${kind}.png`)
       assert.ok(time(step('allowance-alternate').endedAt) <= time(row.startedAt) && time(row.endedAt) <= time(step('protocol-revoked').startedAt))
@@ -181,12 +190,12 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
     const ordered = [row.startedAt, selection.startedAt, event.dispatchedAt, event.receivedAt, selection.endedAt, p.clickedAt].map(time); assert.ok(ordered.every((value, i) => !i || ordered[i - 1]! <= value))
     for (const category of ['protocol', 'basket', 'certificate'] as const) await positive(category, `manifest-${category}`, true)
   }
-  const spent = async (role: 'allowance-first' | 'allowance-second') => {
+  const spent = async (role: 'allowance-first' | 'allowance-second' | 'allowance-third') => {
     assert.equal(step(role).prompts.length, 0); const tx = await transaction(role)
     const fee = tx.inputs.reduce((total, input) => total + input.sourceTransaction!.outputs[input.sourceOutputIndex]!.satoshis!, 0) - tx.outputs.reduce((total, output) => total + output.satoshis!, 0)
     assert.ok(Number.isSafeInteger(fee) && fee >= 0); return tx.outputs[0]!.satoshis! + fee
   }
-  const denyPayment = (id: keyof typeof deniedKinds) => { same(step(id).args, coveragePaymentArgs(deniedKinds[id])); assert.equal(step(id).method, 'createAction'); rejected(id, 'spending'); assertNoCoverageDeniedPayments(report.submissions.slice(report.submissionWindow.startIndex)) }
+  const denyPayment = (id: keyof typeof deniedKinds) => { same(step(id).args, coveragePaymentArgs(deniedKinds[id], revision)); assert.equal(step(id).method, 'createAction'); rejected(id, 'spending'); assertNoCoverageDeniedPayments(report.submissions.slice(report.submissionWindow.startIndex)) }
   const predicates: Array<() => unknown | Promise<unknown>> = [
     ...permissionCoverageCategories.map(category => async () => { prompt(`${category}-grant`, 'allow', category); await positive(category, `${category}-grant`); await positive(category, `${category}-cached`, true) }),
     ...permissionCoverageCategories.map(category => () => { categoryArgs(category, `${category}-alternate-deny`); rejected(`${category}-alternate-deny`, category) }),
@@ -196,15 +205,16 @@ export async function evaluateNativePermissionCoverage(report: NativePermissionC
     ...permissionCoverageCategories.map(category => () => { restarts(); revocations(); for (const suffix of ['revoked', 'revoked-restart']) { categoryArgs(category, `${category}-${suffix}`); rejected(`${category}-${suffix}`, category) } }),
     manifest,
     async () => { await manifest(); restarts(); const first = await spent('allowance-first'), second = await spent('allowance-second'); assert.ok(first > 0 && first + second <= config.allowanceSatoshis) },
-    async () => { const first = await spent('allowance-first'), second = await spent('allowance-second'); assert.ok(config.paymentAmounts.overflow < config.allowanceSatoshis); assert.ok(first + second <= config.allowanceSatoshis && first + second + config.paymentAmounts.overflow > config.allowanceSatoshis); denyPayment('allowance-overflow') },
+    ...(revision === 3 ? [async () => { await manifest(); restarts(); const total = await spent('allowance-first') + await spent('allowance-second') + await spent('allowance-third'); assert.equal(config.allowanceSatoshis, 100); assert.equal(total, 100, 'The three signed payments including actual fees must reach the fixed100-satoshi cap exactly'); revocations(); same(coverageSpendingSummary(report.revocations[1]!.cardBody, config.allowanceSatoshis), { cap: 100, spent: total, remaining: 0 }) }] : []),
+    async () => { const first = await spent('allowance-first'), second = await spent('allowance-second'), third = revision === 3 ? await spent('allowance-third') : 0; assert.ok(config.paymentAmounts.overflow < config.allowanceSatoshis); assert.ok(first + second + third <= config.allowanceSatoshis && first + second + third + config.paymentAmounts.overflow > config.allowanceSatoshis); denyPayment('allowance-overflow') },
     () => denyPayment('allowance-alternate'),
     () => { revocations(); restarts(); denyPayment('allowance-revoked'); denyPayment('allowance-revoked-restart') },
-    () => { same(report.cleanup, { pagesClosed: true, settingsClosed: true, routeUnregistered: true }); same(report.errors, []); same(report.transactions.map(row => row.role), ['setup-basket', 'allowance-first', 'allowance-second']) }
+    () => { same(report.cleanup, { pagesClosed: true, settingsClosed: true, routeUnregistered: true }); same(report.errors, []); same(report.transactions.map(row => row.role), ['setup-basket', 'allowance-first', 'allowance-second', ...(revision === 3 ? ['allowance-third'] : [])]) }
   ]
-  assert.equal(predicates.length, permissionCoverageAssertionIds.length)
+  assert.equal(predicates.length, assertionIds.length)
   return await Promise.all(predicates.map(async (predicate, index) => {
-    try { common(); await predicate(); return { id: permissionCoverageAssertionIds[index]!, result: 'PASS' as const, detail: 'Declared native permission case independently verified from public results, trusted UI, restart receipts and retained transactions.' } }
-    catch (error) { return { id: permissionCoverageAssertionIds[index]!, result: 'FAIL' as const, detail: error instanceof Error ? error.message : String(error) } }
+    try { common(); await predicate(); return { id: assertionIds[index]!, result: 'PASS' as const, detail: 'Declared native permission case independently verified from public results, trusted UI, restart receipts and retained transactions.' } }
+    catch (error) { return { id: assertionIds[index]!, result: 'FAIL' as const, detail: error instanceof Error ? error.message : String(error) } }
   }))
 }
 

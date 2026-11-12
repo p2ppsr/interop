@@ -5,6 +5,12 @@ import { createHash } from 'node:crypto'
 const policyBytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json'))
 export const conditionalPolicy = JSON.parse(policyBytes.toString())
 export const conditionalPolicySha256 = createHash('sha256').update(policyBytes).digest('hex')
+const revision2Bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json'))
+export function conditionalPolicySelection(revision: 1 | 2 = 1) {
+  if (revision !== 1 && revision !== 2) throw new Error(`Unsupported conditional fixture revision ${revision}`)
+  const policy = revision === 1 ? conditionalPolicy : JSON.parse(revision2Bytes.toString())
+  return { revision, policy, oracle: policy.oracle as 'tpnil-native-conditional-oracle@1.0.0' | 'tpnil-native-conditional-oracle@2.0.0', policySha256: revision === 1 ? conditionalPolicySha256 : createHash('sha256').update(revision2Bytes).digest('hex') }
+}
 export const conditionalConfig = {
   basket: 'tpnil conditional population', label: 'tpnil conditional population',
   population: 11, satoshis: 2, lockingScript: '7551',
@@ -16,9 +22,10 @@ export const conditionalConfig = {
 } as const
 export interface ConditionalCall { id: string; method: string; args: any; result?: any; error?: any; submissionStart: number; submissionEnd: number }
 export interface ConditionalReport {
-  schema: 'tpnil-native-conditional@1.0.0'; oracle: 'tpnil-native-conditional-oracle@1.0.0'
+  schema: 'tpnil-native-conditional@1.0.0'; oracle: ReturnType<typeof conditionalPolicySelection>['oracle']
   claim: 'ENGINEERING_OBSERVATION_ONLY'; policySha256: string; identity: string
   trace: ConditionalCall[]; certificates: any[]; issuer: any; errors: string[]
+  actionReferences?: Array<{ txid: string; reference: string }>
   transactions: Array<{ role: string; txid: string; atomicBeef: number[] }>
   submissions: Array<{ index: number; txid: string; serializedHex: string; verdict: string }>
   assertions: Array<{ id: string; result: 'PASS' | 'FAIL' | 'BLOCKED'; detail: string }>

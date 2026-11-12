@@ -1,0 +1,11 @@
+# Official Yours5.1.1 failed observer attempt
+
+Run [43143722884](https://github.com/p2ppsr/interop/actions/runs/43143722884) used exact source6b174e0 and the original official5.1.1 plan. Its original GitHub artifact ZIP is retained byte-for-byte, including both complete native observations. Independent verification failed on conditional diagnostic JSON key ordering:20 failure detail strings differed after canonical serialization, while all84 assertion IDs/outcomes matched. This is a failed attempt, not an environment qualification. Neither Rust graph ran and neither qualification receipt was written.
+
+Both repetitions retain392 observations:338 PASS,45 FAIL,9 BLOCKED. The original99 failures are now87 PASS,10 FAIL,2 BLOCKED in each diagnostic comparison. Two improvements are exact reserved-namespace oracle corrections;85 are observed artifact/component improvements. The integrated component corpus is71 PASS/6 FAIL. These counts are diagnostic findings from a failed admission, never a complete BRC100 claim.
+
+Eight scoped independent gates per repetition passed, including exact artifact bytes, pinned mined ancestry, upfront reserves, the method-corpus payment, returned conditional transaction storage/funding binding, permission/clause transaction funding, and final shutdown submissions. No malformed-return exception was used. Both provider ledgers close at62 initial=62 final submissions, with no late tail and all denied payments absent. Full frozen-source host replay reproduces the observer failure; individual child receipts are retained separately.
+
+`original99-diagnostic.json.gz` is deterministic gzip of the full per-ID trace comparison, with stored/raw hashes in diagnostic-encoding.json. The independent-review directory preserves the reviewers, failed and passing scoped preflights, exact source/member inventories and nonempty child receipts. It does not rewrite any original artifact member. Replaying with corrected future observers must publish a separate assessment.
+
+Measured workflow use is2130 job-seconds; the new completed cohort totals5090 with prior source CI and candidate wallet build. Full monetary, owned-capacity, operator and development-agent costs remain unknown, not zero. No new paid capacity or public-mainnet broadcast was used.

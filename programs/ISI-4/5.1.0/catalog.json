@@ -1,0 +1,344 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-4",
+  "version": "5.1.0",
+  "status": "draft",
+  "title": "Engineering candidate native wallet conformance and application interoperability",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "4.1.0"
+  },
+  "profile": "candidate-wallet-native-engineering",
+  "vectors": [
+    {
+      "id": "ISI-4-V001",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R001",
+      "title": "Engineering candidate intake, initialization, and fixture funding",
+      "origin": "laboratory-profile",
+      "reference": "docs/intake.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified PR368 engineering candidate and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "For controlled-WAB profiles, a digest-pinned mature Teranode funding output and qualified SLAP/SHIP/UMP services"
+      ],
+      "steps": [
+        "Verify the unchanged production-release artifact and its installation identity.",
+        "Initialize through ordinary supported user interfaces with mainnet selected and explicitly configured ITCVE services.",
+        "Establish fixture output ownership, provenance, and declared spending eligibility against the controlled service model.",
+        "Complete the wallet\u2019s ordinary WAB authentication and recovery acknowledgement with an ITCVE-provisioned fixture account.",
+        "Observe the wallet submit and resolve its UMP record through the controlled root SLAP, SHIP, and topical overlay boundaries."
+      ],
+      "expected": [
+        "The artifact and configuration match the reviewed intake record. No special wallet build or regtest support is required.",
+        "Runtime observations identify which service boundaries are controlled and which are unresolved.",
+        "Fixture funding is distinguished from public-mainnet funds and acceptance.",
+        "The initial spendable balance descends from the declared Teranode-mined output and its verified block-header Merkle commitment.",
+        "The UMP record is admitted only after its canonical field predicates pass and is returned by the declared lookup keys."
+      ],
+      "evidence": [
+        "artifact-verification",
+        "configuration-record",
+        "runtime-routing-observations",
+        "fixture-provenance",
+        "initial-wallet-state",
+        "wab-authentication-observation",
+        "teranode-funding-atomic-beef",
+        "root-discovery-transcript",
+        "ump-submission-and-lookup"
+      ],
+      "blockers": [
+        "Wallet- and platform-specific prerequisites are reported as scored outcomes by the executable driver."
+      ]
+    },
+    {
+      "id": "ISI-4-V002",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R002",
+      "title": "Create encrypted ToDo token",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified PR368 engineering candidate and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Serve the nominated compiled ToDo tarball at https://todo.itcve.test.",
+        "Create the canonical task text and declared satoshi amount through ordinary application UI.",
+        "Capture wallet calls and validate the resulting transaction independently."
+      ],
+      "expected": [
+        "The task ciphertext decrypts under the declared protocol/key context.",
+        "The intended PushDrop output has the specified amount, locking semantics and todo tokens basket association.",
+        "Returned outpoint corresponds to actual serialized transaction bytes."
+      ],
+      "evidence": [
+        "app-and-wallet-trace",
+        "raw-transaction",
+        "pushdrop-fields",
+        "basket-state"
+      ],
+      "blockers": [
+        "Wallet- and platform-specific prerequisites are reported as scored outcomes by the executable driver."
+      ]
+    },
+    {
+      "id": "ISI-4-V003",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R003",
+      "title": "List, decrypt and cold reload",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified PR368 engineering candidate and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "List todo tokens with transaction data.",
+        "Clear application cache in a fresh browser context while preserving the same wallet identity and origin permissions.",
+        "Reload from the canonical origin and reconstruct the tasks from wallet state."
+      ],
+      "expected": [
+        "Every expected unspent task appears exactly once with correct plaintext and satoshi value.",
+        "Task reconstruction works without relying on the application P0 cache or UI-only success markers."
+      ],
+      "evidence": [
+        "listOutputs-transcript",
+        "BEEF",
+        "fresh-context-proof",
+        "rendered-task-observation"
+      ],
+      "blockers": [
+        "Wallet- and platform-specific prerequisites are reported as scored outcomes by the executable driver."
+      ]
+    },
+    {
+      "id": "ISI-4-V004",
+      "version": "1.0.0",
+      "requirementId": "ISI-4-R004",
+      "title": "Redeem token and verify spendability",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required within the declared evaluation scope; complete-program coverage is reported separately from the initial ToDo sequence.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified PR368 engineering candidate and application artifacts",
+        "Reviewed production-fidelity intake and declared mainnet configuration",
+        "Qualified ITCVE service dependencies, isolated fixture identity, and initial-state evidence",
+        "Vector-specific exact fixtures, causal barriers, and independent predicates adopted before execution"
+      ],
+      "steps": [
+        "Complete the canonical task through the application.",
+        "Observe createAction/signAction and the consumed output.",
+        "Reload and compare wallet output/action state with chain acceptance at declared barriers."
+      ],
+      "expected": [
+        "The redemption consumes the intended task outpoint with a valid unlocking script.",
+        "Spent output is absent from the unspent task set; value conservation includes explicit fees and change.",
+        "Spendability is established against the declared controlled service and wallet-state model; public-mainnet acceptance requires separate live evidence."
+      ],
+      "evidence": [
+        "unsigned-and-signed-transactions",
+        "spent-outpoint-proof",
+        "basket-and-balance-projections"
+      ],
+      "blockers": [
+        "Wallet- and platform-specific prerequisites are reported as scored outcomes by the executable driver."
+      ]
+    },
+    {
+      "id": "ISI-4-V005",
+      "version": "4.0.0",
+      "requirementId": "ISI-4-R005",
+      "title": "Native permissions, browser restart, allowances and denial through shutdown",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/39a643ff148a8dcd23ec08986a8ddeb7d5713743/wallet/0100.md",
+      "applicability": "Required for the declared native Chromium extension CWI profile. Other wallets, platforms and communications substrates require separate admission.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified Yours PR368 7e39006 engineering candidate and compiled ToDo artifacts",
+        "Supported mainnet configuration with pinned Go services, isolated fixture identity, and mined fixture funding",
+        "The prospective plan infra/native/conformance/plan-pr368-7e39006.json and independent predicates are fixed before execution"
+      ],
+      "steps": [
+        "With legacy automatic prompt decisions suspended, submit the same Level 2 protocol/key/counterparty request at two fresh controlled application origins through public window.CWI.",
+        "Require an explicit no-consent rejection, then approve the pending primary-origin request through the matching native Protocol Permission UI and verify cached access.",
+        "Prove the primary grant does not authorize the alternate origin; deny its matching pending prompt, verify denial creates no grant, and verify the primary grant survives.",
+        "Approve the alternate origin explicitly, verify both authorized derivations agree, and close all scenario-owned pages and prompts.",
+        "Run separately declared basket, certificate and one-shot spending approval/denial scenarios through public CWI and visible category-specific native prompts.",
+        "Revoke individual and origin-wide grants through Settings Permissions; prove loss of access, preservation of unrelated scope, and subsequent explicitly approved recovery.",
+        "Passively retain the exact trusted native click event before the wallet popup may close, and independently join the original terminal public CWI result to the same pending-call nonce.",
+        "After the last scenario, close the native browser and all owned controlled services, then capture every provider ledger with the original global prefix and provider-local suffix provenance.",
+        "Exercise protocol, basket, certificate and both linkage grant caches and origin isolation with distinct frozen contexts.",
+        "Close the native browser completely, reopen the same isolated profile, unlock through supported UI and repeat cached operations; revoke origin grants through Settings and prove revocation survives another full restart.",
+        "Serve a controlled application manifest and explicitly select the native spending checkbox; exercise two cumulative under-cap payments, cumulative overflow denial, alternate-origin denial and revocation.",
+        "Independently verify selected-field and linkage cryptography, trusted checkbox/click receipts, context identity continuity and every denied payment through all final provider ledger suffixes."
+      ],
+      "expected": [
+        "All eight frozen permissions assertions pass using the exact nine-call sequence and actual Allow/Deny decisions. The matching UI identifies origin, protocol, security level, and counterparty while the request is pending.",
+        "The exact same requested capability requires consent independently at each origin. Rejection after Deny preserves the primary grant and leaves the alternate origin unauthorized until explicit approval.",
+        "Timeouts, detached pages, network failures, unsupported methods, and observer errors do not qualify as permission denial. Three screenshot hashes bind the captured UI evidence.",
+        "All new category and revocation predicates must pass alongside the original eight protocol predicates. Generic errors, missing prompts and timeouts cannot establish permission denial; wallet state and cryptographic effects are independently verified.",
+        "A target-closed automation response may accompany a passing decision only when an actual trusted click and the matching terminal native result are retained. Missing events, stale request nonces, generic errors and timeouts never substitute for a wallet decision.",
+        "The complete post-shutdown provider inventory and submission ledger bind the immutable scenario/global reports and worker receipt. No matching denied or unapproved customer payment occurs through final closure; only the independently verified explicitly approved payment is eligible for its declared exception.",
+        "All28 additional permission-coverage outcomes are retained even when the wallet fails a case. Screenshots alone cannot establish checkbox selection, consent or a cached grant.",
+        "The new permission coverage report is hash-bound in shutdown policy2 alongside the unchanged earlier lifecycle report; four distinct denied payment amounts remain absent from every final provider ledger."
+      ],
+      "evidence": [
+        "conformance/permissions.json",
+        "conformance/permissions-primary-approve.png",
+        "conformance/permissions-alternate-deny.png",
+        "conformance/permissions-alternate-approve.png",
+        "conformance/permission-lifecycle.json",
+        "trusted-native-click-receipts",
+        "shutdown-submissions.json",
+        "worker-bound-cleanup-and-final-ledger-hashes",
+        "conformance/permission-coverage.json",
+        "native-browser-contexts.json",
+        "conformance/restart-1-unlocked.png",
+        "conformance/restart-2-unlocked.png"
+      ],
+      "blockers": [
+        "Missing native UI, incomplete observations, or required control failures are retained as non-passing findings; no alternate transport or simulated permission result substitutes for them."
+      ]
+    },
+    {
+      "id": "ISI-4-V006",
+      "version": "2.0.0",
+      "requirementId": "ISI-4-R006",
+      "title": "Native transaction rejection, exact-state preservation, and recovery",
+      "origin": "open-interpretation",
+      "reference": "programs/ISI-4/2.0.0/README.md",
+      "applicability": "Required for the declared native Chromium extension CWI profile. Other wallets, platforms and communications substrates require separate admission.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified Yours PR368 7e39006 engineering candidate and compiled ToDo artifacts",
+        "Supported mainnet configuration with pinned Go services, isolated fixture identity, and mined fixture funding",
+        "The prospective plan infra/native/conformance/plan-pr368-7e39006.json and independent predicates are fixed before execution"
+      ],
+      "steps": [
+        "Retain the original ToDo UI acceptance, rejection, and recovery sequence and all of its independent predicates.",
+        "Through the same native wallet public CWI, create separate accepted, rejected, and recovered actions under a fixed service verdict schedule, with immediate broadcast requested.",
+        "Capture controlled service submissions independently of wallet results; compare full action and output projections, exact metadata, raw transaction bytes, and proof-carrying ancestry after every verdict."
+      ],
+      "expected": [
+        "The original ToDo UI predicates and all three prospective API predicates pass together. Success in one path never hides failure in the other.",
+        "Acceptance corresponds to the exact independently observed service submission and serialized output. Rejection produces the specified terminal failed/invalidTx result, no tracked rejected action, and an identical prior spendable-output projection.",
+        "The next accepted action succeeds without observer-side abort, relinquishment, or storage repair, preserving the prior output state and adding exactly the intended output.",
+        "Controlled service acceptance, wallet-state findings, and public-mainnet acceptance remain distinct."
+      ],
+      "evidence": [
+        "conformance/baseline-vectors.json",
+        "conformance/lifecycle.json",
+        "signed-submission-and-ancestry",
+        "exact-action-and-output-state"
+      ],
+      "blockers": [
+        "A valid non-passing wallet finding remains FAIL; missing required UI or proof evidence cannot be replaced by a reference wallet result."
+      ]
+    },
+    {
+      "id": "ISI-4-V007",
+      "version": "3.0.0",
+      "requirementId": "ISI-4-R007",
+      "title": "Data portability and counterpart replacement",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-4/3.0.0/README.md",
+      "applicability": "Required for the declared native Chromium extension CWI profile. Other wallets, platforms and communications substrates require separate admission.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified Yours PR368 7e39006 engineering candidate and compiled ToDo artifacts",
+        "Supported mainnet configuration with pinned Go services, isolated fixture identity, and mined fixture funding",
+        "The prospective plan infra/native/conformance/plan-pr368-7e39006.json and independent predicates are fixed before execution"
+      ],
+      "steps": [
+        "Create an encrypted task through ordinary ToDo UI and record its public-wallet outpoint, decrypted content, transaction bytes and metadata.",
+        "Add, synchronize, activate, and remove storage counterparts through the unchanged native wallet settings UI. Authenticated read-only observers compare the complete canonical logical datasets.",
+        "Stop the source storage TCP listener and prove it is unavailable, then Lock/Unlock the native wallet, clear the application cache, and reload ToDo.",
+        "Recover the same identity, task, ciphertext and unspent outpoint from the replacement, redeem the task through ToDo UI, verify the signed spend and persisted replacement state, and restore the source endpoint.",
+        "Use portability oracle3 to retain every bounded complete-dataset poll until signed redemption, then final task read and complete snapshot; require successful replacement processAction before restoring the source."
+      ],
+      "expected": [
+        "All nine portability assertions pass in native-ui mode with two distinct storage identities and separate databases. Reference-engineering runs are retained separately and cannot qualify this vector.",
+        "The native wallet mediates authenticated synchronization; the observer does not populate the replacement. Complete logical records, bytes, metadata, and foreign-key relationships match.",
+        "The original source remains unreachable during cold reconstruction and redemption. The live native wallet context and application cache are discarded before proving replacement recovery.",
+        "The same encrypted task is visible and decryptable, and its valid signed redemption is persisted on the replacement while the source is unavailable. Cleanup restores the stopped endpoint.",
+        "A reserved input or unsigned transaction cannot establish redemption. The signed spend, proof closure, successful replacement RPC and final public state all precede source restoration. Rendered active-status comparison permits exact-line case and whitespace normalization only."
+      ],
+      "evidence": [
+        "conformance/portability.json",
+        "native-storage-settings-ui-observations",
+        "authenticated-storage-rpc-transcript",
+        "complete-source-and-replacement-projections",
+        "source-outage-and-cold-reload-evidence",
+        "replacement-redemption-transaction-proof"
+      ],
+      "blockers": [
+        "Unsupported native settings operations, incomplete dataset projection, unproven source outage, or a missing native-mediated write prevent qualification."
+      ]
+    },
+    {
+      "id": "ISI-4-V008",
+      "version": "4.0.0",
+      "requirementId": "ISI-4-R008",
+      "title": "Comprehensive wallet boundary coverage",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json",
+      "applicability": "Required for the declared native Chromium extension CWI profile. Other wallets, platforms and communications substrates require separate admission.",
+      "executable": true,
+      "preconditions": [
+        "Digest-verified Yours PR368 7e39006 engineering candidate and compiled ToDo artifacts",
+        "Supported mainnet configuration with pinned Go services, isolated fixture identity, and mined fixture funding",
+        "The prospective plan infra/native/conformance/plan-pr368-7e39006.json and independent predicates are fixed before execution"
+      ],
+      "steps": [
+        "Derive source-located input and output contracts for all 28 public methods from the exact pinned BRC-100 document and retain its bytes and digest provenance.",
+        "Run the existing 42-assertion stateful native public-CWI corpus with trusted identity discovery, then execute every frozen contract and semantic clause case against the same actual native wallet.",
+        "Check returned output contracts and explicit field-specific invalid-input errors; use independent peer keys and cryptographic calculations for derivation, encryption, HMAC and signature cases, plus exact metadata and namespace fixtures.",
+        "Reconcile each source obligation with executed evidence and retain explicit unexecuted permissions, privilege, ABI, ambiguity, and optional stateful paths. Compute the comprehensive vector outcome from both findings and remaining coverage gaps.",
+        "Use clause oracle6 with the independently bound final signed997-satoshi noSendChange anchor fixture and source-pinned namespace interpretation. Keep every original 5.1.0 observation unchanged and retain any candidate failure or coverage limitation.",
+        "Execute the separately frozen conditional policy with a funded population, transaction/query controls, precise basket boundaries, native direct certificate acquisition and authenticated controlled issuance.",
+        "Preserve public request/return bytes, independently authenticated issuer exchanges and exact transaction ancestry; distinguish wallet failures, missing prerequisites and remaining unsupported capability obligations.",
+        "Execute19 transaction-state and14 certificate-state checks under their frozen policies; bind negative no-spend claims through final provider shutdown, exact staged spend intent, full certificate tuples and scoped route records."
+      ],
+      "expected": [
+        "Every implemented clause has an exact assertion identity, raw native observation and independently recomputable predicate. A method call or output-shape check alone does not establish all of its semantics.",
+        "Any failed implemented clause makes V008 FAIL. With no implemented failure, V008 remains BLOCKED while any required coverage gap remains. It cannot pass by renaming the original comprehensive R008 obligation or treating remaining-obligations accounting as implementation.",
+        "Complete BRC-100 conformance remains false until all applicable source obligations have admitted native fixtures and independent evidence. Historical V008 results remain unchanged.",
+        "The PR368 candidate is separate from both official 5.1.1 and original 5.1.0. Source-level fixes do not establish native PASS; every original artifact and historical oracle result remains unchanged.",
+        "Additional conditional assertions are independently replayed and appended under distinct conditional/ identities. Original280 obligations remain separately comparable, including all99 historical failures.",
+        "The typed300 basket interpretation is explicit and prospective. Signed net action values are never made positive by an observer. No executed subset or changed denominator establishes complete BRC100 conformance."
+      ],
+      "evidence": [
+        "conformance/clauses.json",
+        "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json",
+        "integrated/wallet-boundary.json",
+        "source-located-invalid-input-observations",
+        "independent-peer-crypto-evidence",
+        "remaining-source-obligations",
+        "conformance/conditional.json",
+        "conformance/permission-coverage.json",
+        "conformance/transaction-states.json",
+        "conformance/certificate-states.json"
+      ],
+      "blockers": [
+        "Privileged secondary-keyring and supported user-presence fixtures remain unqualified.",
+        "Linkage permission semantics and finite-expiry admission remain additional obligations beyond the separately executed category/revocation scenarios.",
+        "No laboratory-admitted native BRC-100 byte-wire endpoint is exposed by this artifact; injected CWI evidence does not qualify an ABI substrate.",
+        "The 300-byte interface alias and 400-byte basket namespace prose need an adopted interpretation outside their common subset.",
+        "Additional optional transaction, certificate, batching, default, pagination, and conflicting-parameter combinations require native stateful fixtures."
+      ]
+    }
+  ]
+}

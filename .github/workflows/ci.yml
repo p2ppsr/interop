@@ -27,7 +27,7 @@ jobs:
       - run: node scripts/verify-published-journals.mjs
       - run: node scripts/verify-native-reserve-reference.mjs
       - run: node scripts/verify-descendant-storage-archives.mjs --semantic
-      - run: node journals/native-nosend-change/2026-11-09/oracle4-preflight/replay.mjs
+      - run: node scripts/verify-native-nosend-oracle4-archive.mjs
       - run: node scripts/verify-native-permission-lifecycle-archive.mjs --semantic
       - run: node scripts/verify-native-permission-click-archive.mjs --semantic
       - run: node scripts/verify-native-portability-archive.mjs

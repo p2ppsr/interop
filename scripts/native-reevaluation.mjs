@@ -7,9 +7,16 @@ import { execFileSync, spawnSync } from 'node:child_process'
 import { prepareFrozenComponentReplay, requireVerifierReceipt } from './frozen-component-replay.mjs'
 import { extractZipSafely } from './verify-published-integrations.mjs'
 export const originalReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0.json'
-export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json'
-export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-2'
+export const previousReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json'
+export const previousReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-2'
+export const previousReevaluationPlanSha256 = '1c61f19354185589e5be2f2304f04778adea4e82866ebf8d160a14eec80c7f66'
+export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json'
+export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-3'
 export const originalReevaluationPlanSha256 = 'f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef'
+const revisions = {
+  2: { id: previousReevaluationPlanId, path: previousReevaluationPlanPath, predecessor: { path: originalReevaluationPlanPath, sha256: originalReevaluationPlanSha256 } },
+  3: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } }
+}
 export const reevaluationSchema = 'tpnil-native-integrated-reevaluation@1'
 export const reevaluationInputNames = ['paid-http.json','messaging.json','synthesis-transactions.json','identity-trust.json']
 export const evaluatorSourceNames = ['scripts/reevaluate-native-integrated.mjs','scripts/verify-native-reevaluation.mjs','scripts/native-reevaluation.mjs','scripts/frozen-component-replay.mjs','scripts/verify-published-integrations.mjs']
@@ -23,16 +30,30 @@ export function inventory(directory) {
   walk(directory);return rows.sort((a,b)=>a.path.localeCompare(b.path))
 }
 function relative(name) {assert.equal(typeof name,'string');assert.ok(!path.isAbsolute(name)&&name.split('/').every(part=>part&&part!=='.'&&part!=='..'));return name}
+function validateReevaluationLineage(plan,root) {
+  const ancestors=[]
+  if([previousReevaluationPlanId,currentReevaluationPlanId].includes(plan.id)||plan.sourceBindingRevision!==undefined||plan.predecessor!==undefined) {
+    assert.ok(Number.isSafeInteger(plan.sourceBindingRevision),'Unsupported reevaluation source binding revision')
+    let current=plan
+    for(let revision=plan.sourceBindingRevision;;revision--) {
+      const expected=revisions[revision]
+      assert.ok(expected,'Unsupported reevaluation source binding revision')
+      assert.equal(current.id,expected.id);assert.equal(current.sourceBindingRevision,revision)
+      assert.deepEqual(current.predecessor,expected.predecessor)
+      const predecessorBytes=fs.readFileSync(path.join(root,expected.predecessor.path))
+      assert.equal(sha256(predecessorBytes),expected.predecessor.sha256,'Accepted predecessor plan changed')
+      const predecessor=JSON.parse(predecessorBytes)
+      for(const key of ['original','rust','expected'])assert.deepEqual(current[key],predecessor[key],`Source revision changed retained evidence acceptance: ${key}`)
+      ancestors.push(expected.predecessor)
+      if(revision===2)break
+      current=predecessor
+    }
+  }
+  return ancestors
+}
 export function validateReevaluationPlan(plan,root) {
   assert.equal(plan.schema,'tpnil-native-integrated-reevaluation-plan@1');assert.equal(typeof plan.id,'string');assert.ok(plan.id.length>0)
-  if(plan.id===currentReevaluationPlanId || plan.sourceBindingRevision!==undefined || plan.predecessor!==undefined) {
-    assert.equal(plan.id,currentReevaluationPlanId);assert.equal(plan.sourceBindingRevision,2)
-    assert.deepEqual(plan.predecessor,{path:originalReevaluationPlanPath,sha256:originalReevaluationPlanSha256})
-    const predecessorBytes=fs.readFileSync(path.join(root,originalReevaluationPlanPath))
-    assert.equal(sha256(predecessorBytes),originalReevaluationPlanSha256,'Accepted predecessor plan changed')
-    const predecessor=JSON.parse(predecessorBytes)
-    for(const key of ['original','rust','expected'])assert.deepEqual(plan[key],predecessor[key],`Source revision changed retained evidence acceptance: ${key}`)
-  }
+  validateReevaluationLineage(plan,root)
   const o=plan.original;relative(o.archive);assert.match(o.source,/^[a-f0-9]{40}$/);assert.match(o.sha256,/^[a-f0-9]{64}$/);assert.match(o.planSha256,/^[a-f0-9]{64}$/);assert.match(o.qualificationSha256,/^[a-f0-9]{64}$/)
   assert.ok(Number.isSafeInteger(o.workflowRun)&&o.workflowRun>0);assert.ok(Number.isSafeInteger(o.size)&&o.size>0);assert.ok(Number.isSafeInteger(o.members)&&o.members>0)
   assert.equal(o.profile,'ITCVE-1@2.0.0');assert.equal(o.program,'ISI-4@4.0.0')
@@ -87,10 +108,12 @@ export function validateReevaluationLock(runLock,root) {
   assert.equal(runLock.schema,'tpnil-native-integrated-reevaluation-run-lock@1');assert.equal(runLock.sourceDirty,false);assert.match(runLock.evaluatorSource,/^[a-f0-9]{40}$/)
   assert.equal(runLock.planSha256,sha256(Buffer.from(JSON.stringify(plan,null,2)+'\n')));validateReevaluationPlan(plan,root)
   relative(runLock.planPath)
-  if(plan.sourceBindingRevision===2) {
-    assert.equal(runLock.planPath,currentReevaluationPlanPath)
-    const predecessor=execFileSync('git',['show',`${runLock.evaluatorSource}:${originalReevaluationPlanPath}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024})
-    assert.equal(sha256(predecessor),originalReevaluationPlanSha256,'Accepted predecessor differs at evaluator source')
+  if(plan.sourceBindingRevision!==undefined) {
+    assert.equal(runLock.planPath,revisions[plan.sourceBindingRevision].path)
+    for(const ancestor of validateReevaluationLineage(plan,root)) {
+      const predecessor=execFileSync('git',['show',`${runLock.evaluatorSource}:${ancestor.path}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024})
+      assert.equal(sha256(predecessor),ancestor.sha256,'Accepted predecessor differs at evaluator source')
+    }
   }
   const frozenPlan=execFileSync('git',['show',`${runLock.evaluatorSource}:${runLock.planPath}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024})
   assert.equal(sha256(frozenPlan),runLock.planSha256,'Plan differs from its committed evaluator source');assert.deepEqual(JSON.parse(frozenPlan),plan)

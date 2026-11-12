@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto'
-import type { Page } from 'playwright'
+import type { Page, Locator } from 'playwright'
 import type { NativeScenarioContext } from '../yours-driver.js'
 import { observePermissionClick, type PermissionClickReceipt } from './permission-click.js'
 
@@ -17,6 +17,39 @@ export interface CoveragePermissionCall {
 }
 const now = () => new Date().toISOString()
 const pause = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+/** A displayed spending grant is not ready while its asynchronous monthly
+ * usage is absent. This parser admits no arbitrary suffix or changed cap. */
+export function coverageSpendingSummary(cardBody: string, expectedCap: number): { cap: number; spent: number; remaining: number } | undefined {
+  const lines = cardBody.split('\n').filter(line => line.startsWith('Up to '))
+  if (lines.length !== 1) throw new Error('Exactly one expanded standing allowance is required')
+  if (lines[0] === `Up to ${expectedCap} sats`) return undefined
+  const match = /^Up to ([0-9]+) sats · ([0-9]+) sats spent this month · ([0-9]+) sats remaining$/.exec(lines[0]!)
+  if (!match) throw new Error('Standing allowance usage has an unsupported visible shape')
+  const [cap, spent, remaining] = match.slice(1).map(Number)
+  if (![cap, spent, remaining].every(value => Number.isSafeInteger(value) && value! >= 0) || cap !== expectedCap || remaining !== Math.max(0, cap! - spent!)) throw new Error('Standing allowance usage cap or arithmetic changed')
+  return { cap: cap!, spent: spent!, remaining: remaining! }
+}
+
+/** Wait for the public UI query, then require three unchanged body/card reads.
+ * The subsequent trusted click still has to match this exact captured body.
+ * A failed usage query is retained as an observer failure, never normalized. */
+export async function waitForCoverageRevocationSnapshot(page: Pick<Page, 'locator'>, card: Pick<Locator, 'innerText'>, allowanceSatoshis?: number, timeoutMs = 10_000): Promise<{ beforeBody: string; cardBody: string }> {
+  const deadline = Date.now() + timeoutMs
+  let previous: { beforeBody: string; cardBody: string } | undefined, consecutive = 0
+  do {
+    const cardBody = await card.innerText({ timeout: Math.min(timeoutMs, 1000) })
+    const beforeBody = await page.locator('body').innerText({ timeout: Math.min(timeoutMs, 1000) })
+    const ready = allowanceSatoshis === undefined || coverageSpendingSummary(cardBody, allowanceSatoshis) !== undefined
+    if (ready && beforeBody.includes(cardBody)) {
+      consecutive = previous?.beforeBody === beforeBody && previous.cardBody === cardBody ? consecutive + 1 : 1
+      previous = { beforeBody, cardBody }
+      if (consecutive >= 3) return previous
+    } else { previous = undefined; consecutive = 0 }
+    await pause(50)
+  } while (Date.now() < deadline)
+  throw new Error('Expanded permission card did not settle with visible spending usage before revocation')
+}
 
 /** One public request at a time, with passive trusted-click evidence. Unexpected
  * permission prompts are denied and retained; they cannot count as cache hits. */

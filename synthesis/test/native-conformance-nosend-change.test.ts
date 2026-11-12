@@ -14,6 +14,8 @@ import { deriveClauseOutcomes } from '../src/wallet-lab/native/verify-conformanc
 
 const root = path.resolve(import.meta.dirname, '../..'), directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-nosend-change-'))
 fs.writeFileSync(path.join(directory, 'index.html'), '<title>noSendChange reference fixture</title>')
+const fixtureRevision = process.env.TPNIL_NOSEND_FIXTURE_REVISION === '2' ? 2 : 1
+const selectedOracle = fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : clauseOracle4Id
 const language = process.env.TPNIL_NOSEND_STORAGE === 'go' ? 'go' : 'typescript'
 const services = new ControlledWalletServices({ webroot: directory, components: { storage: language }, ...(language === 'go' ? { go: { binary: path.join(root, 'out/itcve-go-storage-portability'), storagePortabilityPatch: true } } : {}) })
 let wallet: Awaited<ReturnType<typeof createFixtureWallet>> | undefined, report: any
@@ -27,7 +29,7 @@ beforeAll(async () => {
     try { row.result = await (wallet as any)[method](structuredClone(args)) } catch (error) { row.error = captureClauseError(error) }
     return row
   }
-  const prepared = await prepareNoSendChangeFixture(call)
+  const prepared = await prepareNoSendChangeFixture(call, fixtureRevision)
   expect(prepared.outpoints?.length).toBeGreaterThan(0)
   const base = { description: 'TPNIL parameter validation fixture', outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'TPNIL validation output', basket: 'tpnil clause parameters', tags: ['clause'], customInstructions: 'fixture' }], labels: ['tpnil-clauses'], options: { signAndProcess: false, noSend: true, randomizeOutputs: false, noSendChange: prepared.outpoints } }
   const control = await call(`control.${noSendChangeInputId}`, 'createAction', base)
@@ -38,7 +40,7 @@ beforeAll(async () => {
   Object.assign(negative, { base, controlId: control.id, controlUsesFreshReference: false })
   const flushed = await call('cleanup.batch', 'createAction', { description: 'TPNIL release noSend fixture', options: { sendWith: [prepared.pendingBatch.result.txid], acceptDelayedBroadcast: false } })
   expect(flushed.error).toBeUndefined()
-  report = JSON.parse(JSON.stringify({ claim: 'LAB_SELF_TEST_ONLY', oracle: clauseOracle4Id, identity: (await wallet.getPublicKey({ identityKey: true })).publicKey, positives: [], trace }))
+  report = JSON.parse(JSON.stringify({ claim: 'LAB_SELF_TEST_ONLY', oracle: selectedOracle, identity: (await wallet.getPublicKey({ identityKey: true })).publicKey, positives: [], trace }))
 }, 60_000)
 afterAll(async () => {
   await wallet?.destroy(); await services.close(); fs.rmSync(directory, { recursive: true, force: true })
@@ -61,6 +63,7 @@ describe('Prospective noSendChange oracle4, with actual reference public calls',
   it('binds a successful public caller control to signed mined ancestry and public action outputs', async () => {
     const verified = await verifyNoSendChangeFixture(report)
     expect(verified.outpoints.length).toBeGreaterThan(0)
+    expect(row(report, noSendChangeSetupId).args.outputs[0].satoshis).toBe(fixtureRevision === 2 ? 997 : 1)
     const actual = await deriveClauseOutcomes(report)
     expect(await outcomes(report), JSON.stringify(actual.filter(row => [noSendChangeInputId, noSendChangeOutputId].includes(row.id)))).toEqual({ [noSendChangeInputId]: 'PASS', [noSendChangeOutputId]: 'PASS' })
   })
@@ -80,6 +83,7 @@ describe('Prospective noSendChange oracle4, with actual reference public calls',
   })
   it('rejects incorrect signed identity, proof, script, output ownership and public lookup binding', async () => {
     const mutations: Array<(value: any) => void> = [
+      value => { value.oracle = fixtureRevision === 2 ? clauseOracle4Id : 'tpnil-brc100-clause-oracle@6.0.0' },
       value => { row(value, noSendChangeSetupId).result.txid = '01'.repeat(32) },
       value => { const entry = row(value, noSendChangeSetupId), beef = Beef.fromBinary(entry.result.tx); beef.bumps[0]!.blockHeight++; entry.result.tx = beef.toBinaryAtomic(entry.result.txid) },
       value => { const entry = row(value, noSendChangeSetupId), tx = Transaction.fromAtomicBEEF(entry.result.tx); tx.inputs[0]!.unlockingScript = UnlockingScript.fromHex('00'); entry.result.tx = tx.toAtomicBEEF(); entry.result.txid = tx.id('hex') },

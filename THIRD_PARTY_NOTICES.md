@@ -47,3 +47,16 @@ the exact sources in `components/messaging/sources.lock.json`; upstream licenses
 remain controlling. The Rust participant links the SDK revision and dependencies
 fixed by `components/rust/Cargo.lock`. These pins and compatibility patches grant
 no new rights and imply no vendor endorsement.
+
+## Retained Yours PR #368 engineering candidate
+
+`fixtures/artifacts/yours-wallet-pr368-7e39006/` retains the exact CI-built ZIP for
+source `7e39006f87a00d8fefaadef410f1bc8f91fe26cb`, independently identified as an
+engineering candidate. It is not the official 5.1.1 release. The directory
+contains the unchanged Yours MIT license, source/CI provenance, exact package
+lock, and license inventory with published package notices for 134 package names / 139 package versions
+identified across top-level and nested installations in the retained source maps. Bundled dependencies, including Open BSV
+licensed packages, keep their original terms. No Apache relicensing, vendor
+endorsement, or broader submission acceptance is asserted.
+
+The earlier, unscored PR368 f9faa candidate remains byte-for-byte under `fixtures/artifacts/yours-wallet-pr368-f9faa/` with its own provenance and license inventory. It is retired from active native selection and cannot be relabeled as an official release.

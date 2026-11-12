@@ -47,3 +47,15 @@ test('reports regressions without hiding them behind improved failure totals', (
   const report = compareNativeConformance(baseline, candidate, {})
   assert.equal(report.regressions.length, 1); assert.equal(report.originalFailureOutcomes.PASS, 1)
 })
+
+test('keeps candidate engineering identity and rejects mixed artifacts or release claims', () => {
+  const records = fixture().map(record => ({ ...record, itcve: 'ITCVE-1@4.1.0', claim: 'ENGINEERING_OBSERVATION_ONLY', walletCandidate: { officialRelease: false }, artifacts: { ...record.artifacts, wallet: { ...record.artifacts.wallet, version: '5.1.1-pr368.7e39006' } } }))
+  const report = compareNativeConformance(baseline, records, {})
+  assert.equal(report.candidate.recordClaim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.candidate.walletCandidate.officialRelease, false)
+  for (const mutate of [
+    rows => { rows[1].artifacts.wallet.sha256 = '00'.repeat(32) },
+    rows => { rows[1].itcve = 'ITCVE-1@4.0.0' },
+    rows => { rows[0].claim = 'EXPERIMENTAL_CONFORMANCE_RESULT' },
+    rows => { rows[0].walletCandidate.officialRelease = true }
+  ]) { const changed = structuredClone(records); mutate(changed); assert.throws(() => compareNativeConformance(baseline, changed, {})) }
+})

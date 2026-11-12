@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { BigNumber, Point, PrivateKey, ProtoWallet, PublicKey, Schnorr, Signature, Transaction, Utils, VerifiableCertificate } from '@bsv/sdk'
+import { verifyIdentityPublication } from './native/verify-identity-publication.js'
 const root = path.resolve(import.meta.dirname, '../../..')
 const read = (file: string) => JSON.parse(fs.readFileSync(file, 'utf8'))
 const profile = read(path.join(root, 'programs/ISI-4/profiles/brc100-boundary-1.0.0/profile.json'))
@@ -14,10 +15,33 @@ const tracker = { currentHeight: async () => 900100, isValidRootForHeight: async
 export async function verifyBoundaryCorpus(c: any, publication: any) {
   assert.equal(c.schema, 'tpnil-brc100-boundary-corpus@1.0.0')
   assert.equal(c.claim, 'ENGINEERING_OBSERVATION_ONLY')
+  assert.ok(c.fixtureRevision === undefined || c.fixtureRevision === 2, 'Unsupported boundary fixture revision')
   assert.deepEqual(c.assertions.map((x: any) => x.id).sort(), [...profile.assertions].sort())
   const trace = c.trace as any[]
   const first = (method: string) => trace.find(t => t.method === method)
   const all = (method: string) => trace.filter(t => t.method === method)
+  if (c.fixtureRevision === 2) {
+    for (const [description, index, inputDescription] of [['TPNIL boundary abort reservation', 1, 'Abort fixture token'], ['TPNIL boundary staged signature', 0, 'Signing fixture token']] as const) {
+      const prepared = trace.filter(t => t.method === 'createAction' && t.args?.description === description)
+      const creation = trace.find(t => t.method === 'createAction' && t.args?.description === 'TPNIL boundary token pair')?.result
+      if (!creation?.txid) { assert.equal(prepared.length, 0); continue }
+      assert.equal(prepared.length, 1, 'One exact staged fixture required')
+      assert.deepEqual(prepared[0].args, {
+        description, inputBEEF: creation.tx, inputs: [{ outpoint: `${creation.txid}.${index}`, unlockingScriptLength: 1, inputDescription }],
+        outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: index === 1 ? 'Aborted fixture output' : 'Signed fixture output' }],
+        options: index === 1 ? { randomizeOutputs: false, noSend: true } : { randomizeOutputs: false, acceptDelayedBroadcast: false }
+      })
+    }
+    const prepared = trace.find(t => t.method === 'createAction' && t.args?.description === 'TPNIL boundary staged signature')
+    if (prepared?.result?.signableTransaction?.reference) {
+      const signed = all('signAction')[0]
+      assert.deepEqual(signed?.args, { reference: prepared.result.signableTransaction.reference, spends: { '0': { unlockingScript: '51' } }, options: { acceptDelayedBroadcast: false } })
+      if (signed.result?.tx) {
+        const tx = Transaction.fromAtomicBEEF(signed.result.tx)
+        assert.equal(tx.inputs[0]?.unlockingScript?.toHex(), '51')
+      }
+    }
+  }
   const identity = first('getPublicKey')?.result?.publicKey
   const message = Utils.toArray('TPNIL BRC100 boundary corpus v1', 'utf8')
   const verifier = new ProtoWallet(PrivateKey.fromHex('35'.repeat(32)))
@@ -55,7 +79,7 @@ export async function verifyBoundaryCorpus(c: any, publication: any) {
       same(clear, new ProtoWallet(PrivateKey.fromHex('34'.repeat(32))).keyDeriver!.revealSpecificSecret(identity, [0, 'tpnil boundary corpus'], '1'))
     },
     'internalizeAction.mined-descendant-payment': async () => { same(rows('internalizeAction').accepted, true); const tx = Transaction.fromAtomicBEEF(first('internalizeAction').args.tx); same(tx.outputs[0]!.satoshis, 1000); assert.ok(tx.inputs.length > 0); assert.ok(await tx.verify(tracker)) },
-    'createAction.serialized-outputs': async () => { const tx = Transaction.fromAtomicBEEF(created.tx); same(tx.id('hex'), created.txid); for (const o of tx.outputs.slice(0, 2)) { same(o.satoshis, 7); same(o.lockingScript.toHex(), '51') }; assert.ok(await tx.verify(tracker)) },
+    'createAction.serialized-outputs': async () => { const tx = Transaction.fromAtomicBEEF(created.tx); same(tx.id('hex'), created.txid); for (const o of tx.outputs.slice(0, 2)) { same(o.satoshis, 7); same(o.lockingScript.toHex(), c.fixtureRevision === 2 ? '7551' : '51') }; assert.ok(await tx.verify(tracker)) },
     'listActions.metadata': () => assert.ok(rows('listActions').actions.some((a: any) => a.txid === created.txid && a.description === 'TPNIL boundary token pair')),
     'listOutputs.metadata': () => { same(rows('listOutputs').totalOutputs, 2); same(rows('listOutputs').outputs.map((r: any) => r.outpoint).sort(), [`${created.txid}.0`, `${created.txid}.1`]) },
     'abortAction.releases-reservation': () => { same(rows('abortAction').aborted, true); assert.ok(all('listOutputs')[1]?.result.outputs.some((r: any) => r.outpoint === `${created.txid}.1`)) },
@@ -64,7 +88,7 @@ export async function verifyBoundaryCorpus(c: any, publication: any) {
     'acquireCertificate.signed-fields': async () => { same(rows('acquireCertificate').subject, identity); same(rows('acquireCertificate').signature, cert.signature); assert.ok(await VerifiableCertificate.fromCertificate(cert, {}).verify()) },
     'listCertificates.issuer-scope': () => { same(rows('listCertificates').totalCertificates, 1); same(rows('listCertificates').certificates[0].serialNumber, cert.serialNumber) },
     'proveCertificate.selective-disclosure': async () => { const proof = rows('proveCertificate'); same(Object.keys(proof.keyringForVerifier), ['name']); const vc = VerifiableCertificate.fromCertificate(cert, proof.keyringForVerifier); assert.ok(await vc.verify()); same(await vc.decryptFields(verifier), { name: 'TPNIL boundary identity' }); assert.ok(all('proveCertificate')[1]?.result?.keyringForVerifier) },
-    'identity-service.publish': () => { assert.ok(publication?.txid); const tx = Transaction.fromAtomicBEEF(publication.beef); same(tx.id('hex'), publication.txid); same(tx.toHex(), publication.raw); assert.ok(publication.answer.outputs.some((r: any) => Transaction.fromBEEF(r.beef).id('hex') === publication.txid)) },
+    'identity-service.publish': async () => { if (c.fixtureRevision === 2) await verifyIdentityPublication(publication, cert, identity, tracker); assert.ok(publication?.txid); const tx = Transaction.fromAtomicBEEF(publication.beef); same(tx.id('hex'), publication.txid); same(tx.toHex(), publication.raw); assert.ok(publication.answer.outputs.some((r: any) => Transaction.fromBEEF(r.beef).id('hex') === publication.txid)) },
     'relinquishCertificate.tombstone': () => { same(rows('relinquishCertificate').relinquished, true); same(all('listCertificates')[1]?.result.totalCertificates, 0) }
   }
   for (const method of ['discoverByIdentityKey', 'discoverByAttributes']) predicates[`${method}.identity-service`] = () => {

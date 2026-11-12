@@ -2,9 +2,11 @@ import { describe, it, expect, beforeAll } from 'vitest'
 import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
-import { PrivateKey } from '@bsv/sdk'
-import { conditionalPolicy, conditionalPolicySha256, type ConditionalReport } from '../src/wallet-lab/native/conformance-conditional-model.js'
+import { LockingScript, PrivateKey, Transaction, UnlockingScript } from '@bsv/sdk'
+import { conditionalPolicy, conditionalPolicySha256, conditionalPolicySelection, conditionalConfig, type ConditionalReport } from '../src/wallet-lab/native/conformance-conditional-model.js'
 import { deriveConditionalOutcomes, verifyNativeConditionalConformance } from '../src/wallet-lab/native/verify-conformance-conditional.js'
+import { runNativeConditionalConformance } from '../src/wallet-lab/native/conformance-conditional.js'
+import { canonicalJson } from '../src/determinism.js'
 
 function incomplete(): ConditionalReport {
   return { schema: 'tpnil-native-conditional@1.0.0', oracle: 'tpnil-native-conditional-oracle@1.0.0', claim: 'ENGINEERING_OBSERVATION_ONLY', policySha256: conditionalPolicySha256, identity: PrivateKey.fromHex('68'.repeat(32)).toPublicKey().toString(), trace: [], certificates: [], issuer: {}, errors: [], transactions: [], submissions: [], assertions: [], remainingCoverage: structuredClone(conditionalPolicy.remainingCoverage), completeBRC100Conformance: false, result: 'FAIL' }
@@ -49,6 +51,15 @@ const reference = (): ConditionalReport => JSON.parse(fs.readFileSync(path.join(
 const call = (report: ConditionalReport, id: string) => { const row = report.trace.find(row => row.id === id); expect(row, id).toBeDefined(); return row! }
 let referenceOutcomes: ConditionalReport['assertions']
 beforeAll(async () => { referenceOutcomes = await deriveConditionalOutcomes(reference()) })
+
+it('retains identical failure details across canonical evidence serialization', async () => {
+  const report = reference(), row = report.trace.find(call => call.id === 'outputs-newest')!
+  delete row.result
+  row.error = { name: 'Error', message: 'retained native request failure', code: 'FIXTURE_ERROR' }
+  const before = await deriveConditionalOutcomes(report)
+  const restored = JSON.parse(canonicalJson(report))
+  expect(await deriveConditionalOutcomes(restored)).toEqual(before)
+})
 
 describe('conditional verifier adversarial replay of retained public TS fixture', () => {
   it('pins every original fixture byte and preserves the original 69/14/1 source-stage report', async () => {
@@ -97,5 +108,128 @@ describe('conditional verifier adversarial replay of retained public TS fixture'
     report.assertions = await deriveConditionalOutcomes(report)
     const result = await verifyNativeConditionalConformance(report)
     expect(result.counts).toEqual({ PASS: 69, FAIL: 14, BLOCKED: 1 })
+  })
+})
+
+
+// LAB_SELF_TEST_ONLY: retained reference bytes are never edited. These controls
+// independently construct real script-valid spends of the third populated output.
+function signingPair(report: ConditionalReport, index: number) {
+  const funding = call(report, `population-${index}`).result, source = Transaction.fromAtomicBEEF(funding.tx)
+  const sourceOutputIndex = source.outputs.findIndex(output => output.satoshis === conditionalConfig.satoshis && output.lockingScript.toHex() === conditionalConfig.lockingScript)
+  expect(sourceOutputIndex).toBeGreaterThanOrEqual(0)
+  const tx = new Transaction(); tx.addInput({ sourceTransaction: source, sourceOutputIndex, unlockingScript: UnlockingScript.fromHex('') }); tx.addOutput({ satoshis: 1, lockingScript: LockingScript.fromHex('51') })
+  const prepared = tx.toAtomicBEEF(); tx.inputs[0]!.unlockingScript = UnlockingScript.fromHex('51')
+  return { source, sourceOutputIndex, outpoint: `${funding.txid}.${sourceOutputIndex}`, prepared, signed: { txid: tx.id('hex'), tx: tx.toAtomicBEEF() } }
+}
+function prospectiveReference(): ConditionalReport {
+  const report = reference(), selected = conditionalPolicySelection(2), pair = signingPair(report, 2)
+  report.oracle = selected.oracle; report.policySha256 = selected.policySha256
+  report.actionReferences = call(report, 'actions-includes').result.actions.map((action: any) => ({ txid: action.txid, reference: Buffer.from(action.labels.find((label: string) => label.startsWith('reference ')).slice(10), 'hex').toString('base64') })) // LAB_SELF_TEST_ONLY metadata: parent tests bind the real storage ledger separately.
+  const prepared = call(report, 'signable'); delete prepared.error
+  prepared.args.inputBEEF = call(report, 'population-2').result.tx; prepared.args.inputs[0].outpoint = pair.outpoint
+  prepared.result = { signableTransaction: { reference: 'LAB_SELF_TEST_ONLY_independent_signing', tx: pair.prepared } }
+  report.trace.splice(report.trace.indexOf(prepared) + 1, 0, { id: 'signed', method: 'signAction', args: { reference: prepared.result.signableTransaction.reference, spends: { 0: { unlockingScript: '51' } }, options: { acceptDelayedBroadcast: false } }, result: pair.signed, submissionStart: prepared.submissionEnd, submissionEnd: prepared.submissionEnd })
+  call(report, 'after-abort').result.outputs = call(report, 'after-abort').result.outputs.filter((output: any) => output.outpoint !== pair.outpoint)
+  report.transactions = []; const seen = new Set<string>()
+  for (const row of report.trace) if (['createAction', 'signAction'].includes(row.method) && row.result?.txid && Array.isArray(row.result.tx) && !seen.has(row.result.txid)) { seen.add(row.result.txid); report.transactions.push({ role: `conditional/${row.id}`, txid: row.result.txid, atomicBeef: row.result.tx }) }
+  return report
+}
+
+describe('conditional policy2 independent signing fixtures and complete associated labels', () => {
+  it('preserves policy1 bytes/default and keeps the exact84 assertion identities', () => {
+    const legacy = conditionalPolicySelection(), next = conditionalPolicySelection(2)
+    expect(legacy.policySha256).toBe('b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa')
+    expect(legacy.policy).toEqual(conditionalPolicy); expect(next.policy.assertionIds).toEqual(legacy.policy.assertionIds)
+    expect(() => conditionalPolicySelection(3 as any)).toThrow()
+  })
+  it('independently verifies the population2 signed spend despite the retained population0 known-proof error', async () => {
+    const report = prospectiveReference(), outcomes = await deriveConditionalOutcomes(report)
+    expect(call(report, 'known-proof-omission').error.message).toContain('sourceTransaction')
+    for (const id of ['transaction.signable-and-sign', 'transaction.abort-release']) expect(outcomes.find(row => row.id === id)?.result).toBe('PASS')
+    expect(outcomes.find(row => row.id === 'transaction.known-proof-omission')?.result).toBe('FAIL')
+    report.assertions = outcomes; expect((await verifyNativeConditionalConformance(report)).assertionCount).toBe(84)
+  })
+  it.each([
+    ['reused known-proof source', 'transaction.signable-and-sign', (r: ConditionalReport) => { call(r, 'signable').args.inputs[0].outpoint = call(r, 'known-proof-omission').args.inputs[0].outpoint }],
+    ['wrong returned signing source', 'transaction.signable-and-sign', (r: ConditionalReport) => { call(r, 'signable').result.signableTransaction.tx = signingPair(r, 0).prepared }],
+    ['missing signed result', 'transaction.abort-release', (r: ConditionalReport) => { delete call(r, 'signed').result }],
+    ['signed output still spendable', 'transaction.abort-release', (r: ConditionalReport) => { call(r, 'after-abort').result.outputs.push({ outpoint: signingPair(r, 2).outpoint, spendable: true }) }],
+    ['aborted output not released', 'transaction.abort-release', (r: ConditionalReport) => { const outpoint = signingPair(r, 1).outpoint; call(r, 'after-abort').result.outputs.find((o: any) => o.outpoint === outpoint).spendable = false }]
+  ] as const)('rejects %s', async (_name, id, mutate) => {
+    const report = prospectiveReference(); mutate(report)
+    const result = (await deriveConditionalOutcomes(report)).find(row => row.id === id)
+    expect(result?.result, result?.detail).toBe('FAIL')
+  })
+  const withAssociatedLabels = () => {
+    const report = prospectiveReference()
+    for (const output of call(report, 'outputs-metadata').result.outputs) {
+      const action = call(report, 'actions-includes').result.actions.find((a: any) => output.outpoint.startsWith(`${a.txid}.`))
+      const extra = ['admin month2026-11', 'admin originator todo.itcve.test']
+      action.labels.push(...extra); output.labels = action.labels.filter((label: string) => !label.startsWith('reference '))
+    }
+    for (const output of call(report, 'outputs-only-includeLabels').result.outputs) output.labels = call(report, 'actions-includes').result.actions.find((a: any) => output.outpoint.startsWith(`${a.txid}.`)).labels.filter((label: string) => !label.startsWith('reference '))
+    return report
+  }
+  it('accepts all matching associated labels and never discards administration labels', async () => {
+    const report = withAssociatedLabels(), outcomes = await deriveConditionalOutcomes(report)
+    for (const id of ['query.outputs-includes', 'query.outputs-only-includeLabels']) { const outcome = outcomes.find(row => row.id === id); expect(outcome?.result, outcome?.detail).toBe('PASS') }
+    report.oracle = conditionalPolicy.oracle; report.policySha256 = conditionalPolicySha256
+    expect((await deriveConditionalOutcomes(report)).find(row => row.id === 'query.outputs-includes')?.result).toBe('FAIL')
+  })
+  it.each([
+    ['one-sided extra label', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].labels.push('unbound extra') }],
+    ['one-sided missing administrative label', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].labels.pop() }],
+    ['duplicate output label', (r: ConditionalReport) => { const labels = call(r, 'outputs-metadata').result.outputs[0].labels; labels.push(labels[0]) }],
+    ['duplicate action label', (r: ConditionalReport) => { const labels = call(r, 'actions-includes').result.actions[0].labels; labels.push(labels[0]) }],
+    ['missing requested label from both APIs', (r: ConditionalReport) => { for (const o of call(r, 'outputs-metadata').result.outputs) o.labels = o.labels.filter((l: string) => l !== conditionalConfig.label); for (const a of call(r, 'actions-includes').result.actions) a.labels = a.labels.filter((l: string) => l !== conditionalConfig.label) }],
+    ['substituted transaction identity', (r: ConditionalReport) => { call(r, 'actions-includes').result.actions[0].txid = 'ab'.repeat(32) }],
+    ['wrong synthetic reference', (r: ConditionalReport) => { const labels = call(r, 'actions-includes').result.actions[0].labels; labels[labels.findIndex((label: string) => label.startsWith('reference '))] = 'reference abcd' }],
+    ['duplicate synthetic reference', (r: ConditionalReport) => { call(r, 'actions-includes').result.actions[0].labels.push('reference abcd') }],
+    ['synthetic reference leaked to output', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].labels.push('reference abcd') }],
+    ['missing independent stored reference', (r: ConditionalReport) => { r.actionReferences!.pop() }],
+    ['noncanonical stored base64', (r: ConditionalReport) => { r.actionReferences![0]!.reference += ' ' }],
+    ['duplicate stored references', (r: ConditionalReport) => { r.actionReferences![1]!.reference = r.actionReferences![0]!.reference }],
+    ['non-label custom instruction corruption', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].customInstructions = 'wrong' }],
+    ['non-label tag corruption', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].tags.push('wrong') }],
+    ['non-label script corruption', (r: ConditionalReport) => { call(r, 'outputs-metadata').result.outputs[0].lockingScript = '00' }]
+  ] as const)('rejects associated-label or unchanged-byte mutation: %s', async (_name, mutate) => {
+    const report = withAssociatedLabels(); mutate(report)
+    expect((await deriveConditionalOutcomes(report)).find(row => row.id === 'query.outputs-includes')?.result).toBe('FAIL')
+  })
+  it.each([
+    ['one-sided extra', (r: ConditionalReport) => { call(r, 'outputs-only-includeLabels').result.outputs[0].labels.push('unbound label') }],
+    ['one-sided missing', (r: ConditionalReport) => { call(r, 'outputs-only-includeLabels').result.outputs[0].labels.pop() }],
+    ['duplicate', (r: ConditionalReport) => { const labels = call(r, 'outputs-only-includeLabels').result.outputs[0].labels; labels.push(labels[0]) }],
+    ['missing independent action', (r: ConditionalReport) => { call(r, 'actions-includes').result.actions.pop() }]
+  ] as const)('binds every labels-only return against complete independent action labels: %s', async (_name, mutate) => {
+    const report = withAssociatedLabels(); mutate(report)
+    const result = (await deriveConditionalOutcomes(report)).find(row => row.id === 'query.outputs-only-includeLabels')
+    expect(result?.result, result?.detail).toBe('FAIL')
+  })
+  it('runs the actual producer beyond known-proof failure with independent signing and abort inputs', async () => {
+    const source = reference(), pair = signingPair(source, 2), abort = signingPair(source, 1)
+    let released = false
+    const wallet: any = new Proxy({}, { get: (_target, method: string) => async (args: any) => {
+      if (method === 'createAction') {
+        const match = /^TPNIL conditional action (\d+)$/.exec(args.description)
+        if (match) return structuredClone(call(source, `population-${match[1]}`).result)
+        if (args.options?.trustSelf === 'known') throw new Error('Every signableTransaction input must have a sourceTransaction')
+        if (args.inputs?.[0]?.outpoint === pair.outpoint) return { signableTransaction: { reference: 'LAB_SELF_TEST_ONLY_sign', tx: pair.prepared } }
+        if (args.inputs?.[0]?.outpoint === abort.outpoint) return { signableTransaction: { reference: 'LAB_SELF_TEST_ONLY_abort', tx: abort.prepared } }
+        throw new Error('LAB_SELF_TEST_ONLY unsupported unrelated request')
+      }
+      if (method === 'signAction') return pair.signed
+      if (method === 'abortAction') { released = true; return { aborted: true } }
+      if (method === 'listOutputs' && released) return { outputs: [{ outpoint: abort.outpoint, spendable: true }], totalOutputs: 1 }
+      return {}
+    } })
+    const report = await runNativeConditionalConformance({ wallet, fixtureRevision: 2, services: { submissions: [], registerControlledRoute: () => () => {}, nativeActionReferences: async () => prospectiveReference().actionReferences } as any, evidence: { addJson: () => {} } as any, boundaryReport: { trace: [{ method: 'getPublicKey', args: { identityKey: true }, result: { publicKey: source.identity } }] } })
+    expect(report.oracle).toBe('tpnil-native-conditional-oracle@2.0.0')
+    expect(call(report, 'known-proof-omission').error.message).toContain('sourceTransaction')
+    expect(call(report, 'signable').args.inputs[0].outpoint).toBe(pair.outpoint)
+    expect(call(report, 'abort-prepare').args.inputs[0].outpoint).toBe(abort.outpoint)
+    expect(report.assertions.find(row => row.id === 'transaction.signable-and-sign')?.result).toBe('PASS')
+    expect(report.assertions.find(row => row.id === 'transaction.abort-release')?.result).toBe('PASS')
   })
 })

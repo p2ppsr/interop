@@ -1,0 +1,28 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-7e39006",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-7e39006.json",
+    "sha256": "02c54dcb6280d3303e25ca1c45791d674103da68d185a697ef38612fc753fa4e",
+    "profile": "ITCVE-1@4.1.0",
+    "program": "ISI-4@5.1.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "PR3687e39006 engineering candidate. 426 observations retain all392 predecessor identities and add19 transaction-state predicates,14 certificate-state predicates and one exact fee-inclusive spending-cap predicate. Clause oracle6 uses independently bound revised noSendChange/signing fixtures; conditional oracle2 separates signing and known-input controls and binds BRC153 references to identity-scoped storage. Permission coverage oracle3 measures three accepted payments including real fees against the unchanged100-satoshi cap. All original evidence remains immutable. New state checks bind raw public calls to independent transaction, certificate, storage, route and final provider-ledger evidence. Unsupported native capabilities, unexecuted combinations and normative ambiguities remain explicit; no complete BRC100 claim.",
+  "sources": {
+    "scripts/native-rust-compatibility.mjs": "fea0bdffb64de4fba6b0b3a8a6dcd3df63eb2423ef78ba2832b264548a99408b",
+    "scripts/native-wallet-profiles.mjs": "86a05d6170594d7339511c3535fed0d364a993abf3c24a4d2f072fa094348679",
+    "scripts/run-native-go-wallet.mjs": "dbbe2edb033306ecd3bb74365f214a81bdbbdd1ef824a116c3acbec59f40cc47",
+    "scripts/verify-native-integrated.mjs": "1956c281abbe9f474244b53f40a938d78d011601253ca2c86e456266f93a7235",
+    ".github/workflows/isi4-yours-wallet.yml": "88a6e45acbc6950437dc745919f4b62636be278c1467dc611d5b9eb9eaa4e339",
+    "scripts/check-native-wallet-selector.mjs": "3b0d3a7d9234ef48f411fde15f52f35a0a6f1b74c517a27c9b003d2c2898add8"
+  },
+  "sourceBindingRevision": 1
+}

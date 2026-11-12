@@ -1,0 +1,216 @@
+{
+  "schema": "tpnil-native-failed-attempt-independent-review-closeout@1",
+  "claim": "FAILED_ATTEMPT_DIAGNOSTIC_REVIEW_NO_ENVIRONMENT_QUALIFICATION",
+  "workflowRun": 43143722884,
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "newNativeSessions": 0,
+  "qualifiedEnvironment": false,
+  "originalArtifact": {
+    "sha256": "a16bb501d97cb674e9859a61f968d1bfe5c3b44734b373cedf3b7e7ce4f26922",
+    "members": 266,
+    "originalMembersUnchanged": true,
+    "memberInventorySha256": "13f4766b855fbedea01acba02c41c5bbbd224da9cd876ddc4e69d0121d43f69a"
+  },
+  "originalWorkflowConclusion": "failure",
+  "originalRust": "NOT_EXECUTED",
+  "originalQualification": "NOT_WRITTEN",
+  "repetitions": [
+    {
+      "index": 1,
+      "rawNativePredicates": 392,
+      "rawNativeCounts": {
+        "PASS": 338,
+        "FAIL": 45,
+        "BLOCKED": 9
+      },
+      "clauseCounts": {
+        "PASS": 212,
+        "FAIL": 13,
+        "BLOCKED": 8
+      },
+      "conditionalCounts": {
+        "PASS": 62,
+        "FAIL": 21,
+        "BLOCKED": 1
+      },
+      "permissionCounts": {
+        "PASS": 18,
+        "FAIL": 10,
+        "BLOCKED": 0
+      },
+      "historical99": {
+        "PASS": 87,
+        "FAIL": 10,
+        "BLOCKED": 2,
+        "MISSING": 0
+      },
+      "conditionalSemanticOutcomesIndependentlyMatch": true,
+      "conditionalDetailStringsChanged": 20,
+      "conditionalOriginalReplay": "FAIL_DIAGNOSTIC_KEY_ORDER",
+      "originalMalformedReturnExceptions": 0,
+      "strictShutdown": {
+        "verified": true,
+        "policy": "tpnil-native-shutdown-submissions@2.0.0",
+        "initialCount": 62,
+        "finalCount": 62,
+        "tailCount": 0,
+        "providers": 2,
+        "deniedPaymentsCheckedThroughShutdown": true,
+        "coverage": {
+          "verified": true,
+          "checked": 1,
+          "deniedAmounts": [
+            53,
+            59,
+            61,
+            67
+          ]
+        }
+      },
+      "componentCounts": {
+        "PASS": 71,
+        "FAIL": 6,
+        "BLOCKED": 0
+      },
+      "componentStructuredReceipts": 5
+    },
+    {
+      "index": 2,
+      "rawNativePredicates": 392,
+      "rawNativeCounts": {
+        "PASS": 338,
+        "FAIL": 45,
+        "BLOCKED": 9
+      },
+      "clauseCounts": {
+        "PASS": 212,
+        "FAIL": 13,
+        "BLOCKED": 8
+      },
+      "conditionalCounts": {
+        "PASS": 62,
+        "FAIL": 21,
+        "BLOCKED": 1
+      },
+      "permissionCounts": {
+        "PASS": 18,
+        "FAIL": 10,
+        "BLOCKED": 0
+      },
+      "historical99": {
+        "PASS": 87,
+        "FAIL": 10,
+        "BLOCKED": 2,
+        "MISSING": 0
+      },
+      "conditionalSemanticOutcomesIndependentlyMatch": true,
+      "conditionalDetailStringsChanged": 20,
+      "conditionalOriginalReplay": "FAIL_DIAGNOSTIC_KEY_ORDER",
+      "originalMalformedReturnExceptions": 0,
+      "strictShutdown": {
+        "verified": true,
+        "policy": "tpnil-native-shutdown-submissions@2.0.0",
+        "initialCount": 62,
+        "finalCount": 62,
+        "tailCount": 0,
+        "providers": 2,
+        "deniedPaymentsCheckedThroughShutdown": true,
+        "coverage": {
+          "verified": true,
+          "checked": 1,
+          "deniedAmounts": [
+            53,
+            59,
+            61,
+            67
+          ]
+        }
+      },
+      "componentCounts": {
+        "PASS": 71,
+        "FAIL": 6,
+        "BLOCKED": 0
+      },
+      "componentStructuredReceipts": 5
+    }
+  ],
+  "files": [
+    {
+      "path": "snapshot.json",
+      "sha256": "18afad0ef101717b7b735c5a66afdb55067cbe4a186da978bcba0dcf28dfbc64",
+      "bytes": 452
+    },
+    {
+      "path": "acquisition/acquisition.json",
+      "sha256": "a6dfb16e69211f672d7c608bce724fb1623dd0f95d14f27fe4ecbc535008672d",
+      "bytes": 2209
+    },
+    {
+      "path": "partial.mjs",
+      "sha256": "fd81d8c41718957d358d18b84a3f1dfac01073d3bfdbadd679582780dbba0a1f",
+      "bytes": 3238
+    },
+    {
+      "path": "partial.stdout.json",
+      "sha256": "67522ef975e2faf862db8f9c5918d18a6a0c598dd1ebb2f5d13b00292193ded1",
+      "bytes": 145341
+    },
+    {
+      "path": "gates.mjs",
+      "sha256": "3a554bf7bada72782dc2883ca42037b69e442444b406dc082a9b0330a9505ec5",
+      "bytes": 8409
+    },
+    {
+      "path": "gates-3.stdout.log",
+      "sha256": "cf64e97ac19c689ce27eda69017b50a226caa159b99ae413c5d6545692794517",
+      "bytes": 62200
+    },
+    {
+      "path": "gates-3.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "gates-3.receipt.json",
+      "sha256": "143a007a61019c37ba30c0395ad64ea22381bdec68cfe48581f6c0fa9addb981",
+      "bytes": 62031
+    },
+    {
+      "path": "reproduce-host.mjs",
+      "sha256": "25f1661469e504de2b47a26cc8544553aaf4e854adb9668fbc79ed5a3df76d49",
+      "bytes": 1840
+    },
+    {
+      "path": "host-reproduction/receipt.json",
+      "sha256": "2e3d4b36b4c196851829626860b2cafc705d9822d77f69391ea68017e5f98943",
+      "bytes": 1043
+    },
+    {
+      "path": "host-reproduction/stdout.log",
+      "sha256": "aa55a8b3c3535b6f774030cdb36f558149854b45a67c59dbcaf468201b5be21f",
+      "bytes": 158
+    },
+    {
+      "path": "host-reproduction/stderr.log",
+      "sha256": "15a95627909d6bd1ba1094214654adfe55da8e11ab972e20e07d5811dbfcd694",
+      "bytes": 54898
+    },
+    {
+      "path": "components.mjs",
+      "sha256": "2d8b80449479609dc2f233285a73bd38c1776c6da849b5572a5bbf16a40ac387",
+      "bytes": 3262
+    },
+    {
+      "path": "components/review.json",
+      "sha256": "0d1cacf84e552e14db8400279b43eb6eaa0243c6f2eb7cad09260e040f172b81",
+      "bytes": 26984
+    }
+  ],
+  "limitations": [
+    "Both original completed native records exist, but original host verifier fails before qualification.",
+    "Frozen conditional predicates reproduce all original IDs/results; diagnostic binding uses only an in-memory assertion-detail replacement, never original evidence changes.",
+    "Component receipts verify retained FAIL as well as PASS outcomes; they do not grant native admission.",
+    "Both original Rust outputs are absent; no original Rust result is inferred.",
+    "gates.receipt.json preliminary diagnostic list compared assertion object key order; gates-3.receipt.json compares detail string values. gates-2 invocation failed only because diagnostic canonical JSON rejects an explicit undefined member; all attempts retained."
+  ]
+}

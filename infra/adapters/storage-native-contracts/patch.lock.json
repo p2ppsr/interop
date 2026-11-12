@@ -1,0 +1,80 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-native-contracts-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-list-actions/patch.lock.json",
+  "parentSha256": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+  "files": {
+    "pkg/internal/storage/repo/outputs.go": {
+      "before": "76c0fb2f1ed94a7dc194a324a2a62e2eef2831c6f5754a210cd265b6df153783",
+      "after": "c099f95b7237a5fc130c0342a9c5e6552182a775c6ec99c33af38d826c46dbcb"
+    },
+    "pkg/internal/validate/validate_list_actions_args.go": {
+      "before": "a725b9b767a5532049a441449a2dac94cb78faacb9e2e3c4e09aa21b93c1bd18",
+      "after": "796b48d2942b7aa6f71a52c9c8fa640ae7c3ef221714d73936514967026819f9"
+    },
+    "pkg/internal/validate/validate_list_actions_args_test.go": {
+      "before": "9fc4cec41be0ad748cfd201c1251a19a420103ccf2139effe0b87d580e2caa31",
+      "after": "0e8d240fdddfee70022e858c90b9327eeaad88a79c5d40b4a6a0e9095f5ca728"
+    },
+    "pkg/internal/validate/validate_list_certificates_args.go": {
+      "before": "dd6e36ddebdab79da1877846921afdbe3c12c003ef2b825fbd042cc9c4ca4032",
+      "after": "c8f5a25d46803e5237d36f9cfa5fe921abc53f001548d53bd1cfd49db86a68a6"
+    },
+    "pkg/internal/validate/validate_list_outputs_args.go": {
+      "before": "9224839540f48f3a39280217c20e4190f96fcbcf6162381dddfef4be32e3fbc9",
+      "after": "fb60c37fcd354bb45f8f059b0d302974f141e5a51ebf74b4153199e2fba2f964"
+    },
+    "pkg/storage/internal/actions/list_actions_mapping.go": {
+      "before": "e04a9999209081fea47c68a11a8558a991a0ab8b6b45b37a7a388d4ca3b9b9ec",
+      "after": "1b62ae008e52d7fb33183927a5b383cf91aa9f160d848755ad0d41d82700b8bf"
+    },
+    "pkg/storage/internal/actions/list_outputs.go": {
+      "before": "b958c9e2eea0cbd80db5fbe13683829d1ea76ac6d21b6d67e2c08a47663ce223",
+      "after": "3ea01e751585709838963a8024c822d2de8d5007f938bb556c34257385f68d8a"
+    },
+    "pkg/storage/internal/actions/native_reference_labels_tpnil_test.go": {
+      "before": null,
+      "after": "fa487acde226b75c9988b202b7d88ab2cb0daf2fd084e9fc80667b7bb411310c"
+    },
+    "pkg/storage/native_certificate_tuple_tpnil_test.go": {
+      "before": null,
+      "after": "773ae7c2e7c351cb3a00113ea886beebd71ab556196ec23389f3f264a8135926"
+    },
+    "pkg/storage/native_contracts_tpnil_test.go": {
+      "before": null,
+      "after": "a1b84ae56f20b84e5f0f225d5b91dd8095b4e1555a41199b0220d1c096942492"
+    },
+    "pkg/storage/provider.go": {
+      "before": "72467258ffef53e0820d875e62127536eac1e47a494992c179079661019c133f",
+      "after": "fb9e745f7468016b8196141362e66e844139a1f5a942e727a6264e5f5b5c8f6a"
+    },
+    "pkg/storage/provider_list_actions_test.go": {
+      "before": "d241fd41242fb3efeff7ae9c608a05c7eec53bd08e393916b9740c1303949bb0",
+      "after": "ea604524b95e0a26b1f1781c42a136e28d216797464472302d84ea01c86eef22"
+    },
+    "pkg/storage/rpcserver/rpc_typescript_results.go": {
+      "before": null,
+      "after": "84e7b17c868ce02abb24077034a5dfab8c49f82855f306df633d22475c2f49f4"
+    },
+    "pkg/storage/server.go": {
+      "before": "30cfe9c414fde28e997365685b1c17f25777d3fbf18e6ad228e3ac3aabec23a7",
+      "after": "8a7078f79b57ea36e6eb71f4b76adcf0ac24ff2ddc3c2d75113cb53eb4b82708"
+    },
+    "pkg/wallet/internal/mapping/mapping_list_outputs.go": {
+      "before": "0e7920ad873b88e779183044ed03d8e825449c5160047af7bcfbc9ff5109a1a2",
+      "after": "82067db30ee4813ad2667ad8e08afd24e2c21ad371b88db64956ae93a6bbd639"
+    },
+    "pkg/wdk/storage_cert_args.go": {
+      "before": "ac181fab1a6a62ecf1c04b5eae5259daa0d432a59b4bbcf4397003da4fc1e227",
+      "after": "c0f7284bebc1a5141e8ceb03ce886b17502b24649f58d7ea09c4a831baacb585"
+    },
+    "pkg/wdk/storage_outputs_args.go": {
+      "before": "281d004cce4534bcfb4d2334f3e5698b07a5eeabc34b76500a9d717bd4ae63c9",
+      "after": "60a7762532f16029ec810009b4d1ee49c5aeb6e657114beaf943f7768171afc5"
+    }
+  }
+}

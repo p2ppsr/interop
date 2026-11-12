@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
 import {createHash} from 'node:crypto'
-import {spawnSync} from 'node:child_process'
+import {spawnSync,execFileSync} from 'node:child_process'
 import {selectNativeWalletProfile,nativeWallet511Flag,nativeWallet511PlanPath,nativeWallet511Variant} from '../scripts/native-wallet-profiles.mjs'
 const root=path.resolve(import.meta.dirname,'..'),read=file=>JSON.parse(fs.readFileSync(path.join(root,file)))
 
@@ -66,5 +66,6 @@ test('new release admission binds its exact profile, catalog and all accepted po
   assert.equal(`${catalog.itcve.id}@${catalog.itcve.version}`,plan.itcve)
   assert.equal(profile.nativeConformance.clauseOracle,plan.clauseOracle)
   assert.equal(profile.completeBRC100Conformance,false)
-  for(const [file,digest] of Object.entries(plan.conformanceInputs)) assert.equal(createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),digest,file)
+  // Original acceptance inputs are bound to their original execution source.
+  for(const [file,digest] of Object.entries(plan.conformanceInputs)) assert.equal(createHash('sha256').update(execFileSync('git',['show',`6b174e0b903225923999a44fb1de7d67cc4e2959:${file}`],{cwd:root})).digest('hex'),digest,file)
 })

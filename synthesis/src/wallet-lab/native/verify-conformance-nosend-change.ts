@@ -13,8 +13,9 @@ const tracker = { currentHeight: async () => fixture.fundingHeight + fixture.mat
  * returned noSendChange determines the expected outpoint. */
 export async function verifyNoSendChangeFixture(report: any) {
   const one = (id: string) => { const rows = report.trace.filter((row: any) => row.id === id); assert.equal(rows.length, 1, `Exactly one ${id} required`); return rows[0] }
+  const revision = report.oracle === 'tpnil-brc100-clause-oracle@6.0.0' ? 2 : 1
   const setup = one(noSendChangeSetupId), read = one(noSendChangeReadId)
-  assert.equal(setup.method, 'createAction'); assert.deepEqual(setup.args, noSendChangeSetupArgs())
+  assert.equal(setup.method, 'createAction'); assert.deepEqual(setup.args, noSendChangeSetupArgs(revision))
   assert.equal(read.method, 'listActions'); assert.deepEqual(read.args, noSendChangeReadArgs())
   assert.equal(setup.error, undefined); assert.equal(read.error, undefined)
   assert.ok(report.trace.indexOf(setup) < report.trace.indexOf(read))
@@ -37,7 +38,7 @@ export async function verifyNoSendChangeFixture(report: any) {
   for (const [index, output] of tx.outputs.entries()) {
     const row = action.outputs.find((value: any) => value.outputIndex === index); assert.ok(row)
     assert.equal(row.satoshis, output.satoshis); assert.equal(row.lockingScript, output.lockingScript.toHex())
-    if (index === 0) { assert.equal(output.satoshis, 1); assert.equal(row.lockingScript, '51'); assert.equal(row.basket, 'tpnil nosend anchor') }
+    if (index === 0) { assert.equal(output.satoshis, revision === 2 ? 997 : 1); assert.equal(row.lockingScript, '51'); assert.equal(row.basket, 'tpnil nosend anchor') }
     else { assert.equal(row.basket, 'default'); assert.equal(row.spendable, true); assert.ok(output.satoshis! > 0); assert.match(row.lockingScript, /^76a914[0-9a-f]{40}88ac$/); change.push(`${tx.id('hex')}.${index}`) }
   }
   assert.ok(change.length > 0, 'A real wallet-managed change output is required')

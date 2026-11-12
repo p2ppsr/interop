@@ -1,0 +1,86 @@
+{
+  "schema": "tpnil-native-transaction-states-policy@1.0.0",
+  "oracle": "tpnil-native-transaction-states-oracle@1.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "completeBRC100Conformance": false,
+  "historicalInputsMutable": false,
+  "specification": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "lines": [
+      "225-231",
+      "299-318",
+      "632-662",
+      "715-771"
+    ]
+  },
+  "bounds": {
+    "maximumPublicCalls": 55,
+    "maximumExpectedSignedActions": 8,
+    "fanoutOutputs": 16,
+    "fanoutSatoshisEach": 100,
+    "extraFunding": false,
+    "proofDepthOverride": false
+  },
+  "interpretations": [
+    "The three inventory IDs ending version-default, lockTime-default and sequenceNumber-default prove omission is accepted with valid serialized integer values; BRC100 does not prescribe particular numeric defaults. Explicit control values must be honored.",
+    "Default output randomization is tested through preservation of requested output multiset. No particular permutation or minimum entropy is required.",
+    "Aborting a reference must prevent a later successful spend through that reference. No universal sign-twice or internalization-replay error is inferred.",
+    "unlockingScriptLength is a maximum reserved byte length: test an oversized script; a shorter valid script is not automatically a conflict.",
+    "returnTXIDOnly:true applies separately to createAction and signAction. Resolve omitted bytes from independently observed storage and bind the exact transaction intent and ancestry.",
+    "Each negative input/proof case has a valid fully proven source control and an independently checked mutation. Returned generic/network errors cannot pass parameter rejection.",
+    "Only ordinary synchronous submissions are used. The contradictory sendWith/acceptDelayedBroadcast prose is not resolved by this policy.",
+    "The inventory labels input-absent-from-beef and script-and-length-conflict are scoped engineering safety observations: known-source recovery and an oversized length hint may either reject without spending or yield an independently verified correct spend. No BRC100 prohibition on recovery or simultaneous optional fields is claimed."
+  ],
+  "unexecuted": [
+    {
+      "id": "broadcast-batch-timing",
+      "status": "BLOCKED_INTERPRETATION",
+      "reason": "BRC100655/661 and724/727 conflict; requires separate prospective interpretation."
+    },
+    {
+      "id": "unspecified-replay-error",
+      "status": "BLOCKED_INTERPRETATION",
+      "reason": "sign-twice, duplicate sendWith and internalization replay require an idempotency/safety policy, not an invented mandatory error."
+    },
+    {
+      "id": "remaining-transaction-inventory",
+      "status": "NOT_EXECUTED",
+      "reason": "Batch, noSendChange and internalization variants remain independently accountable; this bounded module covers only its18 enumerated case IDs."
+    },
+    {
+      "id": "simultaneous-script-length-exclusivity",
+      "status": "BLOCKED_INTERPRETATION",
+      "reason": "BRC100 does not expressly make unlockingScript and unlockingScriptLength mutually exclusive. Safe consistent processing does not qualify a mandatory-rejection claim."
+    }
+  ],
+  "evidenceRules": [
+    "Exactly one fixed fanout and every conditionally executable request are required in order; missing or duplicate calls fail evidence validation.",
+    "Each signed result is independently decoded, checked against exact request intent and controlled storage, then verified to the admitted mined source. Parent independently binds the storage snapshot and full transaction graph.",
+    "Per-call submission windows and final shutdown ledger are independently bound by the parent. An error alone does not prove absence of a spend or reservation.",
+    "Failed fixture gives an explicit FAIL plus BLOCKED dependents; native FAIL findings never become transaction proofs."
+  ],
+  "assertionIds": [
+    "fixture.fanout",
+    "transaction.defaults.noSend-omitted-false",
+    "transaction.defaults.randomizeOutputs-omitted-true",
+    "transaction.defaults.version-default",
+    "transaction.defaults.lockTime-default",
+    "transaction.defaults.sequenceNumber-default",
+    "transaction.signing-branches.all-unlockingScripts",
+    "transaction.signing-branches.mixed-inputs",
+    "transaction.signing-branches.abort-then-sign-reject",
+    "transaction.consuming-conflicts.input-absent-from-beef",
+    "transaction.consuming-conflicts.input-index-out-of-range",
+    "transaction.consuming-conflicts.already-spent-input",
+    "transaction.consuming-conflicts.script-and-length-conflict",
+    "transaction.consuming-conflicts.missing-script-and-length",
+    "transaction.consuming-conflicts.spend-index-not-in-reference",
+    "transaction.consuming-conflicts.script-length-mismatch",
+    "transaction.batch-send.returnTXIDOnly",
+    "transaction.proof-trust.truncated-proof",
+    "transaction.proof-trust.unknown-without-trust"
+  ]
+}

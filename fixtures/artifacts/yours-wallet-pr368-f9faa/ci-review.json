@@ -1,0 +1,241 @@
+{
+  "schema": "tpnil-yours-candidate-ci-receipt@1",
+  "claim": "ENGINEERING_CANDIDATE_ONLY",
+  "officialRelease": false,
+  "repository": "yours-org/yours-wallet",
+  "pullRequest": 368,
+  "workflowRun": 43140694759,
+  "workflowUrl": "https://github.com/yours-org/yours-wallet/actions/runs/43140694759",
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "success",
+  "sourceHead": "f9faaabae1573b69eca746d317cab008aa8095ad",
+  "actualBuildCheckout": "2d4a9af32d2098edf6a9d0086a4e5bfb7be1c4ff",
+  "actualBuildParents": [
+    "ccdd6f480906c06cfa1481ad3a66f4abc8a5cc9e",
+    "f9faaabae1573b69eca746d317cab008aa8095ad"
+  ],
+  "sourceAndMergeTreeEqual": true,
+  "treeSha256": null,
+  "gitTreeSha": "c54a9cf131fd07adfe8ce1c2851e927e9b5c082f",
+  "buildStamp": "2d4a9af",
+  "jobs": [
+    {
+      "id": 130926667658,
+      "name": "Build and verify",
+      "conclusion": "success",
+      "startedAt": "2026-11-12T02:20:21Z",
+      "completedAt": "2026-11-12T02:22:07Z"
+    }
+  ],
+  "tests": {
+    "passed": 100,
+    "failed": 0,
+    "assertions": 573,
+    "files": 9,
+    "bundles": 4,
+    "verifyBuild": "PASS",
+    "typecheck": "PASS",
+    "format": "PASS"
+  },
+  "artifact": {
+    "id": 13908414781,
+    "name": "extension-2d4a9af32d2098edf6a9d0086a4e5bfb7be1c4ff",
+    "size": 13223323,
+    "sha256": "8cadebaa6dc285cb2eed1ba06628487ce6cb27b0012d87cf4ec6b074037b94bd",
+    "outerMembers": [
+      "SHA256SUMS",
+      "pw-v5.1.1.zip",
+      "pw-v5.1.1.zip.sha256"
+    ]
+  },
+  "extensionArchive": {
+    "path": "pw-v5.1.1.zip",
+    "size": 13233045,
+    "sha256": "d550a0fefb5b2ccec844c47b02610b4f388128e564e3011ad46c2014f30f3a74",
+    "extensionRoot": "build/",
+    "manifestVersion": "5.1.1",
+    "memberCount": 45,
+    "eachMemberDigestVerified": true,
+    "duplicateOrTraversalMembers": false,
+    "allCRCVerified": true
+  },
+  "sourceMapProof": {
+    "src/cwi-errors.ts": [
+      {
+        "map": "build/assets/index-Ds9cQmNy.js.map",
+        "source": "../../src/cwi-errors.ts",
+        "sha256": "c39c10ae3d88a6c3e15dc31201890e4931d127f29ac2de5dd9e6d9f23071ace4"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "c39c10ae3d88a6c3e15dc31201890e4931d127f29ac2de5dd9e6d9f23071ace4"
+      },
+      {
+        "map": "build/content.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "c39c10ae3d88a6c3e15dc31201890e4931d127f29ac2de5dd9e6d9f23071ace4"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "c39c10ae3d88a6c3e15dc31201890e4931d127f29ac2de5dd9e6d9f23071ace4"
+      }
+    ],
+    "src/cwi-transport.ts": [
+      {
+        "map": "build/assets/index-Ds9cQmNy.js.map",
+        "source": "../../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      }
+    ],
+    "src/cwi.ts": [
+      {
+        "map": "build/assets/index-Ds9cQmNy.js.map",
+        "source": "../../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      }
+    ],
+    "src/inject.ts": [
+      {
+        "map": "build/assets/index-Ds9cQmNy.js.map",
+        "source": "../../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      }
+    ],
+    "src/cwi-validation.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-validation.ts",
+        "sha256": "2483611ecfdf2c09f09def96e0de327853d358cccd34898c68e505b94240bcfc"
+      }
+    ],
+    "src/background.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/background.ts",
+        "sha256": "11a56116971a068ad85190d67624b5c5c94a521b1d36476df3d7182116694ef8"
+      }
+    ],
+    "src/cwi-content.ts": [
+      {
+        "map": "build/content.js.map",
+        "source": "../src/cwi-content.ts",
+        "sha256": "c44b3a3516b33080c360495ef55ba41344529c2b514e47eeba0f602bcfec2022"
+      }
+    ],
+    "src/content.ts": [
+      {
+        "map": "build/content.js.map",
+        "source": "../src/content.ts",
+        "sha256": "34f41219d958b050f798d3a87987f5d2b25e67b5bba16bddc6fe03d5d5f4d794"
+      }
+    ]
+  },
+  "cost": {
+    "completedJobSeconds": 106.0,
+    "actualMoneyUSD": null,
+    "operatorCostUSD": null,
+    "agentCostUSD": null,
+    "ownedCapacityAllocationUSD": null,
+    "unknownCostsAreZero": false
+  },
+  "qualification": {
+    "nativeRunPerformed": false,
+    "profileAdmitted": false,
+    "releaseIdentity": "CI engineering candidate; manifest version is inherited and does not make this an official5.1.1 release"
+  },
+  "inspectionCorrections": [
+    "Initial inspection assumed one outer member; actual archive has three exact checksum/ZIP members. No archive bytes changed.",
+    "SHA256SUMS covers45 build/ files, while pw-v5.1.1.zip.sha256 covers inner ZIP. Each verified against exact observed paths."
+  ],
+  "receipts": {
+    "SHA256SUMS": {
+      "size": 4261,
+      "sha256": "6d58eca3b776c0d9e79f584dd38b91e67e4f3f0883c95c290c72f648facf8491"
+    },
+    "artifact-13908414781.zip": {
+      "size": 13223323,
+      "sha256": "8cadebaa6dc285cb2eed1ba06628487ce6cb27b0012d87cf4ec6b074037b94bd"
+    },
+    "artifacts.json": {
+      "size": 790,
+      "sha256": "ebcdb030ae4ed67f4d9267d856b5585448d6118b174e6917448f8bb7e61d70e5"
+    },
+    "built-merge-commit.json": {
+      "size": 52498,
+      "sha256": "9e8fe6fc2ed31fa49fb1f10a8ba714ce07d2d29ffec12db6147e48154e40e3d2"
+    },
+    "job-130926667658.log": {
+      "size": 45390,
+      "sha256": "b7b1d9239f3b977a4d7c4aad09733bf5341dfd1570907afa85e002a0dad06bf9"
+    },
+    "jobs.json": {
+      "size": 2112,
+      "sha256": "1f585e33f29557bf4d9284b763a65cf5dca9de568f90ecc5f417da3dd300886a"
+    },
+    "manifest.json": {
+      "size": 909,
+      "sha256": "6aa4bf203eda968c70537c7e21c483a7f8b0f34c66786d2bb8e0d29604df38d5"
+    },
+    "pr368.json": {
+      "size": 18266,
+      "sha256": "feeaa40973c7001d0a71fb13b3ba002adae4da2d18c6a6136cec9793aecdb981"
+    },
+    "pw-v5.1.1.zip": {
+      "size": 13233045,
+      "sha256": "d550a0fefb5b2ccec844c47b02610b4f388128e564e3011ad46c2014f30f3a74"
+    },
+    "pw-v5.1.1.zip.sha256": {
+      "size": 80,
+      "sha256": "f2e2e71cf62cc38598b93c5521a9f5eda3ef68563b538e766801b92b2a9d9ad2"
+    },
+    "run-logs.zip": {
+      "size": 27329,
+      "sha256": "5139162c2deb3a6aaecbe146577499cbd41b36be8ec60199ba2e533b8b8f95fd"
+    },
+    "run.json": {
+      "size": 12578,
+      "sha256": "d299d07c6f0e3c3ff3d792b3817081f8817689395bf92d0efbc14883ef83c73c"
+    },
+    "source-head-commit.json": {
+      "size": 51057,
+      "sha256": "4806e5b7f51ab9a5e93515470abb9bf681785ebf665a4935bd20454b6642e4dd"
+    },
+    "zip-members.json": {
+      "size": 8006,
+      "sha256": "8bdfdfd8487295b0c85a08c33a2acdf1da252083f41ad20e1e06aee72604c217"
+    }
+  }
+}

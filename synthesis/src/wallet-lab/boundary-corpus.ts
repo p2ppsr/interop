@@ -9,12 +9,13 @@ export interface BoundaryCorpusOptions {
   /** Publish the supplied certificate to the profile's real Identity Services. */
   prepareDiscovery?: (certificate: Record<string, unknown>) => Promise<void>
   discoveryExpectation?: 'published' | 'untrusted-excluded'
+  fixtureRevision?: 1 | 2
 }
 const requiredMethods = ['createAction', 'signAction', 'abortAction', 'listActions', 'internalizeAction', 'listOutputs', 'relinquishOutput', 'getPublicKey', 'revealCounterpartyKeyLinkage', 'revealSpecificKeyLinkage', 'encrypt', 'decrypt', 'createHmac', 'verifyHmac', 'createSignature', 'verifySignature', 'acquireCertificate', 'listCertificates', 'proveCertificate', 'relinquishCertificate', 'discoverByIdentityKey', 'discoverByAttributes', 'isAuthenticated', 'waitForAuthentication', 'getHeight', 'getHeaderForHeight', 'getNetwork', 'getVersion']
 
 /** Prospective BRC-100 method corpus. All SUT operations use its public boundary.
  * A failed native method remains a failed observation; reference behavior cannot replace it. */
-export async function runWalletBoundaryCorpus({ wallet: implementation, funder, prepareDiscovery, discoveryExpectation = 'published' }: BoundaryCorpusOptions) {
+export async function runWalletBoundaryCorpus({ wallet: implementation, funder, prepareDiscovery, discoveryExpectation = 'published', fixtureRevision = 1 }: BoundaryCorpusOptions) {
   const trace: Array<Record<string, unknown>> = [], assertions: Array<{ id: string; result: 'PASS' | 'FAIL' | 'BLOCKED'; detail: string }> = []
   const wallet = new Proxy({} as BoundaryWallet, { get: (_target, method) => async (args: unknown = {}) => {
     const entry: Record<string, unknown> = { method, args: structuredClone(args) }; trace.push(entry)
@@ -85,25 +86,25 @@ export async function runWalletBoundaryCorpus({ wallet: implementation, funder, 
     assert.equal(result.accepted, true)
   })
   const creation = await check('createAction.serialized-outputs', async () => {
-    const result = await wallet.createAction!({ description: 'TPNIL boundary token pair', outputs: [0, 1].map(index => ({ satoshis: 7, lockingScript: '51', basket: 'tpnil boundary tokens', outputDescription: `Boundary token ${index}`, tags: ['boundary'], customInstructions: `tpnil:${index}` })), labels: ['tpnil-boundary'], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
+    const result = await wallet.createAction!({ description: 'TPNIL boundary token pair', outputs: [0, 1].map(index => ({ satoshis: 7, lockingScript: fixtureRevision === 2 ? '7551' : '51', basket: 'tpnil boundary tokens', outputDescription: `Boundary token ${index}`, tags: ['boundary'], customInstructions: `tpnil:${index}` })), labels: ['tpnil-boundary'], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
     assert.ok(result.tx); const tx = Transaction.fromAtomicBEEF(result.tx); assert.equal(tx.id('hex'), result.txid)
-    for (const output of tx.outputs.slice(0, 2)) { assert.equal(output.satoshis, 7); assert.equal(output.lockingScript.toHex(), '51') }
+    for (const output of tx.outputs.slice(0, 2)) { assert.equal(output.satoshis, 7); assert.equal(output.lockingScript.toHex(), fixtureRevision === 2 ? '7551' : '51') }
     return result
   })
   await check('listActions.metadata', async () => { assert.ok(creation); const result = await wallet.listActions!({ labels: ['tpnil-boundary'], includeOutputs: true }); assert.ok(result.actions.some((action: any) => action.txid === creation.txid && action.description === 'TPNIL boundary token pair')) })
   await check('listOutputs.metadata', async () => { assert.ok(creation); const result = await wallet.listOutputs!({ basket: 'tpnil boundary tokens', includeTags: true, includeCustomInstructions: true }); assert.equal(result.totalOutputs, 2); assert.deepEqual(result.outputs.map((row: any) => row.outpoint).sort(), [`${creation.txid}.0`, `${creation.txid}.1`]) })
   await check('abortAction.releases-reservation', async () => {
     assert.ok(creation)
-    const prepared = await wallet.createAction!({ description: 'TPNIL boundary abort reservation', inputBEEF: [...creation.tx], inputs: [{ outpoint: `${creation.txid}.1`, unlockingScriptLength: 0, inputDescription: 'Abort fixture token' }], outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'Aborted fixture output' }], options: { randomizeOutputs: false, noSend: true } })
+    const prepared = await wallet.createAction!({ description: 'TPNIL boundary abort reservation', inputBEEF: [...creation.tx], inputs: [{ outpoint: `${creation.txid}.1`, unlockingScriptLength: fixtureRevision === 2 ? 1 : 0, inputDescription: 'Abort fixture token' }], outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'Aborted fixture output' }], options: { randomizeOutputs: false, noSend: true } })
     assert.ok(prepared.signableTransaction?.reference)
     assert.equal((await wallet.abortAction!({ reference: prepared.signableTransaction.reference })).aborted, true)
     const after = await wallet.listOutputs!({ basket: 'tpnil boundary tokens' }); assert.ok(after.outputs.some((row: any) => row.outpoint === `${creation.txid}.1`))
   })
   await check('signAction.serialized-spend', async () => {
     assert.ok(creation)
-    const prepared = await wallet.createAction!({ description: 'TPNIL boundary staged signature', inputBEEF: [...creation.tx], inputs: [{ outpoint: `${creation.txid}.0`, unlockingScriptLength: 0, inputDescription: 'Signing fixture token' }], outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'Signed fixture output' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
+    const prepared = await wallet.createAction!({ description: 'TPNIL boundary staged signature', inputBEEF: [...creation.tx], inputs: [{ outpoint: `${creation.txid}.0`, unlockingScriptLength: fixtureRevision === 2 ? 1 : 0, inputDescription: 'Signing fixture token' }], outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'Signed fixture output' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
     assert.ok(prepared.signableTransaction?.reference)
-    const signed = await wallet.signAction!({ reference: prepared.signableTransaction.reference, spends: { '0': { unlockingScript: '' } }, options: { acceptDelayedBroadcast: false } })
+    const signed = await wallet.signAction!({ reference: prepared.signableTransaction.reference, spends: { '0': { unlockingScript: fixtureRevision === 2 ? '51' : '' } }, options: { acceptDelayedBroadcast: false } })
     assert.ok(signed.tx); const tx = Transaction.fromAtomicBEEF(signed.tx); assert.equal(tx.id('hex'), signed.txid)
     assert.ok(tx.inputs.some(input => input.sourceTXID === creation.txid && input.sourceOutputIndex === 0))
     assert.equal((await wallet.listOutputs!({ basket: 'tpnil boundary tokens' })).outputs.some((row: any) => row.outpoint === `${creation.txid}.0`), false)
@@ -167,6 +168,6 @@ export async function runWalletBoundaryCorpus({ wallet: implementation, funder, 
   const coverage = requiredMethods.map(method => ({ method, calls: trace.filter(entry => entry.method === method).length, positiveAssertions: assertions.filter(entry => entry.id.startsWith(`${method}.`) && !entry.id.endsWith('.specified-rejection')), negativeAssertions: assertions.filter(entry => entry.id === `${method}.specified-rejection`) }))
   return { schema: 'tpnil-brc100-boundary-corpus@1.0.0', claim: 'ENGINEERING_OBSERVATION_ONLY', assertions, trace, coverage,
     result: assertions.some(item => item.result === 'FAIL') ? 'FAIL' : assertions.some(item => item.result === 'BLOCKED') ? 'BLOCKED' : 'PASS',
-    discoveryExpectation,
+    discoveryExpectation, ...(fixtureRevision === 2 ? { fixtureRevision } : {}),
     boundary: 'Executable method corpus; full BRC-100 clause/substrate/permission coverage remains separate from method execution.' }
 }

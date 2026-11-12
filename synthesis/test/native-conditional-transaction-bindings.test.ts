@@ -6,7 +6,7 @@ import { Transaction, UnlockingScript } from '@bsv/sdk'
 import { describe, expect, it } from 'vitest'
 import { conditionalConfig as config, conditionalPolicy, conditionalPolicySha256, type ConditionalReport } from '../src/wallet-lab/native/conformance-conditional-model.js'
 import { deriveConditionalOutcomes } from '../src/wallet-lab/native/verify-conformance-conditional.js'
-import { verifyConditionalTransactionBindings } from '../src/wallet-lab/native/verify-conditional-transaction-bindings.js'
+import { verifyConditionalTransactionBindings, verifyObservedNativeTransactionBindings } from '../src/wallet-lab/native/verify-conditional-transaction-bindings.js'
 
 const root = path.resolve(import.meta.dirname, '../..')
 const archive = path.join(root, 'journals/integrated-native-attempts/2026-11-09/42680240116/native-integrated.zip')
@@ -64,6 +64,21 @@ describe('prospective malformed native response admission', () => {
     await expect(verifyConditionalTransactionBindings(report, { ...binding, declaredNativePayments: [] })).rejects.toThrow('outside independently declared')
     await expect(verifyConditionalTransactionBindings(await observation([{ txid: funding.id('hex'), tx: funding.toAtomicBEEF() }]), binding)).rejects.toThrow('outside independently declared')
   })
+  it('does not let malformed metadata or trailing bytes hide a recoverable unbound transaction', async () => {
+    const counterexamples = [
+      { name: 'wrong claimed txid with absent storage', returned: { ...native, txid: '00'.repeat(32) }, binding: { ...binding, storageTransactions: new Map() } },
+      { name: 'non-string claimed txid with absent storage', returned: { ...native, txid: 3 }, binding: { ...binding, storageTransactions: new Map() } },
+      { name: 'trailing bytes with absent storage', returned: { ...native, tx: [...native.tx, 0] }, binding: { ...binding, storageTransactions: new Map() } },
+      { name: 'invalid trailing byte with absent storage', returned: { ...native, tx: [...native.tx, 256] }, binding: { ...binding, storageTransactions: new Map() } },
+      { name: 'wrong claimed txid with missing funding roots', returned: { ...native, txid: '00'.repeat(32) }, binding: { ...binding, declaredNativePayments: [] } },
+      { name: 'foreign faucet transaction with native claimed txid', returned: { txid: native.txid, tx: funding.toAtomicBEEF() }, binding }
+    ]
+    const admitted: string[] = []
+    for (const example of counterexamples) {
+      try { await verifyConditionalTransactionBindings(await observation([example.returned]), example.binding); admitted.push(example.name) } catch { /* Each recoverable transaction must still satisfy independent provenance. */ }
+    }
+    expect(admitted).toEqual([])
+  })
   it('records invalid signatures and duplicate create responses without claiming a second valid proof', async () => {
     const tx = Transaction.fromAtomicBEEF(native.tx)
     const changed = new Transaction(tx.version, tx.inputs.map((input, index) => ({ ...input, ...(index === 0 ? { unlockingScript: UnlockingScript.fromHex('00') } : {}) })), tx.outputs, tx.lockTime)
@@ -74,5 +89,31 @@ describe('prospective malformed native response admission', () => {
     const duplicate = await verifyConditionalTransactionBindings(await observation([native, native]), binding)
     expect(duplicate.transactions).toHaveLength(1)
     expect(duplicate.invalidNativeResponses[0]).toMatchObject({ callId: 'population-1', kind: 'DUPLICATE_CREATE_RESPONSE' })
+  })
+})
+
+
+describe('shared native TXID-only admission', () => {
+  const call = () => ({ id: 'txid-only-sign', method: 'signAction', args: { options: { returnTXIDOnly: true } }, result: { txid: native.txid } })
+  const assertions = [{ id: 'returnTXIDOnly', result: 'PASS' }]
+  const options = () => ({ rolePrefix: 'transaction-states', predicateFor: () => 'returnTXIDOnly', isTxidOnly: (row: any) => row.id === 'txid-only-sign', resolvedTransactions: new Map([[native.txid, Transaction.fromAtomicBEEF(native.tx)]]) })
+  it('proves an explicitly requested TXID-only result from independent native storage and mined ancestry', async () => {
+    const result = await verifyObservedNativeTransactionBindings([call()], assertions, binding, options())
+    expect(result.transactions).toEqual([{ role: 'transaction-states/txid-only-sign', txid: native.txid }])
+    expect(result.allReturnedTransactionsProven).toBe(true)
+  })
+  it('rejects missing, foreign, and mismatched independent graph or storage evidence even with a child FAIL', async () => {
+    const failed = [{ id: 'returnTXIDOnly', result: 'FAIL' }]
+    await expect(verifyObservedNativeTransactionBindings([call()], failed, binding, { ...options(), resolvedTransactions: new Map() })).rejects.toThrow('no independent native ancestry graph')
+    await expect(verifyObservedNativeTransactionBindings([call()], failed, binding, { ...options(), resolvedTransactions: new Map([[native.txid, funding]]) })).rejects.toThrow()
+    await expect(verifyObservedNativeTransactionBindings([call()], failed, { ...binding, storageTransactions: new Map() }, options())).rejects.toThrow('storage bytes absent')
+    await expect(verifyObservedNativeTransactionBindings([call()], failed, { ...binding, declaredNativePayments: [] }, options())).rejects.toThrow('outside independently declared')
+  })
+  it('requires a mapped FAIL for unexpected omission after independently binding its transaction', async () => {
+    const altered = call(); altered.args.options.returnTXIDOnly = false
+    await expect(verifyObservedNativeTransactionBindings([altered], assertions, binding, options())).rejects.toThrow('lacks its independently recomputed')
+    const result = await verifyObservedNativeTransactionBindings([altered], [{ id: 'returnTXIDOnly', result: 'FAIL' }], binding, options())
+    expect(result.invalidNativeResponses[0]?.kind).toBe('MALFORMED_RETURN')
+    await expect(verifyObservedNativeTransactionBindings([altered], [{ id: 'returnTXIDOnly', result: 'FAIL' }], { ...binding, storageTransactions: new Map() }, options())).rejects.toThrow('storage bytes absent')
   })
 })
