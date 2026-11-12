@@ -28,7 +28,7 @@ test('future native Rust3 requires exact paired variant and digest-addressed bin
 })
 test('compatibility metadata is bound to its original Git source, preventing c338 retrofits',async()=>{
   const original=await lock();original.source='c338a93c97ffebeeef318e679ff82b7dbf309dd5'
-  await assert.rejects(selectNativeRustCorpus(original,{graphPolicy:options.graphPolicy}),/Command failed|did not exist/)
+  await assert.rejects(selectNativeRustCorpus(original,{graphPolicy:options.graphPolicy}),/Committed source path must resolve to exactly one blob/)
 })
 test('every selector/runner/verifier/workflow input must exist unchanged at execution source',async()=>{
   const original=await lock()

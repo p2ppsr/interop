@@ -1,0 +1,71 @@
+{
+  "schema": "tpnil-selector-recovery-archive-independent-review@1",
+  "verified": true,
+  "archiveSha256": "24f076235eae5646cc227c6761cab182066fd06b8eb3f56b18791f9be7f82893",
+  "manifestSha256": "24f076235eae5646cc227c6761cab182066fd06b8eb3f56b18791f9be7f82893",
+  "runtimeInputs": 394,
+  "observations": 698,
+  "nativeQualification": false,
+  "originalArchiveUnchanged": true,
+  "failedFirstSealPreservedSha256": "e10ee054728f526b87b8b271723eea5f0605e9c7c8854a7ec9c6f3220e9af588",
+  "postcommitCLI": "PENDING_POSTCOMMIT_ACTUAL_CLI",
+  "positiveControls": 1,
+  "negativeControls": 3,
+  "controls": [
+    {
+      "name": "positive-current-source",
+      "expected": "ACCEPT",
+      "exitCode": 0,
+      "passed": true,
+      "stdoutSha256": "9ccb7c5b765ab90a5bc551c91212e437b89a9d9be1e7cebb9e550aa2441ff02c",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "omit-generated-verifier",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "babdb8a4f0b1a713844656430deceb77fd1d3bcf8c33ad61dae4210002fbd647"
+    },
+    {
+      "name": "rehashed-generated-verifier",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "dad2efc030102b32c91f13effb4c43d506cf66f8f4cc908acb66023fad142d9a"
+    },
+    {
+      "name": "alter-native-input-inventory",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "c63b1bbe66f4e1fdcd3f68656dd47d2d956aba52eddce616c0c0938d89faa6f7"
+    }
+  ],
+  "source7CarryFiles": 32,
+  "source7CurrentAnd693CommittedIdentical": true,
+  "sourceReview": {
+    "path": "out/native-closure-20261111/selector-buffer-impact-review/final/review.json",
+    "sha256": "ab5fc82575697085ed729276a089fe26c998f75bbd8a86198f39495872c856b4"
+  },
+  "results": {
+    "corePass": 214,
+    "coreFail": 0,
+    "synthesisPass": 1705,
+    "synthesisSkip": 90,
+    "pythonPass": 5,
+    "focusedPass": 27,
+    "observationsPlanned": 698,
+    "newNativeSessions": 0
+  },
+  "claim": "ARCHIVE_INTEGRITY_AND_FROZEN_SOURCE_REVIEW_ONLY",
+  "limits": [
+    "Actual committed successor default-CLI execution remains a distinct pre-push gate and is not established by historical mechanical replay or synthetic reader injection.",
+    "No native wallet execution, full semantic rerun or Linux image execution is performed by this review.",
+    "Integrity assumes the externally trusted executing verifier and recorded Git/hash anchors; replacing both executable verifier and all evidence is outside self-verification.",
+    "The original failede10 seal and generated-verifier omission counterexample remain preserved; this corrected seal does not rewrite them."
+  ]
+}

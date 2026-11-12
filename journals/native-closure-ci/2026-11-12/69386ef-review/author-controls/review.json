@@ -1,0 +1,51 @@
+{
+  "schema": "tpnil-ci-archive-controls@1",
+  "verified": true,
+  "archiveManifestSha256": "07f6aaa98f1ab6713fdd5e51c04b6b650df23a6783fb225abdffe85404810d0f",
+  "positive": 1,
+  "negative": 7,
+  "controls": [
+    {
+      "case": "positive",
+      "expected": "PASS",
+      "exitCode": 0
+    },
+    {
+      "case": "omit-raw-job-log",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "omit-review-receipt",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "native-qualification-added",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "source-downgrade",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "extra-physical-file",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "original-zip-byte-tamper",
+      "expected": "REJECT",
+      "exitCode": 1
+    },
+    {
+      "case": "readme-false-claim",
+      "expected": "REJECT",
+      "exitCode": 1
+    }
+  ],
+  "scope": "Archive byte/inventory/claim admission controls only; no additional native or semantic execution",
+  "nativeQualification": false
+}

@@ -23,7 +23,7 @@ COPY programs/ISI-4/profiles/native-conformance-5.0.0 /work/programs/ISI-4/profi
 COPY programs/ISI-4/profiles/native-conformance-4.0.0 /work/programs/ISI-4/profiles/native-conformance-4.0.0
 COPY programs/ISI-4/profiles/native-conformance-3.0.0 /work/programs/ISI-4/profiles/native-conformance-3.0.0
 COPY programs/ISI-4/proposals/native-coverage-closure-20261111.json programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json /work/programs/ISI-4/proposals/
-COPY scripts/prepare-storage-native-contracts-go.mjs scripts/prepare-storage-list-actions-go.mjs scripts/check-native-wallet-selector.mjs /work/scripts/
+COPY scripts/prepare-storage-native-contracts-go.mjs scripts/prepare-storage-list-actions-go.mjs scripts/check-native-wallet-selector.mjs scripts/read-committed-blob.mjs /work/scripts/
 COPY scripts/verify-native-trust.mjs scripts/verify-native-synthesis.mjs scripts/native-wallet-profiles.mjs scripts/native-rust-compatibility.mjs scripts/run-native-go-wallet.mjs scripts/verify-native-integrated.mjs scripts/prepare-yours-wallet-run.sh /work/scripts/
 COPY itcves/ITCVE-1/1.4.0 /work/itcves/ITCVE-1/1.4.0
 COPY itcves/ITCVE-1/1.5.0 /work/itcves/ITCVE-1/1.5.0
@@ -56,6 +56,11 @@ COPY scripts/prepare-storage-sqlite-retry-go.mjs /work/scripts/
 COPY infra/adapters/storage-caller-known-inputs /work/infra/adapters/storage-caller-known-inputs
 COPY scripts/prepare-storage-caller-known-inputs-go.mjs /work/scripts/
 COPY programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json
+COPY programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json
+COPY programs/ISI-4/proposals/native-coverage-accountability-20261112-completion-delta.json programs/ISI-4/proposals/native-coverage-accountability-20261112-completion-delta.md /work/programs/ISI-4/proposals/
+COPY scripts/compare-native-conformance.mjs scripts/native-reevaluation.mjs scripts/verify-published-integrations.mjs /work/scripts/
+COPY synthesis/test /work/synthesis/test
+COPY test /work/test
 ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
 COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1

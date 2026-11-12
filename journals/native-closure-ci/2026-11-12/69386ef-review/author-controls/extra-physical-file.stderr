@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-archive-control-834fx_4r/archive/verify.py", line 20, in <module>
+    assert {p.relative_to(root).as_posix()for p in root.rglob('*')if p.is_file()or p.is_symlink()}==seen|{'manifest.json'},'Physical archive inventory changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Physical archive inventory changed

@@ -1,0 +1,61 @@
+{
+  "schema": "tpnil-ci-final-archive-independent-review@1",
+  "verified": true,
+  "archiveSha256": "07f6aaa98f1ab6713fdd5e51c04b6b650df23a6783fb225abdffe85404810d0f",
+  "source": "69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7",
+  "archiveFiles": 165,
+  "artifactCount": 5,
+  "artifactMembers": 483,
+  "nativeInputs": 391,
+  "bothCIWorkflowsSucceeded": true,
+  "nativeQualification": false,
+  "newNativeSessions": 0,
+  "ciJobSeconds": 1826,
+  "knownCohortJobSeconds": 26946,
+  "testCounts": {
+    "core": {
+      "PASS": 203,
+      "FAIL": 0,
+      "SKIP": 1
+    },
+    "synthesis": {
+      "PASS": 1675,
+      "FAIL": 0,
+      "SKIP": 120
+    },
+    "pythonPassed": 5,
+    "separateGoTests": 13,
+    "separateCertificateTests": 42,
+    "separateGoShutdownListenerTests": 14,
+    "componentCounts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "descendantAssertionsWithin590": 80
+  },
+  "source7ChildReceipts": 16,
+  "technicalReviews": [
+    {
+      "path": "43249807860/independent-intake-review.json",
+      "sha256": "b5061001ea439a6a8ec9cdd185fc8895e965939d1119d0f8d93768056057c02a"
+    },
+    {
+      "path": "43249807970/independent-intake-review.json",
+      "sha256": "7b4289bc5cb19004ef909ff2f6856c3e1e5b57e86af90897bbd50d3b6240a955"
+    }
+  ],
+  "dispatchPrerequisiteReceipt": {
+    "path": "prerequisites.json",
+    "sha256": "ebee7ad214a0410138bc889988b9165e8f1f6480a1550bfd03d6a23be0f41879",
+    "checkedAt": "2026-11-12T15:57:39.365879+00:00"
+  },
+  "archiveOriginalsUnchanged": true,
+  "scope": "Independent exact archive verification and raw API/artifact/source/count review; retained semantic execution receipts are inspected, not executed again.",
+  "limits": [
+    "Six Go messaging component failures remain in 590 results; successful CI execution does not convert them to PASS.",
+    "CI synthesis1675PASS/120SKIP differs from local1705PASS/90SKIP; dedicated tests overlap and are not added. New-Go24 host controls are local source-bound evidence, not asserted CI execution.",
+    "Source7 is historical evidence replay with original native180PASS/99FAIL/1BLOCKED per repetition and no new native session.",
+    "The empty archive-seal-result.json is the exact capture-time redirected stdout prefix. Completed seal output is external; it is not treated as a completed execution receipt.",
+    "Dispatch deadline was checked only at the prerequisite receipt time; root must independently recheck before dispatch."
+  ]
+}

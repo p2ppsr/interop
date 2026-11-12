@@ -1,6 +1,6 @@
 # Native conformance closure: 12 November 2026
 
-**Attempt 6 completed both native repetitions but failed evidence admission.** Each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations: 432 PASS, 27 FAIL and 76 BLOCKED. The independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile is being prepared against a new wallet candidate. Its implementation and local engineering controls do not qualify a native run or establish complete BRC-100 conformance.
+**Attempt 7 stopped at source preflight before any native wallet session.** A pinned 3.2 MB fixture exceeded the selector's default Git output buffer. Attempt 6 remains the last completed native observation: each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations, with 432 PASS, 27 FAIL and 76 BLOCKED. Its independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile has passed local and CI execution checks but has no completed native result. These checks do not establish complete BRC-100 conformance.
 
 The original Yours 5.1.0 baseline remains unchanged: each repetition contains 280 observations, with 180 PASS, 99 FAIL and one BLOCKED. Attempt 6 maps those **original 99 findings** to **97 PASS and two FAIL**: the signed-value `listActions` conflict and an unexercised managed-change fixture. Attempt 4 previously recorded 98 PASS and one FAIL under its own frozen fixture. Two improvements are explicitly versioned namespace-oracle corrections; aggregate differences across the changed wallet, Go stack and fixtures are not counts of individual wallet fixes. The [earlier results report](native-conformance-results-2026-11-09.md) and every original failed artifact retain their original outcomes.
 
@@ -34,6 +34,7 @@ The completed native attempts are all retained as failed or incomplete observati
 | 4: [43165501159](https://github.com/p2ppsr/interop/actions/runs/43165501159), candidate `cb3c2f2`, source `69b1b52`; [archive](../journals/integrated-native-attempts/2026-11-11/43165501159/README.md) | Both repetitions: 426 = 418 PASS / 6 FAIL / 2 BLOCKED. Original 99: 98 PASS / 1 FAIL. | Public returned BEEF omitted ancestry required by the frozen parent verifier. Independently hydrated stored bytes prove ownership, but do not repair the public proof. No Rust execution or qualification. | 2,256 |
 | 5: [43195585984](https://github.com/p2ppsr/interop/actions/runs/43195585984), candidate `4a954ac`, source `c648022`; [archive](../journals/integrated-native-attempts/2026-11-12/43195585984/README.md) | Incomplete first repetition; no completed 535-predicate corpus or original-99 reevaluation. | The observer denied fresh-origin identity setup, then portability stopped with “Native wallet settings page is absent.” Actual resource cleanup completed; three missing success bindings prevented admission. No final record, second repetition, qualification or Rust result. | 1,180 |
 | 6: [43216478235](https://github.com/p2ppsr/interop/actions/runs/43216478235), candidate `4a954ac`, source `1f9fe0f`; [archive](../journals/integrated-native-attempts/2026-11-12/43216478235/README.md) | Both repetitions: 535 = 432 PASS / 27 FAIL / 76 BLOCKED. Original 99: 97 PASS / 2 FAIL. Each raw integration report contains 77 PASS. | Independent parent rejects unresolved unmined ancestry. Ten component child replays pass, but no full native or integrated qualification and no Rust execution are admitted. | 2,285 |
+| 7: [43253674251](https://github.com/p2ppsr/interop/actions/runs/43253674251), candidate `3e8a97f`, source `69386ef`; [archive](../journals/integrated-native-attempts/2026-11-12/43253674251/README.md) | Zero native sessions or observations; the 698-predicate corpus and original-99 comparison were not executed. | The committed-source selector raised `ENOBUFS` reading the 3,181,608-byte pagination fixture through the default 1 MiB output buffer. All build and native steps were skipped. No artifact ZIP, qualification or Rust result exists. | 22 |
 
 Attempt 4's six native failures were the signed-satoshi `listActions` response shape, two over-limit UTF-8 baskets, incomplete returned transaction proof, exact fee-inclusive allowance cap, and cumulative allowance. Its three accepted payments actually debited 114 satoshis against a 100-satoshi allowance. Each separate 77-predicate integration report contained 74 PASS and three BLOCKED because the uppercase Board protocol fixture prevented Board, LCH and revision execution. Those failures and absent results remain unchanged by the prospective fixes.
 
@@ -142,3 +143,41 @@ remains separate. Currency charges, storage/egress, operator effort,
 development-agent usage and allocated owned capacity remain unknown. The
 previous work orders are closed; another native attempt requires a new exact
 source freeze and bounded work order.
+
+[Foundation 43249807860](https://github.com/p2ppsr/interop/actions/runs/43249807860)
+and [source7 replay 43249807970](https://github.com/p2ppsr/interop/actions/runs/43249807970)
+subsequently passed on exact source `69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7`.
+Linux core tests reported 203 PASS / 1 SKIP and synthesis reported 1675 PASS /
+120 SKIP; dedicated integration jobs passed 42 certificate, 14 shutdown/listener,
+eight transport and 15 service tests. The nine-lane component report retains
+584 PASS and six upstream Go Messaging FAIL findings. All 80 descendant-storage
+replacement assertions pass. The [CI archive](../journals/native-closure-ci/2026-11-12/69386ef/README.md)
+preserves five original ZIPs and 483 members, with independent integrity review.
+Source7 retains the original native observations unchanged and executes no new
+native session. Successful CI used 1826 job-seconds; attempt 7 added 22,
+bringing completed cohort use to **26968 job-seconds**. The closed order permits
+no retry. A source-selector recovery requires explicit successor bindings and
+a separately bounded execution order; the original 693 plan remains unchanged.
+
+The prospective [source2 plan](../infra/native/conformance/plan-pr368-coverage-3-source-2.json)
+and [Rust binding](../infra/native/conformance/rust-graph-pr368-coverage-3-source-2.json)
+preserve ITCVE-1@4.5.0 / ISI-4@5.5.0 and all 698 criteria. A shared Git reader
+pins the committed blob identity and size, streams output through an owned
+temporary file, checks the exact bytes and Git object hash, and enforces a
+64 MiB per-input bound with cleanup. The old selector's buffer failure and a
+mechanical replay using the corrected reader are retained separately.
+
+An additional offline container audit found 84 missing pinned inputs in the
+initial successor image definition, including policy and fixture files. The
+corrected COPY chain includes all 394 inputs, and the base image ignore rules
+allow the current wallet artifact. The source-closure regression rejects four
+COPY omissions and retains the original 693 image's 82 missing inputs. This is
+a source and packaging check, not a completed Linux native image or wallet run.
+
+Final local recovery gates pass 214 core tests, 1705 synthesis tests with 90
+skips, five Python tests, type checking, catalog/standards and publication
+checks. All 3038 gate-input hashes remain stable through that invocation.
+Independent review confirms unchanged criteria and original profile, catalog,
+plan, Rust and source7 records. The new committed selector must pass its real
+Git read before publication; source7 may be carried only with its unchanged
+complete evaluator, dependency, policy and original-artifact bindings.

@@ -1,0 +1,104 @@
+{
+  "schema": "tpnil-ci-independent-test-and-component-counts@1",
+  "verified": true,
+  "nativeQualification": false,
+  "source": "69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7",
+  "core": {
+    "PASS": 203,
+    "FAIL": 0,
+    "SKIP": 1
+  },
+  "synthesis": {
+    "PASS": 1675,
+    "FAIL": 0,
+    "SKIP": 120
+  },
+  "pythonPassed": 5,
+  "separateGoTests": 13,
+  "separateCertificateTests": 42,
+  "separateGoShutdownListenerTests": 14,
+  "componentAssertions": 590,
+  "componentCounts": {
+    "PASS": 584,
+    "FAIL": 6
+  },
+  "retainedFailures": [
+    {
+      "lane": "messaging",
+      "file": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "file": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "file": "messaging-1/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "file": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "paid-internalization",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "file": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-after-acknowledgment",
+      "result": "FAIL"
+    },
+    {
+      "lane": "messaging",
+      "file": "messaging-2/result.json",
+      "run": 0,
+      "implementation": "go",
+      "id": "payment-replay-rejected",
+      "result": "FAIL"
+    }
+  ],
+  "descendantAssertionsWithin590": 80,
+  "localVsCIScope": "Local 1705/90 and CI 1675/120 are distinct selections. Local-only 24 new-Go host admission controls are not asserted executed by CI. Separate required jobs can overlap offline tests; counts are not summed.",
+  "reviewScope": "Independent raw log summary and retained result arithmetic; no additional semantic replay or native session.",
+  "inputFiles": [
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/job-131292196465.log",
+      "sha256": "c1ba079e06ccbe0d4cc2aa6f4935cefe92beb19cfc868ecc6a014e30f2754bbb"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/job-131292196581.log",
+      "sha256": "5897d77232befdb3916a83d4acf5f42751a956c769a62df92b1ea075390cdc90"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/job-131292195874.log",
+      "sha256": "2f593e7217be813706e8a79f45596d42626591edffa9aff56115ddd1e0b7e289"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/original/13959477803/result.json",
+      "sha256": "3babf4e75e99fb4bdcd884573da008092dd87e729415825aa9c390edeaf3981d"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/original/13959477803/verification.json",
+      "sha256": "7324a43708259d512b88146665d00220b7ff1297113abf47fa076ee2b94f39fd"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-69386ef/43249807860/original/13959477803/run-lock.json",
+      "sha256": "4fb9efd2e2a12f869fcdf791f2eea54c8b0ff4c65245fb0fb473444205d39e0e"
+    }
+  ]
+}
