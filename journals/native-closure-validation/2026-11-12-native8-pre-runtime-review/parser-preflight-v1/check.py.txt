@@ -1,0 +1,33 @@
+from pathlib import Path
+import datetime,gzip,hashlib,io,json,re,subprocess,sys,zipfile
+P=Path(__file__).resolve().parent;R=P.parents[2];A=R/'journals/integrated-native-attempts/2026-11-12/43262928941';EXPECTED='468f3b4e031fe0286324378fd169a34710539a0c104bcbaa0edb33c6035912b5';sha=lambda b:hashlib.sha256(b).hexdigest()
+assert sha((A/'attempt.json').read_bytes())==EXPECTED;before={p.relative_to(A).as_posix():sha(p.read_bytes())for p in A.rglob('*')if p.is_file()};m=json.loads((A/'attempt.json').read_bytes());assert len(m['files'])==137
+for row in m['files']:b=(A/row['name']).read_bytes();assert len(b)==row['size']and sha(b)==row['sha256']
+assert set(before)=={r['name']for r in m['files']}|{'attempt.json'}
+raw={}
+for row in json.loads((A/'encoding.json').read_bytes())['files']:
+ b=(A/row['path']).read_bytes();assert len(b)==row['storedBytes']and sha(b)==row['storedSha256'];b=gzip.decompress(b)if row['encoding']=='gzip'else b;assert len(b)==row['originalBytes']and sha(b)==row['originalSha256'];assert row['originalPath']not in raw;raw[row['originalPath']]=b
+run=json.loads(raw['acquisition/run.json']);jobs=json.loads(raw['acquisition/jobs.json']);artifacts=json.loads(raw['acquisition/artifacts.json']);assert run['id']==43262928941 and run['head_sha']==m['source']=='664e8539031109174e7233390262d76ca6c81240';assert run['event']=='workflow_dispatch'and run['status']=='completed'and run['conclusion']=='failure'and run['run_attempt']==1
+assert artifacts=={'total_count':0,'artifacts':[]};assert jobs['total_count']==len(jobs['jobs'])==2
+job=next(j for j in jobs['jobs']if j['id']==131338748697);assert job['conclusion']=='failure';seconds=int((datetime.datetime.fromisoformat(job['completed_at'])-datetime.datetime.fromisoformat(job['started_at'])).total_seconds());assert seconds==1052
+steps={s['number']:s for s in job['steps']};assert all(steps[n]['conclusion']=='success'for n in range(1,9));assert steps[9]['conclusion']=='failure'
+skipped=[]
+for n in [10,11,12]:
+ s=steps[n];assert s['conclusion']=='skipped';assert s['started_at']==s['completed_at']=='2026-11-12T17:07:27Z';skipped.append({'number':n,'name':s['name'],'conclusion':s['conclusion'],'startedAt':s['started_at'],'completedAt':s['completed_at'],'executionObserved':False})
+log=raw['acquisition/job-131338748697.log'].decode();lines=log.splitlines();instructions={}
+for i,l in enumerate(lines,1):
+ match=re.search(r'#(\d+) \[(\d+)/64\] (.*)',l)
+ if match:node,num,command=match.groups();instructions[int(num)]={'number':int(num),'node':node,'command':command,'line':i}
+assert set(instructions)==set(range(1,65))
+for row in instructions.values():assert re.search(r'#'+row['node']+r' (DONE|CACHED)\b',log),'Instruction not complete '+str(row)
+export=[i for i,l in enumerate(lines,1)if '#69 exporting layers'in l];assert len(export)==1 and not re.search(r'#69 (DONE|exporting layers .* done)',log)
+exitLines=[i for i,l in enumerate(lines,1)if 'Process completed with exit code 143.'in l];shutdownLines=[i for i,l in enumerate(lines,1)if 'The runner has received a shutdown signal.'in l];assert exitLines==[1712]and shutdownLines==[1713]and export[0]<exitLines[0]
+annotations=json.loads(raw['diagnosis/annotations.json']);assert {a['message']for a in annotations if a['annotation_level']=='failure'}=={'Process completed with exit code 143.'}
+assert not any(re.search(r'out of memory|oom killed|no space left on device',l,re.I)for l in lines)
+with zipfile.ZipFile(io.BytesIO(raw['acquisition/all-job-logs.zip']))as z:
+ members=json.loads(raw['all-job-logs-members.json']);assert len(members)==12;assert {i.filename for i in z.infolist()if not i.is_dir()}=={r['path']for r in members}
+ for row in members:b=z.read(row['path']);assert len(b)==row['bytes']and sha(b)==row['sha256']
+r=subprocess.run([sys.executable,str(A/'verify.py')],capture_output=True);(P/'archive.stdout').write_bytes(r.stdout);(P/'archive.stderr').write_bytes(r.stderr);assert r.returncode==0,r.stderr;verified=json.loads(r.stdout);assert verified['verified']is True and verified['shutdownOrigin']=='UNKNOWN'
+assert before=={p.relative_to(A).as_posix():sha(p.read_bytes())for p in A.rglob('*')if p.is_file()}
+report={'schema':'tpnil-native-pre-runtime-independent-review@1','verified':True,'archiveSha256':EXPECTED,'source':m['source'],'workflowRun':run['id'],'job':job['id'],'archiveFiles':137,'allJobLogMembers':12,'artifactCount':0,'newNativeSessions':0,'observedNativePredicates':0,'original99Status':'NOT_OBSERVED','expected698Status':'NOT_EXECUTED','nativeQualification':False,'semanticReplayExecuted':False,'primaryBoundary':'RUNNER_SHUTDOWN_DURING_FINAL_IMAGE_EXPORT','exitCode':143,'shutdownOrigin':'UNKNOWN','initiatingCauseAttribution':None,'workflowConclusion':'failure','completedDockerInstructions':64,'completedDockerCopyInstructions':sum(v['command'].startswith('COPY ')for v in instructions.values()),'finalImageExportCompleted':False,'skippedStepsWithSyntheticTimestamps':skipped,'jobSeconds':1052,'cohortJobSeconds':29430,'originalArchiveUnchanged':True,'sourceAndPlanMayBeReusedOnlyUnderSeparateRecordedAttempt':True,'limits':['All64 Docker instructions completed, but final image export did not; this is not image or native qualification.','Skipped native/integration/upload step timestamps are not execution evidence.','Shutdown notification and exit143 do not identify human cancellation, OOM, disk exhaustion or provider-capacity cause; absence of those diagnostics is not a cause determination.','No original native artifact exists, so neither predicate arithmetic nor frozen semantic replay can produce a native8 result.','Prepared664e passive config remains reusable for a fresh run ID; prior failed native8 bytes/outcome remain immutable.'],'bindings':{'rawRunSha256':sha(raw['acquisition/run.json']),'rawJobsSha256':sha(raw['acquisition/jobs.json']),'rawArtifactsSha256':sha(raw['acquisition/artifacts.json']),'rawJobLogSha256':sha(raw['acquisition/job-131338748697.log']),'annotationsSha256':sha(raw['diagnosis/annotations.json']),'prepDiagnosisSha256':sha(raw['diagnosis/review.json'])}}
+(P/'review.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'verified':True,'archiveSha256':EXPECTED,'reviewSha256':sha((P/'review.json').read_bytes()),'nativeSessions':0,'jobSeconds':1052,'shutdownOrigin':'UNKNOWN'}))

@@ -1,0 +1,70 @@
+{
+  "schema": "tpnil-native-pre-runtime-independent-review@1",
+  "verified": true,
+  "archiveSha256": "468f3b4e031fe0286324378fd169a34710539a0c104bcbaa0edb33c6035912b5",
+  "source": "664e8539031109174e7233390262d76ca6c81240",
+  "workflowRun": 43262928941,
+  "job": 131338748697,
+  "archiveFiles": 137,
+  "allJobLogMembers": 12,
+  "artifactCount": 0,
+  "newNativeSessions": 0,
+  "observedNativePredicates": 0,
+  "original99Status": "NOT_OBSERVED",
+  "expected698Status": "NOT_EXECUTED",
+  "nativeQualification": false,
+  "semanticReplayExecuted": false,
+  "primaryBoundary": "RUNNER_SHUTDOWN_DURING_FINAL_IMAGE_EXPORT",
+  "exitCode": 143,
+  "shutdownOrigin": "UNKNOWN",
+  "initiatingCauseAttribution": null,
+  "workflowConclusion": "failure",
+  "completedDockerInstructions": 64,
+  "completedDockerCopyInstructions": 63,
+  "finalImageExportCompleted": false,
+  "skippedStepsWithSyntheticTimestamps": [
+    {
+      "number": 10,
+      "name": "Execute two clean isolated native repetitions and verify results",
+      "conclusion": "skipped",
+      "startedAt": "2026-11-12T17:07:27Z",
+      "completedAt": "2026-11-12T17:07:27Z",
+      "executionObserved": false
+    },
+    {
+      "number": 11,
+      "name": "Execute and independently verify the integrated native wallet graph",
+      "conclusion": "skipped",
+      "startedAt": "2026-11-12T17:07:27Z",
+      "completedAt": "2026-11-12T17:07:27Z",
+      "executionObserved": false
+    },
+    {
+      "number": 12,
+      "name": "Retain every attempt and qualification receipt",
+      "conclusion": "skipped",
+      "startedAt": "2026-11-12T17:07:27Z",
+      "completedAt": "2026-11-12T17:07:27Z",
+      "executionObserved": false
+    }
+  ],
+  "jobSeconds": 1052,
+  "cohortJobSeconds": 29430,
+  "originalArchiveUnchanged": true,
+  "sourceAndPlanMayBeReusedOnlyUnderSeparateRecordedAttempt": true,
+  "limits": [
+    "All64 Docker instructions completed, but final image export did not; this is not image or native qualification.",
+    "Skipped native/integration/upload step timestamps are not execution evidence.",
+    "Shutdown notification and exit143 do not identify human cancellation, OOM, disk exhaustion or provider-capacity cause; absence of those diagnostics is not a cause determination.",
+    "No original native artifact exists, so neither predicate arithmetic nor frozen semantic replay can produce a native8 result.",
+    "Prepared664e passive config remains reusable for a fresh run ID; prior failed native8 bytes/outcome remain immutable."
+  ],
+  "bindings": {
+    "rawRunSha256": "86138021cbcb76002af923dfe45ac9f9dd344b80a6ff94d70398fe9f8f0d6987",
+    "rawJobsSha256": "84baafba2d8a9d44cdaebb7c05d1cc064799f4e0a032158ac34c04001a177010",
+    "rawArtifactsSha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c",
+    "rawJobLogSha256": "da6a8ed442561e7161aa42585efce07f660a06b0b9fd3915d96893cbc56180ce",
+    "annotationsSha256": "e099fad07079ce36572104ca073d4d43ac389edd02a96968726dea228f01b8b6",
+    "prepDiagnosisSha256": "029643d409dd13ca5651b14e3eaf7307db0581bd25649ca4f35e1a1dfe3b4a32"
+  }
+}

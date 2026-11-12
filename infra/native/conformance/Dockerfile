@@ -1,6 +1,5 @@
 ARG TPNIL_INTEGRATED_BASE
-FROM ${TPNIL_INTEGRATED_BASE}
-USER root
+FROM scratch AS conformance_files
 COPY fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json
 COPY fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json
 COPY infra/native/conformance /work/infra/native/conformance
@@ -58,13 +57,18 @@ COPY scripts/prepare-storage-caller-known-inputs-go.mjs /work/scripts/
 COPY programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json
 COPY programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json
 COPY programs/ISI-4/proposals/native-coverage-accountability-20261112-completion-delta.json programs/ISI-4/proposals/native-coverage-accountability-20261112-completion-delta.md /work/programs/ISI-4/proposals/
-COPY scripts/compare-native-conformance.mjs scripts/native-reevaluation.mjs scripts/verify-published-integrations.mjs /work/scripts/
+COPY scripts/verify-native-image.mjs scripts/compare-native-conformance.mjs scripts/native-reevaluation.mjs scripts/verify-published-integrations.mjs /work/scripts/
 COPY synthesis/test /work/synthesis/test
 COPY test /work/test
 ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
 COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
-ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1
-USER pwuser
 
 COPY synthesis/test/native-permission-startup.test.ts synthesis/test/native-failure.test.ts /work/synthesis/test/
 COPY synthesis/test/fixtures/native5-identity-prompt.json /work/synthesis/test/fixtures/native5-identity-prompt.json
+
+FROM ${TPNIL_INTEGRATED_BASE}
+USER root
+COPY --from=conformance_files /work /work
+COPY --from=conformance_files /opt/tpnil /opt/tpnil
+ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1
+USER pwuser

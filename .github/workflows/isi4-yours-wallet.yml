@@ -61,7 +61,7 @@ jobs:
   all-go-native:
     if: inputs.profile == 'all-go-native' || startsWith(inputs.profile, 'integrated-native')
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ (inputs.profile == 'integrated-native-conformance-pr368-coverage-3' || inputs.profile == 'integrated-native-conformance-pr368-coverage-1' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2') && 70 || (startsWith(inputs.profile, 'integrated-native-conformance-pr368-') || inputs.profile == 'integrated-native-conformance-5.1.1-observer-2') && 50 || 40 }}
+    timeout-minutes: ${{ inputs.profile == 'integrated-native-conformance-pr368-coverage-3' && 90 || (inputs.profile == 'integrated-native-conformance-pr368-coverage-1' || inputs.profile == 'integrated-native-conformance-pr368-coverage-2') && 70 || (startsWith(inputs.profile, 'integrated-native-conformance-pr368-') || inputs.profile == 'integrated-native-conformance-5.1.1-observer-2') && 50 || 40 }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
@@ -143,6 +143,15 @@ jobs:
             node scripts/prepare-storage-portability-go.mjs
           fi
           docker build --build-arg TPNIL_STORAGE_BINARY="$storage_binary" --build-arg TPNIL_INTEGRATED_BASE=tpnil-native-integrated:${{ github.sha }} -f infra/native/conformance/Dockerfile -t tpnil-native-conformance:${{ github.sha }} .
+          node scripts/verify-native-image.mjs tpnil-native-integrated:${{ github.sha }} tpnil-native-conformance:${{ github.sha }} "$storage_binary" out/native-image-audit
+      - name: Retain independent image filesystem audit
+        if: always() && startsWith(inputs.profile, 'integrated-native-conformance')
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: native-image-filesystem-audit
+          path: out/native-image-audit
+          if-no-files-found: warn
+          retention-days: 90
       - name: Execute two clean isolated native repetitions and verify results
         if: inputs.profile == 'all-go-native'
         run: node scripts/run-native-go-wallet.mjs tpnil-native-go:${{ github.sha }} out/native-go-wallet
