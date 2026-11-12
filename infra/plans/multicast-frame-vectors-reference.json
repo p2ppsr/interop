@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "MULTICAST-FRAME-VECTORS-REFERENCE",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/lightwebinc/multicast-test.git",
+    "commit": "388f3e2d40df157ff8c75050b7e7f0a88a5365f3"
+  },
+  "inputs": [
+    {
+      "environment": "TPNIL_FRAME_VECTORS",
+      "sha256": "594fd1e79683777991f72e8b5280172538eca0631cb1177409cc7636628fcc91",
+      "purpose": "The multicast frame conformance corpus the oracle checks."
+    }
+  ],
+  "timeoutSeconds": 900,
+  "environment": {
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly",
+    "TPNIL_FRAME_VECTORS": "${SOURCE_ROOT}/tpnil/vectors/multicast-frames-v1.json"
+  },
+  "command": [
+    "go",
+    "run",
+    "./tpnil/cmd/vectors-check",
+    "tpnil/vectors/multicast-frames-v1.json"
+  ],
+  "requiredOutput": [
+    "reference brc124.frame.example decodes to the corpus fields",
+    "reference brc124.legacy-frame.example decodes to the corpus fields",
+    "reference brc128.ef-payload decodes to the corpus fields",
+    "reference brc129.group-index decodes to the corpus fields",
+    "reference brc124.hashkey decodes to the corpus fields",
+    "reference brc130.two-fragments decodes to the corpus fields",
+    "reference brc135.header-frame decodes to the corpus fields",
+    "reference brc149.record-frame-delivery.one-topic decodes to the corpus fields",
+    "reference brc149.record-frame-delivery.with-label decodes to the corpus fields",
+    "reference brc148.plane-group decodes to the corpus fields",
+    "reference brc124.reject.bad-magic rejected",
+    "reference brc124.reject.truncated-payload rejected",
+    "reference brc149.reject.tag rejected",
+    "reference brc149.reject.record-version rejected",
+    "reference brc149.reject.zero-topics rejected",
+    "reference brc149.reject.empty-topic-name rejected",
+    "reference brc149.reject.object-marker rejected",
+    "reference decoders: 10 vectors and 7 invalid inputs agree with the corpus"
+  ]
+}

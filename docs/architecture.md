@@ -17,7 +17,7 @@ flowchart TD
 
 The orchestration control plane is outside SUT networks. It allocates disposable device guests and service namespaces, stages verified artifacts, restores initial state, drives public interfaces, records observations, evaluates criteria, and publishes only after evidence verification. Adapters execute lifecycle operations and preserve raw observations. Independent oracles determine conformance.
 
-ITCVE-1 supplies the complete component graph. ISI-1 selects a full integration profile; the other ISIs select smaller closures of that graph. A service can be the SUT in one run and a pinned supporting component in another. The run manifest records each role distinctly. All components are replaceable by an implementation that satisfies the declared interface and admission contract; the coordinator is not tied to an SDK language.
+ITCVE-1 supplies the complete component graph. ISI-1 selects a full integration profile; ISI-2 through ISI-4 select smaller closures of that graph. ITCVE-2 adds a multicast delivery fabric between the same services for ISI-5. A service can be the SUT in one run and a pinned supporting component in another. The run manifest records each role distinctly. All components are replaceable by an implementation that satisfies the declared interface and admission contract; the coordinator is not tied to an SDK language.
 
 ## Boundaries
 

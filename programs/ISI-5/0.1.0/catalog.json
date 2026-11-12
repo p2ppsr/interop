@@ -1,0 +1,432 @@
+{
+  "schemaVersion": "0.1.0",
+  "id": "ISI-5",
+  "version": "0.1.0",
+  "status": "draft",
+  "title": "Multicast transaction and object delivery",
+  "itcve": {
+    "id": "ITCVE-2",
+    "version": "0.1.0"
+  },
+  "profile": "multicast-delivery",
+  "vectors": [
+    {
+      "id": "ISI-5-V001",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R001",
+      "title": "Transaction frames, addressing and filtering",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0124.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit the pinned raw and Extended Format transaction fixtures, separately and interleaved, to the fabric ingress.",
+        "Subscribe delivery edges to all shard groups, to a shard subset, to selected subtrees, and through source-specific and any-source joins.",
+        "Announce subtree groups with BRC-127 frames and re-emit frames through an egress bridge onto another group scope.",
+        "Corrupt the transaction identifier of a declared share of frames, and run several edges against a shared deduplication cache."
+      ],
+      "expected": [
+        "Every edge subscribed to a transaction's BRC-129 group and subtree delivers it; an edge outside them does not.",
+        "Raw (BRC-124) and Extended Format (BRC-128) payloads arrive unchanged, alone or interleaved, with no malformed-frame drops.",
+        "An edge that verifies payload hashes forwards only frames whose payload hashes to the frame's transaction identifier.",
+        "An edge that learns its subtrees from BRC-127 announcements forwards them without static configuration, and an edge on the re-mapped scope receives the bridged frames.",
+        "Edges sharing a deduplication cache forward each transaction identifier once; without the cache they keep forwarding, and they resume deduplication after its failover.",
+        "Source-specific join and leave take effect, and an any-source configuration is unchanged by the source-specific path."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-TX-FRAMES component qualification",
+        "MULTICAST-FABRIC-TX-FILTERS component qualification",
+        "MULTICAST-FABRIC-TX-DEDUP component qualification",
+        "MULTICAST-FABRIC-SSM component qualification",
+        "per-edge delivery and drop counters"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V002",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R002",
+      "title": "Fragmentation and reassembly",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0130.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Set the ingress fragmentation MTU below the payload size and submit the pinned transaction fixtures.",
+        "Apply declared fragment loss on the edge segment."
+      ],
+      "expected": [
+        "Edges reassemble every frame with none abandoned, and each reassembled payload hashes to the frame's transaction identifier.",
+        "Shard and subtree filters apply to reassembled frames.",
+        "A frame missing a fragment is abandoned at the reassembly bound and never delivered in part."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-TX-FRAGMENTATION component qualification",
+        "reassembly and abandonment counters"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V003",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R003",
+      "title": "Gap detection and repair",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0126.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Apply declared loss on the edge segment and inject sequence gaps at the ingress.",
+        "Empty the cache of declared retransmission endpoints, and apply per-address, per-chain and per-group rate limits.",
+        "Repeat with repair fed by a listener tee without a group join, with NACK proxying across domains, and between fabrics."
+      ],
+      "expected": [
+        "Edges detect each gap from the per-flow sequence number and send BRC-126 NACKs; retransmission fills recoverable gaps, including those of Extended Format payloads.",
+        "An endpoint without the frame answers MISS, edges escalate by tier to an endpoint that holds it, and a gap that stays open is reported as unrecovered.",
+        "Frames sent equal frames delivered plus frames reported unrecovered.",
+        "Under rate limits, repair is throttled and acknowledgments continue."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-TX-REPAIR component qualification",
+        "MULTICAST-FABRIC-TX-RATE-LIMITS component qualification",
+        "MULTICAST-FABRIC-TX-REPAIR-TOPOLOGIES component qualification",
+        "gap, NACK, ACK, MISS and unrecovered counters"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V004",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R004",
+      "title": "Block, subtree and header objects",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0131.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit block announcements (BRC-131), subtree data (BRC-132), anchor frames (BRC-134) and blocks (BRC-144) to the ingress.",
+        "Apply declared loss on the edge segment."
+      ],
+      "expected": [
+        "Every subscribed edge receives each block announcement and anchor on the block broadcast group, whatever its shard and subtree filters.",
+        "Subtree data is delivered, and fragmented and reassembled when larger than the MTU.",
+        "Each pushed block becomes one BRC-131 frame whose 80-byte header the edge emits on the BRC-135 header lane.",
+        "Lost announcements, subtree data and anchors are repaired by BRC-126 retransmission."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-BLOCK-OBJECTS component qualification",
+        "per-lane delivery and repair counters"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V005",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R005",
+      "title": "BEEF object plane",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0148.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit BEEF submission records (BRC-149) on the open transaction path and on the dedicated BEEF lane, including the BRC-62 specification example and a record naming several topics.",
+        "Run transaction and BEEF traffic together through one ingress and one edge set.",
+        "Apply declared frame and fragment loss, with multicast and unicast repair."
+      ],
+      "expected": [
+        "Edges deliver each object verbatim with a verified content identifier, and an edge electing one encoding version forwards only that version.",
+        "Objects larger than the MTU travel as BRC-130 fragments, are reassembled before filtering, and recover at fragment granularity over multicast and unicast repair.",
+        "A record naming several topics travels as one frame, keyed by its first topic.",
+        "Transaction and BEEF traffic both deliver in full without perturbing each other's sequencing, and per-domain manifests adopt the plane's shard bits independently."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-BEEF-PLANE component qualification",
+        "delivered object identities"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V006",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R006",
+      "title": "Bundling and shard manifests",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0142.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Coalesce transactions into BRC-142 bundles at the ingress, with and without a shard-generation mismatch at the edges.",
+        "Apply declared loss on the edge segment.",
+        "Announce BRC-139 manifests with quorum, with a successor block, and with insufficient or conflicting signal."
+      ],
+      "expected": [
+        "Bundling conserves transactions: the delivered transactions equal the submitted ones.",
+        "A lost bundle is repaired as one unit, including when edges re-bucket bundles across a shard-generation mismatch.",
+        "A manifest is adopted only on quorum; insufficient or conflicting announcements are refused, and a successor signal surfaces once quorum is met."
+      ],
+      "evidence": [
+        "MULTICAST-FABRIC-TX-BUNDLES component qualification",
+        "MULTICAST-FABRIC-MANIFEST component qualification"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the harness's own scenario checks",
+        "Base image pinned by digest in a retained run"
+      ]
+    },
+    {
+      "id": "ISI-5-V007",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R007",
+      "title": "Frame conformance corpus",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/transactions/0124.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Clean ITCVE-2 harness baseline",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Decode the corpus's ten vectors and seven invalid inputs with the decoder under test.",
+        "Compare every decoded field and recomputed digest with the corpus."
+      ],
+      "expected": [
+        "Every field, SHA-256, SHA-256d and XXH64 digest, group index and RFC 5952 address equals the corpus value.",
+        "Every invalid input is rejected."
+      ],
+      "evidence": [
+        "MULTICAST-FRAME-VECTORS-REFERENCE component qualification",
+        "MULTICAST-FRAME-VECTORS-INDEPENDENT component qualification",
+        "per-vector decode transcript"
+      ],
+      "blockers": [
+        "SUT adapter that runs a candidate decoder against the corpus"
+      ]
+    },
+    {
+      "id": "ISI-5-V008",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R008",
+      "title": "Submission path through the fabric",
+      "origin": "laboratory-profile",
+      "reference": "itcves/ITCVE-2/0.1.0/README.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "ITCVE-2 joined ready condition observed",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit the pinned Extended Format fixture transaction to BSV Broadcaster.",
+        "Mine a block with the controlled miner."
+      ],
+      "expected": [
+        "Broadcaster's propagation reaches the facade, and the transaction lane delivers bytes equal to the fixture's Extended Format bytes.",
+        "Teranode accepts the delivered transaction, which reaches the mempool and a mined block.",
+        "The mined transaction's raw bytes equal the fixture's raw bytes."
+      ],
+      "evidence": [
+        "fabric-only configuration record",
+        "facade and lane delivery counts",
+        "delivered transaction bytes",
+        "block and subtree listing",
+        "ISI5-JOINED-PORTABLE-ARCADE-TERANODE-MERKLE component qualification",
+        "ISI5-JOINED-PORTABLE-STANDING-RESTORE component qualification",
+        "transaction lane capture and lane object comparison"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the fabric publisher's own checks"
+      ]
+    },
+    {
+      "id": "ISI-5-V009",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R009",
+      "title": "Processor objects and proofs through the fabric",
+      "origin": "laboratory-profile",
+      "reference": "itcves/ITCVE-2/0.1.0/README.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "ITCVE-2 joined ready condition observed",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Mine a block containing the fixture transaction.",
+        "Observe the processor bridge, the proof bridge, Merkle Service and the header store until Broadcaster reports the transaction mined."
+      ],
+      "expected": [
+        "The processor bridge publishes the block's subtree (BRC-143) and block (BRC-144) objects with identities equal to the processor's, and they arrive on the proof bridge's lanes.",
+        "Merkle Service fetches the objects from the proof bridge and receives no libp2p announcement.",
+        "Broadcaster receives a mined proof whose independently computed root equals the merkle root of the processor's header.",
+        "The header store holds the block under the hash of the header-lane bytes, with the processor's merkle root."
+      ],
+      "evidence": [
+        "lane delivery counts",
+        "Merkle Service announcement counters",
+        "BRC-74 merkle path",
+        "processor header",
+        "header store record",
+        "ISI5-JOINED-PORTABLE-ARCADE-TERANODE-MERKLE component qualification",
+        "ISI5-JOINED-PORTABLE-STANDING-RESTORE component qualification",
+        "subtree and block bytes from the proof bridge and the processor"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the fabric publisher's own checks"
+      ]
+    },
+    {
+      "id": "ISI-5-V010",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R010",
+      "title": "Repair under declared loss on the joined path",
+      "origin": "laboratory-profile",
+      "reference": "itcves/ITCVE-2/0.1.0/README.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "ITCVE-2 joined ready condition observed",
+        "Retransmission endpoint fed upstream of the declared impairment"
+      ],
+      "steps": [
+        "Apply the declared loss between the fabric and the delivery edge, leaving the retransmission feed and every delivery lane unimpaired.",
+        "Repeat the V008 and V009 schedules."
+      ],
+      "expected": [
+        "The delivery edge detects every gap and either repairs it or reports it unrecovered; frames sent equal frames delivered plus frames reported unrecovered.",
+        "Within the declared loss, no frame is reported unrecovered, and the V008 and V009 expectations still hold.",
+        "No transaction produces a second financial effect."
+      ],
+      "evidence": [
+        "impairment declaration",
+        "gap and repair counters",
+        "V008 and V009 evidence",
+        "ISI5-JOINED-PORTABLE-V010-REPAIR-UNDER-LOSS component qualification",
+        "MULTICAST-LISTENER-NACK-REPAIR component qualification"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the fabric publisher's own checks"
+      ]
+    },
+    {
+      "id": "ISI-5-V011",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R011",
+      "title": "Overlay delivery between engines",
+      "origin": "laboratory-profile",
+      "reference": "itcves/ITCVE-2/0.1.0/README.md",
+      "applicability": "Required within the selected draft profile; exceptions require a prospective versioned rule.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "ITCVE-2 joined ready condition observed",
+        "Healthy qualified supporting components"
+      ],
+      "steps": [
+        "Submit the pinned Atomic BEEF fixture to the publishing overlay host for the fixture topic.",
+        "Repeat the same submission."
+      ],
+      "expected": [
+        "Before the submission, the receiving engine holds no output for the fixture.",
+        "The publishing host answers with the topic-keyed admittance of BRC-22, and its bridge publishes the record on the BEEF object plane.",
+        "The receiving bridge takes the record from its BEEF lane and submits it, and the receiving engine admits it on the topic.",
+        "Lookups on both hosts return the output, and each returned BEEF resolves to the submitted transaction.",
+        "The repeated submission creates no second admission: each host still holds exactly one output for the fixture. BRC-22 does not define the answer to a repeat, so an empty admittance and the first admittance replayed are both accepted."
+      ],
+      "evidence": [
+        "BRC-22 request and response",
+        "BEEF bytes",
+        "lookup results from both hosts",
+        "bridge publish and submit counts",
+        "ISI5-JOINED-PORTABLE-V011-OVERLAY-DELIVERY component qualification"
+      ],
+      "blockers": [
+        "Independent oracle for each assertion; retained runs use the fabric publisher's own checks",
+        "The library's own BRC-22 route wraps its answer (V012 brc22.response.topic-keyed), so the retained run's hosts serve BRC-22 and BRC-24 themselves in front of the unmodified engine"
+      ]
+    },
+    {
+      "id": "ISI-5-V012",
+      "version": "0.1.0",
+      "requirementId": "ISI-5-R012",
+      "title": "BRC-22 submission boundary",
+      "origin": "standard",
+      "reference": "https://github.com/bsv-blockchain/BRCs/blob/99ee33ea5980313a5c2b01a02a1e42569d981fd6/overlays/0022.md",
+      "applicability": "Required for overlay bridges that submit through BRC-22 and for the engines that receive them; open-interpretation cases are held out of scoring.",
+      "executable": false,
+      "preconditions": [
+        "Digest-locked admitted SUT and dependency closure",
+        "Server under test in front of a recording engine",
+        "Pinned BRC-22 submit boundary vector file"
+      ],
+      "steps": [
+        "Send each header vector of the BRC-22 submit boundary vector file to the server under test with a one-byte body.",
+        "Read each response body with the client under test."
+      ],
+      "expected": [
+        "Standard cases produce the expected topics, rejections and topic-keyed admittance of BRC-22.",
+        "Extension cases are recorded as supported or not supported, never as failures.",
+        "Open-interpretation cases are recorded without a verdict."
+      ],
+      "evidence": [
+        "OVERLAY-BRC22-SUBMIT-BOUNDARY-GO component qualification",
+        "request header values",
+        "response status and body",
+        "topics the engine received"
+      ],
+      "blockers": [
+        "Laboratory interpretation of the open-interpretation cases",
+        "Runtime observations of overlay-express"
+      ]
+    }
+  ]
+}

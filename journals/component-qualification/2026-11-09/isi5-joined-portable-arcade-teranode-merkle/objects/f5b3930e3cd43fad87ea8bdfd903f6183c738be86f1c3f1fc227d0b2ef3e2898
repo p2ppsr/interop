@@ -1,0 +1,29 @@
+{
+  "arcade": {
+    "configSha256": "682a1ea30d0bbf388dd5b388379c7f05013ba53a51c9729f8db7e2e32d528e00",
+    "datahubDiscovery": false,
+    "datahubURLs": [
+      "http://arcade-bridge:9166"
+    ],
+    "p2pClientRunning": false
+  },
+  "components": {
+    "arcade-bridge": "ghcr.io/lightwebinc/arcade-bridge:0.1.4@sha256:51196953fb43c613cecf9174b674e06b6d2b198ccf3d7b298421d2d447e80fa9 sha256:1d5768df1d0fae7968412abfe01d648029297d807ae8c00a17a66647a4ea7850",
+    "bsv-broadcaster": "ghcr.io/bsv-blockchain/broadcaster:v0.20.0@sha256:f383f2cd7f1aa991defb639c41f8fbb6d74cb2607b427fdcc3df0698c22a98d6 sha256:62c556b146cda8e253ff7bfaad27a1095cfd46866834b648c3bd6b5cf3a5cd8b",
+    "bsv-broadcaster-compose": "e8bc97a5e3c971213a0a0c2933c224816ea7329d",
+    "merkle-service": "ghcr.io/bsv-blockchain/merkle-service:v0.6.3@sha256:a399bb859889a06073ec5db92d9f7cd9fc680a95310c9f6c6fa5e6c4a9f20905 sha256:dc7afa31a29b3dfb1f0e38e5b746fa8ab0a3d68e292de2f02213af6676df05b0",
+    "retry-endpoint": "ghcr.io/lightwebinc/retry-endpoint:1.16.1@sha256:b77cfabe14526c9b28b6f5afada87816073bd0b77a7961f563cd4a1b051b3a52 sha256:7280a7906a0124c9d3cb1170c82c18990ff230d54200d8a16b94ecccf945fe31",
+    "shard-listener": "ghcr.io/lightwebinc/shard-listener:1.36.1@sha256:632fca40b9a1b3f0fe2bf05d871a1a29eed830a59ea2bf2f557f87b2cd37a8b2 sha256:eb0a54f9f895a6b1a6adece2a6af59fce859e7dcfc70e47df4f3d19eeb171f2b",
+    "shard-proxy": "ghcr.io/lightwebinc/shard-proxy:1.43.1@sha256:aa8e0ea7500fa8959c2ee3ff9083b0b2d929f0f53116f04f5face6e74b78ddf0 sha256:72a5d1072b993d7e0645f8b5f861496f360378e6dcef91283f72f3b243e70fca",
+    "teranode": "ghcr.io/bsv-blockchain/teranode:v0.16.0@sha256:8ff56f976ef406309c49ff7e6c41e193d9dca7537bfe93976ec07b52c6d3a220 sha256:e6474360de07c6716770825adbaedf95970815a728c7a8c3576d4aec56299cf6",
+    "teranode-bridge": "ghcr.io/lightwebinc/teranode-bridge:0.13.0@sha256:e53eb55db7011dc60612513fe75e3ca6d2a4ab6488ba5dc07d3dcb5508598631 sha256:833acad32ecd1f93275ae810f19e7238c75d924f72c7706a59411efa35fd4a9d",
+    "teranode-quickstart": "90ff6bf12010e7681dba6bbecb07c2eb96323e07"
+  },
+  "merkleService": {
+    "bootstrapPeers": "/ip4/127.0.0.1/tcp/1/p2p/12D3KooWAFXWuxgdJoRsaA4J4RRRr8yu6WCrAPf8FaS7UfZg3ceG",
+    "dhtMode": "off",
+    "mdns": false
+  },
+  "proofPath": "fabric",
+  "schema": "lightweb-fabric-only-profile@1.0.0"
+}

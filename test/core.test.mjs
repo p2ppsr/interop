@@ -32,7 +32,7 @@ test('strict parser rejects ambiguous keys, Unicode, numbers and trailing data',
 });
 test('unsupported schema keywords fail closed', () => assert.throws(() => validate({ allOf: [] }, {}), /Unsupported/));
 test('catalogs distinguish executable vectors from design-only vectors', () => {
-  assert.deepEqual(checkRepository(), { catalogs: 4, draftVectors: 26, executableSutVectors: 6 });
+  assert.deepEqual(checkRepository(), { catalogs: 5, draftVectors: 38, executableSutVectors: 6 });
   const c = clone(readJson(path.join(ROOT, 'programs/ISI-4/0.1.0/catalog.json')));
   c.vectors[0].executable = true; checkCatalog(c);
   c.vectors[1].id = c.vectors[0].id; assert.throws(() => checkCatalog(c), /Duplicate/);

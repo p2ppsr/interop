@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "MULTICAST-LISTENER-NACK-REPAIR",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/lightwebinc/shard-listener.git",
+    "commit": "dc8a54d288d5726f7ab3092492ad076a47064096"
+  },
+  "environment": {
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly",
+    "GOWORK": "off"
+  },
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-v",
+    "./nack/"
+  ],
+  "timeoutSeconds": 900,
+  "requiredOutput": [
+    "--- PASS: TestBurstSameSender_EveryGapRegistered",
+    "--- PASS: TestBurstSameSender_EveryGapNACKedAndRecovered",
+    "--- PASS: TestInterleavedLoss_LateFramesFillAndRealLossRegistered",
+    "--- PASS: TestRebaseline_KeepsEarlierGaps",
+    "--- PASS: TestSenderChange_StillRebaselines",
+    "--- PASS: TestObserveEmitterChange_Rebaselines",
+    "--- PASS: TestRebaselineRecoversTransition",
+    "--- PASS: TestObserveJumpWithinCapIsLossAtAnyRate",
+    "--- PASS: TestPendingCapBooksTheRest",
+    "--- PASS: TestPendingTotalCapAcrossFlows",
+    "--- PASS: TestACKWithoutConfirmationChannel_LostCopyIsAskedAgainThenUnrecovered",
+    "--- PASS: TestACKWithoutConfirmationChannel_DataPlaneCopyCloses",
+    "--- PASS: TestSendNACK_ACK_DoesNotCloseGapAlone",
+    "--- PASS: TestSendNACK_MulticastAndUnicastACK_NoRecoverFunc_AwaitsDataPlane",
+    "--- PASS: TestSendNACK_UnicastACK_NoData_NotCancelled",
+    "--- PASS: TestSendNACK_UnicastRetransmit_Recovered",
+    "--- PASS: TestTailProbeConfirmedByACK_UnrepairedIsBookedOnce",
+    "--- PASS: TestThrottle_DoesNotConsumeRetryBudgetOrEscalate",
+    "ok  \tgithub.com/lightwebinc/shard-listener/nack\t"
+  ]
+}

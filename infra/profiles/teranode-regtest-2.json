@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "TPNIL-TERANODE-REGTEST-2",
+  "source": {
+    "repository": "https://github.com/bsv-blockchain/teranode-quickstart.git",
+    "commit": "90ff6bf12010e7681dba6bbecb07c2eb96323e07"
+  },
+  "image": {
+    "reference": "ghcr.io/bsv-blockchain/teranode:v0.16.0",
+    "indexDigest": "sha256:8ff56f976ef406309c49ff7e6c41e193d9dca7537bfe93976ec07b52c6d3a220",
+    "linuxArm64Digest": "sha256:e0a1de68ae6eec2ef21153ed211a8f4b1ac927449ac8105b98e65a4e42bd8a1c",
+    "linuxAmd64Digest": "sha256:24d5f7ad75d57755b09ff848840d67f2c2790c8117352dcd9761315a3a60e5ef"
+  },
+  "supportImages": [
+    {
+      "reference": "ghcr.io/bsv-blockchain/aerospike-server:8.1.2.0-1",
+      "indexDigest": "sha256:24f6b5af032cf7e6adb18f87ae38b9c3cc37d0d014efcc4c4d14b7fb5dc68565",
+      "linuxArm64Digest": "sha256:48e3e0deea08ddc5c86a4a2413f0e4798c40d719595228404e5c5bacd69b1cc9",
+      "linuxAmd64Digest": "sha256:976b668f5cbd72c3cb36247f99448807b22747b3e62df5a42f2bd58413d61d50"
+    },
+    {
+      "reference": "postgres:17",
+      "indexDigest": "sha256:f4c66b820c6f974249089d3d16d86a3698eae11e8746eb6644b2271031e91232",
+      "linuxArm64Digest": "sha256:86fa57b44a1d38f09970f64ac71eb492f7a9cf94d08b85e1c8f07bb0fc0a1761",
+      "linuxAmd64Digest": "sha256:e31e3d5327d1806f6177827c9710643e4f35f7ab3f14d26d05332753d3e95ee0"
+    },
+    {
+      "reference": "redpandadata/redpanda:v25.2.1",
+      "indexDigest": "sha256:218469e5d088757bb2c3ff4c5e272f7eebdc4e94c933e6e15aff10b845cbcd07",
+      "linuxArm64Digest": "sha256:df727430292c0e99cb12bd58e24e20657d25cfc410b7a87ff5062032ef33962b",
+      "linuxAmd64Digest": "sha256:930ca743dd41d91311fc1b28f505269814ccab142483daad773516c0544fa502"
+    },
+    {
+      "reference": "nginx:1.29.2",
+      "indexDigest": "sha256:029d4461bd98f124e531380505ceea2072418fdf28752aa73b7b273ba3048903",
+      "linuxArm64Digest": "sha256:68e62e210589c349f01d82308b45fbd6fb9b855f8b12cb27e11ad48dbfd0e43f",
+      "linuxAmd64Digest": "sha256:7e034cabf67d95246a996a3b92ad1c49c20d81526c9d7ba982aead057a0606e8"
+    }
+  ],
+  "network": "regtest",
+  "rpc": {
+    "host": "127.0.0.1",
+    "port": 9292,
+    "username": "tpnil",
+    "password": "tpnil-regtest-only"
+  }
+}

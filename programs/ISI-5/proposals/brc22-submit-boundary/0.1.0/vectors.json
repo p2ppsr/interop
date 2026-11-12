@@ -1,0 +1,522 @@
+{
+  "id": "overlays.brc22-submit-boundary-v1",
+  "name": "BRC-22 submit boundary: topic header encodings and the admittance response",
+  "brc": [
+    "BRC-22"
+  ],
+  "standard": "BRC-22",
+  "version": "0.1.0",
+  "status": "PROPOSED",
+  "contributor": "Lightweb Inc.",
+  "license": "Apache-2.0",
+  "standardSource": {
+    "repository": "https://github.com/bsv-blockchain/BRCs",
+    "commit": "99ee33ea5980313a5c2b01a02a1e42569d981fd6",
+    "path": "overlays/0022.md"
+  },
+  "implementations": [
+    {
+      "id": "go-overlay-services",
+      "role": "server",
+      "repository": "https://github.com/bsv-blockchain/go-overlay-services",
+      "version": "v1.3.8",
+      "commit": "b77904e276ea16558e8f7f3a104a8472b95586af"
+    },
+    {
+      "id": "overlay-express",
+      "role": "server",
+      "repository": "https://github.com/bsv-blockchain/ts-stack",
+      "path": "packages/overlays/overlay-express",
+      "commit": "52d36a5ab1ae7cb9e3243ff4147558bcccde3c07"
+    },
+    {
+      "id": "go-sdk-facilitator",
+      "role": "client",
+      "repository": "https://github.com/bsv-blockchain/go-sdk",
+      "path": "overlay/topic/facilitator.go",
+      "commit": "cc1ba64c171885bd4338d83648f55f43ccf2dc56"
+    }
+  ],
+  "evidence": "Observations of go-overlay-services are runtime observations: tests/tpnil/brc22 in lightwebinc/overlay-bridge runs every vector through the server's HTTP routes, under both route registration functions, in front of an engine that records the topics it is handed, and points go-sdk's facilitator at the running server. Observations of overlay-express are source observations at the pinned commit.",
+  "setup": "Start the server under test with its BRC-22 POST /submit route in front of a recording engine that records the topics it is handed and answers a fixed topic-keyed admittance. The request body is one opaque byte: no chain, fixture transaction or funding is involved. Header vectors send that body with X-Topics set to the vector's input value; response vectors send X-Topics [\"tm_example_1\"].",
+  "teardown": "Stop the server. The recording engine keeps no state beyond the run.",
+  "runtimeQualification": {
+    "id": "OVERLAY-BRC22-SUBMIT-BOUNDARY-GO",
+    "plan": "infra/plans/overlay-brc22-submit-boundary-go.json",
+    "journal": "journals/component-qualification/2026-11-08/overlay-brc22-submit-boundary-go/"
+  },
+  "vectors": [
+    {
+      "id": "brc22.topics.json-array",
+      "classification": "standard",
+      "clause": "Specification, API Endpoint and Parameters: the X-Topics header contains a JSON array of topic names (overlays/0022.md lines 36 and 90)",
+      "input": {
+        "header": "X-Topics",
+        "value": "[\"tm_example_1\",\"tm_example_2\"]"
+      },
+      "expected": {
+        "topics": [
+          "tm_example_1",
+          "tm_example_2"
+        ]
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "source": "pkg/server/internal/ports/topics_header.go#L26-L64",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L463-L483",
+          "evidence": "source"
+        },
+        {
+          "implementation": "go-sdk-facilitator",
+          "result": {
+            "sends": "[\"tm_example_1\",\"tm_example_2\"]"
+          },
+          "source": "overlay/topic/facilitator.go#L42-L46",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Servers implementing BRC-22 POST /submit. A result other than the expected one deviates from BRC-22.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V002",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.comma-list",
+      "classification": "extension",
+      "clause": "Not defined by BRC-22; both servers accept it",
+      "input": {
+        "header": "X-Topics",
+        "value": "tm_example_1,tm_example_2"
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "source": "pkg/server/internal/ports/topics_header.go#L30-L38",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L464-L466",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Recorded as supported or not supported; never scored as a failure.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.whitespace-in-json-elements",
+      "classification": "open-interpretation",
+      "clause": "BRC-22 does not state whether topic names are normalized",
+      "input": {
+        "header": "X-Topics",
+        "value": "[\" tm_example_1\",\"tm_example_2 \"]"
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "note": "each element is trimmed",
+          "source": "pkg/server/internal/ports/topics_header.go#L43-L64",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "topics": [
+              " tm_example_1",
+              "tm_example_2 "
+            ]
+          },
+          "note": "JSON elements pass through unchanged",
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L464-L482",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Held out of scoring until a versioned laboratory interpretation fixes the expected result.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.empty-entry",
+      "classification": "open-interpretation",
+      "clause": "BRC-22 does not define empty topic names",
+      "input": {
+        "header": "X-Topics",
+        "value": "tm_example_1,,tm_example_2"
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_2"
+            ]
+          },
+          "note": "empty entries are dropped",
+          "source": "pkg/server/internal/ports/topics_header.go#L43-L64",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "rejected": "Invalid x-topics header"
+          },
+          "note": "an empty topic fails the request",
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L473-L481",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Held out of scoring until a versioned laboratory interpretation fixes the expected result.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.duplicate",
+      "classification": "open-interpretation",
+      "clause": "BRC-22 does not define repeated topic names",
+      "input": {
+        "header": "X-Topics",
+        "value": "[\"tm_example_1\",\"tm_example_1\"]"
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "topics": [
+              "tm_example_1"
+            ]
+          },
+          "note": "duplicates are removed in first-seen order",
+          "source": "pkg/server/internal/ports/topics_header.go#L43-L64",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "topics": [
+              "tm_example_1",
+              "tm_example_1"
+            ]
+          },
+          "note": "the list reaches the engine as sent",
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L463-L483",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Held out of scoring until a versioned laboratory interpretation fixes the expected result.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.empty-array",
+      "classification": "open-interpretation",
+      "clause": "Processing step 2 defines an early response when no requested topic is hosted; BRC-22 does not say whether an empty request is valid",
+      "input": {
+        "header": "X-Topics",
+        "value": "[]"
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "rejected": "empty transaction topics",
+            "httpStatus": {
+              "RegisterRoutes": 500,
+              "RegisterRoutesWithErrorHandler": 400
+            }
+          },
+          "source": "pkg/server/internal/ports/topics_header.go#L59-L61",
+          "evidence": "runtime",
+          "note": "the server's incorrect-input error; a host that calls RegisterRoutes keeps Fiber's default error handler and answers 500, RegisterRoutesWithErrorHandler maps it to 400"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "topics": []
+          },
+          "note": "the empty list reaches the engine",
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L463-L483",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Held out of scoring until a versioned laboratory interpretation fixes the expected result.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.topics.non-string-element",
+      "classification": "standard",
+      "clause": "Specification, API Endpoint and Parameters: topic names are strings",
+      "input": {
+        "header": "X-Topics",
+        "value": "[1,\"tm_example_1\"]"
+      },
+      "expected": {
+        "rejected": true
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "rejected": "not a JSON array of strings",
+            "httpStatus": {
+              "RegisterRoutes": 500,
+              "RegisterRoutesWithErrorHandler": 400
+            }
+          },
+          "source": "pkg/server/internal/ports/topics_header.go#L30-L33",
+          "evidence": "runtime",
+          "note": "the server's incorrect-input error; a host that calls RegisterRoutes keeps Fiber's default error handler and answers 500, RegisterRoutesWithErrorHandler maps it to 400"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "rejected": "Invalid x-topics header"
+          },
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L473-L481",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Servers implementing BRC-22 POST /submit. A result other than the expected one deviates from BRC-22.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V002",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "request header value",
+        "response status",
+        "topics the engine received"
+      ]
+    },
+    {
+      "id": "brc22.response.topic-keyed",
+      "classification": "standard",
+      "clause": "Overlay Network Node Processing Steps, step 5, and Example, Response: a JSON object containing an Admittance Instructions object for each topic (overlays/0022.md lines 70-75 and 97-116)",
+      "input": {
+        "admittance": {
+          "tm_example_1": {
+            "outputsToAdmit": [
+              0
+            ],
+            "coinsToRetain": []
+          }
+        }
+      },
+      "expected": {
+        "body": {
+          "tm_example_1": {
+            "outputsToAdmit": [
+              0
+            ],
+            "coinsToRetain": []
+          }
+        }
+      },
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "body": {
+              "STEAK": {
+                "tm_example_1": {
+                  "ancillaryTxIDs": [],
+                  "coinsRemoved": null,
+                  "coinsToRetain": [],
+                  "outputsToAdmit": [
+                    0
+                  ]
+                }
+              }
+            }
+          },
+          "note": "the topic map is wrapped in an object under the key STEAK",
+          "source": "pkg/server/internal/ports/submit_transaction_handler.go#L34 and #L45-L70; pkg/server/internal/ports/openapi/openapi_non_admin_response_types.gen.go#L7-L12 and #L88-L90",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "overlay-express",
+          "result": {
+            "body": {
+              "tm_example_1": {
+                "outputsToAdmit": [
+                  0
+                ],
+                "coinsToRetain": []
+              }
+            }
+          },
+          "source": "packages/overlays/overlay-express/src/OverlayExpress.ts#L3013-L3022",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Servers implementing BRC-22 POST /submit. A result other than the expected one deviates from BRC-22.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V002",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "response status",
+        "response body"
+      ]
+    },
+    {
+      "id": "brc22.response.client-decoding",
+      "classification": "standard",
+      "clause": "A client decodes the topic-keyed object of step 5",
+      "input": {
+        "server": "go-overlay-services",
+        "body": {
+          "STEAK": {
+            "tm_example_1": {
+              "outputsToAdmit": [
+                0
+              ],
+              "coinsToRetain": []
+            }
+          }
+        }
+      },
+      "expected": {
+        "topics": [
+          "tm_example_1"
+        ]
+      },
+      "observations": [
+        {
+          "implementation": "go-sdk-facilitator",
+          "result": {
+            "topics": [
+              "STEAK"
+            ],
+            "error": null
+          },
+          "note": "the body is decoded as the bare topic map, so the wrapper key is read as a topic and the request reports success with no admitted outputs",
+          "source": "overlay/topic/facilitator.go#L58-L59; overlay/overlay.go#L63-L71",
+          "evidence": "runtime"
+        }
+      ],
+      "applicability": "Clients that decode the BRC-22 step 5 response, run against a server that answers in the observed shape.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V002",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "facilitator result",
+        "facilitator error"
+      ]
+    },
+    {
+      "id": "brc22.response.ancillary-field-name",
+      "classification": "extension",
+      "clause": "Not defined by BRC-22",
+      "observations": [
+        {
+          "implementation": "go-overlay-services",
+          "result": {
+            "field": "ancillaryTxIDs"
+          },
+          "source": "pkg/server/internal/ports/openapi/openapi_non_admin_response_types.gen.go#L8",
+          "evidence": "runtime"
+        },
+        {
+          "implementation": "go-sdk-facilitator",
+          "result": {
+            "field": "ancillaryTxids"
+          },
+          "note": "Go's JSON decoder matches field names case-insensitively, so Go clients read either spelling; a case-sensitive client does not",
+          "source": "overlay/overlay.go#L67",
+          "evidence": "source"
+        }
+      ],
+      "applicability": "Recorded as supported or not supported; never scored as a failure.",
+      "proposedUse": [
+        "ISI-5-V012",
+        "ISI-2-V006"
+      ],
+      "evidence": [
+        "source observations at the pinned revisions"
+      ]
+    }
+  ]
+}

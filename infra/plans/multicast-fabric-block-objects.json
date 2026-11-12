@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "MULTICAST-FABRIC-BLOCK-OBJECTS",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/lightwebinc/multicast-test.git",
+    "commit": "8e553bf81e55484dfb10431ae1e7da63f061dd3c"
+  },
+  "environment": {
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly"
+  },
+  "command": [
+    "go",
+    "run",
+    "./tpnil/cmd/harness-qualify",
+    "run",
+    "-run",
+    "^(TestScenario30_BlockAnnounceDelivery|TestScenario31_BlockAnnounceRetransmit|TestScenario32_SubtreeDataDelivery|TestScenario33_SubtreeDataFragmentation|TestScenario34_SubtreeDataRetransmit|TestScenario35_BlockHeaderEgress|TestScenario36_AnchorDelivery|TestScenario37_AnchorRetransmit)$",
+    "-timeout",
+    "50m"
+  ],
+  "timeoutSeconds": 3600,
+  "requiredOutput": [
+    "TPNIL component qualification of the Lightweb Inc. multicast-test harness",
+    "components verified: 7 of 7",
+    "toolchain go1.27.3 verified",
+    "image redis:7-alpine sha256:c5d34a98396a4775e223c74e929162c35c5a2182901ba26b50ade939941ce14b verified",
+    "--- PASS: TestScenario30_BlockAnnounceDelivery",
+    "--- PASS: TestScenario31_BlockAnnounceRetransmit",
+    "--- PASS: TestScenario32_SubtreeDataDelivery",
+    "--- PASS: TestScenario33_SubtreeDataFragmentation",
+    "--- PASS: TestScenario34_SubtreeDataRetransmit",
+    "--- PASS: TestScenario35_BlockHeaderEgress",
+    "--- PASS: TestScenario36_AnchorDelivery",
+    "--- PASS: TestScenario37_AnchorRetransmit",
+    "ok  \tgithub.com/lightwebinc/multicast-test/harness/scenarios",
+    "harness qualification exit 0"
+  ]
+}

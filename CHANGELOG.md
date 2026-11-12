@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add ISI-5 0.1.0, multicast transaction and object delivery, with twelve draft vectors, and its environment ITCVE-2 0.1.0. Retain twenty component qualifications: fourteen for the multicast harness, one for the BRC-22 submit boundary, four for the portable joined configuration (V008 to V011 with its ready and restore conditions), and one for the delivery edge's repair. Add the Teranode regtest profile TPNIL-TERANODE-REGTEST-2 (Teranode v0.16.0) for the joined configuration. The joined runs observe byte identity on the transaction, subtree and block lanes, and V010 runs on shard-listener v1.36.1. Register both in the program index, schemas and repository check.
 - Add ITCVE-1 1.1.0 with independent TypeScript/Go Overlay, ChainTracks and Wallet Storage selection, pinned native dependencies, authenticated mixed-component tests, fault/recovery checks, wallet/Android configuration and CI evidence. Historical profiles and results remain fixed.
 
 ## Unreleased

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "MULTICAST-FABRIC-MANIFEST",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/lightwebinc/multicast-test.git",
+    "commit": "8e553bf81e55484dfb10431ae1e7da63f061dd3c"
+  },
+  "environment": {
+    "GOTOOLCHAIN": "local",
+    "GOFLAGS": "-mod=readonly"
+  },
+  "command": [
+    "go",
+    "run",
+    "./tpnil/cmd/harness-qualify",
+    "run",
+    "-run",
+    "^(TestScenario70_BRC139WirePipeline|TestScenario71_BRC139SuccessorSignal|TestScenario72_BRC139AdoptionSafetyGates)$",
+    "-timeout",
+    "50m"
+  ],
+  "timeoutSeconds": 3600,
+  "requiredOutput": [
+    "TPNIL component qualification of the Lightweb Inc. multicast-test harness",
+    "components verified: 7 of 7",
+    "toolchain go1.27.3 verified",
+    "image redis:7-alpine sha256:c5d34a98396a4775e223c74e929162c35c5a2182901ba26b50ade939941ce14b verified",
+    "--- PASS: TestScenario70_BRC139WirePipeline",
+    "--- PASS: TestScenario71_BRC139SuccessorSignal",
+    "--- PASS: TestScenario72_BRC139AdoptionSafetyGates",
+    "ok  \tgithub.com/lightwebinc/multicast-test/harness/scenarios",
+    "harness qualification exit 0"
+  ]
+}

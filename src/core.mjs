@@ -72,11 +72,12 @@ export function checkCatalog(catalog) {
     if (v.origin === 'standard' && !/^https:\/\/github\.com\/[^/]+\/[^/]+\/blob\/[0-9a-f]{40}\//.test(v.reference)) throw new Error('Standard reference must pin a source commit');
   }
 }
+const ENVIRONMENTS = ['ITCVE-1', 'ITCVE-2'];
 export function checkRepository() {
   const index = readJson(path.join(ROOT, 'programs/index.json'));
   checkSchema('program-index', index);
   unique(index.programs.map(p => p.id), 'program ID');
-  if (index.programs.length !== 4) throw new Error('Expected four registered programs');
+  if (index.programs.length !== 5) throw new Error('Expected five registered programs');
   const catalogs = index.programs.map(p => readJson(path.join(ROOT, 'programs', p.id, p.version, 'catalog.json')));
   const version = fs.readFileSync(path.join(ROOT, 'VERSION'), 'utf8').trim();
   if (version !== RELEASE_VERSION || readJson(path.join(ROOT, 'package.json')).version !== RELEASE_VERSION) throw new Error('Laboratory version mismatch');
@@ -86,7 +87,7 @@ export function checkRepository() {
       const catalog = readJson(path.join(ROOT, 'programs', entry.id, version, 'catalog.json'));
       checkCatalog(catalog);
       if (catalog.id !== entry.id || catalog.version !== version) throw new Error('Catalog path identity mismatch');
-      if (catalog.itcve.id !== 'ITCVE-1') throw new Error('Unknown environment');
+      if (!ENVIRONMENTS.includes(catalog.itcve.id)) throw new Error('Unknown environment');
       const environment = readJson(path.join(ROOT, 'itcves', catalog.itcve.id, catalog.itcve.version, 'profile.json'));
       if (environment.id !== catalog.itcve.id || environment.version !== catalog.itcve.version) throw new Error('Environment identity mismatch');
       for (const vector of catalog.vectors) {

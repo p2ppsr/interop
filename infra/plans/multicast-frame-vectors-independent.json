@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "MULTICAST-FRAME-VECTORS-INDEPENDENT",
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "source": {
+    "repository": "https://github.com/lightwebinc/multicast-test.git",
+    "commit": "388f3e2d40df157ff8c75050b7e7f0a88a5365f3"
+  },
+  "inputs": [
+    {
+      "environment": "TPNIL_FRAME_VECTORS",
+      "sha256": "594fd1e79683777991f72e8b5280172538eca0631cb1177409cc7636628fcc91",
+      "purpose": "The multicast frame conformance corpus the oracle checks."
+    }
+  ],
+  "timeoutSeconds": 900,
+  "environment": {
+    "TPNIL_FRAME_VECTORS": "${SOURCE_ROOT}/tpnil/vectors/multicast-frames-v1.json"
+  },
+  "command": [
+    "node",
+    "tpnil/vectors/verify.mjs",
+    "tpnil/vectors/multicast-frames-v1.json"
+  ],
+  "requiredOutput": [
+    "independent brc124.frame.example matches the BRC text",
+    "independent brc124.legacy-frame.example matches the BRC text",
+    "independent brc128.ef-payload matches the BRC text",
+    "independent brc129.group-index matches the BRC text",
+    "independent brc124.hashkey matches the BRC text",
+    "independent brc130.two-fragments matches the BRC text",
+    "independent brc135.header-frame matches the BRC text",
+    "independent brc149.record-frame-delivery.one-topic matches the BRC text",
+    "independent brc149.record-frame-delivery.with-label matches the BRC text",
+    "independent brc148.plane-group matches the BRC text",
+    "independent brc124.reject.bad-magic rejected",
+    "independent brc124.reject.truncated-payload rejected",
+    "independent brc149.reject.tag rejected",
+    "independent brc149.reject.record-version rejected",
+    "independent brc149.reject.zero-topics rejected",
+    "independent brc149.reject.empty-topic-name rejected",
+    "independent brc149.reject.object-marker rejected",
+    "independent verifier: 10 vectors and 7 invalid inputs agree with the BRC text"
+  ]
+}
