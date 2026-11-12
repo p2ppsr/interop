@@ -1,0 +1,37 @@
+{
+  "schema": "tpnil-ci-failure-initial-diagnosis@1",
+  "source": "39ddc7bf657df8c4c7f1a5a96e0ecfeec5200b18",
+  "run": 43189667881,
+  "job": 131085482559,
+  "jobSeconds": 259,
+  "failedStep": "Run npm test --prefix synthesis",
+  "reportedTests": {
+    "pass": 1038,
+    "fail": 2,
+    "skipped": 65,
+    "total": 1105,
+    "passedFiles": 62,
+    "failedFiles": 2,
+    "skippedFiles": 3,
+    "totalFiles": 67
+  },
+  "durationSeconds": 215.63,
+  "errors": [
+    {
+      "file": "synthesis/test/native-coverage-extension.test.ts",
+      "line": 91,
+      "test": "retains lookup-not-found as a basket failure, never a namespace-validation pass",
+      "message": "Test timed out in 5000ms."
+    },
+    {
+      "file": "synthesis/test/native-shutdown-ancestry.test.ts",
+      "line": 94,
+      "test": "requires explicit expanded profile for permission5 and retains every denied ancestor guard",
+      "message": "Test timed out in 5000ms."
+    }
+  ],
+  "nativeDispatchAdmitted": false,
+  "newNativeSessions": 0,
+  "rerunRequested": false,
+  "logSha256": "86f6df0e858288a2d2650e841edcc9f4c2244c6349f88d3fc635b660932d7d6a"
+}

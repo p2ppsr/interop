@@ -91,7 +91,9 @@ describe('prospective complete shutdown permission ancestry', () => {
   })
 })
 
-it('requires explicit expanded profile for permission5 and retains every denied ancestor guard', async () => {
+// This case signs a descendant and checks five complete profile/ancestry paths.
+// Its bounded unit-test budget does not change the native verifier or run limits.
+it('requires explicit expanded profile for permission5 and retains every denied ancestor guard', { timeout: 30_000 }, async () => {
   const b: any = binding(); b.coverageReport.oracle = 'tpnil-native-permission-coverage-oracle@5.0.0'
   await expect(verifyFinalPermissionSubmissionAncestry(b)).rejects.toThrow()
   b.profile = 'ITCVE-1@4.3.0'; expect((await verifyFinalPermissionSubmissionAncestry(b)).verified).toBe(true)

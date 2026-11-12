@@ -88,7 +88,9 @@ it('rejects congruently substituted native signature and native public key using
   for (const verify of r.anchors.boundary.trace.filter((x: any) => x.method === 'verifySignature')) verify.args.signature = signed.result.signature
   expect(await outcome(r, 'crypto.anyone-counterparty')).toBe('FAIL')
 })
-it('retains lookup-not-found as a basket failure, never a namespace-validation pass', async () => {
+// Four complete cryptographic replays exceeded the default five-second unit
+// budget on the shared Linux runner. Keep every replay and its strict verdict.
+it('retains lookup-not-found as a basket failure, never a namespace-validation pass', { timeout: 30_000 }, async () => {
   for (const variant of ['bytes-4', 'uppercase', 'double-space', 'trailing-basket']) expect(await outcome(original, `basket.${variant}.relinquishOutput`)).toBe('FAIL')
 })
 it('accepts valid internalization with additional ordinary result metadata', async () => {
