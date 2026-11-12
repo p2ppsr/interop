@@ -19,21 +19,21 @@ test('source2 preserves the exact executed plan, Rust manifest, profile, catalog
   const reevaluation=JSON.parse(read('infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json'))
   for(const [name,digest] of Object.entries(reevaluation.evaluatorSources)) assert.equal(sha(read(name)),digest)
   assert.equal(plan.itcve,'ITCVE-1@4.5.0');assert.equal(plan.expectedObservations,698)
-  assert.equal(plan.sourceBindingRevision,3)
-  assert.deepEqual(plan.sourcePredecessor,{path:'infra/native/conformance/plan-pr368-coverage-3-source-2.json',sha256:sha(read('infra/native/conformance/plan-pr368-coverage-3-source-2.json'))})
+  assert.equal(plan.sourceBindingRevision,4)
+  assert.deepEqual(plan.sourcePredecessor,{path:'infra/native/conformance/plan-pr368-coverage-3-source-3.json',sha256:sha(read('infra/native/conformance/plan-pr368-coverage-3-source-3.json'))})
   assert.equal(Object.keys(plan.conformanceInputs).length,Object.keys(original.conformanceInputs).length+5)
   for(const [name,digest] of Object.entries(plan.conformanceInputs)) assert.equal(sha(read(name)),digest,name)
 })
 
 test('host, worker, parent and Docker all select the explicit same-criteria successor closure',()=>{
   assert.equal(selectNativeWalletProfile('--conformance-pr368-coverage-3').planPath,nativeCandidateCoverage3PlanPath)
-  assert.ok(nativeCandidateCoverage3PlanPath.endsWith('coverage-3-source-3.json'))
+  assert.ok(nativeCandidateCoverage3PlanPath.endsWith('coverage-3-source-4.json'))
   for(const name of ['synthesis/src/wallet-lab/native/worker.ts','synthesis/src/wallet-lab/native/verify.ts','scripts/verify-native-integrated.mjs']) assert.ok(read(name).toString().includes(nativeCandidateCoverage3PlanPath),name)
   assert.ok(read('infra/native/conformance/Dockerfile').toString().includes('scripts/read-committed-blob.mjs /work/scripts/'))
   const rust=JSON.parse(read(nativeCandidateCoverage3CompatibilityPath))
-  assert.equal(rust.sourceBindingRevision,8)
+  assert.equal(rust.sourceBindingRevision,9)
   assert.deepEqual(Object.keys(rust.sources).sort(),[...nativeCompletionCompatibilitySources].sort())
-  assert.deepEqual(rust.predecessor,{manifest:'infra/native/conformance/rust-graph-pr368-coverage-3-source-2.json',sha256:sha(read('infra/native/conformance/rust-graph-pr368-coverage-3-source-2.json'))})
+  assert.deepEqual(rust.predecessor,{manifest:'infra/native/conformance/rust-graph-pr368-coverage-3-source-3.json',sha256:sha(read('infra/native/conformance/rust-graph-pr368-coverage-3-source-3.json'))})
 })
 
 // Synthetic readCommitted is explicit here: these tests exercise admission

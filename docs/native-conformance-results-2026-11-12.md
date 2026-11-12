@@ -243,3 +243,14 @@ explicit skips, type checking, five Python packaging tests and catalog/standards
 checks. The new audit controls reject missing, extra, modified, permission- or
 owner-changed files, symlink traversal and runtime configuration substitution.
 Actual Linux image comparison and native repetitions remain pending.
+
+Source3 [Foundation43281286382](https://github.com/p2ppsr/interop/actions/runs/43281286382)
+failed one offline unit test: it expected a prebuilt Go binary in that job.
+The operator canceled the other jobs after the failure; total CI use was210
+job-seconds, bringing this cohort to33424. Original APIs and all available job
+logs are retained in the [CI failure archive](../journals/native-closure-ci/2026-11-12/718da3b/README.md).
+The prospective source4 binding retains the source3 plan and fixes only the
+unit fixture dependency and explicit source selection. The test uses owned,
+inert fixture bytes and removes them afterward. The production Linux audit
+still requires the actual compiled storage binary and manifest. Its217core
+tests and type/catalog checks pass; Linux execution remains required.

@@ -1,0 +1,338 @@
+﻿2026-11-12T18:34:46.3732622Z Current runner version: '2.338.2'
+2026-11-12T18:34:46.3748684Z ##[group]Runner Image Provisioner
+2026-11-12T18:34:46.3749183Z Hosted Compute Agent
+2026-11-12T18:34:46.3749578Z Version: 20261028.624
+2026-11-12T18:34:46.3749946Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-12T18:34:46.3750520Z Build Date: 2026-10-28T21:51:42Z
+2026-11-12T18:34:46.3750960Z Worker ID: {fd1d7153-1cab-4cdb-90af-5ee3d05d421d}
+2026-11-12T18:34:46.3751403Z Region: northcentralus
+2026-11-12T18:34:46.3751762Z Cloud: Azure
+2026-11-12T18:34:46.3752118Z ##[endgroup]
+2026-11-12T18:34:46.3752836Z ##[group]Operating System
+2026-11-12T18:34:46.3753262Z Ubuntu
+2026-11-12T18:34:46.3753568Z 24.04.5
+2026-11-12T18:34:46.3753887Z LTS
+2026-11-12T18:34:46.3754204Z ##[endgroup]
+2026-11-12T18:34:46.3754528Z ##[group]Runner Image
+2026-11-12T18:34:46.3754904Z Image: ubuntu-24.04
+2026-11-12T18:34:46.3755264Z Version: 20261101.360.1
+2026-11-12T18:34:46.3756230Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-12T18:34:46.3757127Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-12T18:34:46.3757716Z ##[endgroup]
+2026-11-12T18:34:46.3758356Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T18:34:46.3759591Z Contents: read
+2026-11-12T18:34:46.3759960Z Metadata: read
+2026-11-12T18:34:46.3760453Z ##[endgroup]
+2026-11-12T18:34:46.3761696Z Secret source: Actions
+2026-11-12T18:34:46.3762197Z Cache mode: write
+2026-11-12T18:34:46.3762669Z Prepare workflow directory
+2026-11-12T18:34:46.3962402Z Prepare all required actions
+2026-11-12T18:34:46.3991697Z Getting action download info
+2026-11-12T18:34:46.6456388Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-12T18:34:46.7136748Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-12T18:34:46.8369999Z Download action repository 'actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e' (SHA:b7ad1dad31e06c5925ef5d2fc7ad053ef454303e)
+2026-11-12T18:34:47.2194021Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-12T18:34:47.4215817Z Complete job name: go-components
+2026-11-12T18:34:47.4709890Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-12T18:34:47.4711297Z with:
+2026-11-12T18:34:47.4711561Z   persist-credentials: false
+2026-11-12T18:34:47.4711864Z   repository: p2ppsr/interop
+2026-11-12T18:34:47.4714532Z   token: ***
+2026-11-12T18:34:47.4714787Z   ssh-strict: true
+2026-11-12T18:34:47.4715039Z   ssh-user: git
+2026-11-12T18:34:47.4715283Z   clean: true
+2026-11-12T18:34:47.4715544Z   sparse-checkout-cone-mode: true
+2026-11-12T18:34:47.4715847Z   fetch-depth: 1
+2026-11-12T18:34:47.4716096Z   fetch-tags: false
+2026-11-12T18:34:47.4716358Z   show-progress: true
+2026-11-12T18:34:47.4716651Z   lfs: false
+2026-11-12T18:34:47.4716894Z   submodules: false
+2026-11-12T18:34:47.4717159Z   set-safe-directory: true
+2026-11-12T18:34:47.4717449Z   allow-unsafe-pr-checkout: false
+2026-11-12T18:34:47.4717861Z ##[endgroup]
+2026-11-12T18:34:47.6456845Z Syncing repository: p2ppsr/interop
+2026-11-12T18:34:47.6457957Z ##[group]Getting Git version info
+2026-11-12T18:34:47.6458420Z Working directory is '/home/runner/work/interop/interop'
+2026-11-12T18:34:47.6458954Z [command]/usr/bin/git version
+2026-11-12T18:34:47.6510810Z git version 2.56.0
+2026-11-12T18:34:47.6520903Z ##[endgroup]
+2026-11-12T18:34:47.6528737Z Temporarily overriding HOME='/home/runner/work/_temp/4a796f93-7179-436f-82f1-0c794adc4c23' before making global git config changes
+2026-11-12T18:34:47.6529946Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T18:34:47.6531802Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T18:34:47.6568769Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-12T18:34:47.6571600Z ##[group]Initializing the repository
+2026-11-12T18:34:47.6573611Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-12T18:34:47.6642961Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T18:34:47.6643645Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T18:34:47.6644250Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T18:34:47.6644705Z hint: call:
+2026-11-12T18:34:47.6644978Z hint:
+2026-11-12T18:34:47.6645322Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T18:34:47.6645709Z hint:
+2026-11-12T18:34:47.6646070Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T18:34:47.6646624Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T18:34:47.6647072Z hint:
+2026-11-12T18:34:47.6647341Z hint: 	git branch -m <name>
+2026-11-12T18:34:47.6647675Z hint:
+2026-11-12T18:34:47.6648063Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T18:34:47.6649991Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-12T18:34:47.6656866Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-12T18:34:47.6691613Z ##[endgroup]
+2026-11-12T18:34:47.6692347Z ##[group]Disabling automatic garbage collection
+2026-11-12T18:34:47.6693816Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-12T18:34:47.6717384Z ##[endgroup]
+2026-11-12T18:34:47.6718056Z ##[group]Setting up auth
+2026-11-12T18:34:47.6721584Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T18:34:47.6747277Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T18:34:47.6996723Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T18:34:47.7018860Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T18:34:47.7187066Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T18:34:47.7211813Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T18:34:47.7375247Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T18:34:47.7403379Z ##[endgroup]
+2026-11-12T18:34:47.7403947Z ##[group]Fetching the repository
+2026-11-12T18:34:47.7410289Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +718da3ba12bc67caba8c9c6dd34acece6aad33a5:refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-12T18:34:58.9701319Z From https://github.com/p2ppsr/interop
+2026-11-12T18:34:58.9710867Z  * [new ref]         718da3ba12bc67caba8c9c6dd34acece6aad33a5 -> origin/codex/native-wallet-closure-20261111
+2026-11-12T18:34:58.9712274Z ##[endgroup]
+2026-11-12T18:34:58.9712666Z ##[group]Determining the checkout info
+2026-11-12T18:34:58.9713089Z ##[endgroup]
+2026-11-12T18:34:58.9714387Z [command]/usr/bin/git sparse-checkout disable
+2026-11-12T18:34:58.9752260Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T18:34:58.9775325Z ##[group]Checking out the ref
+2026-11-12T18:34:58.9777779Z [command]/usr/bin/git checkout --progress --force -B codex/native-wallet-closure-20261111 refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-12T18:34:59.9925371Z Updating files:  60% (6688/11105)
+2026-11-12T18:35:00.0046490Z Updating files:  61% (6775/11105)
+2026-11-12T18:35:00.0095621Z Updating files:  62% (6886/11105)
+2026-11-12T18:35:00.0171174Z Updating files:  63% (6997/11105)
+2026-11-12T18:35:00.0513168Z Updating files:  64% (7108/11105)
+2026-11-12T18:35:00.0557884Z Updating files:  65% (7219/11105)
+2026-11-12T18:35:00.0607932Z Updating files:  66% (7330/11105)
+2026-11-12T18:35:00.0669340Z Updating files:  67% (7441/11105)
+2026-11-12T18:35:00.0764185Z Updating files:  68% (7552/11105)
+2026-11-12T18:35:00.0982550Z Updating files:  69% (7663/11105)
+2026-11-12T18:35:00.1089555Z Updating files:  70% (7774/11105)
+2026-11-12T18:35:00.1156189Z Updating files:  71% (7885/11105)
+2026-11-12T18:35:00.1255756Z Updating files:  72% (7996/11105)
+2026-11-12T18:35:00.1378321Z Updating files:  73% (8107/11105)
+2026-11-12T18:35:00.1435922Z Updating files:  74% (8218/11105)
+2026-11-12T18:35:00.1609889Z Updating files:  75% (8329/11105)
+2026-11-12T18:35:00.1645223Z Updating files:  76% (8440/11105)
+2026-11-12T18:35:00.1675575Z Updating files:  77% (8551/11105)
+2026-11-12T18:35:00.1727394Z Updating files:  78% (8662/11105)
+2026-11-12T18:35:00.1760181Z Updating files:  79% (8773/11105)
+2026-11-12T18:35:00.1805881Z Updating files:  80% (8884/11105)
+2026-11-12T18:35:00.1844083Z Updating files:  81% (8996/11105)
+2026-11-12T18:35:00.1886618Z Updating files:  82% (9107/11105)
+2026-11-12T18:35:00.1943520Z Updating files:  83% (9218/11105)
+2026-11-12T18:35:00.1986596Z Updating files:  84% (9329/11105)
+2026-11-12T18:35:00.2080882Z Updating files:  85% (9440/11105)
+2026-11-12T18:35:00.2234854Z Updating files:  86% (9551/11105)
+2026-11-12T18:35:00.2308110Z Updating files:  87% (9662/11105)
+2026-11-12T18:35:00.2532172Z Updating files:  88% (9773/11105)
+2026-11-12T18:35:00.2584806Z Updating files:  89% (9884/11105)
+2026-11-12T18:35:00.2626741Z Updating files:  90% (9995/11105)
+2026-11-12T18:35:00.2766223Z Updating files:  91% (10106/11105)
+2026-11-12T18:35:00.2943661Z Updating files:  92% (10217/11105)
+2026-11-12T18:35:00.3042620Z Updating files:  93% (10328/11105)
+2026-11-12T18:35:00.3050766Z Updating files:  94% (10439/11105)
+2026-11-12T18:35:00.3084708Z Updating files:  95% (10550/11105)
+2026-11-12T18:35:00.3133522Z Updating files:  96% (10661/11105)
+2026-11-12T18:35:00.3186105Z Updating files:  97% (10772/11105)
+2026-11-12T18:35:00.3360866Z Updating files:  98% (10883/11105)
+2026-11-12T18:35:00.3408649Z Updating files:  99% (10994/11105)
+2026-11-12T18:35:00.3408816Z Updating files: 100% (11105/11105)
+2026-11-12T18:35:00.3409218Z Updating files: 100% (11105/11105), done.
+2026-11-12T18:35:00.3500580Z Switched to a new branch 'codex/native-wallet-closure-20261111'
+2026-11-12T18:35:00.3504500Z branch 'codex/native-wallet-closure-20261111' set up to track 'origin/codex/native-wallet-closure-20261111'.
+2026-11-12T18:35:00.3624774Z ##[endgroup]
+2026-11-12T18:35:00.3664867Z [command]/usr/bin/git log -1 --format=%H
+2026-11-12T18:35:00.3683617Z 718da3ba12bc67caba8c9c6dd34acece6aad33a5
+2026-11-12T18:35:00.3691214Z ##[group]Removing auth
+2026-11-12T18:35:00.3693737Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T18:35:00.3716473Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T18:35:00.3898504Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T18:35:00.3918500Z http.https://github.com/.extraheader
+2026-11-12T18:35:00.3924413Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-12T18:35:00.3948710Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T18:35:00.4124267Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T18:35:00.4146110Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T18:35:00.4324403Z ##[endgroup]
+2026-11-12T18:35:00.4510599Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-12T18:35:00.4510817Z with:
+2026-11-12T18:35:00.4510946Z   node-version-file: .nvmrc
+2026-11-12T18:35:00.4511083Z   always-auth: false
+2026-11-12T18:35:00.4511206Z   check-latest: false
+2026-11-12T18:35:00.4512607Z   token: ***
+2026-11-12T18:35:00.4512730Z ##[endgroup]
+2026-11-12T18:35:00.5335593Z Node version file is not JSON file
+2026-11-12T18:35:00.5336762Z Resolved .nvmrc as 24.22.1
+2026-11-12T18:35:00.5348127Z Attempting to download 24.22.1...
+2026-11-12T18:35:00.5440729Z (node:2203) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T18:35:00.5441177Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T18:35:01.2431913Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-12T18:35:01.5225018Z Extracting ...
+2026-11-12T18:35:01.5326133Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/2ce4d402-fc80-4568-872b-df82af482b82 -f /home/runner/work/_temp/9139d521-0ad1-445e-8410-711e4d0f7459
+2026-11-12T18:35:02.4048196Z Adding to the cache ...
+2026-11-12T18:35:04.3506636Z ##[group]Environment details
+2026-11-12T18:35:04.5048146Z node: v24.22.1
+2026-11-12T18:35:04.5048416Z npm: 11.19.1
+2026-11-12T18:35:04.5048579Z yarn: 1.22.22
+2026-11-12T18:35:04.5049022Z ##[endgroup]
+2026-11-12T18:35:04.5234313Z ##[group]Run actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+2026-11-12T18:35:04.5234528Z with:
+2026-11-12T18:35:04.5234640Z   go-version: 1.27.3
+2026-11-12T18:35:04.5234778Z   cache-dependency-path: synthesis/go/go.sum
+2026-11-12T18:35:04.5234937Z   check-latest: false
+2026-11-12T18:35:04.5236198Z   token: ***
+2026-11-12T18:35:04.5236307Z   cache: true
+2026-11-12T18:35:04.5236417Z ##[endgroup]
+2026-11-12T18:35:04.5977780Z Setup go version spec 1.27.3
+2026-11-12T18:35:04.5979215Z Attempting to download 1.27.3...
+2026-11-12T18:35:05.3690610Z matching 1.27.3...
+2026-11-12T18:35:05.3691903Z Acquiring 1.27.3 from https://github.com/actions/go-versions/releases/download/1.27.3-39437817176/go-1.27.3-linux-x64.tar.gz
+2026-11-12T18:35:05.6884477Z Extracting Go...
+2026-11-12T18:35:05.6966600Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/5264068d-4087-4a09-9313-c2f4cb67045e -f /home/runner/work/_temp/2c96da99-c103-43af-af64-a1eeb1d05716
+2026-11-12T18:35:06.8988531Z Successfully extracted go to /home/runner/work/_temp/5264068d-4087-4a09-9313-c2f4cb67045e
+2026-11-12T18:35:06.8988936Z Adding to the cache ...
+2026-11-12T18:35:10.9559662Z Successfully cached go to /opt/hostedtoolcache/go/1.27.3/x64
+2026-11-12T18:35:10.9560848Z Added go to the path
+2026-11-12T18:35:10.9562806Z Successfully set up Go version 1.27.3
+2026-11-12T18:35:10.9715793Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOMODCACHE
+2026-11-12T18:35:10.9745458Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOCACHE
+2026-11-12T18:35:10.9774629Z /home/runner/go/pkg/mod
+2026-11-12T18:35:10.9788659Z /home/runner/.cache/go-build
+2026-11-12T18:35:11.0825500Z Cache hit for: setup-go-Linux-x64-ubuntu24-go-1.27.3-39def735ed8c2dfdb21c2002a828c41dc26a5e08075b577b46d16c8563f66d1f
+2026-11-12T18:35:12.2136663Z Received 134217728 of 1332719475 (10.1%), 128.0 MBs/sec
+2026-11-12T18:35:13.2138991Z Received 364904448 of 1332719475 (27.4%), 174.0 MBs/sec
+2026-11-12T18:35:14.2136169Z Received 583008256 of 1332719475 (43.7%), 185.3 MBs/sec
+2026-11-12T18:35:15.2141821Z Received 792723456 of 1332719475 (59.5%), 189.0 MBs/sec
+2026-11-12T18:35:16.2144749Z Received 985661440 of 1332719475 (74.0%), 188.0 MBs/sec
+2026-11-12T18:35:17.2153559Z Received 1195376640 of 1332719475 (89.7%), 189.9 MBs/sec
+2026-11-12T18:35:18.1215747Z Received 1332719475 of 1332719475 (100.0%), 184.0 MBs/sec
+2026-11-12T18:35:18.1216436Z Cache Size: ~1271 MB (1332719475 B)
+2026-11-12T18:35:18.1324366Z [command]/usr/bin/tar -xf /home/runner/work/_temp/37c0e2eb-eec2-4ccb-b803-faaf2bf29e01/cache.tzst -P -C /home/runner/work/interop/interop --use-compress-program unzstd
+2026-11-12T18:35:43.8456683Z Cache restored successfully
+2026-11-12T18:35:43.9000891Z Cache restored from key: setup-go-Linux-x64-ubuntu24-go-1.27.3-39def735ed8c2dfdb21c2002a828c41dc26a5e08075b577b46d16c8563f66d1f
+2026-11-12T18:35:43.9006085Z go version go1.27.3 linux/amd64
+2026-11-12T18:35:43.9008483Z 
+2026-11-12T18:35:43.9008809Z ##[group]go env
+2026-11-12T18:35:43.9130719Z AR='ar'
+2026-11-12T18:35:43.9130945Z CC='gcc'
+2026-11-12T18:35:43.9131150Z CGO_CFLAGS='-O2 -g'
+2026-11-12T18:35:43.9131438Z CGO_CPPFLAGS=''
+2026-11-12T18:35:43.9131672Z CGO_CXXFLAGS='-O2 -g'
+2026-11-12T18:35:43.9131900Z CGO_ENABLED='1'
+2026-11-12T18:35:43.9132121Z CGO_FFLAGS='-O2 -g'
+2026-11-12T18:35:43.9132323Z CGO_LDFLAGS='-O2 -g'
+2026-11-12T18:35:43.9132520Z CXX='g++'
+2026-11-12T18:35:43.9132697Z GCCGO='gccgo'
+2026-11-12T18:35:43.9132874Z GO111MODULE=''
+2026-11-12T18:35:43.9133062Z GOAMD64='v1'
+2026-11-12T18:35:43.9133241Z GOARCH='amd64'
+2026-11-12T18:35:43.9133418Z GOAUTH='netrc'
+2026-11-12T18:35:43.9133623Z GOBIN='/home/runner/go/bin'
+2026-11-12T18:35:43.9133903Z GOCACHE='/home/runner/.cache/go-build'
+2026-11-12T18:35:43.9134148Z GOCACHEPROG=''
+2026-11-12T18:35:43.9134325Z GODEBUG=''
+2026-11-12T18:35:43.9134554Z GOENV='/home/runner/.config/go/env'
+2026-11-12T18:35:43.9134780Z GOEXE=''
+2026-11-12T18:35:43.9134953Z GOEXPERIMENT=''
+2026-11-12T18:35:43.9135138Z GOFIPS140='off'
+2026-11-12T18:35:43.9135563Z GOFLAGS=''
+2026-11-12T18:35:43.9136267Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build1202244646=/tmp/go-build -gno-record-gcc-switches'
+2026-11-12T18:35:43.9136843Z GOHOSTARCH='amd64'
+2026-11-12T18:35:43.9137074Z GOHOSTOS='linux'
+2026-11-12T18:35:43.9137260Z GOINSECURE=''
+2026-11-12T18:35:43.9137447Z GOMOD='/dev/null'
+2026-11-12T18:35:43.9137691Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-11-12T18:35:43.9137931Z GONOPROXY=''
+2026-11-12T18:35:43.9138109Z GONOSUMDB=''
+2026-11-12T18:35:43.9138279Z GOOS='linux'
+2026-11-12T18:35:43.9138472Z GOPACKAGESDRIVER=''
+2026-11-12T18:35:43.9138686Z GOPATH='/home/runner/go'
+2026-11-12T18:35:43.9138894Z GOPRIVATE=''
+2026-11-12T18:35:43.9139169Z GOPROXY='https://proxy.golang.org,direct'
+2026-11-12T18:35:43.9139505Z GOROOT='/opt/hostedtoolcache/go/1.27.3/x64'
+2026-11-12T18:35:43.9139779Z GOSUMDB='sum.golang.org'
+2026-11-12T18:35:43.9139999Z GOTELEMETRY='local'
+2026-11-12T18:35:43.9140427Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-11-12T18:35:43.9140697Z GOTMPDIR=''
+2026-11-12T18:35:43.9140886Z GOTOOLCHAIN='local'
+2026-11-12T18:35:43.9141237Z GOTOOLDIR='/opt/hostedtoolcache/go/1.27.3/x64/pkg/tool/linux_amd64'
+2026-11-12T18:35:43.9141544Z GOVCS=''
+2026-11-12T18:35:43.9141734Z GOVERSION='go1.27.3'
+2026-11-12T18:35:43.9141925Z GOWORK=''
+2026-11-12T18:35:43.9142141Z PKG_CONFIG='pkg-config'
+2026-11-12T18:35:43.9142271Z 
+2026-11-12T18:35:43.9142519Z ##[endgroup]
+2026-11-12T18:35:43.9350555Z ##[group]Run npm ci --prefix synthesis --ignore-scripts
+2026-11-12T18:35:43.9350953Z [36;1mnpm ci --prefix synthesis --ignore-scripts[0m
+2026-11-12T18:35:43.9368784Z shell: /usr/bin/bash -e {0}
+2026-11-12T18:35:43.9368929Z env:
+2026-11-12T18:35:43.9369043Z   GOTOOLCHAIN: local
+2026-11-12T18:35:43.9369172Z ##[endgroup]
+2026-11-12T18:35:46.1655630Z 
+2026-11-12T18:35:46.1656340Z added 193 packages, and audited 194 packages in 2s
+2026-11-12T18:35:46.1656630Z 
+2026-11-12T18:35:46.1656795Z 58 packages are looking for funding
+2026-11-12T18:35:46.1657095Z   run `npm fund` for details
+2026-11-12T18:35:46.1662586Z 
+2026-11-12T18:35:46.1662746Z found 0 vulnerabilities
+2026-11-12T18:35:46.2360517Z ##[group]Run npm run test:go
+2026-11-12T18:35:46.2360706Z [36;1mnpm run test:go[0m
+2026-11-12T18:35:46.2376032Z shell: /usr/bin/bash -e {0}
+2026-11-12T18:35:46.2376171Z env:
+2026-11-12T18:35:46.2376284Z   GOTOOLCHAIN: local
+2026-11-12T18:35:46.2376409Z ##[endgroup]
+2026-11-12T18:35:46.4052526Z 
+2026-11-12T18:35:46.4052937Z > tpnil@0.5.0 test:go
+2026-11-12T18:35:46.4053194Z > npm run prepare:go && node scripts/test-itcve-go.mjs
+2026-11-12T18:35:46.4053331Z 
+2026-11-12T18:35:46.4654669Z 
+2026-11-12T18:35:46.4654988Z > tpnil@0.5.0 prepare:go
+2026-11-12T18:35:46.4655334Z > node scripts/prepare-itcve-go.mjs
+2026-11-12T18:35:46.4655514Z 
+2026-11-12T18:35:46.5070997Z ITCVE-1 1.1.0: three pinned Go implementations, eight selectable combinations
+2026-11-12T18:35:58.9933157Z ?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+2026-11-12T18:35:58.9933536Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	0.165s
+2026-11-12T18:35:58.9933970Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-batch-subjects	0.699s
+2026-11-12T18:35:58.9934351Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-coverage-observers	1.935s
+2026-11-12T18:36:09.7922725Z ##[error]The operation was canceled.
+2026-11-12T18:36:09.8125570Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-12T18:36:09.8125977Z with:
+2026-11-12T18:36:09.8126168Z   name: itcve-go-components
+2026-11-12T18:36:09.8126397Z   path: out/go-components
+2026-11-12T18:36:09.8126616Z   if-no-files-found: error
+2026-11-12T18:36:09.8126831Z   retention-days: 90
+2026-11-12T18:36:09.8127031Z   compression-level: 6
+2026-11-12T18:36:09.8127251Z   overwrite: false
+2026-11-12T18:36:09.8127448Z   include-hidden-files: false
+2026-11-12T18:36:09.8127663Z env:
+2026-11-12T18:36:09.8127833Z   GOTOOLCHAIN: local
+2026-11-12T18:36:09.8128030Z ##[endgroup]
+2026-11-12T18:36:10.2059767Z (node:5605) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T18:36:10.2061553Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T18:36:10.2172290Z ##[error]No files were found with the provided path: out/go-components. No artifacts will be uploaded.
+2026-11-12T18:36:10.2553408Z Post job cleanup.
+2026-11-12T18:36:10.4479881Z [command]/usr/bin/git version
+2026-11-12T18:36:10.4533132Z git version 2.56.0
+2026-11-12T18:36:10.4671067Z Temporarily overriding HOME='/home/runner/work/_temp/24f16ca2-9ecc-4165-b089-2ac14803caa7' before making global git config changes
+2026-11-12T18:36:10.4683354Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T18:36:10.4696446Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T18:36:10.4699342Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T18:36:10.4832002Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T18:36:10.5831682Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T18:36:10.6222688Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T18:36:10.7101045Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T18:36:10.7271210Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T18:36:10.8189940Z Cleaning up orphan processes
+2026-11-12T18:36:10.8769173Z Terminate orphan process: pid (2324) (npm run test:go)
+2026-11-12T18:36:10.8963580Z Terminate orphan process: pid (2335) (sh)
+2026-11-12T18:36:10.8992709Z Terminate orphan process: pid (2336) (npm run prepare:go)
+2026-11-12T18:36:10.9023319Z Terminate orphan process: pid (2347) (sh)
+2026-11-12T18:36:10.9048227Z Terminate orphan process: pid (2348) (MainThread)
+2026-11-12T18:36:10.9071843Z Terminate orphan process: pid (2596) (go)
+2026-11-12T18:36:10.9098837Z Terminate orphan process: pid (5584) (compile)
+2026-11-12T18:36:10.9149823Z Terminate orphan process: pid (5837) (compile)
+2026-11-12T18:36:10.9268100Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
