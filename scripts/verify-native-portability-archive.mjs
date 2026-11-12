@@ -12,7 +12,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 // The final producer bytes were first retained at this commit. They are
 // historical evidence, not a requirement that future producers stop evolving.
-// The semantic verifier, proof helper and oracle must still match exactly.
+// Replay binds the verifier, proof helper and oracle to that same immutable
+// tree. A separately versioned current verifier is not part of this replay.
 export const portabilityArchiveSource = 'd059d4e2794a83600610c0bccb82d86b69fe6c7d';
 const sourceBindings = [
   ['synthesis/src/wallet-lab/native/conformance-portability.ts', 25152, '137f7e786080f2088f0516317dccac08a4201bdc7b3a2a0039d23bc0ad7e33ea', '89bf8709273210457d7d6c93cc5b1a62c8873fc4', 'producer'],
@@ -20,7 +21,7 @@ const sourceBindings = [
   ['synthesis/src/wallet-lab/native/portability-proof.ts', 3031, 'ced0e10136e91fc10f0caff87842b6cc9eebc5ad9123557da768754489d60fb8', '0a973a45673a45888c96b260c8e4392eaa326c71', 'proof'],
   ['programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json', 2490, '266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f', '7ec97bc1c1f84955363779bec942b510f9e625d7', 'oracle']
 ];
-export function verifyNativePortabilitySourceBindings(files, readCurrent = name => fs.readFileSync(path.join(root, name))) {
+export function verifyNativePortabilitySourceBindings(files, readFrozen) {
   for (const [name, size, sha256, gitBlob, role] of sourceBindings) {
     const retained = files.get(name);
     assert.ok(retained, `Missing retained source: ${name}`);
@@ -29,9 +30,9 @@ export function verifyNativePortabilitySourceBindings(files, readCurrent = name 
     assert.equal(digest(bytes), sha256, `Historical source bytes differ: ${name}`);
     assert.equal(retained.sha256, sha256, `Historical source metadata differs: ${name}`);
     assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'), gitBlob, `Historical Git blob differs: ${name}`);
-    if (role !== 'producer') assert.equal(digest(readCurrent(name)), sha256, `Semantic replay source differs from retained preflight: ${name}`);
+    if (readFrozen !== undefined) assert.equal(digest(readFrozen(name)), sha256, `Frozen replay source differs from retained preflight: ${name}`);
   }
-  return { historicalSource: portabilityArchiveSource, sourceBindings: sourceBindings.length, currentSemanticBindings: 3 };
+  return { historicalSource: portabilityArchiveSource, sourceBindings: sourceBindings.length, currentSemanticBindings: 0, retainedSemanticBindings: 3, frozenSemanticBindings: readFrozen === undefined ? 0 : 3 };
 }
 /** The historical verifier imports values from the producer. Replay their
  * complete Git source together; using the current producer would change the
@@ -88,7 +89,7 @@ export async function verifyNativePortabilityArchive(directory = path.join(root,
     assert.equal(content.length, file.size); assert.equal(digest(content), file.sha256); files.set(file.path, file);
   }
   assert.deepEqual(archive.files.map(({ content, ...meta }) => meta), summary.files);
-  const sources = verifyNativePortabilitySourceBindings(files);
+  let sources = verifyNativePortabilitySourceBindings(files);
   assert.deepEqual(summary.runs.map(run => run.result), ['FAIL', 'FAIL', 'PASS']);
   for (const run of summary.runs) {
     const report = JSON.parse(files.get(`${run.directory}/evidence/conformance/portability.json`).content);
@@ -106,7 +107,7 @@ export async function verifyNativePortabilityArchive(directory = path.join(root,
     frozen = preparePortabilityReplay(path.join(temporary, 'source'));
     // Re-check the four retained source files against the extracted immutable
     // tree before importing anything. No current producer is executed.
-    for (const [name] of sourceBindings) assert.equal(digest(fs.readFileSync(path.join(frozen.directory, name))), files.get(name).sha256);
+    sources = verifyNativePortabilitySourceBindings(files, name => fs.readFileSync(path.join(frozen.directory, name)));
     const report = files.get(`${summary.runs[2].directory}/evidence/conformance/portability.json`).content;
     const reportPath = path.join(temporary, 'report.json'); fs.writeFileSync(reportPath, report);
     const runner = path.join(frozen.directory, 'portability-archive-replay.mjs');
@@ -116,6 +117,6 @@ export async function verifyNativePortabilityArchive(directory = path.join(root,
     const receipts = replay.stdout.split('\n').flatMap(line => { try { const value = JSON.parse(line); return value.verified === true ? [value] : []; } catch { return []; } });
     assert.deepEqual(receipts, [{ verified: true, result: 'PASS', assertions: 9 }], 'Missing or ambiguous historical semantic replay receipt');
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
-  return { verified: true, claim: summary.claim, attempts: 3, retainedFailures: 2, nativeEngineeringAssertions: 9, ...sources, semanticSourceFiles: frozen.files, semanticSource: frozen.source, frozenSynthesisDependencies: true, installedLockSha256: frozen.dependencies.installedLockSha256, installedPackages: frozen.dependencies.installedPackages, currentProducerExecuted: false, replayCleanup: true };
+  return { verified: true, claim: summary.claim, attempts: 3, retainedFailures: 2, nativeEngineeringAssertions: 9, ...sources, semanticSourceFiles: frozen.files, semanticSource: frozen.source, frozenSynthesisDependencies: true, installedLockSha256: frozen.dependencies.installedLockSha256, installedPackages: frozen.dependencies.installedPackages, currentProducerExecuted: false, currentSemanticSourcesExecuted: false, replayCleanup: true };
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) console.log(JSON.stringify(await verifyNativePortabilityArchive(process.argv[2])));

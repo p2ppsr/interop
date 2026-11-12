@@ -1,0 +1,74 @@
+{
+  "schema": "tpnil-native-actual-cost-closeout@1",
+  "claim": "ACTUAL_JOB_WALL_TIME_ONLY_FULL_MONETARY_COST_UNKNOWN",
+  "run": 43216478235,
+  "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "id": 131176905928,
+      "name": "all-go-native",
+      "conclusion": "failure",
+      "startedAt": "2026-11-12T12:17:03Z",
+      "completedAt": "2026-11-12T12:55:08Z",
+      "actualJobSeconds": 2285
+    },
+    {
+      "id": 131176908108,
+      "name": "yours-wallet",
+      "conclusion": "skipped",
+      "startedAt": "2026-11-12T12:17:02Z",
+      "completedAt": "2026-11-12T12:17:01Z",
+      "actualJobSeconds": 0
+    }
+  ],
+  "actualNativeJobSeconds": 2285,
+  "completedCohortJobSecondsBeforeNative": 22672,
+  "completedCohortJobSecondsAfterNative": 24957,
+  "foundationRun": 43213879582,
+  "foundationActualJobSeconds": 1458,
+  "currentOrderActualJobSeconds": 3743,
+  "currentOrderMaximumJobSeconds": 8400,
+  "unusedReservationJobSeconds": 4657,
+  "unusedReservationIsAnActualCharge": false,
+  "retainedSource6": {
+    "run": 43207730665,
+    "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+    "priorActualJobSeconds": 116,
+    "rerun": false,
+    "jobSecondsChargedAgain": 0
+  },
+  "historicalSeparateCohortJobSeconds": 20670,
+  "historicalIncludedInIncrement": false,
+  "actualCIChargeUSD": null,
+  "storageAndEgressUSD": null,
+  "operatorEffortUSD": null,
+  "developmentAgentUsageUSD": null,
+  "allocatedOwnedCapacityUSD": null,
+  "totalFullCostUSD": null,
+  "newPaidCapacityReservations": 0,
+  "unknownCostsAreZero": false,
+  "fullCostReconciled": false,
+  "thirtyTwoFoldImprovementMeasured": false,
+  "workOrder": {
+    "commit": "48a151f40b4602297dbd8e315791da3c45574ff3",
+    "sha256": "4cb6e2179f551835db51aacbedbcf303b493eb9c74b37a8f0f4439a355747656",
+    "path": "artifacts/ops/itcve-native-closure-20261111/attempt-6-portability-replay-recovery-order/work-order.json",
+    "deadline": "2026-11-12T13:59:12.290722Z",
+    "jobMaximumSeconds": 4200
+  },
+  "rawInputs": [
+    {
+      "path": "acquisition/run.json",
+      "sha256": "c5addb1d032a10d2b49dd784b7bd64956ed32e78f19d81dc48c6b27afd0e3986"
+    },
+    {
+      "path": "acquisition/jobs.json",
+      "sha256": "e99cdaee026f6a3c6411a87383efd187647e76500c52aa9fc1c23abd96ba1cd8"
+    },
+    {
+      "path": "acquisition/acquisition.json",
+      "sha256": "1aead2cb74b75cdbbb804aab5c3028e6018395e0778c94817c04a5e4db0af246"
+    }
+  ]
+}

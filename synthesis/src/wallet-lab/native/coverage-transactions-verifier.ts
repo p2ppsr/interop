@@ -12,7 +12,7 @@ class Blocked extends Error {}
 const id = (suffix: string) => transactionCoverageIds.find(x => x.endsWith(`/${suffix}`))!
 function canonical(value: any): any { if (Array.isArray(value)) return value.map(canonical); if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(k => [k, canonical(value[k])])); return value }
 async function inspect(report: Report) {
-  const revision = report.oracle === 'tpnil-native-coverage-transactions-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-coverage-transactions-oracle@2.0.0' ? 2 : undefined
+  const revision = report.oracle === 'tpnil-native-coverage-transactions-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-coverage-transactions-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-coverage-transactions-oracle@3.0.0' ? 3 : undefined
   assert.ok(revision, 'Unsupported transaction coverage oracle')
   const { policy, policySha256 } = getTransactionCoveragePolicy(revision)
   assert.equal(report.schema, `tpnil-native-coverage-transactions@${revision}.0.0`); assert.equal(report.oracle, policy.oracle); assert.equal(report.policySha256, policySha256)
@@ -94,10 +94,35 @@ async function inspect(report: Report) {
     // delivery of an earlier signed delayed action is not the control's effect.
     for (const entry of [...report.submissionPrefix, ...report.submissions].slice(control.submissionStart, control.submissionEnd)) await acceptedDelayedReceipt(entry, control)
   }
+  const noHeldSubmission = async (name: string) => {
+    if (revision !== 3) { noSubmission(name); return }
+    const held = success(name), tx = await txFor(name)
+    assert.equal(held.args.options?.noSend, true, 'Held action must explicitly request noSend')
+    const releases: Record<string, string> = { 'held-a': 'held-release', 'held-b': 'batch-sign', 'held-child': 'held-release', 'foreign-held': 'foreign-held-release', 'held-unknown-control': 'unknown-batch-control', 'held-inactive': 'held-inactive-release' }
+    assert.ok(releases[name], 'No exact release is declared for this held action')
+    const release = row(releases[name]!)
+    assert.ok(report.trace.indexOf(release) > report.trace.indexOf(held), 'Release must follow the held action')
+    assert.ok(release.args.options?.sendWith?.includes(tx.id('hex')), 'Release must explicitly name the held transaction')
+    const ledger = [...report.submissionPrefix, ...report.submissions]
+    // Inspect every intervening target and reachable unmined ancestor, including
+    // entries between calls. A descendant must not expose a held parent early.
+    for (const entry of ledger.slice(held.submissionStart, release.submissionStart)) {
+      for (const observed of observedSubmissionTransactions(entry, { resolvedTransactions: graph, requireResolvedAncestors: true, trustedMinedRoot: { txid: fixture.txid, rawHex: fixture.rawHex } })) assert.notEqual(observed.txid, tx.id('hex'), `${name} transaction appears in submission ancestry before its exact release`)
+    }
+    const defaults = new Set(['default-create-omitted', 'default-sign-omitted', 'default-create-true', 'default-sign-true'])
+    for (const entry of ledger.slice(held.submissionStart, held.submissionEnd)) {
+      const prior = report.trace.slice(0, report.trace.indexOf(held)).find(call => call.actor === 'wallet' && defaults.has(call.id) && call.result?.txid === entry.txid)
+      assert.ok(prior, 'Held window contains a receipt outside the exact prior delayed default controls')
+      const statuses = prior.result.sendWithResults?.filter((status: any) => status.txid === entry.txid)
+      assert.equal(statuses?.length, 1, 'Prior delayed control lacks one truthful status')
+      assert.ok(['sending', 'unproven'].includes(statuses[0].status), 'Prior delayed control status is not pending or processed')
+      await acceptedDelayedReceipt(entry, held)
+    }
+  }
   const inventory = async (before: string, after: string) => {
     for (const suffix of ['basket', 'actions']) {
       const beforeRow = success(`${before}-${suffix}`), afterRow = success(`${after}-${suffix}`), a = beforeRow.result, b = structuredClone(afterRow.result)
-      if (revision === 2 && suffix === 'actions' && Array.isArray(a.actions) && Array.isArray(b.actions) && a.actions.length === b.actions.length) {
+      if (revision >= 2 && suffix === 'actions' && Array.isArray(a.actions) && Array.isArray(b.actions) && a.actions.length === b.actions.length) {
         for (let index = 0; index < a.actions.length; index++) {
           const previousAction = a.actions[index], nextAction = b.actions[index]
           if (previousAction.status === nextAction.status) continue
@@ -124,20 +149,20 @@ async function inspect(report: Report) {
     for (const previous of a?.outputs ?? []) assert.deepEqual(b.outputs.find((o: any) => o.outputIndex === previous.outputIndex), previous, 'Incoming payment changed an existing tracked output')
     return b
   }
-  const changes = async (name: string) => { const tx = await txFor(name), value = row(name).result.noSendChange; assert.ok(Array.isArray(value) && value.length > 0); assert.equal(new Set(value).size, value.length); for (const outpoint of value) { assert.match(outpoint, /^[a-f0-9]{64}\.[0-9]+$/); const [tid, i] = outpoint.split('.'); assert.equal(tid, tx.id('hex')); const output = tx.outputs[Number(i)]!; assert.ok(output); assert.match(output.lockingScript.toHex(), /^76a914[a-f0-9]{40}88ac$/); assert.ok(output.satoshis! > 0) }; noSubmission(name); return value as string[] }
+  const changes = async (name: string) => { const tx = await txFor(name), value = row(name).result.noSendChange; assert.ok(Array.isArray(value) && value.length > 0); assert.equal(new Set(value).size, value.length); for (const outpoint of value) { assert.match(outpoint, /^[a-f0-9]{64}\.[0-9]+$/); const [tid, i] = outpoint.split('.'); assert.equal(tid, tx.id('hex')); const output = tx.outputs[Number(i)]!; assert.ok(output); assert.match(output.lockingScript.toHex(), /^76a914[a-f0-9]{40}88ac$/); assert.ok(output.satoshis! > 0) }; await noHeldSubmission(name); return value as string[] }
   const spend = (tx: Transaction, outpoint: string) => tx.inputs.some(i => `${i.sourceTXID ?? i.sourceTransaction?.id('hex')}.${i.sourceOutputIndex}` === outpoint)
   assert.equal(success('funder-identity').result.publicKey, (await new ProtoWallet(PrivateKey.fromHex(tc.funderKey)).getPublicKey({ identityKey: true })).publicKey)
-  return { revision, policy, row, success, noControlSubmission, txFor, signed, graph, hydrate, submitted, noSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend, replay }
+  return { revision, policy, row, success, noControlSubmission, txFor, signed, graph, hydrate, submitted, noSubmission, noHeldSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend, replay }
 }
 export async function deriveTransactionCoverageOutcomes(report: Report): Promise<Outcome[]> {
-  const v = await inspect(report), { row, success, txFor, submitted, noSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend } = v
+  const v = await inspect(report), { row, success, txFor, submitted, noSubmission, noHeldSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend } = v
   const tests: Record<string, () => Promise<void> | void> = {
     [id('acceptDelayedBroadcast-omitted-true')]: async () => {
       for (const operation of ['create', 'sign']) for (const value of ['omitted', 'true']) { const name = `default-${operation}-${value}`, tx = await txFor(name), statuses = success(name).result.sendWithResults; assert.equal(statuses?.filter((x: any) => x.txid === tx.id('hex') && ['sending', 'unproven'].includes(x.status)).length, 1, 'Delayed transaction requires a truthful pending/processed status'); if (statuses.find((x: any) => x.txid === tx.id('hex')).status === 'unproven') assert.ok(submitted(tx.id('hex'), row(name).submissionStart, report.submissionEnd), 'Processed delayed status lacks submission evidence') }
     },
     [id('foreign-reference-reject')]: async () => { reject('foreign-sign', true); reject('foreign-abort', true); const tx = await txFor('foreign-owner-sign'); assert.ok(submitted(tx.id('hex'), row('foreign-owner-sign').submissionStart, row('foreign-owner-sign').submissionEnd)); assert.notEqual(success('funder-identity').result.publicKey, report.identity) },
     [id('two-dependent-held')]: async () => {
-      const parent = await txFor('held-a'), child = await txFor('held-child'), outpoints = await changes('held-a'); noSubmission('held-child'); assert.ok(outpoints.some(p => spend(child, p)), 'Held child must consume its named final change')
+      const parent = await txFor('held-a'), child = await txFor('held-child'), outpoints = await changes('held-a'); await noHeldSubmission('held-child'); assert.ok(outpoints.some(p => spend(child, p)), 'Held child must consume its named final change')
       const release = success('held-release'), results = release.result.sendWithResults; assert.ok(Array.isArray(results)); for (const tx of [parent, child]) { assert.equal(results.filter((r: any) => r.txid === tx.id('hex') && ['unproven', 'sending'].includes(r.status)).length, 1); assert.ok(submitted(tx.id('hex'), release.submissionStart, report.submissionEnd)) }
       assert.deepEqual(results.map((r: any) => r.txid).sort(), [parent.id('hex'), child.id('hex')].sort())
     },

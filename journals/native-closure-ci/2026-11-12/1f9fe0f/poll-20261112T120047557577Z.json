@@ -1,0 +1,47 @@
+{
+  "observedAt": "2026-11-12T12:00:47.557577+00:00",
+  "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+  "runs": [
+    {
+      "run": 43213879582,
+      "name": "Foundation checks",
+      "status": "in_progress",
+      "conclusion": null,
+      "jobs": [
+        {
+          "id": 131168097845,
+          "name": "integrated-components",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 69,
+          "maximumSeconds": 2400,
+          "overBound": false,
+          "currentStep": "Prepare exact component closures",
+          "failedSteps": []
+        },
+        {
+          "id": 131168098216,
+          "name": "offline-core",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 69,
+          "maximumSeconds": 600,
+          "overBound": false,
+          "currentStep": "Run npm test --prefix synthesis",
+          "failedSteps": []
+        },
+        {
+          "id": 131168098284,
+          "name": "go-components",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 69,
+          "maximumSeconds": 1200,
+          "overBound": false,
+          "currentStep": "Verify Go host, all mixed stacks, faults and recovery",
+          "failedSteps": []
+        }
+      ]
+    }
+  ]
+}

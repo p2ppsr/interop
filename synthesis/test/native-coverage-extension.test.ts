@@ -9,6 +9,8 @@ import { canonicalJson } from '../src/determinism.js'
 import { coverageExtensionIds, coverageExtensionPolicy, privilegedMethods, reasonVariants, type CoverageExtensionReport } from '../src/wallet-lab/native/coverage-extension-model.js'
 import { deriveCoverageExtensionOutcomes, verifyCoverageExtensionDiscoveryAnchor, verifyCoverageExtensionParentBindings, verifyNativeCoverageExtension } from '../src/wallet-lab/native/coverage-extension-verifier.js'
 import { getIdentityTrustOracle2Policy, identityTrustOracle2Id } from '../src/wallet-lab/native/identity-trust-oracle2.js'
+import { coverageObservationEncoding, encodeCoverageObservation, decodeCoverageObservation } from '../src/wallet-lab/native/coverage-observation.js'
+import { coverageExtensionRequests } from '../src/wallet-lab/native/coverage-extension-requests.js'
 
 const root = path.resolve(import.meta.dirname, '../..'), directory = path.join(root, 'programs/ISI-4/profiles/native-coverage-extension-1.0.0/reference')
 const manifest = JSON.parse(fs.readFileSync(path.join(directory, 'manifest.json'), 'utf8'))
@@ -32,6 +34,17 @@ it('retains the actual73-call Go-backed reference including all43 failures and2 
 })
 it('replays canonical evidence without rewriting error verdicts or details', async () => {
   expect(await verifyNativeCoverageExtension(JSON.parse(canonicalJson(original)))).toEqual(baseline)
+})
+it.each(['hole', 'undefined', 'nonfinite'])('rejects malformed %s fixture bytes after reversible observation decoding', async kind => {
+  const report = sample(), bytes = row(report, 'fixture-native').result.tx, index = bytes.indexOf(0)
+  expect(index).toBeGreaterThanOrEqual(0)
+  if (kind === 'hole') delete bytes[index]
+  else bytes[index] = kind === 'undefined' ? undefined : NaN
+  // Synchronize dependent public requests so this reaches the byte predicate,
+  // rather than failing merely because later arguments retain the old proof.
+  for (const request of coverageExtensionRequests(report)) row(report, request.id).args = structuredClone(request.args)
+  const decoded = decodeCoverageObservation<CoverageExtensionReport>(JSON.parse(canonicalJson(encodeCoverageObservation(report))), coverageObservationEncoding)
+  expect(await outcome(decoded, 'basket.bytes-5.createAction')).toBe('FAIL')
 })
 it('does not mistake missing privileged-key-manager errors for reason validation', () => {
   for (const method of privilegedMethods) for (const reason of reasonVariants) expect(baseline.assertions.find(x => x.id === prefix(`privileged.${reason}.${method}`))!.result).toBe('FAIL')

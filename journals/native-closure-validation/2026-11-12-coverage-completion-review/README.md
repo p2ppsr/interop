@@ -1,0 +1,7 @@
+# Independent completion archive review
+
+The sealed local engineering archive passed one actual `--current-source` verification and rejected 15 controlled hostile reads. The reproduction runner uses the unchanged original verifier with a virtual read overlay; no original archive, runtime or historical evidence was modified. Controls include omitted logical/physical/receipt entries, removed or altered objects, rehashed replacement data, extra files, symlinks, changed support files, erased historical limitations, invented qualification/counts, a coherent rewritten completion inventory, linked artifact changes and current source changes.
+
+All 391 frozen native source hashes independently resolve to retained decoded objects or exact immutable artifact links. The review does not rerun native, browser, SDK or Go semantics. The archive's six historical hash-only source references remain nonreplayable. The trusted verifier and externally recorded source/manifest hashes anchor integrity; replacing the verifier and all evidence together is outside these controls. Full 698-observation native capacity and monetary costs remain unqualified.
+
+`python3 verify.py` checks this review and the exact target archive identity. To repeat the actual positive and hostile controls, run `python3 review.py --output /absolute/path/to/a/new/output-directory` from this checkout. Its current-source control requires the original reviewed source bytes.

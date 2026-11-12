@@ -1,0 +1,2401 @@
+{
+  "schema": "tpnil-native-partial-trace-policy@1.0.0",
+  "oracle": "tpnil-native-partial-trace-oracle@1.0.0",
+  "profile": "ITCVE-1@4.5.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "description": "63 fixed scoped computations over five independently recomputed same-run native reports. No whole planning-row or complete BRC100 qualification.",
+  "maximumPublicCalls": 0,
+  "maximumNewSignedTransactions": 0,
+  "modules": {
+    "conditional": {
+      "policy": "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json",
+      "policySha256": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+      "schema": "tpnil-native-conditional@1.0.0",
+      "oracle": "tpnil-native-conditional-oracle@2.0.0",
+      "file": "conformance/conditional.json",
+      "encoded": false
+    },
+    "states": {
+      "policy": "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json",
+      "policySha256": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+      "schema": "tpnil-native-transaction-states@1.0.0",
+      "oracle": "tpnil-native-transaction-states-oracle@2.0.0",
+      "file": "conformance/transaction-states.json",
+      "encoded": false
+    },
+    "transactions": {
+      "policy": "programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json",
+      "policySha256": "019ba68f9ab9b73cecae4084b7508824e17738d827633e1b923c2ad61a0fbd94",
+      "schema": "tpnil-native-coverage-transactions@3.0.0",
+      "oracle": "tpnil-native-coverage-transactions-oracle@3.0.0",
+      "file": "conformance/coverage-transactions.json",
+      "encoded": false
+    },
+    "certificateStates": {
+      "policy": "programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json",
+      "policySha256": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+      "schema": "tpnil-native-certificate-states@1.0.0",
+      "oracle": "tpnil-native-certificate-states-oracle@1.0.0",
+      "file": "conformance/certificate-states.json",
+      "encoded": false
+    },
+    "certificates": {
+      "policy": "programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json",
+      "policySha256": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+      "schema": "tpnil-native-coverage-certificates@1.0.0",
+      "oracle": "tpnil-native-coverage-certificates-oracle@1.0.0",
+      "file": "conformance/coverage-certificates.json",
+      "encoded": true
+    }
+  },
+  "rows": [
+    {
+      "id": "transaction.defaults/signAndProcess-omitted-true",
+      "methods": [
+        "createAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.defaults",
+          "calls": [
+            "population-0",
+            "population-1"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.defaults/returnTXIDOnly-omitted-false",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.defaults",
+          "calls": [
+            "population-0",
+            "population-1"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.defaults/randomizeOutputs-omitted-true",
+      "methods": [
+        "createAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.defaults.randomizeOutputs-omitted-true",
+          "calls": [
+            "direct-default",
+            "direct-explicit"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence. Checks output multiset preservation, not a required permutation or entropy measurement.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.defaults/randomizeOutputs-false-order",
+      "methods": [
+        "createAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.defaults",
+          "calls": [
+            "population-0",
+            "population-1"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/all-unlockingScripts",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.signing-branches.all-unlockingScripts",
+          "calls": [
+            "direct-default",
+            "direct-explicit"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/signAndProcess-false",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.signable-and-sign",
+          "calls": [
+            "signable",
+            "signed"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/unlockingScriptLength",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.signable-and-sign",
+          "calls": [
+            "signable",
+            "signed"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/mixed-inputs",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.signing-branches.mixed-inputs",
+          "calls": [
+            "mixed-prepare",
+            "mixed-sign"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction and signAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/sign-reference",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.signable-and-sign",
+          "calls": [
+            "signable",
+            "signed"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/abort-reference",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.abort-release",
+          "calls": [
+            "abort-prepare",
+            "aborted",
+            "after-abort",
+            "signed"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.signing-branches/abort-then-sign-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.signing-branches.abort-then-sign-reject",
+          "calls": [
+            "abort-prepare",
+            "abort",
+            "abort-sign",
+            "source-after"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, abortAction and signAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/input-absent-from-beef",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.input-absent-from-beef",
+          "calls": [
+            "input-absent-from-beef",
+            "source-after"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence. Allows independently verified wallet-known ancestry recovery or structured rejection without spending; mandatory rejection is not invented.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/input-index-out-of-range",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.input-index-out-of-range",
+          "calls": [
+            "input-index-out-of-range"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/duplicate-input",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.conflicting-inputs",
+          "calls": [
+            "conflict-control",
+            "conflict-control-abort",
+            "conflicting-inputs"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/already-spent-input",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.already-spent-input",
+          "calls": [
+            "direct-default",
+            "already-spent-input"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/missing-script-and-length",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.missing-script-and-length",
+          "calls": [
+            "missing-script-and-length",
+            "source-after"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/spend-index-not-in-reference",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.spend-index-not-in-reference",
+          "calls": [
+            "spend-index-not-in-reference-prepare",
+            "spend-index-not-in-reference",
+            "spend-index-not-in-reference-abort",
+            "source-after"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction preparation, signAction and abortAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.consuming-conflicts/script-length-mismatch",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.consuming-conflicts.script-length-mismatch",
+          "calls": [
+            "script-length-mismatch-prepare",
+            "script-length-mismatch",
+            "script-length-mismatch-abort",
+            "source-after"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction preparation, signAction and abortAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.proof-trust/full-proof",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "fixture.population",
+          "calls": [
+            "population-0"
+          ]
+        },
+        {
+          "module": "conditional",
+          "predicate": "transaction.signable-and-sign",
+          "calls": [
+            "signable",
+            "signed"
+          ]
+        },
+        {
+          "module": "transactions",
+          "predicate": "transaction.proof-trust/wrong-merkle-root",
+          "calls": [
+            "proof-wrong-root-control",
+            "proof-wrong-root-create-control"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "same-execution",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.proof-trust/unknown-without-trust",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.proof-trust.unknown-without-trust",
+          "calls": [
+            "unknown-without-trust",
+            "source-after"
+          ]
+        },
+        {
+          "module": "transactions",
+          "predicate": "transaction.proof-trust/unknown-not-in-knownTxids",
+          "calls": [
+            "proof-unknown-internalize",
+            "proof-unknown-control"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case. internalizeAction proof/trust cases are still missing.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "same-execution",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.batch-send/single-held",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.batch-release",
+          "calls": [
+            "batch-held",
+            "batch-release"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.batch-send/outputless-flush",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.batch-release",
+          "calls": [
+            "batch-held",
+            "batch-release"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.batch-send/create-sendWith",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.batch-release",
+          "calls": [
+            "batch-held",
+            "batch-release"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "transaction.batch-send/returnTXIDOnly",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 292,
+          "endLine": 318,
+          "clause": "transaction validation and conflicts"
+        },
+        {
+          "source": "brc100",
+          "startLine": 630,
+          "endLine": 758,
+          "clause": "createAction and signAction options"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "states",
+          "predicate": "transaction.batch-send.returnTXIDOnly",
+          "calls": [
+            "txid-only-create",
+            "txid-only-prepare",
+            "txid-only-sign"
+          ]
+        }
+      ],
+      "scope": "State policy1 exercises createAction and signAction separately, with real signed/mined transaction controls, exact requested inputs/outputs and independently bound storage/submission evidence.",
+      "originalRemainingWork": "Native execution remains pending. Other methods or combinations in the broad proposal row are not inferred from this bounded case.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": true,
+      "newCallReason": "No current call combines sendWith and returnTXIDOnly:true. Ordinary create/sign TXID projection cannot prove a batch-send combination."
+    },
+    {
+      "id": "query.action-filters/any-default",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-any-default",
+          "calls": [
+            "actions-any-default"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-filters/any-explicit",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-filter",
+          "calls": [
+            "actions-any",
+            "actions-all"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-filters/all-explicit",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-filter",
+          "calls": [
+            "actions-any",
+            "actions-all"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-filters/empty-labels",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-empty-labels",
+          "calls": [
+            "actions-empty-labels"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Complete inventory at the exact query cut is required; no arbitrary extras accepted. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "whole-action-inventory",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-filters/no-match",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-no-match",
+          "calls": [
+            "actions-no-match"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-filters/overlapping-labels",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-overlap",
+          "calls": [
+            "actions-overlap"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/defaults",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-default",
+          "calls": [
+            "actions-default"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeLabels",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeLabels",
+          "calls": [
+            "actions-only-includeLabels"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeInputs",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeInputs",
+          "calls": [
+            "actions-only-includeInputs"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeInputSourceLockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeInputSourceLockingScripts",
+          "calls": [
+            "actions-only-includeInputSourceLockingScripts"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeInputUnlockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeInputUnlockingScripts",
+          "calls": [
+            "actions-only-includeInputUnlockingScripts"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeOutputs",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeOutputs",
+          "calls": [
+            "actions-only-includeOutputs"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/includeOutputLockingScripts",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-only-includeOutputLockingScripts",
+          "calls": [
+            "actions-only-includeOutputLockingScripts"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/all-includes",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-includes",
+          "calls": [
+            "actions-includes"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "action-metadata",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.action-includes/script-without-parent-include",
+      "methods": [
+        "listActions"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.actions-scripts-without-parents",
+          "calls": [
+            "actions-scripts-without-parents"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/any-default",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-any-default",
+          "calls": [
+            "outputs-any-default"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/any-explicit",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-filter",
+          "calls": [
+            "outputs-any",
+            "outputs-all"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/all-explicit",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-filter",
+          "calls": [
+            "outputs-any",
+            "outputs-all"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/empty-tags",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-empty-tags",
+          "calls": [
+            "outputs-empty-tags"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/no-match",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-no-match",
+          "calls": [
+            "outputs-no-match"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-filters/spent-output-excluded",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "transaction.abort-release",
+          "calls": [
+            "abort-prepare",
+            "aborted",
+            "after-abort",
+            "signed"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/defaults",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-default",
+          "calls": [
+            "outputs-default"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/locking-scripts",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-only-locking-scripts",
+          "calls": [
+            "outputs-only-locking-scripts"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/entire-transactions",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-includes",
+          "calls": [
+            "outputs-metadata",
+            "outputs-beef"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/includeTags",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-only-includeTags",
+          "calls": [
+            "outputs-only-includeTags"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/includeLabels",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-only-includeLabels",
+          "calls": [
+            "outputs-only-includeLabels"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/includeCustomInstructions",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-only-includeCustomInstructions",
+          "calls": [
+            "outputs-only-includeCustomInstructions"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.output-includes/all-metadata",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-includes",
+          "calls": [
+            "outputs-metadata",
+            "outputs-beef"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.pagination/output-offset-minus1",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-pagination",
+          "calls": [
+            "outputs-page1",
+            "outputs-page2",
+            "outputs-newest",
+            "outputs-beyond"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "query.pagination/output-offset-minus2",
+      "methods": [
+        "listOutputs"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 772,
+          "endLine": 862,
+          "clause": "listActions filters/includes"
+        },
+        {
+          "source": "brc100",
+          "startLine": 907,
+          "endLine": 964,
+          "clause": "listOutputs filters/includes/order"
+        },
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "query.outputs-minus2",
+          "calls": [
+            "outputs-minus2"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.issuance/valid-issuance",
+      "methods": [
+        "acquireCertificate",
+        "listCertificates"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.issuance",
+          "calls": [
+            "issuance-valid",
+            "issuance-inventory"
+          ]
+        },
+        {
+          "module": "certificates",
+          "predicate": "coverage-certificates.inventory-restart",
+          "calls": [
+            "baseline",
+            "inventory-before-restart",
+            "inventory-after-restart",
+            "identity-after-restart"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "certificate-restart",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.direct-keyrings/certifier-revealer",
+      "methods": [
+        "acquireCertificate",
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.direct",
+          "calls": [
+            "direct-0"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.selective-proof/one-field",
+      "methods": [
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.selective-proof",
+          "calls": [
+            "certificate-proof"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.selective-proof/all-fields",
+      "methods": [
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.proof-all",
+          "calls": [
+            "certificate-proof",
+            "certificate-proof-all"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.selective-proof/unknown-field",
+      "methods": [
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.proof-unknown-field",
+          "calls": [
+            "certificate-proof",
+            "certificate-proof-unknown-field"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.selective-proof/different-verifier",
+      "methods": [
+        "proveCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.proof-alternate-verifier",
+          "calls": [
+            "certificate-proof",
+            "certificate-proof-alternate-verifier"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": null,
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.inventory/combined-filter",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.filter",
+          "calls": [
+            "certificates-other-type"
+          ]
+        },
+        {
+          "module": "certificateStates",
+          "predicate": "certificate-states.inventory-combined",
+          "calls": [
+            "filter-combined"
+          ]
+        },
+        {
+          "module": "certificates",
+          "predicate": "coverage-certificates.inventory-restart",
+          "calls": [
+            "baseline",
+            "inventory-before-restart",
+            "inventory-after-restart",
+            "identity-after-restart"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict. New certificate-state control additionally compares every signed field against the complete baseline and restores preexisting certificates.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "certificate-restart",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.inventory/no-match",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.filter",
+          "calls": [
+            "certificates-other-type"
+          ]
+        },
+        {
+          "module": "certificateStates",
+          "predicate": "certificate-states.inventory-no-match",
+          "calls": [
+            "filter-no-match"
+          ]
+        },
+        {
+          "module": "certificates",
+          "predicate": "coverage-certificates.inventory-restart",
+          "calls": [
+            "baseline",
+            "inventory-before-restart",
+            "inventory-after-restart",
+            "identity-after-restart"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict. New certificate-state control additionally compares every signed field against the complete baseline and restores preexisting certificates.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "certificate-restart",
+      "needsNewNativeCalls": false
+    },
+    {
+      "id": "certificate.inventory/relinquish-one",
+      "methods": [
+        "listCertificates",
+        "relinquishCertificate"
+      ],
+      "sourceRefs": [
+        {
+          "source": "brc100",
+          "startLine": 1217,
+          "endLine": 1387,
+          "clause": "acquire/list/prove/relinquish certificates"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "conditional",
+          "predicate": "certificate.relinquishment",
+          "calls": [
+            "certificate-relinquish",
+            "certificates-after-relinquish"
+          ]
+        },
+        {
+          "module": "certificateStates",
+          "predicate": "certificate-states.cleanup",
+          "calls": [
+            "cleanup-a",
+            "cleanup-b",
+            "cleanup-c",
+            "after-cleanup"
+          ]
+        },
+        {
+          "module": "certificates",
+          "predicate": "coverage-certificates.inventory-restart",
+          "calls": [
+            "baseline",
+            "inventory-before-restart",
+            "inventory-after-restart",
+            "identity-after-restart"
+          ]
+        }
+      ],
+      "scope": "Predicate identifiers define the exact implemented calls; this mapping does not assert complete method/variant coverage or a native verdict. New certificate-state control additionally compares every signed field against the complete baseline and restores preexisting certificates.",
+      "originalRemainingWork": "Execute the current frozen profile twice with exact native artifacts; separately expand any unrepresented method/variant combinations. An assertion mapping is not complete variant coverage.",
+      "nextWork": "Publish only the exact scoped observations after the complete4.5 native parent admits this execution; retain all unrepresented variants and interpretation questions separately.",
+      "scopeLimit": "This is a scoped computation, not proof the whole broad planning row is closed. Final global storage, funding, shutdown ancestry and native environment admission remain separate mandatory parent gates; no whole-row conformance verdict is issued.",
+      "supplement": "certificate-restart",
+      "needsNewNativeCalls": false
+    }
+  ],
+  "explicitlyBlocked": [
+    "transaction.batch-send/returnTXIDOnly",
+    "query.action-filters/empty-labels"
+  ],
+  "predecessor": {
+    "claim": "UNADMITTED_PROTOTYPE_ONLY",
+    "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+    "modelSha256": "9777477d25221e33cec88a3c5f53290cfeda91ea624a718399cafb53bb3d8ae9"
+  },
+  "completeBRC100Conformance": false
+}

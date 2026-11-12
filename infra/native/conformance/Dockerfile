@@ -1,6 +1,7 @@
 ARG TPNIL_INTEGRATED_BASE
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root
+COPY fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-3e8a97f/provenance.json
 COPY fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json
 COPY infra/native/conformance /work/infra/native/conformance
 COPY fixtures/artifacts/yours-wallet-pr368-cb3c2f2/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-cb3c2f2/provenance.json
@@ -17,6 +18,7 @@ COPY programs/ISI-4/5.1.0 /work/programs/ISI-4/5.1.0
 COPY programs/ISI-4/5.2.0 /work/programs/ISI-4/5.2.0
 COPY programs/ISI-4/5.3.0 /work/programs/ISI-4/5.3.0
 COPY programs/ISI-4/5.4.0 /work/programs/ISI-4/5.4.0
+COPY programs/ISI-4/5.5.0 /work/programs/ISI-4/5.5.0
 COPY programs/ISI-4/profiles/native-conformance-5.0.0 /work/programs/ISI-4/profiles/native-conformance-5.0.0
 COPY programs/ISI-4/profiles/native-conformance-4.0.0 /work/programs/ISI-4/profiles/native-conformance-4.0.0
 COPY programs/ISI-4/profiles/native-conformance-3.0.0 /work/programs/ISI-4/profiles/native-conformance-3.0.0
@@ -31,6 +33,7 @@ COPY itcves/ITCVE-1/4.1.0 /work/itcves/ITCVE-1/4.1.0
 COPY itcves/ITCVE-1/4.2.0 /work/itcves/ITCVE-1/4.2.0
 COPY itcves/ITCVE-1/4.3.0 /work/itcves/ITCVE-1/4.3.0
 COPY itcves/ITCVE-1/4.4.0 /work/itcves/ITCVE-1/4.4.0
+COPY itcves/ITCVE-1/4.5.0 /work/itcves/ITCVE-1/4.5.0
 COPY infra/adapters/storage-portability /work/infra/adapters/storage-portability
 COPY infra/adapters/storage-list-actions /work/infra/adapters/storage-list-actions
 COPY infra/adapters/storage-native-contracts /work/infra/adapters/storage-native-contracts
@@ -50,6 +53,9 @@ COPY infra/adapters/storage-input-ancestry /work/infra/adapters/storage-input-an
 COPY scripts/prepare-storage-input-ancestry-go.mjs /work/scripts/
 COPY infra/adapters/storage-sqlite-retry /work/infra/adapters/storage-sqlite-retry
 COPY scripts/prepare-storage-sqlite-retry-go.mjs /work/scripts/
+COPY infra/adapters/storage-caller-known-inputs /work/infra/adapters/storage-caller-known-inputs
+COPY scripts/prepare-storage-caller-known-inputs-go.mjs /work/scripts/
+COPY programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json
 ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
 COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1

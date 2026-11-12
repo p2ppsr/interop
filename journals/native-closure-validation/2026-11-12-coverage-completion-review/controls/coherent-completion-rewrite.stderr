@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion-review/review.py", line 101, in <module>
+    adversarial(sys.argv[sys.argv.index('--case') + 1])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion-review/review.py", line 98, in adversarial
+    exec(compile(V, str(BASE / 'verify.py'), 'exec'), {'__file__': str(BASE / 'verify.py'), '__name__': '__main__'})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion/verify.py", line 13, in <module>
+    completion_bytes=regular(BASE/'completion.json');assert SHA(completion_bytes)==EXPECTED_COMPLETION,'Completion inventory changed'
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Completion inventory changed

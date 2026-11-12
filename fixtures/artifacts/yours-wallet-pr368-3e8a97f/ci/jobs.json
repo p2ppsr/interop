@@ -1,0 +1,89 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 131227611091,
+      "run_id": 43231477283,
+      "workflow_name": "CI",
+      "head_branch": "codex/native-wallet-validation-20261111",
+      "run_url": "https://api.github.com/repos/yours-org/yours-wallet/actions/runs/43231477283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOKUTHt88AAAAejcZv0w",
+      "head_sha": "3e8a97f3dd7953a10e3034381814f3f8aa8b01c0",
+      "url": "https://api.github.com/repos/yours-org/yours-wallet/actions/jobs/131227611091",
+      "html_url": "https://github.com/yours-org/yours-wallet/actions/runs/43231477283/job/131227611091",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-12T13:52:30Z",
+      "started_at": "2026-11-12T13:52:32Z",
+      "completed_at": "2026-11-12T13:54:06Z",
+      "name": "Build and verify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-12T13:52:33Z",
+          "completed_at": "2026-11-12T13:52:33Z"
+        },
+        {
+          "name": "Run actions/checkout@v7",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-12T13:52:33Z",
+          "completed_at": "2026-11-12T13:52:34Z"
+        },
+        {
+          "name": "Run ./.github/actions/build-extension",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-12T13:52:34Z",
+          "completed_at": "2026-11-12T13:54:02Z"
+        },
+        {
+          "name": "Upload extension",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-12T13:54:02Z",
+          "completed_at": "2026-11-12T13:54:04Z"
+        },
+        {
+          "name": "Post Run ./.github/actions/build-extension",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-12T13:54:04Z",
+          "completed_at": "2026-11-12T13:54:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-12T13:54:04Z",
+          "completed_at": "2026-11-12T13:54:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-12T13:54:04Z",
+          "completed_at": "2026-11-12T13:54:04Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/yours-org/yours-wallet/check-runs/131227611091",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000345,
+      "runner_name": "GitHub Actions 1000000345",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

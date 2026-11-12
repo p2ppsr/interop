@@ -13,6 +13,11 @@ import { applyTypeScriptDescendantExport } from '../storage-sync/descendant-expo
 import { SubmissionVerdicts, type SubmissionTarget } from './submission-verdicts.js'
 import { assertSnapshotIdentity, validateNativeOutputSnapshot, type OwnedNativeOutputSnapshots, type NativeOutputSnapshotObservation, type NativeOutputProviderRegistry } from './native-output-snapshot.js'
 
+import { assertCertificateInventoryIdentity } from './native-certificate-inventory.js'
+import { validateNativeActionQueryFinalLedger, validateNativeActionQueryCuts } from './native-action-query-ledger.js'
+import { assertTransactionKnowledgeProvider } from './native-transaction-knowledge-inventory.js'
+import type { NativeInventoryObservation, OwnedNativeCertificateInventories, OwnedNativeTransactionKnowledgeInventories, OwnedNativeActionQueryCuts, OwnedNativeFinalActionQueryLedger } from './native-owned-inventories.js'
+
 export interface HeaderRecord {
   version: number
   previousHash: string
@@ -172,6 +177,10 @@ export class ControlledWalletServices {
   readonly headers = new Map<number, HeaderRecord>([[0, genesisHeader]])
   readonly routes: RouteObservation[] = []
   private readonly ownSubmissions: SubmittedTransaction[] = []
+  private readonly ownCertificateInventoryObservations: NativeInventoryObservation<OwnedNativeCertificateInventories>[] = []
+  private readonly ownKnowledgeInventoryObservations: NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories>[] = []
+  private readonly ownActionQueryObservations: NativeInventoryObservation<OwnedNativeActionQueryCuts>[] = []
+  private retainedFinalActionQueryLedgers: OwnedNativeFinalActionQueryLedger[] = []
   private readonly ownOutputSnapshotObservations: NativeOutputSnapshotObservation[] = []
   readonly walletBridgeObservations: WalletBridgeObservation[] = []
   readonly storageRpcObservations: StorageRpcObservation[] = []
@@ -236,12 +245,13 @@ export class ControlledWalletServices {
   /** Optional, isolated native-coverage fixtures. Registration cannot redirect a
    * production hostname or replace an existing storage/application service. */
   registerControlledRoute(host: string, handler: (request: IncomingMessage, response: ServerResponse) => Promise<void>): () => void {
-    const extended = (this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch) ? [
+    const extended = (this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch || this.goOptions?.storageCallerKnownInputsPatch) ? [
       'permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked',
       'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection',
       'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'
     ].map(name => `${name}.itcve.test`) : []
-    if (!['certifier.itcve.test', 'allowance.itcve.test', ...extended].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
+    const completion = this.goOptions?.storageCallerKnownInputsPatch ? ['permission-sequence', 'permission-sequence-alt', 'permission-sequence-denied', 'permission-sequence-group', 'permission-sequence-group-alt'].map(name => `${name}.itcve.test`) : []
+    if (!['certifier.itcve.test', 'allowance.itcve.test', ...extended, ...completion].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
     this.controlledRoutes.set(host, handler)
     let registered = true
     return () => {
@@ -306,7 +316,7 @@ export class ControlledWalletServices {
   /** Temporarily intercept only the identity fixture's wire lookup. Existing
    * real provider registrations remain intact and become active on cleanup. */
   installIdentityCoverageLookup(answer: (question: any) => Promise<unknown>): () => void {
-    if (!(this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch) || this.scopedOverlayLookups.has('ls_identity') || typeof answer !== 'function') throw new Error('Invalid or duplicate scoped identity lookup')
+    if (!(this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch || this.goOptions?.storageCallerKnownInputsPatch) || this.scopedOverlayLookups.has('ls_identity') || typeof answer !== 'function') throw new Error('Invalid or duplicate scoped identity lookup')
     this.scopedOverlayLookups.set('ls_identity', answer)
     let open = true
     return () => {
@@ -490,6 +500,74 @@ export class ControlledWalletServices {
     }
     await collect(this, 'source')
     return { schema: 'tpnil-native-owned-output-snapshots@1.0.0', identityKey: identity, providers }
+  }
+
+  get nativeCertificateInventoryObservations(): NativeInventoryObservation<OwnedNativeCertificateInventories>[] { return structuredClone(this.ownCertificateInventoryObservations) }
+  get nativeTransactionKnowledgeInventoryObservations(): NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories>[] { return structuredClone(this.ownKnowledgeInventoryObservations) }
+  /** Capture a fixed source-owned provider list before awaiting any control call.
+   * Withdrawn providers stay owned; concurrent registry changes invalidate the cut. */
+  private inventoryProviders(): Array<{ id: string; service: ControlledWalletServices }> {
+    const rows: Array<{ id: string; service: ControlledWalletServices }> = [], seen = new Set<ControlledWalletServices>(), keys = new Set<string>()
+    const visit = (service: ControlledWalletServices, id: string) => {
+      if (seen.has(service) || keys.has(service.identityKey)) throw new Error('Duplicate or cyclic inventory provider')
+      if (!service.goServices || service.components.storage !== 'go' || !service.goOptions?.storageCallerKnownInputsPatch) throw new Error('Complete inventories require owned caller-known-inputs Go providers')
+      seen.add(service); keys.add(service.identityKey); rows.push({ id, service })
+      if (rows.length > 16) throw new Error('Owned inventory provider budget exceeded')
+      for (const [host, child] of service.ownedStorageCounterparts) visit(child, `${id}/${host}`)
+    }
+    visit(this, 'source'); return rows
+  }
+  get nativeActionQueryObservations(): NativeInventoryObservation<OwnedNativeActionQueryCuts>[] { return structuredClone(this.ownActionQueryObservations) }
+  get nativeFinalActionQueryLedgers(): OwnedNativeFinalActionQueryLedger[] { return structuredClone(this.retainedFinalActionQueryLedgers) }
+  async nativeActionQueryCuts(identity: string): Promise<OwnedNativeActionQueryCuts> {
+    const observation: NativeInventoryObservation<OwnedNativeActionQueryCuts> = { sequence: this.ownActionQueryObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownActionQueryObservations.push(observation)
+    try {
+      assertSnapshotIdentity(identity)
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeActionQueryCuts = { schema: 'tpnil-native-owned-action-query-cuts@1.0.0', identityKey: identity, providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.actionQueryCuts(identity)
+        validateNativeActionQueryCuts(snapshot, identity, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned action registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
+  }
+  async nativeCertificateInventories(identity: string): Promise<OwnedNativeCertificateInventories> {
+    const observation: NativeInventoryObservation<OwnedNativeCertificateInventories> = { sequence: this.ownCertificateInventoryObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownCertificateInventoryObservations.push(observation)
+    try {
+      assertSnapshotIdentity(identity)
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeCertificateInventories = { schema: 'tpnil-native-owned-certificate-inventories@1.0.0', identityKey: identity, providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.certificateInventory(identity)
+        assertCertificateInventoryIdentity(snapshot, identity, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned certificate registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
+  }
+  async nativeTransactionKnowledgeInventories(): Promise<OwnedNativeTransactionKnowledgeInventories> {
+    const observation: NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories> = { sequence: this.ownKnowledgeInventoryObservations.length, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownKnowledgeInventoryObservations.push(observation)
+    try {
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeTransactionKnowledgeInventories = { schema: 'tpnil-native-owned-transaction-knowledge-inventories@1.0.0', providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.transactionKnowledgeInventory()
+        assertTransactionKnowledgeProvider(snapshot, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned knowledge registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
   }
 
   async payNativeWallet(publicKey: string, satoshis: number): Promise<{ txid: string; tx: number[] }> {
@@ -804,6 +882,10 @@ export class ControlledWalletServices {
 
   async restartGoComponents(): Promise<void> {
     if (this.goServices === undefined) throw new Error('No Go components selected')
+    // The prospective observer owns one exclusive durable journal per host
+    // lifecycle. Do not restart into it or discard history; epoch-based restart
+    // admission is not implemented and no native completion scenario uses it.
+    if (this.goServices.actionObserverActive) throw new Error('Action-observed Go storage restart requires a separately retained lifecycle epoch')
     await this.faucetWallet?.destroy()
     this.faucetWallet = undefined
     await this.goServices.close()
@@ -812,6 +894,13 @@ export class ControlledWalletServices {
   }
 
   async close(): Promise<void> {
+    // Retain exact source-owned provider references before recursive close clears
+    // child maps and removes temporary directories. Each GoServices instance
+    // reads its finalized journal immediately after its actual process exit.
+    const failures: unknown[] = []
+    let actionProviders: Array<{ id: string; componentIdentity: Record<string, unknown>; providerIdentityKey: string; go: GoServices }> = []
+    try { if (this.goServices?.actionObserverActive && this.retainedFinalActionQueryLedgers.length === 0) actionProviders = this.inventoryProviders().map(({ id, service }) => ({ id, componentIdentity: service.componentIdentity, providerIdentityKey: service.identityKey, go: service.goServices! })) }
+    catch (error) { failures.push(error) }
     if (this.proxy !== undefined) {
       for (const client of this.proxy.wsServer?.clients ?? []) client.terminate()
       for (const client of this.proxy.wssServer?.clients ?? []) client.terminate()
@@ -825,7 +914,6 @@ export class ControlledWalletServices {
       }
       this.proxy.close()
     }
-    const failures: unknown[] = []
     const clean = async (operation: () => Promise<unknown>): Promise<void> => { try { await operation() } catch (error) { failures.push(error) } }
     for (const counterpart of this.ownedStorageCounterparts.values()) await clean(() => counterpart.close())
     this.ownedStorageCounterparts.clear()
@@ -845,6 +933,16 @@ export class ControlledWalletServices {
     await clean(async () => this.closeTypeScriptStorageServer())
     await clean(async () => this.storageSetup?.wallet.destroy())
     await clean(async () => this.storageSetup?.activeStorage.destroy())
+    if (actionProviders.length) {
+      this.retainedFinalActionQueryLedgers = actionProviders.map(({ id, componentIdentity, providerIdentityKey, go }) => {
+        const row: OwnedNativeFinalActionQueryLedger = { id, componentIdentity, providerIdentityKey }
+        const rawFailure = go.actionQueryFailureBundle
+        if (rawFailure !== undefined) row.rawFailure = rawFailure
+        try { const ledger = go.finalActionQueryLedger; if (!ledger) throw new Error('Final owned action query ledger missing'); row.ledger = validateNativeActionQueryFinalLedger(ledger, providerIdentityKey); if (row.rawFailure !== undefined || !ledger.final.finalized || ledger.final.inFlight !== 0 || ledger.final.terminalErrors.length) throw new Error('Final owned action query ledger failed') }
+        catch (error) { row.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; failures.push(error) }
+        return row
+      })
+    }
     fs.rmSync(this.temporaryDirectory, { recursive: true, force: true })
     if (failures.length > 0) throw new AggregateError(failures, 'Controlled service cleanup failed')
   }

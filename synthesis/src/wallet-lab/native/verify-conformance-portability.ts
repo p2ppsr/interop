@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { Beef, MerklePath, PushDrop, Transaction, Utils } from '@bsv/sdk'
+import { projectDatasetWithReferenceOnlyRows } from '../../storage-sync/projection-reference-rows.js'
 import { entities, projectDataset, type Dataset } from '../../storage-sync/projection.js'
 import { canonicalSyncChunk } from '../../storage-sync/compatibility.js'
 import { canonicalJson } from '../../determinism.js'
@@ -26,10 +27,12 @@ function datasetBeef(dataset: Dataset, starting: number[]): Beef {
 
 /** Recompute public operations, full logical projection and signed ancestry. */
 export async function verifyNativePortability(report: any, { requireNative = true } = {}) {
-  const v3 = report.schema === 'tpnil-native-storage-portability@3'
+  const v4 = report.schema === 'tpnil-native-storage-portability@4'
+  const v3 = v4 || report.schema === 'tpnil-native-storage-portability@3'
+  const project = v4 ? projectDatasetWithReferenceOnlyRows : projectDataset
   const v2 = v3 || report.schema === 'tpnil-native-storage-portability@2'
   assert.ok(v2 || report.schema === 'tpnil-native-storage-portability@1')
-  if (v2) assert.equal(report.oracle, v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0')
+  if (v2) assert.equal(report.oracle, v4 ? 'tpnil-native-portability-oracle@4.0.0' : v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0')
   else assert.equal(report.oracle, undefined, 'Original schema cannot select a new proof predicate')
   assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
   assert.ok(['native-ui', 'reference-engineering'].includes(report.mode))
@@ -145,7 +148,7 @@ export async function verifyNativePortability(report: any, { requireNative = tru
       assert.equal(report.source.user.identityKey, report.identity); assert.equal(report.destination.user.identityKey, report.identity)
       assert.ok(report.source.transactions.length >= 2 && report.source.outputs.length >= 2)
       if (!v2) assert.ok(report.source.provenTxs.length >= 1)
-      assert.deepEqual(projectDataset(report.source), projectDataset(report.destination), 'Portable bytes, metadata or relationships differ')
+      assert.deepEqual(project(report.source), project(report.destination), 'Portable bytes, metadata or relationships differ')
       const outpoint = report.task.txid + '.' + report.task.vout; assert.equal(outpoint, report.outpoint)
       const sourceOutput = report.source.outputs.find((row: any) => row.txid === report.task.txid && row.vout === report.task.vout)
       assert.equal(sourceOutput.spendable, true)

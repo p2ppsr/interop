@@ -1,0 +1,906 @@
+◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+SNI enabled. Clients not supporting SNI may fail
+https server started on 40543
+CLIENT_TO_PROXY_SOCKET_ERROR
+Error: write EPIPE
+    at afterWriteDispatched (node:internal/stream_base_commons:138:10)
+    at writeGeneric (node:internal/stream_base_commons:126:10)
+    at Socket._writeGeneric (node:net:1324:11)
+    at Socket._write (node:net:1336:8)
+    at writeOrBuffer (node:internal/streams/writable:574:12)
+    at _write (node:internal/streams/writable:503:10)
+    at Writable.write (node:internal/streams/writable:512:10)
+    at <anonymous> (/work/synthesis/node_modules/http-mitm-proxy/lib/proxy.ts:469:25)
+    at wrapper (/work/synthesis/node_modules/async/dist/async.js:272:20)
+    at eachOfArrayLike (/work/synthesis/node_modules/async/dist/async.js:491:13) {
+  errno: -32,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+creating SNI context for www.google.com
+creating SNI context for fonts.googleapis.com
+creating SNI context for android.clients.google.com
+creating SNI context for wallet.1sat.app
+creating SNI context for messagebox.1sat.app
+creating SNI context for api.1sat.app
+[wallet-lab:evidence] wallet initialized
+creating SNI context for todo.itcve.test
+creating SNI context for api.whatsonchain.com
+creating SNI context for i.ibb.co
+creating SNI context for proxy-api.mnee.net
+creating SNI context for localhost
+[wallet-lab:evidence] boundary getVersion: requesting
+[wallet-lab:evidence] boundary getVersion: completed
+[wallet-lab:evidence] boundary getNetwork: requesting
+[wallet-lab:evidence] boundary getNetwork: completed
+[wallet-lab:evidence] boundary isAuthenticated: requesting
+[wallet-lab:evidence] boundary isAuthenticated: completed
+[wallet-lab:evidence] boundary identified yours-wallet-5.1.1 on mainnet
+[wallet-lab:evidence] permission 1: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 2: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 3: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] controlled funding internalized
+[wallet-lab:evidence] permission 4: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 5: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 6: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 7: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] declared initial conformance reserves internalized before customer scenarios
+creating SNI context for deny.itcve.test
+creating SNI context for alternate.itcve.test
+creating SNI context for allowance.itcve.test
+HTTPS_CLIENT_ERROR
+Error: socket hang up
+    at TLSSocket.onSocketClose (node:internal/tls/wrap:1379:23)
+    at TLSSocket.emit (node:events:526:24)
+    at node:net:362:12
+    at Socket.done (node:internal/tls/wrap:780:7)
+    at Socket.wrapper (node:events:639:12)
+    at Socket.emit (node:events:526:24)
+    at TCP.<anonymous> (node:net:362:12) {
+  code: 'ECONNRESET'
+}
+HTTPS_CLIENT_ERROR
+Error: socket hang up
+    at TLSSocket.onSocketClose (node:internal/tls/wrap:1379:23)
+    at TLSSocket.emit (node:events:526:24)
+    at node:net:362:12
+    at Socket.done (node:internal/tls/wrap:780:7)
+    at Socket.wrapper (node:events:639:12)
+    at Socket.emit (node:events:526:24)
+    at TCP.<anonymous> (node:net:362:12) {
+  code: 'ECONNRESET'
+}
+creating SNI context for permission-extension.itcve.test
+creating SNI context for permission-extension-alt.itcve.test
+HTTPS_CLIENT_ERROR
+Error: socket hang up
+    at TLSSocket.onSocketClose (node:internal/tls/wrap:1379:23)
+    at TLSSocket.emit (node:events:526:24)
+    at node:net:362:12
+    at Socket.done (node:internal/tls/wrap:780:7)
+    at Socket.wrapper (node:events:639:12)
+    at Socket.emit (node:events:526:24)
+    at TCP.<anonymous> (node:net:362:12) {
+  code: 'ECONNRESET'
+}
+creating SNI context for permission-extension-subset.itcve.test
+creating SNI context for permission-extension-unchecked.itcve.test
+creating SNI context for permission-extension-overcap.itcve.test
+creating SNI context for permission-extension-concurrent.itcve.test
+[wallet-lab:evidence] fresh funded native permission prelude completed before ToDo scenarios
+creating SNI context for content-autofill.googleapis.com
+[wallet-lab:evidence] permission 8: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 9: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] ToDo token created and decoded
+[wallet-lab:evidence] cold reload reconstructed wallet state
+[wallet-lab:evidence] ToDo token redeemed
+[wallet-lab:evidence] permission 10: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] requesting explicit protocol denial
+[wallet-lab:evidence] requesting independent cross-origin protocol decision
+[wallet-lab:evidence] permission 11: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission denial and cross-origin isolation exercised
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: opening isolated application page
+[wallet-lab:evidence] permission 12: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: submit dispatched
+[wallet-lab:evidence] permission 13: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 14: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 15: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: 1 submission(s) observed
+[wallet-lab:evidence] immediate REJECTED: opening isolated application page
+[wallet-lab:evidence] immediate REJECTED: submit dispatched
+[wallet-lab:evidence] permission 16: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 17: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] immediate REJECTED: 1 submission(s) observed
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: opening isolated application page
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: submit dispatched
+[wallet-lab:evidence] permission 18: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 19: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] immediate ACCEPTED_BY_NETWORK: 1 submission(s) observed
+[wallet-lab:evidence] accepted, rejected, and recovered immediate broadcasts exercised
+[wallet-lab:evidence] permission 20: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] safe BRC-100 boundary corpus exercised
+[wallet-lab:evidence] additional integrated component scenario: starting
+[wallet-lab:evidence] permission 21: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 22: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 23: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 24: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 25: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 26: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 27: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 28: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 29: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 30: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 31: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 32: allow Spending Authorization for todo.itcve.test
+SNI enabled. Clients not supporting SNI may fail
+https server started on 34897
+[wallet-lab:evidence] permission 33: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 34: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 35: allow Protocol Permission for todo.itcve.test
+creating SNI context for accounts.1sat.app
+creating SNI context for replacement-wallet.itcve.test
+[wallet-lab:evidence] permission 36: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 37: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 38: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 39: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 40: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 41: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 42: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 43: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 44: allow Spending Authorization for todo.itcve.test
+◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+native_messagebox_typescript_22 constructed
+[DECODE ERROR] Skipping output 1 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 2 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 3 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 4 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 5 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 6 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 7 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 8 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[wallet-lab:evidence] permission 45: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 46: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 47: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 48: allow Protocol Permission for todo.itcve.test
+{"level":"info","time":1794486906050,"service":"@bsv/messagebox-server","env":"development","name":"@bsv/messagebox-server","operation":"message.send","has_payment":true,"msg":"Received message send request"}
+{"level":"info","time":1794486906055,"service":"@bsv/messagebox-server","env":"development","name":"@bsv/messagebox-server","operation":"message.send","recipient_output_count":1,"total_output_count":1,"msg":"Payment outputs"}
+{"level":"info","time":1794486906606,"service":"@bsv/messagebox-server","env":"development","name":"@bsv/messagebox-server","operation":"message.send","has_payment":true,"msg":"Received message send request"}
+{"level":"info","time":1794486906608,"service":"@bsv/messagebox-server","env":"development","name":"@bsv/messagebox-server","operation":"message.send","recipient_output_count":1,"total_output_count":1,"msg":"Payment outputs"}
+native_messagebox_go_adapted_22 constructed
+[DECODE ERROR] Skipping output 1 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 2 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[DECODE ERROR] Skipping output 3 due to exception: Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/primitives/utils.ts:853:28)
+    at PushDrop.decode (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:74:21)
+    at MessageBoxTopicManager.identifyAdmissibleOutputs (/work/out/messaging-sources/messagebox-services-71ee613d0ca51d7140ce54ab637ff8fb27f5db47/backend/src/topic-managers/MessageBoxTopicManager.ts:48:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+[wallet-lab:evidence] permission 49: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 50: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 51: allow Spending Authorization for todo.itcve.test
+tpnil_native_a1a0cd26dc_a constructed
+tpnil_native_a1a0cd26dc_b constructed
+[wallet-lab:evidence] permission 52: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 53: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 54: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 55: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 56: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 57: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 58: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 59: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 60: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 61: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 62: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 63: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 64: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 65: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 66: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 67: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 68: allow Spending Authorization for todo.itcve.test
+[TPNIL GASP] [INFO] GASP initialized with version: 1, lastInteraction: 0, unidirectional: true, logLevel: INFO, sequential: false
+[TPNIL GASP] [INFO] Starting sync process. Last interaction timestamp: 0
+[TPNIL GASP] [INFO] Processing page with 1 UTXOs (since: 0)
+[TPNIL GASP] [INFO] Requesting node for UTXO: {"txid":"9b3860b42dc4f2824a5c2d85732f9a1fd9d4b146df3c61eef179401ce16618a2","outputIndex":0,"score":1794486933352}
+[TPNIL GASP] [INFO] Requesting new node for txid: 60720ba19c483a79cd389ffbf7f95a21cd06f94568841e246c029e1dd3b26dca, outputIndex: 0, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 429bc85e7567e6b701bae246b1dc50550ab4863820c7d6e2262884e604623a11, outputIndex: 2, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 25469bb541df4d8dd9466d380a2ffe365a31565d7cb90005198da56fd9e0d057, outputIndex: 2, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 1df7f0d957bba8a08309b3bed63b1c26a4f432fbb82b1df20f82fec032f71bcb, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: c4d7ccddb07223d3888dd400e23eac6eb800813074501c650173a6a571d72257, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 89f528d0c11d446c675a8dfaa95373d3b1988d089a1dcce5ce587b87c8100f7c, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 4e697aaf5d0a8b8ece9ede49962f513a150971b3c4edbd816b414ba5bfd2685f, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 1edbc2eb4ddb32f0644ea90b79104cf0196a0c6a4bf3517aa191fb340cfafe38, outputIndex: 0, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: b47712cf59e98bb7e14c6358de7e9221fb59cdbe15d1ff2a51b2e0384270358d, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 5b6a195c93d2b64601bf0ea4f93311c1583a76d0d7d6338c402968125c3a8a81, outputIndex: 3, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 510c8dd58cafb1f95fa5577d27c129384a62977e4d7b2d3791cdc4748e10b28f, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9, outputIndex: 0, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 429bc85e7567e6b701bae246b1dc50550ab4863820c7d6e2262884e604623a11, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Requesting new node for txid: 1df7f0d957bba8a08309b3bed63b1c26a4f432fbb82b1df20f82fec032f71bcb, outputIndex: 1, metadata: false
+[TPNIL GASP] [INFO] Completing newly-synced graph: 9b3860b42dc4f2824a5c2d85732f9a1fd9d4b146df3c61eef179401ce16618a2.0
+[TPNIL GASP] [INFO] Graph finalized for node: 9b3860b42dc4f2824a5c2d85732f9a1fd9d4b146df3c61eef179401ce16618a2.0
+[TPNIL GASP] [INFO] Sync completed!
+native_identity_22 constructed
+[wallet-lab:evidence] permission 69: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 70: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 71: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 72: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 73: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 74: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 75: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 76: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 77: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 78: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 79: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 80: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 81: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 82: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 83: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 84: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 85: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 86: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 87: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 88: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 89: allow Spending Authorization for todo.itcve.test
+Identity topic manager was invoked
+Identity topic manager has parsed a the transaction:  3d124accfb33221e823a32c0134d3c3f908ff858f3dd6eb14e8cd65c7ce8e5f1
+Error parsing output 1 SyntaxError: Unexpected token 'S', "SLAP" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:34:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+Error parsing output 2 Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/integrations/services/node_modules/@bsv/sdk/src/primitives/utils.ts:919:28)
+    at PushDrop.decode (/work/integrations/services/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:75:15)
+    at IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:33:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+👏 Admitted 1 SLAP output!
+Identity lookup service outputAdded called with 3d124accfb33221e823a32c0134d3c3f908ff858f3dd6eb14e8cd65c7ce8e5f1.0
+Identity lookup service is storing a record 3d124accfb33221e823a32c0134d3c3f908ff858f3dd6eb14e8cd65c7ce8e5f1 0 VerifiableCertificate {
+  type: 'ERERERERERERERERERERERERERERERERERERERERERE=',
+  serialNumber: 'EhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhI=',
+  subject: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+  certifier: '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01',
+  revocationOutpoint: '0000000000000000000000000000000000000000000000000000000000000000.0',
+  fields: [Object: null prototype] { name: 'TPNIL boundary identity' },
+  signature: undefined,
+  keyring: {
+    name: '09ammrTtJaZ0tG5HIWvqnXVluU3VQWyWx/89aajRKoCBF6txpRF0hKQs8lK9C1jTYYs/xhkyDapB6vFf89OWu5CTLsfucedMc7tWWXxP2tQ='
+  },
+  decryptedFields: undefined
+}
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020'
+  }
+}
+Identity lookup returning this many results:  1
+[wallet-lab:evidence] permission 90: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 91: allow Protocol Permission for todo.itcve.test
+creating SNI context for overlay-us-1.bsvb.tech
+creating SNI context for overlay-eu-1.bsvb.tech
+creating SNI context for overlay-ap-1.bsvb.tech
+creating SNI context for users.bapp.dev
+creating SNI context for overlay.itcve.test
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  0
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL boundary identity' },
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  0
+[wallet-lab:evidence] permission 92: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 93: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 94: allow Spending Authorization for todo.itcve.test
+HTTPS_CLIENT_ERROR
+Error [ERR_HTTP_REQUEST_TIMEOUT]: Request timeout
+    at onRequestTimeout (node:_http_server:960:30)
+    at Server.checkConnections (node:_http_server:761:7)
+    at listOnTimeout (node:internal/timers:685:17)
+    at process.processTimers (node:internal/timers:618:7) {
+  code: 'ERR_HTTP_REQUEST_TIMEOUT'
+}
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL boundary identity' },
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+[wallet-lab:evidence] permission 95: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 96: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 97: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 98: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 99: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 100: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 101: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 102: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 103: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 104: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 105: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 106: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 107: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 108: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 109: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 110: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 111: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 112: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 113: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 114: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 115: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 116: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 117: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 118: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 119: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 120: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 121: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 122: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 123: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 124: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 125: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 126: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 127: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 128: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 129: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 130: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 131: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 132: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 133: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 134: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 135: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 136: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 137: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 138: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 139: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 140: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 141: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 142: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 143: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 144: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 145: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 146: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 147: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 148: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 149: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 150: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 151: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 152: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 153: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 154: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 155: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 156: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 157: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 158: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 159: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 160: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 161: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 162: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 163: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 164: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 165: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 166: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 167: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 168: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 169: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 170: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 171: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 172: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 173: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 174: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 175: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 176: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 177: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 178: allow Spending Authorization for todo.itcve.test
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL boundary identity' },
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL boundary identity' },
+    certifiers: [
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8',
+      '03e7e9acacbdb43fc9fb71a8db1536c0f866caa78def49f666fa121a6f7954bb01'
+    ]
+  }
+}
+Identity lookup returning this many results:  1
+[wallet-lab:evidence] permission 179: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 180: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 181: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 182: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 183: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 184: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 185: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 186: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 187: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 188: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 189: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 190: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 191: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 192: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 193: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 194: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 195: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 196: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 197: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 198: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 199: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 200: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 201: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 202: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 203: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 204: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 205: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 206: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 207: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 208: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 209: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 210: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 211: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 212: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 213: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 214: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 215: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 216: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 217: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 218: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 219: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 220: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 221: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 222: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 223: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 224: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 225: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 226: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 227: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 228: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 229: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 230: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 231: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 232: allow Protocol Permission for todo.itcve.test
+creating SNI context for certifier.itcve.test
+[wallet-lab:evidence] permission 233: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 234: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 235: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 236: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 237: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 238: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 239: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 240: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 241: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 242: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 243: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 244: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 245: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 246: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 247: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 248: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 249: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 250: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 251: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 252: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 253: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 254: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 255: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 256: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 257: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 258: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 259: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 260: allow Basket Access for todo.itcve.test
+native_certificate_coverage_22 constructed
+[wallet-lab:evidence] permission 261: allow Basket Access for todo.itcve.test
+[wallet-lab:evidence] permission 262: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 263: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 264: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 265: allow Certificate Access for todo.itcve.test
+[wallet-lab:evidence] permission 266: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 267: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 268: allow Spending Authorization for todo.itcve.test
+Identity topic manager was invoked
+Identity topic manager has parsed a the transaction:  5e908c494817da8918e5b1757eaad4fbac9c31ca7bdea9753456dcda4c07e6a1
+Error parsing output 2 Error: Invalid certificate signature!
+    at IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:65:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+Error parsing output 3 Error: Failed to decrypt selectively revealed certificate fields using keyring: Ciphertext too short
+    at VerifiableCertificate.decryptFields (/work/integrations/services/node_modules/@bsv/sdk/src/auth/certificates/VerifiableCertificate.ts:215:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:69:35)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+Error parsing output 4 SyntaxError: Unexpected token 'S', "SLAP" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:34:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+Error parsing output 5 Error: script.chunks[0].data must have value
+    at verifyNotNull (/work/integrations/services/node_modules/@bsv/sdk/src/primitives/utils.ts:919:28)
+    at PushDrop.decode (/work/integrations/services/node_modules/@bsv/sdk/src/script/templates/PushDrop.ts:75:15)
+    at IdentityTopicManager.identifyAdmissibleOutputs (/work/integrations/services/vendor/identity/IdentityTopicManager.ts:33:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Engine.validateTopicSubmission (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1138:9)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1776:9)
+    at async Promise.all (index 0)
+    at async Engine.submitUnlocked (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1787:25)
+    at async Engine.submit (/work/integrations/services/node_modules/@bsv/overlay/src/Engine.ts:1697:14)
+    at async <anonymous> (/work/integrations/services/node_modules/@bsv/overlay-express/dist/esm/src/OverlayExpress.js:2208:35)
+👏 Admitted 1 SLAP output!
+Identity lookup service outputAdded called with 5e908c494817da8918e5b1757eaad4fbac9c31ca7bdea9753456dcda4c07e6a1.0
+Identity lookup service is storing a record 5e908c494817da8918e5b1757eaad4fbac9c31ca7bdea9753456dcda4c07e6a1 0 VerifiableCertificate {
+  type: 'q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6s=',
+  serialNumber: 'ra2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra0=',
+  subject: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+  certifier: '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+  revocationOutpoint: 'c9774d0f36103408c0c7e47bd3fc34280e27f7ad315360562eae042fca7937f8.0',
+  fields: [Object: null prototype] {
+    name: 'TPNIL additional certificate identity'
+  },
+  signature: undefined,
+  keyring: {
+    name: '3KtDINysM1zbf4n7AWAPhzutNnvsbUKQXoInr4aVOyL9Xb1Y6iD+2QwjQnfeA2KLA0XEmLxMZhVy6iVbS7TbtKDM/Ct2O58ROHMYLXK1H9s='
+  },
+  decryptedFields: undefined
+}
+Identity lookup service outputAdded called with 5e908c494817da8918e5b1757eaad4fbac9c31ca7bdea9753456dcda4c07e6a1.1
+Identity lookup service is storing a record 5e908c494817da8918e5b1757eaad4fbac9c31ca7bdea9753456dcda4c07e6a1 1 VerifiableCertificate {
+  type: 'q6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq6s=',
+  serialNumber: 'rq6urq6urq6urq6urq6urq6urq6urq6urq6urq6urq4=',
+  subject: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+  certifier: '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+  revocationOutpoint: 'c9774d0f36103408c0c7e47bd3fc34280e27f7ad315360562eae042fca7937f8.0',
+  fields: [Object: null prototype] {
+    name: 'TPNIL additional certificate identity'
+  },
+  signature: undefined,
+  keyring: {
+    name: '9MtfmOAsNURbktxgzYeOXKKgFH4S149hc1SPwLbVrK7iviT15MVsNaWmV7o1jjYOSEBOOqG1PpkbaWhaWxRm6RV42tGNAI2w8sfbhI1zezk='
+  },
+  decryptedFields: undefined
+}
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+[wallet-lab:evidence] permission 269: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 270: allow Spending Authorization for todo.itcve.test
+HTTPS_CLIENT_ERROR
+Error: socket hang up
+    at TLSSocket.onSocketClose (node:internal/tls/wrap:1379:23)
+    at TLSSocket.emit (node:events:526:24)
+    at node:net:362:12
+    at Socket.done (node:internal/tls/wrap:780:7)
+    at Socket.wrapper (node:events:639:12)
+    at Socket.emit (node:events:526:24)
+    at TCP.<anonymous> (node:net:362:12) {
+  code: 'ECONNRESET'
+}
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL additional certificate identity' },
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL additional certificate identity' },
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL additional certificate identity' },
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL absent certificate coverage identity' },
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  0
+creating SNI context for certificate-identity.itcve.test
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    identityKey: '022afb3eb4fcb6706be96ec85b4cec1acb663b8ff4b04e386ce213bd2cfc3ce020',
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+creating SNI context for certificate-attribute.itcve.test
+Identity lookup with question {
+  service: 'ls_identity',
+  query: {
+    attributes: { name: 'TPNIL additional certificate identity' },
+    certifiers: [
+      '0251b175b2b50a9e98520ed11777d0b3612761e279724bd2afa7b0b32f389c18e4',
+      '02cf6cdf466951d8dfc9e7c9367511d0007ed6fba35ed42d425cc412fd6cfd4a17',
+      '037eff87ca3bb9f815f47e192641cad3aa58ed7343f67b835d735b28cec11a1bb4',
+      '03daf815fe38f83da0ad83b5bedc520aa488aef5cbc93a93c67a7fe60406cbffe8'
+    ]
+  }
+}
+Identity lookup returning this many results:  2
+[wallet-lab:evidence] permission 271: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 272: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] permission 273: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 274: allow Protocol Permission for todo.itcve.test
+[wallet-lab:evidence] permission 275: allow Permission Request for todo.itcve.test
+[wallet-lab:evidence] permission 276: allow Spending Authorization for todo.itcve.test
+[wallet-lab:evidence] additional integrated component scenario: completed

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import fs from 'node:fs'
+import { clauseOracle7Id } from './conformance-nosend-change.js'
 import path from 'node:path'
 import { isDeepStrictEqual } from 'node:util'
 
@@ -12,7 +13,7 @@ export const namespaceOracle5Policy = JSON.parse(fs.readFileSync(path.resolve(im
  * applies only to the two exact source-bound calls; error structure is scored
  * independently. Existing oracle versions retain their original behavior. */
 export function reservedNamespaceRejection(report: any, row: any): boolean {
-  if ((report?.oracle !== clauseOracle5Id && report?.oracle !== clauseOracle6Id) || !isDeepStrictEqual(report.source, namespaceOracle5Policy.source)) return false
+  if ((report?.oracle !== clauseOracle5Id && report?.oracle !== clauseOracle6Id && report?.oracle !== clauseOracle7Id) || !isDeepStrictEqual(report.source, namespaceOracle5Policy.source)) return false
   const fixture = namespaceOracle5Policy.calls.find((entry: any) => entry.id === row?.id)
   return fixture !== undefined && row.method === fixture.method &&
     isDeepStrictEqual(row.args, fixture.args) && row.result === undefined &&

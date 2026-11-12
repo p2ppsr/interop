@@ -1,0 +1,222 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+  "workflows": [
+    {
+      "id": 43213879582,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43213879582",
+      "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+      "conclusion": "success",
+      "jobSeconds": 1458,
+      "jobs": [
+        {
+          "id": 131168097845,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T11:59:38Z",
+          "completedAt": "2026-11-12T12:14:44Z",
+          "jobSeconds": 906,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131168098216,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T11:59:38Z",
+          "completedAt": "2026-11-12T12:04:16Z",
+          "jobSeconds": 278,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131168098284,
+          "name": "go-components",
+          "startedAt": "2026-11-12T11:59:38Z",
+          "completedAt": "2026-11-12T12:04:12Z",
+          "jobSeconds": 274,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 195,
+      "fail": 0,
+      "skipped": 1,
+      "total": 196
+    },
+    "synthesis": {
+      "pass": 1051,
+      "fail": 0,
+      "skipped": 92,
+      "total": 1143,
+      "passedFiles": 66,
+      "failedFiles": 0,
+      "skippedFiles": 4,
+      "totalFiles": 70,
+      "completeSuitePassed": true
+    },
+    "goComponents": {
+      "pass": 13
+    },
+    "certificateReferenceAndMutationsSeparateJob": {
+      "pass": 39,
+      "required": true
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": {
+      "pass": 5
+    },
+    "typecheck": "PASS"
+  },
+  "failure": null,
+  "historicalPortabilityReplay": {
+    "verified": true,
+    "claim": "ENGINEERING_OBSERVATION_ONLY",
+    "attempts": 3,
+    "retainedFailures": 2,
+    "nativeEngineeringAssertions": 9,
+    "historicalSource": "d059d4e2794a83600610c0bccb82d86b69fe6c7d",
+    "sourceBindings": 4,
+    "currentSemanticBindings": 3,
+    "semanticSourceFiles": 1520,
+    "semanticSource": "d059d4e2794a83600610c0bccb82d86b69fe6c7d",
+    "frozenSynthesisDependencies": true,
+    "installedLockSha256": "1a52d4b6fd035f36a81a5e4052a9296e5e077b79378ac8f4a14958887c4b1db4",
+    "installedPackages": 193,
+    "currentProducerExecuted": false,
+    "replayCleanup": true
+  },
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 18,
+    "totalBundles": 32
+  },
+  "descendantMatrix": {
+    "verified": true,
+    "directions": 4,
+    "result": "PASS"
+  },
+  "previousRetainedReevaluation": {
+    "run": 43207730665,
+    "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+    "archive": "../e47873a",
+    "archiveManifestSha256": "1304e87b20ee409e5080e5c1c47429fbb9308c008495210dc17a29da4d4736cc",
+    "sourcePlanSha256": "2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f",
+    "unchangedEvaluatorInputs": 5,
+    "newRunOnThisSource": false,
+    "jobSecondsIncludedAgain": false,
+    "result": "PASS"
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "currentCandidateNativeSessionsInThisArchive": 0,
+  "cost": {
+    "knownJobWallSeconds": 1458,
+    "completedCohortJobSecondsBeforeIncrement": 21214,
+    "completedCohortJobSecondsAfterIncrement": 22672,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "unusedNativeAllowanceIsActualCost": false,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "48a151f40b4602297dbd8e315791da3c45574ff3",
+      "path": "artifacts/ops/itcve-native-closure-20261111/attempt-6-portability-replay-recovery-order/work-order.json",
+      "sha256": "4cb6e2179f551835db51aacbedbcf303b493eb9c74b37a8f0f4439a355747656",
+      "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41"
+    }
+  },
+  "scope": [
+    "All raw API snapshots, complete job logs, original artifact ZIPs and member byte inventories retained.",
+    "Nonempty CI producer/child-verifier receipts checked. This archive does not rerun frozen artifact semantic verifiers locally.",
+    "The predecessor e478 historical portability binding failure remains unchanged in its own archive.",
+    "Required39 certificate cases run in the integrated job; their default skip is not counted as a pass.",
+    "Retained source6 succeeded on e478 and was carried through exactly five unchanged evaluator inputs; it was not rerun or charged twice.",
+    "This CI archive contains no new native session or current candidate qualification."
+  ]
+}

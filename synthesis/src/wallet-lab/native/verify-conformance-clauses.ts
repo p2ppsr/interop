@@ -3,13 +3,13 @@ import fs from 'node:fs'
 import { createCipheriv, createDecipheriv, createHash, createHmac } from 'node:crypto'
 import { PrivateKey, ProtoWallet, Signature, Transaction } from '@bsv/sdk'
 import { clauseAssertionIds, clauseOracle4AssertionIds, clauseContract, clauseCoverageGaps, clauseOracle4CoverageGaps, clauseCrypto, clauseOracleId, conforms, invalidClauses, semanticClauseIds, specifiedError } from './conformance-clauses-model.js'
-import { clauseOracle4Id, noSendChangeInputId, noSendChangeOutputId } from './conformance-nosend-change.js'
+import { clauseOracle4Id, clauseOracle7Id, noSendChangeInputId, noSendChangeOutputId } from './conformance-nosend-change.js'
 import { verifyNoSendChangeFixture } from './verify-conformance-nosend-change.js'
 import { clauseOracle6Id, clauseOracle5Id, reservedNamespaceRejection } from './conformance-namespace-oracle5.js'
 class ClauseBlocked extends Error {}
 
 export async function deriveClauseOutcomes(report: any) {
-  const oracle5 = (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id)
+  const oracle5 = (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)
   const oracle4 = report.oracle === clauseOracle4Id || oracle5
   const assertionIds = oracle4 ? clauseOracle4AssertionIds : clauseAssertionIds
   let noSendChange: ReturnType<typeof verifyNoSendChangeFixture> | undefined
@@ -240,12 +240,12 @@ export async function deriveClauseOutcomes(report: any) {
 export async function verifyNativeClauseConformance(report: any, boundaryReport?: any) {
   assert.equal(report.schema, 'tpnil-native-brc100-clauses@2.0.0')
   assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.ok(['unchanged-native-window.CWI', 'reference-toolbox-public-api'].includes(report.substrate))
-  assert.ok(report.oracle === clauseOracleId || report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id) || report.oracle === undefined && report.substrate === 'reference-toolbox-public-api', 'Native qualification requires an independently versioned clause oracle; omitted IDs admit historical reference diagnostics only')
-  const gaps = (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id)) ? clauseOracle4CoverageGaps : clauseCoverageGaps
+  assert.ok(report.oracle === clauseOracleId || report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id) || report.oracle === undefined && report.substrate === 'reference-toolbox-public-api', 'Native qualification requires an independently versioned clause oracle; omitted IDs admit historical reference diagnostics only')
+  const gaps = (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)) ? clauseOracle4CoverageGaps : clauseCoverageGaps
   assert.deepEqual(report.source, clauseContract.source); assert.deepEqual(report.coverageGaps, gaps)
   assert.equal(report.completeBRC100Conformance, false)
   if (boundaryReport) assert.deepEqual(report.positives, JSON.parse(JSON.stringify(Object.keys(clauseContract.methods).map(method => ({ method, observations: boundaryReport.trace.filter((r: any) => r.method === method && r.result !== undefined).map((r: any) => ({ args: r.args, result: r.result })) })))))
-  assert.deepEqual(report.assertions.map((r: any) => r.id), (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id)) ? clauseOracle4AssertionIds : clauseAssertionIds)
+  assert.deepEqual(report.assertions.map((r: any) => r.id), (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)) ? clauseOracle4AssertionIds : clauseAssertionIds)
   const assertions = await deriveClauseOutcomes(report)
   assert.deepEqual(report.assertions.map(({ id, result }: any) => ({ id, result })), assertions.map(({ id, result }) => ({ id, result })))
   const result = assertions.some(r => r.result === 'FAIL') ? 'FAIL' : 'BLOCKED'

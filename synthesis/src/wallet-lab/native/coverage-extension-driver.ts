@@ -5,11 +5,12 @@ import { captureClauseError } from './conformance-clauses.js'
 import { coverageExtensionPolicy as policy, coverageExtensionPolicySha256, selectedCoverageExtensionPolicy, coverageExtensionOracle2, extensionConfig as c, type CoverageExtensionReport } from './coverage-extension-model.js'
 import { coverageExtensionRequests, extensionCryptoEnvironment } from './coverage-extension-requests.js'
 import { deriveCoverageExtensionOutcomes } from './coverage-extension-verifier.js'
+import { writeCoverageObservation, type CoverageObservationEncoding } from './coverage-observation.js'
 
 /** Standalone prospective extension. Caller supplies an already funded external
  * fixture wallet; no admission, funding, UI or existing profile is changed. */
-export async function runNativeCoverageExtension({ wallet, funder, services, evidence, boundaryReport, clauseReport, trustReport, observationRevision = 2 }: {
-  wallet: BoundaryWallet; funder: BoundaryWallet; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; boundaryReport: any; clauseReport: any; trustReport?: any; observationRevision?: 1 | 2
+export async function runNativeCoverageExtension({ wallet, funder, services, evidence, boundaryReport, clauseReport, trustReport, observationRevision = 2, observationEncoding }: {
+  wallet: BoundaryWallet; funder: BoundaryWallet; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; boundaryReport: any; clauseReport: any; trustReport?: any; observationRevision?: 1 | 2; observationEncoding?: CoverageObservationEncoding
 }): Promise<CoverageExtensionReport> {
   const selected = selectedCoverageExtensionPolicy(observationRevision === 2 ? coverageExtensionOracle2 : policy.oracle), activePolicy = selected.policy
   const identity = boundaryReport.trace.find((r: any) => r.method === 'getPublicKey' && r.args?.identityKey === true)?.result?.publicKey ?? ''
@@ -44,9 +45,9 @@ export async function runNativeCoverageExtension({ wallet, funder, services, evi
   if (report.outputSnapshotWindow) report.outputSnapshotWindow.endIndex = services.nativeOutputSnapshotObservations.length
   report.submissionEnd = services.submissions.length; report.submissions = snapshot().slice(report.submissionStart, report.submissionEnd)
   report.storageTransactions = await services.nativeTransactions()
-  evidence.addJson('conformance/coverage-extension.json', report) // Preserve raw capture even if independent structural validation rejects it.
+  writeCoverageObservation(evidence, 'conformance/coverage-extension.json', report, observationEncoding) // Preserve raw capture even if independent structural validation rejects it.
   report.assertions = await deriveCoverageExtensionOutcomes(report)
   report.result = report.assertions.some(row => row.result === 'FAIL') ? 'FAIL' : report.assertions.some(row => row.result === 'BLOCKED') ? 'BLOCKED' : 'PASS'
-  evidence.addJson('conformance/coverage-extension.json', report)
+  writeCoverageObservation(evidence, 'conformance/coverage-extension.json', report, observationEncoding)
   return report
 }

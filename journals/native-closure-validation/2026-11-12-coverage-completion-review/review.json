@@ -1,0 +1,153 @@
+{
+  "schema": "tpnil-validation-archive-independent-review@1",
+  "claim": "ARCHIVE_INTEGRITY_AND_SOURCE_BINDING_REVIEW_ONLY",
+  "nativeQualification": false,
+  "manifest": "journals/native-closure-validation/2026-11-12-coverage-completion/validation.json",
+  "manifestSha256": "d385fc517b93c3db44a63edaa32689726cde0683b0635035a9a5e733e7017a80",
+  "verifierSha256": "9fa43b67bafe9de9b7468d3c532cac1ea196d10940ab7849feb7012d12d33959",
+  "completionSha256": "54d25417387db9e1422b96a6e32ffb7cb55f124421e212d05f263a6093fc944a",
+  "runtimeInputs": 391,
+  "allRuntimeInputBytesRetained": true,
+  "originalArchiveUnchanged": true,
+  "results": [
+    {
+      "name": "original-current-source",
+      "expected": "ACCEPT",
+      "exitCode": 0,
+      "passed": true,
+      "stdoutSha256": "df5d806aa116381823e5f7927b6f67000b82f0369e7255b1adf3227729cb4ff6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "omit-logical-member",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "omit-receipt",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "omit-physical-entry",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "18019e81dffa3b2072331b287ac69a84a3a9492fde5ca38ca8e92e113f2758d6"
+    },
+    {
+      "name": "missing-object",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7e7e3b88ee514e4732a3af9095a4e559c5d31e9c6b6274dfee12888fe32eccd2"
+    },
+    {
+      "name": "alter-object-byte",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "bc179093532123e32ad98835d8ecedf5bfa7b8e8c6d35608d819392603cc7df8"
+    },
+    {
+      "name": "rehashed-decoded-object",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "additional-unindexed-file",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "18019e81dffa3b2072331b287ac69a84a3a9492fde5ca38ca8e92e113f2758d6"
+    },
+    {
+      "name": "object-symlink",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "7e7e3b88ee514e4732a3af9095a4e559c5d31e9c6b6274dfee12888fe32eccd2"
+    },
+    {
+      "name": "rehashed-support-file",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e4e19b4d0947b73bedf15438cbaf38a77e1744b647ae9bf484e23f4134612dbe"
+    },
+    {
+      "name": "erase-historical-source-limitations",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "invent-native-qualification",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "alter-validation-count",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "a7804cdb87b343d155d1514e30f0660758ee453027f818112fb2af2f194ce1df"
+    },
+    {
+      "name": "coherent-completion-rewrite",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "2983e80b1fde9d61608cb85f2086f3552e3da53839db7dcdfeb189b71aae1454"
+    },
+    {
+      "name": "alter-linked-artifact",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "77e22c4eb5c4af096a5450af453ed29bbf72d8c8b20284cf9434a5799d6775ca"
+    },
+    {
+      "name": "alter-current-source",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "passed": true,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "562672efc06da8d13861faf418cf1ac093f8d30754c5a4ffa32d4f6c2421f04e"
+    }
+  ],
+  "positiveControls": 1,
+  "negativeControls": 15,
+  "limits": [
+    "The trusted reviewed verifier and its externally recorded hashes are the integrity anchor; replacing both verifier and all evidence requires an external Git/receipt trust decision.",
+    "This invocation verifies retained evidence bytes, inventory, source and explicit gate summaries. It does not rerun the archived SDK/browser/Go/native semantics or create a native qualification.",
+    "Six intermediate historical source references are explicitly hash-only and nonreplayable; historical local binaries are not portable archived executables.",
+    "All 391 frozen native input bytes are retained or independently linked. The 3033 complete gate inputs are checked against current repository files; not all non-native gate inputs are duplicated in this archive.",
+    "Full 698-observation native capacity, actual dollar costs and future native outcomes remain unqualified/unknown."
+  ],
+  "verified": true,
+  "archiveSha256": "d385fc517b93c3db44a63edaa32689726cde0683b0635035a9a5e733e7017a80"
+}

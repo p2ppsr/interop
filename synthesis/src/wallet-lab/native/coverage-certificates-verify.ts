@@ -17,7 +17,8 @@ const sorted = (values: any[]) => values.map(projection).sort((a, b) => tuple(a)
 const certificate = (value: any) => new Certificate(value.type, value.serialNumber, value.subject, value.certifier, value.revocationOutpoint, value.fields, value.signature)
 class Blocked extends Error {}
 function strictAtomic(value: any, txid: string): Transaction {
-  assert.ok(Array.isArray(value) && value.length > 0 && value.every(n => Number.isInteger(n) && n >= 0 && n <= 255), 'Invalid AtomicBEEF bytes')
+  assert.ok(Array.isArray(value) && value.length > 0, 'Invalid AtomicBEEF bytes')
+  for (let index = 0; index < value.length; index++) assert.ok(Object.hasOwn(value, index) && Number.isInteger(value[index]) && value[index] >= 0 && value[index] <= 255, 'Invalid AtomicBEEF bytes')
   const reader = new Utils.Reader(value), beef = Beef.fromReader(reader); assert.equal(reader.eof(), true, 'Trailing AtomicBEEF bytes'); assert.equal(beef.atomicTxid, txid)
   const tx = Transaction.fromAtomicBEEF(value); assert.equal(tx.id('hex'), txid); return tx
 }

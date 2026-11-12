@@ -11,11 +11,13 @@ import { runNativeCoverageExtension } from './coverage-extension-driver.js'
 import { runNativeTransactionCoverage } from './coverage-transactions-producer.js'
 import { runCertificateCoverage } from './coverage-certificates-run.js'
 import { certificateCoverageConfig } from './coverage-certificates-model.js'
+import { coverageObservationEncoding } from './coverage-observation.js'
 
 /** Explicit prospective profile only. Every browser restart changes the public
  * boundary page; resolve it afresh for each call. No wallet implementation state
  * or test-only private wallet API is accessed. */
-export async function runNativeCoverageSuite(context: NativeScenarioContext, anchor: NativePermissionCoverageReport) {
+export async function runNativeCoverageSuite(context: NativeScenarioContext, anchor: NativePermissionCoverageReport, profile?: 'ITCVE-1@4.5.0') {
+  const observationEncoding = profile === 'ITCVE-1@4.5.0' ? coverageObservationEncoding : undefined
   const { services, evidence } = context
   const root = path.resolve(import.meta.dirname, '../../../..')
   const wallet: any = new Proxy({}, { get: (_target, method) => typeof method !== 'string' || method === 'then' ? undefined : (args: unknown) => nativeWalletBoundary(context.application, true)[method](args) })
@@ -30,8 +32,8 @@ export async function runNativeCoverageSuite(context: NativeScenarioContext, anc
     const boundaryReport = JSON.parse(evidence.readBytes('integrated/boundary.json').toString())
     const clauseReport = JSON.parse(evidence.readBytes('conformance/clauses.json').toString())
     const trustReport = JSON.parse(evidence.readBytes('integrated/identity-trust.json').toString())
-    await execute('transactions', () => runNativeTransactionCoverage({ wallet, funder: funder as any, identity: anchor.identity, services, evidence }, 2))
-    await execute('extension', () => runNativeCoverageExtension({ wallet, funder: funder as any, services, evidence, boundaryReport, clauseReport, trustReport }))
+    await execute('transactions', () => runNativeTransactionCoverage({ wallet, funder: funder as any, identity: anchor.identity, services, evidence }, profile ? 3 : 2))
+    await execute('extension', () => runNativeCoverageExtension({ wallet, funder: funder as any, services, evidence, boundaryReport, clauseReport, trustReport, observationEncoding }))
   } finally { await funder.destroy() }
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-certificate-coverage-'))
   const observer = createCoveragePermissionObserver(context), unregister: Array<() => void> = []
@@ -49,7 +51,7 @@ export async function runNativeCoverageSuite(context: NativeScenarioContext, anc
     overlay = await startOverlayNode({ directory: temporary, name: `native_certificate_coverage_${process.pid}`, mongoUri: process.env.TPNIL_GO_MONGO_URI,
       tracker: { currentHeight: async () => 900100, findHeaderForHeight: async (height: number) => services.headers.get(height), isValidRootForHeight: async (value: string, height: number) => services.headers.get(height)?.merkleRoot === value },
       log: (...values: unknown[]) => events.push(values) })
-    await execute('certificates', () => runCertificateCoverage({ wallet, services, evidence, overlayOrigin: overlay.origin, hooks: {
+    await execute('certificates', () => runCertificateCoverage({ wallet, services, evidence, overlayOrigin: overlay.origin, observationEncoding, hooks: {
       extensionId: context.extensionId,
       readEvidence: name => evidence.readBytes(name),
       async installLookup(answer) { const remove = services.installIdentityCoverageLookup(answer); return async () => remove() },

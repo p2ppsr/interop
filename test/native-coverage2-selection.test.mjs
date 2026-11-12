@@ -9,7 +9,10 @@ import { execFileSync } from 'node:child_process'
 import { selectNativeWalletProfile, nativeCandidateCoverage2Flag, nativeCandidateCoverage2Variant, nativeCandidateCoverage2PlanPath } from '../scripts/native-wallet-profiles.mjs'
 import { nativeRustBinding, selectNativeRustCorpus } from '../scripts/native-rust-compatibility.mjs'
 const root = path.resolve(import.meta.dirname, '..'), read = p => JSON.parse(fs.readFileSync(path.join(root,p),'utf8'))
-const plan = read(nativeCandidateCoverage2PlanPath), source = fs.readFileSync(path.join(root,'synthesis/src/wallet-lab/native/worker.ts'),'utf8')
+const frozenRevision = '1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41'
+const frozenCache = new Map()
+const frozenBytes = name => { if(!frozenCache.has(name)) frozenCache.set(name,execFileSync('git',['show',`${frozenRevision}:${name}`],{cwd:root,maxBuffer:32*1024*1024})); return frozenCache.get(name) }
+const plan = read(nativeCandidateCoverage2PlanPath), source = frozenBytes('synthesis/src/wallet-lab/native/worker.ts').toString()
 const startup = source.slice(source.indexOf("const root = '/work'"),source.indexOf('fs.mkdirSync(output,'))+'\n;({planFile,walletRoot,walletVersion,observerRevision,expanded,plan})'
 const env = () => ({TPNIL_NATIVE_WALLET_VERSION:plan.wallet.version,TPNIL_NATIVE_OBSERVER_REVISION:'3',TPNIL_NATIVE_COVERAGE_REVISION:'2',TPNIL_NATIVE_CLOSURE:'1',TPNIL_NATIVE_COVERAGE:'1',TPNIL_NATIVE_CONFORMANCE:'1',TPNIL_NATIVE_INTEGRATED:'1',TPNIL_NATIVE_IDENTITY_TRUST:'1'})
 // LAB_SELF_TEST_ONLY: test the real startup branch without filesystem/process effects.
@@ -52,9 +55,9 @@ test('executed observer3 plans, profiles, policies and Rust manifest remain byte
 
 
 test('recovery selector binds every final source and rejects artifact, profile and observer downgrades', async () => {
- const bytes=name=>fs.readFileSync(path.join(root,name)),sha=value=>createHash('sha256').update(value).digest('hex')
- // LAB_SELF_TEST_ONLY: emulate a commit over the complete frozen source. The
- // real entrypoint also checks these bytes against Git before any native run.
+ const bytes=frozenBytes,sha=value=>createHash('sha256').update(value).digest('hex')
+ // Replay the executed coverage2 source. Its source hashes are historical,
+ // never assertions that a later producer has unchanged bytes.
  const revision='ab'.repeat(20),options={source:revision,read:bytes,readCommitted:(_revision,name)=>bytes(name)}
  assert.equal(plan.admissionState,'FROZEN')
  const result=await checkNativeWalletSelector(nativeCandidateCoverage2Variant,options)

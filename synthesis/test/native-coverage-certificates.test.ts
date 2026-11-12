@@ -5,6 +5,7 @@ import { Transaction } from '@bsv/sdk'
 import { runReferenceChild } from './reference-child.js'
 import { certificateCoverageIds, type CertificateCoverageReport } from '../src/wallet-lab/native/coverage-certificates-model.js'
 import { deriveCertificateCoverageOutcomes, verifyCertificateCoverage, verifyCertificateCoverageParentBindings } from '../src/wallet-lab/native/coverage-certificates-verify.js'
+import { coverageObservationEncoding, encodeCoverageObservation, decodeCoverageObservation } from '../src/wallet-lab/native/coverage-observation.js'
 
 // Self-contained LAB_SELF_TEST_ONLY: actual reference wallet, remote storage,
 // authenticated issuer and OverlayExpress, never synthetic native UI receipts.
@@ -56,6 +57,14 @@ describe.skipIf(process.env.TPNIL_CERTIFICATE_COVERAGE_TESTS !== '1')('prospecti
   it('rejects forged public settings readback', async () => mutation('fixture-authentication', value => { value.settings.readback.trustSettings.trustedCertifiers[0].trust++ }))
   it('rejects a changed signed trust-token ciphertext', async () => mutation('fixture-authentication', value => { value.settings.temporaryOutputs.BEEF[80] ^= 1 }))
   it.each(['publication', 'revocation-setup'])('rejects trailing serialized bytes in %s', async id => mutation('fixture-authentication', value => { call(value, id).result.tx.push(0) }))
+  it.each(['hole', 'undefined', 'nonfinite'])('retains and rejects malformed %s bytes through the prospective observation codec', async kind => {
+    const value = structuredClone(report), bytes = call(value, 'publication').result.tx, index = bytes.indexOf(0)
+    expect(index).toBeGreaterThanOrEqual(0)
+    if (kind === 'hole') delete bytes[index]
+    else bytes[index] = kind === 'undefined' ? undefined : NaN
+    const decoded = decodeCoverageObservation<CertificateCoverageReport>(JSON.parse(JSON.stringify(encodeCoverageObservation(value))), coverageObservationEncoding)
+    expect((await deriveCertificateCoverageOutcomes(decoded)).find(row => row.id === 'coverage-certificates.fixture-authentication')?.result).toBe('FAIL')
+  })
   it('rejects trailing bytes in the actual revocation spend', async () => mutation('relinquish-revoked', value => { call(value, 'revoke').result.tx.push(0) }))
   it('rejects mismatched final settings output count', async () => mutation('cleanup', value => { value.settings.restoredOutputs.outputs.push({ outpoint: `${'00'.repeat(32)}.0` }) }))
   it('binds restored settings to the final actual decrypt response', async () => mutation('cleanup', value => {

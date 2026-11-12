@@ -8,6 +8,7 @@ import { createCoverageCertificateIssuer } from './coverage-certificates-issuer.
 import { certificateCoverageConfig as config, certificateCoveragePolicy as policy, certificateCoveragePolicySha256, type CertificateCoverageReport } from './coverage-certificates-model.js'
 import { deriveCertificateCoverageOutcomes } from './coverage-certificates-verify.js'
 import type { CoveragePermissionCall } from './permission-coverage-observer.js'
+import { writeCoverageObservation, type CoverageObservationEncoding } from './coverage-observation.js'
 
 export interface CertificateCoverageHooks {
   /** Installs a scoped real lookup transport. It must restore the preceding
@@ -23,8 +24,8 @@ export interface CertificateCoverageHooks {
 
 /** Prospective standalone coverage. Callers retain the complete global route,
  * provider and browser ledgers for the independent final parent binding. */
-export async function runCertificateCoverage({ wallet, services, evidence, overlayOrigin, hooks }: {
-  wallet: any; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; overlayOrigin: string; hooks: CertificateCoverageHooks
+export async function runCertificateCoverage({ wallet, services, evidence, overlayOrigin, hooks, observationEncoding }: {
+  wallet: any; services: ControlledWalletServices; evidence: Pick<EvidenceBundle, 'addJson'>; overlayOrigin: string; hooks: CertificateCoverageHooks; observationEncoding?: CoverageObservationEncoding
 }): Promise<CertificateCoverageReport> {
   const origin = new URL(overlayOrigin)
   if (origin.protocol !== 'http:' || origin.hostname !== '127.0.0.1' || !origin.port || origin.pathname !== '/' || origin.search || origin.hash) throw Error('Certificate fixture overlay must be an isolated loopback service')
@@ -145,6 +146,6 @@ export async function runCertificateCoverage({ wallet, services, evidence, overl
   report.routeEnd = services.routes.length; report.routes = structuredClone(services.routes.slice(report.routeStart))
   report.assertions = await deriveCertificateCoverageOutcomes(report, hooks.readEvidence)
   report.result = report.assertions.some(row => row.result === 'FAIL') ? 'FAIL' : report.assertions.some(row => row.result === 'BLOCKED') ? 'BLOCKED' : 'PASS'
-  evidence.addJson('conformance/coverage-certificates.json', report)
+  writeCoverageObservation(evidence, 'conformance/coverage-certificates.json', report, observationEncoding)
   return report
 }

@@ -1,0 +1,85 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "fb0268601be79c243f5c796f578f994176f18b4ca82d397a8306ac7f5795bfea",
+  "files": {
+    "pkg/internal/testabilities/fixture_beef_verifier.go": {
+      "before": "0b01d8e774742a617e810ccc9962cd7c2601afffce0f93d8658e5118a2acd80c",
+      "after": "357ee372e34037c6d00ea315f2fb0a4287b1baa5f57caba53ad5adab25cf02e2"
+    },
+    "pkg/storage/beef_verifier.go": {
+      "before": "bc1a663c97fe4618da2694060829ce1598612022dea7cf9b00058fddbc026f2f",
+      "after": "09dc64777e7dd8f56331f4fedfb2307eec3444730109df739106b8f2abaa9a81"
+    },
+    "pkg/storage/internal/actions/create.go": {
+      "before": "746617161b67c387b39ab1cddc693282cf503b733424b45ab453e10447769fe9",
+      "after": "74dc361d98868919f6da1c6c14593904a894a2deb0f5bc23fbffdc0c46b5b88b"
+    },
+    "pkg/storage/internal/actions/create_process_inputs.go": {
+      "before": "359b692334169b932b400852f5fef9cb294c211b5258d9bf0c1810f995c1ba0b",
+      "after": "2631ff9c76c0a73c39919ec096d6120abc478bf76b474aca7976320c800086e0"
+    },
+    "pkg/storage/native_fixture_proofs_tpnil_test.go": {
+      "before": null,
+      "after": "f792c0afb37cc2e4938ee556407b1af9d7d9ff50d8ff59574310c7e2db728d2b"
+    },
+    "pkg/storage/native_input_ancestry_tpnil_test.go": {
+      "before": "6a7eecb1f06fc27ed7f12ea3c46af623b7cb4d669a24f99c6404bf20f70f2b0a",
+      "after": "588c2910d09d1d118f7d2a3f09da21d5c2b542201ad01da82bc5f69ba65c5e23"
+    },
+    "pkg/storage/native_merge_accounting_tpnil_test.go": {
+      "before": "42ed6fd80c4145cf0dd36ccfc8b1f9bbd82235e6ab0e078c7ff055bf8fb3eb3c",
+      "after": "6753677c60a7d2b2fb0f176c8af123d063def5de3a01c4b2a2eff898cf79a5e7"
+    },
+    "pkg/storage/provider_create_action_known_txids_test.go": {
+      "before": "282b99c95975a45d6ac9f290f97b60724e3c9cc3fd0ecb246661aaf5c84405c4",
+      "after": "582ec89feb503e186d586bcc872eb1b8dfab2b0d9472444b5a06a1ee4f893a69"
+    },
+    "pkg/storage/provider_create_action_test.go": {
+      "before": "eb51c2eb7574402512eb8da662280dfb53b6680bfb764f7a9630830cdd8a2426",
+      "after": "399b4cbc5047c71504325e45caa3422e21be7af90d0cc561dac31bbaca6db523"
+    },
+    "pkg/storage/provider_internalize_action_test.go": {
+      "before": "383eab594d4ea0cd12f97794e25b552b7f1bd7fd65672cfddd1aa08ff800474b",
+      "after": "59c96167bbe7c963291707b3610847816e73d39f01b50a5508005c1b6b256598"
+    },
+    "pkg/storage/provider_internalize_txidonly_test.go": {
+      "before": "37c3f564ef6d6cb2204a637e80718676dd156b18188840f7af27b422a410cb70",
+      "after": "bb5b3612cb7e50161e054cf78302e53bbf220297032078e1c809e06bb6070eef"
+    },
+    "pkg/storage/provider_list_outputs_test.go": {
+      "before": "7004f1c6c872bb5cd6e1fd63656d7d42b7c832934d8051f8871ff51c9626ee98",
+      "after": "bce25b6061b9e3201129bc7f98b0512f35c9e5ae0513eea1072d8ff27f83387c"
+    },
+    "pkg/wdk/beef_verifier.go": {
+      "before": "3cc8a3a164cd519173a10addff2c5f3b0f4f068c334bb0cececa3b93048f5641",
+      "after": "08792ccf1e102cf463afb5dafd25b26bfb2f521b8c9c3fb530a695c9473bb00a"
+    }
+  },
+  "schema": "tpnil-storage-caller-known-inputs-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-sqlite-retry/patch.lock.json",
+  "parentSha256": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+  "sdkPatch": {
+    "module": "github.com/bsv-blockchain/go-sdk",
+    "version": "v1.7.3",
+    "sum": "h1:U4NuOoJcn3NPgzGyc0GPrGQygya6stRDxlfJC8ksUx0=",
+    "patch": "go-sdk-v1.7.3.patch",
+    "patchSha256": "6d73728c448242ec95493fbb4da3c7eeadafbf50b6da1be056d9b0685f43f4d6",
+    "files": {
+      "transaction/beef.go": {
+        "before": "b83d7d5ce121d8125275841ec31d3b79c02f9e2ec492dc3d8fded5104b94957d",
+        "after": "11b457e07527839369866ee370abff4cbe6d49f5f3b19a123734abecc7d9a41b"
+      },
+      "transaction/known_roots_prototype_test.go": {
+        "before": null,
+        "after": "3a10af207d5b46e5bb8c575aedee8db84c76088152aae504c3e8733b2b09cbc4"
+      },
+      "transaction/supplied_bump_validation_test.go": {
+        "before": null,
+        "after": "415d86194b16a40db532f3cf164836af49497778a0586ea2d2fa0653752396e9"
+      }
+    }
+  }
+}

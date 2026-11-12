@@ -9,6 +9,7 @@ import type { EvidenceBundle } from '../evidence.js'
 import { nativeWalletBoundary } from './integrated.js'
 import { ObservedStorageClient, readDataset, type Transcript } from '../../storage-sync/run.js'
 import { projectDataset } from '../../storage-sync/projection.js'
+import { projectDatasetWithReferenceOnlyRows } from '../../storage-sync/projection-reference-rows.js'
 import { canonicalJson } from '../../determinism.js'
 import { verifyPortableProofClosure } from './portability-proof.js'
 
@@ -76,11 +77,13 @@ export interface PortabilityControls {
  * wallet's own supported settings UI performs synchronization and replacement. */
 export async function qualifyStoragePortability(options: {
   wallet: WalletInterface; source: ControlledWalletServices; destination: ControlledWalletServices
-  controls: PortabilityControls; mode: 'native-ui' | 'reference-engineering'; proofOracle?: 'v2' | 'v3'
+  controls: PortabilityControls; mode: 'native-ui' | 'reference-engineering'; proofOracle?: 'v2' | 'v3' | 'v4'
 }) {
   const { wallet, source, destination, controls } = options
-  const v3 = options.proofOracle === 'v3'
-  const report: any = { schema: v3 ? 'tpnil-native-storage-portability@3' : options.proofOracle === 'v2' ? 'tpnil-native-storage-portability@2' : 'tpnil-native-storage-portability@1', ...(options.proofOracle ? { oracle: v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' } : {}), claim: 'ENGINEERING_OBSERVATION_ONLY', mode: options.mode, assertions: [], trace: [], storage: [], readWindows: {}, ui: [], cleanup: { sourceRestored: false } }
+  const v4 = options.proofOracle === 'v4'
+  const v3 = v4 || options.proofOracle === 'v3'
+  const project = v4 ? projectDatasetWithReferenceOnlyRows : projectDataset
+  const report: any = { schema: v4 ? 'tpnil-native-storage-portability@4' : v3 ? 'tpnil-native-storage-portability@3' : options.proofOracle === 'v2' ? 'tpnil-native-storage-portability@2' : 'tpnil-native-storage-portability@1', ...(options.proofOracle ? { oracle: v4 ? 'tpnil-native-portability-oracle@4.0.0' : v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' } : {}), claim: 'ENGINEERING_OBSERVATION_ONLY', mode: options.mode, assertions: [], trace: [], storage: [], readWindows: {}, ui: [], cleanup: { sourceRestored: false } }
   const check = (id: string, pass: boolean, detail: string) => report.assertions.push({ id: `portability.${id}`, result: pass ? 'PASS' : 'FAIL', detail })
   const call = async (method: string, args: any): Promise<any> => {
     const row: any = { method, args, startedAt: new Date().toISOString() }; report.trace.push(row)
@@ -117,7 +120,7 @@ export async function qualifyStoragePortability(options: {
     // Read after the native mediator completes; the harness never writes chunks.
     report.source = await dataset('source', reader, identity)
     report.destination = await dataset('destination', target, identity)
-    let complete = report.source.transactions.length >= 2 && report.source.outputs.length >= 2 && canonicalJson(projectDataset(report.source)) === canonicalJson(projectDataset(report.destination))
+    let complete = report.source.transactions.length >= 2 && report.source.outputs.length >= 2 && canonicalJson(project(report.source)) === canonicalJson(project(report.destination))
     if (options.proofOracle) {
       try {
         const fixture = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
@@ -298,7 +301,7 @@ export async function withNativePortabilitySettingsPage<T>(application: Page, ex
 
 export async function runNativePortability({ application, services, evidence, password, extensionId, oracle = 'tpnil-native-portability-oracle@2.0.0' }: {
   application: Page; services: ControlledWalletServices; evidence: EvidenceBundle; password: string; extensionId?: string
-  oracle?: 'tpnil-native-portability-oracle@2.0.0' | 'tpnil-native-portability-oracle@3.0.0'
+  oracle?: 'tpnil-native-portability-oracle@2.0.0' | 'tpnil-native-portability-oracle@3.0.0' | 'tpnil-native-portability-oracle@4.0.0'
 }) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-portability-'))
   fs.writeFileSync(path.join(directory, 'index.html'), '<title>Isolated storage counterpart</title>')
@@ -311,7 +314,7 @@ export async function runNativePortability({ application, services, evidence, pa
     services.registerStorageCounterpart(replacementHost, replacement.storageUrl, replacement)
     retained = true
     const ui: any[] = []
-    const execute = (walletPage: Page) => qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, oracle === 'tpnil-native-portability-oracle@3.0.0'), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
+    const execute = (walletPage: Page) => qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, ['tpnil-native-portability-oracle@3.0.0', 'tpnil-native-portability-oracle@4.0.0'].includes(oracle ?? '')), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@4.0.0' ? 'v4' : oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
     if (extensionId !== undefined) report = await withNativePortabilitySettingsPage(application, extensionId, execute)
     else {
       const walletPage = application.context().pages().find(page => /^chrome-extension:\/\/.+\/index.html/.test(page.url()))

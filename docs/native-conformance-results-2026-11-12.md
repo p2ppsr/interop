@@ -1,12 +1,14 @@
 # Native conformance closure: 12 November 2026
 
-**Attempt 5 failed before completing the first repetition.** The expanded ITCVE-1@4.3.0 / ISI-4@5.3.0 profile remains implemented and locally validated, without native qualification. Attempt 4 remains the latest complete two-repetition observation: 418 PASS, six FAIL and two BLOCKED in each repetition, with failed overall evidence admission. Attempt 5 retained partial evidence but no completed 535-predicate record, qualification or Rust result. Independent replay identifies observer setup and page-ownership defects; a separately versioned recovery is implemented; its first CI attempt failed historical archive binding before native dispatch. This report makes no official-release or complete BRC-100 conformance claim.
+**Attempt 6 completed both native repetitions but failed evidence admission.** Each ITCVE-1@4.4.0 / ISI-4@5.4.0 repetition recorded 535 observations: 432 PASS, 27 FAIL and 76 BLOCKED. The independent parent rejected unresolved unmined ancestry; no qualified environment or Rust result was produced. The separately versioned ITCVE-1@4.5.0 completion profile is being prepared against a new wallet candidate. Its implementation and local engineering controls do not qualify a native run or establish complete BRC-100 conformance.
 
-The original Yours 5.1.0 baseline remains unchanged: each repetition contains 280 observations, with 180 PASS, 99 FAIL and one BLOCKED. Attempt 4 maps those **original 99 findings** to **98 PASS and one FAIL**. Two improvements are explicitly versioned namespace-oracle corrections; the other 96 occur under the changed wallet and Go stack and are not attributed to 96 individual wallet fixes. The [earlier results report](native-conformance-results-2026-11-09.md) and every original failed artifact retain their original outcomes.
+The original Yours 5.1.0 baseline remains unchanged: each repetition contains 280 observations, with 180 PASS, 99 FAIL and one BLOCKED. Attempt 6 maps those **original 99 findings** to **97 PASS and two FAIL**: the signed-value `listActions` conflict and an unexercised managed-change fixture. Attempt 4 previously recorded 98 PASS and one FAIL under its own frozen fixture. Two improvements are explicitly versioned namespace-oracle corrections; aggregate differences across the changed wallet, Go stack and fixtures are not counts of individual wallet fixes. The [earlier results report](native-conformance-results-2026-11-09.md) and every original failed artifact retain their original outcomes.
 
-The prospective runtime source was committed at `b9bc8fb0eed238594ca7fe89aed9296f26a2760e`. Its [frozen plan](../infra/native/conformance/plan-pr368-coverage-1.json) binds 157 inputs and admits only the reviewed candidate and component chain. Attempt 5 executed publication source `c648022b2d9209b7350527bd5553d73e3e82a52c`; all 157 runtime inputs remained unchanged through the intervening CI test-harness corrections.
+## Retained profiles and attempts
 
-| Prospective component | Pinned identity |
+The 4.3 predecessor runtime source was committed at `b9bc8fb0eed238594ca7fe89aed9296f26a2760e`. Its [frozen plan](../infra/native/conformance/plan-pr368-coverage-1.json) binds 157 inputs and admits only the reviewed candidate and component chain. Attempt 5 executed publication source `c648022b2d9209b7350527bd5553d73e3e82a52c`; all 157 runtime inputs remained unchanged through the intervening CI test-harness corrections.
+
+| Retained 4.3 component | Pinned identity |
 | --- | --- |
 | Native wallet | Yours Wallet `5.1.1-pr368.4a954ac`, source `4a954ac6bb0cb4403fb8ed548efd0cd8d1ba11b1`; [retained PR368 artifact and intake](../fixtures/artifacts/yours-wallet-pr368-4a954ac/) |
 | Wallet artifact | SHA-256 `cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105`, 13,244,753 bytes |
@@ -31,6 +33,7 @@ The completed native attempts are all retained as failed or incomplete observati
 | 3: [43157437280](https://github.com/p2ppsr/interop/actions/runs/43157437280), candidate `7e39006`, source `585211c`; [archive](../journals/integrated-native-attempts/2026-11-11/43157437280/README.md) | No planned 426-predicate corpus. Fourteen preliminary vectors: 12 PASS / 2 FAIL. All original 99 are NOT_OBSERVED. | Candidate correctly rejected the observer's invalid height-zero positive header request. No final record, second repetition or Rust result. | 828 |
 | 4: [43165501159](https://github.com/p2ppsr/interop/actions/runs/43165501159), candidate `cb3c2f2`, source `69b1b52`; [archive](../journals/integrated-native-attempts/2026-11-11/43165501159/README.md) | Both repetitions: 426 = 418 PASS / 6 FAIL / 2 BLOCKED. Original 99: 98 PASS / 1 FAIL. | Public returned BEEF omitted ancestry required by the frozen parent verifier. Independently hydrated stored bytes prove ownership, but do not repair the public proof. No Rust execution or qualification. | 2,256 |
 | 5: [43195585984](https://github.com/p2ppsr/interop/actions/runs/43195585984), candidate `4a954ac`, source `c648022`; [archive](../journals/integrated-native-attempts/2026-11-12/43195585984/README.md) | Incomplete first repetition; no completed 535-predicate corpus or original-99 reevaluation. | The observer denied fresh-origin identity setup, then portability stopped with “Native wallet settings page is absent.” Actual resource cleanup completed; three missing success bindings prevented admission. No final record, second repetition, qualification or Rust result. | 1,180 |
+| 6: [43216478235](https://github.com/p2ppsr/interop/actions/runs/43216478235), candidate `4a954ac`, source `1f9fe0f`; [archive](../journals/integrated-native-attempts/2026-11-12/43216478235/README.md) | Both repetitions: 535 = 432 PASS / 27 FAIL / 76 BLOCKED. Original 99: 97 PASS / 2 FAIL. Each raw integration report contains 77 PASS. | Independent parent rejects unresolved unmined ancestry. Ten component child replays pass, but no full native or integrated qualification and no Rust execution are admitted. | 2,285 |
 
 Attempt 4's six native failures were the signed-satoshi `listActions` response shape, two over-limit UTF-8 baskets, incomplete returned transaction proof, exact fee-inclusive allowance cap, and cumulative allowance. Its three accepted payments actually debited 114 satoshis against a 100-satoshi allowance. Each separate 77-predicate integration report contained 74 PASS and three BLOCKED because the uppercase Board protocol fixture prevented Board, LCH and revision execution. Those failures and absent results remain unchanged by the prospective fixes.
 
@@ -75,7 +78,7 @@ python3 journals/integrated-native-attempts/2026-11-11/43165501159/verify.py
 python3 journals/integrated-native-attempts/2026-11-11/43165501159/guard.py
 ```
 
-The prospective Go host is reconstructed with `node scripts/prepare-storage-sqlite-retry-go.mjs`; its recursive lock checks pin every parent patch and postimage. Run its real-host admission cases from `synthesis` with `TPNIL_COVERAGE_GO_TESTS=1 npx vitest run test/native-coverage-go-admission.test.ts`. Archive integrity commands do not launch native wallets or qualify behavior; semantic replay must retain the original source, canonical invocation and nonempty child receipts. A fresh native execution follows the separately bounded work order rather than these local commands.
+The retained nine-layer Go host is reconstructed with `node scripts/prepare-storage-sqlite-retry-go.mjs`; its recursive lock checks pin every parent patch and postimage. Run its real-host admission cases from `synthesis` with `TPNIL_COVERAGE_GO_TESTS=1 npx vitest run test/native-coverage-go-admission.test.ts`. Archive integrity commands do not launch native wallets or qualify behavior; semantic replay must retain the original source, canonical invocation and nonempty child receipts. A fresh native execution follows the separately bounded work order rather than these local commands.
 
 **Attempt-5 failure closeout is retained.** Its exact source and 1,180 job-seconds are recorded above; both complete native records, qualification and Rust outputs are absent. Independent replay passes the 29 base permission, eight permission and three lifecycle checks in their partial capture context. The extension executed exactly one identity call and received a trusted observer Deny; its 15 raw failure labels share that setup failure. Full five-context admission rejects the three-context partial capture. Browser, services and profile cleanup succeeded, while missing record, lifecycle and counterpart bindings prevented qualification. Partial permission traces must not be called a qualified 535-predicate pack or a new original-99 comparison. The standalone 63-row supplemental trace binder remains unsealed and all 63 observations BLOCKED because the required native/integrated parent evidence is missing. A later attempt must retain this failure, bind its own exact source and demonstrate the full shutdown, storage, funding and independent replay checks before scoped qualification can be claimed.
 
@@ -86,3 +89,56 @@ Final observer-recovery validation passed181 core tests,1,080 synthesis tests wi
 The observer-recovery [Foundation run 43207730680](https://github.com/p2ppsr/interop/actions/runs/43207730680) failed only at historical portability source binding. Its Linux core 180 PASS/1 SKIP and synthesis 1,051 PASS/92 SKIP precede the archive failure; Go and integrated jobs pass. The source6 [reevaluation 43207730665](https://github.com/p2ppsr/interop/actions/runs/43207730665) passes with both original 280-observation projections unchanged at 180 PASS/99 FAIL/1 BLOCKED, plus 77 integration and 48 Rust assertions per repetition. These are retained observations, with zero new native sessions. The [CI archive](../journals/native-closure-ci/2026-11-12/e47873a/README.md) preserves all five original ZIPs, 483 members and 1,497 job-seconds.
 
 The [portability replay correction](../journals/native-closure-validation/2026-11-12-portability-replay-recovery/README.md) executes the complete 1,520-file historical Git source with its locked synthesis dependencies. The producer, imported constants and transitive verifier inputs remain historical; the current producer is not executed. Both earlier failed engineering samples remain failed. Final validation passes 196 core tests, including 15 focused regressions, five Python tests, catalog checks and actual semantic replay. All 164 frozen native inputs and five source6 evaluator inputs remain byte-identical. The first draft’s passing tests did not establish this complete dependency boundary and remain explicitly rejected by independent review. A separate bounded CI recovery precedes any native attempt 6 dispatch.
+
+
+## Prospective completion and candidate intake
+
+ITCVE-1@4.5.0 / ISI-4@5.5.0 adds 163 scoped predicates to the retained 535
+identities: eight permission sequences, 39 basket boundaries, 25 pagination
+checks, 20 certificate rejections, eight transaction branches and 63 trace
+bindings. The [completion accounting](../programs/ISI-4/proposals/native-coverage-accountability-20261112-completion-delta.md) preserves the original planning classifications. The planned denominator is 698 per repetition. The six completion
+modules require complete public observations, the source-owned provider
+registry, independent storage/proof checks and final shutdown evidence. The
+initial 50000-satoshi completion payment is independently derived and bounded;
+no public-mainnet funding or broadcast is involved.
+
+The successor preserves reference-only aborted transaction rows during
+portability, reconstructs only the three exact proven control ancestors, uses
+a surplus input that must produce real managed change, and retains undefined
+values and sparse observations through a versioned codec. The new Go layer
+checks caller-known input proofs, including every supplied Merkle proof, and
+adds bounded read-only certificate, transaction-knowledge and action-query
+observations. Raw RPC/SQL bytes and terminal observer failures remain available
+after service cleanup. Action-query records currently establish authenticated
+provider calls; they do not establish complete public CWI-to-storage query
+membership.
+
+The wallet candidate `5.1.1-pr368.3e8a97f` fixes prompt component state leaking
+between queued requests. [CI43231477283](https://github.com/yours-org/yours-wallet/actions/runs/43231477283)
+passed 264 tests and 1781 expectations, type checking, formatting and all four
+production bundle checks. Linux PID namespaces and Seccomp-BPF isolation and
+removal of the temporary executable-specific AppArmor profile were observed.
+The [immutable intake](../fixtures/artifacts/yours-wallet-pr368-3e8a97f/)
+binds source `3e8a97f3dd7953a10e3034381814f3f8aa8b01c0` to wallet ZIP
+`9da87d79ac7ac70e3c5dee50451b2f0456b51f5e480b1be0925cd24a7707e184`.
+The two earlier sandbox-setup CI failures remain failed and retained. This
+candidate remains proposed in [Yours Wallet PR368](https://github.com/yours-org/yours-wallet/pull/368).
+
+The completion plan freezes 391 inputs and all 698 observation identities before
+execution. Local validation passes 204 core tests, 1705 synthesis tests with 90
+explicit skips, five Python packaging tests, type checking, catalog and standards
+checks. Semantic publication replay verifies 14 accepted integration archives
+and 19 retained attempts without starting native sessions. The initial core
+failure and the corrected worker-selector and historical-portability checks
+remain in the [completion validation archive](../journals/native-closure-validation/2026-11-12-coverage-completion/README.md).
+Historical portability executes its complete 1520-file source and locked
+dependencies; an evolved current verifier neither replaces nor invalidates that
+source. These local results establish engineering readiness, not native
+qualification of the completion profile.
+
+Completed new-cohort execution through this candidate intake totals 25120
+job-seconds, including failed attempts. The earlier 20670-job-second cohort
+remains separate. Currency charges, storage/egress, operator effort,
+development-agent usage and allocated owned capacity remain unknown. The
+previous work orders are closed; another native attempt requires a new exact
+source freeze and bounded work order.

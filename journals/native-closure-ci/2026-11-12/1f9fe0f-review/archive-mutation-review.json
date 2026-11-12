@@ -1,0 +1,86 @@
+{
+  "schema": "tpnil-ci-archive-adversarial-review@1",
+  "verified": true,
+  "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+  "manifestSha256": "ed7335c4a5c768fa8d5d7ac1c51a293299282e949b59b3f278741d2ad74bd96d",
+  "controls": [
+    {
+      "case": "valid-control",
+      "exitCode": 0,
+      "expected": "PASS",
+      "stdout": "{\"verified\": true, \"claim\": \"CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY\", \"files\": 106, \"artifactMembers\": 262, \"jobSeconds\": 1458, \"completedCohortJobSeconds\": 22672, \"newNativeSessions\": 0, \"foundation\": \"success\", \"retainedReevaluation\": \"carried-success-on-e478-not-new-execution\", \"nativeConformanceClosed\": false}\n",
+      "stderr": ""
+    },
+    {
+      "case": "zip-corruption",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-efyuaqp0/archive/verify.py\", line 9, in <module>\n    b=(root/p).read_bytes();assert len(b)==e['bytes']and hashlib.sha256(b).hexdigest()==e['sha256'];assert e['encoding']in['identity','gzip'];raw=gzip.decompress(b)if e['encoding']=='gzip'else b\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "missing-core-log-rebound-inventory",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-xxmro6f0/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-b9vtx1jr/review.py\", line 21, in <module>\n    raw=(folder/f\"job-{j['id']}.log\").read_text();assert source in raw;logs[j['name']]=clean(raw)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 787, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-b9vtx1jr/43213879582/job-131168098216.log'\n\n"
+    },
+    {
+      "case": "zero-cost-rebound-summary",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-o73ce1k8/archive/verify.py\", line 17, in <module>\n    assert json.loads((d/'summary.json').read_text())==summary,'Summary differs from raw CI evidence'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Summary differs from raw CI evidence\n"
+    },
+    {
+      "case": "false-component-child-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-w87x3u0v/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-qohzf8zm/review.py\", line 39, in <module>\n    ij=objects(integrated);sem=[v for v in ij if v.get('childOraclesVerified')is True];assert len(sem)==1 and sem[0]['source']==source and len(sem[0]['findings'])==6\n                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "false-required-certificate-count",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-1os8zzky/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-li99iaoy/review.py\", line 38, in <module>\n    for text in ['39 passed (39)','14 passed (14)','\u2139 tests 8','\u2139 pass 8','\u2139 tests 15','\u2139 pass 15','test result: ok. 1 passed','test result: ok. 14 passed']:assert text in integrated,text\n                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^\nAssertionError: 39 passed (39)\n\n"
+    },
+    {
+      "case": "false-historical-producer-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-uia4_cwq/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-6bw399s7/review.py\", line 60, in <module>\n    portability=[v for v in objects(core) if v.get('currentProducerExecuted')is False];assert len(portability)==1\n                                                                                              ^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "carried-replay-reattributed-to-new-source",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-dp53oi51/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-sp4xqhs9/review.py\", line 44, in <module>\n    assert carry['claim']=='UNCHANGED_SOURCE_CLOSURE_CARRY_FORWARD_NOT_NEW_REPLAY' and carry['newSource']==source and carry['resultSource']=='e47873a952c4fbb25bae241aadf41863104ae977' and carry['run']==43207730665 and carry['runRepeated']is False and carry['jobSecondsChargedAgain']==0 and carry['priorActualJobSeconds']==116\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "carried-evaluator-source-drift",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-za19njet/archive/verify.py\", line 16, in <module>\n    result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                    ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-1f9-jgfvu6kr/review.py\", line 58, in <module>\n    data=(carryFolder/'source'/row['path']).read_bytes();assert sha(data)==row['sha256']==inputs[row['path']]\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "stored-semantic-receipt-forgery",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-ouhydf6d/archive/verify.py\", line 18, in <module>\n    assert json.loads((d/'semantic-receipts.json').read_text())==semantic,'Semantic receipt differs from raw CI evidence'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Semantic receipt differs from raw CI evidence\n"
+    },
+    {
+      "case": "replacement-review-program",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-y5vdebam/archive/verify.py\", line 14, in <module>\n    assert hashlib.sha256((d/'review.py').read_bytes()).hexdigest()=='eb8fcce92a3b71ac2fbbdf7aeab01b1723b03b6961629930dc1bd9d71705981a'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "nativeSessions": 0
+}

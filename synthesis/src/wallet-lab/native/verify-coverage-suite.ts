@@ -1,3 +1,6 @@
+import type { PartialTracePrerequisites } from './coverage-completion/partial-trace-parent.js'
+import { coverageObservationEncoding, decodeCoverageObservation } from './coverage-observation.js'
+import { verifyCompletionParent } from './coverage-completion/suite.js'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { Beef, P2PKH, PrivateKey, ProtoWallet, PublicKey, Transaction, Utils } from '@bsv/sdk'
@@ -120,7 +123,7 @@ export function verifyCoverageBrowserChain(value: any, identity: string, permiss
 
 /** Join the fresh-funding prerequisite to the independent service observation,
  * exact upfront payment bodies, and the original customer execution order. */
-export function verifyPermissionPrelude(binding: FundingBinding & { profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'; globalSubmissions: any[]; readEvidence(name: string): Buffer }) {
+export function verifyPermissionPrelude(binding: FundingBinding & { profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0'; globalSubmissions: any[]; readEvidence(name: string): Buffer }) {
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), sha = (name: string) => createHash('sha256').update(read(name)).digest('hex')
   const prelude = json('conformance/permission-prelude.json'), completion = json('conformance/permission-prelude-completion.json')
   const coverage = json('conformance/permission-coverage.json'), permission = json('conformance/permission-extension.json')
@@ -158,14 +161,15 @@ export function verifyPermissionPrelude(binding: FundingBinding & { profile?: 'I
   return { verified: true as const, initialFundingOutpoints: points, beforeOtherCustomerTransactions: true }
 }
 
-export async function verifyNativeCoverageSuite(binding: FundingBinding & { profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'; globalSubmissions: any[]; finalSubmissions: any[]; readEvidence(name: string): Buffer }) {
-  const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
+export async function verifyNativeCoverageSuite(binding: FundingBinding & { completionPrerequisites?: Omit<PartialTracePrerequisites, 'coverageSuiteBindings'>; profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0'; globalSubmissions: any[]; finalSubmissions: any[]; readEvidence(name: string): Buffer }) {
+  const completion = binding.profile === 'ITCVE-1@4.5.0'
+  const read = binding.readEvidence, json = (name: string) => decodeCoverageObservation<any>(JSON.parse(read(name).toString()), completion && ['conformance/coverage-extension.json', 'conformance/coverage-certificates.json'].includes(name) ? coverageObservationEncoding : undefined)
   const suite = json('conformance/coverage-suite.json'), permission = json('conformance/permission-extension.json'), transactions = json('conformance/coverage-transactions.json'), extension = json('conformance/coverage-extension.json'), certificates = json('conformance/coverage-certificates.json')
-  assert.ok(binding.profile === undefined || ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(binding.profile)); assert.equal(permission.identityPermission, binding.profile === 'ITCVE-1@4.4.0' ? 'explicit-allow-v1' : undefined);
+  assert.ok(binding.profile === undefined || ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(binding.profile)); assert.equal(permission.identityPermission, ['ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(binding.profile ?? '') ? 'explicit-allow-v1' : undefined);
   assert.equal(suite.schema, 'tpnil-native-coverage-suite@1.0.0'); assert.deepEqual(suite.modules, ['permissions', 'transactions', 'extension', 'certificates']); assert.deepEqual(suite.errors, [])
   assert.deepEqual(suite.certificateEnvironment.cleanup, { pagesClosed: true, routesClosed: true, overlayClosed: true })
   const prelude = verifyPermissionPrelude(binding)
-  const contexts = json('native-browser-contexts.json'), browser = verifyCoverageBrowserChain(contexts, binding.identity, permission, certificates, read)
+  const contexts = json('native-browser-contexts.json'), browser = verifyCoverageBrowserChain(completion ? { ...contexts, contexts: contexts.contexts.slice(0, 5) } : contexts, binding.identity, permission, certificates, read)
   const graph = { resolvedTransactions: binding.resolvedTransactions, requireResolvedAncestors: true, trustedMinedRoot: { txid: binding.fixture.txid, rawHex: binding.fixture.rawHex } }
   const permissions = await verifyPermissionExtensionParentBindings(permission, json('conformance/permission-coverage.json'), { ...binding, graph })
   const transactionBindings = await verifyTransactionCoverageParentBindings(transactions, { ...binding, graph })
@@ -176,5 +180,8 @@ export async function verifyNativeCoverageSuite(binding: FundingBinding & { prof
   const certificateBindings = await verifyCertificateCoverageParentBindings(certificates, { ...binding, browserContexts: contexts.contexts, globalRoutes: json('routes.json'), trustedMinedRoot: graph.trustedMinedRoot })
   const certificateFunding = await verifyCoverageModuleFunding(certificates.trace, { ...binding, declaredNativePayments: extensionFunding.declaredNativePayments })
   assert.ok(permission.submissionWindow.endIndex <= transactions.submissionStart && transactions.submissionEnd <= extension.submissionStart && extension.submissionEnd <= certificates.submissionStart, 'Coverage module submission windows are out of order')
-  return { verified: true as const, prelude, browser, permissions, transactions: { ...transactionBindings, funding: transactionFunding }, extension: { ...extensionBindings, transactionOwnershipAndFundingStillRequired: false, funding: extensionFunding }, certificates: { ...certificateBindings, funding: certificateFunding } }
+  const base = { verified: true as const, prelude, browser, permissions, transactions: { ...transactionBindings, funding: transactionFunding }, extension: { ...extensionBindings, transactionOwnershipAndFundingStillRequired: false, funding: extensionFunding }, certificates: { ...certificateBindings, funding: certificateFunding } }
+  if (completion) assert.ok(binding.completionPrerequisites, 'Current complete native parent receipts are required')
+  const completions = completion ? await verifyCompletionParent({ ...binding, profile: 'ITCVE-1@4.5.0', declaredNativePayments: certificateFunding.declaredNativePayments }, { ...binding.completionPrerequisites!, coverageSuiteBindings: base }) : undefined
+  return { ...base, ...(completions ? { completions } : {}) }
 }

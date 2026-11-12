@@ -1,0 +1,59 @@
+name: Build extension
+description: Install the pinned toolchain, then check, build, verify, and package the extension into release/
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: .bun-version
+
+    - name: Set up Node
+      uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+
+    - name: Install dependencies
+      shell: bash
+      run: bun install --frozen-lockfile
+
+    - name: Install the locked Puppeteer browser for UI tests
+      shell: bash
+      run: node node_modules/puppeteer/lib/puppeteer/node/cli.js browsers install chrome
+
+    # Reuse the runner's installed Chrome helper without disabling AppArmor or
+    # Chromium isolation: chromium/src/docs/security/apparmor-userns-restrictions.md
+    - name: Select the runner-owned Linux sandbox helper
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        test -x /opt/google/chrome/chrome-sandbox
+        test -u /opt/google/chrome/chrome-sandbox
+        test "$(stat -c '%u' /opt/google/chrome/chrome-sandbox)" = 0
+        sha256sum /opt/google/chrome/chrome-sandbox
+        echo 'CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox' >> "$GITHUB_ENV"
+
+    - name: Check formatting
+      shell: bash
+      run: bun run format:check
+
+    - name: Typecheck
+      shell: bash
+      run: bun run typecheck
+
+    - name: Test public wallet behavior
+      shell: bash
+      run: bun run test
+
+    - name: Build
+      shell: bash
+      run: bun run build
+
+    - name: Verify build output
+      shell: bash
+      run: bun run verify:build
+
+    - name: Package
+      shell: bash
+      run: bun run package

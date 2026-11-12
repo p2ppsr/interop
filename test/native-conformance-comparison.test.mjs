@@ -88,3 +88,29 @@ test('expanded4.3 comparison binds exact4a intake and all535 observations withou
     rows => rows.forEach(row => { row.claim = 'EXPERIMENTAL_CONFORMANCE_RESULT' })
   ]) { const changed = structuredClone(records); mutate(changed); assert.throws(() => compareNativeConformance(baseline, changed, {})) }
 })
+
+
+test('prospective4.5 arithmetic binds698 observations and exact3e candidate without implying qualification', () => {
+  const plan = JSON.parse(fs.readFileSync(path.join(root, 'infra/native/conformance/plan-pr368-coverage-3.json')))
+  // LAB_SELF_TEST_ONLY: no native observation or source admission is created.
+  const records = fixture().map(record => {
+    record.itcve = 'ITCVE-1@4.5.0'; record.claim = 'ENGINEERING_OBSERVATION_ONLY'
+    record.walletCandidate = structuredClone(plan.walletCandidate); record.artifacts.wallet = structuredClone(plan.wallet)
+    for (let i=0;i<417;i++) record.vectors[7].assertions.push({id:`lab-self-test/completion-${i}`,outcome:i===0?'BLOCKED':'PASS'})
+    return record
+  })
+  const result=compareNativeConformance(baseline,records,{})
+  assert.equal(result.denominator.originalFailures,99);assert.equal(result.additionalCoverage.assertions,418)
+  assert.equal(result.additionalCoverage.counts.BLOCKED,1);assert.equal(result.completeBRC100Conformance,false)
+  assert.equal(result.claim,'DERIVED_RECORD_COMPARISON_ONLY')
+  for(const alter of [
+    row=>row.vectors[7].assertions.pop(),
+    row=>row.vectors[7].assertions.push({id:'extra-unadmitted',outcome:'PASS'}),
+    row=>{row.walletCandidate.sourceCommit='0'.repeat(40)},
+    row=>{row.walletCandidate.manifestSha256='0'.repeat(64)},
+    row=>{row.walletCandidate.manifest='other/provenance.json'},
+    row=>{row.artifacts.wallet.sha256='0'.repeat(64)},
+    row=>{row.artifacts.wallet.size++},
+    row=>{row.walletCandidate.officialRelease=true}
+  ]){const changed=structuredClone(records);changed.forEach(alter);assert.throws(()=>compareNativeConformance(baseline,changed,{}))}
+})

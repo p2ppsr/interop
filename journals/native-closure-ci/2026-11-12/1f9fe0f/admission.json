@@ -1,0 +1,38 @@
+{
+  "schema": "tpnil-ci-monitor-admission@1",
+  "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+  "allowedFoundationRuns": 1,
+  "allowedReevaluationRuns": 0,
+  "nativeDispatchOwnedByParent": true,
+  "maximumJobSeconds": {
+    "offline-core": 600,
+    "go-components": 1200,
+    "integrated-components": 2400
+  },
+  "maximumFoundationJobSeconds": 4200,
+  "deadline": "2026-11-12T13:59:12.290722+00:00",
+  "latestNativeDispatchWithFull70Minutes": "2026-11-12T12:49:12.290722+00:00",
+  "completedCohortBefore": 21214,
+  "carriedSource6": {
+    "maximumWorkflowRuns": 0,
+    "carriedRun": 43207730665,
+    "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+    "conclusion": "success",
+    "actualJobSeconds": 116,
+    "plan": "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json",
+    "planSha256": "2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f",
+    "evaluatorSources": {
+      "scripts/reevaluate-native-integrated.mjs": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+      "scripts/verify-native-reevaluation.mjs": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+      "scripts/native-reevaluation.mjs": "6026d5d7a5e0ef2d2d0f98f90fb6ba635ecae486c3284f08f811f39696c35f75",
+      "scripts/frozen-component-replay.mjs": "d92399e29b06f8b40c0a8b1f9e64ceebc550fa1236b41c22e0fb120b355fb9fd",
+      "scripts/verify-published-integrations.mjs": "c74425ca7ef1df31fae28338e3bc03dbc39b3c06dc7233aeafa90a4885bd5ae5"
+    },
+    "allEvaluatorSourcesUnchanged": true,
+    "freshNativeExecutions": 0
+  },
+  "publishedOpsCommit": "48a151f40b4602297dbd8e315791da3c45574ff3",
+  "orderSha256": "4cb6e2179f551835db51aacbedbcf303b493eb9c74b37a8f0f4439a355747656",
+  "actualMoneyUSD": null,
+  "newNativeSessionsInThisCIScope": 0
+}

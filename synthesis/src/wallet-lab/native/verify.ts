@@ -68,12 +68,14 @@ export async function verifyNativeWallet(directory: string) {
   const read = (name: string) => JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8'))
   const lock = read('run-lock.json'), plan = lock.plan
   assert.equal(lock.schema, 'tpnil-native-wallet-run-lock@1.0.0')
+  const completion = lock.executionVariant === 'integrated-native-conformance-pr368-coverage-3'
   const recovery = lock.executionVariant === 'integrated-native-conformance-pr368-coverage-2'
-  const expanded = recovery || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-1'
-  const candidate = ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(plan.itcve)
+  const expanded = completion || recovery || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-1'
+  const candidate = ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(plan.itcve)
   const observer3 = lock.executionVariant === 'integrated-native-conformance-pr368-cb3c2f2-observer-3'
   const observer2 = lock.executionVariant === 'integrated-native-conformance-5.1.1-observer-2'
-  if (expanded) { assert.equal(plan.itcve, recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0'); assert.equal(plan.observerRevision, 3); assert.equal(plan.coverageRevision, recovery ? 2 : 1); assert.equal(plan.permissionFixture, 'fresh-managed-funding-v1') }
+  if (completion) { assert.equal(plan.admissionState, 'FROZEN'); assert.equal(plan.observationEncoding, 'tpnil-coverage-observation@1.0.0'); assert.equal(plan.browserContexts, 9); assert.equal(plan.portabilityOracle, 'tpnil-native-portability-oracle@4.0.0') }
+  if (expanded) { assert.equal(plan.itcve, completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0'); assert.equal(plan.observerRevision, 3); assert.equal(plan.coverageRevision, completion ? 3 : recovery ? 2 : 1); assert.equal(plan.permissionFixture, 'fresh-managed-funding-v1') }
   else if (observer3) { assert.equal(plan.itcve, 'ITCVE-1@4.2.0'); assert.equal(plan.observerRevision, 3) }
   else if (observer2) { assert.equal(plan.itcve, 'ITCVE-1@4.0.0'); assert.equal(plan.observerRevision, 2) }
   else assert.equal(plan.observerRevision, undefined)
@@ -82,7 +84,7 @@ export async function verifyNativeWallet(directory: string) {
   const closure = wallet511 || plan.itcve === 'ITCVE-1@2.0.0'
   const coverage = closure || plan.itcve === 'ITCVE-1@1.5.0'
   const conformance = coverage || plan.itcve === 'ITCVE-1@1.4.0'
-  if (conformance) assert.equal(plan.clauseOracle, wallet511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
+  if (conformance) assert.equal(plan.clauseOracle, completion ? 'tpnil-brc100-clause-oracle@7.0.0' : wallet511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
   if (coverage) {
     assert.equal(plan.permissionOracle, closure ? 'tpnil-native-permission-oracle@2.0.0' : undefined)
     assert.equal(plan.permissionLifecycleOracle, closure ? 'tpnil-native-permission-lifecycle-oracle@2.0.0' : 'tpnil-native-permission-lifecycle-oracle@1.0.0')
@@ -90,7 +92,7 @@ export async function verifyNativeWallet(directory: string) {
   }
   const trustedIdentity = conformance || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY'
   const integrated = trustedIdentity || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0'
-  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(recovery ? '../../../../infra/native/conformance/plan-pr368-coverage-2.json' : expanded ? '../../../../infra/native/conformance/plan-pr368-coverage-1.json' : observer3 ? '../../../../infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? '../../../../infra/native/conformance/plan-pr368-7e39006.json' : observer2 ? '../../../../infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
+  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(completion ? '../../../../infra/native/conformance/plan-pr368-coverage-3.json' : recovery ? '../../../../infra/native/conformance/plan-pr368-coverage-2.json' : expanded ? '../../../../infra/native/conformance/plan-pr368-coverage-1.json' : observer3 ? '../../../../infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? '../../../../infra/native/conformance/plan-pr368-7e39006.json' : observer2 ? '../../../../infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
   assert.equal(canonicalJson(plan), canonicalJson(frozen))
   assert.equal(plan.id, conformance ? frozen.id : trustedIdentity ? 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY' : integrated ? 'YOURS-5.1.0-GO-ITCVE-1.3.0' : 'YOURS-5.1.0-GO-ITCVE-1.2.0')
   if (integrated) {
@@ -122,7 +124,7 @@ export async function verifyNativeWallet(directory: string) {
     assert.equal(after.state.ExitCode, 0); assert.equal(after.state.OOMKilled, false); assert.equal(cleanup.removed, true)
     const rep = path.join(directory, `repetition-${index}`)
     const record = verifyEvidenceBundle(rep)
-    assert.equal(record.itcve, recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
+    assert.equal(record.itcve, completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
     const evidence = (name: string) => JSON.parse(fs.readFileSync(path.join(rep, 'evidence', name), 'utf8'))
     const installed = read(`repetition-${index}/installed-artifacts.json`)
     assert.equal(installed.exactArchiveContents, true)
@@ -161,7 +163,7 @@ export async function verifyNativeWallet(directory: string) {
       assert.equal(plan.permissionCoverageOracle, `tpnil-native-permission-coverage-oracle@${expanded ? 5 : fixtureRevision === 2 ? 3 : 1}.0.0`)
       assert.equal(evidence('conformance/permission-coverage.json').oracle, plan.permissionCoverageOracle)
       if (fixtureRevision === 2) {
-        assert.equal(plan.expectedObservations, expanded ? 535 : 426)
+        completion ? assert.equal(plan.expectedObservations, 698) : assert.equal(plan.expectedObservations, expanded ? 535 : 426)
         assert.equal(record.vectors.reduce((count, vector) => count + vector.assertions.length, 0), plan.expectedObservations)
         assert.equal(plan.transactionStateOracle, observer3 || expanded ? 'tpnil-native-transaction-states-oracle@2.0.0' : 'tpnil-native-transaction-states-oracle@1.0.0')
         assert.equal(plan.certificateStateOracle, 'tpnil-native-certificate-states-oracle@1.0.0')
@@ -250,7 +252,7 @@ export async function verifyNativeWallet(directory: string) {
     let inputs = 0; for (const input of spend.inputs) { const sourceOutput = input.sourceTransaction?.outputs[input.sourceOutputIndex!]; assert.ok(sourceOutput?.satoshis !== undefined); inputs += sourceOutput.satoshis }
     const outputs = spend.outputs.reduce((sum, item) => sum + (item.satoshis ?? 0), 0); assert.ok(inputs >= outputs)
     let vectors: VectorResult[] = structuredClone(conformance ? evidence('conformance/baseline-vectors.json') : record.vectors)
-    if (conformance) { assert.equal(record.program, recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, candidate ? 'candidate-wallet-native-engineering' : 'production-wallet-native-conformance') }
+    if (conformance) { assert.equal(record.program, completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, candidate ? 'candidate-wallet-native-engineering' : 'production-wallet-native-conformance') }
     for (const vector of vectors.slice(0, 4)) assert.equal(vector.outcome, 'PASS')
     const permission = evidence('permissions.json')
     const explicitDenial = (value: { rejected?: boolean; independentlyPrompted?: boolean; message?: string }) =>
@@ -272,6 +274,10 @@ export async function verifyNativeWallet(directory: string) {
         assert.ok(await tx.verify(tracker), 'Selected ToDo lifecycle transaction signature or mined proof is invalid')
       }
     }
+    let completionObserverBindings: ReturnType<typeof import('./completion-observer-ledger.js').verifyCompletionInventoryClosure> | undefined
+    let controlAncestryBindings: Awaited<ReturnType<typeof import('./coverage-control-ancestry.js').hydrateCoverageControlAncestry>> | undefined
+    let completionFundingRootBindings: Awaited<ReturnType<typeof import('./coverage-completion/funding-roots.js').deriveCompletionNativeFundingRoots>> | undefined
+    let completionFixtureBindings: Awaited<ReturnType<typeof import('./coverage-completion/transaction-known-source.js').hydrateTransactionCompletionFixture>> | undefined
     let conditionalTransactionBindings: Awaited<ReturnType<typeof import('./verify-conditional-transaction-bindings.js').verifyConditionalTransactionBindings>> | undefined
     let transactionStateBindings: Awaited<ReturnType<typeof import('./verify-transaction-state-bindings.js').verifyNativeTransactionStateBindings>> | undefined
     let submissionAncestryBindings: Awaited<ReturnType<typeof import('./verify-submission-ancestry.js').verifyFinalPermissionSubmissionAncestry>> | undefined
@@ -337,6 +343,32 @@ export async function verifyNativeWallet(directory: string) {
           if (fixtureRevision === 2) {
             const { verifyNativeTransactionStateBindings } = await import('./verify-transaction-state-bindings.js')
             const shutdown = JSON.parse(fs.readFileSync(path.join(rep, 'shutdown-submissions.json'), 'utf8'))
+            if (plan.itcve === 'ITCVE-1@4.5.0') {
+              const { verifyCompletionInventoryClosure, completionInventoryLedgerFile, completionInventoryClosureFile } = await import('./completion-observer-ledger.js')
+              const inventoryClosureBytes = fs.readFileSync(path.join(rep, completionInventoryClosureFile))
+              assert.equal(worker.completionInventoryClosureSha256, sha256Hex(inventoryClosureBytes))
+              assert.ok(Date.parse(JSON.parse(inventoryClosureBytes.toString()).capturedAt) <= Date.parse(worker.endedAt))
+              completionObserverBindings = verifyCompletionInventoryClosure({
+                initialBytes: fs.readFileSync(path.join(rep, 'evidence', completionInventoryLedgerFile)),
+                closureBytes: inventoryClosureBytes,
+                recordBytes: fs.readFileSync(path.join(rep, 'record.json')), shutdownBytes: fs.readFileSync(path.join(rep, 'shutdown-submissions.json')),
+                identity: evidence('integrated/result.json').walletIdentity, readEvidence: name => fs.readFileSync(path.join(rep, 'evidence', name))
+              })
+              const { hydrateCoverageControlAncestry } = await import('./coverage-control-ancestry.js')
+              controlAncestryBindings = await hydrateCoverageControlAncestry(evidence('conformance/coverage-transactions.json'), { profile: plan.itcve, identity: evidence('integrated/result.json').walletIdentity, fixture, storageTransactions, resolvedTransactions: transactions })
+              const { deriveCompletionNativeFundingRoots } = await import('./coverage-completion/funding-roots.js')
+              const { hydrateTransactionCompletionFixture } = await import('./coverage-completion/transaction-known-source.js')
+              const { coverageObservationEncoding, decodeCoverageObservation } = await import('./coverage-observation.js')
+              const fixtureBinding = { profile: 'ITCVE-1@4.5.0' as const, identity: evidence('integrated/result.json').walletIdentity,
+                fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])],
+                globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name)) }
+              // Admit only exact independently proven incoming payments before
+              // resolving Q/F ancestry. Full module parents still run below.
+              completionFundingRootBindings = await deriveCompletionNativeFundingRoots(fixtureBinding)
+              completionFixtureBindings = await hydrateTransactionCompletionFixture(
+                decodeCoverageObservation(evidence('conformance/transaction-branches.json'), coverageObservationEncoding),
+                { ...fixtureBinding, declaredNativePayments: completionFundingRootBindings.declaredNativePayments })
+            }
             transactionStateBindings = await verifyNativeTransactionStateBindings(evidence('conformance/transaction-states.json'), {
               storageTransactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], fixture,
               resolvedTransactions: transactions, submissions, finalSubmissions: shutdown.submissions, ...(expanded ? { ownershipFromIndependentGraph: true } : {}),
@@ -345,14 +377,14 @@ export async function verifyNativeWallet(directory: string) {
             const { verifyFinalPermissionSubmissionAncestry, finalSubmissionAncestryPolicy } = await import('./verify-submission-ancestry.js')
             assert.equal(plan.finalSubmissionAncestryPolicy, finalSubmissionAncestryPolicy)
             submissionAncestryBindings = await verifyFinalPermissionSubmissionAncestry({
-              globalSubmissions: submissions, finalSubmissions: shutdown.submissions, ...(expanded ? { profile: recovery ? 'ITCVE-1@4.4.0' as const : 'ITCVE-1@4.3.0' as const } : {}),
+              globalSubmissions: submissions, finalSubmissions: shutdown.submissions, ...(expanded ? { profile: completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' as const : 'ITCVE-1@4.3.0' as const } : {}),
               permissionReport: permissionLifecycle, coverageReport: evidence('conformance/permission-coverage.json'),
               identity: evidence('integrated/result.json').walletIdentity, storageTransactions, resolvedTransactions: transactions, trustedMinedRoot: fixture,
               readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name))
             })
             if (expanded) {
               const { verifyNativeCoverageSuite } = await import('./verify-coverage-suite.js')
-              coverageSuiteBindings = await verifyNativeCoverageSuite({ profile: recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0', identity: evidence('integrated/result.json').walletIdentity, fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: name => fs.readFileSync(path.join(rep, 'evidence', name)) })
+              coverageSuiteBindings = await verifyNativeCoverageSuite({ ...(completion ? { completionPrerequisites: { conditionalTransactionBindings, transactionStateBindings, submissionAncestryBindings } } : {}), profile: completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0', identity: evidence('integrated/result.json').walletIdentity, fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: name => fs.readFileSync(path.join(rep, 'evidence', name)) })
             }
           }
         }
@@ -363,7 +395,7 @@ export async function verifyNativeWallet(directory: string) {
       vectors = prospective.vectors
       conformanceSemanticProjections.push(prospective.semanticProjection)
     }
-    results.push({ record, vectors, recordSha256: worker.recordSha256, independent: { ...(coverageSuiteBindings ? { coverageSuiteBindings } : {}), ...(conditionalTransactionBindings ? { conditionalTransactionBindings } : {}), ...(transactionStateBindings ? { transactionStateBindings } : {}), ...(submissionAncestryBindings ? { submissionAncestryBindings } : {}), funding: funding.id('hex'), ...(conformance ? { preScenarioReserves: nativeFundingRoots.slice(1), recoveryScope: 'unaffected-preexisting-funds' } : {}), create: create.id('hex'), redemption: spend.id('hex'), valueConserved: true, fee: inputs - outputs } })
+    results.push({ record, vectors, recordSha256: worker.recordSha256, independent: { ...(completionFundingRootBindings ? { completionFundingRootBindings } : {}), ...(completionFixtureBindings ? { completionFixtureBindings } : {}), ...(completionObserverBindings ? { completionObserverBindings } : {}), ...(controlAncestryBindings ? { controlAncestryBindings } : {}), ...(coverageSuiteBindings ? { coverageSuiteBindings } : {}), ...(conditionalTransactionBindings ? { conditionalTransactionBindings } : {}), ...(transactionStateBindings ? { transactionStateBindings } : {}), ...(submissionAncestryBindings ? { submissionAncestryBindings } : {}), funding: funding.id('hex'), ...(conformance ? { preScenarioReserves: nativeFundingRoots.slice(1), recoveryScope: 'unaffected-preexisting-funds' } : {}), create: create.id('hex'), redemption: spend.id('hex'), valueConserved: true, fee: inputs - outputs } })
   }
   assert.equal(canonicalJson(results[0]!.vectors.map(vector => vector.outcome)), canonicalJson(results[1]!.vectors.map(vector => vector.outcome)))
   assert.equal(canonicalJson(results[0]!.record.semanticProjection), canonicalJson(results[1]!.record.semanticProjection))

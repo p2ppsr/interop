@@ -6,8 +6,11 @@ import { once } from 'node:events'
 import { createHash, randomBytes } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import { canonicalJson } from '../determinism.js'
-import { validateBatchBuildInputs } from './go-batch-build.js'
+import { validateBatchBuildInputs, validateCallerKnownSDK } from './go-batch-build.js'
 import { assertSnapshotIdentity, validateNativeOutputSnapshot, type NativeOutputSnapshot } from './native-output-snapshot.js'
+import { validateNativeCertificateInventory, nativeCertificateInventoryResponseByteLimit, type NativeCertificateInventory } from './native-certificate-inventory.js'
+import { validateNativeTransactionKnowledgeInventory, nativeTransactionKnowledgeResponseByteLimit, type NativeTransactionKnowledgeInventory } from './native-transaction-knowledge-inventory.js'
+import { readNativeActionQueryFinalLedger, readNativeActionQueryFailureBundle, validateNativeActionQueryCuts, nativeActionQueryResponseByteLimit, type NativeActionQueryCuts, type NativeActionQueryFinalLedger, type NativeActionQueryFailureBundle } from './native-action-query-ledger.js'
 import type { HeaderRecord } from './services.js'
 
 const componentLock = JSON.parse(fs.readFileSync(fileURLToPath(new URL('../../go/components.lock.json', import.meta.url)), 'utf8')) as {
@@ -24,7 +27,8 @@ function validateNativeContractBuildInputs(manifest: Record<string, unknown>): v
   const root = fileURLToPath(new URL('../../../', import.meta.url))
   const hostSources = fs.readdirSync(path.join(root, 'synthesis/go'), { recursive: true, withFileTypes: true })
     .filter(entry => entry.isFile() && entry.name.endsWith('.go'))
-    .map(entry => path.relative(root, path.join(entry.parentPath, entry.name)).split(path.sep).join('/')).sort()
+    .map(entry => path.relative(root, path.join(entry.parentPath, entry.name)).split(path.sep).join('/'))
+    .filter(name => !name.startsWith('synthesis/go/cmd/itcve-services-coverage-observers/')).sort()
   const names = ['scripts/prepare-storage-native-contracts-go.mjs',
     'infra/adapters/storage-native-contracts/rpc-contract-test.mjs', 'synthesis/package-lock.json',
     'synthesis/go/components.lock.json', 'synthesis/go/go.mod', 'synthesis/go/go.sum', ...hostSources]
@@ -47,23 +51,28 @@ export function validateGoBuild(build: GoBuild): void {
   }
 }
 
-export function validateStorageSyncGoBuild(build: GoBuild, binarySha256: string, manifest: Record<string, unknown>, portability = false, listActions = false, nativeContracts = false, batchSubjects = false, dustAccounting = false, mergeAccounting = false, inputAncestry = false, sqliteRetry = false): void {
-  if ([portability, listActions, nativeContracts, batchSubjects, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry].filter(Boolean).length > 1) throw new Error('Conflicting Go storage compatibility selectors')
-  const lockBytes = fs.readFileSync(fileURLToPath(new URL(sqliteRetry ? '../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : inputAncestry ? '../../../infra/adapters/storage-input-ancestry/patch.lock.json' : mergeAccounting ? '../../../infra/adapters/storage-merge-accounting/patch.lock.json' : dustAccounting ? '../../../infra/adapters/storage-dust-accounting/patch.lock.json' : batchSubjects ? '../../../infra/adapters/storage-batch-subjects/patch.lock.json' : nativeContracts ? '../../../infra/adapters/storage-native-contracts/patch.lock.json' : listActions ? '../../../infra/adapters/storage-list-actions/patch.lock.json' : portability ? '../../../infra/adapters/storage-portability/patch.lock.json' : '../../../infra/adapters/storage-sync/patch.lock.json', import.meta.url)))
+export function validateStorageSyncGoBuild(build: GoBuild, binarySha256: string, manifest: Record<string, unknown>, portability = false, listActions = false, nativeContracts = false, batchSubjects = false, dustAccounting = false, mergeAccounting = false, inputAncestry = false, sqliteRetry = false, callerKnownInputs = false): void {
+  if ([portability, listActions, nativeContracts, batchSubjects, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry, callerKnownInputs].filter(Boolean).length > 1) throw new Error('Conflicting Go storage compatibility selectors')
+  const lockBytes = fs.readFileSync(fileURLToPath(new URL(callerKnownInputs ? '../../../infra/adapters/storage-caller-known-inputs/patch.lock.json' : sqliteRetry ? '../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : inputAncestry ? '../../../infra/adapters/storage-input-ancestry/patch.lock.json' : mergeAccounting ? '../../../infra/adapters/storage-merge-accounting/patch.lock.json' : dustAccounting ? '../../../infra/adapters/storage-dust-accounting/patch.lock.json' : batchSubjects ? '../../../infra/adapters/storage-batch-subjects/patch.lock.json' : nativeContracts ? '../../../infra/adapters/storage-native-contracts/patch.lock.json' : listActions ? '../../../infra/adapters/storage-list-actions/patch.lock.json' : portability ? '../../../infra/adapters/storage-portability/patch.lock.json' : '../../../infra/adapters/storage-sync/patch.lock.json', import.meta.url)))
   const lock = JSON.parse(lockBytes.toString()) as { module: string; version: string; sum: string; patchSha256: string; parentSha256?: string }
   const expectedUpstream = { module: lock.module, version: lock.version, sum: lock.sum }
-  if (manifest.schema !== (sqliteRetry ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : inputAncestry ? 'tpnil-storage-input-ancestry-go-build@1.0.0' : mergeAccounting ? 'tpnil-storage-merge-accounting-go-build@1.0.0' : dustAccounting ? 'tpnil-storage-dust-accounting-go-build@1.0.0' : batchSubjects ? 'tpnil-storage-batch-subjects-go-build@1.0.0' : nativeContracts ? 'tpnil-storage-native-contracts-go-build@1.0.0' : listActions ? 'tpnil-storage-list-actions-go-build@1.0.0' : portability ? 'tpnil-storage-portability-go-build@1.0.0' : 'tpnil-storage-sync-go-build@1.0.0') || manifest.binarySha256 !== binarySha256 ||
-      ((portability || listActions || nativeContracts || batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry) && manifest.parentPatchLockSha256 !== lock.parentSha256) || manifest.patchLockSha256 !== createHash('sha256').update(lockBytes).digest('hex') || manifest.patchSha256 !== lock.patchSha256 ||
+  if (manifest.schema !== (callerKnownInputs ? 'tpnil-storage-caller-known-inputs-go-build@1.0.0' : sqliteRetry ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : inputAncestry ? 'tpnil-storage-input-ancestry-go-build@1.0.0' : mergeAccounting ? 'tpnil-storage-merge-accounting-go-build@1.0.0' : dustAccounting ? 'tpnil-storage-dust-accounting-go-build@1.0.0' : batchSubjects ? 'tpnil-storage-batch-subjects-go-build@1.0.0' : nativeContracts ? 'tpnil-storage-native-contracts-go-build@1.0.0' : listActions ? 'tpnil-storage-list-actions-go-build@1.0.0' : portability ? 'tpnil-storage-portability-go-build@1.0.0' : 'tpnil-storage-sync-go-build@1.0.0') || manifest.binarySha256 !== binarySha256 ||
+      ((portability || listActions || nativeContracts || batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry || callerKnownInputs) && manifest.parentPatchLockSha256 !== lock.parentSha256) || manifest.patchLockSha256 !== createHash('sha256').update(lockBytes).digest('hex') || manifest.patchSha256 !== lock.patchSha256 ||
       manifest.toolchain !== componentLock.toolchain || canonicalJson(manifest.upstream) !== canonicalJson(expectedUpstream) ||
       typeof manifest.replacementModule !== 'string' || !path.isAbsolute(manifest.replacementModule))
     throw new Error('Storage sync compatibility build manifest differs from frozen inputs')
   if (nativeContracts) validateNativeContractBuildInputs(manifest)
-  if (batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry) validateBatchBuildInputs(manifest, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry)
+  if (batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry || callerKnownInputs) validateBatchBuildInputs(manifest, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry, callerKnownInputs)
   const normalized = structuredClone(build)
   const actual = normalized.dependencies?.[lock.module]
   if (actual?.version !== lock.version || actual.replacementModule !== manifest.replacementModule || !['', '(devel)'].includes(actual.replacementVersion ?? ''))
     throw new Error('Storage sync compatibility source replacement differs from manifest')
   normalized.dependencies![lock.module] = { version: lock.version, sum: lock.sum }
+  if (callerKnownInputs) {
+    const sdk = validateCallerKnownSDK(manifest), actualSDK = normalized.dependencies?.[sdk.module]
+    if (actualSDK?.version !== sdk.version || actualSDK.replacementModule !== sdk.source || !['', '(devel)'].includes(actualSDK.replacementVersion ?? '')) throw new Error('Compiled SDK replacement differs from the exact tenth-layer manifest')
+    normalized.dependencies![sdk.module] = { version: sdk.version, sum: sdk.sum }
+  }
   validateGoBuild(normalized)
 }
 
@@ -93,6 +102,8 @@ export interface GoServiceOptions {
   storageInputAncestryPatch?: boolean
   /** Retry a rolled-back SQLite snapshot conflict at the existing owner. */
   storageSQLiteRetryPatch?: boolean
+  /** Caller-declared known roots and complete same-host storage inventories. */
+  storageCallerKnownInputsPatch?: boolean
   /** Prospective ITCVE-1.4 fixture semantics, never implicit in old profiles. */
   terminalRejectionReceipts?: boolean
 }
@@ -104,38 +115,41 @@ export function selectComponents(value: ComponentSelection = {}): Required<Compo
   }
   return { overlay: 'typescript', chaintracks: 'typescript', storage: 'typescript', ...value }
 }
-export function validateComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'): void {
+export function validateComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0'): void {
   const components = selectComponents(value.components as ComponentSelection)
   if (!Object.values(components).includes('go')) throw new Error('Go profile omitted Go selection')
   const go = value.go as Record<string, unknown> | undefined
   if (go?.schema !== 'tpnil-go-services@1.0.0' || canonicalJson(go.components) !== canonicalJson(components) ||
       typeof go.binarySha256 !== 'string' || !/^[a-f0-9]{64}$/.test(go.binarySha256) ||
-      (!['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile ?? '') && go.compatibilityPatch !== undefined) ||
-      (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile ?? '') ? go.fixtureSubmissionPolicy !== 'terminal-rejection-v1' : go.fixtureSubmissionPolicy !== undefined) ||
+      (!['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(profile ?? '') && go.compatibilityPatch !== undefined) ||
+      (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(profile ?? '') ? go.fixtureSubmissionPolicy !== 'terminal-rejection-v1' : go.fixtureSubmissionPolicy !== undefined) ||
       go.goModSha256 !== componentLock.moduleFiles['go.mod'] || go.goSumSha256 !== componentLock.moduleFiles['go.sum'] ||
       canonicalJson(go.dependencies) !== canonicalJson(componentLock))
     throw new Error('Go service component identity is incomplete or differs from lock')
-  if (profile === 'ITCVE-1@1.3.0' || ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile ?? '')) {
+  if (profile === 'ITCVE-1@1.3.0' || ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(profile ?? '')) {
     const manifest = go.compatibilityPatch as Record<string, unknown> | undefined
-    const release511 = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile ?? '')
+    const release511 = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0'].includes(profile ?? '')
     const batchSubjects = false
     const dustAccounting = false
     const mergeAccounting = false
     const inputAncestry = false
+    const callerKnownInputs = profile === 'ITCVE-1@4.5.0'
+    if (callerKnownInputs && manifest?.schema !== 'tpnil-storage-caller-known-inputs-go-build@1.0.0') throw new Error('Completion profile requires caller-known-inputs compatibility build')
     const sqliteRetry = profile === 'ITCVE-1@4.3.0' || profile === 'ITCVE-1@4.4.0'
     if (sqliteRetry && manifest?.schema !== 'tpnil-storage-sqlite-retry-go-build@1.0.0') throw new Error('Coverage profile requires SQLite retry compatibility build')
     const nativeContracts = release511 && manifest?.schema === 'tpnil-storage-native-contracts-go-build@1.0.0'
     if (['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'].includes(profile ?? '') && !nativeContracts) throw new Error('Candidate native profile requires the native contract compatibility build')
-    const listActions = release511 && !nativeContracts && !batchSubjects && !dustAccounting && !mergeAccounting && !inputAncestry && !sqliteRetry
+    const listActions = release511 && !nativeContracts && !batchSubjects && !dustAccounting && !mergeAccounting && !inputAncestry && !sqliteRetry && !callerKnownInputs
     if (listActions && manifest?.schema !== 'tpnil-storage-list-actions-go-build@1.0.0') throw new Error('Native 5.1.1 requires the listActions ancestry export compatibility build')
     const portability = ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(profile ?? '') && manifest?.schema === 'tpnil-storage-portability-go-build@1.0.0'
     if (['ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(profile ?? '') && !portability) throw new Error('Native coverage requires the ancestry export compatibility build')
-    const bytes = fs.readFileSync(fileURLToPath(new URL(sqliteRetry ? '../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : inputAncestry ? '../../../infra/adapters/storage-input-ancestry/patch.lock.json' : mergeAccounting ? '../../../infra/adapters/storage-merge-accounting/patch.lock.json' : dustAccounting ? '../../../infra/adapters/storage-dust-accounting/patch.lock.json' : batchSubjects ? '../../../infra/adapters/storage-batch-subjects/patch.lock.json' : nativeContracts ? '../../../infra/adapters/storage-native-contracts/patch.lock.json' : listActions ? '../../../infra/adapters/storage-list-actions/patch.lock.json' : portability ? '../../../infra/adapters/storage-portability/patch.lock.json' : '../../../infra/adapters/storage-sync/patch.lock.json', import.meta.url)))
+    const bytes = fs.readFileSync(fileURLToPath(new URL(callerKnownInputs ? '../../../infra/adapters/storage-caller-known-inputs/patch.lock.json' : sqliteRetry ? '../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : inputAncestry ? '../../../infra/adapters/storage-input-ancestry/patch.lock.json' : mergeAccounting ? '../../../infra/adapters/storage-merge-accounting/patch.lock.json' : dustAccounting ? '../../../infra/adapters/storage-dust-accounting/patch.lock.json' : batchSubjects ? '../../../infra/adapters/storage-batch-subjects/patch.lock.json' : nativeContracts ? '../../../infra/adapters/storage-native-contracts/patch.lock.json' : listActions ? '../../../infra/adapters/storage-list-actions/patch.lock.json' : portability ? '../../../infra/adapters/storage-portability/patch.lock.json' : '../../../infra/adapters/storage-sync/patch.lock.json', import.meta.url)))
     const lock = JSON.parse(bytes.toString())
-    if (manifest?.schema !== (sqliteRetry ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : inputAncestry ? 'tpnil-storage-input-ancestry-go-build@1.0.0' : mergeAccounting ? 'tpnil-storage-merge-accounting-go-build@1.0.0' : dustAccounting ? 'tpnil-storage-dust-accounting-go-build@1.0.0' : batchSubjects ? 'tpnil-storage-batch-subjects-go-build@1.0.0' : nativeContracts ? 'tpnil-storage-native-contracts-go-build@1.0.0' : listActions ? 'tpnil-storage-list-actions-go-build@1.0.0' : portability ? 'tpnil-storage-portability-go-build@1.0.0' : 'tpnil-storage-sync-go-build@1.0.0') || manifest.binarySha256 !== go.binarySha256 || ((portability || listActions || nativeContracts || batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry) && manifest.parentPatchLockSha256 !== lock.parentSha256) || manifest.patchLockSha256 !== createHash('sha256').update(bytes).digest('hex') || manifest.patchSha256 !== lock.patchSha256 || manifest.toolchain !== componentLock.toolchain || canonicalJson(manifest.upstream) !== canonicalJson({ module: lock.module, version: lock.version, sum: lock.sum }))
+    if (manifest?.schema !== (callerKnownInputs ? 'tpnil-storage-caller-known-inputs-go-build@1.0.0' : sqliteRetry ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : inputAncestry ? 'tpnil-storage-input-ancestry-go-build@1.0.0' : mergeAccounting ? 'tpnil-storage-merge-accounting-go-build@1.0.0' : dustAccounting ? 'tpnil-storage-dust-accounting-go-build@1.0.0' : batchSubjects ? 'tpnil-storage-batch-subjects-go-build@1.0.0' : nativeContracts ? 'tpnil-storage-native-contracts-go-build@1.0.0' : listActions ? 'tpnil-storage-list-actions-go-build@1.0.0' : portability ? 'tpnil-storage-portability-go-build@1.0.0' : 'tpnil-storage-sync-go-build@1.0.0') || manifest.binarySha256 !== go.binarySha256 || ((portability || listActions || nativeContracts || batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry || callerKnownInputs) && manifest.parentPatchLockSha256 !== lock.parentSha256) || manifest.patchLockSha256 !== createHash('sha256').update(bytes).digest('hex') || manifest.patchSha256 !== lock.patchSha256 || manifest.toolchain !== componentLock.toolchain || canonicalJson(manifest.upstream) !== canonicalJson({ module: lock.module, version: lock.version, sum: lock.sum }))
       throw new Error('Integrated native compatibility identity differs from its pinned source')
+    if (callerKnownInputs) validateCallerKnownSDK(manifest)
     if (nativeContracts) validateNativeContractBuildInputs(manifest)
-    if (batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry) validateBatchBuildInputs(manifest, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry)
+    if (batchSubjects || dustAccounting || mergeAccounting || inputAncestry || sqliteRetry || callerKnownInputs) validateBatchBuildInputs(manifest, dustAccounting, mergeAccounting, inputAncestry, sqliteRetry, callerKnownInputs)
   }
 }
 
@@ -153,7 +167,7 @@ export class GoServices {
   get diagnostics(): string { return this.stderr }
   readonly binary: string
   constructor(readonly state: string, readonly components: Required<ComponentSelection>, readonly options: GoServiceOptions = {}) {
-    if ([options.storageSyncPatch, options.storagePortabilityPatch, options.storageListActionsPatch, options.storageNativeContractsPatch, options.storageBatchSubjectsPatch, options.storageDustAccountingPatch, options.storageMergeAccountingPatch, options.storageInputAncestryPatch, options.storageSQLiteRetryPatch].filter(Boolean).length > 1) throw new Error('Conflicting Go storage compatibility selectors')
+    if ([options.storageSyncPatch, options.storagePortabilityPatch, options.storageListActionsPatch, options.storageNativeContractsPatch, options.storageBatchSubjectsPatch, options.storageDustAccountingPatch, options.storageMergeAccountingPatch, options.storageInputAncestryPatch, options.storageSQLiteRetryPatch, options.storageCallerKnownInputsPatch].filter(Boolean).length > 1) throw new Error('Conflicting Go storage compatibility selectors')
     this.binary = path.resolve(options.binary ?? process.env.TPNIL_GO_BINARY ?? fileURLToPath(new URL('../../../out/itcve-go-services', import.meta.url)))
   }
   get identity(): Record<string, unknown> {
@@ -171,7 +185,7 @@ export class GoServices {
     this.origin = ''
     this.stderr = ''
     this.executableSha256 = createHash('sha256').update(fs.readFileSync(this.binary)).digest('hex')
-    if (this.options.storageSyncPatch || this.options.storagePortabilityPatch || this.options.storageListActionsPatch || this.options.storageNativeContractsPatch || this.options.storageBatchSubjectsPatch || this.options.storageDustAccountingPatch || this.options.storageMergeAccountingPatch || this.options.storageInputAncestryPatch || this.options.storageSQLiteRetryPatch) {
+    if (this.options.storageSyncPatch || this.options.storagePortabilityPatch || this.options.storageListActionsPatch || this.options.storageNativeContractsPatch || this.options.storageBatchSubjectsPatch || this.options.storageDustAccountingPatch || this.options.storageMergeAccountingPatch || this.options.storageInputAncestryPatch || this.options.storageSQLiteRetryPatch || this.options.storageCallerKnownInputsPatch) {
       this.compatibilityPatch = JSON.parse(fs.readFileSync(`${this.binary}.json`, 'utf8')) as Record<string, unknown>
     }
     const child = spawn(this.binary, args, { stdio: ['ignore', 'pipe', 'pipe'] })
@@ -194,7 +208,7 @@ export class GoServices {
             if (message.schema !== 'tpnil-go-services@1.0.0') continue
             try {
               if (this.compatibilityPatch === undefined) validateGoBuild(message)
-              else validateStorageSyncGoBuild(message, this.executableSha256, this.compatibilityPatch, this.options.storagePortabilityPatch, this.options.storageListActionsPatch, this.options.storageNativeContractsPatch, this.options.storageBatchSubjectsPatch, this.options.storageDustAccountingPatch, this.options.storageMergeAccountingPatch, this.options.storageInputAncestryPatch, this.options.storageSQLiteRetryPatch)
+              else validateStorageSyncGoBuild(message, this.executableSha256, this.compatibilityPatch, this.options.storagePortabilityPatch, this.options.storageListActionsPatch, this.options.storageNativeContractsPatch, this.options.storageBatchSubjectsPatch, this.options.storageDustAccountingPatch, this.options.storageMergeAccountingPatch, this.options.storageInputAncestryPatch, this.options.storageSQLiteRetryPatch, this.options.storageCallerKnownInputsPatch)
             } catch (error) { return failed(error as Error) }
             const url = new URL(message.origin!)
             if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !url.port) return failed(new Error('Invalid Go service origin'))
@@ -272,7 +286,7 @@ export class GoServices {
     return response.json() as Promise<Array<{ txid: string; reference: string }>>
   }
   async outputSnapshot(identity: string): Promise<NativeOutputSnapshot> {
-    if (!(this.options.storageBatchSubjectsPatch || this.options.storageDustAccountingPatch || this.options.storageMergeAccountingPatch || this.options.storageInputAncestryPatch || this.options.storageSQLiteRetryPatch) || !this.admitted) throw new Error('Scoped output observation requires the prospective compatibility host')
+    if (!(this.options.storageBatchSubjectsPatch || this.options.storageDustAccountingPatch || this.options.storageMergeAccountingPatch || this.options.storageInputAncestryPatch || this.options.storageSQLiteRetryPatch || this.options.storageCallerKnownInputsPatch) || !this.admitted) throw new Error('Scoped output observation requires the prospective compatibility host')
     assertSnapshotIdentity(identity)
     const response = await fetch(`${this.origin}/control/v2/native-output-snapshot?identityKey=${encodeURIComponent(identity)}`, {
       headers: { authorization: `Bearer ${this.token}` }, redirect: 'error', signal: AbortSignal.timeout(15000)
@@ -292,6 +306,39 @@ export class GoServices {
     validateNativeOutputSnapshot(value, identity)
     return value
   }
+  private async readCoverageInventory(route: string, maximumBytes: number): Promise<unknown> {
+    if (!this.options.storageCallerKnownInputsPatch || !this.admitted) throw new Error('Complete inventories require the admitted caller-known-inputs host')
+    const response = await fetch(`${this.origin}${route}`, { headers: { authorization: `Bearer ${this.token}` }, redirect: 'error', signal: AbortSignal.timeout(15000) })
+    if (!response.ok || !response.body) throw new Error(`Go coverage inventory failed: HTTP ${response.status}`)
+    const reader = response.body.getReader(), chunks: Uint8Array[] = []
+    let size = 0
+    try {
+      while (true) { const next = await reader.read(); if (next.done) break; size += next.value.length; if (size > maximumBytes) throw new Error('Go coverage inventory response exceeds limit'); chunks.push(next.value) }
+    } finally { await reader.cancel(); reader.releaseLock() }
+    return JSON.parse(Buffer.concat(chunks).toString())
+  }
+  get actionObserverActive(): boolean { return this.admitted && Boolean(this.options.storageCallerKnownInputsPatch) && this.components.storage === 'go' }
+  private retainedFinalActionLedger?: NativeActionQueryFinalLedger
+  private retainedActionFailureBundle?: NativeActionQueryFailureBundle
+  get actionQueryFailureBundle(): NativeActionQueryFailureBundle | undefined { return this.retainedActionFailureBundle === undefined ? undefined : structuredClone(this.retainedActionFailureBundle) }
+  get finalActionQueryLedger(): NativeActionQueryFinalLedger | undefined { return this.retainedFinalActionLedger === undefined ? undefined : structuredClone(this.retainedFinalActionLedger) }
+  async actionQueryCuts(identity: string): Promise<NativeActionQueryCuts> {
+    assertSnapshotIdentity(identity)
+    const route = `/control/v1/native-action-query-cuts?identityKey=${encodeURIComponent(identity)}&from=1&through=`
+    const initial = validateNativeActionQueryCuts(await this.readCoverageInventory(route + '0', nativeActionQueryResponseByteLimit), identity)
+    const result = validateNativeActionQueryCuts(await this.readCoverageInventory(route + initial.entryCount, nativeActionQueryResponseByteLimit), identity)
+    if (result.entryCount !== initial.entryCount || result.inFlight !== 0) throw new Error('Action query ledger advanced during complete control observation')
+    return result
+  }
+  async certificateInventory(identity: string): Promise<NativeCertificateInventory> {
+    assertSnapshotIdentity(identity)
+    const value = await this.readCoverageInventory(`/control/v1/native-certificate-inventory?identityKey=${encodeURIComponent(identity)}`, nativeCertificateInventoryResponseByteLimit)
+    return validateNativeCertificateInventory(value)
+  }
+  async transactionKnowledgeInventory(): Promise<NativeTransactionKnowledgeInventory> {
+    const value = await this.readCoverageInventory('/control/v1/transaction-knowledge-inventory', nativeTransactionKnowledgeResponseByteLimit)
+    return validateNativeTransactionKnowledgeInventory(value)
+  }
   async transactions(): Promise<Array<{ txid: string; rawTxHex: string }>> {
     const response = await fetch(`${this.origin}/control/transactions`, { headers: { authorization: `Bearer ${this.token}` }, redirect: 'error', signal: AbortSignal.timeout(15000) })
     if (!response.ok) throw new Error(`Go transaction snapshot failed: HTTP ${response.status}`)
@@ -309,12 +356,24 @@ export class GoServices {
   }
   async close(): Promise<void> {
     const child = this.process
-    if (child === undefined || child.exitCode !== null || child.signalCode !== null) return
-    const exited = once(child, 'exit').catch(() => undefined)
-    child.kill('SIGTERM')
+    if (child === undefined) return
     let forced = false
-    const timer = setTimeout(() => { forced = true; child.kill('SIGKILL') }, 7000)
-    await exited; clearTimeout(timer)
-    if (forced) throw new Error('Go service required forced termination')
+    if (child.exitCode === null && child.signalCode === null) {
+      const exited = once(child, 'exit').catch(() => undefined)
+      child.kill('SIGTERM')
+      const timer = setTimeout(() => { forced = true; child.kill('SIGKILL') }, this.options.storageCallerKnownInputsPatch ? 15000 : 7000)
+      await exited; clearTimeout(timer)
+    }
+    const failures: unknown[] = []
+    if (forced) failures.push(new Error('Go service required forced termination'))
+    if (this.options.storageCallerKnownInputsPatch && this.admitted && this.components.storage === 'go') {
+      try {
+        this.retainedFinalActionLedger ??= readNativeActionQueryFinalLedger(path.join(this.state, 'action-query-ledger'))
+        const final = this.retainedFinalActionLedger.final
+        if (!final.finalized || final.inFlight !== 0 || final.terminalErrors.length !== 0 || child.exitCode !== 0 || child.signalCode !== null)
+          throw new Error('Action observer finalization or process exit failed')
+      } catch (error) { this.retainedActionFailureBundle ??= readNativeActionQueryFailureBundle(path.join(this.state, 'action-query-ledger')); failures.push(error) }
+    }
+    if (failures.length) throw new AggregateError(failures, 'Go service shutdown evidence failed')
   }
 }

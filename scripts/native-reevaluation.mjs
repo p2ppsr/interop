@@ -19,15 +19,19 @@ export const retainedSource4PlanSha256 = '4aa127e18d6a29e0d07c6ba04a440cc18c3fcd
 export const retainedSource5PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json'
 export const retainedSource5PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-5'
 export const retainedSource5PlanSha256 = '3c7b9ba53566eaae153aed5734266f58d1bd91746a1d4bb9e08f2002e91c263b'
-export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json'
-export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-6'
+export const retainedSource6PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json'
+export const retainedSource6PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-6'
+export const retainedSource6PlanSha256 = '2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f'
+export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json'
+export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-7'
 export const originalReevaluationPlanSha256 = 'f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef'
 const revisions = {
   2: { id: previousReevaluationPlanId, path: previousReevaluationPlanPath, predecessor: { path: originalReevaluationPlanPath, sha256: originalReevaluationPlanSha256 } },
   3: { id: retainedSource3PlanId, path: retainedSource3PlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } },
   4: { id: retainedSource4PlanId, path: retainedSource4PlanPath, predecessor: { path: retainedSource3PlanPath, sha256: retainedSource3PlanSha256 } },
   5: { id: retainedSource5PlanId, path: retainedSource5PlanPath, predecessor: { path: retainedSource4PlanPath, sha256: retainedSource4PlanSha256 } },
-  6: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource5PlanPath, sha256: retainedSource5PlanSha256 } }
+  6: { id: retainedSource6PlanId, path: retainedSource6PlanPath, predecessor: { path: retainedSource5PlanPath, sha256: retainedSource5PlanSha256 } },
+  7: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource6PlanPath, sha256: retainedSource6PlanSha256 } }
 }
 export const reevaluationSchema = 'tpnil-native-integrated-reevaluation@1'
 export const reevaluationInputNames = ['paid-http.json','messaging.json','synthesis-transactions.json','identity-trust.json']
@@ -65,6 +69,7 @@ function validateReevaluationLineage(plan,root) {
 }
 export function validateReevaluationPlan(plan,root) {
   assert.equal(plan.schema,'tpnil-native-integrated-reevaluation-plan@1');assert.equal(typeof plan.id,'string');assert.ok(plan.id.length>0)
+  if (plan.sourceBindingRevision >= 7) assert.equal(plan.admissionState,'FROZEN','Prospective reevaluation source is not frozen')
   validateReevaluationLineage(plan,root)
   const o=plan.original;relative(o.archive);assert.match(o.source,/^[a-f0-9]{40}$/);assert.match(o.sha256,/^[a-f0-9]{64}$/);assert.match(o.planSha256,/^[a-f0-9]{64}$/);assert.match(o.qualificationSha256,/^[a-f0-9]{64}$/)
   assert.ok(Number.isSafeInteger(o.workflowRun)&&o.workflowRun>0);assert.ok(Number.isSafeInteger(o.size)&&o.size>0);assert.ok(Number.isSafeInteger(o.members)&&o.members>0)

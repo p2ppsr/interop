@@ -1,0 +1,628 @@
+--- a/pkg/internal/testabilities/fixture_beef_verifier.go
++++ b/pkg/internal/testabilities/fixture_beef_verifier.go
+@@ -2,6 +2,8 @@
+ 
+ import (
+ 	"context"
++	"fmt"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
+ 
+ 	"github.com/bsv-blockchain/go-sdk/transaction"
+ 	"github.com/bsv-blockchain/go-sdk/transaction/chaintracker"
+@@ -14,11 +16,13 @@
+ 	WillReturnError(err error)
+ 	WillReturnBool(value bool)
+ 	DefaultBehavior()
++	LegacyStrictBehavior()
+ }
+ 
+ type beefVerifierFixture struct {
+ 	willReturnError error
+ 	willReturnBool  *bool
++	legacyStrict    bool
+ }
+ 
+ func newBeefVerifierFixture() *beefVerifierFixture {
+@@ -39,6 +43,9 @@
+ }
+ 
+ func (b *beefVerifierFixture) Verifier(chaintracker chaintracker.ChainTracker) wdk.BeefVerifier {
++	if b.legacyStrict {
++		return &legacyStrictBeefVerifier{storage.NewDefaultBeefVerifier(chaintracker)}
++	}
+ 	return &mockBeefVerifier{
+ 		fixture:         b,
+ 		defaultVerifier: storage.NewDefaultBeefVerifier(chaintracker),
+@@ -59,3 +66,16 @@
+ 	}
+ 	return b.defaultVerifier.VerifyBeef(ctx, beef, allowTxidOnly)
+ }
++
++// Prototype test adapter forwards only the real verifier, never a forced result.
++func (b *mockBeefVerifier) VerifyBeefWithKnownTxIDs(ctx context.Context, beef *transaction.Beef, allowTxidOnly bool, knownTxIDs []chainhash.Hash) (bool, error) {
++	if b.fixture.willReturnError != nil || b.fixture.willReturnBool != nil {
++		return false, fmt.Errorf("forced verifier outcomes forbidden for caller-known regression")
++	}
++	return b.defaultVerifier.(wdk.KnownTxIDBeefVerifier).VerifyBeefWithKnownTxIDs(ctx, beef, allowTxidOnly, knownTxIDs)
++}
++
++// Legacy adapter intentionally exposes only ordinary strict VerifyBeef.
++type legacyStrictBeefVerifier struct{ wdk.BeefVerifier }
++
++func (b *beefVerifierFixture) LegacyStrictBehavior() { b.DefaultBehavior(); b.legacyStrict = true }
+--- a/pkg/storage/beef_verifier.go
++++ b/pkg/storage/beef_verifier.go
+@@ -3,6 +3,7 @@
+ import (
+ 	"context"
+ 	"fmt"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
+ 
+ 	"github.com/bsv-blockchain/go-sdk/transaction"
+ 	"github.com/bsv-blockchain/go-sdk/transaction/chaintracker"
+@@ -34,3 +35,14 @@
+ 
+ 	return ok, nil
+ }
++
++func (b *DefaultBeefVerifier) VerifyBeefWithKnownTxIDs(ctx context.Context, beef *transaction.Beef, allowTxidOnly bool, knownTxIDs []chainhash.Hash) (bool, error) {
++	if beef == nil {
++		return false, fmt.Errorf("nil beef")
++	}
++	ok, err := beef.VerifyWithKnownTxIDs(ctx, b.chainTracker, allowTxidOnly, knownTxIDs)
++	if err != nil {
++		return false, fmt.Errorf("beef verification failed: %w", err)
++	}
++	return ok, nil
++}
+--- a/pkg/storage/internal/actions/create.go
++++ b/pkg/storage/internal/actions/create.go
+@@ -306,7 +306,7 @@
+ 		slog.Int("inputBEEFSize", len(params.InputBEEF)),
+ 	)
+ 
+-	inputProcessor, err := newInputsProcessor(ctx, c, userID, reference, params.Inputs, params.InputBEEF, params.TrustSelf, c.beefVerifier, c.scriptsVerifier)
++	inputProcessor, err := newInputsProcessor(ctx, c, userID, reference, params.Inputs, params.InputBEEF, params.TrustSelf, c.beefVerifier, c.scriptsVerifier, params.KnownTxIDs...)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("failed to create inputs processor: %w", err)
+ 	}
+--- a/pkg/storage/internal/actions/create_process_inputs.go
++++ b/pkg/storage/internal/actions/create_process_inputs.go
+@@ -21,6 +21,7 @@
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/txutils"
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/logging"
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
+ )
+ 
+ var readyToBeInputProvenTxStatuses = []wdk.ProvenTxReqStatus{
+@@ -61,6 +62,7 @@
+ 	providedInputs  []wdk.ValidCreateActionInput
+ 	inputBEEF       []byte
+ 	trustSelf       bool
++	declaredKnown   map[chainhash.Hash]bool
+ 	txIDsLookup     map[chainhash.Hash]struct{}
+ 	beef            *transaction.Beef
+ 	logger          *slog.Logger
+@@ -78,7 +80,18 @@
+ 	trustSelf bool,
+ 	beefVerifier wdk.BeefVerifier,
+ 	scriptsVerifier wdk.ScriptsVerifier,
++	knownTxIDs ...primitives.TXIDHexString,
+ ) (*inputsProcessor, error) {
++	declaredKnown := make(map[chainhash.Hash]bool)
++	if trustSelf {
++		for _, id := range knownTxIDs {
++			hash, err := chainhash.NewHashFromHex(string(id))
++			if err != nil {
++				return nil, fmt.Errorf("invalid declared known txid: %w", err)
++			}
++			declaredKnown[*hash] = true
++		}
++	}
+ 	txIDsLookup := make(map[chainhash.Hash]struct{}, len(providedInputs))
+ 	for _, input := range providedInputs {
+ 		txIDHash, err := chainhash.NewHashFromHex(input.Outpoint.TxID)
+@@ -98,6 +111,7 @@
+ 		userID:          userID,
+ 		inputBEEF:       inputBEEF,
+ 		trustSelf:       trustSelf,
++		declaredKnown:   declaredKnown,
+ 		txIDsLookup:     txIDsLookup,
+ 		providedInputs:  providedInputs,
+ 		beef:            transaction.NewBeefV2(),
+@@ -134,7 +148,7 @@
+ 			return nil, fmt.Errorf("failed to complete beef ancestry from storage: %w", err)
+ 		}
+ 
+-		if ok, err := proc.beefVerifier.VerifyBeef(proc.ctx, proc.beef, true); err != nil {
++		if ok, err := proc.verifyInputProof(); err != nil {
+ 			return nil, fmt.Errorf("failed to verify beef: %w", err)
+ 		} else if !ok {
+ 			return nil, fmt.Errorf("provided beef is not valid: %s", txutils.DescribeInvalidBEEF(proc.beef))
+@@ -142,14 +156,14 @@
+ 	}
+ 
+ 	// hydrate txs in beef
+-	if err := txutils.HydrateBEEF(proc.beef); err != nil {
++	if err := proc.hydrateForInputScripts(); err != nil {
+ 		return nil, fmt.Errorf("failed to hydrate beef for script verification: %w", err)
+ 	}
+ 
+ 	// verify scripts for all unmined transactions in BEEF
+ 	for txIDHash, beefTx := range proc.beef.Transactions {
+ 		// no raw tx available or skip already mined txs
+-		if beefTx.Transaction == nil || beefTx.Transaction.MerklePath != nil {
++		if beefTx.Transaction == nil || beefTx.Transaction.MerklePath != nil || proc.declaredKnown[txIDHash] {
+ 			continue
+ 		}
+ 
+@@ -218,7 +232,7 @@
+ 	// not provided in inputs but exists in the inputBEEF
+ 	notProvidedInInputs := seq.Filter(txIDOnlyIDs, func(txIDHash chainhash.Hash) bool {
+ 		_, ok := proc.txIDsLookup[txIDHash]
+-		return !ok
++		return !ok && !proc.declaredKnown[txIDHash]
+ 	})
+ 
+ 	notProvidedInInputsTxIDs := seq.Collect(seq.Map(notProvidedInInputs, func(txIDHash chainhash.Hash) string {
+@@ -309,7 +323,7 @@
+ 		return nil
+ 	}
+ 
+-	return hydrateAncestryFromStorage(proc.ctx, proc.logger, proc.parent.knownTxRepo, proc.beef,
++	return hydrateAncestryFromStorageWithKnown(proc.ctx, proc.logger, proc.parent.knownTxRepo, proc.beef, proc.declaredKnown,
+ 		func(needed []string) error {
+ 			return missingProofError(needed, "inputBEEF spends transactions whose proof is neither provided nor known to storage")
+ 		})
+@@ -328,8 +342,11 @@
+ 	beef *transaction.Beef,
+ 	onMissing func(needed []string) error,
+ ) error {
++	return hydrateAncestryFromStorageWithKnown(ctx, logger, knownTxRepo, beef, nil, onMissing)
++}
++func hydrateAncestryFromStorageWithKnown(ctx context.Context, logger *slog.Logger, knownTxRepo KnownTxRepo, beef *transaction.Beef, known map[chainhash.Hash]bool, onMissing func([]string) error) error {
+ 	for round := 0; round < maxAncestryHydrationRounds; round++ {
+-		needed := unanchorableSources(beef)
++		needed := unanchorableSourcesWithKnown(beef, known)
+ 		if len(needed) == 0 {
+ 			return nil
+ 		}
+@@ -389,6 +406,9 @@
+ // has no output scripts, which the script verification that follows needs for
+ // every unproven raw transaction. It is reported too.
+ func unanchorableSources(beef *transaction.Beef) []string {
++	return unanchorableSourcesWithKnown(beef, nil)
++}
++func unanchorableSourcesWithKnown(beef *transaction.Beef, known map[chainhash.Hash]bool) []string {
+ 	proven := provenInBEEF(beef)
+ 
+ 	var needed []string
+@@ -398,7 +418,7 @@
+ 			// A bare txid spends nothing as far as this BEEF is concerned.
+ 			continue
+ 		}
+-		if _, ok := proven[txIDHash]; ok {
++		if _, ok := proven[txIDHash]; ok || known[txIDHash] {
+ 			continue
+ 		}
+ 
+@@ -539,3 +559,34 @@
+ 		return hash.String()
+ 	})
+ }
++
++func (proc *inputsProcessor) verifyInputProof() (bool, error) {
++	if len(proc.declaredKnown) == 0 {
++		return proc.beefVerifier.VerifyBeef(proc.ctx, proc.beef, true)
++	}
++	verifier, ok := proc.beefVerifier.(wdk.KnownTxIDBeefVerifier)
++	if !ok {
++		// Preserve complete-proof compatibility with legacy custom verifiers.
++		// This strict path grants no new caller-known-root capability.
++		return proc.beefVerifier.VerifyBeef(proc.ctx, proc.beef, true)
++	}
++	ids := make([]chainhash.Hash, 0, len(proc.declaredKnown))
++	for id := range proc.declaredKnown {
++		ids = append(ids, id)
++	}
++	return verifier.VerifyBeefWithKnownTxIDs(proc.ctx, proc.beef, true, ids)
++}
++func (proc *inputsProcessor) hydrateForInputScripts() error {
++	if len(proc.declaredKnown) == 0 {
++		return txutils.HydrateBEEF(proc.beef)
++	}
++	subjects := make([]string, 0, len(proc.beef.Transactions))
++	for id, bt := range proc.beef.Transactions {
++		if bt.Transaction != nil && bt.Transaction.MerklePath == nil && !proc.declaredKnown[id] {
++			subjects = append(subjects, id.String())
++		}
++	}
++	// Every undeclared raw transaction is checked, with its direct output bodies.
++	// A declared valid root's own missing parents are deliberately not traversed.
++	return txutils.HydrateBEEFSubjects(proc.beef, subjects)
++}
+--- /dev/null
++++ b/pkg/storage/native_fixture_proofs_tpnil_test.go
+@@ -0,0 +1,38 @@
++package storage_test
++
++import (
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++// confirmSyntheticFixtureBumps supplies exact chain-tracker responses only for
++// source-authored positive fixtures. It is never a verifier override: subsequent
++// mutated proofs still have to match a registered height/root on the real path.
++func confirmSyntheticFixtureBumps(t *testing.T, bhs interface{ OnMerkleRootVerifyResponse(uint32, string, string) }, raw []byte) {
++	t.Helper()
++	beef, err := transaction.NewBeefFromBytes(raw)
++	require.NoError(t, err)
++	require.NotEmpty(t, beef.BUMPs)
++	for _, bump := range beef.BUMPs {
++		require.NotNil(t, bump)
++		require.NotEmpty(t, bump.Path)
++		var expected string
++		for _, leaf := range bump.Path[0] {
++			require.NotNil(t, leaf)
++			if leaf.Hash == nil {
++				continue
++			}
++			root, err := bump.ComputeRoot(leaf.Hash)
++			require.NoError(t, err)
++			require.NotNil(t, root)
++			if expected == "" {
++				expected = root.String()
++			} else {
++				require.Equal(t, expected, root.String())
++			}
++		}
++		require.NotEmpty(t, expected)
++		bhs.OnMerkleRootVerifyResponse(bump.BlockHeight, expected, "CONFIRMED")
++	}
++}
+--- a/pkg/storage/native_input_ancestry_tpnil_test.go
++++ b/pkg/storage/native_input_ancestry_tpnil_test.go
+@@ -32,6 +32,7 @@
+ 			}
+ 			if mode == "complete-input-beef" {
+ 				args.InputBEEF = source.BEEF().Bytes()
++				confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.InputBEEF)
+ 			}
+ 			if mode == "explicit-known-txid" {
+ 				args.Options.KnownTxids = []primitives.TXIDHexString{primitives.TXIDHexString(source.ID().String())}
+--- a/pkg/storage/native_merge_accounting_tpnil_test.go
++++ b/pkg/storage/native_merge_accounting_tpnil_test.go
+@@ -21,6 +21,7 @@
+ 	require.NoError(t, err)
+ 	args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
+ 	args.Tx = bytes
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 	args.Labels = []primitives.StringUnder300{"merge accounting"}
+ 	stop := given.StartedRPCServerFor(provider)
+ 	defer stop()
+--- a/pkg/storage/provider_create_action_known_txids_test.go
++++ b/pkg/storage/provider_create_action_known_txids_test.go
+@@ -1,6 +1,8 @@
+ package storage_test
+ 
+ import (
++	"encoding/json"
++	"github.com/bsv-blockchain/go-sdk/script"
+ 	"testing"
+ 
+ 	"github.com/bsv-blockchain/go-sdk/transaction"
+@@ -46,6 +48,7 @@
+ 
+ 	// and: storage knows the parent, together with the ancestry it was submitted with.
+ 	given.RecordKnownTx(parentSpec.TX(), parentSpec.BEEF().Bytes(), wdk.ProvenTxStatusUnmined)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), parentSpec.BEEF().Bytes())
+ 
+ 	// and: the caller sends the parent as a bare txid, exactly as the wallet
+ 	// does for every txid it advertised as known.
+@@ -151,3 +154,123 @@
+ 	require.Error(t, err)
+ 	assert.Contains(t, err.Error(), parentSpec.ID().String())
+ }
++
++// LAB_SELF_TEST_ONLY additive regression; exact public RPC payload from the retained
++// candidate4a/Go reference, not a new native qualification assertion.
++func TestCapturedCallerKnownInputWithoutPriorStorageKnowledge(t *testing.T) {
++	for _, variant := range []string{"explicit-known", "no-claim", "wrong-claim", "no-trust", "out-of-range", "complete-proof", "raw-mutated", "valid-descendant", "invalid-descendant", "mixed-unknown-branch", "repeat-without-claim", "invalid-current-spend", "legacy-complete-proof", "legacy-partial-proof"} {
++		t.Run(variant, func(t *testing.T) {
++			given, cleanup := testabilities.Given(t)
++			defer cleanup()
++			if variant == "legacy-complete-proof" || variant == "legacy-partial-proof" {
++				given.Provider().BeefVerifier().LegacyStrictBehavior()
++			}
++			provider := given.Provider().GORM()
++			given.Provider().BHS().OnMerkleRootVerifyResponse(1, "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9", testabilities.BHSMerkleRootConfirmed)
++			inserted, err := provider.FindOrInsertUser(t.Context(), "0217142f69535e4dad0dc7060df645c55a174cc1bfa5b9eb2e59aad2ae96072dfc")
++			require.NoError(t, err)
++			auth := wdk.AuthID{IdentityKey: "0217142f69535e4dad0dc7060df645c55a174cc1bfa5b9eb2e59aad2ae96072dfc", UserID: to.Ptr(inserted.User.UserID), IsActive: to.Ptr(true)}
++			var args wdk.ValidCreateActionArgs
++			payload := `{"description":"Explicit previously unknown input","inputBEEF":[2,0,190,239,0,1,0,1,0,0,0,1,37,219,8,136,220,238,83,0,191,129,132,140,188,80,93,123,144,165,164,236,195,149,119,219,35,213,15,31,133,19,46,251,0,0,0,0,1,81,255,255,255,255,2,244,1,0,0,0,0,0,0,2,117,81,234,1,0,0,0,0,0,0,25,118,169,20,218,36,43,238,192,66,251,88,163,103,135,129,224,97,186,6,219,90,19,196,136,172,0,0,0,0],"inputs":[{"outpoint":{"txid":"48adf3470203b990cb0b4acb17473948dde6be632da1a3fa2babf93e09a01d77","vout":0},"inputDescription":"Caller declared source","unlockingScriptLength":2,"sequenceNumber":4294967295}],"outputs":[{"lockingScript":"7551","satoshis":400,"outputDescription":"Controlled result","tags":[]}],"lockTime":0,"version":1,"labels":[],"options":{"signAndProcess":false,"acceptDelayedBroadcast":false,"trustSelf":"known","knownTxids":["48adf3470203b990cb0b4acb17473948dde6be632da1a3fa2babf93e09a01d77"],"returnTXIDOnly":false,"noSend":true,"noSendChange":[],"sendWith":[],"randomizeOutputs":false},"isSendWith":false,"isDelayed":false,"isNoSend":true,"isNewTx":true,"isRemixChange":false,"isSignAction":true,"includeAllSourceTransactions":true,"isTestWerrReviewActions":false}`
++			if variant == "complete-proof" || variant == "legacy-complete-proof" {
++				payload = `{"description":"Explicit previously unknown input","inputBEEF":[1,1,1,1,119,29,160,9,62,249,171,43,250,163,161,45,99,190,230,221,72,57,71,23,203,74,11,203,144,185,3,2,71,243,173,72,2,0,190,239,1,1,1,1,0,2,249,44,4,164,201,31,59,248,109,76,24,15,1,15,251,131,231,148,235,79,44,192,146,174,217,88,225,192,185,6,28,248,3,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,255,255,26,3,1,0,0,47,116,101,114,97,110,111,100,101,47,46,94,60,17,33,234,6,96,164,89,159,127,255,255,255,255,1,0,242,5,42,1,0,0,0,25,118,169,20,74,245,67,206,115,230,7,224,174,23,82,188,144,144,27,247,60,193,106,36,136,172,0,0,0,0,0,1,0,0,0,1,249,44,4,164,201,31,59,248,109,76,24,15,1,15,251,131,231,148,235,79,44,192,146,174,217,88,225,192,185,6,28,248,0,0,0,0,106,71,48,68,2,32,46,41,114,242,167,144,6,132,168,47,77,82,63,61,119,109,120,81,73,11,61,128,222,217,162,230,14,246,39,59,100,80,2,32,36,143,90,81,31,127,53,228,154,247,99,138,250,31,228,122,244,231,235,48,5,33,139,238,73,149,103,182,127,118,133,42,65,33,2,199,176,122,246,173,125,95,5,197,192,116,250,181,220,6,68,164,209,223,5,241,101,121,125,143,166,125,113,183,196,209,59,255,255,255,255,10,232,3,0,0,0,0,0,0,2,117,81,0,0,0,0,0,0,0,0,35,0,106,32,114,221,104,85,106,51,206,104,110,243,144,120,77,189,184,119,102,27,51,128,150,41,247,74,122,133,232,185,40,253,85,116,174,250,33,0,0,0,0,0,25,118,169,20,59,236,131,58,132,251,52,206,138,231,179,115,91,108,39,12,197,0,64,29,136,172,225,117,177,86,0,0,0,0,25,118,169,20,79,93,144,26,82,222,147,165,231,112,35,130,48,157,153,26,218,66,103,13,136,172,94,229,131,2,0,0,0,0,25,118,169,20,150,0,76,69,15,0,60,97,89,173,165,62,140,189,148,60,224,67,226,30,136,172,227,188,4,0,0,0,0,0,25,118,169,20,147,89,206,214,217,152,147,142,83,195,172,181,170,170,15,64,249,182,124,176,136,172,83,136,111,88,0,0,0,0,25,118,169,20,155,147,189,120,28,96,222,205,107,92,238,119,229,127,72,80,174,169,138,185,136,172,243,24,198,0,0,0,0,0,25,118,169,20,158,247,16,3,91,148,180,56,126,174,33,237,207,25,85,39,172,171,147,150,136,172,254,252,33,85,0,0,0,0,25,118,169,20,224,184,14,82,144,32,132,62,238,125,163,198,45,122,126,156,152,47,98,178,136,172,211,60,82,34,0,0,0,0,25,118,169,20,239,96,150,235,232,127,231,30,108,185,187,174,248,103,213,132,210,142,94,13,136,172,0,0,0,0,0,1,0,0,0,1,37,219,8,136,220,238,83,0,191,129,132,140,188,80,93,123,144,165,164,236,195,149,119,219,35,213,15,31,133,19,46,251,0,0,0,0,1,81,255,255,255,255,2,244,1,0,0,0,0,0,0,2,117,81,234,1,0,0,0,0,0,0,25,118,169,20,218,36,43,238,192,66,251,88,163,103,135,129,224,97,186,6,219,90,19,196,136,172,0,0,0,0],"inputs":[{"outpoint":{"txid":"48adf3470203b990cb0b4acb17473948dde6be632da1a3fa2babf93e09a01d77","vout":0},"inputDescription":"Caller declared source","unlockingScriptLength":2,"sequenceNumber":4294967295}],"outputs":[{"lockingScript":"7551","satoshis":400,"outputDescription":"Controlled result","tags":[]}],"lockTime":0,"version":1,"labels":[],"options":{"signAndProcess":false,"acceptDelayedBroadcast":false,"trustSelf":"known","knownTxids":[],"returnTXIDOnly":false,"noSend":true,"noSendChange":[],"sendWith":[],"randomizeOutputs":false},"isSendWith":false,"isDelayed":false,"isNoSend":true,"isNewTx":true,"isRemixChange":false,"isSignAction":true,"includeAllSourceTransactions":true,"isTestWerrReviewActions":false}`
++			}
++			require.NoError(t, json.Unmarshal([]byte(payload), &args))
++			if variant == "legacy-complete-proof" {
++				args.Options.KnownTxids = primitives.TXIDHexStrings{primitives.TXIDHexString("48adf3470203b990cb0b4acb17473948dde6be632da1a3fa2babf93e09a01d77")}
++			}
++			if variant == "no-claim" {
++				args.Options.KnownTxids = nil
++			}
++			if variant == "wrong-claim" {
++				args.Options.KnownTxids = primitives.TXIDHexStrings{primitives.TXIDHexString("1111111111111111111111111111111111111111111111111111111111111111")}
++			}
++			if variant == "no-trust" {
++				args.Options.TrustSelf = nil
++			}
++			if variant == "out-of-range" {
++				args.Inputs[0].Outpoint.Vout = 999
++			}
++
++			sourceID := args.Inputs[0].Outpoint.TxID
++			if variant == "raw-mutated" || variant == "valid-descendant" || variant == "invalid-descendant" || variant == "mixed-unknown-branch" {
++				beef, err := transaction.NewBeefFromBytes(args.InputBEEF)
++				require.NoError(t, err)
++				src := beef.FindTransaction(sourceID)
++				require.NotNil(t, src)
++				if variant == "raw-mutated" {
++					src.Outputs[0].Satoshis++
++					beef = transaction.NewBeefV2()
++					_, err = beef.MergeRawTx(src.Bytes(), nil)
++					require.NoError(t, err)
++				} else {
++					unlock := "51"
++					if variant == "invalid-descendant" {
++						unlock = ""
++					}
++					sc, err := script.NewFromHex(unlock)
++					require.NoError(t, err)
++					lock, err := script.NewFromHex("7551")
++					require.NoError(t, err)
++					child := transaction.NewTransaction()
++					child.AddInput(&transaction.TransactionInput{SourceTXID: src.TxID(), SourceTxOutIndex: 0, UnlockingScript: sc, SequenceNumber: 0xffffffff})
++					child.AddOutput(&transaction.TransactionOutput{Satoshis: 400, LockingScript: lock})
++					if variant == "mixed-unknown-branch" {
++						child.Inputs[0].SourceTxOutIndex = 99
++					} else {
++						args.Inputs[0].Outpoint.TxID = child.TxID().String()
++						args.Outputs[0].Satoshis = 300
++					}
++					_, err = beef.MergeRawTx(child.Bytes(), nil)
++					require.NoError(t, err)
++				}
++				args.InputBEEF, err = beef.Bytes()
++				require.NoError(t, err)
++			}
++			var before int64
++			require.NoError(t, provider.Database.DB.Table(provider.Database.DB.NamingStrategy.TableName("KnownTx")).Where("tx_id IN ?", []string{"48adf3470203b990cb0b4acb17473948dde6be632da1a3fa2babf93e09a01d77", "fb2e13851f0fd523db7795c3eca4a5907b5d50bc8c8481bf0053eedc8808db25"}).Count(&before).Error)
++			require.Zero(t, before, "Neither source nor supporting parent existed in provider")
++			result, err := provider.CreateAction(t.Context(), auth, args)
++			if variant == "explicit-known" || variant == "complete-proof" || variant == "valid-descendant" || variant == "repeat-without-claim" || variant == "invalid-current-spend" || variant == "legacy-complete-proof" {
++				require.NoError(t, err, "BRC100 39a643ff lines656-657 permits exact caller-declared valid input without previous wallet knowledge")
++				require.NotNil(t, result)
++				require.Equal(t, args.Inputs[0].Outpoint.TxID, string(result.Inputs[0].SourceTxID))
++				if variant == "invalid-current-spend" {
++					input, err := transaction.NewBeefFromBytes(args.InputBEEF)
++					require.NoError(t, err)
++					source := input.FindTransaction(sourceID)
++					require.NotNil(t, source)
++					unlock, err := script.NewFromHex("6a")
++					require.NoError(t, err)
++					current := transaction.NewTransaction()
++					current.AddInput(&transaction.TransactionInput{SourceTXID: source.TxID(), SourceTxOutIndex: 0, UnlockingScript: unlock, SequenceNumber: 0xffffffff})
++					for _, out := range result.Outputs {
++						lockHex := string(out.LockingScript)
++						if lockHex == "" {
++							lockHex = "7551"
++						}
++						lock, err := script.NewFromHex(lockHex)
++						require.NoError(t, err)
++						current.AddOutput(&transaction.TransactionOutput{Satoshis: uint64(out.Satoshis), LockingScript: lock})
++					}
++					processed, err := provider.ProcessAction(t.Context(), auth, wdk.ProcessActionArgs{IsNewTx: true, IsNoSend: false, IsDelayed: false, Reference: to.Ptr(result.Reference), TxID: to.Ptr(primitives.TXIDHexString(current.TxID().String())), RawTx: current.Bytes()})
++					require.Error(t, err)
++					require.Nil(t, processed)
++					require.Contains(t, err.Error(), "script verification failed", "New spend's script must be executed even though its input was caller-declared valid")
++				}
++				if variant == "repeat-without-claim" {
++					args.Options.KnownTxids = nil
++					next, err := provider.CreateAction(t.Context(), auth, args)
++					require.Error(t, err)
++					require.Nil(t, next)
++					var count int64
++					require.NoError(t, provider.Database.DB.Table(provider.Database.DB.NamingStrategy.TableName("KnownTx")).Where("tx_id IN ?", []string{sourceID, "fb2e13851f0fd523db7795c3eca4a5907b5d50bc8c8481bf0053eedc8808db25"}).Count(&count).Error)
++					require.Zero(t, count, "No persistent knowledge promotion")
++				}
++			} else {
++				require.Error(t, err)
++				require.Nil(t, result)
++			}
++		})
++	}
++}
+--- a/pkg/storage/provider_create_action_test.go
++++ b/pkg/storage/provider_create_action_test.go
+@@ -527,6 +527,7 @@
+ 		InputDescription:      "provided unknown-by-storage input",
+ 	}}
+ 	args.InputBEEF = unknownParentTx.BEEF().Bytes()
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.InputBEEF)
+ 
+ 	// when:
+ 	result, err := activeStorage.CreateAction(
+@@ -591,6 +592,7 @@
+ 		InputDescription:      "provided unknown-by-storage input",
+ 	}}
+ 	args.InputBEEF = unknownParentTx.BEEF().Bytes()
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.InputBEEF)
+ 
+ 	// when:
+ 	result, err := activeStorage.CreateAction(
+@@ -658,6 +660,7 @@
+ 		InputDescription:      "provided unknown-by-storage input",
+ 	}}
+ 	args.InputBEEF = unknownParentTx.BEEF().Bytes()
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.InputBEEF)
+ 
+ 	// when:
+ 	result, err := activeStorage.CreateAction(
+--- a/pkg/storage/provider_internalize_action_test.go
++++ b/pkg/storage/provider_internalize_action_test.go
+@@ -96,6 +96,7 @@
+ 
+ 	// and:
+ 	args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 
+ 	// when:
+ 	result, err := activeStorage.InternalizeAction(
+@@ -147,6 +148,7 @@
+ 
+ 	// and:
+ 	args := fixtures.DefaultInternalizeActionArgs(t, wdk.BasketInsertionProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 
+ 	// when:
+ 	result, err := activeStorage.InternalizeAction(
+@@ -247,6 +249,7 @@
+ 		// and:
+ 		args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
+ 		args.Tx = ownedTxSpec.AtomicBEEF().Bytes()
++		confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 
+ 		// when:
+ 		result, err := activeStorage.InternalizeAction(
+@@ -284,6 +287,7 @@
+ 			WithInput(20_001).
+ 			WithP2PKHOutput(10_000).
+ 			WithP2PKHOutput(10_000)
++		confirmSyntheticFixtureBumps(t, given.Provider().BHS(), transactionSpec.AtomicBEEF().Bytes())
+ 
+ 		// when:
+ 		result, err := activeStorage.InternalizeAction(
+@@ -365,6 +369,7 @@
+ 		// and:
+ 		args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
+ 		args.Tx = ownedTxSpec.AtomicBEEF().Bytes()
++		confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 		args.Outputs[0].Protocol = wdk.BasketInsertionProtocol
+ 		args.Outputs[0].InsertionRemittance = &wdk.BasketInsertion{
+ 			Basket: fixtures.CustomBasket,
+@@ -479,6 +484,7 @@
+ 		// and:
+ 		args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
+ 		args.Tx = ownedTxSpec.AtomicBEEF().Bytes()
++		confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 		args.Labels = []primitives.StringUnder300{labelToAdd}
+ 
+ 		// when:
+@@ -510,6 +516,7 @@
+ 		WithInput(20_001).
+ 		WithP2PKHOutput(10_000).
+ 		WithP2PKHOutput(10_000)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), transactionSpec.AtomicBEEF().Bytes())
+ 
+ 	// when:
+ 	result, err := activeStorage.InternalizeAction(
+@@ -591,6 +598,7 @@
+ 	// and: a mined tx owned by Alice (proof fetched via sync -> status completed, mined)
+ 	txSpec, _ := given.Faucet(activeStorage, testusers.Alice).TopUp(100_000)
+ 	txID := txSpec.ID().String()
++	confirmSyntheticFixtureBumps(t, givenProvider.BHS(), txSpec.AtomicBEEF().Bytes())
+ 
+ 	givenProvider.ARC().WhenQueryingTx(txID).WillReturnWithMindedTx()
+ 	givenProvider.WhatsOnChain().OnTipBlockHeaderWillRespondWithOneElementList()
+@@ -727,6 +735,7 @@
+ 	givenProvider := given.Provider()
+ 	activeStorage := givenProvider.GORM()
+ 	args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 	txID := "03895fb984362a4196bc9931629318fcbb2aeba7c6293638119ea653fa31d119"
+ 
+ 	// and: ARC cannot confirm anything about this tx (empty response body) — bare service error.
+@@ -774,6 +783,7 @@
+ 
+ 	args := fixtures.DefaultInternalizeActionArgs(t, wdk.WalletPaymentProtocol)
+ 	args.Tx = ownedTxSpec.AtomicBEEF().Bytes()
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), args.Tx)
+ 
+ 	// when:
+ 	result, err := activeStorage.InternalizeAction(
+--- a/pkg/storage/provider_internalize_txidonly_test.go
++++ b/pkg/storage/provider_internalize_txidonly_test.go
+@@ -74,6 +74,7 @@
+ 
+ 	parentBEEF, err := parentTx.AtomicBEEF(false)
+ 	require.NoError(t, err)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), parentBEEF)
+ 
+ 	parentResult, err := activeStorage.InternalizeAction(t.Context(), testusers.Alice.AuthID(), internalizeArgsFor(parentBEEF))
+ 	require.NoError(t, err, "the parent must internalize normally")
+@@ -161,6 +162,7 @@
+ 
+ 	grandparentBEEF, err := grandparentTx.AtomicBEEF(false)
+ 	require.NoError(t, err)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), grandparentBEEF)
+ 
+ 	_, err = activeStorage.InternalizeAction(t.Context(), testusers.Alice.AuthID(), internalizeArgsFor(grandparentBEEF))
+ 	require.NoError(t, err, "the grandparent must internalize normally")
+@@ -234,6 +236,7 @@
+ 
+ 	rootBEEF, err := prevTx.AtomicBEEF(false)
+ 	require.NoError(t, err)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), rootBEEF)
+ 
+ 	_, err = activeStorage.InternalizeAction(t.Context(), testusers.Alice.AuthID(), internalizeArgsFor(rootBEEF))
+ 	require.NoError(t, err, "the root must internalize normally")
+--- a/pkg/storage/provider_list_outputs_test.go
++++ b/pkg/storage/provider_list_outputs_test.go
+@@ -71,6 +71,7 @@
+ 
+ 	// and:
+ 	internalizeArgs := fixtures.DefaultInternalizeActionArgs(t, wdk.BasketInsertionProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), internalizeArgs.Tx)
+ 
+ 	internalizeResult, err := activeStorage.InternalizeAction(
+ 		t.Context(),
+@@ -110,6 +111,7 @@
+ 
+ 	// and:
+ 	internalizeArgs := fixtures.DefaultInternalizeActionArgs(t, wdk.BasketInsertionProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), internalizeArgs.Tx)
+ 
+ 	internalizeResult, err := activeStorage.InternalizeAction(
+ 		t.Context(),
+@@ -551,6 +553,7 @@
+ 	activeStorage := given.Provider().WithRandomizer(randomizer.NewTestRandomizer()).GORM()
+ 
+ 	internalizeArgs := fixtures.DefaultInternalizeActionArgs(t, wdk.BasketInsertionProtocol)
++	confirmSyntheticFixtureBumps(t, given.Provider().BHS(), internalizeArgs.Tx)
+ 	internalizeResult, err := activeStorage.InternalizeAction(ctx, testusers.Alice.AuthID(), internalizeArgs)
+ 	require.NoError(t, err)
+ 
+--- a/pkg/wdk/beef_verifier.go
++++ b/pkg/wdk/beef_verifier.go
+@@ -2,6 +2,7 @@
+ 
+ import (
+ 	"context"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
+ 
+ 	"github.com/bsv-blockchain/go-sdk/transaction"
+ )
+@@ -12,3 +13,9 @@
+ type BeefVerifier interface {
+ 	VerifyBeef(ctx context.Context, beef *transaction.Beef, allowTxidOnly bool) (bool, error)
+ }
++
++// KnownTxIDBeefVerifier is an optional per-request input trust capability.
++// Implementations must retain raw roots and validate all undeclared ancestry.
++type KnownTxIDBeefVerifier interface {
++	VerifyBeefWithKnownTxIDs(ctx context.Context, beef *transaction.Beef, allowTxidOnly bool, knownTxIDs []chainhash.Hash) (bool, error)
++}

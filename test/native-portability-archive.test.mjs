@@ -21,18 +21,17 @@ test('portability archive pins the original Git producer while replaying the exa
   const result = verifyNativePortabilitySourceBindings(files)
   assert.equal(result.historicalSource, portabilityArchiveSource)
   assert.equal(result.sourceBindings, 4)
-  assert.equal(result.currentSemanticBindings, 3)
+  assert.equal(result.currentSemanticBindings, 0)
+  assert.equal(result.retainedSemanticBindings, 3)
+  assert.equal(result.frozenSemanticBindings, 0)
 })
 
-test('an evolved producer does not relabel or invalidate the historical producer evidence', () => {
-  const reads = []
-  const result = verifyNativePortabilitySourceBindings(files, name => {
-    reads.push(name)
-    if (name === producer) return Buffer.from('a separately versioned prospective producer')
-    return fs.readFileSync(path.join(root, name))
-  })
-  assert.equal(result.sourceBindings, 4)
-  assert.deepEqual(reads, semantics)
+test('source bindings use retained semantics even when the current verifier has evolved', () => {
+  const current = fs.readFileSync(path.join(root, semantics[0]))
+  assert.notEqual(digest(current), files.get(semantics[0]).sha256, 'This counterfactual requires an actual independently evolved verifier')
+  const result = verifyNativePortabilitySourceBindings(files)
+  assert.equal(result.currentSemanticBindings, 0)
+  assert.equal(result.retainedSemanticBindings, 3)
 })
 
 test('rewriting producer bytes and all corresponding metadata cannot replace the historical Git identity', () => {
@@ -49,8 +48,8 @@ test('retained producer omission is rejected independently of a rewritten invent
 })
 
 for (const name of semantics) {
-  test(`changed current semantic source remains rejected: ${name}`, () => {
-    assert.throws(() => verifyNativePortabilitySourceBindings(files, item => item === name ? Buffer.from('changed') : fs.readFileSync(path.join(root, item))), /Semantic replay source differs/)
+  test(`changed extracted semantic source remains rejected: ${name}`, () => {
+    assert.throws(() => verifyNativePortabilitySourceBindings(files, item => item === name ? Buffer.from('changed') : Buffer.from(files.get(item).content)), /Frozen replay source differs/)
   })
   test(`rewritten retained semantic source remains rejected: ${name}`, () => {
     const changed = new Map(files), row = structuredClone(files.get(name))
@@ -72,8 +71,7 @@ function materializationFixture(operation) {
     const packages = Object.fromEntries(Object.entries(locked.packages).filter(([name]) => name))
     fs.writeFileSync(path.join(dependencyRoot, 'synthesis/node_modules/.package-lock.json'), JSON.stringify({ lockfileVersion: 3, packages }))
     for (const [name, entry] of Object.entries(packages)) { const destination = path.join(dependencyRoot, 'synthesis', name); fs.mkdirSync(destination, { recursive: true }); fs.writeFileSync(path.join(destination, 'package.json'), JSON.stringify({ version: entry.version })); }
-    fs.mkdirSync(path.dirname(path.join(dependencyRoot, producer)), { recursive: true })
-    fs.writeFileSync(path.join(dependencyRoot, producer), 'throw new Error("prospective producer must never execute in historical replay")')
+    for (const name of [producer, ...semantics]) { fs.mkdirSync(path.dirname(path.join(dependencyRoot, name)), { recursive: true }); fs.writeFileSync(path.join(dependencyRoot, name), 'throw new Error("current source must never execute in historical replay")') }
     operation({ temporary, dependencyRoot })
   } finally { fs.rmSync(temporary, { recursive: true, force: true }) }
 }
@@ -82,12 +80,16 @@ test('frozen replay materializes the historical producer and transitive modules 
   const prepared = preparePortabilityReplay(path.join(temporary, 'replay'), { dependencyRoot })
   assert.equal(prepared.source, portabilityArchiveSource)
   assert.equal(prepared.files, 1520)
+  const bindings = verifyNativePortabilitySourceBindings(files, name => fs.readFileSync(path.join(prepared.directory, name)))
+  assert.equal(bindings.currentSemanticBindings, 0); assert.equal(bindings.frozenSemanticBindings, 3)
   for (const name of [producer, ...semantics, 'synthesis/src/storage-sync/projection.ts', 'synthesis/src/storage-sync/compatibility.ts', 'synthesis/src/determinism.ts', 'synthesis/src/wallet-lab/services.ts', 'fixtures/teranode/wab-funding-v1.json']) {
     assert.deepEqual(fs.readFileSync(path.join(prepared.directory, name)), execFileSync('git', ['show', `${portabilityArchiveSource}:${name}`], { cwd: root }))
     assert.equal(fs.lstatSync(path.join(prepared.directory, name)).isSymbolicLink(), false)
   }
   assert.equal(fs.existsSync(path.join(dependencyRoot, 'components/transport/node_modules')), false)
   assert.equal(fs.existsSync(path.join(dependencyRoot, 'integrations/services/node_modules')), false)
+  fs.appendFileSync(path.join(prepared.directory, semantics[0]), '\n')
+  assert.throws(() => verifyNativePortabilitySourceBindings(files, name => fs.readFileSync(path.join(prepared.directory, name))), /Frozen replay source differs/)
 }))
 
 test('frozen replay rejects a changed synthesis lock before any semantic module executes', () => materializationFixture(({ temporary, dependencyRoot }) => {

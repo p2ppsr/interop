@@ -17,11 +17,17 @@ function nativeContractInputs(): Record<string, string> {
   const visit = (directory: string): void => {
     for (const name of fs.readdirSync(directory)) {
       const filename = path.join(directory, name)
+      // This prospective command is not an input to the immutable native-
+      // contracts host. Keep every other historical Go file in the inventory.
+      if (path.relative(root, filename).split(path.sep).join('/') === 'synthesis/go/cmd/itcve-services-coverage-observers') continue
       if (fs.statSync(filename).isDirectory()) visit(filename)
       else if (name.endsWith('.go')) files.push(path.relative(root, filename).split(path.sep).join('/'))
     }
   }
   visit(path.join(root, 'synthesis/go'))
+  expect(files).toContain('synthesis/go/cmd/itcve-services/action_references.go')
+  expect(files).toContain('synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go')
+  expect(files.some(file => file.startsWith('synthesis/go/cmd/itcve-services-coverage-observers/'))).toBe(false)
   return Object.fromEntries(files.map(name => [name, createHash('sha256').update(fs.readFileSync(path.join(root, name))).digest('hex')]))
 }
 
@@ -33,6 +39,7 @@ function invalidNativeContractInputs(): Array<Record<string, string> | undefined
     { ...correct, 'synthesis/go/cmd/itcve-services/action_references.go': '00'.repeat(32) },
     { ...correct, 'synthesis/go/cmd/itcve-services/action_references_test.go': '00'.repeat(32) },
     { ...correct, 'synthesis/go/unreviewed.go': 'ab'.repeat(32) },
+    { ...correct, 'synthesis/go/cmd/itcve-services-coverage-observers/action_ledger.go': createHash('sha256').update(fs.readFileSync(path.resolve(import.meta.dirname, '../go/cmd/itcve-services-coverage-observers/action_ledger.go'))).digest('hex') },
     { ...correct, '../outside-source.go': 'ab'.repeat(32) }]
 }
 
