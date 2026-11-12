@@ -1,0 +1,3940 @@
+{
+  "schema": "tpnil-native-coverage1-source-validation@1",
+  "claim": "LOCAL_ENGINEERING_PREFLIGHT_ONLY",
+  "createdAt": "2026-11-12T08:31:14.129967+00:00",
+  "nativeSessions": 0,
+  "completeBRC100Conformance": false,
+  "sourceBaseCommit": "109705c0cef5ba9ab6175ecff8a3b41bdfbfcf3b",
+  "sourceRuntimeCommit": "b9bc8fb0eed238594ca7fe89aed9296f26a2760e",
+  "finalSourceCommit": null,
+  "sourceBinding": "All runtime inputs match the committed implementation. Final archive publication source is bound by the separate execution order.",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-1.json",
+    "sha256": "a67ed62b96732bb321c8dd08de5ee4903853d5c460a85bf58899eb6e9a1d0b48",
+    "inputs": 157
+  },
+  "results": {
+    "corePassed": 173,
+    "coreFailed": 0,
+    "coreSkipped": 0,
+    "synthesisPassed": 1079,
+    "synthesisSkipped": 23,
+    "synthesisFiles": 66,
+    "pythonPassed": 5,
+    "typecheck": "PASS",
+    "catalog": "PASS",
+    "standards": "PASS",
+    "publishedAcceptedArchives": 14,
+    "publishedFailedAttemptArchives": 17,
+    "publishedSemanticBundles": 31,
+    "parentPreludeMutationTests": 31,
+    "frozenCoreFocusedTests": 57,
+    "yoursSourceTests": 261,
+    "yoursSourceExpectations": 1769
+  },
+  "intermediateFailuresPreserved": true,
+  "sourceInputs": {
+    ".github/workflows/isi4-yours-wallet.yml": "262761453f1d4f1ef650a96e3c5176075efb6b26bbb3b20af4d857f42c9616ba",
+    "fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json": "ee425f6f95e00fc711b6d426634e536e199786592452ace41370c1b6cd1f63ac",
+    "fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json": "5475f47592964e9e5af7924d6269cc0e302c3d7a6fbf67130ff739a40149ab03",
+    "infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+    "infra/adapters/storage-batch-subjects/patch.lock.json": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+    "infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+    "infra/adapters/storage-dust-accounting/patch.lock.json": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+    "infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+    "infra/adapters/storage-input-ancestry/patch.lock.json": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+    "infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch": "b916d1bc65839d599c60f03ed8c1b01d260e7793112b5b5ab9b912ea5994a9ee",
+    "infra/adapters/storage-list-actions/patch.lock.json": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+    "infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+    "infra/adapters/storage-merge-accounting/patch.lock.json": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+    "infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+    "infra/adapters/storage-native-contracts/patch.lock.json": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+    "infra/adapters/storage-native-contracts/rpc-contract-test.mjs": "22a56c72b7134272dddd8d28d1fca83aca5907f858b1e9ae16f67758e5058df1",
+    "infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+    "infra/adapters/storage-sqlite-retry/patch.lock.json": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+    "infra/native/conformance/Dockerfile": "e3fda541eee153c36d3146d18403130db3d68ca2762673ac79812c774ead6ba4",
+    "infra/native/integrated/Dockerfile": "11c68ae765602d2b94267cb0fb55499a6654ddff3d7f34b0efde9ebbb29bb55d",
+    "infra/native/integrated/identity-trust-oracle-2.0.0.json": "7997dfa28032a5cfcd6c2e1c97cbad211acb1561156b629c592c09e5a3294c8c",
+    "infra/native/yours-go/Dockerfile": "3b0dd8f806c469da7a4f5539b4bdd98f1400f72f1905996c548927f85af3341f",
+    "infra/native/yours-go/Dockerfile.dockerignore": "6093c48785d1b3959efe24db973bef159f38120ffd2ec3d2d270288187a7ac56",
+    "infra/native/yours-go/verify-installed.py": "09b04401b78561c8c2c2bbd8b1c248e02e0e5ee1fd2bb124e772c9e730cb00bd",
+    "integrations/services/src/identity.ts": "f53941315b09a0214e3880331682080c8e150165e6a3e57e8767fbe441c3e17c",
+    "itcves/ITCVE-1/4.1.0/profile.json": "902941056de45f4a598b7eaa09a52eea95ddeef64da7896fb60d493553768d20",
+    "itcves/ITCVE-1/4.2.0/profile.json": "43c4c9a4e35a610fafde067f938d290fafef100c9c6e6729db5c3fb97e9a057f",
+    "itcves/ITCVE-1/4.3.0/profile.json": "9a289853871fcf18b3e6e3aa11973617360eeecce2d3f7fd6ed56332d7da3f44",
+    "programs/ISI-4/5.1.0/catalog.json": "ad8b44fa63ac9240a9f48c2159250776f7bab5f01c4ef71bcfcf8ab239b4b0cc",
+    "programs/ISI-4/5.2.0/catalog.json": "0f866d0eab7fb47d30e79257444c1ad65799932e8b9e24ed656bd35ef2bc7338",
+    "programs/ISI-4/5.3.0/catalog.json": "4dadf831518d3181cb87ce6819790cd93f077a9fb1569babd026b8605849116b",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json": "0d910a7ca41883a064bb65fc7c6b1ce4bef58f26d8eadb02d44c69cf6f96ad2e",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json": "9cd945fb5a57eb8ded04d8d8569955f31039ebfdbd6ff1991cd5d3507a3eef7b",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json": "ad803952399a66f099ea9f9efa664a37801866284c5a01064d3357878199a8eb",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json": "7f7585d34920cad911531099009fa2e3b8cf6e0e1f9037bb4812f9bb09e8fe95",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json": "215efe521a229779a3ead0ea3f03b304d63a8d8fd754c6c9994a810cba5a5be4",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json": "266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json": "8395291e84398404816a1e91eeeebbe3322c5568ae5e2371af058e0d40e7b0de",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json": "f67d74120e4edb6a5f91f0e1aa169f6d2cb98f6f547c33b7931d0995f1db3b0c",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json": "671fe862e96a281bb982d6d30d0124ae272180d63998d49c66a9ea6688c3ac19",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json": "10e1ef1a72c1af24224b26e956c6ee3f0153aacad6b3a36ad9a40cb224f7ea4a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json": "ebc4fd6d55badf77b08967010cbe885bce964e71839295804cca6e16f9771122",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json": "ae5a2efcf6135c4667ba14ce324a1a5cbf991051e572674296fcbfe9c6c3b035",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json": "601846e4c52730cf3103e78bbf7e2446bc3f7a47a0df2f36a3c37c2813c96ebf",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+    "programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json": "20f8d35df252fa308c87087bac80e3278712a7731e848384eb7497b8ba1c3a47",
+    "programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json": "d66694d5363360ccd0b05225276e9c70173b5a50d37c4d7478dcb7f652e609cb",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111.json": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+    "scripts/check-native-wallet-selector.mjs": "98815ef84f650667caeef9d189e2a14428c922846dea424b95976e6c2358b868",
+    "scripts/native-rust-compatibility.mjs": "ff8d7dba7aa9ab65b994091bfa348a34db599a3ff9eca61f853f041525df357e",
+    "scripts/native-wallet-profiles.mjs": "eb5c89d83a974409d97c4a0a52a98d3a8d2f407676628b406946088aec255d5c",
+    "scripts/prepare-storage-batch-subjects-go.mjs": "70cc99af9b161a0f247e3e26b406b649c4003a4e63394025854cfcae071d8e82",
+    "scripts/prepare-storage-dust-accounting-go.mjs": "b4c5c88fbf60d2f9f9ee3c445ef1b80c584940995ff7e3e08e291718d1b79f0c",
+    "scripts/prepare-storage-input-ancestry-go.mjs": "7a65ea9b6d3391a387e53d33fa9bf95f91f28591e62a60475960c6ce20bc4aba",
+    "scripts/prepare-storage-list-actions-go.mjs": "fd1083ebfc6e7b196153cdb855ff0e6da626acef607ddba6ba45dd1207459972",
+    "scripts/prepare-storage-merge-accounting-go.mjs": "6a2cab432ae119b0e6b3b4867cecd0bdb5ebc796cd558e4435bc9a127d957420",
+    "scripts/prepare-storage-native-contracts-go.mjs": "c2ff897b84436fbde335cae8d3c880a2025ca533042ec71fd2ebefe11a364da4",
+    "scripts/prepare-storage-sqlite-retry-go.mjs": "d08386e772e659556b1bc1b82bb1b9cdbd017f937fc2a69f90324f604ae924f5",
+    "scripts/prepare-yours-wallet-run.sh": "2f56ac13f3aa3abe4ea6a73b055dddc5f47aedb167d33590ecc0e650a5559104",
+    "scripts/run-native-go-wallet.mjs": "13c8dd4aed3f5e31eb37cc04ffe313bde473fb5ea3a3c898ecbcf76d5e67f0e8",
+    "scripts/verify-native-integrated.mjs": "66c297cba33a072a2889b342c31888c48bd33e85d81cf75a69d2ba768a38f374",
+    "scripts/verify-native-synthesis.mjs": "727563463610106d81e6b2a095f23f3c47026fd2d725850755cf37721970f91f",
+    "scripts/verify-native-trust.mjs": "400dba9182364ba1009562ba6b011a6d999c0ce5da95ed10fea9640cbd763b00",
+    "synthesis/go/cmd/itcve-mongo/main.go": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go": "89e1ca67c9937214534e22e27076539b21183fdcbc3d0b3084515294adc0fd4c",
+    "synthesis/go/cmd/itcve-services/action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "synthesis/go/cmd/itcve-services/action_references_test.go": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+    "synthesis/go/cmd/itcve-services/lifecycle_test.go": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+    "synthesis/go/cmd/itcve-services/main.go": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+    "synthesis/go/cmd/itcve-services/main_test.go": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+    "synthesis/go/cmd/itcve-services/sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "synthesis/go/cmd/itcve-services/sync_test.go": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf",
+    "synthesis/go/components.lock.json": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+    "synthesis/go/go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+    "synthesis/go/go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "synthesis/src/board.ts": "603b1288d03d9aab2225d5f01b29171c9d3d1a8e14e169f8c952c23fd620bdfe",
+    "synthesis/src/wallet-lab/boundary-corpus.ts": "e55ebb5346d9c7eac8d579cbd07bcaba575390e3b0a2a7b0e5926921631a9bc4",
+    "synthesis/src/wallet-lab/evidence.ts": "4631a47efdc0a238456224fe4054063ed972d6080503af2948eaa1fccf34069c",
+    "synthesis/src/wallet-lab/go-batch-build.ts": "f368664330a4dceb7814248addc596873cfbf6001c819f59558d442a5f182991",
+    "synthesis/src/wallet-lab/go-services.ts": "d87e14317b4473e9e41c8e5c8d1d4ec96560b58b6fb8cb361d5ac8c16bc52f0e",
+    "synthesis/src/wallet-lab/model.ts": "7d674bb4fcdc3d8389bd387fe8a34dd1f4bbeb26ee8b8a987d03643d9650a9dd",
+    "synthesis/src/wallet-lab/native-output-snapshot.ts": "0c3c4e01a5304cb50314696ba22fdf2d5e635e26a2ed28a3616c7cbb4a21f477",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states-model.ts": "89b0f2a63f481d55bee251f318393da173f664a7d8287aa51f358d989b8ec528",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states.ts": "2c56e2959e71e034c3a53bc247b2e9b9ac131169257532ae2176c8da2b2ce329",
+    "synthesis/src/wallet-lab/native/conformance-clauses.ts": "916498405577d3f3dc3c0851e408008e02877dc116aea23eccc36c08fe2b82a8",
+    "synthesis/src/wallet-lab/native/conformance-conditional-issuer.ts": "ec32438a0fa33c6195e9b7eaadda78887894135d903627c55f83c963d2637d2a",
+    "synthesis/src/wallet-lab/native/conformance-conditional-model.ts": "cb8f503b4456a5e82b00ded9f54f8428e08c602a93f01f60dd3f127855cd58ea",
+    "synthesis/src/wallet-lab/native/conformance-conditional.ts": "d1f68071db8c2c7487880a0a464c16add1990907d794d2e1ad82f8c0dbef86a4",
+    "synthesis/src/wallet-lab/native/conformance-namespace-oracle5.ts": "c3c598b3e3b873b1c1accbc5cab6f431c729d744a1b152374467a9395a4b314a",
+    "synthesis/src/wallet-lab/native/conformance-nosend-change.ts": "407efdd647d3b16534d92b035d6faf7f9371c8a9d9083b09552086b757741339",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage-model.ts": "61ee50f33883dbad6275b0fabbe194d801346d372eef1df009336e980bfcb001",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage.ts": "90c6b99dc33467d03782d66fc903879e25983448efa84f75afbe1040b63b62ac",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states-model.ts": "23fcb3de2a3dc6a4fe5a3dafb8483715a966fe4e2ff3eb4624ca52ab05519bbb",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states.ts": "3b94500ed6bcfafa18536b66747b853a604205f3d3c3b16ab68266d1dec4db68",
+    "synthesis/src/wallet-lab/native/conformance.ts": "eea7f338b6a0c875e5605f5dd3a2c45393323d406724856e31e9f1dd5369a2ba",
+    "synthesis/src/wallet-lab/native/controlled-header-fixture.ts": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+    "synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts": "68761637d4254764fdc3b1e5e78b491728e16f98e05b5c6886a0d5204aa111cf",
+    "synthesis/src/wallet-lab/native/coverage-certificates-model.ts": "652d0dbb7cab843b048d9ce1767f3260d0b3e0c7ee37d0bc3b21203e20747428",
+    "synthesis/src/wallet-lab/native/coverage-certificates-reference.ts": "6b5a32e4266aa423448145948a845ede8789d4f72ab2e9d84355324de77ebe9f",
+    "synthesis/src/wallet-lab/native/coverage-certificates-run.ts": "449d93b7abea6063c5d68d748877f17f91ba67cbd5eaa08507a9bcca977c4a01",
+    "synthesis/src/wallet-lab/native/coverage-certificates-verify.ts": "4183bb623d0fbf8107def06e8b14d6c8ba8f8cf842ce3999b42f3efe918e2833",
+    "synthesis/src/wallet-lab/native/coverage-extension-driver.ts": "249eae8deec288d93b1c94ecfb09082a917b080b2d2d926c9323360977ebadad",
+    "synthesis/src/wallet-lab/native/coverage-extension-model.ts": "829d7e5e5bce36d6b599916784913f50952ef9efeeee5026d4a6999713b8ba0b",
+    "synthesis/src/wallet-lab/native/coverage-extension-requests.ts": "69bd1da37d0757d443b8b0a480534d1622aa481ff989516d44a99b165c70ca32",
+    "synthesis/src/wallet-lab/native/coverage-extension-verifier.ts": "d29fd14c3b98b747ec95b4d2d87488a15008344299a6518a7cd466fc78005abb",
+    "synthesis/src/wallet-lab/native/coverage-permissions-driver.ts": "6977b6470c9752f1456397b094cbd058e2ab3018e1cd0a16e2776bcd7d706a1a",
+    "synthesis/src/wallet-lab/native/coverage-permissions-model.ts": "764779a63a4f3755d8afebca1fbe444068bef3897575a411b293807a05127a79",
+    "synthesis/src/wallet-lab/native/coverage-permissions-observer.ts": "138da2c70d317cc35db2d32f866c0df3cdeed34ef60e6ce25151a5e657cd6875",
+    "synthesis/src/wallet-lab/native/coverage-permissions-ui.ts": "8e72143bd2edecba21ace05787482a4b7dc33ded9821552bd20170a076f84976",
+    "synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts": "404b7ad7521c39b1679ecfe095ab8ecbdf851789a6a4a59b40d557f4dadd98c4",
+    "synthesis/src/wallet-lab/native/coverage-suite.ts": "90379a999f1eede6e1baee584780fdb6e336f8cffd94a70863a00b4066c2143d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-model.ts": "42fac40342b68f414ace5420622255bbb6eea8878cd0e86b054009e9d1c9d9ba",
+    "synthesis/src/wallet-lab/native/coverage-transactions-producer.ts": "c90f5a42c32c77d5eebc3b15a5b9ee0827d296fb8a665387602f019e72fa2f90",
+    "synthesis/src/wallet-lab/native/coverage-transactions-program.ts": "f6c7a427b821c7585a64afd4b1779cec0a70542573a412e4a3a3d6ed72415e6d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts": "ecccf3bb4134ac562f3fbfea19ec5f84c0996846d6775bc90c6e849a6e9432af",
+    "synthesis/src/wallet-lab/native/identity-trust-oracle2.ts": "a02212c9bb1a54470ab2828adce9635d13c5c11e8034be6f568c7f6eedd5c93e",
+    "synthesis/src/wallet-lab/native/identity-trust.ts": "d669a9471b9fd56ac933df5db1afc86d91b007283e7a8771c4fc8698d11536e5",
+    "synthesis/src/wallet-lab/native/integrated.ts": "09d3141ad4e3fee075b70f5eaf2032b674d6bef1822892e7eab735ba12e479a7",
+    "synthesis/src/wallet-lab/native/permission-coverage-observer.ts": "f0f2a7e0b071f44828a05295274082863eb9fa784d2e87c82d9b6879eda6c053",
+    "synthesis/src/wallet-lab/native/permission-prelude.ts": "0d12583d02b4505c1abbceb7d8973b0111b08d1a8f394df7f2182d4d4b838cde",
+    "synthesis/src/wallet-lab/native/shutdown-submissions.ts": "c2857883cad55ee3dcb6e7dfbdd66668775a71479773124b8c0f386888b4b88c",
+    "synthesis/src/wallet-lab/native/synthesis.ts": "9e42b18cf4a95ea078847a554f4e4be6e8aefc2ff155665e49f7171ef2315f66",
+    "synthesis/src/wallet-lab/native/verify-certificate-states.ts": "c6b291a2e2753cb003c783e5421a2e13355535a0fa1d9e6e4f6ea8e88a0f8c54",
+    "synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts": "bd63edda2df77356caa9fa121aea43d57100f102d6a2cf69258ee128d4c19483",
+    "synthesis/src/wallet-lab/native/verify-conformance-clauses.ts": "3106648ad732d23531baecb815700469a5998aa48c55d71cdb14e0496f2771d9",
+    "synthesis/src/wallet-lab/native/verify-conformance-conditional.ts": "a2a08c3fc3b58c455d3150b49d19ada9d83a9b1cee585700ad10b1f6a38f58be",
+    "synthesis/src/wallet-lab/native/verify-conformance-nosend-change.ts": "c3b32bfef4329cbdbf954f32bef8eb1e03317dcdec4117b79eecdb1c661fd53d",
+    "synthesis/src/wallet-lab/native/verify-conformance-permission-coverage.ts": "71c6aae0dbb6d1c15964bd9d3383da6e5bc3327ae146fa17b94ea1f355ea1401",
+    "synthesis/src/wallet-lab/native/verify-conformance.ts": "e90bb7b890c81d63008d4ef4c66f38bae73a39a03c23b5f0e99a70902febf6b7",
+    "synthesis/src/wallet-lab/native/verify-coverage-suite.ts": "16b6d55f704df292bf905c1415df30354a42efa888c2a20aee9bf804fa2337d3",
+    "synthesis/src/wallet-lab/native/verify-identity-publication.ts": "4e5dba3996324fcb6c24dca3d8c3edf1651c7bcfed581adc7a7b41445df412e6",
+    "synthesis/src/wallet-lab/native/verify-identity-trust.ts": "2d1a5b9e7dc56335a9c5a2a706a64263d250d6bf1efbb4d6a70bf04ccb08681c",
+    "synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts": "34bfb0b5819d47d5510716f27d769d3e4d49764ab1eeecad39d760d2f4cfa6d6",
+    "synthesis/src/wallet-lab/native/verify-submission-ancestry.ts": "5cb38c5fc2c5fadf2db8edc3c6ecf8bba1aad1879ee0c7536f360f1bd1fbe1c5",
+    "synthesis/src/wallet-lab/native/verify-synthesis.ts": "58a8efb506cba4c51642112d3e0574a8dc91d3eb8d76ac0cf1b8800cd89e8b78",
+    "synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts": "4ac93a04d749d3ca74540d9121adbbc9408327cbfa712ed8926aa98987c8902c",
+    "synthesis/src/wallet-lab/native/verify-transaction-states.ts": "176b9cc87f272d1316cc307f922fad62663a701ffa8caa11a9cb8352e9aa6cf0",
+    "synthesis/src/wallet-lab/native/verify.ts": "eed278a37e43a0ce1841ee3f25df50fa37d172647d4567eb3f4466aeec235cc0",
+    "synthesis/src/wallet-lab/native/worker.ts": "751cf5c53c18274a1047b96b984a0c83729d17fdd4202b0ea5dedce7c9753475",
+    "synthesis/src/wallet-lab/run-boundary.ts": "0d19b84a7361f2f963ba3ef256262e671e1fbdaabfb2cfcd66ef27eccc738567",
+    "synthesis/src/wallet-lab/services.ts": "31343426cac2568d993eda57444cc2e395dff9455cf4369308111e3ee055fbf3",
+    "synthesis/src/wallet-lab/verify-boundary.ts": "29785131fc2b051463b9c42e18fea854fe787b56da0e6a7aa946776d13265813",
+    "synthesis/src/wallet-lab/yours-driver.ts": "628438ee1e161697ca8ebc1a9bf0096b6931e2c3027342102f93a37a76a6f2c0"
+  },
+  "cost": {
+    "newNativeSessions": 0,
+    "actualMoneyUSD": null,
+    "operatorUSD": null,
+    "agentUSD": null,
+    "ownedCapacityUSD": null,
+    "unknownCostsAreZero": false
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3460,
+      "sha256": "fe33cc768ec9eaaeedbd413636c00ec777e773cdf5cbf8b58799993d4aaddfc5"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/parent-ledgers.json.gz",
+      "bytes": 5818,
+      "sha256": "25a4e815f02bc151a12ca74bf1b05319a541278c66b4d2fd446eea3f5d6d155b"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/report.json.gz",
+      "bytes": 225036,
+      "sha256": "b184bf0c842ea6c2b505a04f74f6e0cf1418baf0edcdd615a7b4f2a718ba1461"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/source-after.json.gz",
+      "bytes": 1010,
+      "sha256": "46b91ec39f7fdbf98f4b9c9846fc0b6125274f478ae8763cd003cf5dc43b9c3f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/source-before.json.gz",
+      "bytes": 1010,
+      "sha256": "46b91ec39f7fdbf98f4b9c9846fc0b6125274f478ae8763cd003cf5dc43b9c3f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-1/verification.json.gz",
+      "bytes": 2318,
+      "sha256": "dcab7047d1ce0dc120ef8c46a6c36e16ebba46f63bbbc4393b0de39338aaa4a8"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/parent-ledgers.json.gz",
+      "bytes": 5841,
+      "sha256": "11028130c76234d9afce1fb0ba9a63ff8ad321e731e5c5d40848b8b7521063d5"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/report.json.gz",
+      "bytes": 224131,
+      "sha256": "9bb543b9492279035e861f944a746f40279f1618c96091b8a4c7fd8bd9e98b12"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/source-after.json.gz",
+      "bytes": 1014,
+      "sha256": "f55b30123b0f51f2aa67098ade42f896a645aef211a444348b492e2712aaae7e"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/source-before.json.gz",
+      "bytes": 1014,
+      "sha256": "f55b30123b0f51f2aa67098ade42f896a645aef211a444348b492e2712aaae7e"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-2/verification.json.gz",
+      "bytes": 2338,
+      "sha256": "0517bcf531a6577ae5a541f0d7dae77b1474d6f810b198e9062f75f3add26518"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/parent-ledgers.json.gz",
+      "bytes": 5826,
+      "sha256": "1e2805f6882dd461d90373ed0cb7743096cb5d78b2f6dd6bcbd61a414b609002"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/report.json.gz",
+      "bytes": 224513,
+      "sha256": "9684598021eccd8310771dc1d3ab242737945769af2945d20536efaf0177145d"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/source-after.json.gz",
+      "bytes": 1012,
+      "sha256": "49c53e61a136d33f29f4edbcf52ea2119ba06f9e6f184469a5223f9931f5446f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/source-before.json.gz",
+      "bytes": 1012,
+      "sha256": "49c53e61a136d33f29f4edbcf52ea2119ba06f9e6f184469a5223f9931f5446f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-3/verification.json.gz",
+      "bytes": 2303,
+      "sha256": "57e6dd09c3a9754c042521db36763aadef0bfc71303eee02a6a15316ea23c4c1"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/parent-ledgers.json.gz",
+      "bytes": 5827,
+      "sha256": "c9de9f86f1bd2eb1fd555ca64f7cd8dfa7b4975486d6981e9052a0f34469ec27"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/report.json.gz",
+      "bytes": 223911,
+      "sha256": "e142ebc60fbad0ff02910c563cffcd146a704d94cc8f0257c278517eb9123c72"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/source-after.json.gz",
+      "bytes": 1014,
+      "sha256": "670b55668f5aeb40957d0de9676e0ab217456209ae49433dca389c2fe26099c7"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/source-before.json.gz",
+      "bytes": 1014,
+      "sha256": "670b55668f5aeb40957d0de9676e0ab217456209ae49433dca389c2fe26099c7"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-4/verification.json.gz",
+      "bytes": 2325,
+      "sha256": "ef0195d1308d1c704195c63b2f046a7e76ab6631005eebd501ab7dbeace67791"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/parent-ledgers.json.gz",
+      "bytes": 6277,
+      "sha256": "a1f3be8322b4e0959fad1d0799966402e493995627346b15fa53d0c7ee56314e"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/report.json.gz",
+      "bytes": 225923,
+      "sha256": "4103365fbaff59b662cd9a3703208bf4e830763301e62ccdf6feec3173c88e0d"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/source-after.json.gz",
+      "bytes": 1009,
+      "sha256": "34055add8d50fa203abcd5746722c6ca2a986d8a2176f4255f0a16e5769f2ae9"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/source-before.json.gz",
+      "bytes": 1009,
+      "sha256": "34055add8d50fa203abcd5746722c6ca2a986d8a2176f4255f0a16e5769f2ae9"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-5/verification.json.gz",
+      "bytes": 2346,
+      "sha256": "545eec4949e0c69f6a26761f3dc2b34145d91514288c93ffd8c7e7283d76ff28"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/parent-ledgers.json.gz",
+      "bytes": 8587,
+      "sha256": "836dd8cc1c6613fa150aed763d1cc97abe906c8a8590eedf1c877eabbc7e04f5"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/report.json.gz",
+      "bytes": 341785,
+      "sha256": "3dfa5dafb707b55361aac4695ed563acf2f425a33de6799912755e50a2d76609"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/source-after.json.gz",
+      "bytes": 1012,
+      "sha256": "8540f1fab6006a964fe726dc2f98fc793f07dc4013cb6140670ca32a750b297d"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/source-before.json.gz",
+      "bytes": 1012,
+      "sha256": "8540f1fab6006a964fe726dc2f98fc793f07dc4013cb6140670ca32a750b297d"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-6/verification.json.gz",
+      "bytes": 2346,
+      "sha256": "9957bde43f4e8b05a7db6b5a4dd54ba9b403c6d9785011150fbf65553b2c4da2"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/cleanup.json.gz",
+      "bytes": 41,
+      "sha256": "e0c24270381cf30890cb7ff737347e92f3a8bf31c9452e997b9473ac053b79f6"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/parent-ledgers.json.gz",
+      "bytes": 8379,
+      "sha256": "d8fd457cd1f0a9f54e9999acf070574ee820b4b976102d7ea8d648d7262188c0"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/report.json.gz",
+      "bytes": 342717,
+      "sha256": "e7d82d6d9aa1430e516f2423ca987241044f5ddddec55d0cf1ad2be6a8738213"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/fixtures/teranode/wab-funding-v1.json.gz",
+      "bytes": 1229,
+      "sha256": "18f7ad4d2dcfda6fdc6e9f7452d0285ef45a80403d1508ce86fc1740cecde51f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/integrations/services/package-lock.json.gz",
+      "bytes": 28447,
+      "sha256": "9e7000e444bce2f813aa1a7ba20fc183ce8bb4e76bdc0eaab144b69df2083dcf"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/integrations/services/src/overlay.ts.gz",
+      "bytes": 2589,
+      "sha256": "4dc80eba67a1f72f02e3ee3ffb6062e3b3bf95fb3e8785e461a2638806ea681e"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/out/itcve-go-storage-native-contracts.json.gz",
+      "bytes": 1368,
+      "sha256": "826c2714f5d3424fc9c7979b58d29a651a359e5c04480471f838dd7df109b911"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json.gz",
+      "bytes": 1000,
+      "sha256": "48804a49d8e51500c2decb88dccf10ea9be1b3d901a61da2b81be0d5268fd078"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/package-lock.json.gz",
+      "bytes": 27759,
+      "sha256": "66ca4a2f910de53b94c2ab14d28ecd39d044229790c4c9fd0ba49aef3759983a"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/storage-sync/fixture-wallet.ts.gz",
+      "bytes": 881,
+      "sha256": "3af42b7b80fac6c9d3ca81204185069676c2695ad0ecb22999e9c2b1c895b4fc"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/certificate-fixture.ts.gz",
+      "bytes": 886,
+      "sha256": "ed2e6f2b55b8c2adbd99c8c4c02ae143635bad0442ada97a53ed3a2e1b643847"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts.gz",
+      "bytes": 2984,
+      "sha256": "430f2618c204f8c344fea2ee4cb7dafd9dbf7983ead0740e0a5886d40d3cafdc"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/coverage-certificates-model.ts.gz",
+      "bytes": 1163,
+      "sha256": "bc1b83cdc4c7d690a2cbd28bca9ac0c6e0a80618e27d6f981dd1c0cea52cbb4f"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/coverage-certificates-reference.ts.gz",
+      "bytes": 3341,
+      "sha256": "32b418239f3ad0c71f6130b54b8706bc6e9dbb9daea6dfd9a802397a384179d5"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/coverage-certificates-run.ts.gz",
+      "bytes": 4655,
+      "sha256": "7eeae2146a1cd1c77b28a558cc63d60f99027b08cdaa68efc418dbb014fc5c04"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/coverage-certificates-verify.ts.gz",
+      "bytes": 9690,
+      "sha256": "1191a6321337bc405f1914b30d26954912fa51adce4ebc434a60a102cd57d23c"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/permission-click.ts.gz",
+      "bytes": 2387,
+      "sha256": "e4a17ba810d1eab45e11d4af46dd212ab154e842a1d8f8e4765345858b37117b"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/verify-identity-trust.ts.gz",
+      "bytes": 4739,
+      "sha256": "a7c9668af68ff3e2f3e772a39523d15a660379aa557892149a6e134fa7331da1"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts.gz",
+      "bytes": 3256,
+      "sha256": "5b9e04789e78e3a56a899ee1b4611fe442511d2c5be4d1c633d7b5579b1a8768"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source/synthesis/src/wallet-lab/services.ts.gz",
+      "bytes": 14312,
+      "sha256": "cf5efe643bdb84b73eef9ff4a2e8ddb1729a4ef1382016057ebee7814f4dbf9a"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source-after.json.gz",
+      "bytes": 1013,
+      "sha256": "2240305a1b843b6e17c797bd114ea5b51c1c3e8f0b1a23485c8a1ffe522f16e8"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/source-before.json.gz",
+      "bytes": 1013,
+      "sha256": "2240305a1b843b6e17c797bd114ea5b51c1c3e8f0b1a23485c8a1ffe522f16e8"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/attempt-7/verification.json.gz",
+      "bytes": 2346,
+      "sha256": "9957bde43f4e8b05a7db6b5a4dd54ba9b403c6d9785011150fbf65553b2c4da2"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/final-review.json.gz",
+      "bytes": 2811,
+      "sha256": "676e47c21326ede478bc0f561d9d78edd93cbc42f41e91387480a39a4902ba1b"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/replay-parent.ts.gz",
+      "bytes": 681,
+      "sha256": "5032246981ddee3819bbb113f531b2477fafcde0f44e116b818067a2a55bd541"
+    },
+    {
+      "path": "evidence/out/certificate-coverage-reference/replay.ts.gz",
+      "bytes": 204,
+      "sha256": "45f30a5c896ac018ebff7d58dd1cab92368fff0359f29f4099db81d78e654384"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/append-freeze.py.gz",
+      "bytes": 1426,
+      "sha256": "4f07559dc10c5f0fd6e6e6d5a4b4c0fb7bf9581c5eaff57fc019efb2a8afb483"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/build-preflight-attempt1.log.gz",
+      "bytes": 626,
+      "sha256": "46ea82da1d6f398a6b15076c0b2dc4f9400b42a8f8e7d82d2aedc172537d5da0"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/build-preflight.py.gz",
+      "bytes": 3293,
+      "sha256": "af325a0be97afd340521a3f36650218fb31fc74ddddeb3bb8c72e3d823c365c6"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/historical-input-ancestry-admission.test.ts.gz",
+      "bytes": 2437,
+      "sha256": "0bda349a4910f117a8f3f7c792fb389df0787fefcdb51238db130843ecb7e08a"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/historical-source-resolution.json.gz",
+      "bytes": 321,
+      "sha256": "f2553b1f1963590399b8264e4e5e4db5fbba2c49110cbcafcfe180a7a519500f"
+    },
+    {
+      "path": "evidence/out/coverage1-archive/selection-review-attempt1.json.gz",
+      "bytes": 510,
+      "sha256": "5bd558a32d9b2b33ca8f21a5f15b6fa58f61388875b4278b2be9c6357b1cae4a"
+    },
+    {
+      "path": "evidence/out/itcve-go-storage-batch-subjects.json.gz",
+      "bytes": 1963,
+      "sha256": "4e3ce0ab937cc195227c6d3940c669fecf0f4cec72db4e64910c6b2a0794b899"
+    },
+    {
+      "path": "evidence/out/itcve-go-storage-dust-accounting.json.gz",
+      "bytes": 2084,
+      "sha256": "1d676d4c6098b2667d4d7179c86d2c471f2c4e7b7d0aaaa97c33e53028814ab8"
+    },
+    {
+      "path": "evidence/out/itcve-go-storage-input-ancestry.json.gz",
+      "bytes": 2315,
+      "sha256": "c144f95bcd192cd07667bceee9109734ca6323bc40e6804658e70d4e3a9f2979"
+    },
+    {
+      "path": "evidence/out/itcve-go-storage-merge-accounting.json.gz",
+      "bytes": 2198,
+      "sha256": "cd2595220e21b9e903ec0bdd371c0f08639476f3561e7ee805bbed928f184c8d"
+    },
+    {
+      "path": "evidence/out/itcve-go-storage-sqlite-retry.json.gz",
+      "bytes": 2437,
+      "sha256": "1da831209c596de633e006096afc7d3ef852c2943516c19b322cba5227ca7760"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/certificate-coverage-parent-7.log.gz",
+      "bytes": 250,
+      "sha256": "4d5c2ac7c0669cce9dcd31c0e3f78a284fb9ec9f18cd2d9e88ccf28088b7318e"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/certificate-coverage-reference-7.log.gz",
+      "bytes": 2692,
+      "sha256": "e6a87050e452ee6f45bd366ea7859c707700396727b567c6e860861f7e9be2a9"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/certificate-coverage-tests-5.log.gz",
+      "bytes": 277,
+      "sha256": "51e7f4098cc467403820e90874e89ba1561b302c06cbb8e8a9ddba6ba1765900"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/certificate-coverage-typecheck-final.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-extension-accountability/build.py.gz",
+      "bytes": 4471,
+      "sha256": "0ea9f5921fb4d876bd1f6335faa0a2d25e57594fadaa8ba0d5ef490c5f411aea"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-extension-accountability/verification.json.gz",
+      "bytes": 367,
+      "sha256": "b4c7111a76469a1101a9a8145df3889ae40d6c76a97db01775ec701e9bb4d4c0"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-extension-accountability/verify.py.gz",
+      "bytes": 1161,
+      "sha256": "ce55d11bfa189e4f357e8d56a4e35617f5cf82e11549227c2962bda80d13aa8a"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-1.log.gz",
+      "bytes": 595,
+      "sha256": "ffa99e08a6e50be6c2a1a2fe24cda90d5f8b25e848c80e34b5404e1d21c79f46"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-2.log.gz",
+      "bytes": 600,
+      "sha256": "94f00a012551e25a5a2ec929056ce3979eed93bf49e579e51f207544ea3d1e50"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-3.log.gz",
+      "bytes": 619,
+      "sha256": "c7a3f8dd4cbd27055e241b94a40ad315b612b19d8c4b4b723658d56482123db1"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-4.log.gz",
+      "bytes": 704,
+      "sha256": "1bf9d67fed0bf9130d1cb02d48ca41d37ca61564fcae1baaa6d3689751bdd55e"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-5.log.gz",
+      "bytes": 267,
+      "sha256": "afb37728bb30129d81d9dc341dd3a772d497772e692341a237b0db289a7480e0"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage-suite-tests-6.log.gz",
+      "bytes": 286,
+      "sha256": "a1b5a49a3c687b833b1edcfaaf90043836af04e15c3b5544a7b73fd7f1c82dc6"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-candidate-artifact-tests-2.log.gz",
+      "bytes": 458,
+      "sha256": "f403524e4cf8c715dce38623ac8bb60b273345752ef80ffbe11a099e57d2d059"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-catalog-1.log.gz",
+      "bytes": 192,
+      "sha256": "84c5325b355e2a9870f22988c514542208e548f7f99c8f9eb227c0fa8655797f"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-catalog-2.log.gz",
+      "bytes": 192,
+      "sha256": "84c5325b355e2a9870f22988c514542208e548f7f99c8f9eb227c0fa8655797f"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-comparison-tests-1.log.gz",
+      "bytes": 433,
+      "sha256": "f785abb97f846642bdc5a040eb2666022318c28e279e5c80e871a13a868aad41"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-core-tests-1.log.gz",
+      "bytes": 6262,
+      "sha256": "e5d41533015c057076723d37ccebbcd1ac874974fb74318ac6411a4a74255bb0"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-core-tests-2.log.gz",
+      "bytes": 5825,
+      "sha256": "8ad34126d49bc134d4f23e9ebbb18335535735903b976869488351edbeea7198"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-core-tests-3.log.gz",
+      "bytes": 5855,
+      "sha256": "3afcf1aa648c31e81493e09dfc3b8d99312cb96acec42a68aebbffc8dec3bb47"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-final-summary.json.gz",
+      "bytes": 1219,
+      "sha256": "729e5b3880335eeb3a3ead08234d192bc3e6ce4fe7a8c79d88a0fbaeb2d39be9"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-final-typecheck-1.log.gz",
+      "bytes": 72,
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-final-typecheck-2.log.gz",
+      "bytes": 72,
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-freeze-independent.json.gz",
+      "bytes": 738,
+      "sha256": "4d2d9c6a0dda13378166685e483242e797193d5c7e2c5bf6e4c6c43eadf336f6"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-freeze-independent.log.gz",
+      "bytes": 738,
+      "sha256": "4d2d9c6a0dda13378166685e483242e797193d5c7e2c5bf6e4c6c43eadf336f6"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-freeze.json.gz",
+      "bytes": 592,
+      "sha256": "f888d42c3ae8be3670454f143e39711fa78da5b9f12e9d71984e6d51b9f51739"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-frozen-core-tests-1.log.gz",
+      "bytes": 2178,
+      "sha256": "6c3248c9db0182def4fdf593b882599efa26e1040c501ab49b2c44d36f785f22"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-permission5-ancestry-tests-1.log.gz",
+      "bytes": 224,
+      "sha256": "3c7625156fe1e42bcdbb10a94d9c88072f3ca8839785fb9bfeb4326815c1a14c"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-permission5-host-tests-1.log.gz",
+      "bytes": 664,
+      "sha256": "3b2328efe142e3fdc97b2983b5950acbab98f7336d04d989585a41c139831df4"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-publication-source5-tests-1.log.gz",
+      "bytes": 1456,
+      "sha256": "fa5cea57cfd0186850385d7d30407a67c2f74733b4fa00183c28b6c17135e02d"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-published-semantic-1.log.gz",
+      "bytes": 1434,
+      "sha256": "6eb12f3cd85bf41b5f9ac4cdca41689a9c5c7008fc678bc1619f679fa81d1d3e"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-published-semantic-2.log.gz",
+      "bytes": 1059,
+      "sha256": "ace1e348171ae386559f786482fb8b769b68486c6e9a1c1c004a261a0abae435"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-published-semantic-3.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-python-tests-1.log.gz",
+      "bytes": 54,
+      "sha256": "d3dd4ec01b001d54e776c43d9ed9fabdd1a6f6cdb39d62eaae86f026937e2589"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-runtime-committed-selector.json.gz",
+      "bytes": 591,
+      "sha256": "9342c09c2ff1fdfe9d2a1c8b6fb04ead38f97c751f083bb50294be7021853684"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-standards-1.log.gz",
+      "bytes": 254,
+      "sha256": "5eca30db66d89c6b5761471b5c7345258a59b284e000816dfec4d487592f1f09"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-synthesis-tests-1.log.gz",
+      "bytes": 271,
+      "sha256": "65489366c0684303a2564932e9169b88fb7de723c42e8b248ff169ebd8103f79"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-synthesis-tests-2.log.gz",
+      "bytes": 271,
+      "sha256": "19c7af6c490f3ad9383f79538fbe7853373063604ded5f890c2fca069a1f0f10"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/coverage1-synthesis-tests-3.log.gz",
+      "bytes": 270,
+      "sha256": "a5e3c58296fd1bdcfe98ee3ec533e8bee1845129e4ed39cd263979173c5e4a22"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/freeze-coverage1.py.gz",
+      "bytes": 1730,
+      "sha256": "3df1551b6bc7a628fb5cc52843520a521080b150ae7c3cfc2bb363c42f8f81c3"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-linkage-independent.log.gz",
+      "bytes": 228,
+      "sha256": "6fa14cf9df00bcff3105179a60ab93de1eb27da6916a1599547d5797358490bd"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-parent-review.json.gz",
+      "bytes": 1237,
+      "sha256": "249349d9e1f804c41914fe175dd3c29aa8ce9c431afbe93840b2df9d323378d1"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-rejection-tests-2.log.gz",
+      "bytes": 222,
+      "sha256": "efa873e53f12fce08bc898b85aeab0f98ab476cb9b3e81ff10153febe3171a7b"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-rejection-tests-3.log.gz",
+      "bytes": 222,
+      "sha256": "4953716ca65522444d4b0d00a9c0d126109be810bed06d42170d2a39cacfb3da"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-rejection-tests.log.gz",
+      "bytes": 546,
+      "sha256": "0ab61e4c32dfdfdd7285ccb837d10aa3e5574d8d4444e7022c9e5156afce914f"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-rejection-typecheck-2.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-extension-rejection-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-prelude-guard-review.json.gz",
+      "bytes": 1609,
+      "sha256": "63ad58c991f9783c5e5c75f9be4a0d7f1bb246b6ffd85e4b33c8302682b9fc02"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-prelude-guard-review.ts.gz",
+      "bytes": 1651,
+      "sha256": "7b5e780e0deec4924561c355e2c457985f1d0e259f358cee51724aa963000134"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-prelude-independent-review.json.gz",
+      "bytes": 1616,
+      "sha256": "30168f3e291fa9f43b5974fd1251f514e70b95f7c5ba6ab4a933fcf0942e543b"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-prelude-tests.log.gz",
+      "bytes": 220,
+      "sha256": "ff2b89e1760a7fa08df8975a50e1d0579437543351037f26ba4c14f427435ee0"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission-prelude-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission5-review.json.gz",
+      "bytes": 1166,
+      "sha256": "fdc0a7dcac3b5afc02280b2517614f6ddf0e714a2a5702fdc965859f72f7057d"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission5-tests.log.gz",
+      "bytes": 225,
+      "sha256": "afda63dc9043dd896cdaef31a50a05556da4bac4f987ec047d081de0e7c84b67"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/permission5-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/verify-coverage1-freeze.py.gz",
+      "bytes": 2861,
+      "sha256": "8cdd7ec47de3ec1ed52fbad44b5f53b17073f9001c3b848a62d18991c59a12ed"
+    },
+    {
+      "path": "evidence/out/native-closure-20261111/write-attempt5-order.py.gz",
+      "bytes": 3960,
+      "sha256": "f96d930a5231713f96ecb6c0acbafccbd99016f108444ab510b029f844383ebc"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/candidate-ced590f-validation-preflight.json.gz",
+      "bytes": 9313,
+      "sha256": "892f3f4efd7fd3251a27db3b0ebed8d34c1f247306c77146ff552c8c536fe8f8"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/candidate-ced590f-validation-preflight.mts.gz",
+      "bytes": 730,
+      "sha256": "78e063d21dc290f08ad46ba06345d3d3bce8b8a6facf7cab758285de968b9bb8"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review-corrected.json.gz",
+      "bytes": 520,
+      "sha256": "f77cc8a44d1332c483bd297cb8dd4de2be9fc986a72185e30bb651a9966d04ed"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review-corrected.log.gz",
+      "bytes": 619,
+      "sha256": "906ab9d658f7bba73a559ad8f803167b824dd76d9c71a4d6d0aa2389399d76b1"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review-corrected.ts.gz",
+      "bytes": 740,
+      "sha256": "2d345a648c52c8201eb7afd357b6361086cd8dcf82b0004e46111a4cc5f038c6"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review.json.gz",
+      "bytes": 497,
+      "sha256": "e6876464a8d3a9948b734666c0ba29d843519692ace308a3118363e7941af1c3"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review.log.gz",
+      "bytes": 598,
+      "sha256": "1b05a4ca0fee291060a4d5d703fede30daa7c7f489aa0c81c12ec6400795169b"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/certificate-independent-review.ts.gz",
+      "bytes": 735,
+      "sha256": "7fa6c64de66ae6ce5dbc4c31134d525f6b51261818154f4e56eeabaffab71b00"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/der-check.log.gz",
+      "bytes": 223,
+      "sha256": "9b805856d80d216e60e14ca6ee3062ea067dc8ba2a4576e915721a552a4c376c"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/der-check.ts.gz",
+      "bytes": 381,
+      "sha256": "cae82104e8f3f9ebaeb7021900501d7d024f47981129f3fa9d727be7103f27ff"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/go-test-attempt2.log.gz",
+      "bytes": 215,
+      "sha256": "46dd9a1beff83c42d1bdfdd3ebcb5539036a6d122eac516004e44bd43cb20644"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/go-test.log.gz",
+      "bytes": 239,
+      "sha256": "bea30fe3c6ba41b76e19417bb817afb7da83ba0db61dc3c144c1ee3c09d02e5a"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-focused-tests-1.log.gz",
+      "bytes": 226,
+      "sha256": "9b297f8d58678117c49d13a9593ed612d1e882e3ac94ae280047e4f21a19f913"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-legacy-tests.log.gz",
+      "bytes": 225,
+      "sha256": "f7cdb52b4add865a1804282f0afd0b10c1dd1f8defc2b4114523896949c13573"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-real-go-1.log.gz",
+      "bytes": 648,
+      "sha256": "bd1a8bce7a53c7d1540d8154ad52eadefa8812194416539156025ccff3dbb983"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-real-go-2.log.gz",
+      "bytes": 218,
+      "sha256": "be1f6ecc58a2abd732585272f1621b5bb0210467ba6068f6da026dbc493846f4"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-review.json.gz",
+      "bytes": 2131,
+      "sha256": "3912d32a270ac3ea71705e5ba30b5b486fba003f515b5bc69cb3de1317725ece"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-typecheck-1.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-typecheck-2.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/oracle2-typecheck-3.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/replay-attempt1.json.gz",
+      "bytes": 1438,
+      "sha256": "5f479831fcb7981d5ccf61ee3d7d77c38e4d8443b998254bc75697a8a0b1a683"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/replay-attempt1.ts.gz",
+      "bytes": 541,
+      "sha256": "555466eba888846b10effb163c7aaee173d8017c888610141270c87c535c02c6"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/retain-reference.py.gz",
+      "bytes": 1281,
+      "sha256": "6a56b3dcb0b203afb149c05ba00e5e4daeaec6df4e1178e511fdb2c3d241f96e"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/review.json.gz",
+      "bytes": 1736,
+      "sha256": "8b7b3aed9db2a101b0d2094a4536b08c31f4b5c3c4a6bdeb7011d8b6fcc628c5"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/tests-attempt1.log.gz",
+      "bytes": 872,
+      "sha256": "02105bd5d50487e588d182de61a22543fc5d16bd837d124909bf2093847147b9"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/tests-attempt2.log.gz",
+      "bytes": 677,
+      "sha256": "f68c9ba67ad6f09963acc44e6b6c53f39cd620ce3fbc28330b4fdd583e1c0a89"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/tests-attempt3.log.gz",
+      "bytes": 222,
+      "sha256": "82e267754afc0dfe58544b67e9f7f10e22ab2c0e5dc88b9cb10e78f6a6bdc4b8"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/tests-initial.log.gz",
+      "bytes": 546,
+      "sha256": "0ab61e4c32dfdfdd7285ccb837d10aa3e5574d8d4444e7022c9e5156afce914f"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/typecheck-current.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension/typecheck-initial.log.gz",
+      "bytes": 230,
+      "sha256": "cb1174558b68af629f781eefaace2e2e9be5c7172403fc74a2fbe9a3df5ba9cd"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension-v2-independent-review.json.gz",
+      "bytes": 1041,
+      "sha256": "6abc26eb095a13bb0faa41ff9e79107954976aa8c27bd556dd056a0d9fb7e67c"
+    },
+    {
+      "path": "evidence/out/native-coverage-extension-v2-independent-review.log.gz",
+      "bytes": 225,
+      "sha256": "ff36b6b04ef92e3ef50fd8110a2f0c84325e205998e7e7c896386d3bf99e73ee"
+    },
+    {
+      "path": "evidence/out/native-review-4a954ac/intake-independent-review-2.json.gz",
+      "bytes": 741,
+      "sha256": "1a272b5f70cfb278eb719337a80b628104e790a8869af951eb7973ab57371741"
+    },
+    {
+      "path": "evidence/out/native-review-4a954ac/intake-independent-review.json.gz",
+      "bytes": 743,
+      "sha256": "a9d13ca11d1fe259ef7277013845b9eccfd4f620482d57307b15d5436bd29cd9"
+    },
+    {
+      "path": "evidence/out/native-review-4a954ac/verify-intake-independent-2.py.gz",
+      "bytes": 3202,
+      "sha256": "22c41df290c79917b377527d5f1b21e9f7107f8c0128437a6fa6cb558b8c2588"
+    },
+    {
+      "path": "evidence/out/native-review-4a954ac/verify-intake-independent-failed-v1.py.gz",
+      "bytes": 2949,
+      "sha256": "8b12a402e49d183c310a125c8f05244a6f0e1ca978ac9759be4759aff209c2e9"
+    },
+    {
+      "path": "evidence/out/native-review-4a954ac/verify-intake-independent.py.gz",
+      "bytes": 3124,
+      "sha256": "84716ab8d13f7599c3dc8d74053c202044507f2c1ce874c3895488810e3e59ee"
+    },
+    {
+      "path": "evidence/out/native-review-ced590f/independent-run.log.gz",
+      "bytes": 768,
+      "sha256": "208fdbbb20497ff8bd31dbd63f36cfe4bb3a42f8d1f3840c3a74d6af59d62dd9"
+    },
+    {
+      "path": "evidence/out/native-review-ced590f/intake-independent-review.json.gz",
+      "bytes": 738,
+      "sha256": "b7a4db6540dfdedf9b54a6571cb653138c9591a0b8a48c7cdfe7c8299be90cd6"
+    },
+    {
+      "path": "evidence/out/native-review-ced590f/verify-intake-independent.py.gz",
+      "bytes": 2968,
+      "sha256": "ab393d13b24d48899cf134a32de3609535265f0028c418f18402658adaec2392"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fee-dependence.log.gz",
+      "bytes": 21279,
+      "sha256": "0cbe087bc91386ca2003544a4788b4b48a92aa17299dc6903f166f7df77b8f35"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/events.json.gz",
+      "bytes": 269,
+      "sha256": "64a33f8316d703a57b47d40c5aed7838252bc6c0437c53101cf047ec1b3641ff"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/final-storage.json.gz",
+      "bytes": 2061,
+      "sha256": "efa3f14d27d033ce57aa76b3157a4bfdc5c4233bebe0d3441120dbc138a6290d"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/final-submissions.json.gz",
+      "bytes": 2039,
+      "sha256": "d33629660449af9f397dfd08e9e0d2f1519ff9f313eb546d84a13fe4a3e18ef6"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/initial-outputs.json.gz",
+      "bytes": 4915,
+      "sha256": "4b54f4767663f474fa6a9a16c4bc6efb235e8781eb2596c0632a15d65195f842"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/source-after.json.gz",
+      "bytes": 8706,
+      "sha256": "9b581a85da2738c96b3a3f4e9a2c0fa0c72b09e09835c539e657b3cf6b75baf4"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/source-before.json.gz",
+      "bytes": 8706,
+      "sha256": "9b581a85da2738c96b3a3f4e9a2c0fa0c72b09e09835c539e657b3cf6b75baf4"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471324693/trace.json.gz",
+      "bytes": 5817,
+      "sha256": "ad8ad5bb10d31bc030492c10f5f2f9bdce7c1cdbbc62e9c8783a1fdc6d0dabbe"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/events.json.gz",
+      "bytes": 571,
+      "sha256": "6d6fd7bcdffa9954955a9fbfae22bb8d59ca0526c90383e9989700636fcc1a21"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/final-storage.json.gz",
+      "bytes": 2785,
+      "sha256": "feaf8cdf0c27431dbcc5ccae3f71e7c9aa98066dae5bcee7f7f706c46e4d0b6f"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/final-submissions.json.gz",
+      "bytes": 2779,
+      "sha256": "8765790185cc9b1e98e91f361ab2194cbc938d3fe3840e064ed91127c1caed42"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/independent-verification.json.gz",
+      "bytes": 661,
+      "sha256": "01a4d914a04b5f54758b432e154a0c7c2d13734df904fe3bd336d505a2b6d4b0"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/initial-outputs.json.gz",
+      "bytes": 4905,
+      "sha256": "d4be3570e327d27b69ab98c86404e1d703001a1be5fdf8673c7f35ddd74e1aed"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/result.json.gz",
+      "bytes": 666,
+      "sha256": "443ba11afacf92863b37902f97a85883fcb1b15babacf8c247647278f7425a3f"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/source-after.json.gz",
+      "bytes": 8706,
+      "sha256": "5ce48628ce1043bacdcc3f83af395da3442a03ffe8a7ade12b28dee7ed5a6745"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/source-before.json.gz",
+      "bytes": 8706,
+      "sha256": "5ce48628ce1043bacdcc3f83af395da3442a03ffe8a7ade12b28dee7ed5a6745"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-1794471403923/trace.json.gz",
+      "bytes": 7939,
+      "sha256": "8126d15bffa678ea38940cbca9d7a65cf2e95e038ba92eb51daf978325b63ae0"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-attempt1.log.gz",
+      "bytes": 659,
+      "sha256": "afac3a6cda383ee4b2182daf8e8dce1d26ace078445a99f908009ff773d4ecf1"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-attempt1.ts.gz",
+      "bytes": 3465,
+      "sha256": "6f11eaeac5a002b6be1c2b72100cab48489df2a5a180a39253f00a0571b242f9"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool-startup.log.gz",
+      "bytes": 481,
+      "sha256": "7445faca3155e60732b009e8a31dc976cb54a81b12d8f37017f11393e242bba8"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool.log.gz",
+      "bytes": 847,
+      "sha256": "a24eb7965fba798586d57f73b59719716ed9e7289f4ec0a244f2bb474c4b32f0"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/fresh-pool.ts.gz",
+      "bytes": 3595,
+      "sha256": "5672b7a615c437c69587995b2ed862aad908210b583b5d0e28c360199e2ee247"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/prior-native-payments.json.gz",
+      "bytes": 1170,
+      "sha256": "a122e213c9f59b430a44a7ddc21d2d9adb13546c44f2a1705f44a90c72bdd0c2"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/review.json.gz",
+      "bytes": 3571,
+      "sha256": "ee4c1600ca534d539f10561590343346fa4a8ef9590a7f3fbe0746cc3793b0e6"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/source-binding.json.gz",
+      "bytes": 301,
+      "sha256": "e9a2437afecff35d33d48282bb824b3febc50199a52f0b774aebf8fb3ba8cb48"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/verify-fresh-pool.log.gz",
+      "bytes": 742,
+      "sha256": "e27d584af26601bb9e948323b9c0e2814c6d99fe65851fd489874b69f092f9a8"
+    },
+    {
+      "path": "evidence/out/permission-fee-review/verify-fresh-pool.ts.gz",
+      "bytes": 2308,
+      "sha256": "d2aa4bfd2573c48caae367b5a2c67284d1dbbf5898723fb8337bd40fa8264c0b"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466546151/evidence/conformance/coverage-transactions.json.gz",
+      "bytes": 29442,
+      "sha256": "b75ba12d1b143b936387b00b79c318baef882a4007d007ec7625fe40bc0d969e"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466546151/source-after.json.gz",
+      "bytes": 6246,
+      "sha256": "a7875d01c6be1340dde54f3958c9be8544df6d95af2cb6dd3c59dba2a3bb932d"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466546151/source-before.json.gz",
+      "bytes": 6246,
+      "sha256": "a7875d01c6be1340dde54f3958c9be8544df6d95af2cb6dd3c59dba2a3bb932d"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466546151/verification.json.gz",
+      "bytes": 883,
+      "sha256": "7a035471d447d0c69f3a926d364a47b0669bb9f33b652cf5fa69f919b2cc2240"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/evidence/conformance/coverage-transactions.json.gz",
+      "bytes": 29524,
+      "sha256": "5380086e1df211ab08628b760242f85e4e4fd528e51ebf148b31fd744f390439"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/output-snapshot-after.json.gz",
+      "bytes": 4973,
+      "sha256": "b3ca67e269a85fbbad7799ee07eb4ec7d51ece6ac5fc05ac8ec4a1b04fe304a7"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/output-snapshot-before.json.gz",
+      "bytes": 840,
+      "sha256": "cebb6b0856fbbb074562b5f7bf82917e66961837a6aacf94e4c0f35a1a361095"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/source-after.json.gz",
+      "bytes": 6246,
+      "sha256": "a7875d01c6be1340dde54f3958c9be8544df6d95af2cb6dd3c59dba2a3bb932d"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/source-before.json.gz",
+      "bytes": 6246,
+      "sha256": "a7875d01c6be1340dde54f3958c9be8544df6d95af2cb6dd3c59dba2a3bb932d"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/attempt-1794466609915/verification.json.gz",
+      "bytes": 883,
+      "sha256": "7a035471d447d0c69f3a926d364a47b0669bb9f33b652cf5fa69f919b2cc2240"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/base-services.go.gz",
+      "bytes": 9073,
+      "sha256": "9e061825b9d03c13f21057ff644f5f4ce2bccd413695a7c4813e8a95ec6d5efb"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/batch-focused-corrected.log.gz",
+      "bytes": 22989,
+      "sha256": "5147398f4996e6a8055d2301e46cc2cb3de9eb74ed58e1a08e9bae24a6a2daf1"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/full-build-attempt1.log.gz",
+      "bytes": 2246,
+      "sha256": "09ec2d1ad4bbb497d0330af883f16fbcae7bf1be81af07827040471ae632a739"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/full-build-attempt2.log.gz",
+      "bytes": 2112,
+      "sha256": "b939b8c1456c3c634a286c7163a905e6de7d1e8ed9d69d93bbaeb5d32830deb7"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/http-tests-attempt1.log.gz",
+      "bytes": 562,
+      "sha256": "67bff165420ec57c35fa5023165c2cbfad8f08aaa176d238cb6af4427fc0acda"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/http-tests-initial.log.gz",
+      "bytes": 182,
+      "sha256": "bcafb15244eff0137beecbf2f093d85afca930550863a176a3b58cf6d7b0e0a3"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/output-snapshot-tests-attempt1.log.gz",
+      "bytes": 980,
+      "sha256": "c9fef46d105bd0bae21cbcc21e3d22003ced24043b1eba4db56d442f453edd4a"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/output-snapshot-tests-attempt2.log.gz",
+      "bytes": 801,
+      "sha256": "f2b073c1fe2ba6db33e88cb49882daf9ed37cf5a40b5973d795adfc4d2515f9b"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/output-snapshot-tests-attempt3.log.gz",
+      "bytes": 464,
+      "sha256": "df5b243bbdcee100e455642c77b25e3de8dc67ddd7c88191a2530eb41c7bc324"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/reference-attempt1.log.gz",
+      "bytes": 487,
+      "sha256": "283a7d2a1779d67a2fda00b251b15e34fdff79c4bece67ddc98c18d8e0c91208"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/reference-attempt2.log.gz",
+      "bytes": 1356,
+      "sha256": "062870724bc9fc2d7dd1df98e52210469a56bda86be4a8f355597155a5a9e0e1"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/reference-with-snapshot.log.gz",
+      "bytes": 1357,
+      "sha256": "54ebf85022c059b2e8c865be802eaa261452ce0c6009955fc7fe947922caf02d"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/review.json.gz",
+      "bytes": 2436,
+      "sha256": "5e2e83b6a009440bb0b9869159ba9f70c642f0e1d218d861f2640d455da0ebc8"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/run-reference-with-snapshot.ts.gz",
+      "bytes": 1992,
+      "sha256": "74238477e91bd096a327c32d34a60abc599f188187bac684399898599c8ccc35"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/run-reference.ts.gz",
+      "bytes": 1755,
+      "sha256": "3455c0820c8ec5faded61d28a3a7be9d530d81ed825a9dddd65fac852af4644e"
+    },
+    {
+      "path": "evidence/out/storage-batch-subjects-review/storage-suite-diagnostic.log.gz",
+      "bytes": 4525853,
+      "sha256": "97614a40f5b376421b8a576f7999c74ae5114bc15836b79f114d0c51896b380f"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/actual-reference.log.gz",
+      "bytes": 350,
+      "sha256": "c651063ea9b192f78e3e860bcf2e7813600b38fa5e89033dfe28d9cef4d2c82d"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/after-fix-focused.log.gz",
+      "bytes": 21363,
+      "sha256": "4be3e45f371022ec8e007b3045e892db6dac0e4182bfddf32b92e10b1b8686ec"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/output-snapshot.json.gz",
+      "bytes": 1116,
+      "sha256": "67ffaa51ab1d2459ec78b9ec7c8975a1f1265eb28031025135214554196b4f5b"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/receipt.json.gz",
+      "bytes": 241,
+      "sha256": "583c53d5da4345e231e9004fff6fb42f45599ccce2792a640506253adc715007"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/source-after.json.gz",
+      "bytes": 6170,
+      "sha256": "0cb9bdb236e07f59784fd43630d14a196cbf04b471e449dbbc2c48592cb13dfc"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/source-before.json.gz",
+      "bytes": 6170,
+      "sha256": "0cb9bdb236e07f59784fd43630d14a196cbf04b471e449dbbc2c48592cb13dfc"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/storage-transactions.json.gz",
+      "bytes": 888,
+      "sha256": "e8f4d4d0e53c2805313e2292468c2470f97407c9105f1ad23d932f3363f019fd"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467121533/trace.json.gz",
+      "bytes": 2756,
+      "sha256": "bbfff3f486228e8f96ce8f985b0961948dca44f1b7dab7bc5f1f2e2fd3651229"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/attempt-1794467632844/storage-client-trace.json.gz",
+      "bytes": 103648,
+      "sha256": "b74da189f7b4c3f165a922582b30445f3ce4cb57c84a85d8260e081f4de243e3"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/before-fix-compiled.log.gz",
+      "bytes": 19781,
+      "sha256": "5a4463beb16064bdf64c0d2c6fc22a67d768f13356be5be54cd6f05fe2cfa874"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/before-fix.log.gz",
+      "bytes": 19536,
+      "sha256": "762488f71b45b24220b8f15348d9d0a90d0ed8298a9d3e998bdd9cfff453e97e"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/full-build-attempt1.log.gz",
+      "bytes": 2250,
+      "sha256": "764f97e33c6af956fd262bcac7019765247718c3003858a3806ef0731e6b673d"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/funder-suite-corrected.log.gz",
+      "bytes": 97,
+      "sha256": "b7a36b15024360905252edc44ff3d32f4d390c5d3e0fd8f7683272af98f35c5d"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/funder-suite-first.log.gz",
+      "bytes": 215174,
+      "sha256": "459e0d3c5183423ef58904fee4b727f087c90ee5f051c5d4f34874a34e4ecbf9"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/review.json.gz",
+      "bytes": 2031,
+      "sha256": "cf1b8ce7b4f6dd58cb8c9fb651e47aabfeee470c424d58aa501270454db68c69"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/run-dust-reference.ts.gz",
+      "bytes": 2012,
+      "sha256": "2dc3d5685502fc0356c00d13af4b13f8ace18646963491ddcf61d7b23d5674cc"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/run-transaction-storage-trace-executed.ts.gz",
+      "bytes": 2041,
+      "sha256": "1734cadf8e982052421ea7e8c52f4c0e5cbe205c9a1629381a04f0fda926faf5"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/run-transaction-storage-trace.ts.gz",
+      "bytes": 2045,
+      "sha256": "b4736deb1b91eceed4fdd6bb706bcad27b02a2216bbfa67723fa0a182dd4aa21"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/source-snapshot-custody.json.gz",
+      "bytes": 318,
+      "sha256": "f6ddaddb6b06c85abb5c04a68584dc2eb0a5b9d3c378ef2a636d4911bece6757"
+    },
+    {
+      "path": "evidence/out/storage-dust-accounting-review/transaction-storage-trace.log.gz",
+      "bytes": 1251,
+      "sha256": "4e7fc4386e1816018ac2aa26faf68273fd718d22046267a35e50b54a9efed018"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/admission-test.log.gz",
+      "bytes": 219,
+      "sha256": "bd106709476941cd6760797741205faeb937e85428c0afc38ea188094990cf2b"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/admission-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/after-fix.log.gz",
+      "bytes": 87,
+      "sha256": "04c09856a1dff0e2d7793eb06ffbeac9bf83eb95235878320b3e7639237f529f"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/receipt.json.gz",
+      "bytes": 244,
+      "sha256": "aed9d13df03bed78e4114e6ce0fc6fdacdd85e4ed19fea1f28a907cec4a8c8b3"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/source-after.json.gz",
+      "bytes": 6152,
+      "sha256": "7718c3f94bb4719108bdcbfdde991a15396966ec9b6cf9a97717f596f7c60a01"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/source-before.json.gz",
+      "bytes": 6152,
+      "sha256": "7718c3f94bb4719108bdcbfdde991a15396966ec9b6cf9a97717f596f7c60a01"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/storage-client-trace.json.gz",
+      "bytes": 2624,
+      "sha256": "21fb7f2b5da121adf78945b78c3593ac5844cb3971a7fed595bffea0d0ec554f"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/storage-transactions.json.gz",
+      "bytes": 1264,
+      "sha256": "5fd67bdfd159f1efaaaa93af5bbb637772aa6c69343f9b44f846de525b9edc28"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/submissions.json.gz",
+      "bytes": 1185,
+      "sha256": "b3e63f830ccb6c8c3393b5c7add256e6532a9c21f23d79ff0cdd131a0a80c26a"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468879545/trace.json.gz",
+      "bytes": 3389,
+      "sha256": "fb6be0d5b9cb2cffd13c8be44d94bbe2c0645433135e9130b864e7679f3a83d5"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468960039/source-after.json.gz",
+      "bytes": 6154,
+      "sha256": "a0dcf00ed9dc9aeafa445b891c504a27df600fb667d0d97c7b0fa449e42cfb03"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468960039/source-before.json.gz",
+      "bytes": 6154,
+      "sha256": "a0dcf00ed9dc9aeafa445b891c504a27df600fb667d0d97c7b0fa449e42cfb03"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468960039/storage-client-trace.json.gz",
+      "bytes": 2623,
+      "sha256": "91ba4c447233b2d04ffb3d0dddaaa5a48ee3110216334c2f3b6e247a57dfb5e4"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-1794468960039/trace.json.gz",
+      "bytes": 3082,
+      "sha256": "76089282d7830621317d869ff0f8d06c1586d7404ca4da5e6fb33573e3521fbc"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-reference-startup.log.gz",
+      "bytes": 488,
+      "sha256": "04f5bb39ecaaefb7099f886d395de9361e58ca4b8f9c901ffa85f5b44adb3449"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-reference.log.gz",
+      "bytes": 661,
+      "sha256": "c52989a9368940c580cdf7bc9a6d1551162172dfa422520d0a64f5a2c358dd56"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/baseline-warm-client.log.gz",
+      "bytes": 536,
+      "sha256": "3341e46b623ae63c31c090abfc43c46e6e73ff5a416ecf288e668f69a6873479"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/before-fix-compile.log.gz",
+      "bytes": 228,
+      "sha256": "d67b0c0fdb702049767d7aad480984a73cff5b47555b89fb9dc4774d06c864fb"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/before-fix.log.gz",
+      "bytes": 42790,
+      "sha256": "9a9fb70a240152697ec155861b655b985b1654617fe16a3d2993c8301c0ad084"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-baseline-1794469152941/source-after.json.gz",
+      "bytes": 26907,
+      "sha256": "393f17a3536f8b55eb8cee5a044ddbf575cadcada1ca5880f8f4522789e8cc1f"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-baseline-1794469152941/source-before.json.gz",
+      "bytes": 26907,
+      "sha256": "393f17a3536f8b55eb8cee5a044ddbf575cadcada1ca5880f8f4522789e8cc1f"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-baseline-1794469152941/storage-client-trace.json.gz",
+      "bytes": 2624,
+      "sha256": "6a707803037d1788e470242cb8fc8f29f6a0df339387a24ef463cc3eeb6a7323"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-baseline-1794469152941/trace.json.gz",
+      "bytes": 3104,
+      "sha256": "bc25814a85d01b9a8d258a54ab45fb0583e51949bd98bb02544eda7b06c3bd57"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-baseline-reference.log.gz",
+      "bytes": 632,
+      "sha256": "3062734a500cf91433698b7d3048ebc9b3e5520602f4029b835d8dadadf2daa4"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/receipt.json.gz",
+      "bytes": 244,
+      "sha256": "819e211fc774b3f01cc446a0d81b11760a366acefd57a171c19e6e80904c6443"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/source-after.json.gz",
+      "bytes": 26892,
+      "sha256": "64102cd497c2c37d91fc732e072a6db166927d8ae542f3981b1f7134b91b44de"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/source-before.json.gz",
+      "bytes": 26892,
+      "sha256": "64102cd497c2c37d91fc732e072a6db166927d8ae542f3981b1f7134b91b44de"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/storage-client-trace.json.gz",
+      "bytes": 3318,
+      "sha256": "fd65539ed3e42cd65d2dea54dbc2aab0adf8c29ce37cde6be0a27c734fb93180"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/storage-transactions.json.gz",
+      "bytes": 1265,
+      "sha256": "568bba3767f51978d7ed8dc422dbd3602c8e3666509a76ff607a1fb26834d46d"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/submissions.json.gz",
+      "bytes": 1190,
+      "sha256": "5cd69c8c7e7fc627df0ae4d6a6a93b4ebc45a92402800c07933fd67022afd7d6"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-1794469206832/trace.json.gz",
+      "bytes": 3440,
+      "sha256": "77729e929ca0e0dd12a0b09a91cf1b051e77ef3ff302678d3ead2f2984661124"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-corrected-reference.log.gz",
+      "bytes": 482,
+      "sha256": "cd570cf09439bbf8a4ae1dd0c1bcdf54798fced4bf06d15168f9dc2169916fdf"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-dependency-inputs.json.gz",
+      "bytes": 20735,
+      "sha256": "6db793e3b54649c17fce43bc51a8d74528cdf5fc79ce152bda1b8f874fc70b43"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/candidate-fixture.ts.gz",
+      "bytes": 840,
+      "sha256": "527db4190bdc791f49ff2baf05ba29b4eef8c9584f14d501ebb48515f10c85c1"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/receipt.json.gz",
+      "bytes": 243,
+      "sha256": "fdb1d7fa5070720c70de477172fd3dd466609f54566dfafbae2ed687b841ad0d"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/source-after.json.gz",
+      "bytes": 6147,
+      "sha256": "b777fb94163347081d6f4816560728a7c1067ea4d640edf79946fff95dafb312"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/source-before.json.gz",
+      "bytes": 6147,
+      "sha256": "b777fb94163347081d6f4816560728a7c1067ea4d640edf79946fff95dafb312"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/storage-client-trace.json.gz",
+      "bytes": 3304,
+      "sha256": "992c25b70b27adb1f7e41b8fe7c301430d85888b814d692aa7be47818a4e232e"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/storage-transactions.json.gz",
+      "bytes": 1252,
+      "sha256": "edecafe04392d5c5bbba5725eb29d13bc3f64f95ed5b97ff226a60d361e97759"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/submissions.json.gz",
+      "bytes": 1176,
+      "sha256": "12d10359a619d089aa8704926a69e7c192df3df8f66d0fb08478a8ae51ac673c"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-1794468977778/trace.json.gz",
+      "bytes": 3393,
+      "sha256": "5e24e0add38406438eaf12172c45e2236e0c55a6580bf0361832c7217fbd119c"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/corrected-reference.log.gz",
+      "bytes": 460,
+      "sha256": "80f4ab65f3a2bb2e53bf4b05635da3525d7a32a9ae6d2f208659ebbd74c09959"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/final-parent-review.json.gz",
+      "bytes": 1389,
+      "sha256": "b2ff1588998fcc0a4a5a4cd1d3821d5066be356f513b02c6cb7f25bfda95e963"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/final-parent-suite-review.log.gz",
+      "bytes": 221,
+      "sha256": "36d5c6e4fbfffb350884f66a2ec09bfd59e1ba73d5a486be921d4a2151f3b748"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/full-build-attempt1.log.gz",
+      "bytes": 2494,
+      "sha256": "a0b015ca880b42a0be4dbc92007ae15bfd57ab4fd23e7cce66fda30f547d4bfe"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/independent-source-review.json.gz",
+      "bytes": 833,
+      "sha256": "299aaa05f1cf74aad81c3bb68433fd698a015c1039124f086e56bda045dcb08c"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/review.json.gz",
+      "bytes": 4599,
+      "sha256": "677d476cb279fc99bbeac1a6fd099a471070992dade85b4fce4df554e181a022"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/run-candidate-reference.ts.gz",
+      "bytes": 2301,
+      "sha256": "71521d661f33cc92bfb0bc3182795811c5469b1ee6390d4672d01f4c3548da45"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/run-reference-warm-client.ts.gz",
+      "bytes": 2238,
+      "sha256": "660cf9290e2fc3dd5de14ce06f11c1f533e7e290559f577f1bdb0a94420065da"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/run-reference.ts.gz",
+      "bytes": 2244,
+      "sha256": "38912705e8302aec099b3a53abd5af84a5470094201e1770d43a0360f4b8c098"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight-fields-mutation.log.gz",
+      "bytes": 736,
+      "sha256": "a065fa4ad4a8da90665e5571aaabbfeed1c8d7c1813a80b5ece46c0f583d31e6"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight-fields-mutation.ts.gz",
+      "bytes": 1382,
+      "sha256": "d456c6c4f947bc23026ca6c4a09ea5f2f0a02b3e850ddf8d6bdaeb2270df0105"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight-startup.log.gz",
+      "bytes": 499,
+      "sha256": "fe60ce76099ae31adf2b0b1add030f6fd7059b40297f893a95114380234c8cb7"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight-startup.ts.gz",
+      "bytes": 1370,
+      "sha256": "44307f64b48454fe18aaa22da0bb6db52a0876e884d495e26821a7893a13b863"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight.json.gz",
+      "bytes": 1937,
+      "sha256": "053001c7f5707f12697a0a5bf6709cfe1f30ebf4ddec12d062f5b27d30e69436"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight.log.gz",
+      "bytes": 50,
+      "sha256": "73c821d4d04685ac0e3d582ae79638f75a433c65ab1893fe4e8d0969ad1991c9"
+    },
+    {
+      "path": "evidence/out/storage-input-ancestry-review/validated-namespace-preflight.ts.gz",
+      "bytes": 1393,
+      "sha256": "7eaae77e58ee2a66ae7653d1d09dfa5eee809dc0a821952ffd1e46b90dda4ce6"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/actual-reference.log.gz",
+      "bytes": 1134,
+      "sha256": "2a6c7605d93191723bb0b83fe00193b4b0f35d925a27198b6e8413d3b4c516ee"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/after-fix-focused.log.gz",
+      "bytes": 15659,
+      "sha256": "16f013cb720e27e005f070e683aa2b46d9994b63fac8f23cedf8a7962bc53813"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/evidence/conformance/coverage-transactions-observed.json.gz",
+      "bytes": 31757,
+      "sha256": "2bfa8e4c5631f33f6bdd605cbbe0147877cdbbb363e4cf2e32c2e2cca027b888"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/evidence/conformance/coverage-transactions.json.gz",
+      "bytes": 32305,
+      "sha256": "f37adfa6f2c2005c3b0ab2348316c9a0b7056052b257fe5e8743098e2b2e4772"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/global-submissions.json.gz",
+      "bytes": 3645,
+      "sha256": "f5303f19e71ad5e6aa934ac7955c5a1b82e5ca209d7f5b9c4b94e266ed50138c"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/source-after.json.gz",
+      "bytes": 6255,
+      "sha256": "0f3185da58e7b86e3fa3a4835e60be88567f6a29f595a888a5ad0abc6adc6b03"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/source-before.json.gz",
+      "bytes": 6255,
+      "sha256": "0f3185da58e7b86e3fa3a4835e60be88567f6a29f595a888a5ad0abc6adc6b03"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/storage-client-trace.json.gz",
+      "bytes": 104095,
+      "sha256": "99146153317980d198abedcfdb5908119f91c00ad03cd38e55470a666ebf9806"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/attempt-1794468345225/verification.json.gz",
+      "bytes": 728,
+      "sha256": "6933df20d9ca9b6d0f0bf96f2899d2486e38512961b0980207f8869ab98b6c00"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/before-fix.log.gz",
+      "bytes": 11817,
+      "sha256": "76a904248c5e1e8a9db9042801769bf2f9f4561d936e78d8539d8e053eb3c89c"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/full-build-attempt1.log.gz",
+      "bytes": 2377,
+      "sha256": "78f63387ce357646f0d007a5c1d945c9125c2cdb3fc269f6ff75b0f498500cd0"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/funding-source-after.json.gz",
+      "bytes": 6254,
+      "sha256": "051a89cd3cd1a9c3889e231e9d0c4e5dc4ff2c299f5ca99c73528dd6434cbb71"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/funding-source-before.json.gz",
+      "bytes": 6254,
+      "sha256": "051a89cd3cd1a9c3889e231e9d0c4e5dc4ff2c299f5ca99c73528dd6434cbb71"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/independent-source-review.json.gz",
+      "bytes": 917,
+      "sha256": "1905afde97668d6f5029c0f8c772091faf467cdce59e0f8a7dbd60daeb39cee0"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-funding-verification-attempt1.log.gz",
+      "bytes": 465,
+      "sha256": "a574543b40718a86d1244062b96ba67922243e4aaf49197170dd3a1fbcb982f4"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-funding-verification.json.gz",
+      "bytes": 1271,
+      "sha256": "066c96d9c91d32b10fdaf260fcf56331a982e2ea5bb2669efc84bda36356bd78"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-funding-verification.log.gz",
+      "bytes": 220,
+      "sha256": "6d28fe972df9a40c640035a33be00e2838c7d435f27804ac8b5a20526c51c40b"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-verification-attempt1.log.gz",
+      "bytes": 388,
+      "sha256": "23c0f548e20e16e02a33e07268cdf3916192c62cbaf26612ad66264c2d00d3a1"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-verification.json.gz",
+      "bytes": 1528,
+      "sha256": "68f3b985ce3dd679aa3a507991d8f04120a98631bf8bf39904d6b91bd2c033bf"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/parent-verification.log.gz",
+      "bytes": 1248,
+      "sha256": "6b969dbed581df2683b5a32926406b980fff405ed67c41693ef09e427194cb28"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/replay-parent-funding-attempt1.ts.gz",
+      "bytes": 1435,
+      "sha256": "1f3c35a08cb48e18d781d7a1d2936698ff09d0a08020a4c3597700563f44ad64"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/replay-parent-funding.ts.gz",
+      "bytes": 1475,
+      "sha256": "f91d4bf34999768c4d713800f3de1c2d42cae6d494d1688b9ce44499d3509622"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/replay-reference-attempt1.ts.gz",
+      "bytes": 1107,
+      "sha256": "87c2fd17b32d6c1cc893be9c9f687bd600a8881b86cbaf70b14c983a496c9b4f"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/replay-reference.ts.gz",
+      "bytes": 1113,
+      "sha256": "58d627471c33766f3af0178a1d3dc4ceab405da1ee6a8bc56db93e6e4411ca96"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/repository-cas.log.gz",
+      "bytes": 3695,
+      "sha256": "9817b14d31b45ea398aeb57d69e9e03eb2aacc68c5bcb67e68eae8d59deba300"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/review.json.gz",
+      "bytes": 2547,
+      "sha256": "b755a9fb5216b7d29002b58d433033222d92292a020981f102861fa199d3371d"
+    },
+    {
+      "path": "evidence/out/storage-merge-accounting-review/run-reference.ts.gz",
+      "bytes": 2041,
+      "sha256": "afd0062e9f23b0e17c68a8684a47e2b6d3ab97cc36f4e275243356685bdd0ff5"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/contradictory-inputs.json.gz",
+      "bytes": 3121,
+      "sha256": "a4fa90cb5919170d9f68dd2662ee08fe6ce18653f501c335ee0630da1b6f8213"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/diagnose-storage-client.mts.gz",
+      "bytes": 763,
+      "sha256": "056a9b9c0ec7eb5de3dcee1017093ee125a0d0ceac2ba465ad560a5254f778e8"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/diagnose.go.gz",
+      "bytes": 639,
+      "sha256": "470606478ba70729eb1b49318f4ccbbdf71ce807fc10527f2ada27fa2ec096bf"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/diagnose.mts.gz",
+      "bytes": 522,
+      "sha256": "c190b135dd5f882f46a0349e32cd3c423aded616f7cee508d5403f64323ec5a8"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/go-proof-diagnose.log.gz",
+      "bytes": 265,
+      "sha256": "fc9819dcf4301941e2938b92fec4828bb904da2b4e3c7b26ac00c4b7f6b7319b"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/review.json.gz",
+      "bytes": 2147,
+      "sha256": "ac69b0b91db47261011ba03cd6ed0428c82a72e4e46573268ad1347888972342"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/storage-client-diagnose.json.gz",
+      "bytes": 286,
+      "sha256": "949255d2a3e5ce43257a9f98c914b2ae78030d64de8dcada9a09926fe3627634"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/storage-client-diagnose.stderr.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/storage-client-diagnose.stdout.log.gz",
+      "bytes": 389,
+      "sha256": "9c23cf79201f5fed38acc694ecafba4bfd6e7e30241964147b28b378f4d0b59b"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/ts-proof-diagnose.json.gz",
+      "bytes": 320,
+      "sha256": "c68c2e49916403e0ec8e57442161ef3614feb2465d1f21bb645988a8f1085141"
+    },
+    {
+      "path": "evidence/out/storage-proof-merge-review/ts-proof-diagnose.stderr.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-contention-review/review.json.gz",
+      "bytes": 60553,
+      "sha256": "98c1f99f2c9f26f425b8987919075d7d7d98a023be1c00bccbe977bdb737750d"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-contention-review/snapshot-diagnostic.log.gz",
+      "bytes": 636,
+      "sha256": "05fbe39eecf02c0a5be099b59dfdd5fda526b77423e4f4319822566a6f1f6291"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-contention-review/source/pkg/internal/storage/database/native_snapshot_diagnostic_test.go.gz",
+      "bytes": 1286,
+      "sha256": "0356e4a2af98ef5014106dfe286ed43d8d5bb5ce780b90906a53fbffabc62f35"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-contention-review/source-bindings.json.gz",
+      "bytes": 415,
+      "sha256": "40ca227b332f7ac1465147832200bb8607cb2a2a21a070e37b2d46ad914e6ea1"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/admission-test.log.gz",
+      "bytes": 222,
+      "sha256": "04f3c16156779b9ca69670da68bae84f07f8846d14bce54d04cc68c12e063b18"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/after-focused.log.gz",
+      "bytes": 2362,
+      "sha256": "8744b125c0da14ff391ab06481e2ddd4dff010fb45a46074d08118b9d347fc3e"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/baseline-source-binding.json.gz",
+      "bytes": 245,
+      "sha256": "58eb3e1d6bc5b50a1dca1ac258aaaeabff3b95df5a042004ccd980b1fb24638c"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/before-final-tests.log.gz",
+      "bytes": 1513,
+      "sha256": "30e5f54eacee0e0e05f9b865cd9b915efd716769eebf42ab1b02c7f70dc31d65"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/before.log.gz",
+      "bytes": 1548,
+      "sha256": "ba668eb38991d56964d8b068210a2ab6f34881512c63dfe3a43bea3f1e6956b3"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/final-source/infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2839,
+      "sha256": "c2c5b80fadc69a11b0cdf13ccb340a7d34ef854d8e826529ee75531964ca3299"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/final-source/infra/adapters/storage-sqlite-retry/patch.lock.json.gz",
+      "bytes": 619,
+      "sha256": "75e5eb38f7a86884a464337f32b7e6f5cbbfe66402f8f0fdf540a9943f1377f0"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/final-source/out/itcve-go-storage-sqlite-retry.json.gz",
+      "bytes": 2437,
+      "sha256": "1da831209c596de633e006096afc7d3ef852c2943516c19b322cba5227ca7760"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/final-source/scripts/prepare-storage-sqlite-retry-go.mjs.gz",
+      "bytes": 2781,
+      "sha256": "e1ceef90437b861d8effb4d91dc348a81a415eaf1a124388573fbaeb7ad8f74c"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/full-build-attempt1.log.gz",
+      "bytes": 403,
+      "sha256": "fce2d4516af64edfe6012e6e136de8f9444e654ac822f04682c686a71ca5e1c2"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/full-build.log.gz",
+      "bytes": 2635,
+      "sha256": "3ef9a4f24cfd9e40b11d31e27e917ab376ef4cbd4179484da8b7297bb3794f46"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/independent-review-supplement.json.gz",
+      "bytes": 317,
+      "sha256": "483e4fe5466d033e614806bec29f45c7626f87b7b8dfcc609958b29a6dded748"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/independent-review.json.gz",
+      "bytes": 1616,
+      "sha256": "503a50620c007dfbedea669d27b664b03d59a08b45340dd69ba4afe2fbf66c27"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/independent-review.py.gz",
+      "bytes": 1825,
+      "sha256": "3307a8d6f8fae00a80813d892b411ae4e4b120159a4091f729ff97e44e9bbb9b"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/initial-git-header-lock.json.gz",
+      "bytes": 619,
+      "sha256": "fab6b9a1d5bd8572f2d4b7a58641d71ca6754af25409f88559bd9968c23e4dee"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/initial-git-header.patch.gz",
+      "bytes": 2939,
+      "sha256": "db08fa183382e49c522788b55a44eedcf402c76e6179eae8356916978cf194df"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/reference-supplement.json.gz",
+      "bytes": 473,
+      "sha256": "212041fcfd5e22a8801718ff6b337ef374fdbe1c7091d3f82011612b1fbd3cc8"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/review.json.gz",
+      "bytes": 2178,
+      "sha256": "b13880438fb9aa2c4cc04af097b0af5d8445e37f2b72a73b710ee5eecfd8c39d"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/source-after.json.gz",
+      "bytes": 397,
+      "sha256": "96ba19c5331418faf0d2a90cbb324600ca18beb2de3c68354cab19f59c5d4563"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/source-before.json.gz",
+      "bytes": 397,
+      "sha256": "96ba19c5331418faf0d2a90cbb324600ca18beb2de3c68354cab19f59c5d4563"
+    },
+    {
+      "path": "evidence/out/storage-sqlite-retry-review/typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/build-reference.py.gz",
+      "bytes": 1727,
+      "sha256": "3a869a95548233fd5897b6c624d730010faabcc7989877d2df21ab66a59617a6"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/candidate-files.json.gz",
+      "bytes": 86359,
+      "sha256": "cbd71702b1ce80aded50a4ef0c790a99c69dce3a64c5700d579f2c8da4c910f0"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/candidate-fixture.ts.gz",
+      "bytes": 840,
+      "sha256": "527db4190bdc791f49ff2baf05ba29b4eef8c9584f14d501ebb48515f10c85c1"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/final-tests-2.log.gz",
+      "bytes": 224,
+      "sha256": "79a4d54a66b049612a2163eb360356eab60c1a5f6d8ec8f9ca12e549bfaa3b60"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/final-tests.log.gz",
+      "bytes": 224,
+      "sha256": "89cce59be95bfe58c197337ede85fe7efdaa54108079c10c1876a6d8fe6cfa31"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/final-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/reference-candidate-verification.json.gz",
+      "bytes": 1698,
+      "sha256": "bbdd1d1055b91f5bc85ce59b9467379841d208fb586591708833d308945985a0"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/reference-candidate.json.gz",
+      "bytes": 29911,
+      "sha256": "7786640fd25c8d277a13a0949246895684fa7c8d742f72397ec4b561d4509420"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/replay-parent-final-2.log.gz",
+      "bytes": 1254,
+      "sha256": "74c22a3a412663abd7467e7a3bb7852e72cbdc3a967b2c3665a62153288a641c"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/replay-parent-final.log.gz",
+      "bytes": 1249,
+      "sha256": "1db775dc20d50ec04293a3a80a092ff6d1b09ea51abade73e4e5466fe0390ea6"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/replay-parent-preclose.ts.gz",
+      "bytes": 1101,
+      "sha256": "406dac0596a5423973251a43d33dd798a35e400b892300824baceac43d4c9c88"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/replay-parent.log.gz",
+      "bytes": 1248,
+      "sha256": "0710d427279d429c74fb5c2ea015c07c9f78452162f58faa28b3d6c95e8173e7"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/replay-parent.ts.gz",
+      "bytes": 1229,
+      "sha256": "92099d806634fe5c0942c0728fa15c5bb37d180dc8235d631b44776fb737f841"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/review.json.gz",
+      "bytes": 2561,
+      "sha256": "c4abba6d72dbf86ff9314fdf80553719e374988bfeae277192295e38f860e7fe"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-2.log.gz",
+      "bytes": 489,
+      "sha256": "db3ad796047958cb0bde702f9e1b2cc01b0624f461e65053f3a78199b8dbcf9b"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-3.log.gz",
+      "bytes": 512,
+      "sha256": "558be4a1df75447b219341580b3673f697b987944ba56ff0564c7392db739069"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-4.log.gz",
+      "bytes": 547,
+      "sha256": "2a0b8bb322452b5db7af91b50b7a2cee053f40287352df89776b26cc16d22f24"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-5.log.gz",
+      "bytes": 553,
+      "sha256": "b78ebaf9511e3349defbfea55be5a7f297f16cfc5119fbda72e12251e4367cd3"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-6.log.gz",
+      "bytes": 794,
+      "sha256": "be0327ed030fffc442386e5f2a9ae3edc1ef044ac7ace46d74aa437144d06af9"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-7.log.gz",
+      "bytes": 555,
+      "sha256": "aa762cef1b5d96d23efc9c55ff44e3f090eb808600afb801d974124e36213f19"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-8.log.gz",
+      "bytes": 470,
+      "sha256": "2f4bef891ca232223851d8ce93af6e555f5000fb5413514903967cd4f01337b3"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-9.log.gz",
+      "bytes": 543,
+      "sha256": "6064e9388efe00264b93ded3bd7c8db0eba7185bce0c5b4746fc9d35f00d553d"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference-before-closure.ts.gz",
+      "bytes": 2072,
+      "sha256": "98fac677ae6d2d4c71d1fb7aff69ee2b0ea9c2d09ac1ecb97e8c75cb07975463"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference.log.gz",
+      "bytes": 493,
+      "sha256": "64b5214b86d527ab4ce6d34042661de651bb6686d8bd2165b1d307f2965589cb"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-oracle2-reference/run-reference.ts.gz",
+      "bytes": 2241,
+      "sha256": "78e22bf5142ee481ec3f65bfadd2563243da8f8cdba48ceb1deb0658e85d7c11"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-1.log.gz",
+      "bytes": 480,
+      "sha256": "db405a30cb122f1f51af4876440d9cc61bf335e9a07a390afde98d38571689e4"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-2.log.gz",
+      "bytes": 7194,
+      "sha256": "960e8108e08cd60c86dcf7f6024018079006134e996b6a6275c06437197543bd"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-3.log.gz",
+      "bytes": 1319,
+      "sha256": "752cec189393779106a905e6b4f46243a7d31b5c08c741272bd6c54d85fcced0"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-4-final.log.gz",
+      "bytes": 1255,
+      "sha256": "9e884abc10d4d53d7f93748dc2fcd0266d93096f3b9bbc2edf1daa9add2535d8"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-5-supported-api.log.gz",
+      "bytes": 1304,
+      "sha256": "3a591ee0f84a71a79cb641b3a6c28d57dc2a0b44c1574b85dedc9e0a76110fc3"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-6-proof-controls.log.gz",
+      "bytes": 1364,
+      "sha256": "51dbe842287a40f532614fbe041ec8ff29ecec04915201f7db25d38ec92fcbb9"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-7-observed-first.log.gz",
+      "bytes": 1438,
+      "sha256": "e13245a9bbc01221e56b8adec6c8dcd387195ca2911e316c9c8c9aaf87130205"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/attempt-8-duplicate-control.log.gz",
+      "bytes": 1319,
+      "sha256": "4f024d09cc2bbbd465851c89d31f52a5cf4b71f6a6c607b788a46865daea452a"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/debug-graph.ts.gz",
+      "bytes": 693,
+      "sha256": "b2d2f5468415e0dc4535278c05ff3b0d99bb52fda6944cd4c5cf579fcf9d3851"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/held-source-correction-review.json.gz",
+      "bytes": 938,
+      "sha256": "a77716549cefdcccb373ce3e7261077316e41fa532084378fc3d5b2a1225e7b3"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/module-review.json.gz",
+      "bytes": 2074,
+      "sha256": "06e051b8b14b42b2b60278e12d8bc89ad4cc8c46668a48daeb5dd532a65241c7"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/oracle2-legacy-tests.log.gz",
+      "bytes": 223,
+      "sha256": "7ade2d697709f3825b6cab42c7a6b36f4c45e2cff4fcea8966e0766c63e507f5"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/oracle2-typecheck-2.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/oracle2-typecheck.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-current-verification.json.gz",
+      "bytes": 1541,
+      "sha256": "5122a9911d63199824376b9e48479a8f689cda92ed111aba07071dc42f30f9bb"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-current.json.gz",
+      "bytes": 37687,
+      "sha256": "7868116f3cbec474df0686bdec5d35f03a9dde231cf9719d4e840ffccecd1e90"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-final-verification.json.gz",
+      "bytes": 1548,
+      "sha256": "405032891553b3fc3b3a15b717cec9b66ff27db6647e52dedd8f5e88815b53dd"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-final.json.gz",
+      "bytes": 37492,
+      "sha256": "944af896d294b4667a3f8bd49315ebdb556900a2b19cc01308f6e8ac0d81b02e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-held-batch-verification.json.gz",
+      "bytes": 1578,
+      "sha256": "4e32682155fd66a340489bf3d9cd82bee9a888c822058ed5134a32fed487613e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-held-batch.json.gz",
+      "bytes": 32329,
+      "sha256": "eba693daae48b6cdfbbb3f2077a19cbcc2c01140128f947d1fa247561d23b054"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-supported-final-verification.json.gz",
+      "bytes": 1608,
+      "sha256": "da905ecc014444da752ea78b176e526f9fa408fbc05d9bb7e38bb7521cd79338"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/reference-supported-final.json.gz",
+      "bytes": 35422,
+      "sha256": "c98a267b1076185536cc431b03c7fece52b656760dd6d2e475b687d36b6ceb80"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-1.log.gz",
+      "bytes": 1112,
+      "sha256": "2ff4ea578c7cea19adf8d0af4096b44be4cd8b76a1c351bfa3a9fa37134eef52"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-2.log.gz",
+      "bytes": 1278,
+      "sha256": "918b402a68124ef07db73005a8deaf7a5dcc6713e5643eb0ba0e32595b37b3d1"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-3.log.gz",
+      "bytes": 1300,
+      "sha256": "e0febe6ccbdd719f33d66c70c7efb4add13a7552fa6ce44802758bb140ef76eb"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-final.log.gz",
+      "bytes": 1292,
+      "sha256": "b2ec1c509cf70eb720b0f70c6f8e5fcc44170f21eb55268e599e258cb1de9e17"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-final.ts.gz",
+      "bytes": 1048,
+      "sha256": "89ed084365a4153e5673c3f8d91324b206eef6adeb7fb7bf332c5f34670d9f46"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-held-batch.log.gz",
+      "bytes": 1309,
+      "sha256": "928ff256eed5c94b395bd5efd79522127510bb75fc8ced468ffd0c76ec8683ef"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-held-batch.ts.gz",
+      "bytes": 1110,
+      "sha256": "2119980ec76dd0bcfc96846246f6caeb143cae9d72fcbc0d832b945a90816431"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-supported-final.log.gz",
+      "bytes": 1376,
+      "sha256": "e1e703ee76c5a769c496461de9c721f2d52768471cee05817f85b9698f3cc511"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay-supported-final.ts.gz",
+      "bytes": 1103,
+      "sha256": "7e30eccae09dcba2e833e57ec3d1ae132a07bee8bfa8c18fcba648b281a71951"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/replay.ts.gz",
+      "bytes": 1050,
+      "sha256": "5886dec8d3be39892df46a6070b11a0324ff2037e8d0bf729914a5cb2836bf9e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/retain-held-batch.py.gz",
+      "bytes": 1673,
+      "sha256": "c28b39e0753a2730deb67c5f249da9cbb6dfcadc90182206337cb526a188a42e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/run-final.ts.gz",
+      "bytes": 1745,
+      "sha256": "6eaf760cc6ade3c1e51e086eed5839dd026194fd4561217e3d7c7a46593fd632"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/run.ts.gz",
+      "bytes": 1316,
+      "sha256": "3270eb7ff15f7f7dbd205d4076c075953b2d5ae8e96201a49401e07a31993799"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/standards/0062.md.gz",
+      "bytes": 5662,
+      "sha256": "3bc8bfc43a54ef3a17760a2be0a8e75ebd34c5ae2fe6c04b6702816c60d6c94f"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/standards/0067.md.gz",
+      "bytes": 1824,
+      "sha256": "461e05482704003466485819c56c38c4c75cbb27848bc57067a16fc892719c97"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/standards/0095.md.gz",
+      "bytes": 2359,
+      "sha256": "c9529d8a9c0487fcc5129c7f6cf2c41756dab21619a5da77c6069d6d864c2f38"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/standards/0096.md.gz",
+      "bytes": 1817,
+      "sha256": "e413b1137844af79a33d96bf291cdba44479cc2f2829b754b5433be0440698b0"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-2.log.gz",
+      "bytes": 279,
+      "sha256": "cf3959170c1c8dbe8692b4bd9adc83e640aabf78b2574ad0872f76a8d4a928cc"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-3.log.gz",
+      "bytes": 283,
+      "sha256": "b32fae153d0559ce0cece3546776057de28f33e1921d4c4917683953c9f2233b"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-4.log.gz",
+      "bytes": 2198,
+      "sha256": "31ee8df5315bb79cbf26d8db396ec602f894913b42ae5268953d9b83a014840b"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-5.log.gz",
+      "bytes": 282,
+      "sha256": "f5854da7dcf52fe9b2fd3436ecb6068db93ef10d7e9606847426824c3d4c1524"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-final.log.gz",
+      "bytes": 283,
+      "sha256": "7650ad13c262011ba20c8ae767312694447d1fe4e5e6e3500eed350f0c899f43"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-held-batch-2.log.gz",
+      "bytes": 224,
+      "sha256": "5820d8ef530c6c861c003f00189d4d5243494c73adc7dbd957af0a0e8c150a2e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-held-batch.log.gz",
+      "bytes": 224,
+      "sha256": "08931e69e2571062f9d0cba06b5a463522cb20a460e70488501370ccd8a623fa"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tests-supported-final.log.gz",
+      "bytes": 282,
+      "sha256": "2c7dcdaa5e70e012bf11f1c842be55fa3e28f58a210e07a5cc21596d43b0ab2b"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/tsconfig.json.gz",
+      "bytes": 133,
+      "sha256": "57a1368acbedb76823fb463267de7cb7cbe7f35f4eee95fa4f514c9031eb2fcc"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/typecheck-final.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-reference/typecheck-supported-final.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/build-reference.py.gz",
+      "bytes": 1074,
+      "sha256": "e21a4bf3f80563c93bbd0642581d018149e81b316a07bf8443bdb5f77f874955"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/candidate-files.json.gz",
+      "bytes": 86359,
+      "sha256": "cbd71702b1ce80aded50a4ef0c790a99c69dce3a64c5700d579f2c8da4c910f0"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/candidate-fixture.ts.gz",
+      "bytes": 840,
+      "sha256": "527db4190bdc791f49ff2baf05ba29b4eef8c9584f14d501ebb48515f10c85c1"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/reference-candidate-verification.json.gz",
+      "bytes": 1732,
+      "sha256": "d96b0f9fb9a1051fe82dc21d82f90dda70490d79ff62cf3844549a5dc2465462"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/reference-candidate.json.gz",
+      "bytes": 29954,
+      "sha256": "746fa9f5336ec0d93bbc9ab33e95fb6d820fde129c41fafa3fc75811569e165f"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/replay-parent.log.gz",
+      "bytes": 1240,
+      "sha256": "877af6dcff300f78d8183dceb1afaafbf2969ceceaf876cd63b7491de31f107e"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/replay-parent.ts.gz",
+      "bytes": 1211,
+      "sha256": "5e88b8262fc070c8e18965a6f1172c77445f7e65e6659b86be81e867a59958a8"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/review.json.gz",
+      "bytes": 1593,
+      "sha256": "0e559e03984f02b54523d017bb811fe6b920ad10902972ff0c07ff4978ac4d03"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/run-reference.log.gz",
+      "bytes": 467,
+      "sha256": "7a041207873e6402691d4c78858c8ddf19a07f3721e7ea232c514ee322dca640"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/run-reference.ts.gz",
+      "bytes": 2240,
+      "sha256": "b23b3996d640b5846ad138b25753e6e2ff4fa8068f9b732111df4ee2bbf6dd1f"
+    },
+    {
+      "path": "evidence/out/transaction-coverage-sqlite-retry-reference/tests.log.gz",
+      "bytes": 223,
+      "sha256": "9fa5e3ee7228f66d28a5f28029e924eaac1cb14ad667602fdd8fa6217f373484"
+    },
+    {
+      "path": "final-check-index.json",
+      "bytes": 1358,
+      "sha256": "94f46e8d4e1d7da563017c667d1d774b5b8dff64a1d193efed8eb21c63c14e74"
+    },
+    {
+      "path": "final-log-index.json",
+      "bytes": 3615,
+      "sha256": "ebd666ae9ca0ec8ee5a0719d4c8f2cac1771cedfe27c5d7efa0981a0edae7e39"
+    },
+    {
+      "path": "final-validation/out/native-closure-20261111/coverage1-published-semantic-3.log.gz",
+      "bytes": 1434,
+      "sha256": "6eb12f3cd85bf41b5f9ac4cdca41689a9c5c7008fc678bc1619f679fa81d1d3e"
+    },
+    {
+      "path": "final-validation/root-attempt5-order-generator-independent-review.json.gz",
+      "bytes": 2324,
+      "sha256": "7d0eba61d11555bd2ab1fe30d1a69a07edce6f047cc0d1840205802f1c7f5c73"
+    },
+    {
+      "path": "final-validation/root-construction-review.json.gz",
+      "bytes": 464,
+      "sha256": "765529f87fc098dccffb999f6c8f9ec5bfc90c95ed2c76c8e65c9ea917aa5089"
+    },
+    {
+      "path": "final-validation/root-write-attempt5-order.py.gz",
+      "bytes": 4012,
+      "sha256": "9bde640b4482d4e2dc9310201bbdca4ad3f481dd48bfbae1ab5e1b91d01520c3"
+    },
+    {
+      "path": "generated-host/storage-batch-subjects/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "generated-host/storage-batch-subjects/main.go.gz",
+      "bytes": 8182,
+      "sha256": "10fdb32416502b46d1a347605c55f2b72af89e6b6def788d7363c3fcbb641c8b"
+    },
+    {
+      "path": "generated-host/storage-batch-subjects/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "generated-host/storage-batch-subjects/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "generated-host/storage-dust-accounting/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "generated-host/storage-dust-accounting/main.go.gz",
+      "bytes": 8182,
+      "sha256": "10fdb32416502b46d1a347605c55f2b72af89e6b6def788d7363c3fcbb641c8b"
+    },
+    {
+      "path": "generated-host/storage-dust-accounting/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "generated-host/storage-dust-accounting/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "generated-host/storage-input-ancestry/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "generated-host/storage-input-ancestry/main.go.gz",
+      "bytes": 8182,
+      "sha256": "10fdb32416502b46d1a347605c55f2b72af89e6b6def788d7363c3fcbb641c8b"
+    },
+    {
+      "path": "generated-host/storage-input-ancestry/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "generated-host/storage-input-ancestry/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "generated-host/storage-merge-accounting/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "generated-host/storage-merge-accounting/main.go.gz",
+      "bytes": 8182,
+      "sha256": "10fdb32416502b46d1a347605c55f2b72af89e6b6def788d7363c3fcbb641c8b"
+    },
+    {
+      "path": "generated-host/storage-merge-accounting/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "generated-host/storage-merge-accounting/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "generated-host/storage-sqlite-retry/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "generated-host/storage-sqlite-retry/main.go.gz",
+      "bytes": 8182,
+      "sha256": "10fdb32416502b46d1a347605c55f2b72af89e6b6def788d7363c3fcbb641c8b"
+    },
+    {
+      "path": "generated-host/storage-sqlite-retry/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "generated-host/storage-sqlite-retry/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "go-postimages/storage-batch-subjects/pkg/internal/txutils/validate_beef_subjects.go.gz",
+      "bytes": 1139,
+      "sha256": "fb89e02c0f7446d0b40f4924a7333eedb0fc2d26c17f3241dfc0a8dfe19bf482"
+    },
+    {
+      "path": "go-postimages/storage-batch-subjects/pkg/services/batch_subjects_tpnil_test.go.gz",
+      "bytes": 2614,
+      "sha256": "13ea0fcda20c5a8f8aff49e56e38052b7e31a3b778ba3947f6c92b145c84ad8c"
+    },
+    {
+      "path": "go-postimages/storage-batch-subjects/pkg/services/services.go.gz",
+      "bytes": 9235,
+      "sha256": "b42d756dbf63e63f2aefd7a003ceb5773ba3edc2620cf31aea9f770ed7285766"
+    },
+    {
+      "path": "go-postimages/storage-batch-subjects/pkg/storage/provider_no_send_test.go.gz",
+      "bytes": 2044,
+      "sha256": "c20e75ec9c9eb2b429d6626f9e3a40058942c2904df61e441b1c264292001142"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/internal/storage/funder/collector_internal_test.go.gz",
+      "bytes": 2564,
+      "sha256": "ad212179e6c1759071f038319ebced5f19a4362b76446af933347c67f6df2d2c"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/internal/storage/funder/funder_result.go.gz",
+      "bytes": 480,
+      "sha256": "56f5b06a507211990a812a4e24b411a99448eec88ef5f2523ed28bc9e8a13125"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/internal/storage/funder/native_dust_accounting_tpnil_test.go.gz",
+      "bytes": 817,
+      "sha256": "b5369795ff837f4409938045a9da20fa4ac54bc553d582660cbda7f4e8015b96"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/internal/storage/funder/sql.go.gz",
+      "bytes": 7342,
+      "sha256": "05ad4d68c2859b6fd3b87aa84208be14ace542d03010ce781c66aba7b874c56f"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/internal/storage/funder/sql_test.go.gz",
+      "bytes": 4607,
+      "sha256": "99b42a0f936960f41beda135414ee6e9334d784306f8e71cfee49c9bc2419f54"
+    },
+    {
+      "path": "go-postimages/storage-dust-accounting/pkg/storage/native_dust_accounting_tpnil_test.go.gz",
+      "bytes": 1131,
+      "sha256": "df5ce34351c2a120a5fb271a162e878bcbdd62c28325b5444c138f89f5755794"
+    },
+    {
+      "path": "go-postimages/storage-input-ancestry/pkg/storage/internal/actions/create.go.gz",
+      "bytes": 12365,
+      "sha256": "6a174f25fa82ab7fb5367e088fd6a22a409453b5a78a8c0830a36335ba939d5d"
+    },
+    {
+      "path": "go-postimages/storage-input-ancestry/pkg/storage/native_input_ancestry_tpnil_test.go.gz",
+      "bytes": 1195,
+      "sha256": "efba53fb5617a21dc0257fdd0817d856e3e10814263538a24a7289153a71fa3c"
+    },
+    {
+      "path": "go-postimages/storage-merge-accounting/pkg/internal/storage/repo/native_merge_accounting_tpnil_test.go.gz",
+      "bytes": 908,
+      "sha256": "6734c589e7125dcbfda4fed2ae6836877f4caa7edb7429eb8b07474a0555de05"
+    },
+    {
+      "path": "go-postimages/storage-merge-accounting/pkg/internal/storage/repo/transactions.go.gz",
+      "bytes": 8770,
+      "sha256": "678db4925b1a554f05e76f2ff9439765846e1f485c23060eb13e1d5ed942382e"
+    },
+    {
+      "path": "go-postimages/storage-merge-accounting/pkg/storage/internal/actions/internalize.go.gz",
+      "bytes": 8103,
+      "sha256": "1a5fa5771e20d8e8168446a32947633fd11a7d2c365a3f4332f84d899987292d"
+    },
+    {
+      "path": "go-postimages/storage-merge-accounting/pkg/storage/internal/actions/repos.interface.go.gz",
+      "bytes": 2198,
+      "sha256": "abd49b71f464a7755d5424bc1e62759b1999eb94feb872d9ccca0c176023a202"
+    },
+    {
+      "path": "go-postimages/storage-merge-accounting/pkg/storage/native_merge_accounting_tpnil_test.go.gz",
+      "bytes": 1168,
+      "sha256": "b709a3191e9fabe70aa53e4a982ff72ac93d193a167e00f03a5eb4183ca8d5ce"
+    },
+    {
+      "path": "go-postimages/storage-sqlite-retry/pkg/internal/storage/database/native_snapshot_retry_tpnil_test.go.gz",
+      "bytes": 1379,
+      "sha256": "71c32ddbb4d015d36de76b93e9a9122acf800c1b6c09b66e09fc4e0744a3e0d6"
+    },
+    {
+      "path": "go-postimages/storage-sqlite-retry/pkg/internal/storage/dbretry/dbretry.go.gz",
+      "bytes": 2142,
+      "sha256": "8f4574e089836211218448f664b09efb1ee857638d513ab629076ec3e5d0bda9"
+    },
+    {
+      "path": "go-postimages/storage-sqlite-retry/pkg/internal/storage/dbretry/native_sqlite_retry_tpnil_test.go.gz",
+      "bytes": 498,
+      "sha256": "c60950a23fc7b42ff06980e89eeaf6d0360247006a1301e02fcbd675be08f7ea"
+    },
+    {
+      "path": "historical-source/8f48647813758aeb35c04f2447540ba72751c117e31114b8b09b5056fc88ddd7/native-coverage-go-admission.test.ts.gz",
+      "bytes": 2437,
+      "sha256": "0bda349a4910f117a8f3f7c792fb389df0787fefcdb51238db130843ecb7e08a"
+    },
+    {
+      "path": "historical-source/bc0459da15bda99799f8066963ace7002fe2e4a9a398c3af1b91a253b13e0312/go-batch-build.ts.gz",
+      "bytes": 1416,
+      "sha256": "ff91354633d94a65612d381f1de56d52d0044075da875827a9febaf276f6f5cd"
+    },
+    {
+      "path": "historical-source/e10a272704e0b9240f2fade088cbb2b76830a525a3dac3bb71df7e1571de46ba/go-services.ts.gz",
+      "bytes": 6406,
+      "sha256": "d19c752a55bc89357363be562b0dd1ff8f723e2e9d7e41e3acfdb6b7ba44dc64"
+    },
+    {
+      "path": "linked-evidence.json",
+      "bytes": 1131,
+      "sha256": "fd2d5fbc2e1ecb18eb6bd3357368499b708897e3ff0263321e29efeffc6967ff"
+    },
+    {
+      "path": "preflight-index.json",
+      "bytes": 289524,
+      "sha256": "4e7cc8cf3f19170b52105b60beb5d3c0af090e5cd88cb505950de09d94391b0d"
+    },
+    {
+      "path": "reviews/yours/build.log.gz",
+      "bytes": 390,
+      "sha256": "1b3b5117066ff727d16ffa9fcbe3a168428013f6ef8c66d2f007db561d1ed0a6"
+    },
+    {
+      "path": "reviews/yours/diff-check-patch-format.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "reviews/yours/diff-check-source.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "reviews/yours/final-context-focused-tests.log.gz",
+      "bytes": 263,
+      "sha256": "637d26e3f866a468e491de0398fe2f3344e60fa484483a5437b6ced4e613f519"
+    },
+    {
+      "path": "reviews/yours/final-restored-context-focused-tests.log.gz",
+      "bytes": 1871,
+      "sha256": "31c7a42f0783201f500731828f80b4302b99fa126bc3c845fcf31ec8916b269b"
+    },
+    {
+      "path": "reviews/yours/format.log.gz",
+      "bytes": 122,
+      "sha256": "2ee7c0d50503ac9c5f373fb4765083894aca6573a49d7c03b2d2096e587b3607"
+    },
+    {
+      "path": "reviews/yours/frozen-install-context-format.log.gz",
+      "bytes": 912,
+      "sha256": "d1afd94417f951eed8ab70001d5d68963ef3328a3d05fbc4b577a6b3c8f881fd"
+    },
+    {
+      "path": "reviews/yours/frozen-installed-byte-equality-restored-context.json.gz",
+      "bytes": 774,
+      "sha256": "722f0bf91f86b503d36fb6be373b06b638a965a54d3a07bc57872211607a7644"
+    },
+    {
+      "path": "reviews/yours/full-tests.log.gz",
+      "bytes": 6161,
+      "sha256": "bd1289f57ca3610d9279bcc743bb7acec63e7f15ebbf40b3931160200134e7df"
+    },
+    {
+      "path": "reviews/yours/normalization-corrected.json.gz",
+      "bytes": 245,
+      "sha256": "f87d1a69005c2594a34b945a4d0190cfd1f449996e5e5bf4cdc8dd47212d2721"
+    },
+    {
+      "path": "reviews/yours/normalization-diagnosis.json.gz",
+      "bytes": 260,
+      "sha256": "afff59392ade7b26d3d21bd8a01f0f82cf3f7865a611051061e61ea7bab9029e"
+    },
+    {
+      "path": "reviews/yours/predecessor-tests-2.log.gz",
+      "bytes": 3270,
+      "sha256": "bfd5662f40ff4a2e4601ab518b81a8d4b7e210accd9dcf7bfd6923aa5d3af41b"
+    },
+    {
+      "path": "reviews/yours/proof-diagnosis.json.gz",
+      "bytes": 515,
+      "sha256": "8e3e9ea07bb035378a5d75cde45eee3c15f70db0ebc2081618af641b342d88ab"
+    },
+    {
+      "path": "reviews/yours/readable-runtime.diff.gz",
+      "bytes": 854,
+      "sha256": "6b5ed6e73c80316f97da9cf3e3d8a8692007c083e10b1833cfd4d8f80781be70"
+    },
+    {
+      "path": "reviews/yours/review.json.gz",
+      "bytes": 2121,
+      "sha256": "0ebccbc903c5dbaddbecbd80cfffc9ad68a09e935310f8fa94ed2fc94403d2d3"
+    },
+    {
+      "path": "reviews/yours/typecheck.log.gz",
+      "bytes": 82,
+      "sha256": "5e89a200a043741fabd26d65eb09465a232b38304bc44be87551b23be358cf84"
+    },
+    {
+      "path": "reviews/yours/verify-build.log.gz",
+      "bytes": 154,
+      "sha256": "97ce810eaca0e21c9024975c1847cfcafde92873ae48b2bec0b6732d8ba98761"
+    },
+    {
+      "path": "source/.github/workflows/isi4-yours-wallet.yml.gz",
+      "bytes": 2194,
+      "sha256": "68cd61e97667f74a7140bd8a9d9e14148fd55c9cf845d61a06c2d34b592162a4"
+    },
+    {
+      "path": "source/.github/workflows/native-evidence-reevaluation.yml.gz",
+      "bytes": 1153,
+      "sha256": "ea00d855098f7c01985afd8fa2f1d75dd11f27614a74e60b1072fd5d63c1fb1f"
+    },
+    {
+      "path": "source/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json.gz",
+      "bytes": 15449,
+      "sha256": "e0535390fcd577ea60cd46745ef27332d5a1716bafd6d7bbf41527fd6ea399c4"
+    },
+    {
+      "path": "source/fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json.gz",
+      "bytes": 14993,
+      "sha256": "428812da9ded2813964ec0fe7d8767235b0c8b0d42418d3595df628fffcc82bb"
+    },
+    {
+      "path": "source/infra/adapters/storage-batch-subjects/README.md.gz",
+      "bytes": 1805,
+      "sha256": "93b2b59036590cdade12f4f93699ac3f81471aa227a5a05ec4ed59180ee6b29d"
+    },
+    {
+      "path": "source/infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 4436,
+      "sha256": "6c1618b285bfcc13d1c7e45fd9253e44d60fe948beeb1d8f0158a1f517f65152"
+    },
+    {
+      "path": "source/infra/adapters/storage-batch-subjects/patch.lock.json.gz",
+      "bytes": 724,
+      "sha256": "821fba96e8079576cb999e961f1543c8b1d3d7386d2d92f5a91500191edf5773"
+    },
+    {
+      "path": "source/infra/adapters/storage-dust-accounting/README.md.gz",
+      "bytes": 1192,
+      "sha256": "d8cf8571529dbcc742d2cd338ade261b15cad21277f939b8140ee5a0674f252a"
+    },
+    {
+      "path": "source/infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2848,
+      "sha256": "b980633ef36e0eaba3c429d4f38aa42b4a8e6a9d202e3e3b6b348cf12e8314d5"
+    },
+    {
+      "path": "source/infra/adapters/storage-dust-accounting/patch.lock.json.gz",
+      "bytes": 887,
+      "sha256": "d2005768db38c330a5f3476eaf872ce9e64cc83ec0cd65aaf17d6bfaffe39c1f"
+    },
+    {
+      "path": "source/infra/adapters/storage-input-ancestry/README.md.gz",
+      "bytes": 1098,
+      "sha256": "a4528186fab6fa1e27b6a4eecfb2e01a85dee0b42a6dc5183fbd14096848de41"
+    },
+    {
+      "path": "source/infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 1940,
+      "sha256": "20f47f3be10900866c34fee7567a3c1619cbcbd3e1215fa9b60d7d79e3812328"
+    },
+    {
+      "path": "source/infra/adapters/storage-input-ancestry/patch.lock.json.gz",
+      "bytes": 564,
+      "sha256": "9de708a452fd6f4f5010f28639ed39c0a9d4b0cd05e8ce08a40eb84a51f99dd1"
+    },
+    {
+      "path": "source/infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3772,
+      "sha256": "f1ddface869d40c2bea67d0622f8aa867d7d4daa2b3a6fe6b6afa1ce3ea89e2f"
+    },
+    {
+      "path": "source/infra/adapters/storage-list-actions/patch.lock.json.gz",
+      "bytes": 879,
+      "sha256": "7579c980756df6558552eed9c0e8691f631cb30195054fd67784da47cb34945d"
+    },
+    {
+      "path": "source/infra/adapters/storage-merge-accounting/README.md.gz",
+      "bytes": 1391,
+      "sha256": "d2511148882deb4c3cd12726400fbe7b638bfee4452c99624a8eb6ca97889996"
+    },
+    {
+      "path": "source/infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3509,
+      "sha256": "724e1d16cb951232a1789556300104602519583baa12b5b786cc9e8c99ba3ab6"
+    },
+    {
+      "path": "source/infra/adapters/storage-merge-accounting/patch.lock.json.gz",
+      "bytes": 802,
+      "sha256": "135313fbd369bf5797d3ad77dd98e85266ad4555e517d19f3830a518387f4a59"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 7421,
+      "sha256": "56480ccf437a44df6f7661e0bf58eb418cd0ee2bf6f57008db807246e63ea417"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/patch.lock.json.gz",
+      "bytes": 1846,
+      "sha256": "81308a35487eef69098cbcf3a8dfff6b1e62dbadf63de4b8dfe359fc89ff6fe9"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/rpc-contract-test.mjs.gz",
+      "bytes": 1286,
+      "sha256": "ea4ad7c7ea2b5e68ac856a0cdde52351f8818abfac0fb32d842784c91990ec96"
+    },
+    {
+      "path": "source/infra/adapters/storage-portability/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 5466,
+      "sha256": "d3cd9b31f9a6018ced01c44734c1f331bd1834bb0a69599d6f8278184de407e1"
+    },
+    {
+      "path": "source/infra/adapters/storage-portability/patch.lock.json.gz",
+      "bytes": 589,
+      "sha256": "26a53927aeef69d5d5964ca220c2a447d97717f945ca1647ed665d1b6d40b3a0"
+    },
+    {
+      "path": "source/infra/adapters/storage-sqlite-retry/README.md.gz",
+      "bytes": 1128,
+      "sha256": "853652a8b0f7875deb370dcd335aee5b93e0adc42b1e98816ee4aeb009f0e167"
+    },
+    {
+      "path": "source/infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2839,
+      "sha256": "c2c5b80fadc69a11b0cdf13ccb340a7d34ef854d8e826529ee75531964ca3299"
+    },
+    {
+      "path": "source/infra/adapters/storage-sqlite-retry/patch.lock.json.gz",
+      "bytes": 619,
+      "sha256": "75e5eb38f7a86884a464337f32b7e6f5cbbfe66402f8f0fdf540a9943f1377f0"
+    },
+    {
+      "path": "source/infra/adapters/storage-sync/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2636,
+      "sha256": "18624d5cf478377f050e7fd66ad155525d221f758c438e223fcce4f5223a19bb"
+    },
+    {
+      "path": "source/infra/adapters/storage-sync/patch.lock.json.gz",
+      "bytes": 990,
+      "sha256": "05fb6106b956c2606293dc7df6cb7a57d4992895a94350dd97c2bd6ef153d65b"
+    },
+    {
+      "path": "source/infra/native/conformance/Dockerfile.gz",
+      "bytes": 879,
+      "sha256": "66a1d64f5bc18b02bbc5c3628e25a859ccff8e39763726ec3f9ff9a19bd5c888"
+    },
+    {
+      "path": "source/infra/native/conformance/README.md.gz",
+      "bytes": 3113,
+      "sha256": "23863c992ea60583ba1343efa4be351c970d119f7baa8f20311c0d19c33dd757"
+    },
+    {
+      "path": "source/infra/native/conformance/plan-pr368-coverage-1.json.gz",
+      "bytes": 12649,
+      "sha256": "a32c3537eb31f3dbb5247fe8a2b1d8743de56a2c13d86453babe5a887dedf30e"
+    },
+    {
+      "path": "source/infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json.gz",
+      "bytes": 1248,
+      "sha256": "0e7207362dc740f4cbaa83e862f4a054b53cc3e5deb38e23fc18ee11fcf59cb3"
+    },
+    {
+      "path": "source/infra/native/conformance/rust-graph-pr368-coverage-1.json.gz",
+      "bytes": 1390,
+      "sha256": "454288cbb0221e5cfb3c517dae206e3f68f5060e07080bae520b2dadc5dfeb44"
+    },
+    {
+      "path": "source/infra/native/integrated/Dockerfile.gz",
+      "bytes": 542,
+      "sha256": "48b625bd9232a8ee009ca56cb9f5feb9c461a1268058fb5a903e68c62c7636fd"
+    },
+    {
+      "path": "source/infra/native/integrated/identity-trust-oracle-2.0.0.json.gz",
+      "bytes": 834,
+      "sha256": "3f8e7a7fe3adc04e6a286d5ccf7beebd0228117991803a57a7e7a3863aa92acc"
+    },
+    {
+      "path": "source/infra/native/yours-go/Dockerfile.dockerignore.gz",
+      "bytes": 300,
+      "sha256": "6a0f30f29553b885b6eea4d13c46ae113b72f2d2fde8af0acc9085988b19b392"
+    },
+    {
+      "path": "source/infra/native/yours-go/Dockerfile.gz",
+      "bytes": 1000,
+      "sha256": "cca5f8caffd1694c2bbcc66539ccaaa26d6ab6340f0f8e36aef3c9e2da079f7b"
+    },
+    {
+      "path": "source/infra/native/yours-go/verify-installed.py.gz",
+      "bytes": 1691,
+      "sha256": "f8c51e17b0fd218accdd6cc668195313b384a716e570a39fd4111c0cdd151312"
+    },
+    {
+      "path": "source/integrations/services/src/identity.ts.gz",
+      "bytes": 1327,
+      "sha256": "c68427b2e8bdaa85543a6e9c0d788f9f4970fa5a0d8a71d1688b06bc4837899e"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.1.0/profile.json.gz",
+      "bytes": 7139,
+      "sha256": "0356aa21581c4730df12b623c4e145994510e58dac133de518457a6717ba2a1c"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.2.0/profile.json.gz",
+      "bytes": 7079,
+      "sha256": "da6726b6396280643ed6e4e2e9af80194b547428ff7084a643288cfadb750b73"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.3.0/README.md.gz",
+      "bytes": 702,
+      "sha256": "ad96f35083299746edd0098db836919e054b5a33f4020f7f97e01884bb949bf2"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.3.0/profile.json.gz",
+      "bytes": 8846,
+      "sha256": "07775f963c679067c136e5246b961675ea6f91adbb32a3e2f36d37a6dd4d373b"
+    },
+    {
+      "path": "source/programs/ISI-4/5.1.0/catalog.json.gz",
+      "bytes": 6924,
+      "sha256": "a6e9c88e888faff34afa588df8e27ebd4c1aad6356f121c35a1dbad601cff6e1"
+    },
+    {
+      "path": "source/programs/ISI-4/5.2.0/catalog.json.gz",
+      "bytes": 6953,
+      "sha256": "f8c7bf7a50b2c413def84f4da52180851b1ea4d42faf50db48ee47ef79b13647"
+    },
+    {
+      "path": "source/programs/ISI-4/5.3.0/README.md.gz",
+      "bytes": 707,
+      "sha256": "c8795ed6625288ee00abc0b3d702831629ef948515865d20e86eae2aaf0ed6f2"
+    },
+    {
+      "path": "source/programs/ISI-4/5.3.0/catalog.json.gz",
+      "bytes": 7387,
+      "sha256": "cb96b96800291cfd6341c226865db7765f0e822ca7ba11eac4543238e3fc64cd"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json.gz",
+      "bytes": 669,
+      "sha256": "5543b3c30eddb1e122cb8ac235a083e3f685ff4724dd0475bf57dbc37048ea4a"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json.gz",
+      "bytes": 1561,
+      "sha256": "4b10388b48cf5b0b892dcefc8d9b6a654fb69962f23e9cb92a9b4fe0e59794c7"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json.gz",
+      "bytes": 1660,
+      "sha256": "9f3aad9c2addc5c9b0208c182bffdebb7529cd0f970ac70d364075512cef39db"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json.gz",
+      "bytes": 4706,
+      "sha256": "efde937cc296755331e67b29f3116d5616c998a73cd43626b36764081d41075d"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json.gz",
+      "bytes": 1012,
+      "sha256": "3da47b513164b07031f18b5cb2afb705930bd5865fc1a14a53eebbf15e4149ae"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json.gz",
+      "bytes": 1067,
+      "sha256": "d4ca80251dd91c1894686a593f7ed458394815f4082507b2349bcd0f258c2231"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json.gz",
+      "bytes": 1124,
+      "sha256": "b64e88acf67d65d3fd31524a7e9716ec76aca69f8e6d84facbd30d59ac02da68"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json.gz",
+      "bytes": 2487,
+      "sha256": "881246b731105c08449f3ee58f6335f857d2b08e43b4f0b2e5d946b3f7cc4530"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json.gz",
+      "bytes": 1492,
+      "sha256": "cc50e5b5f845db6aab45b90999deca71bfd2f216c658cc4863379524cdc32de4"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json.gz",
+      "bytes": 2320,
+      "sha256": "86d74721811d337201ada30e517a79e7fc1cddbad70a19d79f0014101675e967"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json.gz",
+      "bytes": 840,
+      "sha256": "6c48454be53c906285e684aa71c4da0c0356effc2346f397db992be93bdfd756"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json.gz",
+      "bytes": 2405,
+      "sha256": "a337cf639f90683081af1d77029b10f6334d2e31691eeec7c924f3fa0d97f485"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json.gz",
+      "bytes": 3330,
+      "sha256": "8d5da9c9c97a04ad9047651d642c2f17a35d0696094a22814e1d2165ad945087"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json.gz",
+      "bytes": 1179,
+      "sha256": "290ff2479af9351cc186ea14eae99edd6495d48cd6d607ebebeabcf74a9025e2"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json.gz",
+      "bytes": 1247,
+      "sha256": "3ba36c68522c9aac14aaa57a38b4df620eef48b787a3d2c05c1c1933f27ef8d4"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json.gz",
+      "bytes": 1813,
+      "sha256": "16a1a90c75c841281b659b1646905b60ecd05b1f5006fc6274de9383d645acc9"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json.gz",
+      "bytes": 2028,
+      "sha256": "ab6384bf54f1937e6a19874ba7d228192f42f42f10ae6aff2a9be9703a760056"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json.gz",
+      "bytes": 2181,
+      "sha256": "fba4c6d280b3995ba20254ff1fab06e5904f10cd300343e26b15034ee5af51ee"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json.gz",
+      "bytes": 2316,
+      "sha256": "a5243f36e7d464e4fd9462638a7b44314dea536262ff80026aeb131f3e330aef"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json.gz",
+      "bytes": 1384,
+      "sha256": "96b48aa8efd8c2ae2b3a7d963792afcab0d5f769b1becba60ae4590cda9e7763"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json.gz",
+      "bytes": 655,
+      "sha256": "c57d3a6645aca68036196f9ada4a4adb44b36dc682a61471de42063c36f21893"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json.gz",
+      "bytes": 2145,
+      "sha256": "41dcd5a77961ea39aa72ee2b83960e004868a76ec821e0bf447dd0425224a529"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json.gz",
+      "bytes": 2771,
+      "sha256": "23e1e9b1a2c88aadd65970d6d9f445a115bfd52bd338a125de4b953fdf8af444"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/README.md.gz",
+      "bytes": 1332,
+      "sha256": "e82e5aa73a793335d2adcb10d2b5a68672d98b1a79c9cb5d0e14db157b019cf9"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json.gz",
+      "bytes": 1000,
+      "sha256": "48804a49d8e51500c2decb88dccf10ea9be1b3d901a61da2b81be0d5268fd078"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-extension-1.0.0/README.md.gz",
+      "bytes": 1229,
+      "sha256": "3ca587d103a81608e81fb7eeed4ad049ed270389178860b49a3c95f19fe5a7d7"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-extension-1.0.0/policy.json.gz",
+      "bytes": 2443,
+      "sha256": "ff206b9c45845963157f499b3488de57cabf8a2b1518b79e8dcfa8cc05665966"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-extension-2.0.0/README.md.gz",
+      "bytes": 869,
+      "sha256": "763386981585bd32def8b90573e20997fe927d7336efed82b3fd992635e08857"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json.gz",
+      "bytes": 2861,
+      "sha256": "489ed2abef3b42bb630607d79ba105b625f3a4ec5dc9afb158ce9e18e90c3b6a"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json.gz",
+      "bytes": 1516,
+      "sha256": "08689e1e3d7300b21bdc5252f63730bf3542108a3c9153eae992ffc9a976d026"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/README.md.gz",
+      "bytes": 1652,
+      "sha256": "d762e2f1ae03c0f24c1999b0047d9b7b5c09a132cf8417f254be3922b3e5409c"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/policy.json.gz",
+      "bytes": 2991,
+      "sha256": "8acae8373e723471223ef2701a2b4dc37dd7a8190589cea471a1694ed6be8373"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/provenance.json.gz",
+      "bytes": 1485,
+      "sha256": "a0be50e82d0601d44e12ec54cfbeecc594d2e781c8e2947d2c1ef60a8260e94a"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/report.json.gz.gz",
+      "bytes": 29941,
+      "sha256": "71cbb03a1b91a95aa299d4c88af8a048925ea3629b6edbcb1085fc38a2634148"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-after.json.gz.gz",
+      "bytes": 6303,
+      "sha256": "b84efb15c111b3ae2e04ccb2ae29eae694207fbceb74a4c7f17fa5a781d8f161"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-before.json.gz.gz",
+      "bytes": 6303,
+      "sha256": "b84efb15c111b3ae2e04ccb2ae29eae694207fbceb74a4c7f17fa5a781d8f161"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-inventory.json.gz.gz",
+      "bytes": 6009,
+      "sha256": "0fe6fd5e9d8815eb685f1fe710d0e6b47dbf508facf0cad8bbd2b6ddf4033106"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/coverage-transactions-model.ts.gz.gz",
+      "bytes": 1250,
+      "sha256": "db4c99fbdb11ab12068c3e538ff67ca167bc7f87cceb07de0462c8f5f6678086"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/coverage-transactions-producer.ts.gz.gz",
+      "bytes": 1083,
+      "sha256": "e7d7e86f8fe1db894943d9e9b61879d2ab06f1d39541968c023b9f217b292af1"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/coverage-transactions-program.ts.gz.gz",
+      "bytes": 4715,
+      "sha256": "fa40e98a6487c15a5990a3fdf7a1a927380eb4557434224523a79fbe4b538b5b"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/coverage-transactions-verifier.ts.gz.gz",
+      "bytes": 8500,
+      "sha256": "392a251779ba1df3ab4088465de46b01e9cb8a0f3d080849d1487f97a525ef72"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/manifest.json.gz",
+      "bytes": 807,
+      "sha256": "50c209995bafec1426ecf7f06127721f68d3aee5916cb8f77f7d34a776f0e7ff"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/policy.json.gz.gz",
+      "bytes": 3014,
+      "sha256": "a949ced3a1a06a4a06d042899c108d5ad887612027063faece025d4c10327da7"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/submissions.json.gz.gz",
+      "bytes": 3891,
+      "sha256": "6fe71131d41802d83a1db0636f4bab9699ea690fd0f213bcc24875ac55526ba6"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/verification.json.gz.gz",
+      "bytes": 1601,
+      "sha256": "50dd11b6e13269b36ad85fcf69ad07c563cf0850dc5c1da1eeb2b5c52b23f933"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-2.0.0/README.md.gz",
+      "bytes": 1357,
+      "sha256": "5ff11c41fd83ff711c67da64f4b074af77602d2c2db1ff657f407ced40dc4ed2"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json.gz",
+      "bytes": 3593,
+      "sha256": "6e4ee662d0e4325d10d3336c9fec98916c8a7af0d1fff06002fc45da21cc839f"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/brc100-list-actions-signed-value-clarification-20261112.json.gz",
+      "bytes": 1542,
+      "sha256": "2695b6263443a53a1e3285f3d3d48acbc3b21c225e4032ef6bf6ff2328644a0d"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/brc100-list-actions-signed-value-clarification-20261112.md.gz",
+      "bytes": 2609,
+      "sha256": "3df90e81ed1f7bf9be117396dfc1a49facbce03d06d2da25c773d5ab6d94ee16"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-accountability-20261112-extension-delta.json.gz",
+      "bytes": 18983,
+      "sha256": "6f5b6437fba93da8ed19570fc42a49359390c05f47a5f53566e91602cc5e4a73"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-accountability-20261112-extension-delta.md.gz",
+      "bytes": 1504,
+      "sha256": "2f584a58eeb833f54fd4e8e405f52f60e6809062fce03169ae54cc794d26d57c"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json.gz",
+      "bytes": 5426,
+      "sha256": "8f6cc79e561f09849192da8d22fc5ff96a15cdf758d009cbb8bb4b95b24d2def"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-closure-20261111.json.gz",
+      "bytes": 15477,
+      "sha256": "7b6ea8346f1104d445efb589f0cb3eb821f2456e450ccc4f24bac76ddf93cfe8"
+    },
+    {
+      "path": "source/scripts/check-native-wallet-selector.mjs.gz",
+      "bytes": 1720,
+      "sha256": "37d7175dd75e4e69f50f6f8f2c0a9bc3e46664c7e1b1fc5b6eea0799097ac856"
+    },
+    {
+      "path": "source/scripts/compare-native-conformance.mjs.gz",
+      "bytes": 2680,
+      "sha256": "e765d2492a1f0d7a4ffa6b212a1a8981e7184704f52b0c373063b0da6139ac28"
+    },
+    {
+      "path": "source/scripts/native-reevaluation.mjs.gz",
+      "bytes": 5350,
+      "sha256": "fa87cfb0c674dbab8402a48a2705ccbdc322f2c9061fe8d8b29ceb222335254c"
+    },
+    {
+      "path": "source/scripts/native-rust-compatibility.mjs.gz",
+      "bytes": 2185,
+      "sha256": "b534234f2ecd5ea16f22ac0c98b7bccbc1160ab58df095df1c612a9c42ce20a9"
+    },
+    {
+      "path": "source/scripts/native-wallet-profiles.mjs.gz",
+      "bytes": 877,
+      "sha256": "6cc6173bf8dcc4a65583b2b56dc9935f617c3af9f86ff59aa447041546133017"
+    },
+    {
+      "path": "source/scripts/prepare-storage-batch-subjects-go.mjs.gz",
+      "bytes": 2667,
+      "sha256": "b7a07c97ca81d8bf7e1e2a24ca5fafe8f08cb15129e8769c1647e76b07ba9285"
+    },
+    {
+      "path": "source/scripts/prepare-storage-dust-accounting-go.mjs.gz",
+      "bytes": 2703,
+      "sha256": "e6a8068f539ef7b591d0c8ea7fc44a6f923947739f6820866ee5fc2e37c3ed8f"
+    },
+    {
+      "path": "source/scripts/prepare-storage-input-ancestry-go.mjs.gz",
+      "bytes": 2744,
+      "sha256": "341144bdfe1d75f41c521fb52f75d665c26e9e70f286b8f72b61b0d0c0f55bc0"
+    },
+    {
+      "path": "source/scripts/prepare-storage-list-actions-go.mjs.gz",
+      "bytes": 1620,
+      "sha256": "a38271f9886feb4fb27994987a35890e705b8e480221e30ac8fd1294bc73d57a"
+    },
+    {
+      "path": "source/scripts/prepare-storage-merge-accounting-go.mjs.gz",
+      "bytes": 2727,
+      "sha256": "6da834fe5c5c453ffd0c8f1a6aabf269f182672e2530b0d8da6db81e61e8cf21"
+    },
+    {
+      "path": "source/scripts/prepare-storage-native-contracts-go.mjs.gz",
+      "bytes": 2074,
+      "sha256": "8f78c53b8f2f6d1bbfedd73a1df37be5c142e9fc56983778460c049eff442fa7"
+    },
+    {
+      "path": "source/scripts/prepare-storage-sqlite-retry-go.mjs.gz",
+      "bytes": 2781,
+      "sha256": "e1ceef90437b861d8effb4d91dc348a81a415eaf1a124388573fbaeb7ad8f74c"
+    },
+    {
+      "path": "source/scripts/prepare-yours-wallet-run.sh.gz",
+      "bytes": 1326,
+      "sha256": "6468a95084387501783c480520c0e9d9534620b6260d4c1e8f3b789b777e1728"
+    },
+    {
+      "path": "source/scripts/run-native-go-wallet.mjs.gz",
+      "bytes": 2664,
+      "sha256": "075a7ea29fcc44773a96f32ec3f7d97defda0d01d01c322f62569ecd415e4dc4"
+    },
+    {
+      "path": "source/scripts/verify-native-integrated.mjs.gz",
+      "bytes": 3760,
+      "sha256": "19eb51351fe14d370d9bd24153233c598fc88bb14c0c59c63eb56667e9635b23"
+    },
+    {
+      "path": "source/scripts/verify-native-synthesis.mjs.gz",
+      "bytes": 293,
+      "sha256": "24515845f7992febf98dffb73a856ef67dede68f761c1c9f3518867e2a0875ae"
+    },
+    {
+      "path": "source/scripts/verify-native-trust.mjs.gz",
+      "bytes": 422,
+      "sha256": "cf4875f44af1e8cb35b26cf0eb6737c7e50e0d802df911b0ded5516d251703cd"
+    },
+    {
+      "path": "source/scripts/verify-published-integrations.mjs.gz",
+      "bytes": 6029,
+      "sha256": "5838b8913868175e21ea6d89addc4f6044220f123427bad6067e0360738ee624"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-mongo/main.go.gz",
+      "bytes": 682,
+      "sha256": "1fa3cff171f62935dde01cc4b027878a08b1fe5558182ced8887e67cb920a75d"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/action_references_test.go.gz",
+      "bytes": 1801,
+      "sha256": "dbfa609bc2a3691ad881b1920e70ef2cf0b476e9fa641ea38a8fe119ad84071f"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/lifecycle_test.go.gz",
+      "bytes": 1239,
+      "sha256": "671e93b89af1c3a504542096e289ce3a4754e056725bc1d0bcde00a45c5670dc"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/main.go.gz",
+      "bytes": 8158,
+      "sha256": "83976f7098d6dbe32c291e95a81b50c9524f064f40e17ce386e19846e08b0b8f"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/main_test.go.gz",
+      "bytes": 1368,
+      "sha256": "392e6666150dcc5a4885c6b8f5956ab2968e90a90b4cd273937284c21cf15264"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/sync_test.go.gz",
+      "bytes": 929,
+      "sha256": "698de1224efabfe8bf634b9b6aa05a22688a6ef9b56dc059c0d85ce955e6a984"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go.gz",
+      "bytes": 2502,
+      "sha256": "33b42335b2ffaadd5ade0bd0c3a5d3fdc47b1c187f6d88b21d6d802cbe09f35d"
+    },
+    {
+      "path": "source/synthesis/go/components.lock.json.gz",
+      "bytes": 635,
+      "sha256": "57dc1670c72ea16498b9d9ae49f5cd1767abb5e9964fc47c00f975cfc3494262"
+    },
+    {
+      "path": "source/synthesis/go/go.mod.gz",
+      "bytes": 3963,
+      "sha256": "d186ddfac0f0a40af94cd14fade2fdc0028d451a6f7be705cff5af9885839c12"
+    },
+    {
+      "path": "source/synthesis/go/go.sum.gz",
+      "bytes": 39480,
+      "sha256": "d5e3e4aa0b61ce3cd1061b4b81e018e84983a1b99b0b56fd387c989b69bdf27f"
+    },
+    {
+      "path": "source/synthesis/node_modules/@bsv/wallet-toolbox/out/src/signer/methods/internalizeAction.js.gz",
+      "bytes": 2296,
+      "sha256": "f262547792dd1abe9c64308ce7851591e0b16e7c283b7f24d27c6dfdb95ecd4e"
+    },
+    {
+      "path": "source/synthesis/node_modules/@bsv/wallet-toolbox/out/src/storage/remoting/StorageClientBase.js.gz",
+      "bytes": 7901,
+      "sha256": "c6d36d8da03ef21ad47a2273ab33da8f05361d02dbd4cf42869be5aabf7035fc"
+    },
+    {
+      "path": "source/synthesis/node_modules/@bsv/wallet-toolbox/out/src/utility/canonicalizeAtomicBeef.js.gz",
+      "bytes": 626,
+      "sha256": "9650ef34edac52dd7a2b5ded9ca8840e00e3bc79450fd0865f4e041f3a0712c3"
+    },
+    {
+      "path": "source/synthesis/node_modules/@bsv/wallet-toolbox/package.json.gz",
+      "bytes": 1739,
+      "sha256": "523097d6f4d0f86682b1bd768fe1e99377e463019b310576f1707bf9cd9e8096"
+    },
+    {
+      "path": "source/synthesis/package-lock.json.gz",
+      "bytes": 27759,
+      "sha256": "66ca4a2f910de53b94c2ab14d28ecd39d044229790c4c9fd0ba49aef3759983a"
+    },
+    {
+      "path": "source/synthesis/src/board.ts.gz",
+      "bytes": 2031,
+      "sha256": "e950d786be63d14637e2a503f86eac177dab13dba191251f1b818b5b03009476"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/boundary-corpus.ts.gz",
+      "bytes": 5262,
+      "sha256": "8891b905b85dc2e45c4e414a9fe0727c1c5623c1a3f86adee1369843765a467e"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/evidence.ts.gz",
+      "bytes": 3025,
+      "sha256": "f00baecdbf2e4bee1d802fa7fa261fd283c72340e6bc757a79510f10c0359689"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-batch-build.ts.gz",
+      "bytes": 1432,
+      "sha256": "3a04a1e49dde63e78e8f238c53fb4e2d7c4799be9bebacb9a451a4f8e2bb09b0"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-services.ts.gz",
+      "bytes": 6519,
+      "sha256": "365e269926f9cfebd81a2b3b3c370ec1a3c5de8ca70479268e64258c255d7d60"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/model.ts.gz",
+      "bytes": 2038,
+      "sha256": "32988f20bad86c18c821b093d44eeb1b0a370b2b021982a70baf5953be51ddbf"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-certificate-states-model.ts.gz",
+      "bytes": 1232,
+      "sha256": "841cf0465f79cac4a723533097c167fb1358f52d2290c1fed45537f538acb713"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-certificate-states.ts.gz",
+      "bytes": 1842,
+      "sha256": "c3bcec635b2e1dc8e23bec749d13584f6e05b01f7e03df4a5a29500a55ed21b1"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-clauses.ts.gz",
+      "bytes": 5111,
+      "sha256": "7374601ff5e050dd5216de5c0cf31d0fd28de833c87985a020489d7bea1c5e81"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional-issuer.ts.gz",
+      "bytes": 2936,
+      "sha256": "5af93b12607821d072b2dc8d6702a751e45ae42e428c65541848cb3c52026b87"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional-model.ts.gz",
+      "bytes": 1742,
+      "sha256": "2113798e19d7466d94cb0611fdfafd585de81501449c634e46618e2415ca71b8"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional.ts.gz",
+      "bytes": 4411,
+      "sha256": "e1ed1a85e8a225582ae32623baf09457fe8cc9d8d091091d452227a31cafb3bb"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-namespace-oracle5.ts.gz",
+      "bytes": 686,
+      "sha256": "20be894000e8fa1753809452ffba34188aa4a568cffe664aa3f919013b6dca78"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-nosend-change.ts.gz",
+      "bytes": 1081,
+      "sha256": "22bbc40ae2ac91bd399195cd13eaf76cbce1897173e5e133e4a95b6999a00430"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-permission-coverage-model.ts.gz",
+      "bytes": 2697,
+      "sha256": "09fb118d828e0635389ba2f2e4643c2c29e61880cded3211ab0012964f01c27e"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-permission-coverage.ts.gz",
+      "bytes": 4006,
+      "sha256": "05bac77dcd996cbc11b16e555dbeef37e79732d6503fa1c72b418af464777c42"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-transaction-states-model.ts.gz",
+      "bytes": 1400,
+      "sha256": "b8ab04c5a425e34d2759148387b55678b97e45cf086294a8a5b6765377ddb673"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-transaction-states.ts.gz",
+      "bytes": 2554,
+      "sha256": "18a964a3c4ab40008da6dc2246671ee59bfe42ccd1aa317085f2cac4bfda4b0a"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance.ts.gz",
+      "bytes": 2733,
+      "sha256": "0e6cb4d68e3a43ae6882a24cd88a09d3a6433ed1a20c7a33ed41eeecdff170e5"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/controlled-header-fixture.ts.gz",
+      "bytes": 769,
+      "sha256": "18df1eaf3539b1a885f47782fc755c01f950b8ab5bba4fd2933422267bd329b8"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts.gz",
+      "bytes": 2984,
+      "sha256": "430f2618c204f8c344fea2ee4cb7dafd9dbf7983ead0740e0a5886d40d3cafdc"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-model.ts.gz",
+      "bytes": 1163,
+      "sha256": "bc1b83cdc4c7d690a2cbd28bca9ac0c6e0a80618e27d6f981dd1c0cea52cbb4f"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-reference.ts.gz",
+      "bytes": 3341,
+      "sha256": "32b418239f3ad0c71f6130b54b8706bc6e9dbb9daea6dfd9a802397a384179d5"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-run.ts.gz",
+      "bytes": 4655,
+      "sha256": "7eeae2146a1cd1c77b28a558cc63d60f99027b08cdaa68efc418dbb014fc5c04"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-verify.ts.gz",
+      "bytes": 9690,
+      "sha256": "1191a6321337bc405f1914b30d26954912fa51adce4ebc434a60a102cd57d23c"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-driver.ts.gz",
+      "bytes": 1888,
+      "sha256": "8a66a67e1763786fd67a58959306191527c1aa73bfdf6973b07b0f8231880359"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-model.ts.gz",
+      "bytes": 1839,
+      "sha256": "78e26e43a7b0acf5db0b6661cc76a880ce04da1c4d736d86fd6f81aa4f2ae2cd"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-requests.ts.gz",
+      "bytes": 2003,
+      "sha256": "fc3d517c8f36414eef9509ae052f02b2996054c0b9d35dc9ad69b761fadd0213"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-verifier.ts.gz",
+      "bytes": 10530,
+      "sha256": "c348770f5b888149e2cfd186cde16164e15b2fb2e340e7bbe01ca377b7f1d37b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-driver.ts.gz",
+      "bytes": 4317,
+      "sha256": "3b9fdd74a9e67bc0c6d2baafb00673a91c8a4230cbe5c732d86f837369fd16fc"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-model.ts.gz",
+      "bytes": 2353,
+      "sha256": "07d7d726a1372ec1e1306176fd4e1cfb93bc46e6e0be9cbae8c63681d209d047"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-observer.ts.gz",
+      "bytes": 4183,
+      "sha256": "f15175841947319eb943c5b478e9409250b7448d9b6df0251b235a1da692c50f"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-ui.ts.gz",
+      "bytes": 1429,
+      "sha256": "735c5f53fc92f02e8890c5cc94ee668aed6a0926f06ebaa6d0f88eddc3b077b0"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts.gz",
+      "bytes": 11242,
+      "sha256": "87697454dabe14f1956cf9b76fb67c3ef5f41290cd818620c7456e0b650040a2"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-suite.ts.gz",
+      "bytes": 2211,
+      "sha256": "6b0d1dd08c749dfa180ced10899f8b641f1b4aef88fe41246f635f08ab103b7d"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-model.ts.gz",
+      "bytes": 1324,
+      "sha256": "0fda12b415d128e597edc2171af51cf61c0373bb267c61bfde2031804c0c5c4b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-producer.ts.gz",
+      "bytes": 1085,
+      "sha256": "8daee7cd91e4cf9d95cf69eb06dad424b5ad2a4c1885d3f05aa255ec73f853e4"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-program.ts.gz",
+      "bytes": 4692,
+      "sha256": "aedf9d1e7a77985a54f28bd52e5d2de5b36ae797bc5d3be623169e86617f91f7"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts.gz",
+      "bytes": 9376,
+      "sha256": "dfcd22e8a42bc3901a58c0016aef1e6a43632df29702fdd4e8e758a75d79e485"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/identity-trust-oracle2.ts.gz",
+      "bytes": 634,
+      "sha256": "a3f764b19e78742801cf039433c16dd9b88eb7e9b526cf35498589c7fa4da2c7"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/identity-trust.ts.gz",
+      "bytes": 3979,
+      "sha256": "9588940d4372dbc1e3ad722fa87c2b824998e2523d343cfb95bb52af74dc555d"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/integrated.ts.gz",
+      "bytes": 3023,
+      "sha256": "039cc1e980f0a3bf192a5c393234067a73ad8c5c512ca589a67fa49bd503769b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/permission-coverage-observer.ts.gz",
+      "bytes": 3997,
+      "sha256": "8daf2887dacce98af8741256f30639d49c6c1ae06705c9fdf93b8d4e83f8e74b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/permission-prelude.ts.gz",
+      "bytes": 1019,
+      "sha256": "f30869f4aabb46c520c06f5a55d27a77b819e066ec7ac46db9439b173dbc8506"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/shutdown-submissions.ts.gz",
+      "bytes": 1490,
+      "sha256": "813fae94b9a11e5f021a4ce4e674c01387905ba1d3efb3a3a76c0ab9d0eba16f"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/synthesis.ts.gz",
+      "bytes": 5884,
+      "sha256": "f416e83e1ad246164bb7d408833093d0389af9cd601a7d2795403f3308fb2e2e"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-certificate-states.ts.gz",
+      "bytes": 5760,
+      "sha256": "b25db30d86206a249b655376e63499c55f4c5b1f287e8ae4ba2ed9f4ac46d97b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts.gz",
+      "bytes": 3539,
+      "sha256": "a95df2da103c744d11de74fe3a40380e7157c16765e743b29468e531b3cef069"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-clauses.ts.gz",
+      "bytes": 6061,
+      "sha256": "f3ef177268b010701808be343ee654c156219ff3c59f5ef21e8871e254e0845c"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-conditional.ts.gz",
+      "bytes": 11472,
+      "sha256": "da6bedb8cd2fbaef910f2fba2a8a8ae700cfb5dd5825b78a10d827eb2acb3b3e"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-nosend-change.ts.gz",
+      "bytes": 1672,
+      "sha256": "48ad65c40c05716c025af17afb3e9a1e26c1f8cb50cb8800f2257138c0c81e59"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-permission-coverage.ts.gz",
+      "bytes": 8063,
+      "sha256": "81737563bfdb6eb9e425a2f606d4ff1a2e3cdd72fd7ca27db9576695fddbaa94"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance.ts.gz",
+      "bytes": 3512,
+      "sha256": "a879c5f7bee82d4412f3dc9c356a43093c069d5431723721293cd2ac0019d333"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-coverage-suite.ts.gz",
+      "bytes": 5242,
+      "sha256": "417faaf3864e7e0a90f9e1af559807deea05e832605eab79920eb21062f59168"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-identity-publication.ts.gz",
+      "bytes": 1246,
+      "sha256": "c433972543053b399ad495c703fd32e8b64d1d4988629ccbd45657a60eb22a39"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-identity-trust.ts.gz",
+      "bytes": 4739,
+      "sha256": "a7c9668af68ff3e2f3e772a39523d15a660379aa557892149a6e134fa7331da1"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts.gz",
+      "bytes": 3409,
+      "sha256": "9de2d9085d9738f4225f7b9d2731fdd068d7585859e6f5ca86496cd5a59755db"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-submission-ancestry.ts.gz",
+      "bytes": 1823,
+      "sha256": "a7acc8df05444af75998af77d2cc86ef945f5e371e89918fd1a20cf8d0a07208"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-synthesis.ts.gz",
+      "bytes": 2621,
+      "sha256": "0d15f93532410e757fa95202ca621a340d1e6d6b80d39e8df8dfccb6b42ea701"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts.gz",
+      "bytes": 3284,
+      "sha256": "57da9d37d041cef86c390d17f337b522fa906a07ef4dd33e5d611613ad4634bc"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-transaction-states.ts.gz",
+      "bytes": 6883,
+      "sha256": "4086ca9d9fbea467413e8a99a5c5f60c13d06ed795470e48605b111ff2ef76e3"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify.ts.gz",
+      "bytes": 9392,
+      "sha256": "3acc041bec5510ad2eab36c8763f454e13c379bcbd92e90e99a412b1daef560f"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/worker.ts.gz",
+      "bytes": 4262,
+      "sha256": "eb90c3f9dd62c98b4fb3e46e8a9002c2717c5dd203e99fa9e44174a3bd2981a5"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native-output-snapshot.ts.gz",
+      "bytes": 1707,
+      "sha256": "c40e4411fe00d658ea359ecc88004a9f50cd1c1bb07b97a8f6cde628ade99084"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/run-boundary.ts.gz",
+      "bytes": 2757,
+      "sha256": "a2b0786f5df35d847a1c5b59a30030bfd20acde9ad803cde94fa48f5b55cbeaa"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/services.ts.gz",
+      "bytes": 15435,
+      "sha256": "214ad39ec80e9dba07cec600e1850147ccd69a1e41b9e2044b712e8ecf08f739"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/verify-boundary.ts.gz",
+      "bytes": 4759,
+      "sha256": "56339be7526772d0e1f831b627c434c11372495ea388d1c16655ff423cc26478"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/yours-driver.ts.gz",
+      "bytes": 13978,
+      "sha256": "70f7597a3d128bbab1dcc1c5df4c2ffa57239c4af4e74c84fb497db15e8b04f0"
+    },
+    {
+      "path": "source/synthesis/test/native-conditional-transaction-bindings.test.ts.gz",
+      "bytes": 3774,
+      "sha256": "91bc47c948371d087f9a4aecab3f2201a5988e4a9d9855797219d75616889314"
+    },
+    {
+      "path": "source/synthesis/test/native-conformance-permission-coverage.test.ts.gz",
+      "bytes": 10492,
+      "sha256": "d2f18eb073bac76ee284a894a847abb3445d9e44886e016d13948e29dbed2183"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-certificates.test.ts.gz",
+      "bytes": 3914,
+      "sha256": "463da0b8047547c6d3d8df5d8dd8a20e23b76a97c172558ee3ffd2b40cb5ab18"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-extension-go.test.ts.gz",
+      "bytes": 2174,
+      "sha256": "34c6977ce112a90bd521097d6e2f57ebdba992f36aef487b4479f79f75bf9e4f"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-extension-v2-go.test.ts.gz",
+      "bytes": 2418,
+      "sha256": "e5da340b0f76f2c4298b3a45f4855b8e053a319abadd80dfe2b4c1dafb4c31d7"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-extension-v2.test.ts.gz",
+      "bytes": 2556,
+      "sha256": "9646a67459964eb7a334bb9390a7950690e3382dad7ed654cabc6c6fd836ba5b"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-extension.test.ts.gz",
+      "bytes": 5337,
+      "sha256": "f574ea90d08b8f3a84af4cc7c0a8f7e7538e727b469dbd544cdefdb9abbf5c46"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-go-admission.test.ts.gz",
+      "bytes": 2450,
+      "sha256": "b1215b6c0b561354c08101b4e22f0b377e3715b6fde8331f010879a6cf6af3a8"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-permissions.test.ts.gz",
+      "bytes": 7398,
+      "sha256": "b581a73508664f28b2cf0da6f91e16686de6c7c059141720ced43537eb9a7f09"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-suite.test.ts.gz",
+      "bytes": 2454,
+      "sha256": "77a37539c8c90e0dcad08e784e540c9e43788baf3c3294e70f8467128ae41485"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-transactions-oracle2.test.ts.gz",
+      "bytes": 3631,
+      "sha256": "f909afbda171da38c8df618508e32153e16d07be01ff98b4d4b6e093ecd07b1f"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-transactions.test.ts.gz",
+      "bytes": 4875,
+      "sha256": "5c4419f7e05d4dd24667802817e9df4d876c63bfd119232e1b73b4607d69eb2b"
+    },
+    {
+      "path": "source/synthesis/test/native-output-observation-ledger.test.ts.gz",
+      "bytes": 847,
+      "sha256": "e669c9fd1e2e71cd7ccf32ce3cdff0da1217283bdbb2994d438648e1e7b096d3"
+    },
+    {
+      "path": "source/synthesis/test/native-output-snapshot.test.ts.gz",
+      "bytes": 1678,
+      "sha256": "5acec8051d179c09728f77ac476d514090786cc20da82bb19a1de829413df62d"
+    },
+    {
+      "path": "source/synthesis/test/native-permission-prelude.test.ts.gz",
+      "bytes": 5092,
+      "sha256": "e0bacd58406c00fda9b55204b18fd7813bd64b2237d1575830d71f965d7e32eb"
+    },
+    {
+      "path": "source/synthesis/test/native-shutdown-ancestry.test.ts.gz",
+      "bytes": 2963,
+      "sha256": "510b4aa01a849d636d42b651ef7833c338c970317206d14ed15aa150247f01d2"
+    },
+    {
+      "path": "source/synthesis/test/synthesis.test.ts.gz",
+      "bytes": 2566,
+      "sha256": "24fd64c43cda858f1df14a2958e60681dbdd951b2c454de78ef95d50755887a4"
+    },
+    {
+      "path": "source/test/native-candidate-artifact.test.mjs.gz",
+      "bytes": 3478,
+      "sha256": "e7eca1f040f5e62b87442c030556cad0eeb8cbb2bfc4cf5c4220e56e8bee2333"
+    },
+    {
+      "path": "source/test/native-conformance-comparison.test.mjs.gz",
+      "bytes": 2035,
+      "sha256": "02d72d7e1a2794973676c26a0af0d7ac07a8098d7a7dbed94d1f64f5d2d36f88"
+    },
+    {
+      "path": "source/test/native-container-source-closure.test.mjs.gz",
+      "bytes": 1007,
+      "sha256": "5ad56036794c49bb3494f3551bea899f962ce6c962853cee078a5259cd890dff"
+    },
+    {
+      "path": "source/test/native-coverage1-selection.test.mjs.gz",
+      "bytes": 2606,
+      "sha256": "375d31637440c60f93a8b7bb72af601feab6d5471221ff366ce267015e9c2aad"
+    },
+    {
+      "path": "source/test/native-reevaluation-revisions.test.mjs.gz",
+      "bytes": 1950,
+      "sha256": "ec01f6605d105e18814f633782be62752849719680cbddea40f60136ff8ddd06"
+    },
+    {
+      "path": "source/test/published-integrations.test.mjs.gz",
+      "bytes": 4138,
+      "sha256": "d463bce352deddd502e57cdcac388e64288cdee79544c58d0737bd6de7d9b446"
+    },
+    {
+      "path": "source-freeze-index.json",
+      "bytes": 127780,
+      "sha256": "944da2e00e6fc28702820c7f2ce62106644d4e406427351948123aa3c0f2f5d2"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 3803,
+      "sha256": "ade55bb525ab084369e597cc856f547e6afefe23ce96edf0ae6738c9cb78f158"
+    }
+  ]
+}
