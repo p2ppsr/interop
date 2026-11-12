@@ -50,13 +50,21 @@ test('coverage5 keeps every executed coverage2 JSON byte-identical',()=>{
 test('coverage5 freezes all current inputs and admits its complete source fixture', async () => {
   for (const [name, digest] of Object.entries(plan.conformanceInputs)) assert.equal((await import('node:crypto')).createHash('sha256').update(read(name)).digest('hex'), digest, name)
   const selected = await checkNativeWalletSelector('integrated-native-conformance-pr368-coverage-5', { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) })
-  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-5.json')
+  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-5-source-2.json')
   assert.equal(selected.wallet.version, '5.1.1-pr368.e360e67')
   assert.equal(selected.rust.corpus, 'tpnil-rust-corpus@3')
-  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-5.json')
+  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-5-source-2.json')
 })
 test('coverage5 cannot substitute an input or a release artifact in its source fixture', async () => {
   const variant = 'integrated-native-conformance-pr368-coverage-5', options = { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) }
   await assert.rejects(checkNativeWalletSelector(variant, { ...options, read: name => name === 'synthesis/src/wallet-lab/services.ts' ? Buffer.from('changed') : read(name) }), /Current conformance input differs/)
-  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-5.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
+  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-5-source-2.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
+})
+
+test('source-only metadata correction preserves original unexecuted profile/plan bytes and every actual predicate',()=>{
+ const before='58e0c45b6cdac06cbf351292249c5a059168fced',original='infra/native/conformance/plan-pr368-coverage-5.json',prior=JSON.parse(read(original))
+ for(const name of [original,'infra/native/conformance/rust-graph-pr368-coverage-5.json'])assert.deepEqual(read(name),execFileSync('git',['show',`${before}:${name}`],{cwd:root,maxBuffer:32*1024*1024}))
+ assert.deepEqual(read('itcves/ITCVE-1/4.7.0/profile-source-1.json'),execFileSync('git',['show',`${before}:itcves/ITCVE-1/4.7.0/profile.json`],{cwd:root,maxBuffer:32*1024*1024}))
+ const semantics=value=>Object.fromEntries(Object.entries(value).filter(([key])=>!['id','conformanceInputs','sourceBindingRevision','sourcePredecessor'].includes(key)))
+ assert.deepEqual(semantics(plan),semantics(prior));assert.equal(plan.sourceBindingRevision,8);assert.equal(plan.extensionOracle,prior.extensionOracle)
 })

@@ -7,12 +7,32 @@ permissions:
 jobs:
   offline-core:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        env:
+          GIT_CONFIG_COUNT: '1'
+          GIT_CONFIG_KEY_0: http.version
+          GIT_CONFIG_VALUE_0: HTTP/1.1
         with:
+          # Fetch ordinary full history first; combining all refs with a new
+          # synthetic PR merge can stall GitHub's initial pack generation.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Restore the exact event checkout
+        env:
+          TPNIL_CI_EVENT_SHA: ${{ github.sha }}
+          TPNIL_CI_PULL_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          [[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]]
+          if [ "$(git rev-parse HEAD)" != "$TPNIL_CI_EVENT_SHA" ]; then
+            [[ "$TPNIL_CI_PULL_NUMBER" =~ ^[0-9]+$ ]]
+            git -c http.version=HTTP/1.1 -c protocol.version=2 fetch --no-tags origin "refs/pull/$TPNIL_CI_PULL_NUMBER/merge"
+            test "$(git rev-parse FETCH_HEAD)" = "$TPNIL_CI_EVENT_SHA"
+            git checkout --detach "$TPNIL_CI_EVENT_SHA"
+          fi
+          test "$(git rev-parse HEAD)" = "$TPNIL_CI_EVENT_SHA"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version-file: '.nvmrc'

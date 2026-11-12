@@ -8,6 +8,8 @@ for (const [profile, program, extension, basket] of [['ITCVE-1@4.5.0', 'ISI-4@5.
   const selected = nativeCompletionProfile(profile), manifest = JSON.parse(fs.readFileSync(new URL(`../../${selected.manifest}`, import.meta.url), 'utf8'))
   expect(manifest.program).toBe(program); expect(manifest.version).toBe(profile.split('@')[1]); expect(selected.program).toBe(program)
   expect(selected.extensionRevision).toBe(extension); expect(selected.basketRevision).toBe(basket)
+  for(const [name,module] of Object.entries(manifest.nativeConformance.coverageModules) as Array<[string,any]>){const policy=JSON.parse(fs.readFileSync(new URL(`../../${module.manifest}`,import.meta.url),'utf8'));expect(module.oracle).toBe(policy.oracle);expect(module.assertions).toBe(module.assertionIds.length);const ids=policy.assertionIds??policy.variantIds??policy.assertions.map((id:string)=>name==='certificates'?`coverage-certificates.${id}`:id);expect(module.assertionIds).toEqual(ids)}
+  expect(manifest.nativeConformance.coverageModules.extension.oracle).toBe(`tpnil-native-coverage-extension-oracle@${extension}.0.0`)
   expect(selectedCoverageExtensionPolicy(`tpnil-native-coverage-extension-oracle@${extension}.0.0`).policy.oracle).toBe(`tpnil-native-coverage-extension-oracle@${extension}.0.0`)
   expect(selectedBasketPolicy(selected.basketRevision).policy.schema).toBe(`tpnil-native-basket-boundaries-policy@${basket}.0.0`)
 })

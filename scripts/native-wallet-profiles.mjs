@@ -1,6 +1,7 @@
 export const nativeCandidateCoverage5Flag = '--conformance-pr368-coverage-5'
 export const nativeCandidateCoverage5Variant = 'integrated-native-conformance-pr368-coverage-5'
-export const nativeCandidateCoverage5PlanPath = 'infra/native/conformance/plan-pr368-coverage-5.json'
+export const nativeCandidateCoverage5OriginalPlanPath = 'infra/native/conformance/plan-pr368-coverage-5.json'
+export const nativeCandidateCoverage5PlanPath = 'infra/native/conformance/plan-pr368-coverage-5-source-2.json'
 export const nativeCandidateCoverage4Flag = '--conformance-pr368-coverage-4'
 export const nativeCandidateCoverage4Variant = 'integrated-native-conformance-pr368-coverage-4'
 export const nativeCandidateCoverage4PlanPath = 'infra/native/conformance/plan-pr368-coverage-4.json'
