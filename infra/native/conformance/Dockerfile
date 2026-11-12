@@ -16,6 +16,7 @@ COPY programs/ISI-4/5.0.0 /work/programs/ISI-4/5.0.0
 COPY programs/ISI-4/5.1.0 /work/programs/ISI-4/5.1.0
 COPY programs/ISI-4/5.2.0 /work/programs/ISI-4/5.2.0
 COPY programs/ISI-4/5.3.0 /work/programs/ISI-4/5.3.0
+COPY programs/ISI-4/5.4.0 /work/programs/ISI-4/5.4.0
 COPY programs/ISI-4/profiles/native-conformance-5.0.0 /work/programs/ISI-4/profiles/native-conformance-5.0.0
 COPY programs/ISI-4/profiles/native-conformance-4.0.0 /work/programs/ISI-4/profiles/native-conformance-4.0.0
 COPY programs/ISI-4/profiles/native-conformance-3.0.0 /work/programs/ISI-4/profiles/native-conformance-3.0.0
@@ -29,6 +30,7 @@ COPY itcves/ITCVE-1/4.0.0 /work/itcves/ITCVE-1/4.0.0
 COPY itcves/ITCVE-1/4.1.0 /work/itcves/ITCVE-1/4.1.0
 COPY itcves/ITCVE-1/4.2.0 /work/itcves/ITCVE-1/4.2.0
 COPY itcves/ITCVE-1/4.3.0 /work/itcves/ITCVE-1/4.3.0
+COPY itcves/ITCVE-1/4.4.0 /work/itcves/ITCVE-1/4.4.0
 COPY infra/adapters/storage-portability /work/infra/adapters/storage-portability
 COPY infra/adapters/storage-list-actions /work/infra/adapters/storage-list-actions
 COPY infra/adapters/storage-native-contracts /work/infra/adapters/storage-native-contracts
@@ -52,3 +54,6 @@ ARG TPNIL_STORAGE_BINARY=itcve-go-storage-portability
 COPY out/${TPNIL_STORAGE_BINARY} out/${TPNIL_STORAGE_BINARY}.json /opt/tpnil/
 ENV TPNIL_NATIVE_CONFORMANCE=1 TPNIL_NATIVE_IDENTITY_TRUST=1
 USER pwuser
+
+COPY synthesis/test/native-permission-startup.test.ts synthesis/test/native-failure.test.ts /work/synthesis/test/
+COPY synthesis/test/fixtures/native5-identity-prompt.json /work/synthesis/test/fixtures/native5-identity-prompt.json

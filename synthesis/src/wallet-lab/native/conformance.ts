@@ -16,8 +16,9 @@ function vector(id: VectorResult['id'], report: any, file: string, limitations: 
   return { id, outcome, assertions, limitations }
 }
 
-export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' | 'pr368-observer3' | 'pr368-coverage1' = 'legacy', fixtureRevision: 1 | 2 = 1, headerFixture?: ControlledHeaderFixture, identityTrustOracle?: IdentityTrustOracleOptions['oracle']): Promise<{ vectors: VectorResult[] }> {
-  const expanded = nativeRevision === 'pr368-coverage1'
+export async function runNativeConformance(context: NativeScenarioContext, coverage = false, closure = false, nativeRevision: 'legacy' | 'yours-5.1.1' | 'pr368-7e39006' | 'pr368-observer3' | 'pr368-coverage1' | 'pr368-coverage2' = 'legacy', fixtureRevision: 1 | 2 = 1, headerFixture?: ControlledHeaderFixture, identityTrustOracle?: IdentityTrustOracleOptions['oracle']): Promise<{ vectors: VectorResult[] }> {
+  const recovery = nativeRevision === 'pr368-coverage2'
+  const expanded = recovery || nativeRevision === 'pr368-coverage1'
   const observer3 = nativeRevision === 'pr368-observer3'
   const candidate = expanded || observer3 || nativeRevision === 'pr368-7e39006'
   if ((observer3 || expanded) && (fixtureRevision !== 2 || headerFixture !== 'tpnil-native-controlled-header@1.0.0' || identityTrustOracle !== 'tpnil-native-identity-trust-oracle@2.0.0')) throw new Error('Observer3 requires its prospective fixtures and identity trust oracle')
@@ -26,13 +27,13 @@ export async function runNativeConformance(context: NativeScenarioContext, cover
   if (release511 && !closure) throw new Error('Yours5.1.1 requires the complete native closure')
   coverage = coverage || closure
   const { application, services, evidence, baselineVectors } = context
-  const profile = expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
-  const program = expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
+  const profile = recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : release511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0'
+  const program = recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'
   const wallet = nativeWalletBoundary(application, true)
   const permission = await context.manualPrompt(() => runNativePermissionConformance({ context: context.context, evidence, extensionId: context.extensionId, trustedClick: closure }))
   const lifecycle = await runConformanceLifecycle(wallet, services, { receiptMode: 'storage-rpc', oracle: lifecycleOracleId, submissionBinding: todoSubmissionBinding })
   evidence.addJson('conformance/lifecycle.json', lifecycle)
-  const portability = await runNativePortability({ application, services, evidence, password: context.password, oracle: coverage ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' })
+  const portability = await runNativePortability({ application, services, evidence, password: context.password, ...(recovery ? { extensionId: context.extensionId } : {}), oracle: coverage ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' })
   let clauses: any
   let conditional: any
   let transactionStates: any

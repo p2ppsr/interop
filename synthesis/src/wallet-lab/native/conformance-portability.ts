@@ -274,8 +274,30 @@ export function nativePortabilityControls(application: Page, walletPage: Page, p
   }
 }
 
-export async function runNativePortability({ application, services, evidence, password, oracle = 'tpnil-native-portability-oracle@2.0.0' }: {
-  application: Page; services: ControlledWalletServices; evidence: EvidenceBundle; password: string
+/** A prospective run owns its settings tab. Earlier browser restarts may
+ * legitimately have closed every index page; no unrelated extension is used. */
+export async function withNativePortabilitySettingsPage<T>(application: Page, extensionId: string, operation: (page: Page) => Promise<T>): Promise<T> {
+  assert.match(extensionId, /^[a-p]{32}$/)
+  const page = await application.context().newPage()
+  let primary: { error: unknown } | undefined
+  try {
+    const url = `chrome-extension://${extensionId}/index.html`
+    await page.goto(url, { timeout: 30_000 }); assert.equal(page.url(), url)
+    await page.getByText('Settings', { exact: true }).last().waitFor({ state: 'visible', timeout: 30_000 })
+    return await operation(page)
+  } catch (error) { primary = { error }; throw error }
+  finally {
+    let timer: ReturnType<typeof setTimeout> | undefined
+    try {
+      await Promise.race([page.close({ runBeforeUnload: false }), new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error('Owned portability settings page did not close within 10 seconds')), 10_000) })])
+      assert.equal(page.isClosed(), true)
+    } catch (error) { if (primary) throw new AggregateError([primary.error, error], 'Native portability operation and owned settings cleanup failed', { cause: primary.error }); throw error }
+    finally { if (timer) clearTimeout(timer) }
+  }
+}
+
+export async function runNativePortability({ application, services, evidence, password, extensionId, oracle = 'tpnil-native-portability-oracle@2.0.0' }: {
+  application: Page; services: ControlledWalletServices; evidence: EvidenceBundle; password: string; extensionId?: string
   oracle?: 'tpnil-native-portability-oracle@2.0.0' | 'tpnil-native-portability-oracle@3.0.0'
 }) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-portability-'))
@@ -288,10 +310,14 @@ export async function runNativePortability({ application, services, evidence, pa
     await replacement.start()
     services.registerStorageCounterpart(replacementHost, replacement.storageUrl, replacement)
     retained = true
-    const walletPage = application.context().pages().find(page => /^chrome-extension:\/\/.+\/index.html/.test(page.url()))
-    if (!walletPage) throw new Error('Native wallet settings page is absent')
     const ui: any[] = []
-    report = await qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, oracle === 'tpnil-native-portability-oracle@3.0.0'), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
+    const execute = (walletPage: Page) => qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, oracle === 'tpnil-native-portability-oracle@3.0.0'), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
+    if (extensionId !== undefined) report = await withNativePortabilitySettingsPage(application, extensionId, execute)
+    else {
+      const walletPage = application.context().pages().find(page => /^chrome-extension:\/\/.+\/index.html/.test(page.url()))
+      if (!walletPage) throw new Error('Native wallet settings page is absent')
+      report = await execute(walletPage)
+    }
     report.ui = ui
     report.components = { source: services.componentIdentity, replacement: replacement.componentIdentity }
     report.cleanup.replacementOwnedByServiceGraph = true

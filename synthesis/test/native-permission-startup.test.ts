@@ -1,0 +1,120 @@
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import { chromium, type BrowserContext, type Page } from 'playwright'
+import { PrivateKey } from '@bsv/sdk'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { createExtendedPermissionObserver } from '../src/wallet-lab/native/coverage-permissions-observer.js'
+import { verifyPermissionExtensionIdentityConsent } from '../src/wallet-lab/native/coverage-permissions-verifier.js'
+import { runNativePortability, withNativePortabilitySettingsPage } from '../src/wallet-lab/native/conformance-portability.js'
+
+// LAB_SELF_TEST_ONLY. Real Chromium proves observer control flow and trusted
+// input capture. The test extension and fake CWI response never qualify a wallet.
+describe.skipIf(!fs.existsSync(chromium.executablePath()))('prospective permission startup recovery', () => {
+  let directory: string, extension: string, profile: string, extensionId: string, context: BrowserContext, application: Page
+  let denied: any, allowed: any
+  const identity = PrivateKey.fromHex('01').toPublicKey().toString(), images = new Map<string, Buffer>()
+  const origin = 'https://permission-extension.itcve.test'
+  const retained = JSON.parse(fs.readFileSync(new URL('./fixtures/native5-identity-prompt.json', import.meta.url), 'utf8'))
+  const read = (name: string) => { const value = images.get(name); if (!value) throw new Error('Missing observed image'); return value }
+  const launch = () => chromium.launchPersistentContext(profile, { headless: true, channel: 'chromium', args: [`--disable-extensions-except=${extension}`, `--load-extension=${extension}`] })
+  beforeAll(async () => {
+    directory = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-permission-startup-')))
+    extension = path.join(directory, 'extension'); profile = path.join(directory, 'profile'); fs.mkdirSync(extension)
+    fs.writeFileSync(path.join(extension, 'manifest.json'), JSON.stringify({ manifest_version: 3, name: 'TPNIL observer test', version: '1.0', background: { service_worker: 'background.js' } }))
+    fs.writeFileSync(path.join(extension, 'background.js'), 'chrome.runtime.onInstalled.addListener(()=>{});')
+    fs.writeFileSync(path.join(extension, 'index.html'), '<h1>Fixture wallet</h1><button>Settings</button>')
+    fs.writeFileSync(path.join(extension, 'prompt.html'), '<meta charset="utf-8"><style>button{display:block}</style><h1>Protocol Permission</h1><p>An application is requesting permission to use protocol "identity key retrieval" with security level 1.</p><p>Origin</p><p>permission-extension.itcve.test</p><p>Protocol</p><p>identity key retrieval</p><p>Security</p><p>Level 1 · this app only</p><button>Allow</button><button>Deny</button><script src="prompt.js"></script>')
+    fs.writeFileSync(path.join(extension, 'prompt.js'), 'document.querySelectorAll("button").forEach(b=>b.onclick=()=>window.fixtureDecision(b.textContent));')
+    context = await launch()
+    const worker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker')
+    extensionId = new URL(worker.url()).host
+    await context.route('https://**/*', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><h1>TPNIL boundary fixture</h1>' }))
+    let settle: (value: string) => void
+    await context.exposeBinding('fixtureDecision', async (_, button) => { settle(button) })
+    await context.exposeBinding('fixtureRequest', async () => {
+      const popup = await context.newPage(); await popup.goto(`chrome-extension://${extensionId}/prompt.html?kind=permission`)
+      const button = await new Promise<string>(resolve => { settle = resolve }); await popup.close()
+      if (button === 'Allow') return { publicKey: identity }
+      throw new Error('Permission denied.')
+    })
+    await context.addInitScript(() => { (window as any).CWI = { getPublicKey: (args: any) => (window as any).fixtureRequest(args) } })
+    const owner: any = { context, extensionId, evidence: { addBytes: (name: string, bytes: Uint8Array) => images.set(name, Buffer.from(bytes)) } }
+    const first = createExtendedPermissionObserver(owner)
+    denied = await first.request('identity', origin, 'getPublicKey', { identityKey: true }); await first.close()
+    const second = createExtendedPermissionObserver(owner)
+    allowed = await second.request('identity', origin, 'getPublicKey', { identityKey: true }, { decision: 'allow' }); await second.close()
+    const initial = await context.newPage(); await initial.goto(`chrome-extension://${extensionId}/index.html`)
+    await context.close(); context = await launch()
+    const nextWorker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker')
+    expect(new URL(nextWorker.url()).host).toBe(extensionId)
+    for (const page of context.pages()) await page.close()
+    const unlock = await context.newPage(); await unlock.goto(`chrome-extension://${extensionId}/index.html`); await unlock.close()
+    await context.route('https://**/*', route => route.fulfill({ status: 200, body: '<h1>ToDo List</h1>' }))
+    application = await context.newPage(); await application.goto('https://todo.itcve.test/')
+  }, 60_000)
+  afterAll(async () => { if (context) await context.close(); if (directory) fs.rmSync(directory, { recursive: true, force: true }) })
+
+  it('reproduces default denial without weakening other missing-decision calls', () => {
+    expect(denied.outcome.status).toBe('rejected'); expect(denied.outcome.error.message).toBe('Permission denied.')
+    expect(denied.prompts[0].button).toBe('Deny'); expect(denied.prompts[0].trustedClick.dispatch.isTrusted).toBe(true)
+  })
+  it('binds explicit identity consent to the actual level1 prompt, native click and image bytes', () => {
+    expect(allowed.outcome.status).toBe('fulfilled')
+    expect(allowed.prompts[0].body.split('\n').map((line: string) => line.trim()).filter(Boolean)).toEqual(retained.prompt.body.split('\n').map((line: string) => line.trim()).filter(Boolean))
+    expect(retained.prompt.decision).toBe('deny'); expect(retained.outcome.status).toBe('rejected')
+    expect(() => verifyPermissionExtensionIdentityConsent(allowed, extensionId, read, identity)).not.toThrow()
+  })
+  it.each(['origin', 'scope', 'security', 'counterparty', 'duplicate-origin', 'checkbox', 'selection', 'button', 'untrusted', 'call-nonce', 'click-nonce', 'different-extension', 'error-with-result', 'identity', 'extra-prompt', 'image', 'missing-prompt'] as const)('rejects %s consent substitution', mutation => {
+    const row = structuredClone(allowed), prompt = row.prompts[0]
+    if (mutation === 'origin') row.origin = 'https://unrelated.itcve.test'
+    if (mutation === 'scope') prompt.body = prompt.body.replaceAll('identity key retrieval', 'unrelated key retrieval')
+    if (mutation === 'security') prompt.body = prompt.body.replace('Level 1 · this app only', 'Level 2 · this app and this recipient only')
+    if (mutation === 'counterparty') prompt.body += '\nCounterparty\nanyone'
+    if (mutation === 'duplicate-origin') prompt.body += '\nOrigin\npermission-extension.itcve.test'
+    if (mutation === 'checkbox') prompt.checkboxStates.push({ label: 'Extra grant', checked: true })
+    if (mutation === 'selection') prompt.selections.push({ label: 'Extra grant' })
+    if (mutation === 'button') { prompt.decision = 'deny'; prompt.button = 'Deny' }
+    if (mutation === 'untrusted') prompt.trustedClick.dispatch.isTrusted = false
+    if (mutation === 'call-nonce') prompt.trustedClick.callNonce = '00000000-0000-4000-8000-000000000000'
+    if (mutation === 'click-nonce') prompt.trustedClick.dispatch.nonce = '00000000-0000-4000-8000-000000000000'
+    if (mutation === 'different-extension') prompt.url = prompt.url.replace(extensionId, 'a'.repeat(32))
+    if (mutation === 'error-with-result') row.outcome.error = { message: 'Permission denied.' }
+    if (mutation === 'identity') row.outcome.value.publicKey = PrivateKey.fromHex('02').toPublicKey().toString()
+    if (mutation === 'extra-prompt') row.prompts.push(structuredClone(prompt))
+    if (mutation === 'image') prompt.screenshot.sha256 = '00'.repeat(32)
+    if (mutation === 'missing-prompt') row.prompts = []
+    expect(() => verifyPermissionExtensionIdentityConsent(row, extensionId, read, identity)).toThrow()
+  })
+  it('reproduces historical portability failure after real context restart and closing the unlock page', async () => {
+    expect(context.pages().some(page => page.url().startsWith('chrome-extension:'))).toBe(false)
+    const services: any = { headers: new Map(), createStorageCounterpart: () => ({ start: async () => {}, close: async () => {}, storageUrl: 'http://127.0.0.1:1' }), registerStorageCounterpart: () => {} }
+    await expect(runNativePortability({ application, services, evidence: {} as any, password: 'fixture-only' })).rejects.toThrow('Native wallet settings page is absent')
+  })
+  it('opens exactly the selected extension and closes only its owned tab after success', async () => {
+    const existing = await context.newPage(); await existing.goto(`chrome-extension://${extensionId}/index.html`)
+    let observed!: Page
+    const result = await withNativePortabilitySettingsPage(application, extensionId, async page => { observed = page; expect(page).not.toBe(existing); expect(page.context()).toBe(context); expect(page.url()).toBe(`chrome-extension://${extensionId}/index.html`); return 'operation observed' })
+    expect(result).toBe('operation observed'); expect(observed.isClosed()).toBe(true); expect(existing.isClosed()).toBe(false); expect(application.isClosed()).toBe(false); await existing.close()
+  })
+  it('retains the operation error while closing its settings tab', async () => {
+    let observed!: Page
+    await expect(withNativePortabilitySettingsPage(application, extensionId, async page => { observed = page; throw new Error('Actual operation failed') })).rejects.toThrow('Actual operation failed')
+    expect(observed.isClosed()).toBe(true); expect(application.isClosed()).toBe(false)
+  })
+  it.each([undefined, 0, null])('retains a falsy operation failure %s together with cleanup failure', async primary => {
+    const page = await context.newPage()
+    const newPage = vi.spyOn(context, 'newPage').mockResolvedValueOnce(page)
+    const close = vi.spyOn(page, 'close').mockRejectedValueOnce(new Error('Observed cleanup failure'))
+    try {
+      const result = await withNativePortabilitySettingsPage(application, extensionId, async () => { throw primary }).then(() => undefined, error => error)
+      expect(result).toBeInstanceOf(AggregateError); expect(result.errors[0]).toBe(primary); expect(result.errors[1].message).toBe('Observed cleanup failure')
+      expect(Object.hasOwn(result, 'cause')).toBe(true); expect(result.cause).toBe(primary)
+    } finally { newPage.mockRestore(); close.mockRestore(); await page.close() }
+  })
+  it('rejects an invalid extension identity before creating a tab', async () => {
+    const pages = context.pages()
+    await expect(withNativePortabilitySettingsPage(application, '../unrelated', async () => undefined)).rejects.toThrow()
+    expect(context.pages()).toEqual(pages)
+  })
+})

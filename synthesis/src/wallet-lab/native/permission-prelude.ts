@@ -7,7 +7,7 @@ import { runPermissionExtension } from './coverage-permissions-driver.js'
 /** This profile runs spending controls before other customer transactions can
  * populate the default basket with small, fee-sensitive change outputs. Funding
  * remains the three declared upfront payments; no refill or storage mutation. */
-export async function runNativePermissionPrelude(context: NativeScenarioContext): Promise<void> {
+export async function runNativePermissionPrelude(context: NativeScenarioContext, options?: { identityPermission: 'explicit-allow-v1' }): Promise<void> {
   const { services, evidence } = context
   const reserves = JSON.parse(evidence.readBytes('conformance/funding-reserves.json').toString())
   const startedAt = new Date().toISOString(), submissionStart = services.submissions.length
@@ -25,7 +25,7 @@ export async function runNativePermissionPrelude(context: NativeScenarioContext)
   evidence.addJson('conformance/permission-prelude.json', prelude)
   const sha = (name: string) => createHash('sha256').update(evidence.readBytes(name)).digest('hex')
   const coverage = await context.manualPrompt(() => runNativePermissionCoverage(context, 5))
-  await context.manualPrompt(() => runPermissionExtension(context, coverage))
+  await context.manualPrompt(() => runPermissionExtension(context, coverage, options))
   evidence.addJson('conformance/permission-prelude-completion.json', { schema: 'tpnil-native-permission-prelude-completion@1.0.0', identity: reserves.identity,
     startedAt: prelude.endedAt, endedAt: new Date().toISOString(), submissionStart, submissionEnd: services.submissions.length,
     initialSha256: sha('conformance/permission-prelude.json'), coverageSha256: sha('conformance/permission-coverage.json'), extensionSha256: sha('conformance/permission-extension.json') })

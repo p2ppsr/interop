@@ -36,13 +36,13 @@ function matchingRepetitions(records) {
 export function compareNativeConformance(baseline, candidate, bindings) {
   const before = matchingRepetitions(baseline), after = matchingRepetitions(candidate)
   assert.equal(baseline[0].itcve, 'ITCVE-1@2.0.0'); assert.equal(baseline[1].itcve, 'ITCVE-1@2.0.0')
-  assert.ok(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0'].includes(candidate[0].itcve)); assert.equal(candidate[1].itcve, candidate[0].itcve)
+  assert.ok(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(candidate[0].itcve)); assert.equal(candidate[1].itcve, candidate[0].itcve)
   for (const records of [baseline, candidate]) assert.deepEqual(records[0].artifacts.wallet, records[1].artifacts.wallet, 'Repetitions use different wallet artifacts')
-  if (['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0'].includes(candidate[0].itcve)) {
-    for (const record of candidate) { assert.equal(record.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(record.walletCandidate?.officialRelease, false); assert.equal(record.artifacts.wallet.version, record.itcve === 'ITCVE-1@4.3.0' ? '5.1.1-pr368.4a954ac' : record.itcve === 'ITCVE-1@4.2.0' ? '5.1.1-pr368.cb3c2f2' : '5.1.1-pr368.7e39006') }
+  if (['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(candidate[0].itcve)) {
+    for (const record of candidate) { assert.equal(record.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(record.walletCandidate?.officialRelease, false); assert.equal(record.artifacts.wallet.version, ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(record.itcve) ? '5.1.1-pr368.4a954ac' : record.itcve === 'ITCVE-1@4.2.0' ? '5.1.1-pr368.cb3c2f2' : '5.1.1-pr368.7e39006') }
     assert.deepEqual(candidate[0].walletCandidate, candidate[1].walletCandidate)
   }
-  if (candidate[0].itcve === 'ITCVE-1@4.3.0') {
+  if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(candidate[0].itcve)) {
     assert.equal(after.size, 535, 'Expanded comparison requires all535 retained native observations')
     assert.deepEqual(candidate[0].artifacts.wallet, { id: 'yours-wallet-chromium-extension', version: '5.1.1-pr368.4a954ac', sha256: 'cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105', size: 13244753 })
     assert.equal(candidate[0].walletCandidate.sourceCommit, '4a954ac6bb0cb4403fb8ed548efd0cd8d1ba11b1')

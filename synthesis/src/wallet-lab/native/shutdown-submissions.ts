@@ -15,17 +15,17 @@ const now = () => new Date().toISOString()
  * they are rethrown; no pre-shutdown report is rewritten or promoted. */
 export async function closeWithSubmissionReceipt(options: {
   directory: string; observer: SubmissionClosureObserver; initialCapturedAt: string
-  profile?: 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0'
+  profile?: 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'
   closeBrowser(): Promise<unknown>; closeServices(): Promise<unknown>; removeProfile(): unknown
 }) {
   const profile = options.profile ?? 'ITCVE-1@2.0.0'
-  if (!['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0'].includes(profile)) throw new Error('Unknown shutdown profile')
-  const policy = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0'].includes(profile) ? shutdownCoveragePolicy : shutdownSubmissionPolicy
-  const errors: unknown[] = [], stages: Record<string, any> = {}
+  if (!['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile)) throw new Error('Unknown shutdown profile')
+  const policy = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile) ? shutdownCoveragePolicy : shutdownSubmissionPolicy
+  const cleanupErrors: unknown[] = [], evidenceErrors: unknown[] = [], stages: Record<string, any> = {}
   const closureStartedAt = now()
   for (const [name, close] of [['browser', options.closeBrowser], ['services', options.closeServices], ['profile', options.removeProfile]] as const) {
     const stage: any = { startedAt: now(), closed: false }; stages[name] = stage
-    try { await close(); stage.closed = true } catch (error) { errors.push(error); stage.error = String(error) }
+    try { await close(); stage.closed = true } catch (error) { cleanupErrors.push(error); stage.error = String(error) }
     stage.endedAt = now()
   }
   const providers = options.observer.readFinalProviders()
@@ -36,13 +36,13 @@ export async function closeWithSubmissionReceipt(options: {
   }
   const binding = (name: string) => {
     try { const bytes = fs.readFileSync(path.join(options.directory, name)); return { path: name, bytes: bytes.length, sha256: sha(bytes) } }
-    catch (error) { errors.push(error); return { path: name, error: String(error) } }
+    catch (error) { evidenceErrors.push(error); return { path: name, error: String(error) } }
   }
   const report = { schema: policy, policy, profile,
     claim: 'ENGINEERING_OBSERVATION_ONLY', initialCapturedAt: options.initialCapturedAt, closureStartedAt,
     initialProviders: options.observer.initialProviders, providers, initialCount: options.observer.initialSubmissions.length,
-    submissions, provenance, cleanup: stages, bindings: { record: binding('record.json'), global: binding('evidence/native-submissions.json'), module: binding('evidence/conformance/permission-lifecycle.json'), counterparts: binding('evidence/conformance/service-counterparts.json'), ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0'].includes(profile) ? { coverage: binding('evidence/conformance/permission-coverage.json') } : {}) },
-    capturedAt: now(), errors: errors.map(String), ordering: 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.' }
+    submissions, provenance, cleanup: stages, bindings: { record: binding('record.json'), global: binding('evidence/native-submissions.json'), module: binding('evidence/conformance/permission-lifecycle.json'), counterparts: binding('evidence/conformance/service-counterparts.json'), ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile) ? { coverage: binding('evidence/conformance/permission-coverage.json') } : {}) },
+    capturedAt: now(), errors: [...cleanupErrors, ...evidenceErrors].map(String), failureCategories: { cleanup: cleanupErrors.map(String), evidence: evidenceErrors.map(String) }, ordering: 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.' }
   fs.writeFileSync(path.join(options.directory, shutdownSubmissionFilename), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' })
-  return { report, errors }
+  return { report, errors: [...cleanupErrors, ...evidenceErrors], cleanupErrors, evidenceErrors }
 }

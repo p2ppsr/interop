@@ -120,7 +120,7 @@ export function verifyCoverageBrowserChain(value: any, identity: string, permiss
 
 /** Join the fresh-funding prerequisite to the independent service observation,
  * exact upfront payment bodies, and the original customer execution order. */
-export function verifyPermissionPrelude(binding: FundingBinding & { globalSubmissions: any[]; readEvidence(name: string): Buffer }) {
+export function verifyPermissionPrelude(binding: FundingBinding & { profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'; globalSubmissions: any[]; readEvidence(name: string): Buffer }) {
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), sha = (name: string) => createHash('sha256').update(read(name)).digest('hex')
   const prelude = json('conformance/permission-prelude.json'), completion = json('conformance/permission-prelude-completion.json')
   const coverage = json('conformance/permission-coverage.json'), permission = json('conformance/permission-extension.json')
@@ -158,9 +158,10 @@ export function verifyPermissionPrelude(binding: FundingBinding & { globalSubmis
   return { verified: true as const, initialFundingOutpoints: points, beforeOtherCustomerTransactions: true }
 }
 
-export async function verifyNativeCoverageSuite(binding: FundingBinding & { globalSubmissions: any[]; finalSubmissions: any[]; readEvidence(name: string): Buffer }) {
+export async function verifyNativeCoverageSuite(binding: FundingBinding & { profile?: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0'; globalSubmissions: any[]; finalSubmissions: any[]; readEvidence(name: string): Buffer }) {
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
   const suite = json('conformance/coverage-suite.json'), permission = json('conformance/permission-extension.json'), transactions = json('conformance/coverage-transactions.json'), extension = json('conformance/coverage-extension.json'), certificates = json('conformance/coverage-certificates.json')
+  assert.ok(binding.profile === undefined || ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(binding.profile)); assert.equal(permission.identityPermission, binding.profile === 'ITCVE-1@4.4.0' ? 'explicit-allow-v1' : undefined);
   assert.equal(suite.schema, 'tpnil-native-coverage-suite@1.0.0'); assert.deepEqual(suite.modules, ['permissions', 'transactions', 'extension', 'certificates']); assert.deepEqual(suite.errors, [])
   assert.deepEqual(suite.certificateEnvironment.cleanup, { pagesClosed: true, routesClosed: true, overlayClosed: true })
   const prelude = verifyPermissionPrelude(binding)

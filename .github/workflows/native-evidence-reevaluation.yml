@@ -9,6 +9,7 @@ on:
       - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json'
       - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-4.json'
       - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json'
+      - 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json'
       - 'scripts/frozen-component-replay.mjs'
       - 'scripts/verify-published-integrations.mjs'
       - 'components/rust/graph-oracle-3.0.0.json'
@@ -52,7 +53,7 @@ jobs:
         env:
           RUSTUP_TOOLCHAIN: 1.88.0
           CARGO_NET_OFFLINE: 'true'
-        run: node scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json out/native-integrated-reevaluation
+        run: node scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json out/native-integrated-reevaluation
       - name: Independently replay the separate reevaluation result
         env:
           RUSTUP_TOOLCHAIN: 1.88.0

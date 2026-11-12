@@ -40,3 +40,30 @@ test('verification requires a complete final receipt, not a zero exit or diagnos
  assert.deepEqual(requireVerifierReceipt('{"verified":true}\n'+JSON.stringify(expected)+'\n',expected),expected)
  assert.throws(()=>requireVerifierReceipt('{"verified":true,"assertions":47,"parentInputsBound":4,"independentReplay":true,"outcome":"FAIL"}',{verified:true,assertions:48,parentInputsBound:4,independentReplay:true,outcome:'FAIL'}),/assertions/)
 })
+
+test('replays a Git archive larger than128MiB and rejects archive attribute transformations', {timeout:60000},()=>{
+ const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'tpnil-large-replay-test-')),root=path.join(temporary,'repository')
+ fs.mkdirSync(root)
+ const write=(name,value)=>{const file=path.join(root,name);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,value)}
+ const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8',timeout:30000})
+ try {
+  write('.nvmrc',process.versions.node+'\n');write('package.json','{}');write('scripts/marker.mjs','export const source="$Format:%H$"\n')
+  for(const name of ['synthesis','integrations/services','components/transport']){write(`${name}/package-lock.json`,'{"lockfileVersion":3}');fs.mkdirSync(path.join(root,name,'node_modules'))}
+  write('components/rust/Cargo.lock','# pinned\n')
+  const large=path.join(root,'fixtures/large-owned-fixture.bin');fs.mkdirSync(path.dirname(large))
+  const fd=fs.openSync(large,'wx'),chunk=Buffer.alloc(1024*1024,0x5a)
+  try {for(let i=0;i<129;i++)fs.writeSync(fd,chunk)} finally {fs.closeSync(fd)}
+  git('init','-q');git('add','.');git('-c','user.name=TPNIL fixture','-c','user.email=fixture@example.invalid','commit','-qm','Large owned self-test fixture')
+  const source=git('rev-parse','HEAD').trim(),result=prepareFrozenComponentReplay(root,source,path.join(temporary,'large-copy'))
+  assert.equal(fs.statSync(path.join(result.root,'fixtures/large-owned-fixture.bin')).size,129*1024*1024)
+  assert.equal(git('hash-object',path.join(result.root,'fixtures/large-owned-fixture.bin')),git('hash-object',large))
+  assert.equal(fs.readdirSync(temporary).some(name=>name.startsWith('.tpnil-replay-archive-')),false)
+  fs.rmSync(result.root,{recursive:true})
+  // Git archive can apply export attributes even when the selected tree only
+  // contains regular blobs. Such a transformation is not exact source replay.
+  fs.rmSync(large);write('.gitattributes','scripts/marker.mjs export-subst\n')
+  git('add','-A');git('-c','user.name=TPNIL fixture','-c','user.email=fixture@example.invalid','commit','-qm','Counterfactual altered archive bytes')
+  assert.throws(()=>prepareFrozenComponentReplay(root,git('rev-parse','HEAD').trim(),path.join(temporary,'transformed')),/Frozen source (size|Git blob) differs/)
+  assert.equal(fs.readdirSync(temporary).some(name=>name.startsWith('.tpnil-replay-archive-')),false)
+ } finally {fs.rmSync(temporary,{recursive:true,force:true})}
+})

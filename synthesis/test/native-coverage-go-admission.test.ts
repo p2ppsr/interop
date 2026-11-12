@@ -57,11 +57,11 @@ describe.skipIf(process.env.TPNIL_COVERAGE_GO_TESTS !== '1')('actual prospective
   const admit = (candidate: any, actualBinary = binarySha256) => validateStorageSyncGoBuild(build, actualBinary, candidate, false, false, false, false, false, false, false, true)
   const publicIdentity = (candidate: any) => ({ ...identity, go: { ...identity.go, compatibilityPatch: candidate } })
 
-  it('admits only the exact final source, binary and4.3 profile', () => {
+  it.each(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'] as const)('admits only the exact final source and binary for%s', profile => {
     expect(identity.go.binarySha256).toBe(binarySha256)
     expect(identity.go.compatibilityPatch).toEqual(manifest)
     expect(() => admit(manifest)).not.toThrow()
-    expect(() => validateComponentIdentity(identity, 'ITCVE-1@4.3.0')).not.toThrow()
+    expect(() => validateComponentIdentity(identity, profile)).not.toThrow()
     for (const profile of ['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0'] as const) expect(() => validateComponentIdentity(identity, profile)).toThrow()
   })
   it.each(['inputs', 'patchInputs', 'generatedHost'] as const)('rejects missing, changed and surplus%s inventory entries in both admission paths', field => {

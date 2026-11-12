@@ -1,6 +1,7 @@
 import { yoursPr368Coverage1Artifact } from '../model.js'
 import { controlledHeaderFixture } from './controlled-header-fixture.js'
 import fs from 'node:fs'
+import { nativeFailureSnapshot } from './failure.js'
 import os from 'node:os'
 import path from 'node:path'
 import net from 'node:net'
@@ -15,8 +16,9 @@ import type { TeranodeWalletFundingFixture } from '../services.js'
 const root = '/work'
 const output = '/evidence'
 const coverageRevision = process.env.TPNIL_NATIVE_COVERAGE_REVISION
-if (coverageRevision !== undefined && coverageRevision !== '1') throw new Error('Unknown coverage revision')
-const expanded = coverageRevision === '1'
+if (coverageRevision !== undefined && !['1', '2'].includes(coverageRevision)) throw new Error('Unknown coverage revision')
+const recovery = coverageRevision === '2'
+const expanded = recovery || coverageRevision === '1'
 const walletVersion = process.env.TPNIL_NATIVE_WALLET_VERSION ?? '5.1.0'
 if (!['5.1.0', '5.1.1', '5.1.1-pr368.7e39006', '5.1.1-pr368.cb3c2f2', ...(expanded ? [yoursPr368Coverage1Artifact.version] : [])].includes(walletVersion)) throw new Error('Unknown native wallet release')
 if (expanded && (walletVersion !== yoursPr368Coverage1Artifact.version || !/^[a-f0-9]{64}$/.test(yoursPr368Coverage1Artifact.sha256) || yoursPr368Coverage1Artifact.size <= 0)) throw new Error('Coverage candidate intake is not frozen or mismatched')
@@ -35,10 +37,10 @@ const integrated = process.env.TPNIL_NATIVE_INTEGRATED === '1'
 const trustedIdentity = process.env.TPNIL_NATIVE_IDENTITY_TRUST === '1'
 if (conformance && (!integrated || !trustedIdentity)) throw new Error('Conformance qualification requires integrated trusted native mode')
 if (trustedIdentity && !integrated) throw new Error('Trusted identity qualification requires integrated native mode')
-const planFile = path.join(root, expanded ? 'infra/native/conformance/plan-pr368-coverage-1.json' : observerRevision === '3' ? 'infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? 'infra/native/conformance/plan-pr368-7e39006.json' : observerRevision === '2' ? 'infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? 'infra/native/conformance/plan-5.1.1.json' : closure ? 'infra/native/conformance/plan-coverage-closure.json' : coverage ? 'infra/native/conformance/plan-coverage.json' : conformance ? 'infra/native/conformance/plan.json' : trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json')
+const planFile = path.join(root, recovery ? 'infra/native/conformance/plan-pr368-coverage-2.json' : expanded ? 'infra/native/conformance/plan-pr368-coverage-1.json' : observerRevision === '3' ? 'infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? 'infra/native/conformance/plan-pr368-7e39006.json' : observerRevision === '2' ? 'infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? 'infra/native/conformance/plan-5.1.1.json' : closure ? 'infra/native/conformance/plan-coverage-closure.json' : coverage ? 'infra/native/conformance/plan-coverage.json' : conformance ? 'infra/native/conformance/plan.json' : trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json')
 const plan = JSON.parse(fs.readFileSync(planFile, 'utf8'))
 if (observerRevision !== undefined && plan.observerRevision !== Number(observerRevision)) throw new Error('Native observer revision differs from selected plan')
-if (expanded && (plan.coverageRevision !== 1 || plan.itcve !== 'ITCVE-1@4.3.0' || plan.program !== 'ISI-4@5.3.0' || plan.expectedObservations !== 535 || plan.permissionFixture !== 'fresh-managed-funding-v1' || plan.permissionCoverageOracle !== 'tpnil-native-permission-coverage-oracle@5.0.0' || plan.admissionState !== 'FROZEN')) throw new Error('Coverage plan is not admitted')
+if (expanded && (plan.coverageRevision !== (recovery ? 2 : 1) || plan.itcve !== (recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0') || plan.program !== (recovery ? 'ISI-4@5.4.0' : 'ISI-4@5.3.0') || plan.expectedObservations !== 535 || plan.permissionFixture !== 'fresh-managed-funding-v1' || plan.permissionCoverageOracle !== 'tpnil-native-permission-coverage-oracle@5.0.0' || plan.admissionState !== 'FROZEN')) throw new Error('Coverage plan is not admitted')
 if (plan.wallet.version !== walletVersion) throw new Error('Wallet release differs from selected plan')
 const walletRoot = path.join(root, 'out/sut-artifacts', expanded ? 'yours-wallet-pr368-4a954ac' : observerRevision === '3' ? 'yours-wallet-pr368-cb3c2f2' : candidate ? 'yours-wallet-pr368-7e39006' : `yours-wallet-v${walletVersion}`)
 fs.mkdirSync(output, { recursive: true })
@@ -109,7 +111,7 @@ try {
     ...(closure && plan.shutdownSubmissionPolicy ? { shutdownSubmissionPolicy: plan.shutdownSubmissionPolicy } : {}),
     ...(observerRevision === '3' ? { headerFixture: controlledHeaderFixture } : {}),
     ...(candidate || observerRevision === '2' ? { nativeActionReferenceEvidence: true } : {}),
-    ...(conformance ? { prepareScenario: (await import('./conformance-reserves.js')).prepareNativeConformanceReserves, additionalScenario: async (context: import('../yours-driver.js').NativeScenarioContext) => (await import('./conformance.js')).runNativeConformance(context, coverage, closure, expanded ? 'pr368-coverage1' : observerRevision === '3' ? 'pr368-observer3' : candidate ? 'pr368-7e39006' : wallet511 ? 'yours-5.1.1' : 'legacy', candidate || observerRevision === '2' ? 2 : 1, observerRevision === '3' ? controlledHeaderFixture : undefined, observerRevision === '3' ? 'tpnil-native-identity-trust-oracle@2.0.0' : undefined), integratedProfile: expanded ? 'ITCVE-1@4.3.0' : observerRevision === '3' ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0', go: expanded ? { binary: '/opt/tpnil/itcve-go-storage-sqlite-retry', storageSQLiteRetryPatch: true, terminalRejectionReceipts: true } : candidate || observerRevision === '2' ? { binary: '/opt/tpnil/itcve-go-storage-native-contracts', storageNativeContractsPatch: true, terminalRejectionReceipts: true } : wallet511 ? { binary: '/opt/tpnil/itcve-go-storage-list-actions', storageListActionsPatch: true, terminalRejectionReceipts: true } : { binary: '/opt/tpnil/itcve-go-storage-portability', storagePortabilityPatch: true, terminalRejectionReceipts: true } } as const : integrated ? { additionalScenario: (await import('./integrated.js')).runNativeIntegration, integratedProfile: 'ITCVE-1@1.3.0', go: { binary: '/opt/tpnil/itcve-go-storage-sync', storageSyncPatch: true } } as const : {})
+    ...(conformance ? { prepareScenario: (await import('./conformance-reserves.js')).prepareNativeConformanceReserves, additionalScenario: async (context: import('../yours-driver.js').NativeScenarioContext) => (await import('./conformance.js')).runNativeConformance(context, coverage, closure, recovery ? 'pr368-coverage2' : expanded ? 'pr368-coverage1' : observerRevision === '3' ? 'pr368-observer3' : candidate ? 'pr368-7e39006' : wallet511 ? 'yours-5.1.1' : 'legacy', candidate || observerRevision === '2' ? 2 : 1, observerRevision === '3' ? controlledHeaderFixture : undefined, observerRevision === '3' ? 'tpnil-native-identity-trust-oracle@2.0.0' : undefined), integratedProfile: recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observerRevision === '3' ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : 'ITCVE-1@1.4.0', go: expanded ? { binary: '/opt/tpnil/itcve-go-storage-sqlite-retry', storageSQLiteRetryPatch: true, terminalRejectionReceipts: true } : candidate || observerRevision === '2' ? { binary: '/opt/tpnil/itcve-go-storage-native-contracts', storageNativeContractsPatch: true, terminalRejectionReceipts: true } : wallet511 ? { binary: '/opt/tpnil/itcve-go-storage-list-actions', storageListActionsPatch: true, terminalRejectionReceipts: true } : { binary: '/opt/tpnil/itcve-go-storage-portability', storagePortabilityPatch: true, terminalRejectionReceipts: true } } as const : integrated ? { additionalScenario: (await import('./integrated.js')).runNativeIntegration, integratedProfile: 'ITCVE-1@1.3.0', go: { binary: '/opt/tpnil/itcve-go-storage-sync', storageSyncPatch: true } } as const : {})
   })
   verifyEvidenceBundle(output)
   save('network-after.json', await network())
@@ -124,7 +126,7 @@ try {
   save('worker.json', { schema: 'tpnil-native-wallet-worker@1.0.0', completed: true, startedAt, endedAt: new Date().toISOString(), platform: process.platform, architecture: process.arch, os: os.release(), node: process.version, planSha256: sha256Hex(fs.readFileSync(planFile)), recordSha256: sha256Hex(fs.readFileSync(path.join(output, 'record.json'))), cleanWalletAndServiceShutdown: true, ...(closure && plan.shutdownSubmissionPolicy ? { shutdownSubmissionsSha256: sha256Hex(fs.readFileSync(path.join(output, 'shutdown-submissions.json'))) } : {}), vectorOutcomes: record.vectors.map(vector => ({ id: vector.id, outcome: vector.outcome })), sandboxSha256: sha256Hex(fs.readFileSync(evidenceFile('native-sandbox.txt'))) })
 } catch (error) {
   failure = error
-  save('worker-failure.json', { startedAt, endedAt: new Date().toISOString(), message: error instanceof Error ? error.message : String(error) })
+  save('worker-failure.json', { startedAt, endedAt: new Date().toISOString(), error: nativeFailureSnapshot(error), message: error instanceof Error ? error.message : String(error) })
 } finally {
   if (mongo !== undefined && mongo.exitCode === null && mongo.signalCode === null) {
     const exited = once(mongo, 'exit')

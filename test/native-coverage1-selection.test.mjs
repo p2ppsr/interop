@@ -51,11 +51,12 @@ test('executed observer3 plans, profiles, policies and Rust manifest remain byte
 })
 
 
-test('current expanded selector binds the final4a artifact, every frozen source and exact Rust observer', async () => {
- const bytes=name=>fs.readFileSync(path.join(root,name)),sha=value=>createHash('sha256').update(value).digest('hex')
- // LAB_SELF_TEST_ONLY: model a committed checkout over exact frozen working
- // bytes. Real admission still independently reads Git at the execution source.
- const revision='ab'.repeat(20),options={source:revision,read:bytes,readCommitted:(_revision,name)=>bytes(name)}
+test('executed coverage1 selector binds the final4a artifact at its exact frozen source', async () => {
+ const revision='c648022b2d9209b7350527bd5553d73e3e82a52c',cache=new Map(),sha=value=>createHash('sha256').update(value).digest('hex')
+ // Historical acceptance is evaluated against its actual committed source,
+ // never against a later recovery observer's working files.
+ const bytes=name=>{if(!cache.has(name))cache.set(name,execFileSync('git',['show',`${revision}:${name}`],{cwd:root,maxBuffer:32*1024*1024}));return cache.get(name)}
+ const options={source:revision,read:bytes,readCommitted:(_revision,name)=>bytes(name)}
  assert.equal(plan.admissionState,'FROZEN')
  const result=await checkNativeWalletSelector(nativeCandidateCoverage1Variant,options)
  assert.equal(result.variant,nativeCandidateCoverage1Variant);assert.equal(result.wallet.sha256,plan.wallet.sha256)

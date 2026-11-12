@@ -16,14 +16,18 @@ export const retainedSource3PlanSha256 = '2308c7f5fdbc717029e4a654f09b5938afb499
 export const retainedSource4PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-4.json'
 export const retainedSource4PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-4'
 export const retainedSource4PlanSha256 = '4aa127e18d6a29e0d07c6ba04a440cc18c3fcd56a25dd31f260c215715f7d3f5'
-export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json'
-export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-5'
+export const retainedSource5PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json'
+export const retainedSource5PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-5'
+export const retainedSource5PlanSha256 = '3c7b9ba53566eaae153aed5734266f58d1bd91746a1d4bb9e08f2002e91c263b'
+export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json'
+export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-6'
 export const originalReevaluationPlanSha256 = 'f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef'
 const revisions = {
   2: { id: previousReevaluationPlanId, path: previousReevaluationPlanPath, predecessor: { path: originalReevaluationPlanPath, sha256: originalReevaluationPlanSha256 } },
   3: { id: retainedSource3PlanId, path: retainedSource3PlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } },
   4: { id: retainedSource4PlanId, path: retainedSource4PlanPath, predecessor: { path: retainedSource3PlanPath, sha256: retainedSource3PlanSha256 } },
-  5: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource4PlanPath, sha256: retainedSource4PlanSha256 } }
+  5: { id: retainedSource5PlanId, path: retainedSource5PlanPath, predecessor: { path: retainedSource4PlanPath, sha256: retainedSource4PlanSha256 } },
+  6: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource5PlanPath, sha256: retainedSource5PlanSha256 } }
 }
 export const reevaluationSchema = 'tpnil-native-integrated-reevaluation@1'
 export const reevaluationInputNames = ['paid-http.json','messaging.json','synthesis-transactions.json','identity-trust.json']

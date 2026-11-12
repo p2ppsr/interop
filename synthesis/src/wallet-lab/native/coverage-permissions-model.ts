@@ -41,6 +41,7 @@ export interface ExtensionSettings {
 export type ExtensionStep = CoveragePermissionCall & { submissionStart: number; submissionEnd: number }
 export interface NativePermissionExtensionReport {
   schema: 'tpnil-native-permission-extension@1.0.0'; oracle: string; policySha256: string
+  identityPermission?: 'explicit-allow-v1'
   claim: 'ENGINEERING_OBSERVATION_ONLY'; completeBRC100Conformance: false; identity: string; extensionId: string
   startedAt: string; endedAt: string; anchorSha256: string; steps: ExtensionStep[]; ui: ExtensionControl[]
   settings: ExtensionSettings[]; restarts: NativeBrowserRestartReceipt[]

@@ -15,9 +15,13 @@ const sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('he
 /** Public CWI and visible native UI only. Caller suspends automatic prompts.
  * The original coverage report is immutable fixture provenance, never a source
  * of inherited permission results for these fresh origins. */
-export async function runPermissionExtension(context: NativeScenarioContext, anchor: NativePermissionCoverageReport): Promise<NativePermissionExtensionReport> {
+export async function runPermissionExtension(context: NativeScenarioContext, anchor: NativePermissionCoverageReport, options?: { identityPermission: 'explicit-allow-v1' }): Promise<NativePermissionExtensionReport> {
   const policy = permissionExtensionPolicy(), c = policy.configuration, observer = createExtendedPermissionObserver(context), services = context.services
   const report: NativePermissionExtensionReport = { schema: 'tpnil-native-permission-extension@1.0.0', oracle: policy.oracle, policySha256: policy.sha256, claim: 'ENGINEERING_OBSERVATION_ONLY', completeBRC100Conformance: false, identity: '', extensionId: context.extensionId, startedAt: now(), endedAt: '', anchorSha256: sha(Buffer.from(canonicalJson(anchor))), steps: [], ui: [], settings: [], restarts: [], lock: { sameContext: false, beforePageUrl: '', afterPageUrl: '', passwordVisible: false, passwordHiddenAfterUnlock: false }, manifests: [], storageTransactions: [], submissions: [], submissionWindow: { startIndex: services.submissions.length, endIndex: services.submissions.length }, concurrent: { startedAt: '', endedAt: '' }, references: {}, errors: [], cleanup: { pagesClosed: false, routesUnregistered: false, settingsClosed: false }, assertions: [], result: 'FAIL' }
+  if (options) {
+    if (options.identityPermission !== 'explicit-allow-v1') throw new Error('Unknown permission extension identity observer')
+    report.identityPermission = options.identityPermission
+  }
   const unregister: Array<() => void> = [], settingsPages = new Set<Page>()
   const request = async (id: string, origin: string, method: string, args: any, options?: Parameters<typeof observer.request>[4]) => {
     if (report.steps.length >= policy.maximumCalls) throw new Error('Permission extension call limit reached')
@@ -56,7 +60,7 @@ export async function runPermissionExtension(context: NativeScenarioContext, anc
         else { response.writeHead(404); response.end('Not found') }
       }))
     }
-    report.identity = value(await request('identity', c.primary, 'getPublicKey', { identityKey: true })).publicKey
+    report.identity = value(await request('identity', c.primary, 'getPublicKey', { identityKey: true }, options ? { decision: 'allow' } : undefined)).publicKey
     for (const name of extensionCategories) { await category(name, 'grant', c.primary, 'allow'); await category(name, 'cached', c.primary); await category(name, 'alternate-deny', c.alternate, 'deny') }
     value(await request('before-lock-auth', c.primary, 'isAuthenticated', {}))
     const originalContext = context.context, lockPage = await context.context.newPage(); settingsPages.add(lockPage)

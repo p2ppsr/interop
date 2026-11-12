@@ -42,6 +42,12 @@ export function verifyPermissionExtensionPromptScope(step: Report['steps'][numbe
     return
   }
   assert.equal(after('Origin'), origin)
+  if (step.method === 'getPublicKey' && step.args.identityKey === true) {
+    same(step.args, { identityKey: true })
+    same(lines, ['Protocol Permission', 'An application is requesting permission to use protocol "identity key retrieval" with security level 1.', 'Origin', origin, 'Protocol', 'identity key retrieval', 'Security', 'Level 1 · this app only', 'Allow', 'Deny'])
+    same(prompt.checkboxStates, []); same(prompt.selections, [])
+    return
+  }
   if (step.method === 'getPublicKey' || step.method === 'revealSpecificKeyLinkage') {
     assert.equal(lines[0], 'Protocol Permission')
     assert.equal(after('Protocol'), step.method === 'getPublicKey' ? step.args.protocolID[1] : `specific key linkage revelation ${step.args.protocolID[1]} ${step.args.keyID}`)
@@ -55,6 +61,21 @@ export function verifyPermissionExtensionPromptScope(step: Report['steps'][numbe
     assert.match(after('Amount') ?? '', /^(?:[0-9,]+ satoshis|[0-9]+(?:\.[0-9]+)? BSV)$/)
   } else throw new Error('Unexpected permission prompt method')
   assert.equal(prompt.checkboxStates.length, 0)
+}
+/** Prospective identity consent is a distinct level1 grant, not an inferred
+ * side effect of the later protocol/category grants. */
+export function verifyPermissionExtensionIdentityConsent(step: Report['steps'][number], extensionId: string, read: (name: string) => Buffer, identity: string): void {
+  assert.equal(step.id, 'identity'); assert.equal(step.origin, permissionExtensionPolicy().configuration.primary); assert.equal(new URL(step.pageUrl).origin, step.origin)
+  assert.equal(step.method, 'getPublicKey'); same(step.args, { identityKey: true })
+  assert.equal(PublicKey.fromString(identity).toString(), identity); assert.equal(terminal(step).publicKey, identity)
+  verifyPermissionCallNonces([step]); assert.equal(step.prompts.length, 1)
+  const prompt = step.prompts[0]!
+  assert.equal(prompt.decision, 'allow'); assert.equal(prompt.button, 'Allow'); assert.equal(prompt.pendingBeforeDecision, true)
+  assert.match(extensionId, /^[a-p]{32}$/)
+  const url = new URL(prompt.url); assert.equal(url.protocol, 'chrome-extension:'); assert.equal(url.host, extensionId); assert.equal(url.pathname, '/prompt.html')
+  verifyPermissionExtensionPromptScope(step, prompt); verifyPermissionClick(prompt.trustedClick, prompt, step)
+  assert.equal(prompt.screenshot.name, 'conformance/extension-identity-0.png')
+  const bytes = read(prompt.screenshot.name); assert.equal(bytes.length, prompt.screenshot.size); assert.equal(sha(bytes), prompt.screenshot.sha256); assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
 }
 export function verifyPermissionExtensionStaging(prepared: number[], signed: number[]): void {
   const before = decodePermissionExtensionAtomic(prepared), after = decodePermissionExtensionAtomic(signed)
@@ -177,11 +198,13 @@ export async function evaluatePermissionExtension(report: Report, anchor: Native
     const s = step(id), submitted = report.submissions.slice(s.submissionStart, s.submissionEnd).filter(row => row.txid === tx.id('hex')); assert.equal(submitted.length, 1); assert.equal(submitted[0]!.verdict, 'ACCEPTED_BY_NETWORK'); assert.equal(observedSubmissionTransactions(submitted[0]!)[0]!.transaction.toHex(), tx.toHex()); return amount + permissionExtensionFee(independent)
   }
   const common = async () => {
+    assert.ok(report.identityPermission === undefined || report.identityPermission === 'explicit-allow-v1', 'Unknown identity consent observer');
     assert.equal(report.schema, 'tpnil-native-permission-extension@1.0.0'); assert.equal(report.oracle, p.oracle); assert.equal(report.policySha256, p.sha256); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false); assert.equal(report.identity, identity); assert.equal(PublicKey.fromString(identity).toString(), identity); assert.equal(report.anchorSha256, sha(Buffer.from(canonicalJson(anchor)))); await anchorVerified()
     assert.equal(report.extensionId, anchor.extensionId); verifyPermissionExtensionReceiptSequence(report); assert.ok(report.steps.length <= p.maximumCalls); verifyPermissionCallNonces(report.steps); same(report.errors, []); assert.equal(report.cleanup.pagesClosed, true); assert.equal(report.cleanup.routesUnregistered, true); assert.equal(report.cleanup.settingsClosed, true)
     assert.ok(instant(report.startedAt) <= instant(report.endedAt)); assert.equal(report.submissionWindow.endIndex, report.submissions.length); assert.ok(Number.isSafeInteger(report.submissionWindow.startIndex) && report.submissionWindow.startIndex >= 0 && report.submissionWindow.startIndex <= report.submissionWindow.endIndex)
     for (const [index, s] of report.steps.entries()) { if (index && !([report.steps[index - 1]!.id, s.id].every(id => ['concurrent-a', 'concurrent-b'].includes(id)))) assert.ok(instant(report.steps[index - 1]!.endedAt) <= instant(s.startedAt), 'Sequential native calls overlap'); assert.equal(new URL(s.pageUrl).origin, s.origin); assert.ok(instant(report.startedAt) <= instant(s.startedAt) && instant(s.startedAt) <= instant(s.endedAt) && instant(s.endedAt) <= instant(report.endedAt)); assert.ok(Number.isSafeInteger(s.submissionStart) && Number.isSafeInteger(s.submissionEnd) && s.submissionStart >= report.submissionWindow.startIndex && s.submissionEnd >= s.submissionStart && s.submissionEnd <= report.submissionWindow.endIndex) }
     check('identity', c.primary, 'getPublicKey', { identityKey: true }); assert.equal(success('identity').publicKey, identity)
+    if (report.identityPermission === 'explicit-allow-v1') verifyPermissionExtensionIdentityConsent(step('identity'), report.extensionId, read, identity)
     const applicationTransactions = [...transactions().values()].filter(tx => tx.outputs.some(output => output.lockingScript.toHex() === coveragePaymentScript) && tx.inputs.every(input => input.unlockingScript && input.unlockingScript.toBinary().length > 0)); assert.ok(applicationTransactions.length <= p.maximumSignedApplicationTransactions); assert.ok(applicationTransactions.reduce((sum, tx) => sum + permissionExtensionFee(tx), 0) <= p.maximumApplicationFees)
   }
   const predicates: Array<() => Promise<void> | void> = [
