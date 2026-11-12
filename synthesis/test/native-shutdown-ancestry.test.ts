@@ -62,7 +62,9 @@ describe('prospective complete shutdown permission ancestry', () => {
     const { child } = await hiddenPayment(coveragePaymentScript, 53)
     await expect(verifyFinalPermissionSubmissionAncestry(binding([receipt(child, 'ACCEPTED_BY_NETWORK', true)]))).rejects.toThrow('unresolved unmined ancestry')
   })
-  it('permits the exact approved native grant as an ancestor but rejects replay as a new target', async () => {
+  // Signing plus three complete ancestry checks can exceed five seconds on the
+  // shared Linux runner. This is a test budget, never a relaxed verifier limit.
+  it('permits the exact approved native grant as an ancestor but rejects replay as a new target', { timeout: 30_000 }, async () => {
     const original = permission.transactions.find((row: any) => row.role === 'spending-allow')
     const approved = Transaction.fromAtomicBEEF(original.atomicBeef)
     const index = approved.outputs.findIndex(output => output.satoshis === 5 && output.lockingScript.toHex() === permission.paymentScript)

@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { PrivateKey, ProtoWallet } from '@bsv/sdk'
 import { ControlledWalletServices } from '../src/wallet-lab/services.js'
 import { createFixtureWallet } from '../src/storage-sync/fixture-wallet.js'
@@ -13,26 +13,40 @@ import { deriveCertificateStateOutcomes, verifyCertificateStateParentBindings, v
 // LAB_SELF_TEST_ONLY: real TypeScript reference wallet, remote storage and SDK
 // cryptography. These tests never qualify native behavior or replace its data.
 describe('prospective certificate states with real reference wallet', () => {
-  let report: CertificateStateReport, services: ControlledWalletServices, wallet: any, directory: string
+  let report: CertificateStateReport, missingBoundary: CertificateStateReport
   let binding: Parameters<typeof verifyCertificateStateParentBindings>[1]
   beforeAll(async () => {
-    directory = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'tpnil-certificate-states-'))
-    services = new ControlledWalletServices({ webroot: directory }); await services.start()
-    await services.fundRemoteWalletFromTeranode('77'.repeat(32), JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../fixtures/teranode/wab-funding-v1.json'), 'utf8')))
-    wallet = await createFixtureWallet(services, '77'.repeat(32))
-    const identity = await wallet.getPublicKey({ identityKey: true })
-    const args = { description: 'TPNIL boundary token pair', outputs: [0, 1].map(index => ({ satoshis: 7, lockingScript: '7551', outputDescription: `Boundary token ${index}` })), options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }
-    const creation = await wallet.createAction(args)
-    // A real preexisting certificate overlaps both an issuer and type. Exact
-    // filter/cleanup checks must retain it instead of assuming an empty wallet.
-    const baseline = await issueFixtureCertificateForSubject(new ProtoWallet(PrivateKey.fromHex(config.issuerKeys[0])) as any, identity.publicKey,
-      { name: 'Preexisting retained certificate' }, config.types[0], async () => `${creation.txid}.1`, Buffer.alloc(32, 190).toString('base64'))
-    await wallet.acquireCertificate({ ...baseline, acquisitionProtocol: 'direct', keyringRevealer: 'certifier', keyringForSubject: baseline.masterKeyring })
-    const boundaryReport = { trace: [{ method: 'getPublicKey', args: { identityKey: true }, result: identity }, { method: 'createAction', args, result: creation }] }
-    report = await runNativeCertificateStates({ wallet, services, evidence: { addJson: () => {} } as any, boundaryReport })
-    binding = { boundary: boundaryReport, identity: identity.publicKey, globalRoutes: structuredClone(services.routes), globalSubmissions: services.submissions.map(value => ({ txid: value.txid, beefHex: Buffer.from(value.bytes).toString('hex'), verdict: value.verdict })) }
+    let wallet: any, services: ControlledWalletServices | undefined
+    const failures: unknown[] = []
+    const directory = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), 'tpnil-certificate-states-'))
+    try {
+      services = new ControlledWalletServices({ webroot: directory }); await services.start()
+      await services.fundRemoteWalletFromTeranode('77'.repeat(32), JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../fixtures/teranode/wab-funding-v1.json'), 'utf8')))
+      wallet = await createFixtureWallet(services, '77'.repeat(32))
+      const identity = await wallet.getPublicKey({ identityKey: true })
+      const args = { description: 'TPNIL boundary token pair', outputs: [0, 1].map(index => ({ satoshis: 7, lockingScript: '7551', outputDescription: `Boundary token ${index}` })), options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }
+      const creation = await wallet.createAction(args)
+      // A real preexisting certificate overlaps both an issuer and type. Exact
+      // filter/cleanup checks must retain it instead of assuming an empty wallet.
+      const baseline = await issueFixtureCertificateForSubject(new ProtoWallet(PrivateKey.fromHex(config.issuerKeys[0])) as any, identity.publicKey,
+        { name: 'Preexisting retained certificate' }, config.types[0], async () => `${creation.txid}.1`, Buffer.alloc(32, 190).toString('base64'))
+      await wallet.acquireCertificate({ ...baseline, acquisitionProtocol: 'direct', keyringRevealer: 'certifier', keyringForSubject: baseline.masterKeyring })
+      const boundaryReport = { trace: [{ method: 'getPublicKey', args: { identityKey: true }, result: identity }, { method: 'createAction', args, result: creation }] }
+      report = await runNativeCertificateStates({ wallet, services, evidence: { addJson: () => {} } as any, boundaryReport })
+      binding = { boundary: boundaryReport, identity: identity.publicKey, globalRoutes: structuredClone(services.routes), globalSubmissions: services.submissions.map(value => ({ txid: value.txid, beefHex: Buffer.from(value.bytes).toString('hex'), verdict: value.verdict })) }
+      missingBoundary = await runNativeCertificateStates({ wallet, services, evidence: { addJson: () => {} } as any,
+        boundaryReport: { trace: [{ method: 'getPublicKey', args: { identityKey: true }, result: { publicKey: report.identity } }] } })
+    } catch (error) { failures.push(error) }
+    finally {
+      // All tests below replay immutable observations. Release authenticated
+      // storage clients before CPU-only cryptographic mutations can leave an
+      // idle HTTP connection pending for longer than the server keepalive.
+      try { await wallet?.destroy() } catch (error) { failures.push(error) }
+      try { await services?.close() } catch (error) { failures.push(error) }
+      try { fs.rmSync(directory, { recursive: true, force: true }) } catch (error) { failures.push(error) }
+    }
+    if (failures.length) throw new AggregateError(failures, 'Certificate fixture capture or cleanup failed')
   }, 90000)
-  afterAll(async () => { await wallet?.destroy(); await services?.close(); if (directory) fs.rmSync(directory, { recursive: true, force: true }) })
   const mutation = async (id: string, change: (value: CertificateStateReport) => void) => {
     const changed = structuredClone(report); change(changed)
     const outcomes = await deriveCertificateStateOutcomes(changed)
@@ -114,8 +128,7 @@ describe('prospective certificate states with real reference wallet', () => {
     await expect(deriveCertificateStateOutcomes(duplicate)).rejects.toThrow(/Duplicate/)
   })
   it('preserves absence of a public boundary fixture as oneFAIL and13BLOCKED', async () => {
-    const result = await runNativeCertificateStates({ wallet, services, evidence: { addJson: () => {} } as any,
-      boundaryReport: { trace: [{ method: 'getPublicKey', args: { identityKey: true }, result: { publicKey: report.identity } }] } })
+    const result = missingBoundary
     expect(result.boundaryAnchor).toBe(null)
     expect(result.trace).toEqual([])
     expect((await verifyNativeCertificateStates(result)).assertions.map(row => row.result)).toEqual(['FAIL', ...Array(13).fill('BLOCKED')])

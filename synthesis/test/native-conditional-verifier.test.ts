@@ -52,7 +52,12 @@ const call = (report: ConditionalReport, id: string) => { const row = report.tra
 let referenceOutcomes: ConditionalReport['assertions']
 beforeAll(async () => { referenceOutcomes = await deriveConditionalOutcomes(reference()) })
 
-it('retains identical failure details across canonical evidence serialization', async () => {
+// These controls independently replay the full signed graph twice. The shared
+// Linux CI runner exceeded Vitest's five-second default; retain every predicate
+// and give only these double-replay checks a bounded execution allowance.
+const doubleReplayTimeout = 30_000
+
+it('retains identical failure details across canonical evidence serialization', { timeout: doubleReplayTimeout }, async () => {
   const report = reference(), row = report.trace.find(call => call.id === 'outputs-newest')!
   delete row.result
   row.error = { name: 'Error', message: 'retained native request failure', code: 'FIXTURE_ERROR' }
@@ -102,7 +107,7 @@ describe('conditional verifier adversarial replay of retained public TS fixture'
     expect(outcome?.result, outcome?.detail).toBe('FAIL')
   })
 
-  it('ignores transaction-shaped extra fields on methods without a transaction-return contract', async () => {
+  it('ignores transaction-shaped extra fields on methods without a transaction-return contract', { timeout: doubleReplayTimeout }, async () => {
     const report = reference(), transaction = report.transactions[0]!
     Object.assign(call(report, 'outputs-default').result, { txid: 'ab'.repeat(32), tx: transaction.atomicBeef })
     report.assertions = await deriveConditionalOutcomes(report)
@@ -143,7 +148,7 @@ describe('conditional policy2 independent signing fixtures and complete associat
     expect(legacy.policy).toEqual(conditionalPolicy); expect(next.policy.assertionIds).toEqual(legacy.policy.assertionIds)
     expect(() => conditionalPolicySelection(3 as any)).toThrow()
   })
-  it('independently verifies the population2 signed spend despite the retained population0 known-proof error', async () => {
+  it('independently verifies the population2 signed spend despite the retained population0 known-proof error', { timeout: doubleReplayTimeout }, async () => {
     const report = prospectiveReference(), outcomes = await deriveConditionalOutcomes(report)
     expect(call(report, 'known-proof-omission').error.message).toContain('sourceTransaction')
     for (const id of ['transaction.signable-and-sign', 'transaction.abort-release']) expect(outcomes.find(row => row.id === id)?.result).toBe('PASS')
@@ -171,7 +176,7 @@ describe('conditional policy2 independent signing fixtures and complete associat
     for (const output of call(report, 'outputs-only-includeLabels').result.outputs) output.labels = call(report, 'actions-includes').result.actions.find((a: any) => output.outpoint.startsWith(`${a.txid}.`)).labels.filter((label: string) => !label.startsWith('reference '))
     return report
   }
-  it('accepts all matching associated labels and never discards administration labels', async () => {
+  it('accepts all matching associated labels and never discards administration labels', { timeout: doubleReplayTimeout }, async () => {
     const report = withAssociatedLabels(), outcomes = await deriveConditionalOutcomes(report)
     for (const id of ['query.outputs-includes', 'query.outputs-only-includeLabels']) { const outcome = outcomes.find(row => row.id === id); expect(outcome?.result, outcome?.detail).toBe('PASS') }
     report.oracle = conditionalPolicy.oracle; report.policySha256 = conditionalPolicySha256
