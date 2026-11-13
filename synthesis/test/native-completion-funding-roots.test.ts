@@ -110,3 +110,43 @@ for (const kind of ['trailing', 'truncated', 'sparse']) test(`completion public 
   const f = completionFixture(); changeCompletionProof(f, kind)
   await assert.rejects(deriveCompletionReserveRoot(f.report, f.binding))
 })
+
+// Constructed profile controls retain the signed fixture and cannot qualify a new run.
+test('funding-root parent selects oracle4 for4.8 and rejects an oracle3 child', async () => {
+  const f = fixture(); f.binding.profile = 'ITCVE-1@4.8.0'
+  await assert.rejects(deriveTransactionCoveragePaymentRoots(f.report, f.binding))
+  const current = getTransactionCoveragePolicy(4)
+  f.report.schema = 'tpnil-native-coverage-transactions@4.0.0'
+  f.report.oracle = current.policy.oracle; f.report.policySha256 = current.policySha256
+  assert.equal((await deriveTransactionCoveragePaymentRoots(f.report, f.binding)).actualPaymentSatoshis, 2000)
+  f.binding.profile = 'ITCVE-1@4.7.0'
+  await assert.rejects(deriveTransactionCoveragePaymentRoots(f.report, f.binding))
+})
+
+function insertExactReplay(f: any, callId: string, creationId: string) {
+ const {report,binding}=f, target=report.trace.find((r:any)=>r.id===callId), creation=report.trace.find((r:any)=>r.id===creationId), index=target.submissionStart
+ const receipt={...binding.globalSubmissions.slice(creation.submissionStart,creation.submissionEnd).find((r:any)=>r.txid===creation.result.txid)}
+ binding.globalSubmissions.splice(index,0,receipt)
+ binding.finalSubmissions=structuredClone(binding.globalSubmissions)
+ for(const row of report.trace) {if(row===target)row.submissionEnd++;else if(row.submissionStart>=index){row.submissionStart++;row.submissionEnd++}}
+ report.submissionEnd++
+ if(report.submissions)report.submissions=binding.globalSubmissions.slice(report.submissionStart,report.submissionEnd)
+ return receipt
+}
+for(const kind of ['exact','wrong-txid','wrong-body','rejected'] as const)test(`4.8 incoming root replay ${kind} retains exact prior-fixture contract`,async()=>{
+ const f=fixture(),current=getTransactionCoveragePolicy(4);f.binding.profile='ITCVE-1@4.8.0';Object.assign(f.report,{schema:'tpnil-native-coverage-transactions@4.0.0',oracle:current.policy.oracle,policySha256:current.policySha256})
+ const receipt=insertExactReplay(f,'payment','incoming-fixture')
+ if(kind==='wrong-txid')receipt.txid='00'.repeat(32)
+ if(kind==='wrong-body')receipt.beefHex+='00'
+ if(kind==='rejected')receipt.verdict='REJECTED'
+ if(kind==='exact')assert.equal((await deriveTransactionCoveragePaymentRoots(f.report,f.binding)).actualPaymentSatoshis,2000)
+ else await assert.rejects(deriveTransactionCoveragePaymentRoots(f.report,f.binding))
+})
+for(const kind of ['exact','wrong-body','rejected'] as const)test(`4.8 reserve root replay ${kind} retains exact prior-fixture contract`,async()=>{
+ const f=completionFixture();f.binding.profile='ITCVE-1@4.8.0'
+ const receipt=insertExactReplay(f,'completion-acceptance','completion-payment')
+ if(kind==='wrong-body')receipt.beefHex+='00'
+ if(kind==='rejected')receipt.verdict='REJECTED'
+ if(kind==='exact')assert.equal((await deriveCompletionReserveRoot(f.report,f.binding)).actualPaymentSatoshis,50000)
+ else await assert.rejects(deriveCompletionReserveRoot(f.report,f.binding))
+})

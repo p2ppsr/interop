@@ -156,7 +156,7 @@ for (const kind of ['wrong-host', 'unknown-active', 'two-active', 'wrong-main-im
 async function modernProviderFixture() {
  const f = await parentFixture()
  for (const o of [f.report.activeProviderInitial, f.report.activeProvider]) {
-  o.representation = 'ACTIVE_STORAGE_SUMMARY_V2'; o.summaryButtons = 1; o.makeActiveButtons = 0
+  o.representation = 'ACTIVE_STORAGE_SUMMARY_V3'; o.summaryButtons = 2; o.summaryEditButtons = 1; o.summarySyncButtons = 1; o.makeActiveButtons = 0
   o.activeSummary = 'ACTIVE STORAGE\nSynced across devices\nWALLET.1SAT.APP'
   o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary]
  }
@@ -173,7 +173,7 @@ for (const kind of ['missing-summary', 'two-headings', 'wrong-summary-host', 'tw
   if (kind === 'two-headings') { o.activeSummary += '\nActive Storage'; o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary] }
   if (kind === 'wrong-summary-host') { o.activeSummary = 'Active Storage\nwallet.1sat.app.evil'; o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary] }
   if (kind === 'two-active') o.candidates[1].card += '\nActive Storage'
-  if (kind === 'two-buttons') o.summaryButtons = 2
+  if (kind === 'two-buttons') o.summaryEditButtons = 2
   if (kind === 'make-active') o.makeActiveButtons = 1
   if (kind === 'backup-detail') o.card = 'wallet.1sat.app\nBackup copy\nhttps://wallet.1sat.app'
   if (kind === 'wrong-image') o.mainScreenshotSha256 = '00'.repeat(32)

@@ -1,0 +1,13 @@
+# Native observer source correction
+
+The source-only successor of ITCVE-1 4.8 uses the same 698 observation IDs, ISI-4 5.8 criteria, e360e67 wallet artifact, Go compatibility10, sole mined funding root and independent Rust3 corpus. Original profile, policy, plan and compatibility manifest bytes remain retained.
+
+Native attempt14 retained two matching captures, each676PASS/3FAIL/19BLOCKED, but failed parent admission. Shutdown called the permission verifier with the full nine-context chain; only its other caller projected the declared five-context prefix. The shared verifier now validates the exact nine-context chain before projecting its owned prefix for every caller.
+
+Partial trace and narrow funding-root admission inherited transaction schema/oracle3 although the frozen4.8 parent selects4. Both now select their expected tuple from the parent profile. The basket parent's final and reopened membership checks likewise receive the selected basket revision, preserving the frozen public-plaintext/private-ciphertext comparison. Child labels cannot select or downgrade the oracle. Narrow incoming-payment admission also applies the existing exact prior-fixture replay contract to4.8 imports: at most one byte-identical accepted raw receipt for the declared, independently proven fixture, with no additional target or ancestry. The complete module and final-ledger parents remain mandatory.
+
+The pinned Active Storage summary has a header Edit control and a separate Sync Now control. The V3 observer verifies exactly two card buttons, one header Edit and one Sync Now, and opens the unique header Edit. Exact provider identity, detail card, timestamp and screenshot joins remain mandatory. The earlier whole-card one-button observer blocked capture.
+
+Prospective replay and constructed controls diagnose these source corrections. They do not change the original attempt14 evidence or establish native qualification. A new exact-source native run and original receipts, both Rust results and independent replay remain required.
+
+The final transaction guard also joins the next module's independently verified controlled-funder fixture. The foreign noSendChange rejection still forbids wallet consumption through shutdown. The fixed extension fixture may consume its owner's change only after the complete extension parent and funding checks pass, at exact accepted module receipt positions and with byte-identical independently proven ancestry. Every other protected claim and any substituted body, actor, window or unrelated later target remains rejected. This corrects an ownership join that previously recognized authorized funder spends only inside the first module.

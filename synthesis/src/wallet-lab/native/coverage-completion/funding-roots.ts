@@ -1,3 +1,5 @@
+import {verifyPriorFixtureReplay} from '../prior-fixture-replay.js'
+import {nativeCompletionProfile} from '../completion-profile.js'
 import {nativeProofResources} from '../proof-resources.js'
 // SPDX-License-Identifier: Apache-2.0
 import assert from 'node:assert/strict'
@@ -33,8 +35,9 @@ async function verifiedPublicPayment(bytes: any, claimedId: string, binding: Bas
  * native qualification. It is safe before unrelated final-ledger traversal. */
 export async function deriveTransactionCoveragePaymentRoots(report: any, binding: BasketParentBinding) {
   assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile))
-  const selected = getTransactionCoveragePolicy(3)
-  assert.equal(report.schema, 'tpnil-native-coverage-transactions@3.0.0')
+  const {transactionRevision} = nativeCompletionProfile(binding.profile)
+  const selected = getTransactionCoveragePolicy(transactionRevision)
+  assert.equal(report.schema, `tpnil-native-coverage-transactions@${transactionRevision}.0.0`)
   assert.equal(report.oracle, selected.policy.oracle); assert.equal(report.policySha256, selected.policySha256)
   assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false)
   assert.equal(report.identity, binding.identity)
@@ -54,7 +57,7 @@ export async function deriveTransactionCoveragePaymentRoots(report: any, binding
   for (const row of [identity, incoming, payment, both]) {
     assert.equal(row.error, undefined); index(row.submissionStart); index(row.submissionEnd)
     assert.ok(row.submissionStart >= report.submissionStart && row.submissionStart <= row.submissionEnd && row.submissionEnd <= report.submissionEnd)
-    if (row !== incoming) assert.equal(row.submissionStart, row.submissionEnd, 'Getter or internalization emitted a submission')
+    if (row === identity || (row !== incoming && binding.profile !== 'ITCVE-1@4.8.0')) assert.equal(row.submissionStart, row.submissionEnd, 'Getter or legacy internalization emitted a submission')
   }
   assert.equal(identity.actor, 'funder'); assert.equal(identity.method, 'getPublicKey'); assert.deepEqual(identity.args, { identityKey: true }); assert.equal(identity.result.publicKey, senderIdentityKey)
   const outputs = Array.from({ length: 10 }, (_, i) => ({ satoshis: i < 2 ? 1000 : i === 8 ? tc.sourceSatoshis : 7,
@@ -84,6 +87,7 @@ export async function deriveTransactionCoveragePaymentRoots(report: any, binding
     assert.equal(row.actor, 'wallet'); assert.equal(row.method, 'internalizeAction')
     assert.deepEqual(row.args, { tx: incoming.result.tx, outputs: requested, description: `TPNIL extension ${row.id}`, labels: [tc.label] })
     assert.equal(row.result.accepted, true); assert.ok(incoming.submissionEnd <= row.submissionStart)
+    if (binding.profile === 'ITCVE-1@4.8.0') await verifyPriorFixtureReplay(row, incoming, binding.globalSubmissions, { currentHeight: async () => binding.fixture.fundingHeight + binding.fixture.maturityDepth, isValidRootForHeight: async (root: string, height: number) => root === binding.fixture.merkleRoot && height === binding.fixture.fundingHeight })
   }
   const receipts = binding.globalSubmissions.slice(incoming.submissionStart, incoming.submissionEnd).filter(row => row.txid === id && row.verdict === 'ACCEPTED_BY_NETWORK')
   assert.ok(receipts.length > 0, 'Incoming payment has no independently accepted scoped receipt')

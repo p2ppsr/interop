@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
+import {verifyPriorFixtureReplay} from '../prior-fixture-replay.js'
 import assert from 'node:assert/strict'
 import { P2PKH, PrivateKey, ProtoWallet, PublicKey } from '@bsv/sdk'
 import type { NativeScenarioContext } from '../../yours-driver.js'
@@ -92,7 +93,7 @@ export async function verifyCompletionFunding(report: any, binding: BasketParent
     assert.equal(row.error, undefined)
     assert.ok(Number.isSafeInteger(row.submissionStart) && row.submissionStart >= report.submissionStart)
     assert.ok(Number.isSafeInteger(row.submissionEnd) && row.submissionEnd >= row.submissionStart && row.submissionEnd <= report.submissionEnd)
-    if (row.id !== 'completion-payment') assert.equal(row.submissionStart, row.submissionEnd, 'Read-only or acceptance call emitted a submission')
+    if (row.id !== 'completion-payment' && !(row.id === 'completion-acceptance' && binding.profile === 'ITCVE-1@4.8.0')) assert.equal(row.submissionStart, row.submissionEnd, 'Read-only or legacy acceptance call emitted a submission')
   }
   for (const row of [identity, sender]) { assert.equal(row.method, 'getPublicKey'); assert.deepEqual(row.args, { identityKey: true }) }
   assert.equal(identity.actor, 'wallet'); assert.equal(identity.result.publicKey, binding.identity)
@@ -107,7 +108,8 @@ export async function verifyCompletionFunding(report: any, binding: BasketParent
   const tx = atomic(payment.result.tx); assert.equal(tx.id('hex'), payment.result.txid)
   assert.equal(tx.outputs[0]?.satoshis, completionFundingPolicy.amount); assert.equal(tx.outputs[0]?.lockingScript.toHex(), script)
   assert.equal(accepted.actor, 'wallet'); assert.equal(accepted.method, 'internalizeAction'); assert.deepEqual(accepted.args, acceptanceArgs(payment.result.tx, senderIdentityKey)); assert.equal(accepted.result.accepted, true)
-  assert.equal(accepted.submissionStart, accepted.submissionEnd)
+  if (binding.profile === 'ITCVE-1@4.8.0') await verifyPriorFixtureReplay(accepted, payment, binding.globalSubmissions, { currentHeight: async () => binding.fixture.fundingHeight + binding.fixture.maturityDepth, isValidRootForHeight: async (root: string, height: number) => root === binding.fixture.merkleRoot && height === binding.fixture.fundingHeight })
+  else assert.equal(accepted.submissionStart, accepted.submissionEnd)
   const funding = await verifyCoverageModuleFunding([payment], binding)
   assert.ok(binding.globalSubmissions.slice(payment.submissionStart, payment.submissionEnd).some(row => row.txid === tx.id('hex') && row.verdict === 'ACCEPTED_BY_NETWORK'))
   const fee = tx.inputs.reduce((sum, input) => sum + input.sourceTransaction!.outputs[input.sourceOutputIndex]!.satoshis!, 0) - tx.outputs.reduce((sum, output) => sum + output.satoshis!, 0)

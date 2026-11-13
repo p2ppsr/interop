@@ -1,0 +1,36 @@
+
+> @tpnil/synthesis@0.1.0 test
+> vitest run --run test/native-completion-profile.test.ts test/native-completion-funding-roots.test.ts
+
+
+ RUN  v4.1.12 /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis
+
+stdout | test/native-completion-profile.test.ts
+◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+
+ ❯ test/native-completion-profile.test.ts (7 tests | 1 failed) 2846ms
+   × partial-trace transaction binding follows the parent and rejects a downgraded child 2838ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/native-completion-profile.test.ts > partial-trace transaction binding follows the parent and rejects a downgraded child
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ test/native-completion-profile.test.ts:42:126
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 31 passed (32)
+   Start at  18:50:07
+   Duration  3.35s (transform 477ms, setup 0ms, import 1.19s, tests 3.17s, environment 0ms)
+

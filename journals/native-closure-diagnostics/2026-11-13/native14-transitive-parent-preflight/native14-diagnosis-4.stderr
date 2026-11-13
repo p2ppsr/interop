@@ -1,0 +1,21 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Read-only or acceptance call emitted a submission
+
+111 !== 112
+
+    at verifyCompletionFunding (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/funding.ts:95:49)
+    at deriveCompletionReserveRoot (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/funding-roots.ts:106:10)
+    at async deriveCompletionNativeFundingRoots (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/funding-roots.ts:120:22)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:21:16) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 111,
+  expected: 112,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

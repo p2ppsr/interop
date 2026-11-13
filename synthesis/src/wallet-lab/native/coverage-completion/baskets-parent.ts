@@ -37,7 +37,8 @@ export async function verifyBasketParent(report: any, binding: BasketParentBindi
   assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile))
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
-  const checked = await verifyBasketObservations(report, nativeCompletionProfile(binding.profile).basketRevision)
+  const revision = nativeCompletionProfile(binding.profile).basketRevision
+  const checked = await verifyBasketObservations(report, revision)
   assert.equal(checked.fixtureValid, true, checked.fixtureError ?? 'Missing fixtures')
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString())
   const registry = nativeCompletionProviders(read)
@@ -97,8 +98,8 @@ export async function verifyBasketParent(report: any, binding: BasketParentBindi
   }
   const last = snapshotPair(report, operations.at(-1)!.id)
   for (const variant of variants.filter(value => value.accepted)) {
-    membership(report, `${variant.id}.final-membership`, last.rowsAfter, variant.name)
-    membership(report, `${variant.id}.reopened-membership`, last.rowsAfter, variant.name)
+    membership(report, `${variant.id}.final-membership`, last.rowsAfter, variant.name, revision)
+    membership(report, `${variant.id}.reopened-membership`, last.rowsAfter, variant.name, revision)
   }
   assert.equal(report.reopen?.kind, 'PUBLIC_CWI_HANDLE_REFRESH')
   assert.equal(report.reopen.nativeBrowserRestart, false)

@@ -26,3 +26,19 @@ it('projects the permission prefix only from the complete declared completion ch
     expect(()=>permissionCoverageEvidenceForCompletion(()=>Buffer.from(JSON.stringify({...value,contexts})),'ITCVE-1@4.8.0')('native-browser-contexts.json')).toThrow()
   }
 })
+
+import {gunzipSync} from 'node:zlib'
+import {partialTraceModulesForProfile,evaluatePartialTrace} from '../src/wallet-lab/native/coverage-completion/partial-trace-verifier.js'
+import {getTransactionCoveragePolicy} from '../src/wallet-lab/native/coverage-transactions-model.js'
+it('partial-trace transaction binding follows the parent and rejects a downgraded child', async () => {
+ const current=partialTraceModulesForProfile('ITCVE-1@4.8.0').transactions
+ const previous=partialTraceModulesForProfile('ITCVE-1@4.7.0').transactions
+ expect(current.schema).toBe('tpnil-native-coverage-transactions@4.0.0')
+ expect(current.oracle).toBe(getTransactionCoveragePolicy(4).policy.oracle)
+ expect(previous.schema).toBe('tpnil-native-coverage-transactions@3.0.0')
+ const child={schema:previous.schema,oracle:previous.oracle,policySha256:previous.policySha256}
+ const checked=await evaluatePartialTrace(undefined,(name:string)=>{if(name==='conformance/coverage-transactions.json')return Buffer.from(JSON.stringify(child));if(name==='conformance/conditional.json')return gunzipSync(fs.readFileSync(new URL('./fixtures/native-partial-trace/conditional-native6.json.gz',import.meta.url)));throw Error('absent')},'ITCVE-1@4.8.0')
+ expect(checked.counts.FAIL).toBeGreaterThan(0)
+ expect(checked.rows.filter((row:any)=>row.id.startsWith('transaction.proof-trust/')).some((row:any)=>row.result==='FAIL')).toBe(true)
+ expect(checked.parentProfile).toBe('ITCVE-1@4.8.0')
+})

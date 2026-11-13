@@ -25,14 +25,16 @@ export function selectActiveStorageSummary(summary:string, backups:string[], all
  * Backup-row buttons are not the active summary and carry no active badge. */
 export async function observeActiveStorageSummary(page:Page, allowed:Provider[], stage:string, evidence:EvidenceBundle) {
   const startedAt=new Date().toISOString(),label=page.getByText('Active Storage',{exact:true})
-  assert.equal(await label.count(),1)
+  await label.waitFor({state:'visible'});assert.equal(await label.count(),1)
   const summary=label.locator('xpath=ancestor::div[contains(concat(" ", normalize-space(@class), " "), " w-full ") and contains(concat(" ", normalize-space(@class), " "), " rounded-xl ")][1]')
   assert.equal(await summary.count(),1)
   const activeSummary=await summary.innerText(),backups=await page.locator('button.w-full').allInnerTexts()
   const {id,providerUrl,candidates}=selectActiveStorageSummary(activeSummary,backups,allowed)
-  const summaryButtons=await summary.locator('button').count();assert.equal(summaryButtons,1)
+  const edit=summary.locator(':scope > div').first().locator('button'),sync=summary.getByRole('button',{name:'Sync Now',exact:true})
+  const summaryButtons=await summary.locator('button').count(),summaryEditButtons=await edit.count(),summarySyncButtons=await sync.count()
+  assert.equal(summaryButtons,2);assert.equal(summaryEditButtons,1);assert.equal(summarySyncButtons,1)
   const mainScreenshot=`conformance/transaction-branches-provider-cards-${stage}.png`,mainBytes=await page.screenshot();evidence.addBytes(mainScreenshot,mainBytes)
-  await summary.locator('button').click()
+  await edit.click()
   await page.getByText(providerUrl,{exact:true}).waitFor()
   const card=await page.getByText(providerUrl,{exact:true}).evaluate(element=>{
     let current:Element|null=element
@@ -43,8 +45,8 @@ export async function observeActiveStorageSummary(page:Page, allowed:Provider[],
   assert.ok(lines(card).includes('in use'));assert.ok(!lines(card).includes('backup copy'))
   const makeActiveButtons=await page.getByRole('button',{name:'Make Active',exact:true}).count();assert.equal(makeActiveButtons,0)
   const screenshot=`conformance/transaction-branches-active-provider-${stage}.png`,bytes=await page.screenshot();evidence.addBytes(screenshot,bytes)
-  return {kind:'NATIVE_REMOTE_BACKUP_UI',representation:'ACTIVE_STORAGE_SUMMARY_V2',id,providerUrl,candidates,
-    activeSummary,summaryButtons,makeActiveButtons,activeCards:[activeSummary],mainScreenshot,
+  return {kind:'NATIVE_REMOTE_BACKUP_UI',representation:'ACTIVE_STORAGE_SUMMARY_V3',id,providerUrl,candidates,
+    activeSummary,summaryButtons,summaryEditButtons,summarySyncButtons,makeActiveButtons,activeCards:[activeSummary],mainScreenshot,
     mainScreenshotSha256:createHash('sha256').update(mainBytes).digest('hex'),url:page.url(),card,screenshot,
     screenshotSha256:createHash('sha256').update(bytes).digest('hex'),startedAt,endedAt:new Date().toISOString()}
 }

@@ -77,6 +77,8 @@ COPY programs/ISI-4/profiles/native-coverage-extension-4.0.0 /work/programs/ISI-
 COPY programs/ISI-4/5.8.0 /work/programs/ISI-4/5.8.0
 COPY itcves/ITCVE-1/4.8.0 /work/itcves/ITCVE-1/4.8.0
 COPY programs/ISI-4/profiles/native-coverage-transactions-4.0.0 /work/programs/ISI-4/profiles/native-coverage-transactions-4.0.0
+COPY docs/native-observer-source-correction-2026-11-13.md /work/docs/native-observer-source-correction-2026-11-13.md
+
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root
 COPY --from=conformance_files /work /work

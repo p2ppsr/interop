@@ -71,3 +71,30 @@ describe('prospective transaction oracle3 with unchanged failed native6 captures
     expect(policy.policy.nativeRun).toBeNull(); expect(policy.policy.variantIds).toEqual(previous.policy.variantIds); expect(policy.policy.bounds).toEqual(previous.policy.bounds)
   })
 })
+
+import {decodeCoverageObservation,coverageObservationEncoding} from '../src/wallet-lab/native/coverage-observation.js'
+import {bindForeignOwnerFixture} from '../src/wallet-lab/native/coverage-transactions-verifier.js'
+// Original bytes test only the receipt join. Full module/funding verification is
+// separately required by the native parent; these constructed receipts grant no admission.
+const native14 = path.resolve(import.meta.dirname,'../../journals/integrated-native-attempts/2026-11-13/43346773141')
+const crossModule = JSON.parse(execFileSync('python3',['-c',`import io,json,sys,zipfile,hashlib,pathlib
+p=pathlib.Path(sys.argv[1]);m=json.loads((p/'attempt.json').read_bytes());b=b''.join((p/n).read_bytes()for n in m['originalArchive']['parts']);assert 'sha256:'+hashlib.sha256(b).hexdigest()==m['originalArchive']['digest'];z=zipfile.ZipFile(io.BytesIO(b));print(json.dumps([json.loads(z.read('repetition-1/evidence/'+n))for n in ['conformance/coverage-transactions.json','conformance/coverage-extension.json','native-submissions.json']]))`,native14],{encoding:'utf8',maxBuffer:64*1024*1024}))
+function ownerFixture() {const [report,encoded,ledger]=structuredClone(crossModule);return {report,external:decodeCoverageObservation<any>(encoded,coverageObservationEncoding),ledger}}
+it('joins only the exact next fixed controlled-funder fixture after both parents verify',()=>{
+ const f=ownerFixture(),r=bindForeignOwnerFixture(f.report,f.external,{verified:true},{verified:true},f.ledger)!
+ expect(r.outpoint).toBe(f.report.trace.find((r:any)=>r.id==='change-foreign').args.options.noSendChange[0]);expect(r.positions).toEqual([101,104])
+ expect(r.start).toBeGreaterThanOrEqual(f.report.submissionEnd)
+})
+it.each(['actor','call-id','identity','oracle','parent','funding','body','receipt-verdict','window'] as const)('rejects substituted cross-module owner %s',kind=>{
+ const f=ownerFixture(),row=f.external.trace.find((r:any)=>r.id==='fixture-external'),parent={verified:true as const},funding={verified:true as const}
+ if(kind==='actor')row.actor='wallet'
+ if(kind==='call-id')row.id='another-owner'
+ if(kind==='identity')f.external.identity='foreign'
+ if(kind==='oracle')f.external.oracle='tpnil-native-coverage-extension-oracle@3.0.0'
+ if(kind==='parent')Object.assign(parent,{verified:false})
+ if(kind==='funding')Object.assign(funding,{verified:false})
+ if(kind==='body')row.result.tx.push(0)
+ if(kind==='receipt-verdict')f.ledger[row.submissionStart].verdict='REJECTED'
+ if(kind==='window')f.external.submissionStart=f.report.submissionEnd-1
+ expect(()=>bindForeignOwnerFixture(f.report,f.external,parent,funding,f.ledger)).toThrow()
+})

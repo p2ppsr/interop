@@ -10,7 +10,7 @@ import { coverageAtomic } from './coverage-transactions-program.js'
 import { tc } from './coverage-transactions-model.js'
 import { spendsOnlyDeclaredNativePayments } from './verify-conformance-reserves.js'
 import { verifyPermissionExtensionParentBindings } from './coverage-permissions-verifier.js'
-import { verifyTransactionCoverageParentBindings } from './coverage-transactions-verifier.js'
+import { bindForeignOwnerFixture, verifyTransactionCoverageParentBindings } from './coverage-transactions-verifier.js'
 import { coverageExtensionTransactionPredicate, verifyCoverageExtensionParentBindings } from './coverage-extension-verifier.js'
 import { verifyCertificateCoverageParentBindings } from './coverage-certificates-verify.js'
 import { validateNativeOutputSnapshot } from '../native-output-snapshot.js'
@@ -176,12 +176,13 @@ export async function verifyNativeCoverageSuite(binding: FundingBinding & { comp
   const graph = { resolvedTransactions: binding.resolvedTransactions, requireResolvedAncestors: true, trustedMinedRoot: { txid: binding.fixture.txid, rawHex: binding.fixture.rawHex } }
   const permissions = await verifyPermissionExtensionParentBindings(permission, json('conformance/permission-coverage.json'), { ...binding, graph })
   assert.equal(transactions.oracle, `tpnil-native-coverage-transactions-oracle@${completion ? nativeCompletionProfile(binding.profile!).transactionRevision : 2}.0.0`)
-  const transactionBindings = await verifyTransactionCoverageParentBindings(transactions, { ...binding, graph })
   const transactionFunding = await verifyCoverageModuleFunding(transactions.trace, binding)
   assert.equal(extension.oracle, `tpnil-native-coverage-extension-oracle@${completion ? nativeCompletionProfile(binding.profile!).extensionRevision : 2}.0.0`)
   const extensionBindings = await verifyCoverageExtensionParentBindings(extension, { identity: binding.identity, boundary: json('integrated/boundary.json'), clauses: json('conformance/clauses.json'), trust: json('integrated/identity-trust.json'), storage: binding.storageTransactions, submissions: binding.globalSubmissions, finalSubmissions: binding.finalSubmissions, graph,
     outputSnapshotObservations: json('native-output-snapshot-observations.json'), outputProviderRegistry: json('native-output-provider-registry.json') })
   const extensionFunding = await verifyCoverageModuleFunding(extension.trace, { ...binding, declaredNativePayments: transactionFunding.declaredNativePayments }, { assertions: extension.assertions, predicateFor: call => coverageExtensionTransactionPredicate(call.id) })
+  const foreignOwnerFixture = binding.profile === 'ITCVE-1@4.8.0' ? bindForeignOwnerFixture(transactions, extension, extensionBindings, extensionFunding, binding.globalSubmissions) : undefined
+  const transactionBindings = await verifyTransactionCoverageParentBindings(transactions, { ...binding, graph, ...(foreignOwnerFixture ? {foreignOwnerFixture} : {}) })
   const certificateBindings = await verifyCertificateCoverageParentBindings(certificates, { ...binding, browserContexts: contexts.contexts, globalRoutes: json('routes.json'), trustedMinedRoot: graph.trustedMinedRoot })
   const certificateFunding = await verifyCoverageModuleFunding(certificates.trace, { ...binding, declaredNativePayments: extensionFunding.declaredNativePayments })
   assert.ok(permission.submissionWindow.endIndex <= transactions.submissionStart && transactions.submissionEnd <= extension.submissionStart && extension.submissionEnd <= certificates.submissionStart, 'Coverage module submission windows are out of order')

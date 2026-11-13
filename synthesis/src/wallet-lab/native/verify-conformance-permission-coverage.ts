@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import assert from 'node:assert/strict'
+import {permissionCoverageEvidenceForCompletion} from './completion-profile.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
@@ -46,6 +47,9 @@ export function verifyPermissionFundingPrelude(report: NativePermissionCoverageR
 
 export interface PermissionCoverageContextOptions { profile: 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0' }
 export async function evaluateNativePermissionCoverage(report: NativePermissionCoverageReport, readEvidence: (name: string) => Buffer, expectedIdentity: string, options?: PermissionCoverageContextOptions) {
+  // Every independent caller receives the same exact complete-chain check.
+  // Capture's original three-context anchor and legacy profiles stay unchanged.
+  if (options?.profile === 'ITCVE-1@4.8.0') readEvidence = permissionCoverageEvidenceForCompletion(readEvidence, options.profile)
   const revision = report.oracle === 'tpnil-native-permission-coverage-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-permission-coverage-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-permission-coverage-oracle@3.0.0' ? 3 : report.oracle === 'tpnil-native-permission-coverage-oracle@4.0.0' ? 4 : report.oracle === 'tpnil-native-permission-coverage-oracle@5.0.0' ? 5 : undefined
   assert.ok(revision, 'Unknown permission coverage oracle')
   if (options) { assert.ok(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.profile)); assert.equal(report.linkagePermissionScope, ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.profile) ? 'peer-protocol-key-v2' : undefined); assert.equal(revision, 5, 'Expanded browser prefix requires permission oracle5') }

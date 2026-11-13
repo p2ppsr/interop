@@ -18,7 +18,7 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
   const instant = (s: string) => { const value = Date.parse(s); assert.equal(new Date(value).toISOString(), s); return value }
   for (const [stage, observation, cut] of [['initial', report.activeProviderInitial, report.cuts[0]], ['full-set', report.activeProvider, report.cuts.find((r: any) => r.id === 'full-set-before')]] as const) {
     assert.equal(observation.kind, 'NATIVE_REMOTE_BACKUP_UI')
-    assert.equal(observation.representation, modern ? 'ACTIVE_STORAGE_SUMMARY_V2' : undefined)
+    assert.equal(observation.representation, modern ? 'ACTIVE_STORAGE_SUMMARY_V3' : undefined)
     const allowed = [{ id: 'source', providerUrl: 'https://wallet.1sat.app' }, { id: 'source/replacement-wallet.itcve.test', providerUrl: 'https://replacement-wallet.itcve.test' }]
     const selected = allowed.find(provider => provider.id === observation.id); assert.ok(selected && registry.some(row => row.id === selected.id))
     assert.equal(observation.providerUrl, selected.providerUrl)
@@ -29,7 +29,7 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
       else assert.equal(candidate.card, null)
     }
     const active = observation.candidates.filter((row: any) => row.present && row.card.split('\n').map((s: string) => s.trim().toLowerCase()).includes(modern ? 'active storage' : 'in use'))
-    if(modern){assert.equal(observation.summaryButtons,1);assert.equal(observation.makeActiveButtons,0);assert.equal(typeof observation.activeSummary,'string');assert.equal(active[0]?.card,observation.activeSummary);assert.equal(observation.activeSummary.split('\n').filter((line:string)=>line.trim().toLowerCase()==='active storage').length,1)}
+    if(modern){assert.equal(observation.summaryButtons,2);assert.equal(observation.summaryEditButtons,1);assert.equal(observation.summarySyncButtons,1);assert.equal(observation.makeActiveButtons,0);assert.equal(typeof observation.activeSummary,'string');assert.equal(active[0]?.card,observation.activeSummary);assert.equal(observation.activeSummary.split('\n').filter((line:string)=>line.trim().toLowerCase()==='active storage').length,1)}
     assert.equal(active.length, 1); assert.equal(active[0].id, selected.id); assert.deepEqual(observation.activeCards, [active[0].card])
     assert.equal(observation.mainScreenshot, `conformance/transaction-branches-provider-cards-${stage}.png`)
     const mainBytes = read(observation.mainScreenshot); assert.equal(mainBytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')

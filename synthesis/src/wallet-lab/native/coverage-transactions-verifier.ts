@@ -235,7 +235,27 @@ export async function verifyNativeTransactionCoverage(report: Report) {
 /** The parent supplies independently authenticated storage, the complete global
  * ledger, and the post-shutdown provider ledger. A child end index cannot hide
  * a late spend, replay, rejected submission, or protected spend in an ancestor. */
-export async function verifyTransactionCoverageParentBindings(report: Report, binding: { identity: string; globalSubmissions: Submission[]; finalSubmissions: Submission[]; storageTransactions: ReadonlyMap<string, Transaction>; graph: SubmissionGraphOptions }) {
+/** Issued only after the next fixed module and its funding parent verify. The
+ * foreign owner can spend its own change; this permits no other protected claim. */
+export interface ForeignOwnerFixtureBinding { outpoint: string; txid: string; rawHex: string; positions: number[]; start: number; end: number }
+export function bindForeignOwnerFixture(report: Report, external: any, parent: {verified: true}, funding: {verified: true}, ledger: Submission[]): ForeignOwnerFixtureBinding | undefined {
+  assert.equal(report.oracle,'tpnil-native-coverage-transactions-oracle@4.0.0')
+  assert.equal(external.oracle,'tpnil-native-coverage-extension-oracle@4.0.0')
+  assert.equal(parent.verified,true);assert.equal(funding.verified,true);assert.equal(external.identity,report.identity)
+  assert.ok(report.submissionEnd <= external.submissionStart)
+  const calls=external.trace.filter((row:any)=>row.id==='fixture-external');assert.equal(calls.length,1)
+  const row=calls[0];assert.equal(row.actor,'funder');assert.equal(row.method,'createAction');assert.equal(row.error,undefined)
+  const tx=coverageAtomic(row.result.tx);assert.equal(tx.id('hex'),row.result.txid)
+  const foreign=report.trace.filter(row=>row.id==='change-foreign');assert.equal(foreign.length,1)
+  const outpoint=foreign[0]!.args.options.noSendChange[0]
+  if(!tx.inputs.some(input=>`${input.sourceTXID??input.sourceTransaction?.id('hex')}.${input.sourceOutputIndex}`===outpoint))return undefined
+  const rawHex=tx.toHex(),positions:number[]=[]
+  for(let i=external.submissionStart;i<external.submissionEnd;i++)if(ledger[i]?.txid===tx.id('hex')) {assert.equal(ledger[i]!.beefHex,rawHex);assert.equal(ledger[i]!.verdict,'ACCEPTED_BY_NETWORK');positions.push(i)}
+  assert.equal(positions.filter(index=>index>=row.submissionStart&&index<row.submissionEnd).length,1)
+  return {outpoint,txid:tx.id('hex'),rawHex,positions,start:external.submissionStart,end:external.submissionEnd}
+}
+
+export async function verifyTransactionCoverageParentBindings(report: Report, binding: { foreignOwnerFixture?: ForeignOwnerFixtureBinding; identity: string; globalSubmissions: Submission[]; finalSubmissions: Submission[]; storageTransactions: ReadonlyMap<string, Transaction>; graph: SubmissionGraphOptions }) {
   assert.equal(report.identity, binding.identity)
   assert.equal(binding.graph.requireResolvedAncestors, true); assert.ok(binding.graph.resolvedTransactions)
   assert.deepEqual(binding.graph.trustedMinedRoot, { txid: fixture.txid, rawHex: fixture.rawHex })
@@ -275,13 +295,24 @@ export async function verifyTransactionCoverageParentBindings(report: Report, bi
   for (const [suffix, mode] of [['unknown-not-in-knownTxids', 'unknown'], ['conflicting-proof', 'conflicting'], ['wrong-merkle-root', 'wrong-root']] as const) protect(suffix, () => v.row(`proof-${mode}-create`).args.inputs[0].outpoint)
   protect('relinquish-without-spend', () => v.row('relinquish').args.output)
   for (const [suffix, call] of [['missing-paymentRemittance', 'missing-payment'], ['missing-insertionRemittance', 'missing-insertion'], ['wrong-derivation', 'wrong-derivation'], ['wrong-derivation', 'wrong-prefix'], ['wrong-derivation', 'wrong-sender'], ['output-index-out-of-range', 'index-range']] as const) protect(suffix, () => `${v.incoming().id('hex')}.${v.row(call).args.outputs[0].outputIndex}`, suffix === 'output-index-out-of-range' || suffix === 'missing-insertionRemittance' ? [] : report.trace.filter(r => r.actor === 'wallet' && r.result?.txid && !r.id.startsWith('change-') && !/^proof-.*-create$/.test(r.id)).map(r => r.id))
+  const foreignOwner = binding.foreignOwnerFixture
+  if(foreignOwner) {
+    assert.equal(report.oracle,'tpnil-native-coverage-transactions-oracle@4.0.0')
+    assert.equal(foreignOwner.outpoint,v.row('change-foreign').args.options.noSendChange[0]);assert.ok(foreignOwner.start>=report.submissionEnd&&foreignOwner.end<=binding.globalSubmissions.length)
+    assert.equal(Transaction.fromHex(foreignOwner.rawHex).id('hex'),foreignOwner.txid)
+    assert.ok(foreignOwner.positions.length>0)
+    for(const index of foreignOwner.positions) {assert.ok(Number.isSafeInteger(index)&&index>=foreignOwner.start&&index<foreignOwner.end);const row=binding.globalSubmissions[index]!;assert.equal(row.txid,foreignOwner.txid);assert.equal(row.beefHex,foreignOwner.rawHex);assert.equal(row.verdict,'ACCEPTED_BY_NETWORK')}
+  }
   let ancestorCount = 0
+  const invalidProtectedSpends = new Map<string, unknown>()
   for (let index = report.submissionStart; index < binding.finalSubmissions.length; index++) for (const observed of observedSubmissionTransactions(binding.finalSubmissions[index]!, binding.graph)) {
     if (!observed.isTarget) ancestorCount++
     for (const claim of protectedClaims) if (v.spend(observed.transaction, claim.outpoint)) {
       const permit = claim.permittedCallIds.some(name => v.row(name).result?.txid === observed.txid) ? approved.get(observed.txid) : undefined
-      assert.ok(permit && permit.positions.size > 0 && permit.rawHex === observed.transaction.toHex() && (!observed.isTarget || permit.positions.has(index)), `Protected ${claim.id} outpoint spent in final submission ancestry`)
+      const ownedFixture=claim.id===id('foreign-output')&&foreignOwner?.outpoint===claim.outpoint&&foreignOwner.txid===observed.txid&&foreignOwner.rawHex===observed.transaction.toHex()&&(!observed.isTarget||foreignOwner.positions.includes(index))
+      if (!ownedFixture && !(permit && permit.positions.size > 0 && permit.rawHex === observed.transaction.toHex() && (!observed.isTarget || permit.positions.has(index)))) invalidProtectedSpends.set(`${claim.id}/${observed.txid}`, { claim: claim.id, outpoint: claim.outpoint, spender: observed.txid, firstObservedIndex: index })
     }
   }
-  return { verified: true as const, claim: 'ENGINEERING_OBSERVATION_ONLY', signedTransactions: feeTransactions.size, successfulReturnedTransactions: signed.size, aggregateFeesSatoshis, publicCalls: report.trace.length, finalCount: binding.finalSubmissions.length, ancestorCount, protectedClaims, unprovenClaims }
+  assert.equal(invalidProtectedSpends.size, 0, `Protected outpoint spent in final submission ancestry: ${JSON.stringify([...invalidProtectedSpends.values()])}`)
+  return { verified: true as const, claim: 'ENGINEERING_OBSERVATION_ONLY', signedTransactions: feeTransactions.size, successfulReturnedTransactions: signed.size, aggregateFeesSatoshis, publicCalls: report.trace.length, finalCount: binding.finalSubmissions.length, ancestorCount, protectedClaims, unprovenClaims, ...(foreignOwner?{foreignOwnerFixture:foreignOwner}:{}) }
 }

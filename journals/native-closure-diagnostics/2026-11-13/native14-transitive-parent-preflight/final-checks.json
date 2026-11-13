@@ -1,0 +1,43 @@
+[
+  {
+    "name": "typecheck-final2",
+    "command": [
+      "npm",
+      "run",
+      "typecheck",
+      "--prefix",
+      "synthesis"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-11-13T02:57:50.471882+00:00",
+    "endedAt": "2026-11-13T02:57:53.031499+00:00"
+  },
+  {
+    "name": "transaction-parent-final",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "synthesis",
+      "--",
+      "--run",
+      "test/native-coverage-transactions-oracle3.test.ts",
+      "test/native-coverage-transactions.test.ts"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-11-13T02:57:53.031796+00:00",
+    "endedAt": "2026-11-13T02:58:03.791687+00:00"
+  },
+  {
+    "name": "synthesis-final",
+    "command": [
+      "npm",
+      "test",
+      "--prefix",
+      "synthesis"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-11-13T02:58:03.791968+00:00",
+    "endedAt": "2026-11-13T02:59:06.085043+00:00"
+  }
+]

@@ -3,7 +3,7 @@ import path from 'node:path'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { readCommittedBlob } from './read-committed-blob.mjs'
-import { nativeCandidateCoverage6Variant, nativeCandidateCoverage6PlanPath, nativeCandidateCoverage5OriginalPlanPath, nativeCandidateCoverage5Variant, nativeCandidateCoverage5PlanPath, nativeCandidateCoverage4Variant, nativeCandidateCoverage4PlanPath, nativeCandidateCoverage3OriginalPlanPath, nativeCandidateCoverage3Variant, nativeCandidateCoverage3PlanPath, nativeCandidateCoverage2Variant, nativeCandidateCoverage2PlanPath, nativeCandidateCoverage1Variant, nativeCandidateCoverage1PlanPath, nativeWallet511Variant, nativeWallet511PlanPath, nativeCandidateVariant, nativeCandidatePlanPath, nativeWallet511Observer2Variant, nativeWallet511Observer2PlanPath, nativeCandidateObserver3Variant, nativeCandidateObserver3PlanPath } from './native-wallet-profiles.mjs'
+import { nativeCandidateCoverage6Variant, nativeCandidateCoverage6OriginalPlanPath, nativeCandidateCoverage6PlanPath, nativeCandidateCoverage5OriginalPlanPath, nativeCandidateCoverage5Variant, nativeCandidateCoverage5PlanPath, nativeCandidateCoverage4Variant, nativeCandidateCoverage4PlanPath, nativeCandidateCoverage3OriginalPlanPath, nativeCandidateCoverage3Variant, nativeCandidateCoverage3PlanPath, nativeCandidateCoverage2Variant, nativeCandidateCoverage2PlanPath, nativeCandidateCoverage1Variant, nativeCandidateCoverage1PlanPath, nativeWallet511Variant, nativeWallet511PlanPath, nativeCandidateVariant, nativeCandidatePlanPath, nativeWallet511Observer2Variant, nativeWallet511Observer2PlanPath, nativeCandidateObserver3Variant, nativeCandidateObserver3PlanPath } from './native-wallet-profiles.mjs'
 const root=path.resolve(import.meta.dirname,'..')
 export const nativeRustV3Variant='integrated-native-conformance-closure-rust-v3'
 export const nativeRustV3Flag='--conformance-closure-rust-v3'
@@ -11,7 +11,8 @@ export const nativeRustOriginalCompatibilityPath='infra/native/conformance/rust-
 export const nativeRustCompatibilityPath='infra/native/conformance/rust-graph-3.0.0-selector-2.json'
 export const nativeWallet511Observer2CompatibilityPath='infra/native/conformance/rust-graph-5.1.1-selector-2.json'
 export const nativeCandidateCoverage3OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-3.json'
-export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6.json'
+export const nativeCandidateCoverage6OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6.json'
+export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6-source-2.json'
 export const nativeCandidateCoverage5OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5.json'
 export const nativeCandidateCoverage5CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5-source-2.json'
 export const nativeCandidateCoverage4CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-4.json'
@@ -38,6 +39,18 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   const recovery=plan.itcve==='ITCVE-1@4.4.0'
   const expanded=completion||recovery||plan.itcve==='ITCVE-1@4.3.0'
   if(expanded) { assert.equal(plan.observerRevision,3);assert.equal(plan.coverageRevision,enhanced?6:replay?5:followup?4:completion?3:recovery?2:1);completion ? assert.equal(plan.expectedObservations,698) : assert.equal(plan.expectedObservations,535);assert.equal(plan.admissionState,'FROZEN','Expanded source must be frozen before admission') }
+  if(enhanced) {
+    const originalBytes=read(nativeCandidateCoverage6OriginalPlanPath),original=JSON.parse(originalBytes)
+    assert.equal(plan.sourceBindingRevision,10,'Transitive observer source successor revision differs')
+    assert.equal(plan.id,`${original.id}-SOURCE-2`)
+    assert.deepEqual(plan.sourcePredecessor,{path:nativeCandidateCoverage6OriginalPlanPath,sha256:sha(originalBytes)})
+    assert.equal(sha(readCommitted(source,nativeCandidateCoverage6OriginalPlanPath)),sha(originalBytes))
+    const semantic=value=>Object.fromEntries(Object.entries(value).filter(([key])=>!['id','conformanceInputs','sourceBindingRevision','sourcePredecessor'].includes(key)))
+    assert.deepEqual(semantic(plan),semantic(original),'Transitive source correction changed a native criterion')
+    const added=['docs/native-observer-source-correction-2026-11-13.md']
+    assert.deepEqual(Object.keys(plan.conformanceInputs).filter(name=>!added.includes(name)).sort(),Object.keys(original.conformanceInputs).sort(),'Source correction dropped or replaced a frozen input')
+    for(const name of added)assert.match(plan.conformanceInputs[name],/^[a-f0-9]{64}$/)
+  }
   if(replay) {
     const originalBytes=read(nativeCandidateCoverage5OriginalPlanPath),original=JSON.parse(originalBytes)
     assert.equal(plan.sourceBindingRevision,8,'Metadata source successor revision differs')
@@ -71,9 +84,9 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   assert.equal(sha(readCommitted(source,compatibilityPath)),sha(bytes),'Compatibility manifest did not exist unchanged at the recorded native execution source')
   assert.equal(manifest.schema,'tpnil-native-rust-compatibility@3.0.0')
   assert.equal(manifest.variant,enhanced?nativeCandidateCoverage6Variant:replay?nativeCandidateCoverage5Variant:followup?nativeCandidateCoverage4Variant:completion?nativeCandidateCoverage3Variant:recovery?nativeCandidateCoverage2Variant:expanded?nativeCandidateCoverage1Variant:observer3?nativeCandidateObserver3Variant:candidate?nativeCandidateVariant:observer2?nativeWallet511Observer2Variant:wallet511?nativeWallet511Variant:nativeRustV3Variant)
-  assert.equal(manifest.sourceBindingRevision,enhanced?14:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
+  assert.equal(manifest.sourceBindingRevision,enhanced?15:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
   if(expanded) {
-    const previous=enhanced?nativeCandidateCoverage5CompatibilityPath:replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
+    const previous=enhanced?nativeCandidateCoverage6OriginalCompatibilityPath:replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
     assert.deepEqual(manifest.predecessor,{manifest:previous,sha256:sha(prior)})
     assert.equal(sha(readCommitted(source,previous)),sha(prior))
   }

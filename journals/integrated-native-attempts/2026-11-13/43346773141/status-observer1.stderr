@@ -1,0 +1,14 @@
+gh: Server Error (HTTP 502)
+Traceback (most recent call last):
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source11-validation/monitor-native.py", line 5, in <module>
+    now=datetime.datetime.now(datetime.timezone.utc);r=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']));assert r['head_sha']==order['source']and r['run_attempt']==1
+                                                                  ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['gh', 'api', 'repos/p2ppsr/interop/actions/runs/43346773141']' returned non-zero exit status 1.

@@ -1,0 +1,41 @@
+
+> @tpnil/synthesis@0.1.0 test
+> vitest run --run test/native-coverage-transactions-oracle3.test.ts test/native-coverage-transactions.test.ts
+
+
+ RUN  v4.1.12 /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis
+
+stdout | test/native-coverage-transactions-oracle3.test.ts
+◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+
+ ❯ test/native-coverage-transactions-oracle3.test.ts (23 tests | 1 failed) 8868ms
+   × joins only the exact next fixed controlled-funder fixture after both parents verify 749ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/native-coverage-transactions-oracle3.test.ts > joins only the exact next fixed controlled-funder fixture after both parents verify
+AssertionError: expected [ 101, 104 ] to have a length of 3 but got 2
+
+- Expected
++ Received
+
+- 3
++ 2
+
+ ❯ test/native-coverage-transactions-oracle3.test.ts:85:130
+     83| it('joins only the exact next fixed controlled-funder fixture after bo…
+     84|  const f=ownerFixture(),r=bindForeignOwnerFixture(f.report,f.external,…
+     85|  expect(r.outpoint).toBe(f.report.trace.find((r:any)=>r.id==='change-f…
+       |                                                                                                                                  ^
+     86|  expect(r.start).toBeGreaterThanOrEqual(f.report.submissionEnd)
+     87| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 73 passed (74)
+   Start at  18:57:07
+   Duration  9.65s (transform 252ms, setup 0ms, import 1.12s, tests 12.55s, environment 0ms)
+

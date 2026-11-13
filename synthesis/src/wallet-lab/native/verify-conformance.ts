@@ -1,4 +1,4 @@
-import {nativeCompletionProfile, permissionCoverageEvidenceForCompletion} from './completion-profile.js'
+import {nativeCompletionProfile} from './completion-profile.js'
 import { completionModules, verifyCompletionReports } from './coverage-completion/suite.js'
 import { coverageObservationEncoding, decodeCoverageObservation } from './coverage-observation.js'
 import assert from 'node:assert/strict'
@@ -85,7 +85,7 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
       globalSubmissions: JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'native-submissions.json'), 'utf8'))
     })
   }
-  const permissionEvidence = permissionCoverageEvidenceForCompletion(name => fs.readFileSync(path.join(evidenceDirectory, name)), selectedCompletion?.profile)
+  const permissionEvidence = (name: string) => fs.readFileSync(path.join(evidenceDirectory, name))
   const permissionCoverage = release511 ? await (await import('./verify-conformance-permission-coverage.js')).verifyNativePermissionCoverage(read('permission-coverage'), permissionEvidence, integrated.walletIdentity, expanded ? { profile: completion ? selectedCompletion!.profile : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0' } : undefined) : undefined
   let extensions: { permissions: any; transactions: any; extension: any; certificates: any } | undefined
   if (expanded) {

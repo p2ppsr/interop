@@ -51,7 +51,7 @@ export function verifyPartialTracePrerequisites(prior: PartialTracePrerequisites
  * parent receipts must all join before any supplemental PASS is admitted. */
 export async function verifyPartialTraceParent(report: any, binding: BasketParentBinding, prior: PartialTracePrerequisites) {
   assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile))
-  const checked = await evaluatePartialTrace(report, binding.readEvidence)
+  const checked = await evaluatePartialTrace(report, binding.readEvidence, binding.profile)
   const joined = verifyPartialTraceRawBindings(report, checked, binding, prior)
   return { ...joined, assertions: checked.assertions }
 }

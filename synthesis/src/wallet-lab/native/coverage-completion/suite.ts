@@ -72,7 +72,7 @@ export async function verifyCompletionReports(read: (name: string) => Buffer, pr
     else if (module.name === 'pagination') assertions = paginationAssertions(await evaluatePagination(report))
     else if (module.name === 'certificateRejections') assertions = certificateRejectionAssertions(await evaluateCertificateRejections(report))
     else if (module.name === 'transactionBranches') assertions = transactionBranchAssertions(await evaluateTransactionBranches(report))
-    else assertions = partialTraceAssertions(await evaluatePartialTrace(report, read))
+    else assertions = partialTraceAssertions(await evaluatePartialTrace(report, read, profile))
     assert.deepEqual(assertions.map(row => row.id), [...module.ids]); assert.deepEqual(report.assertions, assertions)
     results[module.name] = { assertions, report }
   }

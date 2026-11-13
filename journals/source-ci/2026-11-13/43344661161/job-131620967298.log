@@ -1,0 +1,292 @@
+﻿2026-11-13T01:24:19.8662944Z Current runner version: '2.338.2'
+2026-11-13T01:24:19.8700071Z ##[group]Runner Image Provisioner
+2026-11-13T01:24:19.8701365Z Hosted Compute Agent
+2026-11-13T01:24:19.8702354Z Version: 20261028.624
+2026-11-13T01:24:19.8703469Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-13T01:24:19.8704651Z Build Date: 2026-10-28T21:51:42Z
+2026-11-13T01:24:19.8706150Z Worker ID: {f54048ae-caeb-49b6-bd84-77cb0bca42e2}
+2026-11-13T01:24:19.8707392Z Region: centralus
+2026-11-13T01:24:19.8708392Z Cloud: Azure
+2026-11-13T01:24:19.8709325Z ##[endgroup]
+2026-11-13T01:24:19.8711864Z ##[group]Operating System
+2026-11-13T01:24:19.8712889Z Ubuntu
+2026-11-13T01:24:19.8713853Z 24.04.5
+2026-11-13T01:24:19.8715017Z LTS
+2026-11-13T01:24:19.8716088Z ##[endgroup]
+2026-11-13T01:24:19.8717162Z ##[group]Runner Image
+2026-11-13T01:24:19.8718246Z Image: ubuntu-24.04
+2026-11-13T01:24:19.8719376Z Version: 20261101.360.1
+2026-11-13T01:24:19.8721611Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-13T01:24:19.8724478Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-13T01:24:19.8726520Z ##[endgroup]
+2026-11-13T01:24:19.8728708Z ##[group]GITHUB_TOKEN Permissions
+2026-11-13T01:24:19.8731600Z Contents: read
+2026-11-13T01:24:19.8732767Z Metadata: read
+2026-11-13T01:24:19.8733864Z ##[endgroup]
+2026-11-13T01:24:19.8737181Z Secret source: Actions
+2026-11-13T01:24:19.8738847Z Cache mode: write
+2026-11-13T01:24:19.8740577Z Prepare workflow directory
+2026-11-13T01:24:19.9104092Z Prepare all required actions
+2026-11-13T01:24:19.9175972Z Getting action download info
+2026-11-13T01:24:20.1958703Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-13T01:24:20.3199353Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-13T01:24:20.6058876Z Download action repository 'actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e' (SHA:b7ad1dad31e06c5925ef5d2fc7ad053ef454303e)
+2026-11-13T01:24:21.0269166Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-13T01:24:21.4297312Z Complete job name: integrated-components
+2026-11-13T01:24:21.5264535Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-13T01:24:21.5266046Z with:
+2026-11-13T01:24:21.5266521Z   fetch-depth: 0
+2026-11-13T01:24:21.5267038Z   persist-credentials: false
+2026-11-13T01:24:21.5267620Z   repository: p2ppsr/interop
+2026-11-13T01:24:21.5271797Z   token: ***
+2026-11-13T01:24:21.5272270Z   ssh-strict: true
+2026-11-13T01:24:21.5272741Z   ssh-user: git
+2026-11-13T01:24:21.5273191Z   clean: true
+2026-11-13T01:24:21.5273666Z   sparse-checkout-cone-mode: true
+2026-11-13T01:24:21.5274250Z   fetch-tags: false
+2026-11-13T01:24:21.5274896Z   show-progress: true
+2026-11-13T01:24:21.5275443Z   lfs: false
+2026-11-13T01:24:21.5275902Z   submodules: false
+2026-11-13T01:24:21.5276416Z   set-safe-directory: true
+2026-11-13T01:24:21.5276974Z   allow-unsafe-pr-checkout: false
+2026-11-13T01:24:21.5277841Z ##[endgroup]
+2026-11-13T01:24:22.1581590Z Syncing repository: p2ppsr/interop
+2026-11-13T01:24:22.1585973Z ##[group]Getting Git version info
+2026-11-13T01:24:22.1588623Z Working directory is '/home/runner/work/interop/interop'
+2026-11-13T01:24:22.1592187Z [command]/usr/bin/git version
+2026-11-13T01:24:22.1680402Z git version 2.56.0
+2026-11-13T01:24:22.1702407Z ##[endgroup]
+2026-11-13T01:24:22.1718244Z Temporarily overriding HOME='/home/runner/work/_temp/243806f8-3cb2-428b-af07-09e6842de441' before making global git config changes
+2026-11-13T01:24:22.1723028Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T01:24:22.1726727Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T01:24:22.1952542Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-13T01:24:22.1958525Z ##[group]Initializing the repository
+2026-11-13T01:24:22.1961965Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-13T01:24:22.2070063Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-13T01:24:22.2073036Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-13T01:24:22.2076038Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-13T01:24:22.2078305Z hint: call:
+2026-11-13T01:24:22.2079421Z hint:
+2026-11-13T01:24:22.2080789Z hint: 	git config --global init.defaultBranch <name>
+2026-11-13T01:24:22.2082589Z hint:
+2026-11-13T01:24:22.2084215Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-13T01:24:22.2087201Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-13T01:24:22.2090147Z hint:
+2026-11-13T01:24:22.2091320Z hint: 	git branch -m <name>
+2026-11-13T01:24:22.2092647Z hint:
+2026-11-13T01:24:22.2094493Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-13T01:24:22.2097593Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-13T01:24:22.2102269Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-13T01:24:22.2147974Z ##[endgroup]
+2026-11-13T01:24:22.2149802Z ##[group]Disabling automatic garbage collection
+2026-11-13T01:24:22.2151922Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-13T01:24:22.2187233Z ##[endgroup]
+2026-11-13T01:24:22.2188933Z ##[group]Setting up auth
+2026-11-13T01:24:22.2193191Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T01:24:22.2232946Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T01:24:22.2743537Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T01:24:22.2780357Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T01:24:22.3008052Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T01:24:22.3044280Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T01:24:22.3272484Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-13T01:24:22.3501062Z ##[endgroup]
+2026-11-13T01:24:22.3502881Z ##[group]Fetching the repository
+2026-11-13T01:24:22.3515010Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-13T01:24:32.4714224Z From https://github.com/p2ppsr/interop
+2026-11-13T01:24:32.4715176Z  * [new branch]      codex/itcve-go-components-20261106 -> origin/codex/itcve-go-components-20261106
+2026-11-13T01:24:32.4715867Z  * [new branch]      codex/lab-integration-20261106 -> origin/codex/lab-integration-20261106
+2026-11-13T01:24:32.4716577Z  * [new branch]      codex/native-wallet-closure-20261111 -> origin/codex/native-wallet-closure-20261111
+2026-11-13T01:24:32.4717350Z  * [new branch]      codex/native-wallet-conformance-20261109 -> origin/codex/native-wallet-conformance-20261109
+2026-11-13T01:24:32.4718288Z  * [new branch]      main                     -> origin/main
+2026-11-13T01:24:32.4718836Z  * [new tag]         sut-artifacts-2026-09-20 -> sut-artifacts-2026-09-20
+2026-11-13T01:24:32.4727254Z [command]/usr/bin/git branch --list --remote origin/codex/native-wallet-closure-20261111
+2026-11-13T01:24:32.4754088Z   origin/codex/native-wallet-closure-20261111
+2026-11-13T01:24:32.4763153Z [command]/usr/bin/git rev-parse refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-13T01:24:32.4787940Z bbbc164b9042468e3e5895c3a6f42177dcc4b568
+2026-11-13T01:24:32.4792499Z ##[endgroup]
+2026-11-13T01:24:32.4793245Z ##[group]Determining the checkout info
+2026-11-13T01:24:32.4794117Z ##[endgroup]
+2026-11-13T01:24:32.4799270Z [command]/usr/bin/git sparse-checkout disable
+2026-11-13T01:24:32.4852227Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-13T01:24:32.4884421Z ##[group]Checking out the ref
+2026-11-13T01:24:32.4889440Z [command]/usr/bin/git checkout --progress --force -B codex/native-wallet-closure-20261111 refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-13T01:24:33.5160918Z Updating files:  36% (4367/11965)
+2026-11-13T01:24:33.5590631Z Updating files:  37% (4428/11965)
+2026-11-13T01:24:33.5947188Z Updating files:  38% (4547/11965)
+2026-11-13T01:24:33.5982932Z Updating files:  39% (4667/11965)
+2026-11-13T01:24:33.6044999Z Updating files:  40% (4786/11965)
+2026-11-13T01:24:33.6089222Z Updating files:  41% (4906/11965)
+2026-11-13T01:24:33.6129526Z Updating files:  42% (5026/11965)
+2026-11-13T01:24:33.6171019Z Updating files:  43% (5145/11965)
+2026-11-13T01:24:33.6220790Z Updating files:  44% (5265/11965)
+2026-11-13T01:24:34.5536252Z Updating files:  45% (5385/11965)
+2026-11-13T01:24:34.5598490Z Updating files:  45% (5484/11965)
+2026-11-13T01:24:34.6046484Z Updating files:  46% (5504/11965)
+2026-11-13T01:24:34.6766408Z Updating files:  47% (5624/11965)
+2026-11-13T01:24:34.7229672Z Updating files:  48% (5744/11965)
+2026-11-13T01:24:34.7434482Z Updating files:  49% (5863/11965)
+2026-11-13T01:24:34.7875574Z Updating files:  50% (5983/11965)
+2026-11-13T01:24:34.8112597Z Updating files:  51% (6103/11965)
+2026-11-13T01:24:34.8157875Z Updating files:  52% (6222/11965)
+2026-11-13T01:24:34.9225210Z Updating files:  53% (6342/11965)
+2026-11-13T01:24:34.9593721Z Updating files:  54% (6462/11965)
+2026-11-13T01:24:35.0167409Z Updating files:  55% (6581/11965)
+2026-11-13T01:24:35.0221675Z Updating files:  56% (6701/11965)
+2026-11-13T01:24:35.0265594Z Updating files:  57% (6821/11965)
+2026-11-13T01:24:35.0319460Z Updating files:  58% (6940/11965)
+2026-11-13T01:24:35.0367569Z Updating files:  59% (7060/11965)
+2026-11-13T01:24:35.0416625Z Updating files:  60% (7179/11965)
+2026-11-13T01:24:35.0495480Z Updating files:  61% (7299/11965)
+2026-11-13T01:24:35.0579462Z Updating files:  62% (7419/11965)
+2026-11-13T01:24:35.0779126Z Updating files:  63% (7538/11965)
+2026-11-13T01:24:35.0853936Z Updating files:  64% (7658/11965)
+2026-11-13T01:24:35.1068085Z Updating files:  65% (7778/11965)
+2026-11-13T01:24:35.1460360Z Updating files:  66% (7897/11965)
+2026-11-13T01:24:35.1521431Z Updating files:  67% (8017/11965)
+2026-11-13T01:24:35.1616140Z Updating files:  68% (8137/11965)
+2026-11-13T01:24:35.1792478Z Updating files:  69% (8256/11965)
+2026-11-13T01:24:35.1977448Z Updating files:  70% (8376/11965)
+2026-11-13T01:24:35.2253008Z Updating files:  71% (8496/11965)
+2026-11-13T01:24:35.2380598Z Updating files:  72% (8615/11965)
+2026-11-13T01:24:35.2519006Z Updating files:  73% (8735/11965)
+2026-11-13T01:24:35.2666612Z Updating files:  74% (8855/11965)
+2026-11-13T01:24:35.2754030Z Updating files:  75% (8974/11965)
+2026-11-13T01:24:35.2995410Z Updating files:  76% (9094/11965)
+2026-11-13T01:24:35.3051157Z Updating files:  77% (9214/11965)
+2026-11-13T01:24:35.3110872Z Updating files:  78% (9333/11965)
+2026-11-13T01:24:35.3183292Z Updating files:  79% (9453/11965)
+2026-11-13T01:24:35.3229151Z Updating files:  80% (9572/11965)
+2026-11-13T01:24:35.3341305Z Updating files:  81% (9692/11965)
+2026-11-13T01:24:35.3392546Z Updating files:  82% (9812/11965)
+2026-11-13T01:24:35.3439356Z Updating files:  83% (9931/11965)
+2026-11-13T01:24:35.3515444Z Updating files:  84% (10051/11965)
+2026-11-13T01:24:35.3591215Z Updating files:  85% (10171/11965)
+2026-11-13T01:24:35.4253920Z Updating files:  86% (10290/11965)
+2026-11-13T01:24:35.4410542Z Updating files:  87% (10410/11965)
+2026-11-13T01:24:35.4569598Z Updating files:  88% (10530/11965)
+2026-11-13T01:24:35.4863039Z Updating files:  89% (10649/11965)
+2026-11-13T01:24:35.4937806Z Updating files:  90% (10769/11965)
+2026-11-13T01:24:35.5054556Z Updating files:  91% (10889/11965)
+2026-11-13T01:24:35.5114209Z Updating files:  91% (10985/11965)
+2026-11-13T01:24:35.5408590Z Updating files:  92% (11008/11965)
+2026-11-13T01:24:35.5483503Z Updating files:  93% (11128/11965)
+2026-11-13T01:24:35.5578327Z Updating files:  94% (11248/11965)
+2026-11-13T01:24:35.5654530Z Updating files:  95% (11367/11965)
+2026-11-13T01:24:35.5730697Z Updating files:  96% (11487/11965)
+2026-11-13T01:24:35.5814049Z Updating files:  97% (11607/11965)
+2026-11-13T01:24:35.6077267Z Updating files:  98% (11726/11965)
+2026-11-13T01:24:35.6150664Z Updating files:  99% (11846/11965)
+2026-11-13T01:24:35.6151169Z Updating files: 100% (11965/11965)
+2026-11-13T01:24:35.6151656Z Updating files: 100% (11965/11965), done.
+2026-11-13T01:24:35.6318174Z Switched to a new branch 'codex/native-wallet-closure-20261111'
+2026-11-13T01:24:35.6325747Z branch 'codex/native-wallet-closure-20261111' set up to track 'origin/codex/native-wallet-closure-20261111'.
+2026-11-13T01:24:35.6515182Z ##[endgroup]
+2026-11-13T01:24:35.6563854Z [command]/usr/bin/git log -1 --format=%H
+2026-11-13T01:24:35.6590019Z bbbc164b9042468e3e5895c3a6f42177dcc4b568
+2026-11-13T01:24:35.6602420Z ##[group]Removing auth
+2026-11-13T01:24:35.6604189Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T01:24:35.6638782Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T01:24:35.6892701Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T01:24:35.6923744Z http.https://github.com/.extraheader
+2026-11-13T01:24:35.6932691Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-13T01:24:35.6971215Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T01:24:35.7233030Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T01:24:35.7264382Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T01:24:35.7509013Z ##[endgroup]
+2026-11-13T01:24:35.7797529Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-13T01:24:35.7797966Z with:
+2026-11-13T01:24:35.7798187Z   node-version-file: .nvmrc
+2026-11-13T01:24:35.7798436Z   always-auth: false
+2026-11-13T01:24:35.7798650Z   check-latest: false
+2026-11-13T01:24:35.7800984Z   token: ***
+2026-11-13T01:24:35.7801194Z ##[endgroup]
+2026-11-13T01:24:35.9260452Z Node version file is not JSON file
+2026-11-13T01:24:35.9262429Z Resolved .nvmrc as 24.22.1
+2026-11-13T01:24:35.9288095Z Attempting to download 24.22.1...
+2026-11-13T01:24:35.9463467Z (node:2411) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T01:24:35.9464389Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T01:24:36.7258555Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-13T01:24:37.2492390Z Extracting ...
+2026-11-13T01:24:37.2622055Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/ebbf9b9a-58aa-4b3b-8666-3157e680b379 -f /home/runner/work/_temp/a14e69c6-5b5d-4ae8-aac5-35da8ae99fa2
+2026-11-13T01:24:38.5058061Z Adding to the cache ...
+2026-11-13T01:24:40.2559556Z ##[group]Environment details
+2026-11-13T01:24:40.4994411Z node: v24.22.1
+2026-11-13T01:24:40.4995117Z npm: 11.19.1
+2026-11-13T01:24:40.4995477Z yarn: 1.22.22
+2026-11-13T01:24:40.4996468Z ##[endgroup]
+2026-11-13T01:24:40.5235808Z ##[group]Run actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+2026-11-13T01:24:40.5236256Z with:
+2026-11-13T01:24:40.5236477Z   go-version: 1.27.3
+2026-11-13T01:24:40.5236771Z   cache-dependency-path: synthesis/go/go.sum
+2026-11-13T01:24:40.5237098Z   check-latest: false
+2026-11-13T01:24:40.5239417Z   token: ***
+2026-11-13T01:24:40.5239637Z   cache: true
+2026-11-13T01:24:40.5239855Z ##[endgroup]
+2026-11-13T01:24:40.6473217Z Setup go version spec 1.27.3
+2026-11-13T01:24:40.6481391Z Attempting to download 1.27.3...
+2026-11-13T01:24:41.3726144Z matching 1.27.3...
+2026-11-13T01:24:41.3742316Z Acquiring 1.27.3 from https://github.com/actions/go-versions/releases/download/1.27.3-39437817176/go-1.27.3-linux-x64.tar.gz
+2026-11-13T01:24:42.7562041Z Extracting Go...
+2026-11-13T01:24:42.7694435Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/110b0c4c-5b48-4e53-bc68-bdec6c67301f -f /home/runner/work/_temp/c034bd48-8368-49a9-8215-143139ebd89c
+2026-11-13T01:24:44.4329179Z Successfully extracted go to /home/runner/work/_temp/110b0c4c-5b48-4e53-bc68-bdec6c67301f
+2026-11-13T01:24:44.4330052Z Adding to the cache ...
+2026-11-13T01:24:49.6611884Z ##[error]The operation was canceled.
+2026-11-13T01:24:49.6937446Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T01:24:49.6937942Z with:
+2026-11-13T01:24:49.6938148Z   name: descendant-storage-sync
+2026-11-13T01:24:49.6938442Z   path: out/integrated-lab/descendant-storage-sync
+2026-11-13T01:24:49.6938760Z   if-no-files-found: warn
+2026-11-13T01:24:49.6938984Z   retention-days: 90
+2026-11-13T01:24:49.6939195Z   compression-level: 6
+2026-11-13T01:24:49.6939407Z   overwrite: false
+2026-11-13T01:24:49.6939616Z   include-hidden-files: false
+2026-11-13T01:24:49.6939845Z env:
+2026-11-13T01:24:49.6940019Z   GOTOOLCHAIN: local
+2026-11-13T01:24:49.6940221Z ##[endgroup]
+2026-11-13T01:24:49.8817407Z (node:2467) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T01:24:49.8818994Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T01:24:49.8850853Z ##[warning]No files were found with the provided path: out/integrated-lab/descendant-storage-sync. No artifacts will be uploaded.
+2026-11-13T01:24:49.9360250Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T01:24:49.9360958Z with:
+2026-11-13T01:24:49.9361292Z   name: integrated-lab
+2026-11-13T01:24:49.9361686Z   path: out/integrated-lab
+2026-11-13T01:24:49.9362109Z   if-no-files-found: warn
+2026-11-13T01:24:49.9362510Z   retention-days: 7
+2026-11-13T01:24:49.9362878Z   compression-level: 6
+2026-11-13T01:24:49.9363257Z   overwrite: false
+2026-11-13T01:24:49.9363632Z   include-hidden-files: false
+2026-11-13T01:24:49.9364039Z env:
+2026-11-13T01:24:49.9364354Z   GOTOOLCHAIN: local
+2026-11-13T01:24:49.9364710Z ##[endgroup]
+2026-11-13T01:24:50.1197412Z (node:2479) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T01:24:50.1198335Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T01:24:50.1214364Z ##[warning]No files were found with the provided path: out/integrated-lab. No artifacts will be uploaded.
+2026-11-13T01:24:50.1441394Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T01:24:50.1441836Z with:
+2026-11-13T01:24:50.1442068Z   name: integrated-reference-test-failures
+2026-11-13T01:24:50.1442369Z   path: out/test-evidence
+2026-11-13T01:24:50.1442612Z   if-no-files-found: warn
+2026-11-13T01:24:50.1442846Z   retention-days: 90
+2026-11-13T01:24:50.1443062Z   compression-level: 6
+2026-11-13T01:24:50.1443330Z   overwrite: false
+2026-11-13T01:24:50.1443550Z   include-hidden-files: false
+2026-11-13T01:24:50.1443782Z env:
+2026-11-13T01:24:50.1443979Z   GOTOOLCHAIN: local
+2026-11-13T01:24:50.1444181Z ##[endgroup]
+2026-11-13T01:24:50.3130989Z (node:2491) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T01:24:50.3132946Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T01:24:50.3150157Z ##[warning]No files were found with the provided path: out/test-evidence. No artifacts will be uploaded.
+2026-11-13T01:24:50.3999618Z Post job cleanup.
+2026-11-13T01:24:50.4860673Z [command]/usr/bin/git version
+2026-11-13T01:24:50.4903084Z git version 2.56.0
+2026-11-13T01:24:50.4945371Z Temporarily overriding HOME='/home/runner/work/_temp/ca00801c-f9a1-4c0b-b76b-da852581a48d' before making global git config changes
+2026-11-13T01:24:50.4946392Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T01:24:50.4951744Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T01:24:50.4990130Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T01:24:50.5025090Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T01:24:50.5316131Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T01:24:50.5354036Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T01:24:50.5638123Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T01:24:50.5676984Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T01:24:50.6118605Z Cleaning up orphan processes
+2026-11-13T01:24:50.6434580Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

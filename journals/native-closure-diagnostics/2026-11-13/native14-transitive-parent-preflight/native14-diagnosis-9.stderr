@@ -1,0 +1,76 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   'anchor',
++   'assertions',
++   'claim',
++   'cleanup',
++   'contextBaseSequence',
++   'contextProfileBinding',
++   'endedAt',
++   'errors',
++   'extensionId',
++   'freshness',
++   'identity',
++   'manifests',
++   'mode',
++   'nativeAdmission',
++   'observations',
++   'parentAdmissionRequired',
++   'programSha256',
++   'promptScopeRevision',
++   'result',
+-   'exceptionalValues',
+    'schema',
++   'startedAt',
++   'submissionEnd',
++   'submissionPrefix',
++   'submissionStart',
++   'submissionSuffix'
+-   'value'
+  ]
+
+    at decodeCoverageObservation (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-observation.ts:91:10)
+    at decode (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:41:30)
+    at <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:47:58)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:42:25) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'anchor',
+    'assertions',
+    'claim',
+    'cleanup',
+    'contextBaseSequence',
+    'contextProfileBinding',
+    'endedAt',
+    'errors',
+    'extensionId',
+    'freshness',
+    'identity',
+    'manifests',
+    'mode',
+    'nativeAdmission',
+    'observations',
+    'parentAdmissionRequired',
+    'programSha256',
+    'promptScopeRevision',
+    'result',
+    'schema',
+    'startedAt',
+    'submissionEnd',
+    'submissionPrefix',
+    'submissionStart',
+    'submissionSuffix'
+  ],
+  expected: [ 'exceptionalValues', 'schema', 'value' ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

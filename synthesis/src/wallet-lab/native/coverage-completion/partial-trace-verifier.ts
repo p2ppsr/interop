@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict'
+import {nativeCompletionProfile, type NativeCompletionProfile} from '../completion-profile.js'
+import {getTransactionCoveragePolicy, transactionCoveragePolicyPathForRevision} from '../coverage-transactions-model.js'
 import { createHash } from 'node:crypto'
 import { Beef, Transaction, Utils } from '@bsv/sdk'
 import { deriveConditionalOutcomes } from '../verify-conformance-conditional.js'
@@ -84,11 +86,19 @@ const derivations:any={conditional:deriveConditionalOutcomes,states:deriveTransa
 
 /** Recompute dependency predicates from the fixed raw files. Public result
  * digests retain undefined and sparse values through the evidence codec. */
-export async function evaluatePartialTrace(report: any | undefined, read: (name: string) => Buffer) {
+export function partialTraceModulesForProfile(profile?: NativeCompletionProfile) {
+ if (!profile) return model.modules
+ const revision = nativeCompletionProfile(profile).transactionRevision
+ const selected = getTransactionCoveragePolicy(revision)
+ return {...model.modules, transactions:{...model.modules.transactions,
+  policy:transactionCoveragePolicyPathForRevision(revision), policySha256:selected.policySha256,
+  schema:`tpnil-native-coverage-transactions@${revision}.0.0`, oracle:selected.policy.oracle}}
+}
+export async function evaluatePartialTrace(report: any | undefined, read: (name: string) => Buffer, profile?: NativeCompletionProfile) {
  verifyPartialTracePolicy()
  const gates:any={conditional:['fixture.call-inventory','fixture.population'],states:['fixture.fanout'],certificateStates:['certificate-states.fixture-authentication','certificate-states.fixture-acquisition'],certificates:['coverage-certificates.fixture-authentication'],transactions:[]}
  const evaluations:any={},reports:any={},inputs:any={}
- for(const [name,expected] of Object.entries(model.modules) as any[]) {
+ for(const [name,expected] of Object.entries(partialTraceModulesForProfile(profile)) as any[]) {
   let bytes:Buffer
   try { bytes=read(expected.file) } catch(error) { inputs[name]={file:expected.file,missing:true}; continue }
   inputs[name]={file:expected.file,bytes:bytes.length,sha256:sha(bytes)}
@@ -126,7 +136,7 @@ export async function evaluatePartialTrace(report: any | undefined, read: (name:
   }catch(error){result.result=error instanceof MissingInput?'BLOCKED':'FAIL';result.reason=String(error)}
   rows.push(result)
  }
- const checked={schema:partialTraceSchema,oracle:partialTraceOracle,profile:'ITCVE-1@4.5.0',policySha256:partialTracePolicySha256,claim:'ENGINEERING_OBSERVATION_ONLY',identity:reports.conditional?.identity??null,inputs,rows,counts:Object.fromEntries(['SCOPED_PASS','FAIL','BLOCKED'].map(v=>[v,rows.filter(r=>r.result===v).length])),publicCalls:0,newSignedTransactions:0,completeBRC100Conformance:false,nativeQualification:false,wholeRowQualifications:0,original535ResultsChanged:false,parentAdmissionRequired:true}
+ const checked={schema:partialTraceSchema,oracle:partialTraceOracle,profile:'ITCVE-1@4.5.0',...(profile==='ITCVE-1@4.8.0'?{parentProfile:profile}:{}),policySha256:partialTracePolicySha256,claim:'ENGINEERING_OBSERVATION_ONLY',identity:reports.conditional?.identity??null,inputs,rows,counts:Object.fromEntries(['SCOPED_PASS','FAIL','BLOCKED'].map(v=>[v,rows.filter(r=>r.result===v).length])),publicCalls:0,newSignedTransactions:0,completeBRC100Conformance:false,nativeQualification:false,wholeRowQualifications:0,original535ResultsChanged:false,parentAdmissionRequired:true}
  const assertions=partialTraceAssertions(checked)
  if(report!==undefined){for(const key of Object.keys(checked))assert.deepEqual(report[key],(checked as any)[key],`Partial trace ${key} differs from raw replay`);assert.deepEqual(report.assertions,assertions)}
  return {...checked,assertions,modules:reports}
