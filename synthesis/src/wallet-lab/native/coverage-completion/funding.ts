@@ -80,7 +80,7 @@ export async function runNativeCompletionFunding(context: NativeScenarioContext)
 }
 
 export async function verifyCompletionFunding(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.schema, completionFundingPolicy.schema)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile)); assert.equal(report.schema, completionFundingPolicy.schema)
   assert.deepEqual(report.policy, completionFundingPolicy); assert.deepEqual(report.errors, []); assert.equal(report.identity, binding.identity)
   assert.deepEqual(report.cleanup, { funderClosed: true })
   assert.ok(Number.isSafeInteger(report.submissionStart) && report.submissionStart >= 0)

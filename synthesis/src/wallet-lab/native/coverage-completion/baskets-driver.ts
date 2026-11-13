@@ -1,3 +1,4 @@
+import {fixtureMetadataQueries} from './basket-metadata.js'
 // SPDX-License-Identifier: Apache-2.0
 import {config,operations,variants,nativeArgs,externalArgs,requestFor,queryArgs,ordinaryControlArgs,policySha256,sourceCheck,selectedBasketPolicy} from './baskets-model.js'
 import {captureClauseError} from '../conformance-clauses.js'
@@ -13,6 +14,7 @@ export async function runNativeBasketBoundaries(context:any){
   report.funderIdentity=(await call('funder-identity','funder','getPublicKey',{identityKey:true})).result?.publicKey
   const native=(await call('fixture-native','wallet','createAction',nativeArgs())).result,external=(await call('fixture-external','funder','createAction',externalArgs())).result
   if(!native?.tx||!external?.tx)throw Error('Public signed fixture absent')
+  if(context.policyRevision===3)for(const query of fixtureMetadataQueries('fixture-metadata'))await call(query.id,'wallet','listOutputs',query.args)
   await snapshot('control.internalizeAction','before')
   await call('control.internalizeAction','wallet','internalizeAction',ordinaryControlArgs(external))
   await snapshot('control.internalizeAction','after')
@@ -25,7 +27,7 @@ export async function runNativeBasketBoundaries(context:any){
    if(operation.accepted)await call(`${operation.id}.after-membership`,'wallet','listOutputs',queryArgs(operation.basket))
   }
   for(const v of variants.filter(v=>v.accepted))await call(`${v.id}.final-membership`,'wallet','listOutputs',queryArgs(v.name))
-  if(context.reopen){const startedAt=now();wallet=await context.reopen(wallet);report.reopen={kind:'PUBLIC_CWI_HANDLE_REFRESH',startedAt,endedAt:now(),nativeBrowserRestart:false};await call('reopened-identity','wallet','getPublicKey',{identityKey:true});for(const v of variants.filter(v=>v.accepted))await call(`${v.id}.reopened-membership`,'wallet','listOutputs',queryArgs(v.name))}
+  if(context.reopen){const startedAt=now();wallet=await context.reopen(wallet);report.reopen={kind:'PUBLIC_CWI_HANDLE_REFRESH',startedAt,endedAt:now(),nativeBrowserRestart:false};await call('reopened-identity','wallet','getPublicKey',{identityKey:true});if(context.policyRevision===3)for(const query of fixtureMetadataQueries('reopened-metadata'))await call(query.id,'wallet','listOutputs',query.args);for(const v of variants.filter(v=>v.accepted))await call(`${v.id}.reopened-membership`,'wallet','listOutputs',queryArgs(v.name))}
  }catch(error){report.errors.push(String(error))}
  report.submissionEnd=services.submissions.length;report.submissions=ledger().slice(report.submissionStart);report.snapshotEnd=services.nativeOutputSnapshotObservations.length;report.finalProviderRegistry=services.nativeOutputProviderRegistry;sourceCheck();return {report,wallet}
 }

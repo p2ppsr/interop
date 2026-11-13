@@ -70,7 +70,7 @@ export function verifyCompletionInventoryClosure(options: {
   const initial = JSON.parse(options.initialBytes.toString()), closure = JSON.parse(options.closureBytes.toString())
   const shutdown = JSON.parse(options.shutdownBytes.toString()), record = JSON.parse(options.recordBytes.toString())
   const registry = nativeCompletionProviders(options.readEvidence)
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(record.itcve))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(record.itcve))
   assert.equal(shutdown.profile, record.itcve)
   assert.equal(closure.schema, 'tpnil-native-completion-inventory-closure@1.0.0')
   assert.equal(closure.profile, record.itcve); assert.deepEqual(closure.errors, [])

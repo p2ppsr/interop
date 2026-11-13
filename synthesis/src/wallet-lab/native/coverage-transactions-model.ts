@@ -10,8 +10,8 @@ export const transactionCoverageIds = [
   ...['valid-subset', 'foreign-output', 'already-spent', 'out-of-range', 'noSend-false'].map(x => `transaction.nosend-change/${x}`),
   ...['wallet-payment', 'basket-insertion', 'both-output-types', 'missing-paymentRemittance', 'missing-insertionRemittance', 'conflicting-remittance', 'wrong-derivation', 'output-index-out-of-range', 'relinquish-without-spend'].map(x => `transaction.internalization/${x}`)
 ]
-export type TransactionCoverageRevision = 1 | 2 | 3
-export const transactionCoveragePolicyPathForRevision = (revision: TransactionCoverageRevision = 1) => { assert.ok(revision === 1 || revision === 2 || revision === 3, 'Unsupported transaction coverage revision'); return revision === 1 ? transactionCoveragePolicyPath : `programs/ISI-4/profiles/native-coverage-transactions-${revision}.0.0/policy.json` }
+export type TransactionCoverageRevision = 1 | 2 | 3 | 4
+export const transactionCoveragePolicyPathForRevision = (revision: TransactionCoverageRevision = 1) => { assert.ok(revision === 1 || revision === 2 || revision === 3 || revision === 4, 'Unsupported transaction coverage revision'); return revision === 1 ? transactionCoveragePolicyPath : `programs/ISI-4/profiles/native-coverage-transactions-${revision}.0.0/policy.json` }
 export function getTransactionCoveragePolicy(revision: TransactionCoverageRevision = 1) {
   const bytes = fs.readFileSync(path.resolve(import.meta.dirname, '../../../..', transactionCoveragePolicyPathForRevision(revision))), policy = JSON.parse(bytes.toString())
   assert.equal(policy.oracle, `tpnil-native-coverage-transactions-oracle@${revision}.0.0`); assert.deepEqual(policy.variantIds, transactionCoverageIds)

@@ -1,0 +1,323 @@
+{
+  "schema": "tpnil-native-coverage-transactions-policy@4.0.0",
+  "oracle": "tpnil-native-coverage-transactions-oracle@4.0.0",
+  "claim": "PROSPECTIVE_LAB_IMPLEMENTATION",
+  "completeBRC100Conformance": false,
+  "nativeRun": null,
+  "variantIds": [
+    "transaction.defaults/acceptDelayedBroadcast-omitted-true",
+    "transaction.signing-branches/foreign-reference-reject",
+    "transaction.proof-trust/unknown-not-in-knownTxids",
+    "transaction.proof-trust/conflicting-proof",
+    "transaction.proof-trust/wrong-merkle-root",
+    "transaction.batch-send/two-dependent-held",
+    "transaction.batch-send/sign-sendWith",
+    "transaction.batch-send/unknown-batch-txid",
+    "transaction.nosend-change/valid-subset",
+    "transaction.nosend-change/foreign-output",
+    "transaction.nosend-change/already-spent",
+    "transaction.nosend-change/out-of-range",
+    "transaction.nosend-change/noSend-false",
+    "transaction.internalization/wallet-payment",
+    "transaction.internalization/basket-insertion",
+    "transaction.internalization/both-output-types",
+    "transaction.internalization/missing-paymentRemittance",
+    "transaction.internalization/missing-insertionRemittance",
+    "transaction.internalization/conflicting-remittance",
+    "transaction.internalization/wrong-derivation",
+    "transaction.internalization/output-index-out-of-range",
+    "transaction.internalization/relinquish-without-spend"
+  ],
+  "bounds": {
+    "maximumPublicCalls": 160,
+    "maximumSignedTransactions": 24,
+    "maximumAggregateFeesSatoshis": 5000,
+    "maximumProofDepth": 128,
+    "maximumRetainedTransactions": 2048
+  },
+  "standard": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082"
+  },
+  "deferred": [
+    {
+      "id": "transaction.internalization/conflicting-remittance",
+      "reason": "Pinned interface describes fields selected by protocol without an explicit exclusivity or inactive-field rejection requirement; no error-as-success predicate is admitted."
+    }
+  ],
+  "scope": {
+    "delayedBroadcast": "Omitted and true must accept the same valid signed intent and return a truthful sending/unproven status. Unproven requires observed submission; sending remains explicitly pending, with no delivery-by-deadline claim. The complete final ledger is retained. Conflicting synchronous sendWith timing prose remains unresolved.",
+    "unknownInternalize": "internalizeAction has no knownTxids option; its counterpart omits an unknown source while retaining an unrelated complete source in the BEEF.",
+    "noSendChange": "Valid subset is demonstrated across two actual wallet-owned change outputs. signAction has no noSendChange input.",
+    "negativeSafety": "Successful rejection predicates require exact inventory equality and absence of protected spends through the complete final shutdown ancestry, including rejected provider submissions.",
+    "qualification": "Local TypeScript wallet and actual Go storage reference execution is LAB_SELF_TEST_ONLY; it does not replace native execution.",
+    "creditObservation": "Application-scoped listActions with included outputs and signed net value observes credited payments. No public listOutputs(default) call or privileged permission bypass is used.",
+    "duplicateEncoding": "The unchanged grammar retains identical-proof duplicate calls as optional compatibility observations. Their acceptance or rejection does not satisfy or fail the conflicting-proof predicate. Accepted stages must still abort without submitting; complete final-ledger provenance remains mandatory.",
+    "delayedInventoryProgress": "Only sending-to-unproven status progress of an exact preexisting earlier signed wallet action is normalized. The earlier intent must permit delayed broadcast, signature and complete ancestry must independently verify, and an exact ACCEPTED_BY_NETWORK receipt must precede completion of the after-snapshot. Every other field and all rejected-call submission windows remain exact; late, rejected, foreign, unsigned, or mismatched receipts do not qualify.",
+    "positiveControlDelivery": "Staged proof controls and their aborts cannot submit their own transaction. Their windows may contain only independently verified exact earlier wallet signed delayed-action ACCEPTED receipts. This does not loosen rejected-call zero-submission rules or final protected-outpoint ancestry checks.",
+    "heldDelayedDelivery": "A noSend creation window may contain only ACCEPTED receipts for the exact four earlier wallet delayed default controls. Their signed bytes, intent, truthful status, storage and complete ancestry independently verify. Every held transaction remains absent as target or reachable unmined ancestor until its exact named release starts, including intervening entries between calls. Rejected-call zero-entry rules remain unchanged. Original native6 oracle2 failures are retained; this is a new prospective oracle, not native qualification."
+  },
+  "variants": [
+    {
+      "id": "transaction.defaults/acceptDelayedBroadcast-omitted-true",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Verify independent transaction intent/bytes plus observed submission timing/equivalence, without asserting a nonexistent numeric field or resolving conflicting synchronous timing prose implicitly."
+    },
+    {
+      "id": "transaction.signing-branches/foreign-reference-reject",
+      "methods": [
+        "createAction",
+        "signAction",
+        "abortAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Native must not sign, mutate, release or submit the other wallet action; exact owner reference and source proof/ownership independently retained."
+    },
+    {
+      "id": "transaction.proof-trust/unknown-not-in-knownTxids",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent BEEF/root/body validation establishes malformed or untrusted property; named safe rejection/no state mutation, and complete final-ledger protection for every affected input; no knownTxids removal workaround."
+    },
+    {
+      "id": "transaction.proof-trust/conflicting-proof",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent BEEF/root/body validation establishes malformed or untrusted property; named safe rejection/no state mutation, and complete final-ledger protection for every affected input; no knownTxids removal workaround."
+    },
+    {
+      "id": "transaction.proof-trust/wrong-merkle-root",
+      "methods": [
+        "createAction",
+        "internalizeAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent BEEF/root/body validation establishes malformed or untrusted property; named safe rejection/no state mutation, and complete final-ledger protection for every affected input; no knownTxids removal workaround."
+    },
+    {
+      "id": "transaction.batch-send/two-dependent-held",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Verify dependency graph and per-item status/txid/transaction-byte mapping, exact submission set/order constraints only where normative, and truthful partial-result/failure behavior. No duplicated or unrelated accepted receipts."
+    },
+    {
+      "id": "transaction.batch-send/sign-sendWith",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Verify dependency graph and per-item status/txid/transaction-byte mapping, exact submission set/order constraints only where normative, and truthful partial-result/failure behavior. No duplicated or unrelated accepted receipts."
+    },
+    {
+      "id": "transaction.batch-send/unknown-batch-txid",
+      "methods": [
+        "createAction",
+        "signAction",
+        "listActions"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Verify dependency graph and per-item status/txid/transaction-byte mapping, exact submission set/order constraints only where normative, and truthful partial-result/failure behavior. No duplicated or unrelated accepted receipts."
+    },
+    {
+      "id": "transaction.nosend-change/valid-subset",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent source BEEF, final\u2014not unsigned\u2014TXID, wallet ownership, allowed subset and output spend state; exact consumed references plus full final reachable-spend exclusion for rejected cases."
+    },
+    {
+      "id": "transaction.nosend-change/foreign-output",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent source BEEF, final\u2014not unsigned\u2014TXID, wallet ownership, allowed subset and output spend state; exact consumed references plus full final reachable-spend exclusion for rejected cases."
+    },
+    {
+      "id": "transaction.nosend-change/already-spent",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent source BEEF, final\u2014not unsigned\u2014TXID, wallet ownership, allowed subset and output spend state; exact consumed references plus full final reachable-spend exclusion for rejected cases."
+    },
+    {
+      "id": "transaction.nosend-change/out-of-range",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent source BEEF, final\u2014not unsigned\u2014TXID, wallet ownership, allowed subset and output spend state; exact consumed references plus full final reachable-spend exclusion for rejected cases."
+    },
+    {
+      "id": "transaction.nosend-change/noSend-false",
+      "methods": [
+        "createAction",
+        "signAction"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independent source BEEF, final\u2014not unsigned\u2014TXID, wallet ownership, allowed subset and output spend state; exact consumed references plus full final reachable-spend exclusion for rejected cases."
+    },
+    {
+      "id": "transaction.internalization/wallet-payment",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/basket-insertion",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/both-output-types",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/missing-paymentRemittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/missing-insertionRemittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/conflicting-remittance",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/wrong-derivation",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/output-index-out-of-range",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    },
+    {
+      "id": "transaction.internalization/relinquish-without-spend",
+      "methods": [
+        "internalizeAction",
+        "listOutputs",
+        "listActions",
+        "relinquishOutput"
+      ],
+      "nativeVerdict": null,
+      "requiredIndependentOracle": "Independently derive BRC29 recipient from exact declared prefix/suffix/identity, bind transaction/output bytes and identity-scoped public inventory before/after. Invalid calls must not mutate credit/basket/action set or produce final ledger effects; relinquishment must not consume on chain."
+    }
+  ],
+  "proofNormativeBasis": {
+    "scope": "The conflicting fixture carries an explicitly referenced BUMP whose root is absent from the admitted header. Ordinary valid nonduplicate BEEF controls are required for both createAction and internalizeAction. Identical serialized duplicate transaction acceptance is optional compatibility, not a BRC100 conformance requirement; raw responses remain retained.",
+    "brc62": {
+      "path": "transactions/0062.md",
+      "sha256": "7fdee54fa863a3787143ba86a076e1b790d9d9d0584059aa156214fea828a313",
+      "lines": [
+        174,
+        190
+      ],
+      "rule": "Every referenced root is checked; any root absent from the longest chain fails whole validation."
+    },
+    "brc95": {
+      "path": "transactions/0095.md",
+      "sha256": "e5ceb51ecbfd9b3715227e65891503908e485eb09d1a0bfd8060d99b2e13026e",
+      "rule": "Atomic BEEF validates subject dependency closure and included mined proof roots."
+    },
+    "brc96": {
+      "path": "transactions/0096.md",
+      "sha256": "9b4b11fdb28c5ec66332cb3260716f82d61318e9dc376aba730fef903a577283",
+      "rule": "V2 permits collapsing common transactions/proofs when merging; it does not require accepting repeated serialized entries. Every referenced mined root still must be valid."
+    }
+  },
+  "heldChangeFixture": {
+    "walletFanoutIndices": {
+      "held-a": 5,
+      "held-b": 6,
+      "held-inactive": 7,
+      "held-unknown-control": 8
+    },
+    "foreignIncomingIndex": 8,
+    "satoshis": 100,
+    "reason": "Explicit sources guarantee sufficient surplus for real managed change independently of small previously released coins; signed byte checks still fail if missing."
+  },
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json",
+    "sha256": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+    "semanticsPreservedForRevision": 2
+  },
+  "resourceAdmission": "The full retained graph may include earlier native module change chains. Every ancestor body and input remains verified to the single admitted mined fixture; no extra mined/trusted boundary is accepted. Depth128 and2048 retained transactions bound observer resources. Legacy oracle3 retains depth32 and the original failed observations."
+}

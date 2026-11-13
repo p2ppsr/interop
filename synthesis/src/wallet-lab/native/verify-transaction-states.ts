@@ -1,3 +1,4 @@
+import {nativeProofResources} from './proof-resources.js'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -96,7 +97,7 @@ export async function deriveTransactionStateOutcomes(report: StateReport): Promi
   const { row, fanout, stored, policy } = inspect(report)
   const graph = new Map(stored); graph.set(fixture.txid, Transaction.fromAtomicBEEF([...Buffer.from(fixture.atomicBeefHex, 'hex')]))
   const hydrate = (tx: Transaction, visited = new Set<string>(), depth = 0): Transaction => {
-    assert.ok(depth < 32, 'Historical proof depth retained'); const id = tx.id('hex'); assert.ok(!visited.has(id)); const next = new Set([...visited, id])
+    assert.ok(depth < nativeProofResources().maximumProofDepth, 'Historical proof depth retained'); const id = tx.id('hex'); assert.ok(!visited.has(id)); const next = new Set([...visited, id])
     if (!tx.merklePath) for (const input of tx.inputs) { const parent = input.sourceTransaction ?? graph.get(input.sourceTXID ?? ''); assert.ok(parent, 'Stored source absent'); input.sourceTransaction = hydrate(parent, next, depth + 1) }; return tx
   }
   const remember = (tx: Transaction) => { graph.set(tx.id('hex'), tx); if (!tx.merklePath) for (const input of tx.inputs) if (input.sourceTransaction) remember(input.sourceTransaction) }

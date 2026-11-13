@@ -1,3 +1,6 @@
+import {nativeCompletionProfile} from './completion-profile.js'
+import {withNativeProofResources} from './proof-resources.js'
+import {nativeProofResources} from './proof-resources.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import assert from 'node:assert/strict'
@@ -65,19 +68,25 @@ export function verifyNativeActionReferenceBinding(conditional: any, finalRefere
 }
 
 export async function verifyNativeWallet(directory: string) {
+  const lock = JSON.parse(fs.readFileSync(path.join(directory, 'run-lock.json'), 'utf8'))
+  return withNativeProofResources(lock.plan?.itcve, () => verifyNativeWalletWithResources(directory))
+}
+
+async function verifyNativeWalletWithResources(directory: string) {
   const read = (name: string) => JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8'))
   const lock = read('run-lock.json'), plan = lock.plan
   assert.equal(lock.schema, 'tpnil-native-wallet-run-lock@1.0.0')
+  const enhanced = lock.executionVariant === 'integrated-native-conformance-pr368-coverage-6'
   const replay = lock.executionVariant === 'integrated-native-conformance-pr368-coverage-5'
-  const followup = replay || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-4'
+  const followup = enhanced || replay || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-4'
   const completion = followup || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-3'
   const recovery = lock.executionVariant === 'integrated-native-conformance-pr368-coverage-2'
   const expanded = completion || recovery || lock.executionVariant === 'integrated-native-conformance-pr368-coverage-1'
-  const candidate = ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(plan.itcve)
+  const candidate = ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(plan.itcve)
   const observer3 = lock.executionVariant === 'integrated-native-conformance-pr368-cb3c2f2-observer-3'
   const observer2 = lock.executionVariant === 'integrated-native-conformance-5.1.1-observer-2'
   if (completion) { assert.equal(plan.admissionState, 'FROZEN'); assert.equal(plan.observationEncoding, 'tpnil-coverage-observation@1.0.0'); assert.equal(plan.browserContexts, 9); assert.equal(plan.portabilityOracle, 'tpnil-native-portability-oracle@4.0.0') }
-  if (expanded) { assert.equal(plan.itcve, replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0'); assert.equal(plan.observerRevision, 3); assert.equal(plan.coverageRevision, replay ? 5 : followup ? 4 : completion ? 3 : recovery ? 2 : 1); assert.equal(plan.permissionFixture, 'fresh-managed-funding-v1') }
+  if (expanded) { assert.equal(plan.itcve, enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0'); assert.equal(plan.observerRevision, 3); assert.equal(plan.coverageRevision, enhanced ? 6 : replay ? 5 : followup ? 4 : completion ? 3 : recovery ? 2 : 1); assert.equal(plan.permissionFixture, 'fresh-managed-funding-v1') }
   else if (observer3) { assert.equal(plan.itcve, 'ITCVE-1@4.2.0'); assert.equal(plan.observerRevision, 3) }
   else if (observer2) { assert.equal(plan.itcve, 'ITCVE-1@4.0.0'); assert.equal(plan.observerRevision, 2) }
   else assert.equal(plan.observerRevision, undefined)
@@ -94,7 +103,7 @@ export async function verifyNativeWallet(directory: string) {
   }
   const trustedIdentity = conformance || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY'
   const integrated = trustedIdentity || plan.id === 'YOURS-5.1.0-GO-ITCVE-1.3.0'
-  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(replay ? '../../../../infra/native/conformance/plan-pr368-coverage-5-source-2.json' : followup ? '../../../../infra/native/conformance/plan-pr368-coverage-4.json' : completion ? '../../../../infra/native/conformance/plan-pr368-coverage-3-source-5.json' : recovery ? '../../../../infra/native/conformance/plan-pr368-coverage-2.json' : expanded ? '../../../../infra/native/conformance/plan-pr368-coverage-1.json' : observer3 ? '../../../../infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? '../../../../infra/native/conformance/plan-pr368-7e39006.json' : observer2 ? '../../../../infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
+  const frozen = JSON.parse(fs.readFileSync(fileURLToPath(new URL(enhanced ? '../../../../infra/native/conformance/plan-pr368-coverage-6.json' : replay ? '../../../../infra/native/conformance/plan-pr368-coverage-5-source-2.json' : followup ? '../../../../infra/native/conformance/plan-pr368-coverage-4.json' : completion ? '../../../../infra/native/conformance/plan-pr368-coverage-3-source-5.json' : recovery ? '../../../../infra/native/conformance/plan-pr368-coverage-2.json' : expanded ? '../../../../infra/native/conformance/plan-pr368-coverage-1.json' : observer3 ? '../../../../infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json' : candidate ? '../../../../infra/native/conformance/plan-pr368-7e39006.json' : observer2 ? '../../../../infra/native/conformance/plan-5.1.1-observer-2.json' : wallet511 ? '../../../../infra/native/conformance/plan-5.1.1.json' : closure ? '../../../../infra/native/conformance/plan-coverage-closure.json' : coverage ? '../../../../infra/native/conformance/plan-coverage.json' : conformance ? '../../../../infra/native/conformance/plan.json' : trustedIdentity ? '../../../../infra/native/integrated/plan-trusted.json' : integrated ? '../../../../infra/native/integrated/plan.json' : '../../../../infra/native/yours-go/plan.json', import.meta.url)), 'utf8'))
   assert.equal(canonicalJson(plan), canonicalJson(frozen))
   assert.equal(plan.id, conformance ? frozen.id : trustedIdentity ? 'YOURS-5.1.0-GO-ITCVE-1.3.0-TRUSTED-IDENTITY' : integrated ? 'YOURS-5.1.0-GO-ITCVE-1.3.0' : 'YOURS-5.1.0-GO-ITCVE-1.2.0')
   if (integrated) {
@@ -126,7 +135,7 @@ export async function verifyNativeWallet(directory: string) {
     assert.equal(after.state.ExitCode, 0); assert.equal(after.state.OOMKilled, false); assert.equal(cleanup.removed, true)
     const rep = path.join(directory, `repetition-${index}`)
     const record = verifyEvidenceBundle(rep)
-    assert.equal(record.itcve, replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
+    assert.equal(record.itcve, enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : integrated ? 'ITCVE-1@1.3.0' : 'ITCVE-1@1.1.0')
     const evidence = (name: string) => JSON.parse(fs.readFileSync(path.join(rep, 'evidence', name), 'utf8'))
     const installed = read(`repetition-${index}/installed-artifacts.json`)
     assert.equal(installed.exactArchiveContents, true)
@@ -208,7 +217,7 @@ export async function verifyNativeWallet(directory: string) {
     assert.ok(await ancestor.verify(tracker))
     const funding = Transaction.fromAtomicBEEF([...fs.readFileSync(path.join(rep, 'evidence/funding.atomicbeef'))])
     const transactions = new Map<string, Transaction>()
-    function add(tx: Transaction, depth = 0) { assert.ok(depth < 32); if (transactions.has(tx.id('hex'))) return; transactions.set(tx.id('hex'), tx); for (const input of tx.inputs) if (input.sourceTransaction) add(input.sourceTransaction, depth + 1) }
+    function add(tx: Transaction, depth = 0) { assert.ok(depth < nativeProofResources().maximumProofDepth); if (transactions.has(tx.id('hex'))) return; transactions.set(tx.id('hex'), tx); for (const input of tx.inputs) if (input.sourceTransaction) add(input.sourceTransaction, depth + 1) }
     add(funding)
     const reserveReport = conformance ? evidence('conformance/funding-reserves.json') : undefined
     if (reserveReport) for (const payment of reserveReport.payments) add(Transaction.fromAtomicBEEF(payment.beef))
@@ -217,7 +226,7 @@ export async function verifyNativeWallet(directory: string) {
     const storageTransactions = new Map<string, Transaction>()
     for (const item of evidence('native-transactions.json')) { const tx = Transaction.fromHex(item.rawTxHex); assert.equal(tx.id('hex'), item.txid); storageTransactions.set(item.txid, tx); if (!transactions.has(item.txid)) transactions.set(item.txid, tx); else assert.equal(transactions.get(item.txid)!.toHex(), tx.toHex()) }
     for (const tx of transactions.values()) for (const input of tx.inputs) if (!input.sourceTransaction) input.sourceTransaction = transactions.get(input.sourceTXID!)
-    function ancestry(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < 32); return tx.inputs.some(input => input.sourceTXID === target || (input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, target, depth + 1))) }
+    function ancestry(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < nativeProofResources().maximumProofDepth); return tx.inputs.some(input => input.sourceTXID === target || (input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, target, depth + 1))) }
     const nativeFundingRoots = [funding.id('hex')]
     if (conformance) {
       const { verifyConformanceReserves } = await import('./verify-conformance-reserves.js')
@@ -256,7 +265,7 @@ export async function verifyNativeWallet(directory: string) {
     let inputs = 0; for (const input of spend.inputs) { const sourceOutput = input.sourceTransaction?.outputs[input.sourceOutputIndex!]; assert.ok(sourceOutput?.satoshis !== undefined); inputs += sourceOutput.satoshis }
     const outputs = spend.outputs.reduce((sum, item) => sum + (item.satoshis ?? 0), 0); assert.ok(inputs >= outputs)
     let vectors: VectorResult[] = structuredClone(conformance ? evidence('conformance/baseline-vectors.json') : record.vectors)
-    if (conformance) { assert.equal(record.program, replay ? 'ISI-4@5.7.0' : followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, candidate ? 'candidate-wallet-native-engineering' : 'production-wallet-native-conformance') }
+    if (conformance) { assert.equal(record.program, enhanced ? 'ISI-4@5.8.0' : replay ? 'ISI-4@5.7.0' : followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(record.profile, candidate ? 'candidate-wallet-native-engineering' : 'production-wallet-native-conformance') }
     for (const vector of vectors.slice(0, 4)) assert.equal(vector.outcome, 'PASS')
     const permission = evidence('permissions.json')
     const explicitDenial = (value: { rejected?: boolean; independentlyPrompted?: boolean; message?: string }) =>
@@ -347,7 +356,7 @@ export async function verifyNativeWallet(directory: string) {
           if (fixtureRevision === 2) {
             const { verifyNativeTransactionStateBindings } = await import('./verify-transaction-state-bindings.js')
             const shutdown = JSON.parse(fs.readFileSync(path.join(rep, 'shutdown-submissions.json'), 'utf8'))
-            if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(plan.itcve)) {
+            if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(plan.itcve)) {
               const { verifyCompletionInventoryClosure, completionInventoryLedgerFile, completionInventoryClosureFile } = await import('./completion-observer-ledger.js')
               const inventoryClosureBytes = fs.readFileSync(path.join(rep, completionInventoryClosureFile))
               assert.equal(worker.completionInventoryClosureSha256, sha256Hex(inventoryClosureBytes))
@@ -363,7 +372,7 @@ export async function verifyNativeWallet(directory: string) {
               const { deriveCompletionNativeFundingRoots } = await import('./coverage-completion/funding-roots.js')
               const { hydrateTransactionCompletionFixture } = await import('./coverage-completion/transaction-known-source.js')
               const { coverageObservationEncoding, decodeCoverageObservation } = await import('./coverage-observation.js')
-              const fixtureBinding = { profile: replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : 'ITCVE-1@4.5.0' as const, identity: evidence('integrated/result.json').walletIdentity,
+              const fixtureBinding = { profile: nativeCompletionProfile(plan.itcve).profile, identity: evidence('integrated/result.json').walletIdentity,
                 fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])],
                 globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name)) }
               // Admit only exact independently proven incoming payments before
@@ -381,14 +390,14 @@ export async function verifyNativeWallet(directory: string) {
             const { verifyFinalPermissionSubmissionAncestry, finalSubmissionAncestryPolicy } = await import('./verify-submission-ancestry.js')
             assert.equal(plan.finalSubmissionAncestryPolicy, finalSubmissionAncestryPolicy)
             submissionAncestryBindings = await verifyFinalPermissionSubmissionAncestry({
-              globalSubmissions: submissions, finalSubmissions: shutdown.submissions, ...(expanded ? { profile: replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' as const : 'ITCVE-1@4.3.0' as const } : {}),
+              globalSubmissions: submissions, finalSubmissions: shutdown.submissions, ...(expanded ? { profile: enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' as const : 'ITCVE-1@4.3.0' as const } : {}),
               permissionReport: permissionLifecycle, coverageReport: evidence('conformance/permission-coverage.json'),
               identity: evidence('integrated/result.json').walletIdentity, storageTransactions, resolvedTransactions: transactions, trustedMinedRoot: fixture,
               readEvidence: (name: string) => fs.readFileSync(path.join(rep, 'evidence', name))
             })
             if (expanded) {
               const { verifyNativeCoverageSuite } = await import('./verify-coverage-suite.js')
-              coverageSuiteBindings = await verifyNativeCoverageSuite({ ...(completion ? { completionPrerequisites: { conditionalTransactionBindings, transactionStateBindings, submissionAncestryBindings } } : {}), profile: replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0', identity: evidence('integrated/result.json').walletIdentity, fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: name => fs.readFileSync(path.join(rep, 'evidence', name)) })
+              coverageSuiteBindings = await verifyNativeCoverageSuite({ ...(completion ? { completionPrerequisites: { conditionalTransactionBindings, transactionStateBindings, submissionAncestryBindings } } : {}), profile: enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' as const : followup ? 'ITCVE-1@4.6.0' as const : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0', identity: evidence('integrated/result.json').walletIdentity, fixture, storageTransactions, resolvedTransactions: transactions, declaredNativePayments: [...nativeFundingOutpoints, ...(corpusPayment ? [corpusPayment] : [])], globalSubmissions: submissions, finalSubmissions: shutdown.submissions, readEvidence: name => fs.readFileSync(path.join(rep, 'evidence', name)) })
             }
           }
         }

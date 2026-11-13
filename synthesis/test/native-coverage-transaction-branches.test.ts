@@ -150,3 +150,35 @@ for (const kind of ['wrong-host', 'unknown-active', 'two-active', 'wrong-main-im
   if (kind === 'wrong-provider-registry') o.id = 'unowned'
   assert.throws(() => verifyTransactionActiveProvider(f.report, f.binding.readEvidence))
  })
+
+// LAB_SELF_TEST_ONLY: the new summary representation is joined to the same
+// independently owned provider ledger, exact extension origin and cut windows.
+async function modernProviderFixture() {
+ const f = await parentFixture()
+ for (const o of [f.report.activeProviderInitial, f.report.activeProvider]) {
+  o.representation = 'ACTIVE_STORAGE_SUMMARY_V2'; o.summaryButtons = 1; o.makeActiveButtons = 0
+  o.activeSummary = 'ACTIVE STORAGE\nSynced across devices\nWALLET.1SAT.APP'
+  o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary]
+ }
+ return f
+}
+test('new active summary retains independent native parent identity and time joins', async () => {
+ const f = await modernProviderFixture(); verifyTransactionActiveProvider(f.report, f.binding.readEvidence, 'ITCVE-1@4.8.0')
+ assert.throws(() => verifyTransactionActiveProvider(f.report, f.binding.readEvidence, 'ITCVE-1@4.7.0'))
+})
+for (const kind of ['missing-summary', 'two-headings', 'wrong-summary-host', 'two-active', 'two-buttons', 'make-active', 'backup-detail', 'wrong-image', 'after-cut', 'foreign-origin', 'wrong-provider-ledger'] as const)
+ test(`new active summary parent rejects ${kind}`, async () => {
+  const f = await modernProviderFixture(), o = f.report.activeProvider
+  if (kind === 'missing-summary') delete o.activeSummary
+  if (kind === 'two-headings') { o.activeSummary += '\nActive Storage'; o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary] }
+  if (kind === 'wrong-summary-host') { o.activeSummary = 'Active Storage\nwallet.1sat.app.evil'; o.candidates[0].card = o.activeSummary; o.activeCards = [o.activeSummary] }
+  if (kind === 'two-active') o.candidates[1].card += '\nActive Storage'
+  if (kind === 'two-buttons') o.summaryButtons = 2
+  if (kind === 'make-active') o.makeActiveButtons = 1
+  if (kind === 'backup-detail') o.card = 'wallet.1sat.app\nBackup copy\nhttps://wallet.1sat.app'
+  if (kind === 'wrong-image') o.mainScreenshotSha256 = '00'.repeat(32)
+  if (kind === 'after-cut') o.endedAt = new Date(Date.parse(f.report.endedAt) + 1).toISOString()
+  if (kind === 'foreign-origin') o.url = 'https://attacker.test/index.html'
+  if (kind === 'wrong-provider-ledger') f.evidence['conformance/portability.json'].counterparts.destination.storageIdentityKey = '00'
+  assert.throws(() => verifyTransactionActiveProvider(f.report, f.binding.readEvidence, 'ITCVE-1@4.8.0'))
+ })

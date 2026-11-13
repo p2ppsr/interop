@@ -23,7 +23,7 @@ export function requestFor(operation:any,native:any,external:any){
  return {basket,output:`${native.txid}.${operation.relinquishIndex}`}
 }
 export const ordinaryControlArgs=(external:any)=>({tx:external.tx,outputs:[{outputIndex:15,protocol:'basket insertion',insertionRemittance:{basket:'tpnil bb insertion control',tags:['bb valid control'],customInstructions:'bb:control'}}],description:'Basket boundary valid insertion control',labels:[config.label]})
-export const queryArgs=(basket:string)=>({basket,include:'locking scripts',includeTags:true,includeCustomInstructions:true,limit:10000})
+export const queryArgs=(basket:string)=>({basket,include:'locking scripts' as const,includeTags:true,includeCustomInstructions:true,limit:10000})
 export const policy={schema:'tpnil-native-basket-boundaries-policy@1.0.0',claim:'ENGINEERING_OBSERVATION_ONLY',completeBRC100Conformance:false,
  interpretation:'The pinned typed-interface300-byte and narrative400-byte limits conflict. ASCII301/399/400 remain interpretation-blocked. Unicode independently rejects the namespace grammar.',
  reservedRejection:{name:'Error',message:'Unsupported P-module scheme: p tpnil'},reservedRequestRejections:{createAction:'Unsupported P-basket scheme: p tpnil',internalizeAction:'Unsupported P-basket scheme: p tpnil',relinquishOutput:'Unsupported P-module scheme: p tpnil'},adminRejections:['admin bb','default'].map(basket=>({basket,name:'Error',message:`Basket “${basket}” is admin-only.`})),config,variants,operations,
@@ -32,4 +32,5 @@ export const policySha256=hash(JSON.stringify(policy))
 export function sourceCheck(){return {policy:policy.schema,policySha256}}
 
 export const replayPolicy={...policy,schema:'tpnil-native-basket-boundaries-policy@2.0.0',priorFixtureReplay:{maximumReceiptsPerSuccessfulImport:1,serialization:'EXACT_PREVIOUSLY_ACCEPTED_RAW_TRANSACTION',creationWindow:'DECLARED_EXTERNAL_FIXTURE',args:'EXACT_FIXTURE_ATOMIC_BEEF',invalidCalls:'ZERO_RECEIPTS_AND_UNCHANGED_COMPLETE_STATE',finalLedger:'ALL_RECEIPTS_AND_ANCESTRY_RETAINED'}}
-export function selectedBasketPolicy(revision:1|2=1){const selected=revision===2?replayPolicy:policy;return {policy:selected,sha256:hash(JSON.stringify(selected))}}
+export const encryptedMetadataPolicy={...replayPolicy,schema:'tpnil-native-basket-boundaries-policy@3.0.0',metadataRepresentation:{public:'EXACT_DECLARED_PLAINTEXT',ownedStorage:'PINNED_WALLET_METADATA_AES_GCM_OPAQUE_ENVELOPE',publicFixtureReads:['fixture-metadata','reopened-metadata'],publicReadContract:'PUBLIC_LIST_OUTPUTS_FOUR_DECLARED_BASKETS',relinquishedMetadata:'EXACT_ORIGINAL_OPAQUE_BYTES_IN_COMPLETE_OWNED_SNAPSHOTS',retention:'ALL_ORIGINAL_CIPHER_BYTES_AND_COMPLETE_OWNED_STATE',scope:'Public metadata correctness and opaque storage retention; no secret-free ciphertext authentication or browser-restart claim.'}}
+export function selectedBasketPolicy(revision:1|2|3=1){assert.ok([1,2,3].includes(revision));const selected=revision===3?encryptedMetadataPolicy:revision===2?replayPolicy:policy;return {policy:selected,sha256:hash(JSON.stringify(selected))}}

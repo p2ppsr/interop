@@ -1,3 +1,4 @@
+import {nativeProofResources} from './proof-resources.js'
 import assert from 'node:assert/strict'
 import { Beef, LockingScript, Transaction, UnlockingScript, Utils } from '@bsv/sdk'
 import type { TransactionCoverageReport } from './coverage-transactions-model.js'
@@ -12,7 +13,7 @@ export async function hydrateCoverageControlAncestry(report: TransactionCoverage
   profile: string; identity: string; fixture: { txid: string; rawHex: string; fundingHeight: number; maturityDepth: number; merkleRoot: string }
   storageTransactions: ReadonlyMap<string, Transaction>; resolvedTransactions: Map<string, Transaction>
 }) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile), 'Constructed control ancestry requires the explicit prospective profile')
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile), 'Constructed control ancestry requires the explicit prospective profile')
   assert.equal(report.identity, binding.identity)
   const child = await verifyNativeTransactionCoverage(report)
   const one = (id: string) => { const rows = report.trace.filter(row => row.id === id); assert.ok(rows.length <= 1); return rows[0] }
@@ -36,7 +37,7 @@ export async function hydrateCoverageControlAncestry(report: TransactionCoverage
     isValidRootForHeight: async (root: string, height: number) => root === binding.fixture.merkleRoot && height === binding.fixture.fundingHeight }
   const staged = new Map<string, Transaction>(), admitted = []
   const retain = (tx: Transaction, depth = 0) => {
-    assert.ok(depth < 32)
+    assert.ok(depth < nativeProofResources().maximumProofDepth)
     const txid = tx.id('hex'), old = staged.get(txid) ?? binding.resolvedTransactions.get(txid)
     if (old) assert.equal(old.toHex(), tx.toHex(), 'Control ancestor differs from independently retained bytes')
     if (staged.has(txid)) return

@@ -1,3 +1,4 @@
+import {nativeProofResources} from './proof-resources.js'
 import assert from 'node:assert/strict'
 import { P2PKH, PrivateKey, ProtoWallet, PublicKey, Transaction } from '@bsv/sdk'
 import { verifyNativeReserveStorage } from './conformance-reserve-storage.js'
@@ -8,7 +9,7 @@ const policy = { schema: 'tpnil-native-funding-reserves@1', count: 2, satoshisEa
 export function verifyReserveGraph(transactions: Transaction[], protectedOutpoints: string[]): void {
   const visited = new Set<string>(), spent = new Map<string, string>()
   function visit(tx: Transaction, depth = 0): void {
-    assert.ok(depth < 32); const txid = tx.id('hex'); if (visited.has(txid)) return; visited.add(txid)
+    assert.ok(depth < nativeProofResources().maximumProofDepth); const txid = tx.id('hex'); if (visited.has(txid)) return; visited.add(txid)
     for (const input of tx.inputs) {
       const outpoint = `${input.sourceTXID ?? input.sourceTransaction?.id('hex')}.${input.sourceOutputIndex}`
       const previous = spent.get(outpoint)
@@ -21,7 +22,7 @@ export function verifyReserveGraph(transactions: Transaction[], protectedOutpoin
   for (const outpoint of protectedOutpoints) assert.ok(!spent.has(outpoint), `Initial native payment already consumed before customer scenarios: ${outpoint}`)
 }
 export function spendsOnlyDeclaredNativePayments(tx: Transaction, roots: string[], depth = 0): boolean {
-  assert.ok(depth < 32)
+  assert.ok(depth < nativeProofResources().maximumProofDepth)
   return tx.inputs.length > 0 && tx.inputs.every(input => {
     const outpoint = `${input.sourceTXID ?? input.sourceTransaction?.id('hex')}.${input.sourceOutputIndex}`
     return roots.includes(outpoint) || input.sourceTransaction !== undefined && spendsOnlyDeclaredNativePayments(input.sourceTransaction, roots, depth + 1)
@@ -40,7 +41,7 @@ export async function verifyBoundaryFundingRoot(boundary: any, binding: { identi
   assert.equal(boundary.trace.find((row: any) => row.method === 'getPublicKey' && row.args.identityKey === true).result.publicKey, binding.identity)
   const key = await sender.getPublicKey({ protocolID: [2, '3241645161d8'], keyID: `${derivationPrefix} ${derivationSuffix}`, counterparty: binding.identity, forSelf: false })
   assert.equal(tx.outputs[0]?.lockingScript.toHex(), new P2PKH().lock(PublicKey.fromString(key.publicKey).toAddress()).toHex()); assert.equal(tx.outputs[0]?.satoshis, 1000)
-  function ancestry(current: Transaction, depth = 0): boolean { assert.ok(depth < 32); return current.inputs.some(input => input.sourceTXID === binding.fixture.txid || input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, depth + 1)) }
+  function ancestry(current: Transaction, depth = 0): boolean { assert.ok(depth < nativeProofResources().maximumProofDepth); return current.inputs.some(input => input.sourceTXID === binding.fixture.txid || input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, depth + 1)) }
   assert.ok(ancestry(tx), 'Corpus payment does not descend from the exact mined funding fixture')
   assert.ok(await tx.verify({ currentHeight: async () => binding.fixture.fundingHeight + binding.fixture.maturityDepth, isValidRootForHeight: async (root, height) => root === binding.fixture.merkleRoot && height === binding.fixture.fundingHeight }))
   assert.equal(binding.storageTransactions.get(txid)?.toHex(), tx.toHex())
@@ -76,8 +77,8 @@ export async function verifyConformanceReserves(report: any, binding: {
   assert.ok(initial >= 0 && firstCustomer > initial)
   const roots: string[] = [], tracker = { currentHeight: async () => binding.fixture.fundingHeight + binding.fixture.maturityDepth,
     isValidRootForHeight: async (root: string, height: number) => root === binding.fixture.merkleRoot && height === binding.fixture.fundingHeight }
-  function ancestry(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < 32); return tx.inputs.some(input => input.sourceTXID === target || input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, target, depth + 1)) }
-  function spendsPayment(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < 32); return tx.inputs.some(input => input.sourceTXID === target && input.sourceOutputIndex === 0 || input.sourceTransaction !== undefined && spendsPayment(input.sourceTransaction, target, depth + 1)) }
+  function ancestry(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < nativeProofResources().maximumProofDepth); return tx.inputs.some(input => input.sourceTXID === target || input.sourceTransaction !== undefined && ancestry(input.sourceTransaction, target, depth + 1)) }
+  function spendsPayment(tx: Transaction, target: string, depth = 0): boolean { assert.ok(depth < nativeProofResources().maximumProofDepth); return tx.inputs.some(input => input.sourceTXID === target && input.sourceOutputIndex === 0 || input.sourceTransaction !== undefined && spendsPayment(input.sourceTransaction, target, depth + 1)) }
   for (const [index, payment] of report.payments.entries()) {
     assert.equal(payment.index, index)
     const prefix = Buffer.from('tpnil-conformance-reserves').toString('base64'), suffix = Buffer.from(`initial-${index + 1}`).toString('base64'), keyID = `${prefix} ${suffix}`

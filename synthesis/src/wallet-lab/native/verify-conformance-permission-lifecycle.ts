@@ -1,3 +1,4 @@
+import {nativeProofResources} from './proof-resources.js'
 import { verifyPermissionClick, verifyPermissionCallNonces } from './permission-click.js'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
@@ -61,7 +62,7 @@ export async function evaluateNativePermissionLifecycle(report: NativePermission
   const mined = async (bytes: number[]) => {
     const tx = Transaction.fromAtomicBEEF(bytes)
     assert.ok(await tx.verify({ currentHeight: async () => fixture.fundingHeight + fixture.maturityDepth, isValidRootForHeight: async (root: string, height: number) => root === fixture.merkleRoot && height === fixture.fundingHeight }))
-    const root = (current: Transaction, depth = 0): boolean => { assert.ok(depth < 32); return current.id('hex') === fixture.txid || current.inputs.some(input => input.sourceTransaction && root(input.sourceTransaction, depth + 1)) }
+    const root = (current: Transaction, depth = 0): boolean => { assert.ok(depth < nativeProofResources().maximumProofDepth); return current.id('hex') === fixture.txid || current.inputs.some(input => input.sourceTransaction && root(input.sourceTransaction, depth + 1)) }
     assert.ok(root(tx)); return tx
   }
   const transaction = async (role: 'setup-basket' | 'spending-allow') => {

@@ -19,7 +19,7 @@ export function basketAssertions(checked: Awaited<ReturnType<typeof verifyBasket
 }
 
 export interface BasketParentBinding {
-  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
+  profile: 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0'
   identity: string
   fixture: any
   storageTransactions: Map<string, Transaction>
@@ -34,7 +34,7 @@ export interface BasketParentBinding {
  * all provider shutdown ledgers and mined graph. This joins this fixed program
  * to those independent observations and forbids spending protected outputs. */
 export async function verifyBasketParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile))
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile))
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
   const checked = await verifyBasketObservations(report, nativeCompletionProfile(binding.profile).basketRevision)
@@ -60,7 +60,7 @@ export async function verifyBasketParent(report: any, binding: BasketParentBindi
   for (const row of report.trace) {
     assert.ok(row.submissionStart >= end && row.submissionEnd <= report.submissionEnd)
     end = row.submissionEnd
-    if (binding.profile === 'ITCVE-1@4.7.0' && (row.id === 'control.internalizeAction' || operations.some(op => op.id === row.id && op.accepted && op.method === 'internalizeAction'))) await verifyPriorFixtureReplay(row, call(report, 'fixture-external'), binding.globalSubmissions, tracker)
+    if (['ITCVE-1@4.7.0','ITCVE-1@4.8.0'].includes(binding.profile) && (row.id === 'control.internalizeAction' || operations.some(op => op.id === row.id && op.accepted && op.method === 'internalizeAction'))) await verifyPriorFixtureReplay(row, call(report, 'fixture-external'), binding.globalSubmissions, tracker)
     else if (!['fixture-native', 'fixture-external'].includes(row.id)) assert.equal(row.submissionStart, row.submissionEnd, 'Non-broadcast basket operation emitted a submission')
   }
   const funding = await verifyCoverageModuleFunding(report.trace, binding)

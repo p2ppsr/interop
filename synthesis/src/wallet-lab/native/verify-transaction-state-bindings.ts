@@ -1,3 +1,4 @@
+import {nativeProofResources} from './proof-resources.js'
 import assert from 'node:assert/strict'
 import { Beef, Transaction, Utils } from '@bsv/sdk'
 import type { StateReport } from './conformance-transaction-states-model.js'
@@ -49,13 +50,16 @@ export function observedSubmissionTransactions(entry: Submission, options: Submi
   const results: Array<{ txid: string; transaction: Transaction; isTarget: boolean }> = []
   const visited = new Map<string, number>(), bodies = new Map<string, string>()
   const walk = (original: Transaction, depth: number, ancestry: Set<string>): void => {
-    assert.ok(depth < 32, 'Final submission ancestry exceeds the retained depth bound')
+    assert.ok(depth < nativeProofResources().maximumProofDepth, 'Final submission ancestry exceeds the retained depth bound')
     const txid = original.id('hex'); assert.ok(!ancestry.has(txid), 'Cyclic final submission ancestry')
     const resolved = options.resolvedTransactions?.get(txid)
     if (resolved) assert.equal(resolved.toHex(), original.toHex(), 'Independent final ancestry body differs from original submission')
     if (bodies.has(txid)) assert.equal(bodies.get(txid), original.toHex()); else bodies.set(txid, original.toHex())
     if ((visited.get(txid) ?? -1) >= depth) return
-    if (!visited.has(txid)) results.push({ txid, transaction: original, isTarget: txid === entry.txid })
+    if (!visited.has(txid)) {
+      assert.ok(results.length < nativeProofResources().maximumRetainedTransactions, 'Final submission ancestry exceeds the retained transaction bound')
+      results.push({ txid, transaction: original, isTarget: txid === entry.txid })
+    }
     visited.set(txid, depth)
     // A caller-supplied BUMP cannot establish a safe traversal boundary.
     if (options.trustedMinedRoot && txid === options.trustedMinedRoot.txid) {

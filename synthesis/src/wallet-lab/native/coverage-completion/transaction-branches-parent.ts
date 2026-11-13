@@ -8,7 +8,8 @@ import { hydrateTransactionCompletionFixture } from './transaction-known-source.
 import { nativeCompletionProviders } from './providers.js'
 import type { BasketParentBinding } from './baskets-parent.js'
 
-export function verifyTransactionActiveProvider(report: any, read: (name: string) => Buffer) {
+export function verifyTransactionActiveProvider(report: any, read: (name: string) => Buffer, profile: BasketParentBinding['profile'] = 'ITCVE-1@4.5.0') {
+  const modern = profile === 'ITCVE-1@4.8.0'
   const json = (name: string) => JSON.parse(read(name).toString()), portability = json('conformance/portability.json'), contexts = json('native-browser-contexts.json')
   assert.equal(portability.mode, 'native-ui'); assert.equal(portability.counterparts.url, 'https://replacement-wallet.itcve.test')
   for (const stage of ['replacement-active', 'source-removed-from-config']) assert.equal(portability.ui.filter((row: any) => row.stage === stage).length, 1)
@@ -17,16 +18,18 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
   const instant = (s: string) => { const value = Date.parse(s); assert.equal(new Date(value).toISOString(), s); return value }
   for (const [stage, observation, cut] of [['initial', report.activeProviderInitial, report.cuts[0]], ['full-set', report.activeProvider, report.cuts.find((r: any) => r.id === 'full-set-before')]] as const) {
     assert.equal(observation.kind, 'NATIVE_REMOTE_BACKUP_UI')
+    assert.equal(observation.representation, modern ? 'ACTIVE_STORAGE_SUMMARY_V2' : undefined)
     const allowed = [{ id: 'source', providerUrl: 'https://wallet.1sat.app' }, { id: 'source/replacement-wallet.itcve.test', providerUrl: 'https://replacement-wallet.itcve.test' }]
     const selected = allowed.find(provider => provider.id === observation.id); assert.ok(selected && registry.some(row => row.id === selected.id))
     assert.equal(observation.providerUrl, selected.providerUrl)
     assert.deepEqual(observation.candidates.map((row: any) => ({ id: row.id, providerUrl: row.providerUrl })), allowed)
     for (const candidate of observation.candidates) {
       assert.equal(typeof candidate.present, 'boolean')
-      if (candidate.present) { assert.equal(typeof candidate.card, 'string'); assert.ok(candidate.card.split('\n').map((s: string) => s.trim()).includes(new URL(candidate.providerUrl).host)) }
+      if (candidate.present) { assert.equal(typeof candidate.card, 'string'); assert.ok(candidate.card.split('\n').map((s: string) => modern ? s.trim().toLowerCase() : s.trim()).includes(modern ? new URL(candidate.providerUrl).host.toLowerCase() : new URL(candidate.providerUrl).host)) }
       else assert.equal(candidate.card, null)
     }
-    const active = observation.candidates.filter((row: any) => row.present && row.card.split('\n').map((s: string) => s.trim()).some((line: string) => line.toLowerCase() === 'in use'))
+    const active = observation.candidates.filter((row: any) => row.present && row.card.split('\n').map((s: string) => s.trim().toLowerCase()).includes(modern ? 'active storage' : 'in use'))
+    if(modern){assert.equal(observation.summaryButtons,1);assert.equal(observation.makeActiveButtons,0);assert.equal(typeof observation.activeSummary,'string');assert.equal(active[0]?.card,observation.activeSummary);assert.equal(observation.activeSummary.split('\n').filter((line:string)=>line.trim().toLowerCase()==='active storage').length,1)}
     assert.equal(active.length, 1); assert.equal(active[0].id, selected.id); assert.deepEqual(observation.activeCards, [active[0].card])
     assert.equal(observation.mainScreenshot, `conformance/transaction-branches-provider-cards-${stage}.png`)
     const mainBytes = read(observation.mainScreenshot); assert.equal(mainBytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
@@ -34,7 +37,7 @@ export function verifyTransactionActiveProvider(report: any, read: (name: string
     assert.equal(observation.url, `chrome-extension://${contexts.contexts[0].extensionId}/index.html`)
     const lines = observation.card.split('\n').map((line: string) => line.trim())
     assert.ok(lines.includes(new URL(selected.providerUrl).host) && lines.includes(observation.providerUrl))
-    assert.equal(lines.filter((line: string) => line.toLowerCase() === 'in use').length, 1); assert.ok(!lines.includes('Backup copy'))
+    assert.equal(lines.filter((line: string) => line.toLowerCase() === 'in use').length, 1); assert.ok(!lines.some((line:string)=>line.toLowerCase()==='backup copy'))
     assert.equal(observation.screenshot, `conformance/transaction-branches-active-provider-${stage}.png`)
     const bytes = read(observation.screenshot); assert.equal(bytes.subarray(0, 8).toString('hex'), '89504e470d0a1a0a')
     assert.equal(createHash('sha256').update(bytes).digest('hex'), observation.screenshotSha256)
@@ -56,10 +59,10 @@ export async function evaluateTransactionBranches(report: any) {
     providerRegistry: report.providerRegistry, routes: report.finalRoutes, unknownSource: report.unknownSource })
 }
 export async function verifyTransactionBranchParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
   assert.deepEqual(report.fixture, binding.fixture)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), registry = nativeCompletionProviders(read)
-  verifyTransactionActiveProvider(report, read)
+  verifyTransactionActiveProvider(report, read, binding.profile)
   assert.deepEqual(report.providerRegistry, registry); assert.deepEqual(json('native-output-provider-registry.json'), registry)
   const observations = json('native-output-snapshot-observations.json')
   assert.ok(Number.isSafeInteger(report.outputObservationStart) && report.outputObservationStart >= 0)

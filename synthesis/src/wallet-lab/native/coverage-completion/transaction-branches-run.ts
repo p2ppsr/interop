@@ -1,3 +1,4 @@
+import {observeActiveStorageSummary} from './provider-summary-observer.js'
 // SPDX-License-Identifier: Apache-2.0
 import fs from 'node:fs'
 import path from 'node:path'
@@ -28,6 +29,7 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
         await page.getByText('Remote Backup', { exact: true }).click()
         await page.getByText('Sync Now', { exact: true }).waitFor()
         const allowed = [{ id: 'source', providerUrl: 'https://wallet.1sat.app' }, { id: 'source/replacement-wallet.itcve.test', providerUrl: 'https://replacement-wallet.itcve.test' }]
+        if(context.integratedProfile==='ITCVE-1@4.8.0')return observeActiveStorageSummary(page,allowed,stage,context.evidence)
         const cards = await page.locator('button.w-full').allInnerTexts()
         const candidates = allowed.map(provider => { const matches = cards.filter(card => card.split('\n').map(line => line.trim()).includes(new URL(provider.providerUrl).host)); assert.ok(matches.length <= 1); return { ...provider, present: matches.length === 1, card: matches[0] ?? null } })
         const activeCards = cards.filter(card => card.split('\n').map(line => line.trim().toLowerCase()).includes('in use'))

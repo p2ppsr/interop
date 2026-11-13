@@ -1,3 +1,5 @@
+import {withTransactionProofResources} from './proof-resources.js'
+import {nativeProofResources} from './proof-resources.js'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -12,9 +14,10 @@ class Blocked extends Error {}
 const id = (suffix: string) => transactionCoverageIds.find(x => x.endsWith(`/${suffix}`))!
 function canonical(value: any): any { if (Array.isArray(value)) return value.map(canonical); if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map(k => [k, canonical(value[k])])); return value }
 async function inspect(report: Report) {
-  const revision = report.oracle === 'tpnil-native-coverage-transactions-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-coverage-transactions-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-coverage-transactions-oracle@3.0.0' ? 3 : undefined
+  const revision = report.oracle === 'tpnil-native-coverage-transactions-oracle@1.0.0' ? 1 : report.oracle === 'tpnil-native-coverage-transactions-oracle@2.0.0' ? 2 : report.oracle === 'tpnil-native-coverage-transactions-oracle@3.0.0' ? 3 : report.oracle === 'tpnil-native-coverage-transactions-oracle@4.0.0' ? 4 : undefined
   assert.ok(revision, 'Unsupported transaction coverage oracle')
   const { policy, policySha256 } = getTransactionCoveragePolicy(revision)
+  assert.equal(nativeProofResources().maximumProofDepth, policy.bounds.maximumProofDepth, 'Transaction oracle resource admission differs from its frozen policy')
   assert.equal(report.schema, `tpnil-native-coverage-transactions@${revision}.0.0`); assert.equal(report.oracle, policy.oracle); assert.equal(report.policySha256, policySha256)
   assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.equal(report.completeBRC100Conformance, false); assert.equal(report.finalLedgerRequired, true)
   assert.match(report.identity, /^(02|03)[a-f0-9]{64}$/); assert.ok(report.trace.length <= policy.bounds.maximumPublicCalls); assert.equal(new Set(report.trace.map(r => r.id)).size, report.trace.length)
@@ -34,10 +37,10 @@ async function inspect(report: Report) {
     assert.deepEqual(Object.keys(row).sort(), ['rawTxHex', 'txid']); const tx = Transaction.fromHex(row.rawTxHex); assert.equal(tx.toHex(), row.rawTxHex); assert.equal(tx.id('hex'), row.txid); assert.ok(!graph.has(row.txid)); graph.set(row.txid, tx)
   }
   const root = coverageAtomic([...Buffer.from(fixture.atomicBeefHex, 'hex')]); if (graph.has(root.id('hex'))) assert.equal(graph.get(root.id('hex'))!.toHex(), root.toHex()); graph.set(root.id('hex'), root)
-  const remember = (tx: Transaction, depth = 0) => { assert.ok(depth < 32); const existing = graph.get(tx.id('hex')); if (existing) assert.equal(existing.toHex(), tx.toHex()); graph.set(tx.id('hex'), tx); if (tx.id('hex') !== root.id('hex')) for (const input of tx.inputs) if (input.sourceTransaction) remember(input.sourceTransaction, depth + 1) }
+  const remember = (tx: Transaction, depth = 0) => { assert.ok(depth < nativeProofResources().maximumProofDepth); const existing = graph.get(tx.id('hex')); if (existing) assert.equal(existing.toHex(), tx.toHex()); graph.set(tx.id('hex'), tx); if (tx.id('hex') !== root.id('hex')) for (const input of tx.inputs) if (input.sourceTransaction) remember(input.sourceTransaction, depth + 1) }
   for (const row of report.trace) for (const bytes of [row.result?.tx, row.error?.tx, row.result?.signableTransaction?.tx, /^proof-.*-control$/.test(row.id) && row.method === 'internalizeAction' ? row.args.tx : undefined]) if (bytes) { try { remember(row.id === 'proof-duplicate-control' && bytes === row.args.tx ? coverageDuplicateControlAtomic(bytes) : coverageAtomic(bytes)) } catch { /* Semantic predicate retains malformed response as FAIL. */ } }
   const hydrate = (tx: Transaction, visited = new Set<string>()): Transaction => {
-    assert.ok(visited.size < 32 && !visited.has(tx.id('hex'))); if (tx.id('hex') === root.id('hex')) { assert.equal(tx.toHex(), root.toHex()); tx.merklePath = root.merklePath; return tx }
+    assert.ok(visited.size < nativeProofResources().maximumProofDepth && !visited.has(tx.id('hex'))); if (tx.id('hex') === root.id('hex')) { assert.equal(tx.toHex(), root.toHex()); tx.merklePath = root.merklePath; return tx }
     // Only the admitted fixture establishes a mined boundary.
     tx.merklePath = undefined
     const next = new Set([...visited, tx.id('hex')])
@@ -95,7 +98,7 @@ async function inspect(report: Report) {
     for (const entry of [...report.submissionPrefix, ...report.submissions].slice(control.submissionStart, control.submissionEnd)) await acceptedDelayedReceipt(entry, control)
   }
   const noHeldSubmission = async (name: string) => {
-    if (revision !== 3) { noSubmission(name); return }
+    if (revision < 3) { noSubmission(name); return }
     const held = success(name), tx = await txFor(name)
     assert.equal(held.args.options?.noSend, true, 'Held action must explicitly request noSend')
     const releases: Record<string, string> = { 'held-a': 'held-release', 'held-b': 'batch-sign', 'held-child': 'held-release', 'foreign-held': 'foreign-held-release', 'held-unknown-control': 'unknown-batch-control', 'held-inactive': 'held-inactive-release' }
@@ -155,6 +158,10 @@ async function inspect(report: Report) {
   return { revision, policy, row, success, noControlSubmission, txFor, signed, graph, hydrate, submitted, noSubmission, noHeldSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend, replay }
 }
 export async function deriveTransactionCoverageOutcomes(report: Report): Promise<Outcome[]> {
+  return withTransactionProofResources(report.oracle === 'tpnil-native-coverage-transactions-oracle@4.0.0' ? 4 : 1, () => deriveTransactionCoverageOutcomesWithResources(report))
+}
+
+async function deriveTransactionCoverageOutcomesWithResources(report: Report): Promise<Outcome[]> {
   const v = await inspect(report), { row, success, txFor, submitted, noSubmission, noHeldSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend } = v
   const tests: Record<string, () => Promise<void> | void> = {
     [id('acceptDelayedBroadcast-omitted-true')]: async () => {

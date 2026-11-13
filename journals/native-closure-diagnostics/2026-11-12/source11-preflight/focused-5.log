@@ -1,0 +1,42 @@
+
+> @tpnil/synthesis@0.1.0 test
+> vitest run --testTimeout=30000 native-provider-summary-dom.test.ts native-provider-summary.test.ts native-coverage-transaction-branches.test.ts native-completion-profile.test.ts native-proof-resources.test.ts
+
+
+ RUN  v4.1.12 /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis
+
+ ❯ test/native-provider-summary-dom.test.ts (1 test | 1 failed) 381ms
+     × opens the summary detail when the backup button has no active badge 380ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/native-provider-summary-dom.test.ts > LAB_SELF_TEST_ONLY exact active-summary DOM, no wallet > opens the summary detail when the backup button has no active badge
+AssertionError: Exactly one Active Storage heading is required
+
+0 !== 1
+
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ selectActiveStorageSummary src/wallet-lab/native/coverage-completion/provider-summary-observer.ts:12:10
+     10| export function selectActiveStorageSummary(summary:string, backups:str…
+     11|   const summaryLines=lines(summary)
+     12|   assert.equal(summaryLines.filter(line=>line==='active storage').leng…
+       |          ^
+     13|   const selected=allowed.filter(provider=>summaryLines.includes(new UR…
+     14|   assert.equal(selected.length,1,'Active Storage must name exactly one…
+ ❯ observeActiveStorageSummary src/wallet-lab/native/coverage-completion/provider-summary-observer.ts:32:37
+ ❯ test/native-provider-summary-dom.test.ts:17:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 72 passed (73)
+   Start at  17:15:13
+   Duration  11.95s (transform 301ms, setup 0ms, import 1.11s, tests 11.80s, environment 0ms)
+

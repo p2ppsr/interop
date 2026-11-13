@@ -17,12 +17,12 @@ const now = () => new Date().toISOString()
  * they are rethrown; no pre-shutdown report is rewritten or promoted. */
 export async function closeWithSubmissionReceipt(options: {
   directory: string; observer: SubmissionClosureObserver; initialCapturedAt: string
-  profile?: 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0'
+  profile?: 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0'
   closeBrowser(): Promise<unknown>; closeServices(): Promise<unknown>; removeProfile(): unknown
 }) {
   const profile = options.profile ?? 'ITCVE-1@2.0.0'
-  if (!['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '')) throw new Error('Unknown shutdown profile')
-  const ordered = ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile)
+  if (!['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '')) throw new Error('Unknown shutdown profile')
+  const ordered = ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile)
   const policy = ordered ? shutdownOrderedPolicy : ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(profile ?? '') ? shutdownCoveragePolicy : shutdownSubmissionPolicy
   const cleanupErrors: unknown[] = [], evidenceErrors: unknown[] = [], stages: Record<string, any> = {}
   const closureStartedAt = now()
@@ -51,7 +51,7 @@ export async function closeWithSubmissionReceipt(options: {
   const report = { schema: policy, policy, profile,
     claim: 'ENGINEERING_OBSERVATION_ONLY', initialCapturedAt: options.initialCapturedAt, closureStartedAt,
     initialProviders: options.observer.initialProviders, providers, initialCount: options.observer.initialSubmissions.length,
-    submissions, provenance, ...(journal ? { initialProvenance: journal.initialProvenance } : {}), cleanup: stages, bindings: { record: binding('record.json'), global: binding('evidence/native-submissions.json'), module: binding('evidence/conformance/permission-lifecycle.json'), counterparts: binding('evidence/conformance/service-counterparts.json'), ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '') ? { coverage: binding('evidence/conformance/permission-coverage.json') } : {}) },
+    submissions, provenance, ...(journal ? { initialProvenance: journal.initialProvenance } : {}), cleanup: stages, bindings: { record: binding('record.json'), global: binding('evidence/native-submissions.json'), module: binding('evidence/conformance/permission-lifecycle.json'), counterparts: binding('evidence/conformance/service-counterparts.json'), ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '') ? { coverage: binding('evidence/conformance/permission-coverage.json') } : {}) },
     capturedAt: now(), errors: [...cleanupErrors, ...evidenceErrors].map(String), failureCategories: { cleanup: cleanupErrors.map(String), evidence: evidenceErrors.map(String) }, ordering: ordered ? orderedSubmissionDescription : 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.' }
   fs.writeFileSync(path.join(options.directory, shutdownSubmissionFilename), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' })
   return { report, errors: [...cleanupErrors, ...evidenceErrors], cleanupErrors, evidenceErrors }

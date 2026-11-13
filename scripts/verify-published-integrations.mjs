@@ -155,10 +155,11 @@ export function verifyIntegrationArchive(directory) {
   const qualification = readJson(path.join(directory, 'qualification.json'))
   assert.equal(qualification.source, manifest.source)
   const exactHistory = kind === 'component' && qualification.profile === 'ITCVE-1@3.0.0'
-  const candidate = kind === 'native' && ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(qualification.profile)
+  const candidate = kind === 'native' && ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
+  const enhanced = kind === 'native' && qualification.profile === 'ITCVE-1@4.8.0'
   const replay = kind === 'native' && qualification.profile === 'ITCVE-1@4.7.0'
-  const followup = kind === 'native' && ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(qualification.profile)
-  const completion = candidate && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(qualification.profile)
+  const followup = kind === 'native' && ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
+  const completion = candidate && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
   const recovery = candidate && qualification.profile === 'ITCVE-1@4.4.0'
   const expanded = completion || recovery || candidate && qualification.profile === 'ITCVE-1@4.3.0'
   const observer3 = candidate && qualification.profile === 'ITCVE-1@4.2.0'
@@ -166,7 +167,7 @@ export function verifyIntegrationArchive(directory) {
   const closure = wallet511 || kind === 'native' && qualification.profile === 'ITCVE-1@2.0.0'
   const coverage = closure || kind === 'native' && qualification.profile === 'ITCVE-1@1.5.0'
   const conformance = coverage || (kind === 'native' && qualification.profile === 'ITCVE-1@1.4.0')
-  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : replay ? 'ITCVE-1@4.7.0' : followup ? 'ITCVE-1@4.6.0' : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
+  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' : followup ? 'ITCVE-1@4.6.0' : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
   const archive = kind === 'component' ? 'integrated-lab.zip' : 'native-integrated.zip'
   if (manifest.archiveParts === undefined) assert(names.includes(archive))
   else { assert.equal(kind, 'native'); assert.equal(completion, true); readIntegrationArchive(directory, archive, manifest) }
@@ -174,7 +175,7 @@ export function verifyIntegrationArchive(directory) {
   else {
     assert.equal(qualification.schema, conformance ? 'tpnil-native-integrated-qualification@2' : 'tpnil-native-integrated-qualification@1')
     assert.equal(qualification.claim, candidate ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT'); assert.equal(qualification.qualifiedEnvironment, true)
-    if (conformance) { assert.equal(qualification.program, replay ? 'ISI-4@5.7.0' : followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
+    if (conformance) { assert.equal(qualification.program, enhanced ? 'ISI-4@5.8.0' : replay ? 'ISI-4@5.7.0' : followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
   }
   if (qualification.workflowRun !== undefined) assert.equal(qualification.workflowRun, manifest.workflowRun)
   if (qualification.artifact !== undefined) {
@@ -217,7 +218,7 @@ export function verifyArchiveSemantics(bundle, { root = repository } = {}) {
   try {
     const manifest = readJson(path.join(bundle.directory, 'provenance.json'))
     const bytes = readIntegrationArchive(bundle.directory, bundle.archive, manifest)
-    const extracted = extractZipSafely(bytes, temporary, bundle.kind === 'native' && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(bundle.qualification.profile) ? { maxBytes: 1024 * 1024 * 1024 } : {})
+    const extracted = extractZipSafely(bytes, temporary, bundle.kind === 'native' && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(bundle.qualification.profile) ? { maxBytes: 1024 * 1024 * 1024 } : {})
     const lock = readJson(path.join(temporary, 'run-lock.json')); assert.equal(bundle.kind==='reevaluation'?lock.evaluatorSource:lock.source, bundle.source)
     const script = bundle.kind === 'component' ? 'verify-integrated-lab.mjs' : bundle.kind === 'reevaluation' ? 'verify-native-reevaluation.mjs' : 'verify-native-integrated.mjs'
     frozenSource=fs.mkdtempSync(path.join(os.tmpdir(),'tpnil-integration-source-'));fs.rmdirSync(frozenSource)

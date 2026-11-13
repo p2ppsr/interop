@@ -1,4 +1,4 @@
-import {nativeCompletionProfile} from './completion-profile.js'
+import {nativeCompletionProfile, permissionCoverageEvidenceForCompletion} from './completion-profile.js'
 import { completionModules, verifyCompletionReports } from './coverage-completion/suite.js'
 import { coverageObservationEncoding, decodeCoverageObservation } from './coverage-observation.js'
 import assert from 'node:assert/strict'
@@ -12,8 +12,8 @@ import { verifyNativePortability } from './verify-conformance-portability.js'
 import { verifyNativeClauseConformance } from './verify-conformance-clauses.js'
 import { validateComponentIdentity } from '../go-services.js'
 
-export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' = 'ITCVE-1@1.4.0') {
-  const completion = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0'].includes(profile ?? '')
+export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0' = 'ITCVE-1@1.4.0') {
+  const completion = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '')
   const selectedCompletion = completion ? nativeCompletionProfile(profile) : undefined
   const read = (name: string) => decodeCoverageObservation<any>(JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance', `${name}.json`), 'utf8')), completion && ['coverage-extension', 'coverage-certificates'].includes(name) ? coverageObservationEncoding : undefined)
   const report = read('result')
@@ -85,7 +85,8 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
       globalSubmissions: JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'native-submissions.json'), 'utf8'))
     })
   }
-  const permissionCoverage = release511 ? await (await import('./verify-conformance-permission-coverage.js')).verifyNativePermissionCoverage(read('permission-coverage'), name => fs.readFileSync(path.join(evidenceDirectory, name)), integrated.walletIdentity, expanded ? { profile: completion ? selectedCompletion!.profile : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0' } : undefined) : undefined
+  const permissionEvidence = permissionCoverageEvidenceForCompletion(name => fs.readFileSync(path.join(evidenceDirectory, name)), selectedCompletion?.profile)
+  const permissionCoverage = release511 ? await (await import('./verify-conformance-permission-coverage.js')).verifyNativePermissionCoverage(read('permission-coverage'), permissionEvidence, integrated.walletIdentity, expanded ? { profile: completion ? selectedCompletion!.profile : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0' } : undefined) : undefined
   let extensions: { permissions: any; transactions: any; extension: any; certificates: any } | undefined
   if (expanded) {
     const suite = read('coverage-suite')
@@ -93,7 +94,7 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
     assert.deepEqual(suite.modules, ['permissions', 'transactions', 'extension', 'certificates']); assert.deepEqual(suite.errors, [])
     const reports = { permissions: read('permission-extension'), transactions: read('coverage-transactions'), extension: read('coverage-extension'), certificates: read('coverage-certificates') }
     const policies = [
-      ['permissions', 'native-coverage-permissions-1.0.0'], ['transactions', completion ? 'native-coverage-transactions-3.0.0' : 'native-coverage-transactions-2.0.0'],
+      ['permissions', 'native-coverage-permissions-1.0.0'], ['transactions', selectedCompletion ? `native-coverage-transactions-${selectedCompletion.transactionRevision}.0.0` : 'native-coverage-transactions-2.0.0'],
       ['extension', selectedCompletion?.extensionDirectory ?? 'native-coverage-extension-2.0.0'], ['certificates', 'native-coverage-certificates-1.0.0']
     ] as const
     for (const [name, directory] of policies) {

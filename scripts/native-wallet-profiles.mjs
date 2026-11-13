@@ -1,3 +1,6 @@
+export const nativeCandidateCoverage6Flag = '--conformance-pr368-coverage-6'
+export const nativeCandidateCoverage6Variant = 'integrated-native-conformance-pr368-coverage-6'
+export const nativeCandidateCoverage6PlanPath = 'infra/native/conformance/plan-pr368-coverage-6.json'
 export const nativeCandidateCoverage5Flag = '--conformance-pr368-coverage-5'
 export const nativeCandidateCoverage5Variant = 'integrated-native-conformance-pr368-coverage-5'
 export const nativeCandidateCoverage5OriginalPlanPath = 'infra/native/conformance/plan-pr368-coverage-5.json'
@@ -39,6 +42,7 @@ export const nativeWallet511PlanPath = 'infra/native/conformance/plan-5.1.1.json
 
 /** Only named, frozen profiles select an artifact or a new observer. */
 export function selectNativeWalletProfile(flag) {
+  if(flag === nativeCandidateCoverage6Flag)return {...selectNativeWalletProfile(nativeCandidateCoverage5Flag),planPath:nativeCandidateCoverage6PlanPath,coverageRevision:6}
   const allowed = [undefined, '--integrated', '--integrated-trusted', '--conformance', '--conformance-coverage', '--conformance-closure', '--conformance-closure-rust-v3', nativeWallet511Flag, nativeCandidateFlag, nativeWallet511Observer2Flag, nativeCandidateObserver3Flag, nativeCandidateCoverage1Flag, nativeCandidateCoverage2Flag, nativeCandidateCoverage3Flag, nativeCandidateCoverage4Flag, nativeCandidateCoverage5Flag]
   if (!allowed.includes(flag)) throw new Error('Unknown native qualification profile flag')
   const replay = flag === nativeCandidateCoverage5Flag
