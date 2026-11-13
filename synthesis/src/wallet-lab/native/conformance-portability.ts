@@ -14,6 +14,18 @@ import { canonicalJson } from '../../determinism.js'
 import { verifyPortableProofClosure } from './portability-proof.js'
 
 export const portabilityAssertions = ['same-identity', 'distinct-counterparts', 'native-mediated-sync', 'complete-logical-dataset', 'source-unavailable', 'cold-wallet-reload', 'cold-task-recovery', 'replacement-redemption', 'cleanup'].map(id => `portability.${id}`)
+/** Score rows follow the frozen profile inventory. Causal execution order is
+ * retained separately in trace, UI, RPC and read-window observations. */
+export function canonicalPortabilityAssertions<T extends { id: string }>(rows: readonly T[]): T[] {
+  assert.equal(rows.length, portabilityAssertions.length, 'Portability assertion count differs from the frozen inventory')
+  const byId = new Map(rows.map(row => [row.id, row]))
+  assert.equal(byId.size, rows.length, 'Duplicate portability assertion')
+  return portabilityAssertions.map(id => {
+    const row = byId.get(id)
+    assert.ok(row, `Missing frozen portability assertion ${id}`)
+    return row
+  })
+}
 const replacementHost = 'replacement-wallet.itcve.test'
 const replacementUrl = `https://${replacementHost}`
 export const portableTask = 'TPNIL native storage replacement'
@@ -210,6 +222,7 @@ export async function qualifyStoragePortability(options: {
     check('cleanup', true, 'The source listener is restored; caller retires the isolated replacement after evidence collection.')
   }
   for (const id of portabilityAssertions) if (!report.assertions.some((a: any) => a.id === id)) report.assertions.push({ id, result: 'FAIL', detail: 'A preceding operation prevented this observation.' })
+  report.assertions = canonicalPortabilityAssertions(report.assertions)
   report.result = report.assertions.every((a: any) => a.result === 'PASS') ? 'PASS' : 'FAIL'
   return clean(report)
 }

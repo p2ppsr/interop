@@ -84,6 +84,8 @@ COPY docs/native-transaction-failure-classification-2026-11-13.md /work/docs/nat
 
 COPY docs/native-evidence-ownership-source-correction-2026-11-13.md /work/docs/native-evidence-ownership-source-correction-2026-11-13.md
 
+COPY docs/native-portability-score-order-source-correction-2026-11-13.md /work/docs/native-portability-score-order-source-correction-2026-11-13.md
+
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root
 COPY --from=conformance_files /work /work

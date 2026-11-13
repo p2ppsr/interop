@@ -457,3 +457,36 @@ with these prospective corrections. The missing early PNG and absent new
 namespace remain rejected; original results are unchanged. Fresh original
 qualification, both actual Rust results and complete frozen replay are still
 required before readiness. Full BRC100 conformance remains unproven.
+
+
+## Native17 terminal ordering and source6 correction
+
+[Source71d8b58 Foundation43382339235](https://github.com/p2ppsr/interop/actions/runs/43382339235)
+passes1654job-seconds:235Linux core/oneSKIP,1804synthesis/126SKIP, fivePython and
+13Go checks. Its590-observation component matrix remains584PASS/six upstream Go
+Messaging FAIL findings with verified evidence. Duplicate43382324554 is canceled
+at96seconds. [Evaluator10 run43382324932](https://github.com/p2ppsr/interop/actions/runs/43382324932)
+passes165seconds and independent frozen replay.
+
+[Native17 run43384270997](https://github.com/p2ppsr/interop/actions/runs/43384270997)
+fails after3471job-seconds. Both raw captures match685PASS/oneFAIL/12BLOCKED;
+original99 remain98PASS/one signed-satoshi FAIL. The source5 evidence ownership
+checks execute, and verification reaches the terminal conformance projection.
+All nine portability predicates exist, but their execution order differs from
+the frozen profile's score inventory. Original native/integrated qualification
+and Rust results are absent; complete independent replay remains refused.
+The [failed attempt](../journals/integrated-native-attempts/2026-11-13/43384270997/attempt.json)
+preserves the exact150134300-byte ZIP and550member hashes. Image reconstruction
+passes71525final/553source-overlay entries,453frozen inputs, full configuration
+and the Linux Go manifest. Order23 actual5386 and completed cohort76325. Full
+monetary/operator/agent/allocated-capacity costs remain unknown.
+
+The [source6 correction](native-portability-score-order-source-correction-2026-11-13.md)
+canonicalizes producer score rows by the unchanged frozen inventory. Missing,
+unknown, duplicate and extra rows are rejected; FAIL and every causal receipt
+remain intact. Laboratory overlays of the two terminal reports verify all698
+observations each with the same685PASS/oneFAIL/12BLOCKED outcomes. Twelve child
+verifiers also pass on native17 inputs, including locally executed48Rust checks
+per repetition. These executions occur after the failed workflow and are not
+its original Rust results or native qualification. A fresh bounded native
+attempt and complete independent source replay remain required.

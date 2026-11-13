@@ -1,0 +1,429 @@
+{
+  "schema": "tpnil-component-result@1",
+  "corpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+  "components": {
+    "rustSdk": {
+      "repository": "bsv-blockchain/rs-sdk",
+      "commit": "99d2313f2ede48a465aa8be1907d26d098aac8fd"
+    },
+    "typescriptSdk": "4.0.1",
+    "binarySha256": "5d22386c402e0fc67031baa85a9e43f0e9cf912b8483bf571fb378bbcde847fe",
+    "cargoLockSha256": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402"
+  },
+  "sources": {
+    "scripts/rust-corpus.mjs": "c65bba363b4f0605b1b47db354eb65b49cfeb88a17685d631cea4d9efb26906c",
+    "components/rust/vectors.json": "3396484d7c094b8d116df44c0b4284df1b59fe92bcc2fab07b4d1ab93db954c8",
+    "components/rust/Cargo.toml": "71064a519d63fe7174d6d16f1525321541cba75830b1fa79e8b020eedb693837",
+    "components/rust/Cargo.lock": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402",
+    "components/rust/src/main.rs": "0cacf7baa33a9e4c7b43c810adcb5386c0183d1a7f3e13d50026a7032220f315",
+    "fixtures/teranode/wab-funding-v1.json": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+    "components/transport/package-lock.json": "dda70c2b8b059836108cdf36b8ba3d35faf0a21a16300ef1ba3789bbd8c49fac",
+    "components/rust/src/graph_oracle_v3.rs": "e9b0176a2039d8716f5ae28638991dbe0ef6eb40b29ec6d34d9346689d161a6b",
+    "scripts/run-rust.mjs": "b38c6bb59f5b368c0ac49d2c535075d975efc5df3abe49ddc09e53f4b200e63e",
+    "scripts/verify-rust.mjs": "f896b4c8493025456ecc4dea52180dea47f7544f5db5e46793c94171aeef8ae7",
+    "components/rust/graph-oracle-3.0.0.json": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063"
+  },
+  "inputs": [
+    {
+      "path": "input-1.json",
+      "sourceName": "paid-http.json",
+      "sha256": "1b24ce6f958de9ae1795370760b12b910b162c5d7be35e18540fe86892077254"
+    },
+    {
+      "path": "input-2.json",
+      "sourceName": "messaging.json",
+      "sha256": "d436d545ba13484804c54e8eee236e1ac80ace7531c4452b111f97d71afbffe2"
+    },
+    {
+      "path": "input-3.json",
+      "sourceName": "synthesis-transactions.json",
+      "sha256": "2850ef27df3b7580c6bbf387918b476823b9e43ee6217fc3d5bfa98f7975752e"
+    },
+    {
+      "path": "input-4.json",
+      "sourceName": "identity-trust.json",
+      "sha256": "5724dfd333d2e12289ab3c155c6bec79633fedaf930af422af8872f2460f02b3"
+    }
+  ],
+  "assertions": [
+    {
+      "id": "sha256-abc",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "script-true",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "script-false",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "script-equality-positive",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "script-equality-negative",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "malformed-beef",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "malformed-transaction",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "secp256k1-generator",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "rust-signature-typescript-verification",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "typescript-signature-rust-verification",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "modified-signature-message-rejected",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "brc42-derived-key",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "mined-transaction-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "mined-atomic-beef-and-merkle-root",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "strict-beef-trailing-bytes",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-82ef684e7bdfba283b92d7ff53cd7f28ab0d3499075cce471e93eee882f52339-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-82ef684e7bdfba283b92d7ff53cd7f28ab0d3499075cce471e93eee882f52339-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 23,
+        "inputSatoshis": 887,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 864,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-82ef684e7bdfba283b92d7ff53cd7f28ab0d3499075cce471e93eee882f52339-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-a15262c23c5a881ca27465ffdedb355cd9892f5dc545906a8aeef6a649b0bf19-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-a15262c23c5a881ca27465ffdedb355cd9892f5dc545906a8aeef6a649b0bf19-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 23,
+        "inputSatoshis": 863,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 840,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-a15262c23c5a881ca27465ffdedb355cd9892f5dc545906a8aeef6a649b0bf19-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-4fc81e671c4f9aa9fac5bbb7ea3847dcb7f77ac373328274e9e45783e34c94e6-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-4fc81e671c4f9aa9fac5bbb7ea3847dcb7f77ac373328274e9e45783e34c94e6-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 23,
+        "inputSatoshis": 833,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 810,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-4fc81e671c4f9aa9fac5bbb7ea3847dcb7f77ac373328274e9e45783e34c94e6-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d29998f37e2341ab2d9223d3edbccef9a6f5e04ec39624a51e019e8651b7b760-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d29998f37e2341ab2d9223d3edbccef9a6f5e04ec39624a51e019e8651b7b760-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 23,
+        "inputSatoshis": 803,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 780,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-d29998f37e2341ab2d9223d3edbccef9a6f5e04ec39624a51e019e8651b7b760-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-b17c463418abd0758492615cdc1c6dc0bcae10322c4b3fbf39ec0e6b0853d29b-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-b17c463418abd0758492615cdc1c6dc0bcae10322c4b3fbf39ec0e6b0853d29b-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 23,
+        "inputSatoshis": 757,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 734,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-b17c463418abd0758492615cdc1c6dc0bcae10322c4b3fbf39ec0e6b0853d29b-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-b5bc4fa28235c5bd125274cb45c161884879b5e090a4b598f0b1a994d00962b0-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-b5bc4fa28235c5bd125274cb45c161884879b5e090a4b598f0b1a994d00962b0-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 89,
+        "inputSatoshis": 711,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 622,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-b5bc4fa28235c5bd125274cb45c161884879b5e090a4b598f0b1a994d00962b0-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-55edd7209754ba3ab12564a2a9d451c376eea52900ea2e5815d31007fa7d6f62-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-55edd7209754ba3ab12564a2a9d451c376eea52900ea2e5815d31007fa7d6f62-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 568,
+        "inputSatoshis": 620,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 52,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-55edd7209754ba3ab12564a2a9d451c376eea52900ea2e5815d31007fa7d6f62-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d4d90e5c5b40c6365994ffbb3770b96690034e19f0ed0aeb399523d8e011932a-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d4d90e5c5b40c6365994ffbb3770b96690034e19f0ed0aeb399523d8e011932a-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 43,
+        "inputSatoshis": 51,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 8,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-d4d90e5c5b40c6365994ffbb3770b96690034e19f0ed0aeb399523d8e011932a-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d34c572d38eb0289bd8eb8a20a2e1cb0915dc90d4886eedb77ee73ee7cead0a7-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-d34c572d38eb0289bd8eb8a20a2e1cb0915dc90d4886eedb77ee73ee7cead0a7-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 587,
+        "inputSatoshis": 1001,
+        "inputs": [
+          true,
+          true
+        ],
+        "outputSatoshis": 414,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-d34c572d38eb0289bd8eb8a20a2e1cb0915dc90d4886eedb77ee73ee7cead0a7-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-e92361b13c3aadb6a9ba91c8754a74162652a0e3f4f6df6af5aa68ecf15d569a-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-e92361b13c3aadb6a9ba91c8754a74162652a0e3f4f6df6af5aa68ecf15d569a-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 114,
+        "inputSatoshis": 217,
+        "inputs": [
+          true
+        ],
+        "outputSatoshis": 103,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-e92361b13c3aadb6a9ba91c8754a74162652a0e3f4f6df6af5aa68ecf15d569a-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-8a495837f1aeb07a583da3cb33dd0a2b7054423b2bcf6ed7c234aa44099eb257-serialization",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    },
+    {
+      "id": "joined-payment-8a495837f1aeb07a583da3cb33dd0a2b7054423b2bcf6ed7c234aa44099eb257-scripts-and-value",
+      "result": "PASS",
+      "detail": {
+        "anchoredGraphValid": true,
+        "fee": 31,
+        "inputSatoshis": 85,
+        "inputs": [
+          true,
+          true
+        ],
+        "outputSatoshis": 54,
+        "valid": true
+      }
+    },
+    {
+      "id": "joined-payment-8a495837f1aeb07a583da3cb33dd0a2b7054423b2bcf6ed7c234aa44099eb257-modified-output",
+      "result": "PASS",
+      "detail": "Expected outcome observed"
+    }
+  ],
+  "outcome": "PASS",
+  "evidence": [
+    {
+      "path": "calls.json",
+      "sha256": "12a13d763344a2cc5023c4528b099fe63d408171c003c713b93515bbbf1a6f26"
+    },
+    {
+      "path": "build.txt",
+      "sha256": "6d77f64dfc8c5325b90fdbe05d8be367bdd578bcccec24f275c5ffee7d03dd6e"
+    },
+    {
+      "path": "input-1.json",
+      "sha256": "1b24ce6f958de9ae1795370760b12b910b162c5d7be35e18540fe86892077254"
+    },
+    {
+      "path": "input-2.json",
+      "sha256": "d436d545ba13484804c54e8eee236e1ac80ace7531c4452b111f97d71afbffe2"
+    },
+    {
+      "path": "input-3.json",
+      "sha256": "2850ef27df3b7580c6bbf387918b476823b9e43ee6217fc3d5bfa98f7975752e"
+    },
+    {
+      "path": "input-4.json",
+      "sha256": "5724dfd333d2e12289ab3c155c6bec79633fedaf930af422af8872f2460f02b3"
+    }
+  ],
+  "cleanup": {
+    "childProcessesExited": true
+  }
+}

@@ -12,7 +12,7 @@ export const nativeRustCompatibilityPath='infra/native/conformance/rust-graph-3.
 export const nativeWallet511Observer2CompatibilityPath='infra/native/conformance/rust-graph-5.1.1-selector-2.json'
 export const nativeCandidateCoverage3OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-3.json'
 export const nativeCandidateCoverage6OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6.json'
-export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6-source-5.json'
+export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6-source-6.json'
 export const nativeCandidateCoverage5OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5.json'
 export const nativeCandidateCoverage5CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5-source-2.json'
 export const nativeCandidateCoverage4CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-4.json'
@@ -41,13 +41,16 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   if(expanded) { assert.equal(plan.observerRevision,3);assert.equal(plan.coverageRevision,enhanced?6:replay?5:followup?4:completion?3:recovery?2:1);completion ? assert.equal(plan.expectedObservations,698) : assert.equal(plan.expectedObservations,535);assert.equal(plan.admissionState,'FROZEN','Expanded source must be frozen before admission') }
   if(enhanced) {
     const originalBytes=read(nativeCandidateCoverage6OriginalPlanPath),original=JSON.parse(originalBytes)
-    assert.equal(plan.sourceBindingRevision,13,'Transaction failure classification source successor revision differs')
-    assert.equal(plan.id,`${original.id}-SOURCE-5`)
-    const predecessorPath='infra/native/conformance/plan-pr368-coverage-6-source-4.json',predecessor=read(predecessorPath),source2Path='infra/native/conformance/plan-pr368-coverage-6-source-2.json',source2=read(source2Path)
+    assert.equal(plan.sourceBindingRevision,14,'Transaction failure classification source successor revision differs')
+    assert.equal(plan.id,`${original.id}-SOURCE-6`)
+    const predecessorPath='infra/native/conformance/plan-pr368-coverage-6-source-5.json',predecessor=read(predecessorPath),source2Path='infra/native/conformance/plan-pr368-coverage-6-source-2.json',source2=read(source2Path)
     assert.deepEqual(plan.sourcePredecessor,{path:predecessorPath,sha256:sha(predecessor)})
     assert.equal(sha(readCommitted(source,predecessorPath)),sha(predecessor))
+    const source4Path='infra/native/conformance/plan-pr368-coverage-6-source-4.json',source4=read(source4Path)
+    assert.deepEqual(JSON.parse(predecessor).sourcePredecessor,{path:source4Path,sha256:sha(source4)})
+    assert.equal(sha(readCommitted(source,source4Path)),sha(source4))
     const source3Path='infra/native/conformance/plan-pr368-coverage-6-source-3.json',source3=read(source3Path)
-    assert.deepEqual(JSON.parse(predecessor).sourcePredecessor,{path:source3Path,sha256:sha(source3)})
+    assert.deepEqual(JSON.parse(source4).sourcePredecessor,{path:source3Path,sha256:sha(source3)})
     assert.equal(sha(readCommitted(source,source3Path)),sha(source3))
     assert.deepEqual(JSON.parse(source3).sourcePredecessor,{path:source2Path,sha256:sha(source2)})
     assert.equal(sha(readCommitted(source,source2Path)),sha(source2))
@@ -55,7 +58,7 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
     assert.equal(sha(readCommitted(source,nativeCandidateCoverage6OriginalPlanPath)),sha(originalBytes))
     const semantic=value=>Object.fromEntries(Object.entries(value).filter(([key])=>!['id','conformanceInputs','sourceBindingRevision','sourcePredecessor'].includes(key)))
     assert.deepEqual(semantic(plan),semantic(original),'Transitive source correction changed a native criterion')
-    const added=["docs/native-evidence-ownership-source-correction-2026-11-13.md", "synthesis/test/native-observer-receipt-source5.test.ts"].concat(["docs/native-observer-source-correction-2026-11-13.md", "docs/native-transaction-fixture-source-correction-2026-11-13.md", "synthesis/test/fixtures/native-transaction-branches-source3/candidate-fixture.ts.gz", "synthesis/test/fixtures/native-transaction-branches-source3/cleanup.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/funding.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/missing-stage-report.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/missing-stage-verification.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/native15-no-change-1.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/native15-no-change-2.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/provenance.json", "synthesis/test/fixtures/native-transaction-branches-source3/registry.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/report.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/run-reference.ts.gz", "synthesis/test/fixtures/native-transaction-branches-source3/source-after.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/source-before.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/verification.json.gz", "docs/native-transaction-failure-classification-2026-11-13.md", "synthesis/test/fixtures/native-transaction-failure-classification/provenance.json", "synthesis/test/fixtures/native-transaction-failure-classification/report.json.gz", "synthesis/test/fixtures/native-transaction-failure-classification/verification.json.gz"])
+    const added=["docs/native-portability-score-order-source-correction-2026-11-13.md", "synthesis/test/native-portability-assertion-order.test.ts"].concat(["docs/native-evidence-ownership-source-correction-2026-11-13.md", "synthesis/test/native-observer-receipt-source5.test.ts"].concat(["docs/native-observer-source-correction-2026-11-13.md", "docs/native-transaction-fixture-source-correction-2026-11-13.md", "synthesis/test/fixtures/native-transaction-branches-source3/candidate-fixture.ts.gz", "synthesis/test/fixtures/native-transaction-branches-source3/cleanup.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/funding.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/missing-stage-report.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/missing-stage-verification.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/native15-no-change-1.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/native15-no-change-2.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/provenance.json", "synthesis/test/fixtures/native-transaction-branches-source3/registry.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/report.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/run-reference.ts.gz", "synthesis/test/fixtures/native-transaction-branches-source3/source-after.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/source-before.json.gz", "synthesis/test/fixtures/native-transaction-branches-source3/verification.json.gz", "docs/native-transaction-failure-classification-2026-11-13.md", "synthesis/test/fixtures/native-transaction-failure-classification/provenance.json", "synthesis/test/fixtures/native-transaction-failure-classification/report.json.gz", "synthesis/test/fixtures/native-transaction-failure-classification/verification.json.gz"]))
     assert.deepEqual(Object.keys(plan.conformanceInputs).filter(name=>!added.includes(name)).sort(),Object.keys(original.conformanceInputs).sort(),'Source correction dropped or replaced a frozen input')
     for(const name of added)assert.match(plan.conformanceInputs[name],/^[a-f0-9]{64}$/)
   }
@@ -92,9 +95,9 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   assert.equal(sha(readCommitted(source,compatibilityPath)),sha(bytes),'Compatibility manifest did not exist unchanged at the recorded native execution source')
   assert.equal(manifest.schema,'tpnil-native-rust-compatibility@3.0.0')
   assert.equal(manifest.variant,enhanced?nativeCandidateCoverage6Variant:replay?nativeCandidateCoverage5Variant:followup?nativeCandidateCoverage4Variant:completion?nativeCandidateCoverage3Variant:recovery?nativeCandidateCoverage2Variant:expanded?nativeCandidateCoverage1Variant:observer3?nativeCandidateObserver3Variant:candidate?nativeCandidateVariant:observer2?nativeWallet511Observer2Variant:wallet511?nativeWallet511Variant:nativeRustV3Variant)
-  assert.equal(manifest.sourceBindingRevision,enhanced?18:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
+  assert.equal(manifest.sourceBindingRevision,enhanced?19:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
   if(expanded) {
-    const previous=enhanced?'infra/native/conformance/rust-graph-pr368-coverage-6-source-4.json':replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
+    const previous=enhanced?'infra/native/conformance/rust-graph-pr368-coverage-6-source-5.json':replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
     assert.deepEqual(manifest.predecessor,{manifest:previous,sha256:sha(prior)})
     assert.equal(sha(readCommitted(source,previous)),sha(prior))
   }
