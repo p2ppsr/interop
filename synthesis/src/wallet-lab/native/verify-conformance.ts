@@ -60,10 +60,10 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
     assert.equal(portabilityReport.oracle, portabilityOracle)
     const primary = JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'service-components.json'), 'utf8'))
     assert.deepEqual(portabilityReport.components.source, primary)
-    const patch = fs.readFileSync(path.resolve(import.meta.dirname, completion ? '../../../../infra/adapters/storage-caller-known-inputs/patch.lock.json' : expanded ? '../../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : fixtureRevision === 2 ? '../../../../infra/adapters/storage-native-contracts/patch.lock.json' : release511 ? '../../../../infra/adapters/storage-list-actions/patch.lock.json' : '../../../../infra/adapters/storage-portability/patch.lock.json'))
+    const patch = fs.readFileSync(path.resolve(import.meta.dirname, profile === 'ITCVE-1@4.8.0' ? '../../../../infra/adapters/storage-sync-order/patch.lock.json' : completion ? '../../../../infra/adapters/storage-caller-known-inputs/patch.lock.json' : expanded ? '../../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : fixtureRevision === 2 ? '../../../../infra/adapters/storage-native-contracts/patch.lock.json' : release511 ? '../../../../infra/adapters/storage-list-actions/patch.lock.json' : '../../../../infra/adapters/storage-portability/patch.lock.json'))
     for (const identity of [primary, portabilityReport.components.replacement]) {
       validateComponentIdentity(identity, profile)
-      assert.equal(identity.go.compatibilityPatch.schema, completion ? 'tpnil-storage-caller-known-inputs-go-build@1.0.0' : expanded ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : fixtureRevision === 2 ? 'tpnil-storage-native-contracts-go-build@1.0.0' : release511 ? 'tpnil-storage-list-actions-go-build@1.0.0' : 'tpnil-storage-portability-go-build@1.0.0')
+      assert.equal(identity.go.compatibilityPatch.schema, profile === 'ITCVE-1@4.8.0' ? 'tpnil-storage-sync-order-go-build@1.0.0' : completion ? 'tpnil-storage-caller-known-inputs-go-build@1.0.0' : expanded ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : fixtureRevision === 2 ? 'tpnil-storage-native-contracts-go-build@1.0.0' : release511 ? 'tpnil-storage-list-actions-go-build@1.0.0' : 'tpnil-storage-portability-go-build@1.0.0')
       assert.equal(identity.go.compatibilityPatch.patchLockSha256, sha256Hex(patch), 'Portability requires the admitted ancestry export build')
     }
   } else {

@@ -54,6 +54,8 @@ COPY scripts/prepare-storage-input-ancestry-go.mjs /work/scripts/
 COPY infra/adapters/storage-sqlite-retry /work/infra/adapters/storage-sqlite-retry
 COPY scripts/prepare-storage-sqlite-retry-go.mjs /work/scripts/
 COPY infra/adapters/storage-caller-known-inputs /work/infra/adapters/storage-caller-known-inputs
+COPY infra/adapters/storage-sync-order /work/infra/adapters/storage-sync-order
+COPY scripts/prepare-storage-sync-order-go.mjs /work/scripts/
 COPY scripts/prepare-storage-caller-known-inputs-go.mjs /work/scripts/
 COPY programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-transactions-3.0.0/policy.json
 COPY programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json /work/programs/ISI-4/profiles/native-coverage-partial-trace-1.0.0/policy.json
@@ -86,6 +88,10 @@ COPY docs/native-evidence-ownership-source-correction-2026-11-13.md /work/docs/n
 
 COPY docs/native-portability-score-order-source-correction-2026-11-13.md /work/docs/native-portability-score-order-source-correction-2026-11-13.md
 COPY docs/native-qualification-summary-source-correction-2026-11-13.md /work/docs/native-qualification-summary-source-correction-2026-11-13.md
+COPY docs/native-go-serialization-artifact-correction-2026-11-13.md /work/docs/native-go-serialization-artifact-correction-2026-11-13.md
+COPY .github/workflows/ci.yml /work/.github/workflows/ci.yml
+COPY .github/workflows/native-evidence-reevaluation.yml /work/.github/workflows/native-evidence-reevaluation.yml
+COPY scripts/frozen-component-replay.mjs /work/scripts/
 
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root

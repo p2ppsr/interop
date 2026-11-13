@@ -1,3 +1,4 @@
+import { validateSyncOrderArtifact } from './go-sync-order-build.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import http, { type IncomingMessage, type ServerResponse } from 'node:http'
@@ -104,6 +105,8 @@ export interface GoServiceOptions {
   storageSQLiteRetryPatch?: boolean
   /** Caller-declared known roots and complete same-host storage inventories. */
   storageCallerKnownInputsPatch?: boolean
+  /** Go11: deterministic portable BEEF bytes, retaining the complete Go10 host. */
+  storageSyncOrderPatch?: boolean
   /** Prospective ITCVE-1.4 fixture semantics, never implicit in old profiles. */
   terminalRejectionReceipts?: boolean
 }
@@ -115,7 +118,7 @@ export function selectComponents(value: ComponentSelection = {}): Required<Compo
   }
   return { overlay: 'typescript', chaintracks: 'typescript', storage: 'typescript', ...value }
 }
-export function validateComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0'): void {
+function validateBaseComponentIdentity(value: Record<string, unknown>, profile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0'): void {
   const components = selectComponents(value.components as ComponentSelection)
   if (!Object.values(components).includes('go')) throw new Error('Go profile omitted Go selection')
   const go = value.go as Record<string, unknown> | undefined
@@ -153,6 +156,23 @@ export function validateComponentIdentity(value: Record<string, unknown>, profil
   }
 }
 
+/** Admission for the current4.8 artifact retains every inherited Go10 check. */
+export function validateComponentIdentity(value: Record<string,unknown>,profile?: Parameters<typeof validateBaseComponentIdentity>[1]): void {
+  if(profile!=='ITCVE-1@4.8.0')return validateBaseComponentIdentity(value,profile)
+  const go=value.go as Record<string,any>|undefined
+  if(!go||!go.compatibilityPatch)throw new Error('Current4.8 requires the separately frozen Go11 artifact')
+  const parent=validateSyncOrderArtifact(String(go.binarySha256),go.compatibilityPatch)
+  validateBaseComponentIdentity({...value,go:{...go,binarySha256:parent.binarySha256,compatibilityPatch:parent}},profile)
+}
+
+export function validateSyncOrderGoBuild(build: GoBuild,binarySha256:string,manifest:Record<string,unknown>): void {
+  const parent=validateSyncOrderArtifact(binarySha256,manifest),sdk=manifest.sdkReplacement as Record<string,any>,actual=build.dependencies?.[sdk.module]
+  if(!actual||actual.version!==sdk.version||actual.replacementModule!==sdk.source||!['','(devel)'].includes(actual.replacementVersion??''))throw new Error('Compiled Go11 SDK replacement differs')
+  const inherited=structuredClone(build)
+  inherited.dependencies![sdk.module]!.replacementModule=parent.sdkReplacement.source
+  validateStorageSyncGoBuild(inherited,parent.binarySha256,parent,false,false,false,false,false,false,false,false,true)
+}
+
 export class GoServices {
   private process?: ChildProcess
   private origin = ''
@@ -167,6 +187,7 @@ export class GoServices {
   get diagnostics(): string { return this.stderr }
   readonly binary: string
   constructor(readonly state: string, readonly components: Required<ComponentSelection>, readonly options: GoServiceOptions = {}) {
+    if(options.storageSyncOrderPatch&&!options.storageCallerKnownInputsPatch)throw new Error('Go11 requires the full caller-known-inputs host')
     if ([options.storageSyncPatch, options.storagePortabilityPatch, options.storageListActionsPatch, options.storageNativeContractsPatch, options.storageBatchSubjectsPatch, options.storageDustAccountingPatch, options.storageMergeAccountingPatch, options.storageInputAncestryPatch, options.storageSQLiteRetryPatch, options.storageCallerKnownInputsPatch].filter(Boolean).length > 1) throw new Error('Conflicting Go storage compatibility selectors')
     this.binary = path.resolve(options.binary ?? process.env.TPNIL_GO_BINARY ?? fileURLToPath(new URL('../../../out/itcve-go-services', import.meta.url)))
   }
@@ -208,6 +229,7 @@ export class GoServices {
             if (message.schema !== 'tpnil-go-services@1.0.0') continue
             try {
               if (this.compatibilityPatch === undefined) validateGoBuild(message)
+              else if(this.options.storageSyncOrderPatch)validateSyncOrderGoBuild(message,this.executableSha256,this.compatibilityPatch)
               else validateStorageSyncGoBuild(message, this.executableSha256, this.compatibilityPatch, this.options.storagePortabilityPatch, this.options.storageListActionsPatch, this.options.storageNativeContractsPatch, this.options.storageBatchSubjectsPatch, this.options.storageDustAccountingPatch, this.options.storageMergeAccountingPatch, this.options.storageInputAncestryPatch, this.options.storageSQLiteRetryPatch, this.options.storageCallerKnownInputsPatch)
             } catch (error) { return failed(error as Error) }
             const url = new URL(message.origin!)

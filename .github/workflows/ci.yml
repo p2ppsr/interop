@@ -131,6 +131,18 @@ jobs:
           npm test --prefix integrations/services
           RUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml
           RUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml --features graph-oracle-v3 --target-dir components/rust/target/corpus-v3
+      - name: Verify deterministic Go11 ancestry and direct replacement RPC
+        run: |
+          node scripts/prepare-storage-sync-order-go.mjs
+          node scripts/run-conformance-portability-reference.mjs out/go11-portability-reference go --sync-order-patch --native-wire
+      - name: Retain deterministic replacement evidence
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: go11-portability-reference
+          path: out/go11-portability-reference
+          if-no-files-found: warn
+          retention-days: 90
       - name: Execute all component matrices with fresh repeated state
         env:
           RUSTUP_TOOLCHAIN: 1.88.0

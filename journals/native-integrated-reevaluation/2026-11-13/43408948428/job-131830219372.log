@@ -1,0 +1,522 @@
+﻿2026-11-13T10:25:31.6018016Z Current runner version: '2.338.2'
+2026-11-13T10:25:31.6055795Z ##[group]Runner Image Provisioner
+2026-11-13T10:25:31.6057321Z Hosted Compute Agent
+2026-11-13T10:25:31.6058372Z Version: 20261028.624
+2026-11-13T10:25:31.6059618Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-13T10:25:31.6061017Z Build Date: 2026-10-28T21:51:42Z
+2026-11-13T10:25:31.6062389Z Worker ID: {4bf36d3e-3f81-4045-91a4-25ccc5d63173}
+2026-11-13T10:25:31.6064095Z Region: centralus
+2026-11-13T10:25:31.6065173Z Cloud: Azure
+2026-11-13T10:25:31.6066242Z ##[endgroup]
+2026-11-13T10:25:31.6069292Z ##[group]Operating System
+2026-11-13T10:25:31.6070566Z Ubuntu
+2026-11-13T10:25:31.6071516Z 24.04.5
+2026-11-13T10:25:31.6072470Z LTS
+2026-11-13T10:25:31.6073847Z ##[endgroup]
+2026-11-13T10:25:31.6074963Z ##[group]Runner Image
+2026-11-13T10:25:31.6076542Z Image: ubuntu-24.04
+2026-11-13T10:25:31.6077787Z Version: 20261101.360.1
+2026-11-13T10:25:31.6080078Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-13T10:25:31.6083386Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-13T10:25:31.6085229Z ##[endgroup]
+2026-11-13T10:25:31.6087518Z ##[group]GITHUB_TOKEN Permissions
+2026-11-13T10:25:31.6090358Z Contents: read
+2026-11-13T10:25:31.6091135Z Metadata: read
+2026-11-13T10:25:31.6091723Z ##[endgroup]
+2026-11-13T10:25:31.6094403Z Secret source: Actions
+2026-11-13T10:25:31.6095411Z Cache mode: write
+2026-11-13T10:25:31.6096451Z Prepare workflow directory
+2026-11-13T10:25:31.6819396Z Prepare all required actions
+2026-11-13T10:25:31.6894130Z Getting action download info
+2026-11-13T10:25:31.9234514Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-13T10:25:32.0346144Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-13T10:25:32.1468264Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-13T10:25:32.5911903Z Complete job name: retained-native-evidence
+2026-11-13T10:25:32.6906218Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-13T10:25:32.6908144Z with:
+2026-11-13T10:25:32.6909037Z   fetch-depth: 0
+2026-11-13T10:25:32.6910019Z   persist-credentials: false
+2026-11-13T10:25:32.6911128Z   repository: p2ppsr/interop
+2026-11-13T10:25:32.6920754Z   token: ***
+2026-11-13T10:25:32.6921744Z   ssh-strict: true
+2026-11-13T10:25:32.6923368Z   ssh-user: git
+2026-11-13T10:25:32.6924312Z   clean: true
+2026-11-13T10:25:32.6925269Z   sparse-checkout-cone-mode: true
+2026-11-13T10:25:32.6926387Z   fetch-tags: false
+2026-11-13T10:25:32.6927333Z   show-progress: true
+2026-11-13T10:25:32.6928297Z   lfs: false
+2026-11-13T10:25:32.6929194Z   submodules: false
+2026-11-13T10:25:32.6930182Z   set-safe-directory: true
+2026-11-13T10:25:32.6931273Z   allow-unsafe-pr-checkout: false
+2026-11-13T10:25:32.6932744Z env:
+2026-11-13T10:25:32.6934563Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:25:32.6936551Z ##[endgroup]
+2026-11-13T10:25:33.4107179Z Syncing repository: p2ppsr/interop
+2026-11-13T10:25:33.4108993Z ##[group]Getting Git version info
+2026-11-13T10:25:33.4109471Z Working directory is '/home/runner/work/interop/interop'
+2026-11-13T10:25:33.4110129Z [command]/usr/bin/git version
+2026-11-13T10:25:33.4329368Z git version 2.56.0
+2026-11-13T10:25:33.4351605Z ##[endgroup]
+2026-11-13T10:25:33.4365567Z Temporarily overriding HOME='/home/runner/work/_temp/f0380e1e-4743-4a5a-96c5-720a3e5b6a12' before making global git config changes
+2026-11-13T10:25:33.4366531Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T10:25:33.4371034Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T10:25:33.4420328Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-13T10:25:33.4424435Z ##[group]Initializing the repository
+2026-11-13T10:25:33.4428648Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-13T10:25:33.4748140Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-13T10:25:33.4749409Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-13T10:25:33.4750630Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-13T10:25:33.4751388Z hint: call:
+2026-11-13T10:25:33.4751706Z hint:
+2026-11-13T10:25:33.4752245Z hint: 	git config --global init.defaultBranch <name>
+2026-11-13T10:25:33.4753106Z hint:
+2026-11-13T10:25:33.4753599Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-13T10:25:33.4754297Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-13T10:25:33.4754817Z hint:
+2026-11-13T10:25:33.4755118Z hint: 	git branch -m <name>
+2026-11-13T10:25:33.4755502Z hint:
+2026-11-13T10:25:33.4755957Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-13T10:25:33.4763857Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-13T10:25:33.4776389Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-13T10:25:33.4824100Z ##[endgroup]
+2026-11-13T10:25:33.4824668Z ##[group]Disabling automatic garbage collection
+2026-11-13T10:25:33.4827768Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-13T10:25:33.4868536Z ##[endgroup]
+2026-11-13T10:25:33.4869120Z ##[group]Setting up auth
+2026-11-13T10:25:33.4875755Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T10:25:33.4910716Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T10:25:33.5412482Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T10:25:33.5448929Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T10:25:33.5686456Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T10:25:33.5724052Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T10:25:33.5961180Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-13T10:25:33.6277842Z ##[endgroup]
+2026-11-13T10:25:33.6278857Z ##[group]Fetching the repository
+2026-11-13T10:25:33.6296578Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-13T10:25:52.7449391Z From https://github.com/p2ppsr/interop
+2026-11-13T10:25:52.7474008Z  * [new branch]      codex/itcve-go-components-20261106 -> origin/codex/itcve-go-components-20261106
+2026-11-13T10:25:52.7475425Z  * [new branch]      codex/lab-integration-20261106 -> origin/codex/lab-integration-20261106
+2026-11-13T10:25:52.7477425Z  * [new branch]      codex/native-wallet-closure-20261111 -> origin/codex/native-wallet-closure-20261111
+2026-11-13T10:25:52.7478992Z  * [new branch]      codex/native-wallet-conformance-20261109 -> origin/codex/native-wallet-conformance-20261109
+2026-11-13T10:25:52.7480249Z  * [new branch]      main                     -> origin/main
+2026-11-13T10:25:52.7480954Z  * [new tag]         sut-artifacts-2026-09-20 -> sut-artifacts-2026-09-20
+2026-11-13T10:25:52.7482623Z [command]/usr/bin/git branch --list --remote origin/codex/native-wallet-closure-20261111
+2026-11-13T10:25:52.7498852Z   origin/codex/native-wallet-closure-20261111
+2026-11-13T10:25:52.7508540Z [command]/usr/bin/git rev-parse refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-13T10:25:52.7533208Z 3aac88975fc0f4e911fcf10fea6c8158f7760534
+2026-11-13T10:25:52.7537396Z ##[endgroup]
+2026-11-13T10:25:52.7539271Z ##[group]Determining the checkout info
+2026-11-13T10:25:52.7539692Z ##[endgroup]
+2026-11-13T10:25:52.7544182Z [command]/usr/bin/git sparse-checkout disable
+2026-11-13T10:25:52.7601403Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-13T10:25:52.7635156Z ##[group]Checking out the ref
+2026-11-13T10:25:52.7635850Z [command]/usr/bin/git checkout --progress --force -B codex/native-wallet-closure-20261111 refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-13T10:25:53.7933321Z Updating files:  33% (4361/12972)
+2026-11-13T10:25:53.8384601Z Updating files:  34% (4411/12972)
+2026-11-13T10:25:53.8792694Z Updating files:  35% (4541/12972)
+2026-11-13T10:25:53.8838434Z Updating files:  36% (4670/12972)
+2026-11-13T10:25:53.8902023Z Updating files:  37% (4800/12972)
+2026-11-13T10:25:53.8955083Z Updating files:  38% (4930/12972)
+2026-11-13T10:25:53.8999718Z Updating files:  39% (5060/12972)
+2026-11-13T10:25:53.9048988Z Updating files:  40% (5189/12972)
+2026-11-13T10:25:53.9675938Z Updating files:  41% (5319/12972)
+2026-11-13T10:25:54.8386073Z Updating files:  42% (5449/12972)
+2026-11-13T10:25:55.8218629Z Updating files:  42% (5502/12972)
+2026-11-13T10:25:55.8384192Z Updating files:  42% (5557/12972)
+2026-11-13T10:25:56.8823995Z Updating files:  43% (5578/12972)
+2026-11-13T10:25:57.5917901Z Updating files:  43% (5613/12972)
+2026-11-13T10:25:57.6320624Z Updating files:  44% (5708/12972)
+2026-11-13T10:25:57.7050335Z Updating files:  45% (5838/12972)
+2026-11-13T10:25:57.7524746Z Updating files:  46% (5968/12972)
+2026-11-13T10:25:57.7766328Z Updating files:  47% (6097/12972)
+2026-11-13T10:25:57.7877032Z Updating files:  48% (6227/12972)
+2026-11-13T10:25:57.8367815Z Updating files:  48% (6231/12972)
+2026-11-13T10:25:57.8416926Z Updating files:  49% (6357/12972)
+2026-11-13T10:25:57.9186731Z Updating files:  50% (6486/12972)
+2026-11-13T10:25:57.9796902Z Updating files:  51% (6616/12972)
+2026-11-13T10:25:58.0374345Z Updating files:  52% (6746/12972)
+2026-11-13T10:25:58.0432973Z Updating files:  53% (6876/12972)
+2026-11-13T10:25:58.0488326Z Updating files:  54% (7005/12972)
+2026-11-13T10:25:58.0592376Z Updating files:  55% (7135/12972)
+2026-11-13T10:25:58.0682920Z Updating files:  56% (7265/12972)
+2026-11-13T10:25:58.0808739Z Updating files:  57% (7395/12972)
+2026-11-13T10:25:58.0880705Z Updating files:  58% (7524/12972)
+2026-11-13T10:25:58.0931064Z Updating files:  59% (7654/12972)
+2026-11-13T10:25:58.1059160Z Updating files:  60% (7784/12972)
+2026-11-13T10:25:58.1077155Z Updating files:  61% (7913/12972)
+2026-11-13T10:25:58.1198708Z Updating files:  62% (8043/12972)
+2026-11-13T10:25:58.1402615Z Updating files:  63% (8173/12972)
+2026-11-13T10:25:58.1481245Z Updating files:  64% (8303/12972)
+2026-11-13T10:25:58.1700008Z Updating files:  65% (8432/12972)
+2026-11-13T10:25:58.2098876Z Updating files:  66% (8562/12972)
+2026-11-13T10:25:58.2176517Z Updating files:  67% (8692/12972)
+2026-11-13T10:25:58.2279532Z Updating files:  68% (8821/12972)
+2026-11-13T10:25:58.2430599Z Updating files:  69% (8951/12972)
+2026-11-13T10:25:58.2784887Z Updating files:  70% (9081/12972)
+2026-11-13T10:25:58.2960911Z Updating files:  71% (9211/12972)
+2026-11-13T10:25:58.3098438Z Updating files:  72% (9340/12972)
+2026-11-13T10:25:58.3271391Z Updating files:  73% (9470/12972)
+2026-11-13T10:25:58.3388099Z Updating files:  74% (9600/12972)
+2026-11-13T10:25:58.3634086Z Updating files:  75% (9729/12972)
+2026-11-13T10:25:58.3693532Z Updating files:  76% (9859/12972)
+2026-11-13T10:25:58.3774258Z Updating files:  77% (9989/12972)
+2026-11-13T10:25:58.3832967Z Updating files:  78% (10119/12972)
+2026-11-13T10:25:58.3954542Z Updating files:  79% (10248/12972)
+2026-11-13T10:25:58.4019287Z Updating files:  80% (10378/12972)
+2026-11-13T10:25:58.4085229Z Updating files:  81% (10508/12972)
+2026-11-13T10:25:58.4169813Z Updating files:  82% (10638/12972)
+2026-11-13T10:25:58.4254036Z Updating files:  83% (10767/12972)
+2026-11-13T10:25:58.4549072Z Updating files:  84% (10897/12972)
+2026-11-13T10:25:58.5369676Z Updating files:  85% (11027/12972)
+2026-11-13T10:25:58.6110338Z Updating files:  86% (11156/12972)
+2026-11-13T10:25:58.6224060Z Updating files:  87% (11286/12972)
+2026-11-13T10:25:58.6561186Z Updating files:  88% (11416/12972)
+2026-11-13T10:25:58.6653770Z Updating files:  89% (11546/12972)
+2026-11-13T10:25:58.6798649Z Updating files:  90% (11675/12972)
+2026-11-13T10:25:58.7374947Z Updating files:  91% (11805/12972)
+2026-11-13T10:25:58.7966614Z Updating files:  92% (11935/12972)
+2026-11-13T10:25:58.8381749Z Updating files:  92% (12014/12972)
+2026-11-13T10:25:58.8540856Z Updating files:  93% (12064/12972)
+2026-11-13T10:25:58.8661691Z Updating files:  94% (12194/12972)
+2026-11-13T10:25:58.8754436Z Updating files:  95% (12324/12972)
+2026-11-13T10:25:58.8849585Z Updating files:  96% (12454/12972)
+2026-11-13T10:25:58.8961550Z Updating files:  97% (12583/12972)
+2026-11-13T10:25:58.9297743Z Updating files:  98% (12713/12972)
+2026-11-13T10:25:58.9381182Z Updating files:  99% (12843/12972)
+2026-11-13T10:25:58.9382007Z Updating files: 100% (12972/12972)
+2026-11-13T10:25:58.9382723Z Updating files: 100% (12972/12972), done.
+2026-11-13T10:25:59.4753813Z Switched to a new branch 'codex/native-wallet-closure-20261111'
+2026-11-13T10:25:59.4759951Z branch 'codex/native-wallet-closure-20261111' set up to track 'origin/codex/native-wallet-closure-20261111'.
+2026-11-13T10:25:59.5094153Z ##[endgroup]
+2026-11-13T10:25:59.5140864Z [command]/usr/bin/git log -1 --format=%H
+2026-11-13T10:25:59.5166004Z 3aac88975fc0f4e911fcf10fea6c8158f7760534
+2026-11-13T10:25:59.5178650Z ##[group]Removing auth
+2026-11-13T10:25:59.5187414Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T10:25:59.5216511Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T10:25:59.5473571Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T10:25:59.5500105Z http.https://github.com/.extraheader
+2026-11-13T10:25:59.5511043Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-13T10:25:59.5549089Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T10:25:59.5808843Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T10:25:59.5842505Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T10:25:59.6091690Z ##[endgroup]
+2026-11-13T10:25:59.6398224Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-13T10:25:59.6398659Z with:
+2026-11-13T10:25:59.6398874Z   node-version-file: .nvmrc
+2026-11-13T10:25:59.6399113Z   always-auth: false
+2026-11-13T10:25:59.6399326Z   check-latest: false
+2026-11-13T10:25:59.6401863Z   token: ***
+2026-11-13T10:25:59.6402059Z env:
+2026-11-13T10:25:59.6402500Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:25:59.6403254Z ##[endgroup]
+2026-11-13T10:25:59.7895231Z Node version file is not JSON file
+2026-11-13T10:25:59.7897289Z Resolved .nvmrc as 24.22.1
+2026-11-13T10:25:59.7918792Z Attempting to download 24.22.1...
+2026-11-13T10:25:59.8070983Z (node:2427) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T10:25:59.8072534Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T10:26:00.6014726Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-13T10:26:01.1088610Z Extracting ...
+2026-11-13T10:26:01.1244600Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/3ccd38f2-44a1-4282-9ec9-f87b6c41b9e5 -f /home/runner/work/_temp/378c90af-9248-43d0-aab4-7442d0eb0a0a
+2026-11-13T10:26:02.3568594Z Adding to the cache ...
+2026-11-13T10:26:06.0301684Z ##[group]Environment details
+2026-11-13T10:26:06.2724983Z node: v24.22.1
+2026-11-13T10:26:06.2725334Z npm: 11.19.1
+2026-11-13T10:26:06.2725667Z yarn: 1.22.22
+2026-11-13T10:26:06.2726187Z ##[endgroup]
+2026-11-13T10:26:06.2940931Z ##[group]Run npm ci --ignore-scripts --prefix synthesis
+2026-11-13T10:26:06.2941423Z [36;1mnpm ci --ignore-scripts --prefix synthesis[0m
+2026-11-13T10:26:06.2941848Z [36;1mnpm ci --ignore-scripts --prefix components/transport[0m
+2026-11-13T10:26:06.2942285Z [36;1mnpm ci --ignore-scripts --prefix integrations/services[0m
+2026-11-13T10:26:06.2942712Z [36;1mnpm rebuild better-sqlite3 --prefix integrations/services[0m
+2026-11-13T10:26:06.2943556Z [36;1mnode scripts/prepare-messaging.mjs --native-verifier-only[0m
+2026-11-13T10:26:06.2943977Z [36;1mrustup toolchain install 1.88.0 --profile minimal[0m
+2026-11-13T10:26:06.2944504Z [36;1mRUSTUP_TOOLCHAIN=1.88.0 cargo fetch --locked --manifest-path components/rust/Cargo.toml[0m
+2026-11-13T10:26:06.2970677Z shell: /usr/bin/bash -e {0}
+2026-11-13T10:26:06.2970951Z env:
+2026-11-13T10:26:06.2971373Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:26:06.2971924Z ##[endgroup]
+2026-11-13T10:26:10.2396557Z 
+2026-11-13T10:26:10.2406983Z added 193 packages, and audited 194 packages in 4s
+2026-11-13T10:26:10.2407474Z 
+2026-11-13T10:26:10.2407765Z 58 packages are looking for funding
+2026-11-13T10:26:10.2408280Z   run `npm fund` for details
+2026-11-13T10:26:10.2412383Z 
+2026-11-13T10:26:10.2412698Z found 0 vulnerabilities
+2026-11-13T10:26:12.3308557Z 
+2026-11-13T10:26:12.3309602Z added 103 packages, and audited 104 packages in 2s
+2026-11-13T10:26:12.3310080Z 
+2026-11-13T10:26:12.3317601Z 34 packages are looking for funding
+2026-11-13T10:26:12.3320446Z   run `npm fund` for details
+2026-11-13T10:26:12.3324074Z 
+2026-11-13T10:26:12.3324351Z found 0 vulnerabilities
+2026-11-13T10:26:14.0213653Z npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+2026-11-13T10:26:16.2248692Z 
+2026-11-13T10:26:16.2249691Z added 226 packages, and audited 227 packages in 4s
+2026-11-13T10:26:16.2250233Z 
+2026-11-13T10:26:16.2250558Z 57 packages are looking for funding
+2026-11-13T10:26:16.2251134Z   run `npm fund` for details
+2026-11-13T10:26:16.2260857Z 
+2026-11-13T10:26:16.2261255Z found 0 vulnerabilities
+2026-11-13T10:26:20.0123815Z npm warn rebuild 4 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+2026-11-13T10:26:20.0126547Z rebuilt dependencies successfully
+2026-11-13T10:26:32.3778845Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2026-11-13T10:26:33.9159284Z npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-13T10:26:33.9200049Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-13T10:26:33.9472541Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-13T10:26:37.7340706Z 
+2026-11-13T10:26:37.7341421Z added 755 packages in 10s
+2026-11-13T10:26:39.0384213Z {
+2026-11-13T10:26:39.0384982Z   "schema": "tpnil-native-messaging-verifier-preparation@1",
+2026-11-13T10:26:39.0385805Z   "mode": "native-verifier-only",
+2026-11-13T10:26:39.0386419Z   "serviceRuntimePrepared": false,
+2026-11-13T10:26:39.0387038Z   "startedAt": "2026-11-13T10:26:20.057Z",
+2026-11-13T10:26:39.0387611Z   "completedAt": "2026-11-13T10:26:37.921Z",
+2026-11-13T10:26:39.0388287Z   "source": {
+2026-11-13T10:26:39.0389130Z     "commit": "3aac88975fc0f4e911fcf10fea6c8158f7760534",
+2026-11-13T10:26:39.0389541Z     "dirty": false,
+2026-11-13T10:26:39.0389800Z     "files": {
+2026-11-13T10:26:39.0390392Z       "scripts/prepare-messaging.mjs": "77c7661e713e12391d072c9fb621861ed46584d16e03a64ae186e3cabb746d87",
+2026-11-13T10:26:39.0391378Z       "scripts/messaging-preparation.mjs": "b7e7ba0854f79625e2b9d0eef7ab36fe71635f026c6542b379ee7c93ad1ecdbd",
+2026-11-13T10:26:39.0392409Z       "components/messaging/identity.mjs": "2efcc48bb74b954c9101d75e99f814f3c989406143f3ce3ab25f61ae4641dbc8",
+2026-11-13T10:26:39.0393831Z       "components/messaging/sources.lock.json": "11d2a834b5364f9132330acd1013fb09cd9037086937dbdd2b63ebd761d6372d"
+2026-11-13T10:26:39.0394460Z     }
+2026-11-13T10:26:39.0394686Z   },
+2026-11-13T10:26:39.0394906Z   "runtime": {
+2026-11-13T10:26:39.0395154Z     "node": "24.22.1",
+2026-11-13T10:26:39.0395416Z     "npm": "11.19.1",
+2026-11-13T10:26:39.0395678Z     "platform": "linux",
+2026-11-13T10:26:39.0395949Z     "arch": "x64"
+2026-11-13T10:26:39.0396191Z   },
+2026-11-13T10:26:39.0396420Z   "component": {
+2026-11-13T10:26:39.0396713Z     "id": "typescript-messagebox",
+2026-11-13T10:26:39.0397090Z     "repository": "bsv-blockchain/ts-stack",
+2026-11-13T10:26:39.0397525Z     "commit": "eb131148c3e95749162e7c8263e444e255c7db1f",
+2026-11-13T10:26:39.0397954Z     "path": "infra/message-box-server",
+2026-11-13T10:26:39.0398292Z     "license": "Open BSV",
+2026-11-13T10:26:39.0398762Z     "archiveSha256": "112672e0c2aaebc15d7eb0f9e7ecf1b9e3a9497134db9af5931494c61e0004ed"
+2026-11-13T10:26:39.0399196Z   },
+2026-11-13T10:26:39.0399383Z   "archive": {
+2026-11-13T10:26:39.0399983Z     "path": "/home/runner/work/interop/interop/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f.tgz",
+2026-11-13T10:26:39.0400750Z     "sha256": "112672e0c2aaebc15d7eb0f9e7ecf1b9e3a9497134db9af5931494c61e0004ed",
+2026-11-13T10:26:39.0401148Z     "bytes": 83414602
+2026-11-13T10:26:39.0401356Z   },
+2026-11-13T10:26:39.0401538Z   "package": {
+2026-11-13T10:26:39.0402222Z     "path": "/home/runner/work/interop/interop/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server",
+2026-11-13T10:26:39.0403228Z     "jsonSha256": "5ad985aed28c664dd59c4468c13a0ff9eb4b575538d9972dcb7a267f60d6ffa5",
+2026-11-13T10:26:39.0403830Z     "lockSha256": "9a8b47c0539b82e87f6b08a464c6bc55ab92b4c52ab842b90a0174a744704a6e",
+2026-11-13T10:26:39.0404448Z     "sourceTreeSha256": "4bc0c070e3b29ede2fdd02b59aaf92319eb9f708dd2ca495653debe5258d5a52"
+2026-11-13T10:26:39.0404890Z   },
+2026-11-13T10:26:39.0405073Z   "sdk": {
+2026-11-13T10:26:39.0405270Z     "name": "@bsv/sdk",
+2026-11-13T10:26:39.0405506Z     "version": "4.0.1",
+2026-11-13T10:26:39.0405897Z     "resolved": "https://registry.npmjs.org/@bsv/sdk/-/sdk-4.0.1.tgz",
+2026-11-13T10:26:39.0406623Z     "integrity": "sha512-aLaRa38h+ck5OhqRlNiQ9oUIOuB+vSZwWzkgWlXzr/9qwK5F0pbtog5PM+1Wo2GNIzxVAEnvxYCLL5SU55cW0w==",
+2026-11-13T10:26:39.0407411Z     "packageSha256": "f24429a17276be77147c73fd296b9738a3b966a80b95a1b13a73a1d66cc3f02e",
+2026-11-13T10:26:39.0407911Z     "entry": "node_modules/@bsv/sdk/dist/cjs/mod.js",
+2026-11-13T10:26:39.0408391Z     "entrySha256": "39ad80d8ef59012a60d462e2eb788137d42b89124604171b64f2f54224101a53",
+2026-11-13T10:26:39.0408816Z     "publicKeyCheck": "PASS"
+2026-11-13T10:26:39.0409057Z   },
+2026-11-13T10:26:39.0409245Z   "commands": [
+2026-11-13T10:26:39.0409445Z     {
+2026-11-13T10:26:39.0409639Z       "command": "tar",
+2026-11-13T10:26:39.0410047Z       "args": [
+2026-11-13T10:26:39.0410246Z         "-xzf",
+2026-11-13T10:26:39.0410818Z         "/home/runner/work/interop/interop/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f.tgz",
+2026-11-13T10:26:39.0411389Z         "-C",
+2026-11-13T10:26:39.0411744Z         "/home/runner/work/interop/interop/out/messaging-native-verifier",
+2026-11-13T10:26:39.0412785Z         "ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server"
+2026-11-13T10:26:39.0413723Z       ]
+2026-11-13T10:26:39.0413921Z     },
+2026-11-13T10:26:39.0414288Z     {
+2026-11-13T10:26:39.0414500Z       "command": "npm",
+2026-11-13T10:26:39.0414722Z       "args": [
+2026-11-13T10:26:39.0414944Z         "ci",
+2026-11-13T10:26:39.0415218Z         "--ignore-scripts",
+2026-11-13T10:26:39.0415469Z         "--no-audit",
+2026-11-13T10:26:39.0415681Z         "--no-fund"
+2026-11-13T10:26:39.0415879Z       ]
+2026-11-13T10:26:39.0416153Z     }
+2026-11-13T10:26:39.0416425Z   ],
+2026-11-13T10:26:39.0416717Z   "paths": {
+2026-11-13T10:26:39.0418006Z     "typescript-messagebox": "/home/runner/work/interop/interop/out/messaging-native-verifier/ts-stack-eb131148c3e95749162e7c8263e444e255c7db1f/infra/message-box-server"
+2026-11-13T10:26:39.0419260Z   },
+2026-11-13T10:26:39.0419474Z   "verifierEnvironment": {
+2026-11-13T10:26:39.0420009Z     "TPNIL_MESSAGING_PATHS": "/home/runner/work/interop/interop/out/messaging-native-verifier/paths.json"
+2026-11-13T10:26:39.0420489Z   },
+2026-11-13T10:26:39.0420675Z   "capabilities": {
+2026-11-13T10:26:39.0420969Z     "offlineNativeMessagingVerification": true,
+2026-11-13T10:26:39.0421297Z     "serviceBuild": false,
+2026-11-13T10:26:39.0421571Z     "nativeSqliteRebuild": false,
+2026-11-13T10:26:39.0421834Z     "goBuild": false,
+2026-11-13T10:26:39.0422087Z     "discoveryPreparation": false
+2026-11-13T10:26:39.0422331Z   }
+2026-11-13T10:26:39.0422633Z }
+2026-11-13T10:26:39.1315140Z info: syncing channel updates for 1.88.0-x86_64-unknown-linux-gnu
+2026-11-13T10:26:39.3517282Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+2026-11-13T10:26:39.3519186Z info: downloading 3 components
+2026-11-13T10:26:47.0893178Z 
+2026-11-13T10:26:47.0970020Z   1.88.0-x86_64-unknown-linux-gnu installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-11-13T10:26:47.0970571Z 
+2026-11-13T10:26:47.1345277Z     Updating git repository `https://github.com/bsv-blockchain/rs-sdk.git`
+2026-11-13T10:26:48.0468187Z     Updating crates.io index
+2026-11-13T10:26:48.2772015Z  Downloading crates ...
+2026-11-13T10:26:48.3898809Z   Downloaded proc-macro2 v1.0.107
+2026-11-13T10:26:48.4078006Z   Downloaded equivalent v1.0.3
+2026-11-13T10:26:48.4098719Z   Downloaded cfg-if v1.0.5
+2026-11-13T10:26:48.4113246Z   Downloaded hex v0.4.3
+2026-11-13T10:26:48.4130803Z   Downloaded itoa v1.0.18
+2026-11-13T10:26:48.4154924Z   Downloaded quote v1.0.47
+2026-11-13T10:26:48.4183739Z   Downloaded wasi v0.11.1+wasi-snapshot-preview1
+2026-11-13T10:26:48.4199159Z   Downloaded thiserror v2.0.21
+2026-11-13T10:26:48.4267911Z   Downloaded async-trait v0.1.92
+2026-11-13T10:26:48.4309195Z   Downloaded getrandom v0.2.17
+2026-11-13T10:26:48.4339458Z   Downloaded ryu v1.0.23
+2026-11-13T10:26:48.4371472Z   Downloaded serde v1.0.229
+2026-11-13T10:26:48.4408087Z   Downloaded indexmap v2.14.2
+2026-11-13T10:26:48.4457994Z   Downloaded serde_json v1.0.145
+2026-11-13T10:26:48.4526419Z   Downloaded hashbrown v0.17.1
+2026-11-13T10:26:48.4576515Z   Downloaded memchr v2.8.3
+2026-11-13T10:26:48.4627689Z   Downloaded serde_core v1.0.229
+2026-11-13T10:26:48.4653495Z   Downloaded serde_derive v1.0.229
+2026-11-13T10:26:48.4681877Z   Downloaded thiserror-impl v2.0.21
+2026-11-13T10:26:48.4696301Z   Downloaded unicode-ident v1.0.27
+2026-11-13T10:26:48.4722996Z   Downloaded syn v3.0.9
+2026-11-13T10:26:48.4833594Z   Downloaded libc v0.2.191
+2026-11-13T10:26:48.5405485Z ##[group]Run cargo test --offline --locked --manifest-path components/rust/Cargo.toml --features graph-oracle-v3 --target-dir components/rust/target/corpus-v3
+2026-11-13T10:26:48.5406786Z [36;1mcargo test --offline --locked --manifest-path components/rust/Cargo.toml --features graph-oracle-v3 --target-dir components/rust/target/corpus-v3[0m
+2026-11-13T10:26:48.5426237Z shell: /usr/bin/bash -e {0}
+2026-11-13T10:26:48.5426480Z env:
+2026-11-13T10:26:48.5426888Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:26:48.5427380Z   RUSTUP_TOOLCHAIN: 1.88.0
+2026-11-13T10:26:48.5427631Z   CARGO_NET_OFFLINE: true
+2026-11-13T10:26:48.5427857Z ##[endgroup]
+2026-11-13T10:26:48.6032592Z    Compiling proc-macro2 v1.0.107
+2026-11-13T10:26:48.6033631Z    Compiling quote v1.0.47
+2026-11-13T10:26:48.6034194Z    Compiling unicode-ident v1.0.27
+2026-11-13T10:26:48.6036282Z    Compiling serde_core v1.0.229
+2026-11-13T10:26:48.6754577Z    Compiling libc v0.2.191
+2026-11-13T10:26:48.9045085Z    Compiling serde_json v1.0.145
+2026-11-13T10:26:49.0806311Z    Compiling thiserror v2.0.21
+2026-11-13T10:26:49.4284065Z    Compiling memchr v2.8.3
+2026-11-13T10:26:49.9175617Z    Compiling syn v3.0.9
+2026-11-13T10:26:50.1934218Z    Compiling equivalent v1.0.3
+2026-11-13T10:26:50.2244157Z    Compiling ryu v1.0.23
+2026-11-13T10:26:50.3714170Z    Compiling itoa v1.0.18
+2026-11-13T10:26:50.5058814Z    Compiling cfg-if v1.0.5
+2026-11-13T10:26:50.5318322Z    Compiling hashbrown v0.17.1
+2026-11-13T10:26:50.5455104Z    Compiling getrandom v0.2.17
+2026-11-13T10:26:50.6679279Z    Compiling hex v0.4.3
+2026-11-13T10:26:51.2588396Z    Compiling indexmap v2.14.2
+2026-11-13T10:26:52.7833264Z    Compiling thiserror-impl v2.0.21
+2026-11-13T10:26:52.7833919Z    Compiling async-trait v0.1.92
+2026-11-13T10:26:53.6855186Z    Compiling bsv-sdk v0.8.1 (https://github.com/bsv-blockchain/rs-sdk.git?rev=99d2313f2ede48a465aa8be1907d26d098aac8fd#99d2313f)
+2026-11-13T10:26:57.2915527Z    Compiling tpnil-rust-participant v0.1.0 (/home/runner/work/interop/interop/components/rust)
+2026-11-13T10:26:58.2432272Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 9.68s
+2026-11-13T10:26:58.2450167Z      Running unittests src/main.rs (components/rust/target/corpus-v3/debug/deps/tpnil_rust_participant-7e99a1c704af3d35)
+2026-11-13T10:26:58.2463594Z 
+2026-11-13T10:26:58.2463834Z running 14 tests
+2026-11-13T10:26:58.2494775Z test graph_oracle_v3::tests::duplicate_beef_entries_are_rejected_instead_of_last_writer_winning ... ok
+2026-11-13T10:26:58.2504931Z test graph_oracle_v3::tests::bad_ancestor_script_is_checked_even_when_subject_script_is_valid ... ok
+2026-11-13T10:26:58.2511314Z test graph_oracle_v3::tests::duplicate_subject_inputs_cannot_inflate_available_value ... ok
+2026-11-13T10:26:58.2512500Z test graph_oracle_v3::tests::cycles_and_index_aliases_fail_closed ... ok
+2026-11-13T10:26:58.2530792Z test graph_oracle_v3::tests::forged_ancestor_bytes_cannot_keep_the_old_transaction_identity ... ok
+2026-11-13T10:26:58.2532396Z test graph_oracle_v3::tests::malformed_subject_framing_and_height_are_rejected ... ok
+2026-11-13T10:26:58.2574444Z test graph_oracle_v3::tests::parsed_but_reordered_beef_table_has_the_same_graph ... ok
+2026-11-13T10:26:58.2576070Z test graph_oracle_v3::tests::missing_and_txid_only_ancestor_cannot_borrow_from_another_request ... ok
+2026-11-13T10:26:58.2612420Z test graph_oracle_v3::tests::mutated_script_value_root_height_and_missing_output_do_not_pass ... ok
+2026-11-13T10:26:58.2630030Z test graph_oracle_v3::tests::two_distinct_ancestors_cannot_spend_the_same_outpoint ... ok
+2026-11-13T10:26:58.2656858Z test tests::repeated_outpoint_cannot_inflate_input_value ... ok
+2026-11-13T10:26:58.2658270Z test graph_oracle_v3::tests::shared_dag_is_valid_in_both_input_orders_without_expanding_duplicate_trees ... ok
+2026-11-13T10:26:58.2912052Z test graph_oracle_v3::tests::ancestry_depth_limit_retains_the_original_64_edge_boundary ... ok
+2026-11-13T10:26:58.3219086Z test graph_oracle_v3::tests::shallow_memoized_visits_do_not_hide_a_deep_dag_path ... ok
+2026-11-13T10:26:58.3219966Z 
+2026-11-13T10:26:58.3220810Z test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+2026-11-13T10:26:58.3222108Z 
+2026-11-13T10:26:58.3274882Z ##[group]Run node scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-10.json out/native-integrated-reevaluation
+2026-11-13T10:26:58.3276162Z [36;1mnode scripts/reevaluate-native-integrated.mjs infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-10.json out/native-integrated-reevaluation[0m
+2026-11-13T10:26:58.3296332Z shell: /usr/bin/bash -e {0}
+2026-11-13T10:26:58.3296582Z env:
+2026-11-13T10:26:58.3296998Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:26:58.3297511Z   RUSTUP_TOOLCHAIN: 1.88.0
+2026-11-13T10:26:58.3297753Z   CARGO_NET_OFFLINE: true
+2026-11-13T10:26:58.3297981Z ##[endgroup]
+2026-11-13T10:27:43.1223665Z {"schema":"tpnil-native-integrated-reevaluation@1","claim":"RETAINED_NATIVE_EVIDENCE_REEVALUATION","qualifiedRetainedEvidence":true,"plan":"YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-10","planSha256":"caf98f78ff6bcd3739ce2e5ac401229be293927075d4472db3acabc05986d13b","evaluatorSource":"3aac88975fc0f4e911fcf10fea6c8158f7760534","original":{"workflowRun":42711700295,"source":"c338a93c97ffebeeef318e679ff82b7dbf309dd5","sha256":"c0645821afeea30cbc1c0c70f4ca10bfbe288ebfa570b719af5a709f145c3826","size":4255642,"members":186,"profile":"ITCVE-1@2.0.0","program":"ISI-4@4.0.0","planSha256":"eb08ea9808a3cd314d9060c16c466f47cbb36c64ebd3506064085276596432c6","qualificationSha256":"8a98103995b918aec867f414c36bc8ff71645ce1004e1ced3f4706257ea82ad7","rust":[{"index":1,"status":"EXECUTED","corpus":"tpnil-rust-corpus@2","sha256":"ede7591f0ef610d90ed696134ab2b3d1ed8598bfa3862784d283471a8e08db8e","assertions":48,"counts":{"PASS":42,"FAIL":6,"BLOCKED":0},"outcome":"FAIL"},{"index":2,"status":"NOT_EXECUTED"}]},"newNativeSessions":0,"originalMembersUnchanged":true,"nativeOutcome":"FAIL","integrationOutcome":"PASS","rustOutcome":"PASS","outcome":"FAIL","completeBRC100Conformance":false,"repetitions":[{"index":1,"identity":"03f3bdc33964247a0ab8353511f0469eaeee3126bf9a3f55c6a6384ec75cb4a0ea","assertions":[{"id":"402.automatic-retry","result":"PASS"},{"id":"402.challenge","result":"PASS"},{"id":"402.duplicate-rejected","result":"PASS"},{"id":"402.freshness","result":"PASS"},{"id":"402.insufficient-value","result":"PASS"},{"id":"402.malformed-payment","result":"PASS"},{"id":"402.real-wallet-payment","result":"PASS"},{"id":"402.restart-replay","result":"PASS"},{"id":"402.transaction-identities","result":"PASS"},{"id":"boundary/abortAction.releases-reservation","result":"PASS"},{"id":"boundary/acquireCertificate.signed-fields","result":"PASS"},{"id":"boundary/acquireCertificate.specified-rejection","result":"PASS"},{"id":"boundary/createAction.serialized-outputs","result":"PASS"},{"id":"boundary/createAction.specified-rejection","result":"PASS"},{"id":"boundary/createHmac.length","result":"PASS"},{"id":"boundary/createSignature.independent-verification","result":"PASS"},{"id":"boundary/decrypt.roundtrip","result":"PASS"},{"id":"boundary/decrypt.specified-rejection","result":"PASS"},{"id":"boundary/discoverByAttributes.identity-service","result":"PASS"},{"id":"boundary/discoverByIdentityKey.identity-service","result":"PASS"},{"id":"boundary/encrypt.bytes","result":"PASS"},{"id":"boundary/getHeaderForHeight.genesis","result":"PASS"},{"id":"boundary/getHeaderForHeight.specified-rejection","result":"PASS"},{"id":"boundary/getHeight.controlled","result":"PASS"},{"id":"boundary/getNetwork.mainnet","result":"PASS"},{"id":"boundary/getPublicKey.identity","result":"PASS"},{"id":"boundary/getPublicKey.specified-rejection","result":"PASS"},{"id":"boundary/getVersion.nonempty","result":"PASS"},{"id":"boundary/identity-service.publish","result":"PASS"},{"id":"boundary/internalizeAction.mined-descendant-payment","result":"PASS"},{"id":"boundary/internalizeAction.specified-rejection","result":"PASS"},{"id":"boundary/isAuthenticated.true","result":"PASS"},{"id":"boundary/listActions.metadata","result":"PASS"},{"id":"boundary/listActions.specified-rejection","result":"PASS"},{"id":"boundary/listCertificates.issuer-scope","result":"PASS"},{"id":"boundary/listCertificates.specified-rejection","result":"PASS"},{"id":"boundary/listOutputs.metadata","result":"PASS"},{"id":"boundary/listOutputs.specified-rejection","result":"PASS"},{"id":"boundary/proveCertificate.selective-disclosure","result":"PASS"},{"id":"boundary/proveCertificate.specified-rejection","result":"PASS"},{"id":"boundary/relinquishCertificate.tombstone","result":"PASS"},{"id":"boundary/relinquishOutput.removes-basket-membership","result":"PASS"},{"id":"boundary/revealCounterpartyKeyLinkage.independent-secret","result":"PASS"},{"id":"boundary/revealSpecificKeyLinkage.independent-secret","result":"PASS"},{"id":"boundary/signAction.serialized-spend","result":"PASS"},{"id":"boundary/signAction.specified-rejection","result":"PASS"},{"id":"boundary/verifyHmac.specified-rejection","result":"PASS"},{"id":"boundary/verifyHmac.valid","result":"PASS"},{"id":"boundary/verifySignature.specified-rejection","result":"PASS"},{"id":"boundary/verifySignature.valid","result":"PASS"},{"id":"boundary/waitForAuthentication.true","result":"PASS"},{"id":"identity-trust.cache-expiry","result":"PASS"},{"id":"identity-trust.cleanup","result":"PASS"},{"id":"identity-trust.initial-exclusion","result":"PASS"},{"id":"identity-trust.positive-discovery","result":"PASS"},{"id":"identity-trust.public-boundary-only","result":"PASS"},{"id":"identity-trust.public-settings-token","result":"PASS"},{"id":"identity-trust.settings-restored","result":"PASS"},{"id":"identity-trust.temporary-token-spent","result":"PASS"},{"id":"messaging/go-adapted/discovery","result":"PASS"},{"id":"messaging/go-adapted/native-paid-delivery","result":"PASS"},{"id":"messaging/go-adapted/restart-ack-replay","result":"PASS"},{"id":"messaging/typescript/discovery","result":"PASS"},{"id":"messaging/typescript/native-paid-delivery","result":"PASS"},{"id":"messaging/typescript/restart-ack-replay","result":"PASS"},{"id":"NATIVE-SYNTHESIS-BOARD","result":"PASS"},{"id":"NATIVE-SYNTHESIS-LCH","result":"PASS"},{"id":"NATIVE-SYNTHESIS-REVISION","result":"PASS"},{"id":"NATIVE-SYNTHESIS-UHRP","result":"PASS"},{"id":"relay.binary-roundtrip","result":"PASS"},{"id":"relay.desktop-token","result":"PASS"},{"id":"relay.origin-allowlist","result":"PASS"},{"id":"relay.pairing-and-identity","result":"PASS"},{"id":"relay.permission-denial","result":"PASS"},{"id":"relay.reconnect","result":"PASS"},{"id":"relay.session-revocation","result":"PASS"},{"id":"relay.signed-qr-tamper","result":"PASS"}],"counts":{"PASS":77,"FAIL":0,"BLOCKED":0},"recordSha256":"a2d718ca79f704af40346d011f2869fc06dc25aa5668b31d403f1c72b5ad4c11","native":{"assertions":280,"counts":{"PASS":180,"FAIL":99,"BLOCKED":1},"vectors":[{"id":"ISI-4-V001","outcome":"PASS"},{"id":"ISI-4-V002","outcome":"PASS"},{"id":"ISI-4-V003","outcome":"PASS"},{"id":"ISI-4-V004","outcome":"PASS"},{"id":"ISI-4-V005","outcome":"PASS"},{"id":"ISI-4-V006","outcome":"PASS"},{"id":"ISI-4-V007","outcome":"PASS"},{"id":"ISI-4-V008","outcome":"FAIL"}]},"rust":{"corpus":"tpnil-rust-corpus@3","assertions":48,"counts":{"PASS":48,"FAIL":0,"BLOCKED":0},"outcome":"PASS","resultSha256":"86d135128ac436c847a72ae10121ca96b2c144ce8703883d4478ced0e8f2cec9","inputs":[{"name":"paid-http.json","sha256":"b7b9cec5d2ac508e7c1f39ef3fb9fa16fe84ebb7dc3ab9eadeb4c91e2c44b769"},{"name":"messaging.json","sha256":"87492d2549173c7df6909b85b794558219cff10acccc868d8da1fc731b2fa1b9"},{"name":"synthesis-transactions.json","sha256":"daf3713a4272e7a70ccfb0010b114f0e63b8628686dea2e9b3eb05c5234d121c"},{"name":"identity-trust.json","sha256":"fe7920058d1aea69a01db1c2255c3aa6c6bf699e3e0e45b08d2d74f70cd6a460"}]}},{"index":2,"identity":"0260e423ccba54e7cc947bf60148b2d79a9f6e43874559292dc98a0ccf7f0c783a","assertions":[{"id":"402.automatic-retry","result":"PASS"},{"id":"402.challenge","result":"PASS"},{"id":"402.duplicate-rejected","result":"PASS"},{"id":"402.freshness","result":"PASS"},{"id":"402.insufficient-value","result":"PASS"},{"id":"402.malformed-payment","result":"PASS"},{"id":"402.real-wallet-payment","result":"PASS"},{"id":"402.restart-replay","result":"PASS"},{"id":"402.transaction-identities","result":"PASS"},{"id":"boundary/abortAction.releases-reservation","result":"PASS"},{"id":"boundary/acquireCertificate.signed-fields","result":"PASS"},{"id":"boundary/acquireCertificate.specified-rejection","result":"PASS"},{"id":"boundary/createAction.serialized-outputs","result":"PASS"},{"id":"boundary/createAction.specified-rejection","result":"PASS"},{"id":"boundary/createHmac.length","result":"PASS"},{"id":"boundary/createSignature.independent-verification","result":"PASS"},{"id":"boundary/decrypt.roundtrip","result":"PASS"},{"id":"boundary/decrypt.specified-rejection","result":"PASS"},{"id":"boundary/discoverByAttributes.identity-service","result":"PASS"},{"id":"boundary/discoverByIdentityKey.identity-service","result":"PASS"},{"id":"boundary/encrypt.bytes","result":"PASS"},{"id":"boundary/getHeaderForHeight.genesis","result":"PASS"},{"id":"boundary/getHeaderForHeight.specified-rejection","result":"PASS"},{"id":"boundary/getHeight.controlled","result":"PASS"},{"id":"boundary/getNetwork.mainnet","result":"PASS"},{"id":"boundary/getPublicKey.identity","result":"PASS"},{"id":"boundary/getPublicKey.specified-rejection","result":"PASS"},{"id":"boundary/getVersion.nonempty","result":"PASS"},{"id":"boundary/identity-service.publish","result":"PASS"},{"id":"boundary/internalizeAction.mined-descendant-payment","result":"PASS"},{"id":"boundary/internalizeAction.specified-rejection","result":"PASS"},{"id":"boundary/isAuthenticated.true","result":"PASS"},{"id":"boundary/listActions.metadata","result":"PASS"},{"id":"boundary/listActions.specified-rejection","result":"PASS"},{"id":"boundary/listCertificates.issuer-scope","result":"PASS"},{"id":"boundary/listCertificates.specified-rejection","result":"PASS"},{"id":"boundary/listOutputs.metadata","result":"PASS"},{"id":"boundary/listOutputs.specified-rejection","result":"PASS"},{"id":"boundary/proveCertificate.selective-disclosure","result":"PASS"},{"id":"boundary/proveCertificate.specified-rejection","result":"PASS"},{"id":"boundary/relinquishCertificate.tombstone","result":"PASS"},{"id":"boundary/relinquishOutput.removes-basket-membership","result":"PASS"},{"id":"boundary/revealCounterpartyKeyLinkage.independent-secret","result":"PASS"},{"id":"boundary/revealSpecificKeyLinkage.independent-secret","result":"PASS"},{"id":"boundary/signAction.serialized-spend","result":"PASS"},{"id":"boundary/signAction.specified-rejection","result":"PASS"},{"id":"boundary/verifyHmac.specified-rejection","result":"PASS"},{"id":"boundary/verifyHmac.valid","result":"PASS"},{"id":"boundary/verifySignature.specified-rejection","result":"PASS"},{"id":"boundary/verifySignature.valid","result":"PASS"},{"id":"boundary/waitForAuthentication.true","result":"PASS"},{"id":"identity-trust.cache-expiry","result":"PASS"},{"id":"identity-trust.cleanup","result":"PASS"},{"id":"identity-trust.initial-exclusion","result":"PASS"},{"id":"identity-trust.positive-discovery","result":"PASS"},{"id":"identity-trust.public-boundary-only","result":"PASS"},{"id":"identity-trust.public-settings-token","result":"PASS"},{"id":"identity-trust.settings-restored","result":"PASS"},{"id":"identity-trust.temporary-token-spent","result":"PASS"},{"id":"messaging/go-adapted/discovery","result":"PASS"},{"id":"messaging/go-adapted/native-paid-delivery","result":"PASS"},{"id":"messaging/go-adapted/restart-ack-replay","result":"PASS"},{"id":"messaging/typescript/discovery","result":"PASS"},{"id":"messaging/typescript/native-paid-delivery","result":"PASS"},{"id":"messaging/typescript/restart-ack-replay","result":"PASS"},{"id":"NATIVE-SYNTHESIS-BOARD","result":"PASS"},{"id":"NATIVE-SYNTHESIS-LCH","result":"PASS"},{"id":"NATIVE-SYNTHESIS-REVISION","result":"PASS"},{"id":"NATIVE-SYNTHESIS-UHRP","result":"PASS"},{"id":"relay.binary-roundtrip","result":"PASS"},{"id":"relay.desktop-token","result":"PASS"},{"id":"relay.origin-allowlist","result":"PASS"},{"id":"relay.pairing-and-identity","result":"PASS"},{"id":"relay.permission-denial","result":"PASS"},{"id":"relay.reconnect","result":"PASS"},{"id":"relay.session-revocation","result":"PASS"},{"id":"relay.signed-qr-tamper","result":"PASS"}],"counts":{"PASS":77,"FAIL":0,"BLOCKED":0},"recordSha256":"d36c02053f3077eea2442e6d596979ee900eba37ddb3f52053633e3193b12576","native":{"assertions":280,"counts":{"PASS":180,"FAIL":99,"BLOCKED":1},"vectors":[{"id":"ISI-4-V001","outcome":"PASS"},{"id":"ISI-4-V002","outcome":"PASS"},{"id":"ISI-4-V003","outcome":"PASS"},{"id":"ISI-4-V004","outcome":"PASS"},{"id":"ISI-4-V005","outcome":"PASS"},{"id":"ISI-4-V006","outcome":"PASS"},{"id":"ISI-4-V007","outcome":"PASS"},{"id":"ISI-4-V008","outcome":"FAIL"}]},"rust":{"corpus":"tpnil-rust-corpus@3","assertions":48,"counts":{"PASS":48,"FAIL":0,"BLOCKED":0},"outcome":"PASS","resultSha256":"2286d514ad25aa184c5311d39defb96ecc70bd10c328d3e5fb1117dc9f2782a6","inputs":[{"name":"paid-http.json","sha256":"c022f19285e73571c3aae17359509026a9d2680855085f828f8063d180c322b8"},{"name":"messaging.json","sha256":"d333b5c927aa56cf1b2e3e6377f2af70a30162cf9a33ba9ce6d4a36b353903a5"},{"name":"synthesis-transactions.json","sha256":"583f8d7116772da280220f9d50588df8fd08f23ce4adef7541a794168efb6bd7"},{"name":"identity-trust.json","sha256":"a587c57ccdc7c150d60e86e72c506110ecb554715c7d8f036a46c792bd1cd478"}]}}]}
+2026-11-13T10:27:43.1324542Z ##[group]Run node scripts/verify-native-reevaluation.mjs out/native-integrated-reevaluation
+2026-11-13T10:27:43.1325242Z [36;1mnode scripts/verify-native-reevaluation.mjs out/native-integrated-reevaluation[0m
+2026-11-13T10:27:43.1346833Z shell: /usr/bin/bash -e {0}
+2026-11-13T10:27:43.1347089Z env:
+2026-11-13T10:27:43.1347504Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:27:43.1347996Z   RUSTUP_TOOLCHAIN: 1.88.0
+2026-11-13T10:27:43.1348261Z   CARGO_NET_OFFLINE: true
+2026-11-13T10:27:43.1348487Z ##[endgroup]
+2026-11-13T10:28:11.4901398Z {"verified":true,"claim":"RETAINED_NATIVE_EVIDENCE_REEVALUATION","originalNativeSource":"c338a93c97ffebeeef318e679ff82b7dbf309dd5","evaluatorSource":"3aac88975fc0f4e911fcf10fea6c8158f7760534","newNativeSessions":0,"nativeOutcome":"FAIL","integrationOutcome":"PASS","rustOutcome":"PASS","repetitions":2}
+2026-11-13T10:28:11.5076326Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T10:28:11.5076741Z with:
+2026-11-13T10:28:11.5076960Z   name: native-integrated-reevaluation
+2026-11-13T10:28:11.5077260Z   path: out/native-integrated-reevaluation
+2026-11-13T10:28:11.5077552Z   if-no-files-found: warn
+2026-11-13T10:28:11.5077777Z   retention-days: 90
+2026-11-13T10:28:11.5077989Z   compression-level: 6
+2026-11-13T10:28:11.5078202Z   overwrite: false
+2026-11-13T10:28:11.5078413Z   include-hidden-files: false
+2026-11-13T10:28:11.5078643Z env:
+2026-11-13T10:28:11.5079038Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:28:11.5079514Z ##[endgroup]
+2026-11-13T10:28:11.6782300Z (node:4401) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T10:28:11.6784051Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T10:28:11.7177422Z With the provided path, there will be 220 files uploaded
+2026-11-13T10:28:11.7182308Z Artifact name is valid!
+2026-11-13T10:28:11.7183421Z Root directory input is valid!
+2026-11-13T10:28:11.9859172Z Beginning upload of artifact content to blob storage
+2026-11-13T10:28:12.8317879Z (node:4401) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-13T10:28:13.2810957Z Uploaded bytes 8388608
+2026-11-13T10:28:13.3317153Z Uploaded bytes 8917016
+2026-11-13T10:28:13.3727713Z Finished uploading artifact content to blob storage!
+2026-11-13T10:28:13.3729457Z SHA256 digest of uploaded artifact zip is 43e5a782cf1374626b57bddfa0a13671ef598f93aa60bf40cab0081a7d2609f4
+2026-11-13T10:28:13.3731134Z Finalizing artifact upload
+2026-11-13T10:28:13.7446623Z Artifact native-integrated-reevaluation.zip successfully finalized. Artifact ID 14028292762
+2026-11-13T10:28:13.7448255Z Artifact native-integrated-reevaluation has been successfully uploaded! Final size is 8917016 bytes. Artifact ID is 14028292762
+2026-11-13T10:28:13.7453882Z Artifact download URL: https://github.com/p2ppsr/interop/actions/runs/43408948428/artifacts/14028292762
+2026-11-13T10:28:13.7680588Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T10:28:13.7681318Z with:
+2026-11-13T10:28:13.7681702Z   name: native-reevaluation-preparation
+2026-11-13T10:28:13.7682363Z   path: out/messaging-native-verifier/verifier-preparation.json
+2026-11-13T10:28:13.7683648Z   if-no-files-found: warn
+2026-11-13T10:28:13.7684288Z   retention-days: 90
+2026-11-13T10:28:13.7684658Z   compression-level: 6
+2026-11-13T10:28:13.7685039Z   overwrite: false
+2026-11-13T10:28:13.7685422Z   include-hidden-files: false
+2026-11-13T10:28:13.7685813Z env:
+2026-11-13T10:28:13.7686483Z   TPNIL_MESSAGING_PATHS: /home/runner/work/interop/interop/out/messaging-native-verifier/paths.json
+2026-11-13T10:28:13.7687296Z ##[endgroup]
+2026-11-13T10:28:13.9381733Z (node:4415) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T10:28:13.9382839Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T10:28:13.9431484Z With the provided path, there will be 1 file uploaded
+2026-11-13T10:28:13.9438166Z Artifact name is valid!
+2026-11-13T10:28:13.9439085Z Root directory input is valid!
+2026-11-13T10:28:14.1940690Z Beginning upload of artifact content to blob storage
+2026-11-13T10:28:14.2127889Z (node:4415) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-13T10:28:14.3270152Z Uploaded bytes 1574
+2026-11-13T10:28:14.3656283Z Finished uploading artifact content to blob storage!
+2026-11-13T10:28:14.3657272Z SHA256 digest of uploaded artifact zip is 757558e59d8cece5218c88e18eeed370a2dfc19873c43355f27717598367e40e
+2026-11-13T10:28:14.3658997Z Finalizing artifact upload
+2026-11-13T10:28:14.7308722Z Artifact native-reevaluation-preparation.zip successfully finalized. Artifact ID 14027599930
+2026-11-13T10:28:14.7310831Z Artifact native-reevaluation-preparation has been successfully uploaded! Final size is 1574 bytes. Artifact ID is 14027599930
+2026-11-13T10:28:14.7317374Z Artifact download URL: https://github.com/p2ppsr/interop/actions/runs/43408948428/artifacts/14027599930
+2026-11-13T10:28:14.7531927Z Post job cleanup.
+2026-11-13T10:28:14.8768411Z (node:4427) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T10:28:14.8769831Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T10:28:14.8935613Z Post job cleanup.
+2026-11-13T10:28:14.9836393Z [command]/usr/bin/git version
+2026-11-13T10:28:14.9879791Z git version 2.56.0
+2026-11-13T10:28:14.9953254Z Temporarily overriding HOME='/home/runner/work/_temp/f4227f32-8706-4d19-a540-c31ed6a6144f' before making global git config changes
+2026-11-13T10:28:14.9955079Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T10:28:14.9959323Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T10:28:15.0009700Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T10:28:15.0054693Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T10:28:15.0332414Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T10:28:15.0369410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T10:28:15.0629358Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T10:28:15.0663552Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T10:28:15.1071460Z Cleaning up orphan processes
+2026-11-13T10:28:15.1570146Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

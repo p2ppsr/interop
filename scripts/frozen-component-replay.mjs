@@ -4,7 +4,7 @@ import path from 'node:path'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
-const paths=['package.json','.nvmrc','.github','scripts','synthesis','infra','fixtures','components','integrations','itcves','programs','config','src','bin','adapters','schemas','suts']
+const paths=['package.json','.nvmrc','.github','scripts','synthesis','infra','fixtures','components','integrations','itcves','programs','config','src','bin','adapters','schemas','suts','test','docs']
 /** Replay an integration pack against its recorded Git source. The caller owns and
  * removes `directory`; installed dependencies are reused only with exact locks. */
 export function prepareFrozenComponentReplay(root,source,directory,{repository=process.env.TPNIL_REPLAY_GIT_ROOT??root}={}) {

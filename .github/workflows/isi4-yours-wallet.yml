@@ -131,7 +131,10 @@ jobs:
         if: startsWith(inputs.profile, 'integrated-native-conformance')
         run: |
           storage_binary=itcve-go-storage-portability
-          if [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-3 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-4 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-5 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-6 ]; then
+          if [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-6 ]; then
+            node scripts/prepare-storage-sync-order-go.mjs
+            storage_binary=itcve-go-storage-sync-order
+          elif [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-3 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-4 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-5 ] || [ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-6 ]; then
             node scripts/prepare-storage-caller-known-inputs-go.mjs
             storage_binary=itcve-go-storage-caller-known-inputs
           elif [[ "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-1 || "${{ inputs.profile }}" = integrated-native-conformance-pr368-coverage-2 ]]; then

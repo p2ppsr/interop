@@ -101,12 +101,18 @@ test('removing a whole provenance manifest cannot hide a published archive', () 
   bundle(directory); assert.equal(verifyPublishedIntegrations({ root }).verifiedPublishedIntegrationArchives, 1)
   fs.unlinkSync(path.join(directory, 'provenance.json')); assert.throws(() => verifyPublishedIntegrations({ root }), /Unmanifested/)
 }))
-test('observer build failures cannot claim native wallet execution', () => temporary(directory => {
+test('failed build and repetition-mismatch archives cannot claim native qualification', () => temporary(directory => {
   const bytes = Buffer.from('Compiler unavailable\n'); fs.writeFileSync(path.join(directory, 'failure.log'), bytes)
   const attempt = { schema: 'tpnil-integration-attempt@1', source: 'ab'.repeat(20), claim: 'OBSERVER_BUILD_ERROR', walletExecuted: false, files: [{ name: 'failure.log', size: bytes.length, sha256: hash(bytes) }] }
   const filename = path.join(directory, 'attempt.json'); fs.writeFileSync(filename, JSON.stringify(attempt))
   assert.equal(verifyIntegrationArchive(directory).kind, 'attempt')
   attempt.walletExecuted = true; fs.writeFileSync(filename, JSON.stringify(attempt)); assert.throws(() => verifyIntegrationArchive(directory))
+  const findings=Buffer.from(JSON.stringify({originalQualificationReceipts:'ABSENT',differentOutcomes:[{vector:'ISI-4-V007',id:'portability.complete-logical-dataset',first:'PASS',second:'FAIL'}]}))
+  fs.writeFileSync(path.join(directory,'findings.json'),findings)
+  const mismatch={...attempt,claim:'INTEGRATION_FAILURE_NOT_QUALIFIED',walletExecuted:true,newNativeSessions:2,nativeQualification:false,completeBRC100Conformance:false,files:[...attempt.files,{name:'findings.json',size:findings.length,sha256:hash(findings)}]}
+  fs.writeFileSync(filename,JSON.stringify(mismatch));assert.equal(verifyIntegrationArchive(directory).kind,'attempt')
+  for(const drift of [{nativeQualification:true},{completeBRC100Conformance:true},{newNativeSessions:0},{walletExecuted:false}]){fs.writeFileSync(filename,JSON.stringify({...mismatch,...drift}));assert.throws(()=>verifyIntegrationArchive(directory))}
+
 }))
 test('safe ZIP extraction preserves bytes and rejects CRC damage', () => temporary(directory => {
   assert.deepEqual(extractZipSafely(zip([{ name: 'a/file.json', body: '{"ok":true}' }]), directory), { entries: 1, bytes: 11 })

@@ -1,0 +1,31 @@
+{
+  "schema": "tpnil-storage-sync-order-go-patch@1.0.0",
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "parent": "infra/adapters/storage-caller-known-inputs/patch.lock.json",
+  "parentSha256": "b0bc4cad3ea89a4e09b17104b9233b264d7388c101fb1587a445c6abb2138c32",
+  "sdkPatch": {
+    "module": "github.com/bsv-blockchain/go-sdk",
+    "version": "v1.7.3",
+    "sum": "h1:U4NuOoJcn3NPgzGyc0GPrGQygya6stRDxlfJC8ksUx0=",
+    "parentPatchSha256": "6d73728c448242ec95493fbb4da3c7eeadafbf50b6da1be056d9b0685f43f4d6",
+    "patch": "go-sdk-v1.7.3.patch",
+    "patchSha256": "36be70190ae254b69f468c38eecc51726514785e5a0ff0ecd2214a80b95b61b6",
+    "files": {
+      "transaction/beef.go": {
+        "before": "11b457e07527839369866ee370abff4cbe6d49f5f3b19a123734abecc7d9a41b",
+        "after": "161d9c15ed947ca9e05f1deed8606580fa5b1a8502a87a55b5f2bb9126081cf1"
+      },
+      "transaction/native_sync_order_tpnil_test.go": {
+        "before": null,
+        "after": "93a3b6f33bab5531cf1e8d105679dfd1d862fcfeea1d05790c4d9fcecfa24d94"
+      },
+      "transaction/testdata/tpnil_native19_sync_order.json": {
+        "before": null,
+        "after": "51fb829488f8bb3c3b854f3bf6f14b1bb8a3d575885be195ea9651162951212b"
+      }
+    }
+  },
+  "scope": "Sort BEEF transaction traversal roots by transaction identity before dependency traversal. Preserve input edge order, raw transaction bytes, Merkle proof order/index, V1/V2 encoding, cycle/map-key checks and implicit newest target. No byte comparison relaxation or metadata changes."
+}

@@ -1,0 +1,391 @@
+{
+  "schema": "tpnil-go11-sync-order-preflight@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "beforeSource": "3aac88975fc0f4e911fcf10fea6c8158f7760534",
+  "nativeSessions": 0,
+  "nativeQualification": false,
+  "originalRustResults": false,
+  "plan": "infra/native/conformance/plan-pr368-coverage-6-source-8.json",
+  "planSha256": "d4fc1728f29ac9c7cd50dfbc5e8b9cbc442794a84fdd8eda738fe2688e962edb",
+  "rustSha256": "7118a957905efb911db428dc3dc9ab7bf0585d28a51f1d73ae46e157f92f1c6e",
+  "nativeInputs": 471,
+  "artifactChanged": "Go11",
+  "criteriaChanged": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2103,
+      "sha256": "b46f41aa322481f3d462bd623edc93f8a1592bc0a48a8146d967e13baedc6dc2"
+    },
+    {
+      "path": "beef-order.json",
+      "bytes": 8661,
+      "sha256": "2648f2bb427f95b0876aad44b3a8f40028b6b176022e3750dea2a048d0924c4e"
+    },
+    {
+      "path": "beef-order.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "beef-order.stdout",
+      "bytes": 8661,
+      "sha256": "2648f2bb427f95b0876aad44b3a8f40028b6b176022e3750dea2a048d0924c4e"
+    },
+    {
+      "path": "beef-order.ts",
+      "bytes": 1210,
+      "sha256": "9c6e1c186eec7cad4820d3590c7be98fb56fe8d21ae4d69acd5b261524d2db76"
+    },
+    {
+      "path": "check.log",
+      "bytes": 233,
+      "sha256": "baa33431367858d930c5009e8d05cd2cda11023cb2f667ab89fa5cbbf0299d10"
+    },
+    {
+      "path": "core-final.log",
+      "bytes": 23444,
+      "sha256": "625cbc56d6d4bd43d4cf52c8900f56aa5a95035f362800659491cbb12f9e555f"
+    },
+    {
+      "path": "core-first.log",
+      "bytes": 26621,
+      "sha256": "0ab93277976b1140525406131bd6716ecc39e36e131eb885bee90babb39602e5"
+    },
+    {
+      "path": "core.log",
+      "bytes": 23435,
+      "sha256": "25a76bdc4d2faa539162dbc8a95cde43acbaa735facd94dbbe439b1933ed49d7"
+    },
+    {
+      "path": "freeze.py",
+      "bytes": 663,
+      "sha256": "996b8c785f6b643fb3fb1aeef049a22e9194fbcaf70f5473f560be4243ee7bce"
+    },
+    {
+      "path": "go-order-after.log",
+      "bytes": 57,
+      "sha256": "185546378fbb415356573979d5477be2b6d121e592739363dba90a21b626d69e"
+    },
+    {
+      "path": "go-order-before.log",
+      "bytes": 1428,
+      "sha256": "a8296a209776647b228ea894cb8e602c402131cf1e7aad34d9ad3dadd1ca4964"
+    },
+    {
+      "path": "go-sdk-transaction.log",
+      "bytes": 57,
+      "sha256": "e175a8b4c62f5fb687217cbbd212c274956faae94ac44c2844e69db3375b8821"
+    },
+    {
+      "path": "go10-parent-build.json",
+      "bytes": 11823,
+      "sha256": "7469dfc300a42acee17fc8529f4063e00b6f7206aef76524124a4f960e5024ee"
+    },
+    {
+      "path": "go11-admission-controls.log",
+      "bytes": 283,
+      "sha256": "785f32223eda0720b94e101542dcaebd5c1ba190f422a663ac4e1140be7ea050"
+    },
+    {
+      "path": "go11-build-first.log",
+      "bytes": 14422,
+      "sha256": "f9f7eb74d7466187b18787a3212876b77006b1092e3bf818052993a791c0c48f"
+    },
+    {
+      "path": "go11-build.json",
+      "bytes": 24630,
+      "sha256": "cdff941b1ec2d228e097de0570c6b127c49fa6eff38bbdf6bc61d398d1b1b24f"
+    },
+    {
+      "path": "go11-build.log",
+      "bytes": 38939,
+      "sha256": "3c44249175135e8d623e07283d86ff4b5d6b46fe27a9c1d7b65981a45b91183d"
+    },
+    {
+      "path": "go11-portability-reference/portability.json.gz",
+      "bytes": 113706,
+      "sha256": "6819523a44f70d63c63f2d31109f9d92a26514e8237352d1a350e89fddf24596"
+    },
+    {
+      "path": "go11-portability-reference/verification.json",
+      "bytes": 837,
+      "sha256": "4d0b9d008c74ca2d0cc66bddb20516371f8b27db3e3271a8ea1d230b17d0c6b6"
+    },
+    {
+      "path": "go11-portability-reference.log",
+      "bytes": 908,
+      "sha256": "92703016a56b05d928ff2b954ae88beb5521446ad490799d9fca319d03c95e2e"
+    },
+    {
+      "path": "local-recovery-notes.json",
+      "bytes": 1018,
+      "sha256": "574d523ad3982b01fcc4dea87f021b5b6c679a715d7897302b0ecc3b0471df44"
+    },
+    {
+      "path": "original-byte-audit.json",
+      "bytes": 162,
+      "sha256": "3eae1ffc444a0e0f2a94bcc26e0b8682ebcd4b4d0818b4d60f5b3b5133b29a9c"
+    },
+    {
+      "path": "portability-difference.json.gz",
+      "bytes": 18677,
+      "sha256": "acb5d9d321b33404681d66f748fb935fedd6e04d3c48cbb7e4df4370ade225fe"
+    },
+    {
+      "path": "portability-difference.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portability-difference.stdout.gz",
+      "bytes": 18454,
+      "sha256": "7fe1e779230e41b062f433340513459c84b80e5425795f505ab001308358a03a"
+    },
+    {
+      "path": "portability-difference.ts",
+      "bytes": 1523,
+      "sha256": "e5833c563fd61de3c63fad036bc3fe451ed5246455731e415ee2cdd20b3f7f7d"
+    },
+    {
+      "path": "prepare-pipeline.py",
+      "bytes": 8825,
+      "sha256": "dd2a1166a682b5e672ab9ee70f21dcdad07d9ab487e2d1e7c6298504bf4df0d9"
+    },
+    {
+      "path": "prepare-sdk-experiment.py",
+      "bytes": 3448,
+      "sha256": "993cfd3c3247c24aa58f277fcb4ac4d01a718fc1cbbfb8fcaaab5a01ca9d0404"
+    },
+    {
+      "path": "prepare-source8.py",
+      "bytes": 9783,
+      "sha256": "936862df5842a139df223ff17ad6a618180c3f675c091d12567233f13244fe44"
+    },
+    {
+      "path": "publication-final.log",
+      "bytes": 10909,
+      "sha256": "989276f6d69cc41ab7db2e759879a73f5b4a89f85d885567ca80cb98451a7e3a"
+    },
+    {
+      "path": "publication-first.log",
+      "bytes": 1153,
+      "sha256": "2ed8a2a26cf94108fd19f67e95d1d43dcf8c5e696491001ef38c124db02ea26b"
+    },
+    {
+      "path": "publication.log",
+      "bytes": 1153,
+      "sha256": "2ed8a2a26cf94108fd19f67e95d1d43dcf8c5e696491001ef38c124db02ea26b"
+    },
+    {
+      "path": "python.log",
+      "bytes": 710,
+      "sha256": "b3d6a5a7be35eb527e98d72e4e1676506c607a2b8f9bb2ae8bd4e482bfca2438"
+    },
+    {
+      "path": "selector-image-final.log",
+      "bytes": 4900,
+      "sha256": "dd8e2e4754719c585637064e3cf6aba6d7bff2c75dca4117ed539b4e9f7256ea"
+    },
+    {
+      "path": "selector-image-first.log",
+      "bytes": 976,
+      "sha256": "27c891edb7ec66d4e3c5353d3afcf19aa232dcafd14d3148b5e71af012becf65"
+    },
+    {
+      "path": "source/.github/workflows/ci.yml.gz",
+      "bytes": 2302,
+      "sha256": "619a37d27faf2e44e292af478452add9979da18a2ae7fdd08323842e48d45ad9"
+    },
+    {
+      "path": "source/.github/workflows/isi4-yours-wallet.yml.gz",
+      "bytes": 2522,
+      "sha256": "b1867a1651dde62f36392ad0e79663e724dd1fda4bb5d8f61e23ed6e4d6df81d"
+    },
+    {
+      "path": "source/.github/workflows/native-evidence-reevaluation.yml.gz",
+      "bytes": 1170,
+      "sha256": "dd78a632a9230620a10cfd884382f220ce02b84800b50d2dc81b6d966fa09fff"
+    },
+    {
+      "path": "source/THIRD_PARTY_NOTICES.md.gz",
+      "bytes": 3161,
+      "sha256": "d030d01ce7cf86818d40166531056dbdc9283346b35c3c0aa79d558b39990139"
+    },
+    {
+      "path": "source/docs/implementation-status.md.gz",
+      "bytes": 6277,
+      "sha256": "c819bcddbd806212607592d6b4f2402e2f786ef67fed0ce6840c3c1e5eecb3be"
+    },
+    {
+      "path": "source/docs/native-conformance-results-2026-11-12.md.gz",
+      "bytes": 20959,
+      "sha256": "8c92c96e98b1eb63a36d3c895398a6f886ee44bf70067f6423a7443492aaaf48"
+    },
+    {
+      "path": "source/docs/native-go-serialization-artifact-correction-2026-11-13.md.gz",
+      "bytes": 1543,
+      "sha256": "31c38c0ab2d5d2c1cb8f8e53dfcd638fabfa9e0d5f1e4ef1d29358a105b3dc82"
+    },
+    {
+      "path": "source/infra/adapters/storage-sync-order/README.md.gz",
+      "bytes": 766,
+      "sha256": "d299c74140ffbc18f71827f61ea82a41f3766986c332c65861453cbcca1c3696"
+    },
+    {
+      "path": "source/infra/adapters/storage-sync-order/go-sdk-v1.7.3.patch.gz",
+      "bytes": 4490,
+      "sha256": "23658e101d756cf374d0c9d7b102e1dfefbbfdad07dd23aa97c3695f56a77986"
+    },
+    {
+      "path": "source/infra/adapters/storage-sync-order/patch.lock.json.gz",
+      "bytes": 911,
+      "sha256": "3bdacdffb1ba0eaf58d6403d3ac1c61590357b5157d2559b14cc8df4515f8a45"
+    },
+    {
+      "path": "source/infra/native/conformance/Dockerfile.gz",
+      "bytes": 1436,
+      "sha256": "9c0c506370628412bc477138470de17fefcb1c1a82510248bbfa159b29b0a68b"
+    },
+    {
+      "path": "source/infra/native/conformance/plan-pr368-coverage-6-source-8.json.gz",
+      "bytes": 29636,
+      "sha256": "67a41ad0f072141882bd601f742103a34603a96d673e105e670dc23f17e3925a"
+    },
+    {
+      "path": "source/infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-11.json.gz",
+      "bytes": 1221,
+      "sha256": "175224ccfb6553d58b8ec12bfddef5fe2ba0542c155170fb8f25899160b5338d"
+    },
+    {
+      "path": "source/infra/native/conformance/rust-graph-pr368-coverage-6-source-8.json.gz",
+      "bytes": 1149,
+      "sha256": "1d22238d8cc7a52789817c9674f6a3a43ec147afd97af27d6e3c2dab08ef9b27"
+    },
+    {
+      "path": "source/scripts/frozen-component-replay.mjs.gz",
+      "bytes": 2916,
+      "sha256": "4dd56816aa9b5cb82d20413afd935b9ba98ce400b7ed6ff1e3015aef725ded83"
+    },
+    {
+      "path": "source/scripts/native-reevaluation.mjs.gz",
+      "bytes": 5920,
+      "sha256": "421f6f189d465b6aa257f8dbc920ede001a932a42deb804b73d12cf54af72037"
+    },
+    {
+      "path": "source/scripts/native-rust-compatibility.mjs.gz",
+      "bytes": 3987,
+      "sha256": "417b939cd83e9fb802c4744ccd908ca1f6afabd59c478b7ebddb01925e2343af"
+    },
+    {
+      "path": "source/scripts/native-wallet-profiles.mjs.gz",
+      "bytes": 1199,
+      "sha256": "8d2cfb042423719f60f9ef6628bffb9b48da0ae6b25bacf45f895c3aa97eced6"
+    },
+    {
+      "path": "source/scripts/prepare-storage-sync-order-go.mjs.gz",
+      "bytes": 1866,
+      "sha256": "68bd391a35de043329484bd438e06cb9ca55ce812773c102ac2696779d9aef97"
+    },
+    {
+      "path": "source/scripts/verify-native-integrated.mjs.gz",
+      "bytes": 4041,
+      "sha256": "0cf7b0195597a958dea92fadbae9e123ff8edd3770fb9c5bac28750d4f936669"
+    },
+    {
+      "path": "source/scripts/verify-published-integrations.mjs.gz",
+      "bytes": 6978,
+      "sha256": "32a878ed4ede93a7c354bad2468e7d1134e84d82bf6a0aa2a0bcdb83bd1639b4"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-services.ts.gz",
+      "bytes": 8097,
+      "sha256": "b4717ba7a1b11c0bfe7571195f1ec803aaf67774c476f216356dc06b0e4a9092"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-sync-order-build.ts.gz",
+      "bytes": 1595,
+      "sha256": "b1a6cfa80df1c702d36b9d82fda95d03dd9026746eca908f73fd24b539dc8429"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/run-portability-reference.ts.gz",
+      "bytes": 2953,
+      "sha256": "2e6d7f6558df3e98339e1a717be950d1786f2c6cddfa1a4c7912f6edfe4ea94a"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance.ts.gz",
+      "bytes": 4031,
+      "sha256": "d0f699c329a5b253776ec938aed504d35c23c770195652dca13d8fa73127f2ea"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify.ts.gz",
+      "bytes": 10542,
+      "sha256": "15e8bb85b9c93131dd282556c52bc4c51c6ad8aa2a3cbabe3e5053471cae6ed5"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/worker.ts.gz",
+      "bytes": 4816,
+      "sha256": "9bb5b130f146edafd972489d4e6346e1fb5de569731e34a1d1c589ffe61337bc"
+    },
+    {
+      "path": "source/synthesis/test/fixtures/native-sync-order/parent-build.json.gz.gz",
+      "bytes": 4210,
+      "sha256": "f3c71c62d99358162580d3b44d315d04ba0db6d104de12c6bd7d2829f88c062f"
+    },
+    {
+      "path": "source/synthesis/test/fixtures/native-sync-order/provenance.json.gz",
+      "bytes": 355,
+      "sha256": "914cbec73cc02f4eb0c8877c4cbf4566e4ccbd274ab2ddc25a9ef2f8d8df2f81"
+    },
+    {
+      "path": "source/synthesis/test/native-sync-order-build.test.ts.gz",
+      "bytes": 1790,
+      "sha256": "adbf580a2a8d0daf306ea527566b68fdb5975f368c66bacb18e61a3b261771b7"
+    },
+    {
+      "path": "source/test/frozen-component-replay.test.mjs.gz",
+      "bytes": 2363,
+      "sha256": "75c678880aa430286e6eaa86ed7c7bed48abecdee32c3d760512057564bb5b61"
+    },
+    {
+      "path": "source/test/native-coverage6-selection.test.mjs.gz",
+      "bytes": 2553,
+      "sha256": "20003d1e4d1d1726988087821c6ab16b20ba848c3560ec4d4727ef81b6924185"
+    },
+    {
+      "path": "source/test/native-reevaluation-revisions.test.mjs.gz",
+      "bytes": 2196,
+      "sha256": "8c72a6b3633a2dff82f6e7d54d055871038091bf56eb1aabe1ae7431ec6d1a3f"
+    },
+    {
+      "path": "source/test/published-integrations.test.mjs.gz",
+      "bytes": 5019,
+      "sha256": "a6be342480dda0fa771a1cbd13106a5409ae81f5cc5fbd7ce3d258a61c8c1c88"
+    },
+    {
+      "path": "standards.log",
+      "bytes": 362,
+      "sha256": "d0560516f217a4d43a2dfd8d2891c2a436d0bff1d50b2a0199840abc4e2bf528"
+    },
+    {
+      "path": "synthesis-full.log",
+      "bytes": 383,
+      "sha256": "c1b402271a6ab33e0b6aaa00332713a12dc4ec59af4df61379ec4ad1bc7a985b"
+    },
+    {
+      "path": "typecheck-first.log",
+      "bytes": 229,
+      "sha256": "72a0087b76335f88ed718ba42dc5e33fa0d146071146ae6869ea5cb7870d46ba"
+    },
+    {
+      "path": "typecheck.log",
+      "bytes": 52,
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 602,
+      "sha256": "4dde340f77544a598fe0611e6c9748aea66a71a85cadf157227faa03816765c7"
+    }
+  ]
+}

@@ -11,18 +11,20 @@ test('component3 frozen replay survives current source drift but rejects depende
  const git=(...args)=>execFileSync('git',args,{cwd:root,encoding:'utf8'})
  try{
   for(const directory of ['infra','fixtures','itcves','programs'])write(`${directory}/.keep`,'fixture')
+  write('test/pinned.mjs','export const marker="test-frozen"\n');write('docs/pinned.md','# Frozen input documentation\n');
   write('.github/workflows/native.yml','name: frozen-native-policy\n');write('.nvmrc',process.versions.node+'\n');write('scripts/oracle.mjs','export const marker="frozen"\n');write('package.json','{}')
   write('scripts/guarded.mjs','if(process.argv[1]===import.meta.filename)console.log(JSON.stringify({verified:true,marker:"executed"}))\n')
   for(const dir of ['synthesis','integrations/services','components/transport']){write(`${dir}/package-lock.json`,'{"lockfileVersion":3}');fs.mkdirSync(path.join(root,dir,'node_modules'))}
   write('components/rust/Cargo.lock','# pinned\n');fs.mkdirSync(path.join(root,'out'));fs.mkdirSync(path.join(root,'components/rust/target'))
   git('init','-q');git('add','.');git('-c','user.name=TPNIL fixture','-c','user.email=fixture@example.invalid','commit','-qm','Frozen fixture')
-  const revision=git('rev-parse','HEAD').trim();write('scripts/oracle.mjs','throw new Error("current drift")\n')
+  const revision=git('rev-parse','HEAD').trim();write('scripts/oracle.mjs','throw new Error("current drift")\n');write('test/pinned.mjs','throw new Error("current test drift")\n');write('docs/pinned.md','# Current documentation drift\n')
   const alias=path.join(temporary,'alias');fs.symlinkSync(fs.realpathSync(temporary),alias,'dir')
   const copy=path.join(alias,'frozen');const result=prepareFrozenComponentReplay(root,revision,copy)
   assert.equal(result.root,fs.realpathSync(copy),'CLI entry points must use canonical paths even through an alias')
   const execution=spawnSync(process.execPath,[path.join(result.root,'scripts/guarded.mjs')],{encoding:'utf8'})
   assert.equal(execution.status,0);assert.deepEqual(requireVerifierReceipt(execution.stdout),{verified:true,marker:'executed'})
   assert.equal(fs.readFileSync(path.join(copy,'.github/workflows/native.yml'),'utf8'),'name: frozen-native-policy\n');assert.equal(fs.readFileSync(path.join(copy,'scripts/oracle.mjs'),'utf8'),'export const marker="frozen"\n');assert.equal(result.source,revision);assert.ok(result.reused.includes('synthesis/node_modules'))
+  assert.equal(fs.readFileSync(path.join(copy,'test/pinned.mjs'),'utf8'),'export const marker="test-frozen"\n');assert.equal(fs.readFileSync(path.join(copy,'docs/pinned.md'),'utf8'),'# Frozen input documentation\n');
   fs.rmSync(copy,{recursive:true});assert.ok(fs.existsSync(path.join(root,'out')),'Removing replay cannot remove original cache')
   write('synthesis/package-lock.json','{"lockfileVersion":2}');assert.throws(()=>prepareFrozenComponentReplay(root,revision,path.join(temporary,'bad-lock')),/frozen dependencies/)
   write('synthesis/package-lock.json','{"lockfileVersion":3}');fs.symlinkSync('/outside',path.join(root,'scripts/link'));git('add','scripts/link');git('-c','user.name=TPNIL fixture','-c','user.email=fixture@example.invalid','commit','-qm','Unsupported link')

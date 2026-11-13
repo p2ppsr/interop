@@ -36,6 +36,12 @@ unchanged license texts remain in the resolved module archives; linking or downl
 The digest-pinned MongoDB container used for component qualification retains
 its own license. Original laboratory host and adapter code remains Apache-2.0.
 
+The [Go11 serialization adapter](infra/adapters/storage-sync-order/README.md)
+extends the checksum-bound Go10 compatibility artifact. Its SDK patch retains
+the upstream terms, with unchanged [SDK](infra/adapters/storage-caller-known-inputs/LICENSE-sdk)
+and [toolbox](infra/adapters/storage-caller-known-inputs/LICENSE-toolbox) license
+texts. The original laboratory tests and admission tooling retain Apache-2.0.
+
 ## Integrated service and Rust dependencies
 
 `integrations/services/vendor/` retains selected ChainTracks routes (Open BSV v6)

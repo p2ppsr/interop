@@ -5,7 +5,7 @@ import path from 'node:path';
 // A file present only in an operator's ignored working files is not published
 // evidence. Check the actual Git index, which is the committed tree in CI and
 // the proposed next tree during local staging.
-const tracked = new Set(execFileSync('git', ['ls-files', '-z', '--', 'journals/'], { encoding: 'utf8' }).split('\0').filter(Boolean));
+const tracked = new Set(execFileSync('git', ['ls-files', '-z', '--', 'journals/'], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }).split('\0').filter(Boolean));
 const integrationSchemas = new Set(['tpnil-integrated-component-archive@1', 'tpnil-integrated-native-archive@1', 'tpnil-integration-attempt@1', 'tpnil-native-integrated-reevaluation-archive@1']);
 const indexBytes = name => execFileSync('git', ['show', `:${name}`], { maxBuffer: 256 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
 for (const name of tracked) {

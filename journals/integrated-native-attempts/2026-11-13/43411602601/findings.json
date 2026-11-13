@@ -1,0 +1,173 @@
+{
+  "source": "3aac88975fc0f4e911fcf10fea6c8158f7760534",
+  "run": 43411602601,
+  "claim": "RAW_OBSERVATIONS_NOT_QUALIFIED",
+  "repetitions": [
+    {
+      "repetition": 1,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 685,
+        "FAIL": 1,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    },
+    {
+      "repetition": 2,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 684,
+        "FAIL": 2,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V007",
+          "id": "portability.complete-logical-dataset"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    }
+  ],
+  "differentOutcomes": [
+    {
+      "vector": "ISI-4-V007",
+      "id": "portability.complete-logical-dataset",
+      "first": "PASS",
+      "second": "FAIL"
+    }
+  ],
+  "nativeJobSeconds": 2966,
+  "order25JobSeconds": 5379,
+  "completedCohortJobSeconds": 87710,
+  "actualRustResults": "NOT_EXECUTED",
+  "originalQualificationReceipts": "ABSENT",
+  "independentFullNativeReplay": "NOT_EXECUTED_MISSING_ORIGINAL_QUALIFICATION_AND_RUST",
+  "imageSourceReconstruction": "PASS",
+  "actualFullCostUSD": null,
+  "fullCostReconciled": false,
+  "roots": [
+    "Go sync ancestry export serializes the same eight-transaction graph and identical BUMPs in different topological sibling orders. Two provenTxReq inputBEEF fields differ byte-for-byte in repetition2; no other projected dataset field differs. The strict complete dataset check correctly fails and matching-repetition admission rejects. A new deterministic Go serialization artifact is required, preserving the exact byte comparison and failed sample."
+  ]
+}

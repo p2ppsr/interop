@@ -139,8 +139,16 @@ export function verifyIntegrationArchive(directory) {
     const bytes = fs.readFileSync(path.join(directory, names[index])); assert.equal(bytes.length, item.size); assert.equal(sha256(bytes), item.sha256, names[index])
   }
   if (attempt) {
-    assert(['OBSERVER_BUILD_ERROR', 'OBSERVER_STARTUP_ERROR', 'OBSERVER_EXECUTION_ERROR', 'OBSERVER_VERIFICATION_ERROR'].includes(manifest.claim))
+    assert(['OBSERVER_BUILD_ERROR', 'OBSERVER_STARTUP_ERROR', 'OBSERVER_EXECUTION_ERROR', 'OBSERVER_VERIFICATION_ERROR', 'INTEGRATION_FAILURE_NOT_QUALIFIED'].includes(manifest.claim))
     if (manifest.claim === 'OBSERVER_BUILD_ERROR') assert.equal(manifest.walletExecuted, false)
+    if (manifest.claim === 'INTEGRATION_FAILURE_NOT_QUALIFIED') {
+      assert.equal(manifest.walletExecuted, true); assert.equal(manifest.newNativeSessions, 2)
+      assert.equal(manifest.nativeQualification, false); assert.equal(manifest.completeBRC100Conformance, false)
+      assert(names.includes('findings.json')); const findings=readJson(path.join(directory,'findings.json'))
+      assert.equal(findings.originalQualificationReceipts,'ABSENT')
+      assert(Array.isArray(findings.differentOutcomes)&&findings.differentOutcomes.length>0,'Unqualified repetition mismatch needs its differing findings')
+      for(const row of findings.differentOutcomes) { assert(['PASS','FAIL','BLOCKED'].includes(row.first)); assert(['PASS','FAIL','BLOCKED'].includes(row.second)); assert.notEqual(row.first,row.second) }
+    }
     return { kind, directory, source: manifest.source, files: names.length, claim: manifest.claim }
   }
   if (kind === 'reevaluation') {
@@ -212,7 +220,7 @@ export function requireArchiveVerifierReceipt(stdout, bundle) {
   return requireVerifierReceipt(stdout, expected)
 }
 export function verifyArchiveSemantics(bundle, { root = repository } = {}) {
-  if (bundle.kind === 'attempt') return { semantic: false, reason: 'Failed observer attempt issues no wallet qualification' }
+  if (bundle.kind === 'attempt') return { semantic: false, reason: 'Unqualified or failed attempt issues no wallet qualification' }
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-integration-'))
   let frozenSource
   try {

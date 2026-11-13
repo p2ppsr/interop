@@ -525,3 +525,37 @@ remain unchanged. Both actual raw reports round-trip through strict qualificatio
 JSON; exceptional native values remain explicit and reversible. Original failed
 evidence remains unchanged. Fresh integrated qualification, actual Rust and full
 frozen source replay are required before readiness.
+
+
+## Native19 portable-byte failure and Go11 successor
+
+[Source3aac889 Foundation43408960489](https://github.com/p2ppsr/interop/actions/runs/43408960489)
+passes2129job-seconds:235Linux core/oneSKIP,1819synthesis/126SKIP, fivePython
+and13Go checks. The component590 matrix retains584PASS/six upstream Go Messaging
+FAIL findings with passing evidence verification. Duplicate43408942916 is
+canceled at117seconds. Evaluator10 run43408948428 passes167seconds and independent
+frozen replay.
+
+[Native19 run43411602601](https://github.com/p2ppsr/interop/actions/runs/43411602601)
+fails after2966job-seconds. Both698-observation captures retain original99 at
+98PASS/one signed-satoshi FAIL. Capture1 has685PASS/oneFAIL/12BLOCKED; capture2 has
+684PASS/twoFAIL/12BLOCKED. Its additional failure is the complete portable logical
+dataset. The exact comparison rejects two inputBEEF arrays with identical raw
+transaction/proof sets but different sibling ordering. Repetition-match admission
+rejects. No original native/integrated qualification or Rust result exists.
+
+The [failed archive](../journals/integrated-native-attempts/2026-11-13/43411602601/attempt.json)
+retains all550member hashes and the exact141103974-byte ZIP. Full image
+reconstruction passes71533final/561source-overlay entries,457frozen inputs, all
+runtime configuration and Linux Go manifest binding. The missing-source control
+rejects. Both containers exit0 and are removed; host policy is restored. Order25
+closes at5379job-seconds; completed cohort87710. Full costs remain unknown.
+
+The [Go11 artifact correction](native-go-serialization-artifact-correction-2026-11-13.md)
+fixes deterministic SDK transaction traversal while preserving every raw body,
+proof byte/index, implicit newest target and all698criteria. The exact captured
+graphs fail Go10 and pass512 insertion-order controls under Go11. Full SDK, host,
+wallet, storage and RPC suites pass. A direct authenticated Go11 replacement
+reference passes all nine predicates, including source outage, cold recovery
+and redemption. These are laboratory controls; a new frozen native qualification
+remains required. No failed capture is rescored.
