@@ -361,3 +361,35 @@ Local diagnosis against both original captures validates all29 permission predic
 The [source-only successor](native-observer-source-correction-2026-11-13.md) retains the original4.8 profile/policy/plan bytes and698 IDs. It corrects transitive permission-prefix, transaction-oracle and basket-metadata bindings, exact fixture replay, the controlled foreign-owner fixture join and the Active Storage header Edit/Sync Now observer. Local preflight passes236core tests,1,800synthesis tests/92SKIP, five Python tests, typecheck/catalog/standards,197focused controls,74transaction-parent controls and29basket-parent/metadata controls. One earlier local synthesis cleanup hook timed out; its failed log remains retained and the complete subsequent suite passes.
 
 Both unchanged native14 captures pass prospective shutdown, transaction/extension, funding, final-submission and completion-parent diagnosis. Partial traces each derive61SCOPED_PASS/zeroFAIL/twoBLOCKED. This diagnosis is not a new native qualification. Original native15 receipts, both Rust results, matching captures and independent frozen replay remain required before PR readiness.
+
+
+## Native15 closeout and transaction fixture correction
+
+[Native15](https://github.com/p2ppsr/interop/actions/runs/43358474345) retains two
+matching698-observation captures, each678PASS/oneFAIL/19BLOCKED. The original99
+remain98PASS/one signed-satoshi FAIL. The [exact546-member archive](../journals/integrated-native-attempts/2026-11-13/43358474345/README.md)
+preserves the failed parent admission and absence of original qualification or
+Rust results. Full semantic replay is correctly refused. Independent image
+reconstruction verifies all71496 final entries,524 source-overlay entries and
+two added layers. The original ZIP is138196978bytes at SHA256
+`fed4697fd4c6b91c37e6e1d55e15808ad027b376d0fc8bb49c1cafb32ccd4d63`.
+
+[Foundation43356669995](https://github.com/p2ppsr/interop/actions/runs/43356669995)
+passes1511job-seconds; its matrix preserves584PASS/six upstream Go Messaging FAIL
+findings. The canceled duplicate uses27seconds. [Evaluator10 reevaluation43356872719](https://github.com/p2ppsr/interop/actions/runs/43356872719)
+passes155seconds and independent frozen replay, preserving all original criteria
+and bytes. Native15 uses3294seconds: order20 actual4987, completed cohort63311.
+Full monetary/operator/agent/capacity costs remain unknown.
+
+The [source3 correction](native-transaction-fixture-source-correction-2026-11-13.md)
+separates the stale unsigned-TXID fixture from a full-set child that may legally
+have no change. It reuses an independently staged change-bearing transaction,
+retains strict source/intent/proof/window/batch checks, and persists fatal
+evaluator diagnostics. The original4.8 criteria and source2 JSON remain frozen.
+The [offline preflight](../journals/native-closure-diagnostics/2026-11-13/native15-transaction-fixture-preflight/manifest.json)
+passes236core tests,1806synthesis/92SKIP,62focused transaction controls, types,
+catalogs, standards and fivePython checks. Both original native15 no-change
+counterexamples and an injected staging failure are retained as engineering
+controls. Fresh native qualification, both actual Rust results and complete
+independent replay remain required before PR readiness. Full BRC100 conformance
+and the signed-satoshi finding remain open.

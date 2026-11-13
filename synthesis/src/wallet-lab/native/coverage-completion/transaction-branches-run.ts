@@ -10,7 +10,7 @@ import { createFixtureWallet } from '../../../storage-sync/fixture-wallet.js'
 import { coverageObservationEncoding, decodeCoverageObservation, writeCoverageObservation } from '../coverage-observation.js'
 import { runTransactionBranches } from './transaction-branches-driver.js'
 import { createIsolatedKnownSource } from './transaction-known-source.js'
-import { evaluateTransactionBranches, transactionBranchAssertions } from './transaction-branches-parent.js'
+import { finalizeTransactionBranchReport } from './transaction-branches-parent.js'
 import { withNativePortabilitySettingsPage } from '../conformance-portability.js'
 
 export async function runNativeTransactionBranches(context: NativeScenarioContext) {
@@ -18,7 +18,7 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
   const wallet = new Proxy({}, { get: (_target, method) => typeof method !== 'string' || method === 'then' ? undefined
     : (args: unknown) => nativeWalletBoundary(context.application, true)[method](args) })
   const funder = await createFixtureWallet(context.services, '77'.repeat(32)), unknownSource = await createIsolatedKnownSource(context.services, funder)
-  let report: any, primary: unknown
+  let report: any, lastObservation: any, primary: unknown
   try {
     report = await runTransactionBranches({ wallet, funder, services: context.services, identity: funding.identity, unknownSource,
       observeActiveProvider: (stage: string) => context.manualPrompt(() => withNativePortabilitySettingsPage(context.application, context.extensionId, async page => {
@@ -52,14 +52,22 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
         return { kind: 'NATIVE_REMOTE_BACKUP_UI', id, providerUrl, candidates, activeCards, mainScreenshot, mainScreenshotSha256: createHash('sha256').update(mainBytes).digest('hex'),
           url: page.url(), card, screenshot, screenshotSha256: createHash('sha256').update(bytes).digest('hex'), startedAt, endedAt: new Date().toISOString() }
       })),
-      onProgress: (value: unknown) => writeCoverageObservation(context.evidence, 'conformance/transaction-branches-observed.json', value, coverageObservationEncoding) })
+      onProgress: (value: unknown) => { lastObservation = value; writeCoverageObservation(context.evidence, 'conformance/transaction-branches-observed.json', value, coverageObservationEncoding) } })
   } catch (error) { primary = error }
   finally {
     for (const close of [() => unknownSource.close(), () => funder.destroy()]) try { await close() }
     catch (error) { primary = primary ? new AggregateError([primary, error], 'Transaction completion cleanup failed', { cause: primary }) : error }
     writeCoverageObservation(context.evidence, 'conformance/transaction-branches-fixture.json', unknownSource.report, coverageObservationEncoding)
   }
-  if (primary) throw primary
+  if (primary) {
+    const failed = report ?? lastObservation
+    if (failed) {
+      failed.result = 'INVALID_EXECUTION'
+      failed.executionError = { name: primary instanceof Error ? primary.name : 'Error', message: primary instanceof Error ? primary.message : String(primary) }
+      writeCoverageObservation(context.evidence, 'conformance/transaction-branches.json', failed, coverageObservationEncoding)
+    }
+    throw primary
+  }
   report.mode = 'NATIVE_OBSERVATION'
   report.observedStorage = await context.services.nativeTransactions()
   report.finalRoutes = structuredClone(context.services.routes)
@@ -69,9 +77,5 @@ export async function runNativeTransactionBranches(context: NativeScenarioContex
   // The child needs the exact source-owned funding roots; the native parent
   // independently replaces this set with the complete admitted root inventory.
   report.parentAdmissionRequired = true
-  const checked = await evaluateTransactionBranches(report), assertions = transactionBranchAssertions(checked)
-  report.assertions = assertions
-  report.result = assertions.some((row: any) => row.result === 'FAIL') ? 'FAIL' : assertions.some((row: any) => row.result === 'BLOCKED') ? 'BLOCKED' : 'PASS'
-  writeCoverageObservation(context.evidence, 'conformance/transaction-branches.json', report, coverageObservationEncoding)
-  return report
+  return finalizeTransactionBranchReport(report, value => writeCoverageObservation(context.evidence, 'conformance/transaction-branches.json', value, coverageObservationEncoding))
 }

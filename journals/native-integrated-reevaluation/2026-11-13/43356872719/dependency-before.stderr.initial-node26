@@ -1,0 +1,23 @@
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '26.12.1'
+- '24.22.1'
+
+    at file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-replay/guarded-replay.mjs:12:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:105:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '26.12.1',
+  expected: '24.22.1',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.12.1

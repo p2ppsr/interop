@@ -1,0 +1,34 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-coverage-6",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-6-source-3.json",
+    "sha256": "281aa1e19a6a1d5ee9ac83c3dd7276f13cacc66d20d9fd9055bbde16f45c35b2",
+    "profile": "ITCVE-1@4.8.0",
+    "program": "ISI-4@5.8.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Separately frozen4.8 observer profile: same e360 wallet,698 observations, sole admitted mined root and Rust3 criterion bytes. Exact nine-context permission prefix, public listOutputs metadata plus retained opaque bytes,128-depth Node graph resource admission and exact Active Storage summary/detail observer. No original4.7 failed qualification or Rust result is fabricated.",
+  "sources": {
+    ".github/workflows/isi4-yours-wallet.yml": "c75abc6c65734bf6ff7f25194a5740549c25070a6cabe55d48cba8c313a460af",
+    "scripts/check-native-wallet-selector.mjs": "e1cdf750168f592809b7a9bfe890dc8a35930a8ea0fcd452176062e5775bf4cf",
+    "scripts/native-rust-compatibility.mjs": "1a51b3737c9079968fc11531dcbdaf126ff472b4f27da304be77528799fce3b6",
+    "scripts/native-wallet-profiles.mjs": "1738e9697a28ca555de9b7eab12c15d3384a7fa01545c5d5a7ee319a5d114aea",
+    "scripts/read-committed-blob.mjs": "1e5da6099cfd7fdd3bdb0983b61153a3143363507e9b0b6bcfd8a3dcd2444e04",
+    "scripts/run-native-go-wallet.mjs": "fc099b6d01c41ca5749f5d34605caa3c0e6f59785a4f3307ae6ab1d96f4a66d6",
+    "scripts/verify-native-integrated.mjs": "b6c5332d8788debf9fa34b36b6acc41f91488d6373d438760200c51781f1bfdc"
+  },
+  "sourceBindingRevision": 16,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-coverage-6-source-2.json",
+    "sha256": "af6a3ef4107a7b844c613a1f238962c66d93a17b638cd2312b8c1afd23ae92b9"
+  },
+  "admissionState": "FROZEN"
+}

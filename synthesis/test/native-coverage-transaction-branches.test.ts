@@ -5,14 +5,14 @@ import { gunzipSync } from 'node:zlib'
 import { test } from 'vitest'
 import { Beef, MerklePath, P2PKH, PrivateKey, Transaction, UnlockingScript, Utils } from '@bsv/sdk'
 import { coverageObservationEncoding, decodeCoverageObservation } from '../src/wallet-lab/native/coverage-observation.js'
-import { evaluateTransactionBranches, transactionBranchAssertions, verifyTransactionActiveProvider, verifyTransactionBranchParent } from '../src/wallet-lab/native/coverage-completion/transaction-branches-parent.js'
-import { strictBeef, verifyTransactionBranchProof } from '../src/wallet-lab/native/coverage-completion/transaction-branches-oracle.js'
+import { evaluateTransactionBranches, transactionBranchAssertions, verifyTransactionActiveProvider, verifyTransactionBranchParent, finalizeTransactionBranchReport } from '../src/wallet-lab/native/coverage-completion/transaction-branches-parent.js'
+import { strictBeef, verifyTransactionBranchProof, returnedChange, proveFullSetConsumption } from '../src/wallet-lab/native/coverage-completion/transaction-branches-oracle.js'
 import { hydrateTransactionCompletionFixture } from '../src/wallet-lab/native/coverage-completion/transaction-known-source.js'
 import { coveragePaymentScript as extensionRecipient } from '../src/wallet-lab/native/coverage-permissions-model.js'
 import { coveragePaymentScript as baseRecipient } from '../src/wallet-lab/native/conformance-permission-coverage-model.js'
 import { lifecyclePermissionConfig } from '../src/wallet-lab/native/conformance-permission-lifecycle-model.js'
 
-const directory = new URL('./fixtures/native-transaction-branches/', import.meta.url)
+const directory = new URL('./fixtures/native-transaction-branches-source3/', import.meta.url)
 const provenance = JSON.parse(fs.readFileSync(new URL('provenance.json', directory), 'utf8'))
 function read(name: string) {
  const entry = provenance.files.find((r: any) => r.path === `${name}.gz`), bytes = fs.readFileSync(new URL(entry.path, directory)), raw = gunzipSync(bytes)
@@ -182,3 +182,52 @@ for (const kind of ['missing-summary', 'two-headings', 'wrong-summary-host', 'tw
   if (kind === 'wrong-provider-ledger') f.evidence['conformance/portability.json'].counterparts.destination.storageIdentityKey = '00'
   assert.throws(() => verifyTransactionActiveProvider(f.report, f.binding.readEvidence, 'ITCVE-1@4.8.0'))
  })
+
+// Retained native counterexamples are input evidence, never completed qualification.
+for (const repetition of [1, 2]) test(`native15 repetition${repetition} permits a fee-only full-set remainder`, async () => {
+ const r = decodeCoverageObservation<any>(read(`native15-no-change-${repetition}.json`), coverageObservationEncoding)
+ assert.equal(r.nativeQualification, false); assert.equal(r.sourceRun, 43358474345)
+ const signed = Transaction.fromAtomicBEEF(r.sign.result.tx), staged = Transaction.fromAtomicBEEF(r.stage.result.signableTransaction.tx)
+ const tr = { currentHeight: async () => r.fixture.fundingHeight + r.fixture.maturityDepth, isValidRootForHeight: async (root: string, height: number) => root === r.fixture.merkleRoot && height === r.fixture.fundingHeight }
+ await verifyTransactionBranchProof(r.sign.result.tx, tr)
+ const balance = proveFullSetConsumption(r.fullSet.eligible, r.fullSet.required, signed, 0, r.recipientScript)
+ assert.ok(balance.fee > 0); assert.equal(signed.outputs.length, 1)
+ const change = r.outputs.filter((o: any) => o.basketName === 'default').map((o: any) => o.outpoint)
+ assert.deepEqual(change, []); returnedChange(r.stage.result, change)
+ assert.deepEqual(staged.outputs.map(o => [o.satoshis, o.lockingScript.toHex()]), signed.outputs.map(o => [o.satoshis, o.lockingScript.toHex()]))
+ assert.throws(() => returnedChange({ ...r.stage.result, noSendChange: [signed.id('hex') + '.0'] }, change))
+ assert.throws(() => returnedChange({ ...r.stage.result, noSendChange: null }, change))
+})
+test('stale fixture uses its own independently observed change after batch signing', async () => {
+ assert.equal(original.programRevision, 2)
+ const signed = row(original, 'batch-sign-held').result.txid
+ assert.ok(original.stale.signed.startsWith(signed + '.'))
+ assert.ok(original.cuts.find((c: any) => c.id === 'stale-before').snapshot.providers.some((p: any) => p.snapshot.outputs.some((o: any) => o.outpoint === original.stale.signed && o.spendable && o.basketName === 'default')))
+ const r = structuredClone(original); r.stale.signed = row(r, 'full-child-sign').result.txid + '.0'
+ await assert.rejects(evaluateTransactionBranches(r))
+})
+test('evaluator persists an invalid-evidence diagnostic and propagates the global failure', async () => {
+ const r = structuredClone(original); row(r, 'full-held-a').actor = 'funder'
+ let saved: any
+ await assert.rejects(finalizeTransactionBranchReport(r, value => { saved = structuredClone(value) }))
+ assert.equal(saved.result, 'INVALID_EVIDENCE'); assert.equal(saved.evaluatorError.name, 'AssertionError')
+ assert.ok(saved.evaluatorError.message); assert.equal(saved.assertions, undefined)
+ await assert.rejects(evaluateTransactionBranches(saved))
+})
+test('positive evaluator report retains scoped assertions and never qualifies the reference', async () => {
+ let saved: any
+ const r = await finalizeTransactionBranchReport(structuredClone(original), value => { saved = structuredClone(value) })
+ assert.deepEqual(saved, r); assert.equal(r.nativeQualification, false); assert.equal(r.assertions.filter((x: any) => x.result === 'PASS').length, 7); assert.equal(r.result, 'BLOCKED')
+})
+
+test('missing independently staged fixture retains row diagnostics without discarding the report', async () => {
+ const r = decodeCoverageObservation<any>(read('missing-stage-report.json'), coverageObservationEncoding)
+ const checked = await evaluateTransactionBranches(r)
+ assert.equal(satisfied(checked), 5)
+ const stale = checked.outcomes.find((x: any) => x.id === 'transaction.nosend-change/unsigned-stale-txid')!
+ assert.equal(stale.result, 'BLOCKED'); assert.equal(stale.localChecks, 'UNAVAILABLE')
+ assert.match(stale.detail, /fixture unavailable.*Missing public prerequisite/)
+ assert.equal(checked.outcomes.find((x: any) => x.id === 'transaction.batch-send/returnTXIDOnly')!.result, 'FAIL')
+ assert.deepEqual(checked, read('missing-stage-verification.json'))
+ assert.equal(checked.acceptedNativeAssertions, 0)
+})

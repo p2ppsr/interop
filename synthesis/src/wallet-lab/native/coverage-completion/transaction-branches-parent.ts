@@ -50,6 +50,21 @@ export function transactionBranchAssertions(checked: any) {
   return checked.outcomes.map((row: any) => ({ id: `completion.${row.id}`, result: row.localChecks === 'SATISFIED' ? 'PASS' : row.result,
     detail: row.localChecks === 'SATISFIED' ? 'Exact public transaction branch, complete owned-state cuts and independent signed proof match; full native parent admission is also required.' : row.detail }))
 }
+/** Preserve the exact failed report before propagating a global evidence error. */
+export async function finalizeTransactionBranchReport(report: any, persist: (report: any) => void) {
+  try {
+    const checked = await evaluateTransactionBranches(report)
+    report.assertions = transactionBranchAssertions(checked)
+    report.result = report.assertions.some((row: any) => row.result === 'FAIL') ? 'FAIL' : report.assertions.some((row: any) => row.result === 'BLOCKED') ? 'BLOCKED' : 'PASS'
+    persist(report)
+    return report
+  } catch (error) {
+    report.result = 'INVALID_EVIDENCE'
+    report.evaluatorError = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }
+    persist(report)
+    throw error
+  }
+}
 export async function evaluateTransactionBranches(report: any) {
   const isolated = report.unknownSource?.storage ?? []
   return verifyTransactionBranches(report, { identity: report.identity, declaredNativePayments: report.declaredNativePayments,
@@ -59,7 +74,7 @@ export async function evaluateTransactionBranches(report: any) {
     providerRegistry: report.providerRegistry, routes: report.finalRoutes, unknownSource: report.unknownSource })
 }
 export async function verifyTransactionBranchParent(report: any, binding: BasketParentBinding) {
-  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); assert.equal(report.identity, binding.identity)
+  assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile)); assert.equal(report.mode, 'NATIVE_OBSERVATION'); if (binding.profile === 'ITCVE-1@4.8.0') assert.equal(report.programRevision, 2); assert.equal(report.identity, binding.identity)
   assert.deepEqual(report.fixture, binding.fixture)
   const read = binding.readEvidence, json = (name: string) => JSON.parse(read(name).toString()), registry = nativeCompletionProviders(read)
   verifyTransactionActiveProvider(report, read, binding.profile)

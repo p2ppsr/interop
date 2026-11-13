@@ -1,0 +1,54 @@
+{
+  "schema": "tpnil-native-integrated-reevaluation-run-lock@1",
+  "planPath": "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-10.json",
+  "plan": {
+    "schema": "tpnil-native-integrated-reevaluation-plan@1",
+    "id": "YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-10",
+    "original": {
+      "archive": "journals/integrated-native-attempts/2026-11-09/42711700295/native-integrated.zip",
+      "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+      "workflowRun": 42711700295,
+      "sha256": "c0645821afeea30cbc1c0c70f4ca10bfbe288ebfa570b719af5a709f145c3826",
+      "size": 4255642,
+      "members": 186,
+      "profile": "ITCVE-1@2.0.0",
+      "program": "ISI-4@4.0.0",
+      "planSha256": "eb08ea9808a3cd314d9060c16c466f47cbb36c64ebd3506064085276596432c6",
+      "qualificationSha256": "8a98103995b918aec867f414c36bc8ff71645ce1004e1ced3f4706257ea82ad7"
+    },
+    "rust": {
+      "corpus": "tpnil-rust-corpus@3",
+      "manifest": "components/rust/graph-oracle-3.0.0.json",
+      "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+      "inputNames": [
+        "paid-http.json",
+        "messaging.json",
+        "synthesis-transactions.json",
+        "identity-trust.json"
+      ]
+    },
+    "expected": {
+      "repetitions": 2,
+      "nativeAssertions": 280,
+      "integratedAssertions": 77,
+      "rustAssertions": 48
+    },
+    "evaluatorSources": {
+      "scripts/reevaluate-native-integrated.mjs": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+      "scripts/verify-native-reevaluation.mjs": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+      "scripts/native-reevaluation.mjs": "de002b7e816247de3d65dee9476dcddf250039aa42b0112cfa30154d248f6f0f",
+      "scripts/frozen-component-replay.mjs": "d92399e29b06f8b40c0a8b1f9e64ceebc550fa1236b41c22e0fb120b355fb9fd",
+      "scripts/verify-published-integrations.mjs": "9376146c32cfa9a6c8797b7bacc4bf0df2296560a1f71ddd8ff5ec2b98f76cb2"
+    },
+    "sourceBindingRevision": 10,
+    "predecessor": {
+      "path": "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-9.json",
+      "sha256": "ebc35a6362a3bc86a473557fccba6f65ce969fcb6579e5d33236cd9f6f4f31da"
+    },
+    "scope": "Separate evaluator10 source binding for4.8 publication support. Exact original186-member archive,280 native,77 integrated and48 Rust criteria are unchanged. Source9 and every earlier result remain immutable; zero new native sessions.",
+    "admissionState": "FROZEN"
+  },
+  "planSha256": "caf98f78ff6bcd3739ce2e5ac401229be293927075d4472db3acabc05986d13b",
+  "evaluatorSource": "4c872d109e49d2e63b3942cc0ec2f7386832c5a9",
+  "sourceDirty": false
+}
