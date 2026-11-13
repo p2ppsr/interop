@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-11-13T13:04:32.783938+00:00",
+  "source": "ec3a554d433845e9aa8209d9eb20dde48cba6a2a",
+  "orderSha256": "b4aa69b07a9dbc5c5f5601fd011768b8880cba7cf4e7ebca5a9bae19dd79396a",
+  "sourceInputs": 471,
+  "PR": 26,
+  "ciTestCounts": {
+    "corePASS": 236,
+    "coreSKIP": 1,
+    "synthesisPASS": 1831,
+    "synthesisSKIP": 126,
+    "GoPASS": 13,
+    "PythonPASS": 5,
+    "sourceArtifactLogHashesVerified": true,
+    "directGo11ReplacementPASS": 9
+  },
+  "PRFoundation": 43426848841,
+  "reevaluationPASS": 43426830671,
+  "duplicatePushCanceled": 43426828226,
+  "independentReevaluationReplaySha256": "68a2fb0e794492b3cf57a3ccfe7fa9fdaf7c75120e781d1be1fe18caf30f6ab7",
+  "jobSeconds": {
+    "43426848841": 2551.0,
+    "43426830671": 122.0,
+    "43426828226": 130.0
+  },
+  "prerequisiteJobSeconds": 2803.0,
+  "cancelledDuplicateAPIStatusExceptions": [],
+  "admissionControllerSha256": "de306a2e2f69e3f06ee5dbad284db80a0607a7e2ebcc847a871b595034f8531c",
+  "cohortBeforeNative": 92542.0,
+  "syntheticMerge": "16890697219b0612d8aadae8fe682c6accf975c9",
+  "syntheticTree": "d8c32bddaac99dc03797501e59e06be98aef8d78",
+  "treeEqualsNativeSource": true,
+  "deadline": "2026-11-13T15:37:17.881086+00:00",
+  "nativeMaximumJobSeconds": 5400,
+  "nativeRunsBefore": 0,
+  "dispatchedAt": "2026-11-13T13:04:34.919509+00:00",
+  "command": [
+    "gh",
+    "workflow",
+    "run",
+    "isi4-yours-wallet.yml",
+    "--repo",
+    "p2ppsr/interop",
+    "--ref",
+    "codex/native-wallet-closure-20261111",
+    "-f",
+    "profile=integrated-native-conformance-pr368-coverage-6"
+  ],
+  "exitCode": 0
+}

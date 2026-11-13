@@ -1,0 +1,240 @@
+{
+  "schema": "tpnil-native-replay-dependency-guard-tests@1",
+  "result": "PASS",
+  "tests": 16,
+  "npmPackageFileBytes": 321859027,
+  "uniquePackageFiles": 19350,
+  "verifiedPackageTarballs": 525,
+  "guardSha256": "96797f3967f4f310dd31e13bcafa2c364127c40b3cc2a1b8f3bce07f867743d7",
+  "closureSha256": "da06c7b161147ae9c4cda21626de68dbc7001630cc6c487dd70120ec7e1c541a",
+  "sandboxExecSha256": "10cf4a46a575e4747d2419cf343800db0d11ae6e6e9b8415998d3d8f336b2a92",
+  "nodeSha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+  "allPackageBytesStillMatchAudit": true,
+  "semanticReplayExecuted": false,
+  "interpretation": "All ten unverified generated build-metadata files are unreadable to the replay and inherited child processes; actual replay under this guard remains required.",
+  "controls": [
+    {
+      "id": "allowed-verified-package",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/sdk/package.json"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "343fd217a2c067a8243ea9e0a8ec1a30d44bef19251d185c8e4f81b770a7fc2a",
+      "stdoutBytes": 29520,
+      "stderr": ""
+    },
+    {
+      "id": "deny-generated-0",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-1",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/test_extension.target.mk"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/test_extension.target.mk: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-2",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/better_sqlite3.target.mk"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/better_sqlite3.target.mk: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-3",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Makefile"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Makefile: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-4",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/config.gypi"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/config.gypi: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-5",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/binding.Makefile"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/binding.Makefile: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-6",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/obj.target/better_sqlite3.stamp"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/obj.target/better_sqlite3.stamp: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-7",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/obj.target/test_extension.stamp"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/obj.target/test_extension.stamp: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-8",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/.deps/Release/obj.target/test_extension.stamp.d"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/.deps/Release/obj.target/test_extension.stamp.d: Operation not permitted\n"
+    },
+    {
+      "id": "deny-generated-9",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/.deps/Release/obj.target/better_sqlite3.stamp.d"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/Release/.deps/Release/obj.target/better_sqlite3.stamp.d: Operation not permitted\n"
+    },
+    {
+      "id": "same-file-readable-without-guard",
+      "command": [
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "988d2125c86bf4d7c1e117b68ad150294a44e9070d2046214742a2dd3dafc810",
+      "stdoutBytes": 30502,
+      "stderr": ""
+    },
+    {
+      "id": "descendant-process-inherits-denial",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/Users/tyeverett/.local/lib/nodejs/node-v24.22.1-darwin-arm64/bin/node",
+        "-e",
+        "require('node:child_process').execFileSync('/bin/cat',[process.argv[1]])",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool: Operation not permitted\nnode:child_process:982\n    throw err;\n    ^\n\nError: Command failed: /bin/cat /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool\ncat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/integrations/services/node_modules/@bsv/wallet-toolbox/node_modules/better-sqlite3/build/gyp-mac-tool: Operation not permitted\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:943:11)\n    at Object.execFileSync (node:child_process:979:15)\n    at [eval]:1:31\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30) {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    Buffer(0) [Uint8Array] [],\n    Buffer(221) [Uint8Array] [\n       99,  97, 116,  58,  32,  47,  85, 115, 101, 114, 115,  47,\n      116, 121, 101, 118, 101, 114, 101, 116, 116,  47, 116, 109,\n      112,  47, 110, 101, 116, 119, 111, 114, 107,  45, 111, 112,\n      115,  47, 119, 111, 114, 107, 116, 114, 101, 101, 115,  47,\n      112,  50, 112, 112, 115, 114,  47, 105, 110, 116, 101, 114,\n      111, 112,  47,  99, 111, 100, 101, 120,  47, 108,  97,  98,\n       45, 105, 110, 116, 101, 103, 114,  97, 116, 105, 111, 110,\n       45,  50,  48,  50,  54,  49,  49,  48,  54,  47, 105, 110,\n      116, 101, 103, 114,\n      ... 121 more items\n    ]\n  ],\n  pid: 21023,\n  stdout: Buffer(0) [Uint8Array] [],\n  stderr: Buffer(221) [Uint8Array] [\n     99,  97, 116,  58,  32,  47,  85, 115, 101, 114, 115,  47,\n    116, 121, 101, 118, 101, 114, 101, 116, 116,  47, 116, 109,\n    112,  47, 110, 101, 116, 119, 111, 114, 107,  45, 111, 112,\n    115,  47, 119, 111, 114, 107, 116, 114, 101, 101, 115,  47,\n    112,  50, 112, 112, 115, 114,  47, 105, 110, 116, 101, 114,\n    111, 112,  47,  99, 111, 100, 101, 120,  47, 108,  97,  98,\n     45, 105, 110, 116, 101, 103, 114,  97, 116, 105, 111, 110,\n     45,  50,  48,  50,  54,  49,  49,  48,  54,  47, 105, 110,\n    116, 101, 103, 114,\n    ... 121 more items\n  ]\n}\n\nNode.js v24.22.1\n"
+    },
+    {
+      "id": "symlink-alias-denied",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-dependency-guard-a23juuqh/metadata-alias"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-dependency-guard-a23juuqh/metadata-alias: Operation not permitted\n"
+    },
+    {
+      "id": "generated-vite-cache-denied",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json: Operation not permitted\n"
+    },
+    {
+      "id": "unmaterialized-wasi-archive-denied",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-f",
+        "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43268040660/review/replay-dependency-guard-v3.sb",
+        "/bin/cat",
+        "/Users/tyeverett/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/wasi-0.11.1+wasi-snapshot-preview1.crate"
+      ],
+      "exitCode": 1,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 0,
+      "stderr": "cat: /Users/tyeverett/.cargo/registry/cache/index.crates.io-1949cf8c6b5b557f/wasi-0.11.1+wasi-snapshot-preview1.crate: Operation not permitted\n"
+    }
+  ]
+}

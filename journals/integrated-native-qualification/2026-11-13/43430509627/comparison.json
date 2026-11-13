@@ -1,0 +1,2982 @@
+{
+  "schema": "tpnil-native-conformance-comparison@1.0.0",
+  "claim": "DERIVED_RECORD_COMPARISON_ONLY",
+  "qualificationRequired": "Separate native environment qualification and frozen-source semantic replay are required; this comparison cannot qualify evidence.",
+  "bindings": {
+    "baseline/repetition-1/record.json": {
+      "bytes": 624428,
+      "sha256": "a2d718ca79f704af40346d011f2869fc06dc25aa5668b31d403f1c72b5ad4c11"
+    },
+    "baseline/repetition-2/record.json": {
+      "bytes": 624722,
+      "sha256": "d36c02053f3077eea2442e6d596979ee900eba37ddb3f52053633e3193b12576"
+    },
+    "candidate/repetition-1/record.json": {
+      "bytes": 883864,
+      "sha256": "26708a66c538239b324b131cd5100915ffd5c33eafcf55b8fe0b058e262b90fe"
+    },
+    "candidate/repetition-2/record.json": {
+      "bytes": 883200,
+      "sha256": "bfa4f9da74e9e7bcf60352ba4f1449432130fff09ef788627b994daa8ea523f7"
+    }
+  },
+  "denominator": {
+    "originalAssertions": 280,
+    "originalFailures": 99,
+    "originalBlocked": 1,
+    "repetitions": 2
+  },
+  "baseline": {
+    "profile": "ITCVE-1@2.0.0",
+    "wallet": {
+      "id": "yours-wallet-chromium-extension",
+      "sha256": "d55abda7dc8790ecfdd57ed0f5f4dd4a28187bb4833715f7612b067625eabc52",
+      "size": 13513123,
+      "version": "5.1.0"
+    },
+    "counts": {
+      "PASS": 180,
+      "FAIL": 99,
+      "BLOCKED": 1,
+      "INCONCLUSIVE": 0
+    }
+  },
+  "candidate": {
+    "profile": "ITCVE-1@4.8.0",
+    "wallet": {
+      "id": "yours-wallet-chromium-extension",
+      "sha256": "553b6df9a43714c5b4c708fac2a00eed2c77e4c26047edcd70456df5eaeaf0da",
+      "size": 13246448,
+      "version": "5.1.1-pr368.e360e67"
+    },
+    "recordClaim": "ENGINEERING_OBSERVATION_ONLY",
+    "walletCandidate": {
+      "artifactId": 13985070043,
+      "buildCommit": "3d6235ab364ab43f00750830cced9741a772ffed",
+      "manifest": "fixtures/artifacts/yours-wallet-pr368-e360e67/provenance.json",
+      "manifestSha256": "da86c230f237ef8febf78fdcfade5894a510dfe954eec02df5c40e91b7fe4c96",
+      "manifestVersion": "5.1.1",
+      "officialRelease": false,
+      "reportedCwiVersion": "yours-wallet-5.1.1",
+      "sourceCommit": "e360e67876be2eadbf5caf2a4fd6d401fce64569",
+      "workflowRun": 43306868169
+    },
+    "counts": {
+      "PASS": 685,
+      "FAIL": 1,
+      "BLOCKED": 12,
+      "INCONCLUSIVE": 0
+    }
+  },
+  "originalFailureOutcomes": {
+    "PASS": 98,
+    "FAIL": 1,
+    "BLOCKED": 0,
+    "INCONCLUSIVE": 0
+  },
+  "failures": [
+    {
+      "vector": "ISI-4-V008",
+      "id": "output.listActions",
+      "outcome": "FAIL",
+      "before": "FAIL",
+      "after": "FAIL",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.description",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.inputBEEF",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.inputs.0.unlockingScriptLength",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.inputs.0.inputDescription",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.inputs.0.sequenceNumber",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.outputs.0.outputDescription",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.outputs.0.basket",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.outputs.0.customInstructions",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.outputs.0.tags.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.lockTime",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.version",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.labels.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.signAndProcess",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.acceptDelayedBroadcast",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.trustSelf",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.knownTxids.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.returnTXIDOnly",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.noSend",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.sendWith.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createAction.options.randomizeOutputs",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.signAction.spends",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.signAction.reference",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.signAction.options.acceptDelayedBroadcast",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.signAction.options.returnTXIDOnly",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.signAction.options.noSend",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.labels.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeLabels",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeInputs",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeInputSourceLockingScripts",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeInputUnlockingScripts",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeOutputs",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.includeOutputLockingScripts",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listActions.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.internalizeAction.outputs.0.insertionRemittance.basket",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.internalizeAction.outputs.0.insertionRemittance.customInstructions",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.internalizeAction.outputs.0.insertionRemittance.tags.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.internalizeAction.labels.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.internalizeAction.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.basket",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.tags.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.include",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.includeCustomInstructions",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.includeTags",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.includeLabels",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listOutputs.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.relinquishOutput.basket",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.identityKey",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.forSelf",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.getPublicKey.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.revealCounterpartyKeyLinkage.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.revealCounterpartyKeyLinkage.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.revealSpecificKeyLinkage.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.revealSpecificKeyLinkage.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.encrypt.plaintext.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.encrypt.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.encrypt.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.encrypt.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.encrypt.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.decrypt.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.decrypt.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.decrypt.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.decrypt.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createHmac.data.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createHmac.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createHmac.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createHmac.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createHmac.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifyHmac.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifyHmac.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifyHmac.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifyHmac.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.data.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.hashToDirectlySign.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.counterparty",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.createSignature.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifySignature.privilegedReason",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifySignature.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.verifySignature.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.acquireCertificate.fields",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.acquireCertificate.certifierUrl",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.acquireCertificate.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.listCertificates.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.proveCertificate.certificate.fields",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.proveCertificate.fieldsToReveal.0",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.proveCertificate.privileged",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.discoverByIdentityKey.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.discoverByAttributes.attributes",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "input.discoverByAttributes.seekPermission",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "namespace.protocol.reserved",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "PROSPECTIVE_NAMESPACE_ORACLE_CORRECTION"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "namespace.protocol.uppercase",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "namespace.basket.reserved",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "PROSPECTIVE_NAMESPACE_ORACLE_CORRECTION"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "errors.structured",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    },
+    {
+      "vector": "ISI-4-V008",
+      "id": "output.createAction.noSendChange-final-outpoints",
+      "outcome": "PASS",
+      "before": "FAIL",
+      "after": "PASS",
+      "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+    }
+  ],
+  "originalBlockedGate": {
+    "vector": "ISI-4-V008",
+    "id": "coverage.remaining-obligations",
+    "outcome": "BLOCKED",
+    "before": "BLOCKED",
+    "after": "BLOCKED",
+    "attribution": "NEW_ARTIFACT_AND_COMPONENT_OBSERVATION_NO_SINGLE_CAUSE_INFERENCE"
+  },
+  "regressions": [],
+  "additionalCoverage": {
+    "assertions": 418,
+    "counts": {
+      "PASS": 407,
+      "FAIL": 0,
+      "BLOCKED": 11,
+      "INCONCLUSIVE": 0
+    },
+    "rows": [
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.protocol-grant-cache",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.basket-grant-cache",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.certificate-grant-cache",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.counterparty-linkage-grant-cache",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.specific-linkage-grant-cache",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.protocol-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.basket-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.certificate-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.counterparty-linkage-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.specific-linkage-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.restart-identity",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.protocol-restart-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.basket-restart-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.certificate-restart-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.counterparty-linkage-restart-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.specific-linkage-restart-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.revocation-ui",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.protocol-revocation-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.basket-revocation-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.certificate-revocation-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.counterparty-linkage-revocation-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.specific-linkage-revocation-persistence",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.manifest-selection",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.standing-allowance",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.exact-fee-inclusive-cap",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.cumulative-allowance-boundary",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.allowance-origin-isolation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.allowance-revocation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-coverage.cleanup",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.restart-persistence.protocol-lock",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.restart-persistence.basket-lock",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.restart-persistence.certificate-lock",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.revoke-persistence.single-restart",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.linkage-isolation.verifier",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.linkage-isolation.counterparty",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.linkage-isolation.protocol",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.linkage-isolation.level2-key",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.manifest-selection.subset-selected",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.manifest-selection.spending-unchecked",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.standing-allowance.single-over-cap-deny",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.allowance-boundaries.concurrent-cap",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.allowance-boundaries.abort-accounting",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.allowance-boundaries.rejection-accounting",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permission-extension.allowance-boundaries.nosend-accounting",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.restart-persistence/denial-not-grant",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.restart-persistence/alternate-origin",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.revoke-persistence/single-immediate",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.revoke-persistence/unaffected-scope",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.linkage-decisions/counterparty-deny",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.linkage-decisions/specific-deny",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.manifest-selection/all-denied",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V005",
+        "id": "permissions.manifest-selection/alternate-origin",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/fixture.call-inventory",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/fixture.population",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.defaults",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-filter",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-pagination",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-includes",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-filter",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-pagination",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-includes",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-299",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-300",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-301",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-399",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-400",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.ascii-401",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-299",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-300",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-301",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-399",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-400",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/basket.utf8-401",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.conflicting-inputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.known-proof-omission",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.signable-and-sign",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.abort-release",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/transaction.batch-release",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.direct",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.default-pagination",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.filter",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.required-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.bad-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.bad-keyring",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.alternate-revealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.wrong-revealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.selective-proof",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.verifier-separation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.relinquishment",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-server-nonce",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-serial",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-type",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-subject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-certifier",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-bad-fields",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-missing-certificate",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-missing-server-nonce",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-any-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-empty-tags",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-limit1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-offset1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-minus2",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-max-limit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-only-locking-scripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-only-includeTags",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-only-includeLabels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.outputs-only-includeCustomInstructions",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-any-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-empty-labels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-overlap",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-limit1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-offset1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-max-limit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeLabels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeInputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeInputSourceLockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeInputUnlockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-only-includeOutputLockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/query.actions-scripts-without-parents",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.missing-revocationOutpoint",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.missing-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.missing-keyringRevealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.missing-keyringForSubject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.missing-field-key",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.proof-all",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.proof-unknown-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.proof-alternate-verifier",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/certificate.issuance-missing-url",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "conditional/coverage.remaining-obligations",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/fixture.fanout",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.defaults.noSend-omitted-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.defaults.randomizeOutputs-omitted-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.defaults.version-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.defaults.lockTime-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.defaults.sequenceNumber-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.signing-branches.all-unlockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.signing-branches.mixed-inputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.signing-branches.abort-then-sign-reject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.input-absent-from-beef",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.input-index-out-of-range",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.already-spent-input",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.script-and-length-conflict",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.missing-script-and-length",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.spend-index-not-in-reference",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.consuming-conflicts.script-length-mismatch",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.batch-send.returnTXIDOnly",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.proof-trust.truncated-proof",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction-states/transaction.proof-trust.unknown-without-trust",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.fixture-authentication",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.fixture-acquisition",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.acquire-tampered-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.acquire-wrong-subject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.direct-extra-url",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.issuance-direct-fields",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.proof-control",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.proof-tuple-mismatches",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.inventory-issuer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.inventory-type",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.inventory-combined",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.inventory-empty",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.inventory-no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "certificate-states.cleanup",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.defaults/acceptDelayedBroadcast-omitted-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.signing-branches/foreign-reference-reject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.proof-trust/unknown-not-in-knownTxids",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.proof-trust/conflicting-proof",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.proof-trust/wrong-merkle-root",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.batch-send/two-dependent-held",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.batch-send/sign-sendWith",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.batch-send/unknown-batch-txid",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.nosend-change/valid-subset",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.nosend-change/foreign-output",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.nosend-change/already-spent",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.nosend-change/out-of-range",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.nosend-change/noSend-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/wallet-payment",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/basket-insertion",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/both-output-types",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/missing-paymentRemittance",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/missing-insertionRemittance",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/conflicting-remittance",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/wrong-derivation",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/output-index-out-of-range",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "transaction.internalization/relinquish-without-spend",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.data-only",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.hash-only",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.neither-data-nor-hash",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.forSelf-false-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.forSelf-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.anyone-counterparty",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.crypto.identityKey-override",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.getPublicKey",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.revealCounterpartyKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.revealSpecificKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.encrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.decrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.createHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.verifyHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.createSignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.missing-reason.verifySignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.getPublicKey",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.revealCounterpartyKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.revealSpecificKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.encrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.decrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.createHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.verifyHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.createSignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.short-reason.verifySignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.getPublicKey",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.revealCounterpartyKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.revealSpecificKeyLinkage",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.encrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.decrypt",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.createHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.verifyHmac",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.createSignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.privileged.overlong-reason.verifySignature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-0.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-0.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-0.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-0.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-4.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-4.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-4.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-4.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-5.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-5.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-5.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.bytes-5.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.uppercase.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.uppercase.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.uppercase.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.uppercase.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.double-space.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.double-space.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.double-space.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.double-space.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.trailing-basket.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.trailing-basket.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.trailing-basket.listOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.basket.trailing-basket.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.discovery.identity-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.discovery.attribute-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-extension.query.relinquished-excluded",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.fixture-authentication",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.wrong-auth-identity",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.inventory-restart",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.relinquish-revoked",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.attribute-no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.multiple-certifiers",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.bad-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.bad-keyring",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.default-seekPermission-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.explicit-seekPermission-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "coverage-certificates.cleanup",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-299.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-299.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-300.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-300.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-301.internalizeAction",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-301.relinquishOutput",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-399.internalizeAction",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-399.relinquishOutput",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-400.internalizeAction",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-400.relinquishOutput",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-401.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.ascii-401.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-299.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-299.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-299.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-300.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-300.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-300.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-301.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-301.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-301.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-399.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-399.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-399.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-400.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-400.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-400.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-401.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-401.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.utf8-401.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.admin-prefix.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.admin-prefix.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.admin-prefix.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.default.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.default.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.default.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.reserved-p-prefix.createAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.reserved-p-prefix.internalizeAction",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.baskets.reserved-p-prefix.relinquishOutput",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.fixture",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/default-limit10",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/limit1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/offset0",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/offset1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/last-page",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/beyond-end",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/max-limit10000",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.listCertificates/page-union-control",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/default-limit10",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/limit1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/offset0",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/offset1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/last-page",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/beyond-end",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/max-limit10000",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByIdentityKey/page-union-control",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/default-limit10",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/limit1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/offset0",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/offset1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/last-page",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/beyond-end",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/max-limit10000",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.pagination.discoverByAttributes/page-union-control",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/missing-certificate",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/missing-serverNonce",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/invalid-serverNonce",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/invalid-serial-HMAC",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/wrong-type",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/wrong-subject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/wrong-certifier",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/altered-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.issuance/invalid-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/direct-missing-serialNumber",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/direct-missing-revocationOutpoint",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/direct-missing-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/direct-missing-keyringRevealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/direct-missing-keyringForSubject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.conditional-parameters/issuance-missing-certifierUrl",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.direct-keyrings/wrong-revealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.direct-keyrings/missing-field-key",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.direct-keyrings/wrong-field-key",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.direct-keyrings/tampered-signature",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.certificate.direct-keyrings/distinct-revealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.defaults/noSend-omitted-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.proof-trust/known-wallet-trustSelf",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.proof-trust/explicit-knownTxids",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.proof-trust/truncated-proof",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.nosend-change/valid-full",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.nosend-change/empty-return-unexercised",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.nosend-change/unsigned-stale-txid",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.transaction.batch-send/returnTXIDOnly",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.defaults/signAndProcess-omitted-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.defaults/returnTXIDOnly-omitted-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.defaults/randomizeOutputs-omitted-true",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.defaults/randomizeOutputs-false-order",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/all-unlockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/signAndProcess-false",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/unlockingScriptLength",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/mixed-inputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/sign-reference",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/abort-reference",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.signing-branches/abort-then-sign-reject",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/input-absent-from-beef",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/input-index-out-of-range",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/duplicate-input",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/already-spent-input",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/missing-script-and-length",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/spend-index-not-in-reference",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.consuming-conflicts/script-length-mismatch",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.proof-trust/full-proof",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.proof-trust/unknown-without-trust",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.batch-send/single-held",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.batch-send/outputless-flush",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.batch-send/create-sendWith",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/any-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/any-explicit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/all-explicit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/empty-labels",
+        "outcome": "BLOCKED"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-filters/overlapping-labels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/defaults",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeLabels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeInputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeInputSourceLockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeInputUnlockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeOutputs",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/includeOutputLockingScripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/all-includes",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.action-includes/script-without-parent-include",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/any-default",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/any-explicit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/all-explicit",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/empty-tags",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-filters/spent-output-excluded",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/defaults",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/locking-scripts",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/entire-transactions",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/includeTags",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/includeLabels",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/includeCustomInstructions",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.output-includes/all-metadata",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.pagination/output-offset-minus1",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.query.pagination/output-offset-minus2",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.issuance/valid-issuance",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.direct-keyrings/certifier-revealer",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.selective-proof/one-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.selective-proof/all-fields",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.selective-proof/unknown-field",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.selective-proof/different-verifier",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.inventory/combined-filter",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.inventory/no-match",
+        "outcome": "PASS"
+      },
+      {
+        "vector": "ISI-4-V008",
+        "id": "completion.partial-trace.certificate.inventory/relinquish-one",
+        "outcome": "PASS"
+      }
+    ]
+  },
+  "completeBRC100Conformance": false
+}
