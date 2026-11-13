@@ -1,0 +1,475 @@
+{
+  "schema": "tpnil-independent-foundation-log-review@1",
+  "reviewedAt": "2026-11-12T03:05:54.753809+00:00",
+  "runId": 43143699101,
+  "url": "https://github.com/p2ppsr/interop/actions/runs/43143699101",
+  "event": "push",
+  "headSha": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "checkoutCommits": {
+    "offline-core": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+    "go-components": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+    "integrated-components": "6b174e0b903225923999a44fb1de7d67cc4e2959"
+  },
+  "conclusion": "failure",
+  "actualMonetaryCostUSD": null,
+  "failureStage": "Historical oracle4 preflight current-source hash coupling; subsequent offline-core checks skipped",
+  "runAttempt": 1,
+  "jobs": [
+    {
+      "name": "offline-core",
+      "id": 130936462660,
+      "conclusion": "failure",
+      "startedAt": "2026-11-12T02:46:30Z",
+      "completedAt": "2026-11-12T02:48:44Z",
+      "jobWallSeconds": 134,
+      "steps": 27
+    },
+    {
+      "name": "go-components",
+      "id": 130936462858,
+      "conclusion": "success",
+      "startedAt": "2026-11-12T02:46:30Z",
+      "completedAt": "2026-11-12T02:50:52Z",
+      "jobWallSeconds": 262,
+      "steps": 11
+    },
+    {
+      "name": "integrated-components",
+      "id": 130936462888,
+      "conclusion": "success",
+      "startedAt": "2026-11-12T02:46:30Z",
+      "completedAt": "2026-11-12T03:00:22Z",
+      "jobWallSeconds": 832,
+      "steps": 16
+    }
+  ],
+  "knownJobWallSeconds": 1228,
+  "tests": {
+    "core": {
+      "tests": 133,
+      "pass": 133,
+      "fail": 0,
+      "skipped": 0
+    },
+    "synthesis": [
+      {
+        "pass": 438,
+        "skipped": 10,
+        "total": 448
+      }
+    ],
+    "goComponents": [
+      {
+        "pass": 12,
+        "skipped": 0,
+        "total": 12
+      }
+    ],
+    "actualShutdownAndListener": [
+      {
+        "pass": 14,
+        "skipped": 0,
+        "total": 14
+      }
+    ],
+    "transport": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0
+    },
+    "services": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0
+    },
+    "rustDefault": {
+      "pass": 1,
+      "fail": 0,
+      "ignored": 0
+    },
+    "rustGraphV3": {
+      "pass": 14,
+      "fail": 0,
+      "ignored": 0
+    },
+    "python": {
+      "pass": null,
+      "executed": false,
+      "reason": "Prior frozen oracle4 replay failed before Python step"
+    }
+  },
+  "integratedComponentResults": {
+    "profile": "ITCVE-1@3.0.0",
+    "lanes": 9,
+    "observedOutputs": [
+      {
+        "name": "storage-sync",
+        "exitCode": 0,
+        "observations": 88
+      },
+      {
+        "name": "descendant-storage-sync",
+        "exitCode": 0,
+        "observations": 80
+      },
+      {
+        "name": "overlay-identity-1",
+        "exitCode": 0,
+        "observations": 14
+      },
+      {
+        "name": "overlay-identity-2",
+        "exitCode": 0,
+        "observations": 14
+      },
+      {
+        "name": "messaging-1",
+        "exitCode": 0,
+        "observations": 41
+      },
+      {
+        "name": "messaging-2",
+        "exitCode": 0,
+        "observations": 41
+      },
+      {
+        "name": "transport-typescript-1",
+        "exitCode": 0,
+        "observations": 17
+      },
+      {
+        "name": "transport-typescript-2",
+        "exitCode": 0,
+        "observations": 17
+      },
+      {
+        "name": "transport-go-1",
+        "exitCode": 0,
+        "observations": 17
+      },
+      {
+        "name": "transport-go-2",
+        "exitCode": 0,
+        "observations": 17
+      },
+      {
+        "name": "boundary-typescript-1",
+        "exitCode": 0,
+        "observations": 43
+      },
+      {
+        "name": "boundary-typescript-2",
+        "exitCode": 0,
+        "observations": 43
+      },
+      {
+        "name": "boundary-go-1",
+        "exitCode": 0,
+        "observations": 43
+      },
+      {
+        "name": "boundary-go-2",
+        "exitCode": 0,
+        "observations": 43
+      },
+      {
+        "name": "rust-1",
+        "exitCode": 0,
+        "observations": 36
+      },
+      {
+        "name": "rust-2",
+        "exitCode": 0,
+        "observations": 36
+      }
+    ],
+    "totalObservations": 590,
+    "pass": 584,
+    "fail": 6,
+    "findings": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ],
+    "childOraclesVerified": true,
+    "claim": "COMPONENT_ONLY_NOT_NATIVE_WALLET_QUALIFICATION"
+  },
+  "descendantVerification": {
+    "verified": true,
+    "result": "PASS",
+    "projection": {
+      "profile": "ISI-3/descendant-storage@2.0.0",
+      "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+      "projectionManifestSha256": "3549779398c8c562cd01e7253377b6c4c9b5a2f636028940ff7ddf817a6c9fb2",
+      "storageProjection": {
+        "profile": "ISI-3/storage-http-sync@2.0.0",
+        "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+        "projectionManifestSha256": "02d213f1215ecdde54b813e04d93b9a8be8464063fbfdefb07c1a3ad4b740062"
+      }
+    },
+    "directions": 4,
+    "freshExecutions": 8,
+    "independentIdentities": 8,
+    "assertions": 80,
+    "binarySha256": "60b4e5ef06ed7101c854a1bf9e64cb3876dc13f6e7498be80f9afc1c9da3eea8",
+    "sourceCommit": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+    "claim": "ENGINEERING_REFERENCE_STORAGE_QUALIFICATION_ONLY"
+  },
+  "publishedReplay": {
+    "archives": 14,
+    "attempts": 13,
+    "semantic": true
+  },
+  "negativeVerifierChecks": {
+    "messagingCases": 2,
+    "rust": {
+      "verified": true,
+      "mutationsRejected": 5,
+      "validFailurePreserved": true
+    }
+  },
+  "scope": [
+    "API and full job logs reviewed; no qualification artifacts downloaded or independently replayed for this run.",
+    "Ten synthesis skips are environment gated; the Go component cases and actual listener/shutdown checks execute in their separate jobs.",
+    "Component execution preserves the six known Go Message Box findings; CI success is not full component conformance or native-wallet conformance."
+  ],
+  "files": [
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/artifacts.json",
+      "bytes": 2155,
+      "sha256": "2b04203c46c4466d39e960bf6be40fa46ef3537c81e8194d0e05dcc76454255e"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/go-components-full-job.log",
+      "bytes": 34767,
+      "sha256": "5ad5233d2a47e7097b7226c5496f15ccefd56c7c5e90511514358e90f1c96884"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/integrated-components-full-job.log",
+      "bytes": 101686,
+      "sha256": "ac24b20831259b94084c2ddbcb9dead5a492de256a4c830a941669b6c71b632b"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T024855Z.json",
+      "bytes": 12054,
+      "sha256": "950aa80ea6b35898a8a8492ee4544b0cdd9602c1666529ae4789d285ae2212d4"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T024955Z.json",
+      "bytes": 12054,
+      "sha256": "950aa80ea6b35898a8a8492ee4544b0cdd9602c1666529ae4789d285ae2212d4"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025051Z.json",
+      "bytes": 12401,
+      "sha256": "1029a23f05b9f2aea63a94d8ba5d8cac2507bdcee7f4a5c1fae51353e9207f5a"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025147Z.json",
+      "bytes": 12422,
+      "sha256": "e79844705e2d6dd48f1a06508e3738861cb864d4e519ca0da01cc579fd8c4523"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025245Z.json",
+      "bytes": 12422,
+      "sha256": "e79844705e2d6dd48f1a06508e3738861cb864d4e519ca0da01cc579fd8c4523"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025341Z.json",
+      "bytes": 12422,
+      "sha256": "e79844705e2d6dd48f1a06508e3738861cb864d4e519ca0da01cc579fd8c4523"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025438Z.json",
+      "bytes": 12422,
+      "sha256": "e79844705e2d6dd48f1a06508e3738861cb864d4e519ca0da01cc579fd8c4523"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025534Z.json",
+      "bytes": 12508,
+      "sha256": "6b8c560a24b0fed33c307bec55a944a34933878eb249e3923db1e8c5606a56f7"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025630Z.json",
+      "bytes": 12551,
+      "sha256": "3795a0014086bc03f8656ec7933cb2f8e942bafe472bf02c44e7f5b4d6cf37ca"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025726Z.json",
+      "bytes": 12551,
+      "sha256": "3795a0014086bc03f8656ec7933cb2f8e942bafe472bf02c44e7f5b4d6cf37ca"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025822Z.json",
+      "bytes": 12594,
+      "sha256": "ec997a6330df582c07f9ff852ec1b3f7b7d398c99a4032eb6eafc9df8bf73ea0"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T025918Z.json",
+      "bytes": 12594,
+      "sha256": "ec997a6330df582c07f9ff852ec1b3f7b7d398c99a4032eb6eafc9df8bf73ea0"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T030014Z.json",
+      "bytes": 12594,
+      "sha256": "ec997a6330df582c07f9ff852ec1b3f7b7d398c99a4032eb6eafc9df8bf73ea0"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-20261112T030111Z.json",
+      "bytes": 13048,
+      "sha256": "20fca6044c715e405a66e154da241037166889a5979a55fa28dd203edb114829"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs-initial.json",
+      "bytes": 11170,
+      "sha256": "4755b6461facd85d337edce253195e0bc464a681789b21e3fa047a81269aaafc"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/jobs.json",
+      "bytes": 13048,
+      "sha256": "20fca6044c715e405a66e154da241037166889a5979a55fa28dd203edb114829"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/offline-core-failure-review.json",
+      "bytes": 946,
+      "sha256": "8c6d6b5e5bee2c5337f294954c8ed1d508cc1ee51a7e785fbc1b040c1b2712d5"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/offline-core-full-job.log",
+      "bytes": 103917,
+      "sha256": "0ebd7bf6532c8c967095c60f87837d1f5114ffa216d86ca77e87696bf3fc3257"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T024855Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T024955Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025051Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025147Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025245Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025341Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025438Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025534Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025630Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025726Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025822Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T025918Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T030014Z.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-20261112T030111Z.json",
+      "bytes": 11954,
+      "sha256": "bc5fe1aedcb8fcf5e308fc0f0fcd24fd73c29ba50f51f2d0b301c95a45d5fed0"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-initial.json",
+      "bytes": 11951,
+      "sha256": "669ad08580678b4417e07ddef9a8c19334237ebedb23ebd43cc03d40ce4e0023"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run-logs.zip",
+      "bytes": 125708,
+      "sha256": "ee3c4b978057fde32514dbe015a6b0bab40da3f2cb25fb38740342c4fff0df0c"
+    },
+    {
+      "path": "out/native-closure-20261111/ci-6b174e0/43143699101/run.json",
+      "bytes": 11954,
+      "sha256": "bc5fe1aedcb8fcf5e308fc0f0fcd24fd73c29ba50f51f2d0b301c95a45d5fed0"
+    }
+  ]
+}

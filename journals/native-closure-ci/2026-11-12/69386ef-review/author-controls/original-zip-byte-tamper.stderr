@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-archive-control-lfajnyc_/archive/verify.py", line 17, in <module>
+    p=row['path'];assert not Path(p).is_absolute() and '..' not in Path(p).parts;seen.add(p);f=root/p;assert f.is_file() and not f.is_symlink();b=f.read_bytes();assert len(b)==row['bytes'] and sha(b)==row['sha256'];assert row['encoding'] in ['identity','gzip'];raw=gzip.decompress(b)if row['encoding']=='gzip'else b;assert len(raw)==row['originalBytes'] and sha(raw)==row['originalSha256']
+                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

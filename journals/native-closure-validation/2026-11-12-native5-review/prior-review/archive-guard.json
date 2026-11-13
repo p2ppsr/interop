@@ -1,0 +1,51 @@
+{
+  "schema": "tpnil-native-attempt-independent-guard@1",
+  "claim": "ARCHIVE_REVIEW_ONLY",
+  "nativeSessions": 0,
+  "originalAttemptSha256": "5f377127638d342ebd72ea708462ace3fdbbc58ed8cb2637b25cbde88052e614",
+  "verified": true,
+  "controls": [
+    {
+      "case": "valid",
+      "exitCode": 0,
+      "expected": "PASS",
+      "stdout": "{\"verified\": true, \"claim\": \"FAILED_ATTEMPT_ARCHIVE_INTEGRITY_AND_DIAGNOSIS_ONLY\", \"source\": \"c648022b2d9209b7350527bd5553d73e3e82a52c\", \"workflowRun\": 43195585984, \"originalMembers\": 91, \"archiveFiles\": 198, \"nativeQualification\": false, \"full535\": \"NOT_EXECUTED_TO_COMPLETION\", \"original99\": \"NOT_EXECUTED\", \"rust\": \"NOT_EXECUTED\", \"jobSeconds\": 1180, \"completedCohortJobSeconds\": 19717, \"actualCleanupSucceeded\": true, \"shutdownBindingsAdmitted\": false}\n",
+      "stderr": ""
+    },
+    {
+      "case": "corrupt-original-zip",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native5-guard-pm_e3y6i/archive/verify.py\", line 15, in <module>\n    b=safe(row['name']).read_bytes();assert len(b)==row['size']and sha(b)==row['sha256'],row['name']\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: native-integrated.zip\n"
+    },
+    {
+      "case": "full535-promoted",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native5-guard-scbrgns4/archive/verify.py\", line 33, in <module>\n    partial=read('review/independent-diagnosis/partial-replay.json');assert partial['source']==m['source']and partial['nativeQualification']is False and partial['allOriginalMembersUnchanged']is True and partial['full535']=='NOT_EXECUTED_TO_COMPLETION'and partial['original99']=='NOT_EXECUTED';expected={'permission-coverage':{'PASS':29,'FAIL':0,'BLOCKED':0},'permission-extension-empty-observed-identity':{'PASS':0,'FAIL':15,'BLOCKED':0},'permissions':{'PASS':8,'FAIL':0,'BLOCKED':0},'lifecycle':{'PASS':3,'FAIL':0,'BLOCKED':0}};assert len(partial['modules'])==4\n                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "shutdown-bindings-promoted",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native5-guard-hyfybrob/archive/verify.py\", line 39, in <module>\n    d=read('diagnosis.json');assert d['nativeQualification']is False and d['full535']=='NOT_EXECUTED_TO_COMPLETION'and d['original99']=='NOT_EXECUTED'and d['rust']=='NOT_EXECUTED'and d['actualCleanupSucceeded']is True and d['shutdownBindingsAdmitted']is False\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "unknown-money-zero",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native5-guard-cy3yvp3b/archive/verify.py\", line 38, in <module>\n    cost=read('cost.json');assert cost['knownJobWallSeconds']==cost['failedWorkflowJobSecondsIncluded']==1180 and cost['completedCohortBefore']==18537 and cost['completedCohortAfter']==19717 and cost['historicalSeparateCohort']==20670 and cost['acceptedNativeCustomerPacks']==0 and cost['unknownCostsAreZero']is False;assert all(cost[k]is None for k in ['actualCIChargeUSD','operatorEffortUSD','developmentAgentUsageUSD','allocatedOwnedCapacityUSD','storageAndEgressUSD','totalFullCostUSD'])\n                                                                                                                                                                                                                                                                                                                                     ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "native-qualification-promoted",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native5-guard-x7iij2ri/archive/verify.py\", line 12, in <module>\n    assert m['qualifiedEnvironment']is False and m['completeBRC100Conformance']is False and m['officialRelease']is False and m['candidateOnly']is True\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ]
+}

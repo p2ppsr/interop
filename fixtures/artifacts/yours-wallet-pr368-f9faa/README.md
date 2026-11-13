@@ -1,0 +1,7 @@
+# Yours PR #368 engineering candidate
+
+This is the exact CI archive for source `f9faaabae1573b69eca746d317cab008aa8095ad`, built at PR merge `2d4a9af32d2098edf6a9d0086a4e5bfb7be1c4ff` with an identical Git tree. It is an **ENGINEERING_OBSERVATION_ONLY** candidate, not the official 5.1.1 release. Its embedded manifest and public CWI version remain 5.1.1; the laboratory artifact version is `5.1.1-pr368.f9faa`.
+
+[provenance.json](provenance.json) binds the unchanged ZIP, upstream CI run, source/merge commits, artifact metadata, member checksums, package lock and retained license files. The upstream Actions artifact expires on 2026-11-19; this retained inner ZIP supplies reproducible bytes without a cross-repository token or temporary URL. It does not assert a native run or qualification result.
+
+Yours source retains its [MIT license](LICENSE.yours-wallet.md). Bundled dependencies retain their respective terms, including Open BSV licenses; [licenses.json](licenses.json) records all 134 package names / 139 package versions from 145 top-level and nested installation paths identified in the source maps and retains their shipped package metadata and notice/license texts. A missing separate license text is recorded explicitly, without inventing one or relabeling the bundle as Apache-2.0. Original archive source maps and notices inside compiled source remain unchanged. No vendor endorsement or broader submission grant is asserted.

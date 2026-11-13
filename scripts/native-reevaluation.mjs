@@ -6,6 +6,49 @@ import { createHash } from 'node:crypto'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { prepareFrozenComponentReplay, requireVerifierReceipt } from './frozen-component-replay.mjs'
 import { extractZipSafely } from './verify-published-integrations.mjs'
+export const originalReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0.json'
+export const previousReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json'
+export const previousReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-2'
+export const previousReevaluationPlanSha256 = '1c61f19354185589e5be2f2304f04778adea4e82866ebf8d160a14eec80c7f66'
+export const retainedSource3PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json'
+export const retainedSource3PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-3'
+export const retainedSource3PlanSha256 = '2308c7f5fdbc717029e4a654f09b5938afb4992298e299ac26ae93ae95f560ea'
+export const retainedSource4PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-4.json'
+export const retainedSource4PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-4'
+export const retainedSource4PlanSha256 = '4aa127e18d6a29e0d07c6ba04a440cc18c3fcd56a25dd31f260c215715f7d3f5'
+export const retainedSource5PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json'
+export const retainedSource5PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-5'
+export const retainedSource5PlanSha256 = '3c7b9ba53566eaae153aed5734266f58d1bd91746a1d4bb9e08f2002e91c263b'
+export const retainedSource6PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json'
+export const retainedSource6PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-6'
+export const retainedSource6PlanSha256 = '2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f'
+export const retainedSource7PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json'
+export const retainedSource7PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-7'
+export const retainedSource7PlanSha256 = '692c8a749eff3b32eed33db8de8c4442b975c72021c2de8bbc2ee7dbfd2724b8'
+export const retainedSource8PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-8.json'
+export const retainedSource8PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-8'
+export const retainedSource8PlanSha256 = 'a562163292a6c8233f26a491b1d6a12e3cce1adb3fee1c3bf00c78f7dc26eb0c'
+export const retainedSource9PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-9.json'
+export const retainedSource9PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-9'
+export const retainedSource9PlanSha256 = 'ebc35a6362a3bc86a473557fccba6f65ce969fcb6579e5d33236cd9f6f4f31da'
+export const retainedSource10PlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-10.json'
+export const retainedSource10PlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-10'
+export const retainedSource10PlanSha256 = 'caf98f78ff6bcd3739ce2e5ac401229be293927075d4472db3acabc05986d13b'
+export const currentReevaluationPlanPath = 'infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-11.json'
+export const currentReevaluationPlanId = 'YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-11'
+export const originalReevaluationPlanSha256 = 'f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef'
+const revisions = {
+  2: { id: previousReevaluationPlanId, path: previousReevaluationPlanPath, predecessor: { path: originalReevaluationPlanPath, sha256: originalReevaluationPlanSha256 } },
+  3: { id: retainedSource3PlanId, path: retainedSource3PlanPath, predecessor: { path: previousReevaluationPlanPath, sha256: previousReevaluationPlanSha256 } },
+  4: { id: retainedSource4PlanId, path: retainedSource4PlanPath, predecessor: { path: retainedSource3PlanPath, sha256: retainedSource3PlanSha256 } },
+  5: { id: retainedSource5PlanId, path: retainedSource5PlanPath, predecessor: { path: retainedSource4PlanPath, sha256: retainedSource4PlanSha256 } },
+  6: { id: retainedSource6PlanId, path: retainedSource6PlanPath, predecessor: { path: retainedSource5PlanPath, sha256: retainedSource5PlanSha256 } },
+  7: { id: retainedSource7PlanId, path: retainedSource7PlanPath, predecessor: { path: retainedSource6PlanPath, sha256: retainedSource6PlanSha256 } },
+  8: { id: retainedSource8PlanId, path: retainedSource8PlanPath, predecessor: { path: retainedSource7PlanPath, sha256: retainedSource7PlanSha256 } },
+  9: { id: retainedSource9PlanId, path: retainedSource9PlanPath, predecessor: { path: retainedSource8PlanPath, sha256: retainedSource8PlanSha256 } },
+  10: { id: retainedSource10PlanId, path: retainedSource10PlanPath, predecessor: { path: retainedSource9PlanPath, sha256: retainedSource9PlanSha256 } },
+  11: { id: currentReevaluationPlanId, path: currentReevaluationPlanPath, predecessor: { path: retainedSource10PlanPath, sha256: retainedSource10PlanSha256 } }
+}
 export const reevaluationSchema = 'tpnil-native-integrated-reevaluation@1'
 export const reevaluationInputNames = ['paid-http.json','messaging.json','synthesis-transactions.json','identity-trust.json']
 export const evaluatorSourceNames = ['scripts/reevaluate-native-integrated.mjs','scripts/verify-native-reevaluation.mjs','scripts/native-reevaluation.mjs','scripts/frozen-component-replay.mjs','scripts/verify-published-integrations.mjs']
@@ -19,8 +62,31 @@ export function inventory(directory) {
   walk(directory);return rows.sort((a,b)=>a.path.localeCompare(b.path))
 }
 function relative(name) {assert.equal(typeof name,'string');assert.ok(!path.isAbsolute(name)&&name.split('/').every(part=>part&&part!=='.'&&part!=='..'));return name}
+function validateReevaluationLineage(plan,root) {
+  const ancestors=[]
+  if([previousReevaluationPlanId,currentReevaluationPlanId].includes(plan.id)||plan.sourceBindingRevision!==undefined||plan.predecessor!==undefined) {
+    assert.ok(Number.isSafeInteger(plan.sourceBindingRevision),'Unsupported reevaluation source binding revision')
+    let current=plan
+    for(let revision=plan.sourceBindingRevision;;revision--) {
+      const expected=revisions[revision]
+      assert.ok(expected,'Unsupported reevaluation source binding revision')
+      assert.equal(current.id,expected.id);assert.equal(current.sourceBindingRevision,revision)
+      assert.deepEqual(current.predecessor,expected.predecessor)
+      const predecessorBytes=fs.readFileSync(path.join(root,expected.predecessor.path))
+      assert.equal(sha256(predecessorBytes),expected.predecessor.sha256,'Accepted predecessor plan changed')
+      const predecessor=JSON.parse(predecessorBytes)
+      for(const key of ['original','rust','expected'])assert.deepEqual(current[key],predecessor[key],`Source revision changed retained evidence acceptance: ${key}`)
+      ancestors.push(expected.predecessor)
+      if(revision===2)break
+      current=predecessor
+    }
+  }
+  return ancestors
+}
 export function validateReevaluationPlan(plan,root) {
   assert.equal(plan.schema,'tpnil-native-integrated-reevaluation-plan@1');assert.equal(typeof plan.id,'string');assert.ok(plan.id.length>0)
+  if (plan.sourceBindingRevision >= 7) assert.equal(plan.admissionState,'FROZEN','Prospective reevaluation source is not frozen')
+  validateReevaluationLineage(plan,root)
   const o=plan.original;relative(o.archive);assert.match(o.source,/^[a-f0-9]{40}$/);assert.match(o.sha256,/^[a-f0-9]{64}$/);assert.match(o.planSha256,/^[a-f0-9]{64}$/);assert.match(o.qualificationSha256,/^[a-f0-9]{64}$/)
   assert.ok(Number.isSafeInteger(o.workflowRun)&&o.workflowRun>0);assert.ok(Number.isSafeInteger(o.size)&&o.size>0);assert.ok(Number.isSafeInteger(o.members)&&o.members>0)
   assert.equal(o.profile,'ITCVE-1@2.0.0');assert.equal(o.program,'ISI-4@4.0.0')
@@ -75,6 +141,13 @@ export function validateReevaluationLock(runLock,root) {
   assert.equal(runLock.schema,'tpnil-native-integrated-reevaluation-run-lock@1');assert.equal(runLock.sourceDirty,false);assert.match(runLock.evaluatorSource,/^[a-f0-9]{40}$/)
   assert.equal(runLock.planSha256,sha256(Buffer.from(JSON.stringify(plan,null,2)+'\n')));validateReevaluationPlan(plan,root)
   relative(runLock.planPath)
+  if(plan.sourceBindingRevision!==undefined) {
+    assert.equal(runLock.planPath,revisions[plan.sourceBindingRevision].path)
+    for(const ancestor of validateReevaluationLineage(plan,root)) {
+      const predecessor=execFileSync('git',['show',`${runLock.evaluatorSource}:${ancestor.path}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024})
+      assert.equal(sha256(predecessor),ancestor.sha256,'Accepted predecessor differs at evaluator source')
+    }
+  }
   const frozenPlan=execFileSync('git',['show',`${runLock.evaluatorSource}:${runLock.planPath}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024})
   assert.equal(sha256(frozenPlan),runLock.planSha256,'Plan differs from its committed evaluator source');assert.deepEqual(JSON.parse(frozenPlan),plan)
   for(const name of evaluatorSourceNames){const frozen=execFileSync('git',['show',`${runLock.evaluatorSource}:${name}`],{cwd:process.env.TPNIL_REPLAY_GIT_ROOT??root,maxBuffer:8*1024*1024});assert.equal(sha256(frozen),plan.evaluatorSources[name])}

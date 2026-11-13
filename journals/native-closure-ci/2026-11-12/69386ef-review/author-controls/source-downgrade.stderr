@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-archive-control-1w9bzehv/archive/verify.py", line 9, in <module>
+    m=json.loads((root/'manifest.json').read_bytes());assert m['schema']=='tpnil-native-ci-archive-manifest@3' and m['source']==SOURCE and m['claim']=='CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY'
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

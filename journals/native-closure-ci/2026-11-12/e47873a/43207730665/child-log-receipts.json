@@ -1,0 +1,1732 @@
+{
+  "claim": "RETAINED_SOURCE6_CI_LOG_RECEIPTS_ONLY",
+  "actualNonemptyCompleteJsonSuffixes": 16,
+  "logs": [
+    {
+      "path": "logs/native-admission.log",
+      "bytes": 578,
+      "sha256": "1908674948ac21971cd33eda03ebf5b934cfab008e4599515eddfe3122d1c1c5",
+      "receipt": {
+        "verified": true,
+        "qualifiedEnvironment": true,
+        "claim": "EXPERIMENTAL_CONFORMANCE_RESULT",
+        "outcome": "FAIL",
+        "vectors": [
+          {
+            "id": "ISI-4-V001",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V002",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V003",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V004",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V005",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V006",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V007",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V008",
+            "outcome": "FAIL"
+          }
+        ]
+      }
+    },
+    {
+      "path": "logs/repetition-1-verify-native-messaging.mjs.log",
+      "bytes": 425,
+      "sha256": "2c955598576317901cad4c8429412ab5e0eff99f39a74b44a3f3548f4f799b1f",
+      "receipt": {
+        "verified": true,
+        "assertions": 6,
+        "nativeIdentity": "03f3bdc33964247a0ab8353511f0469eaeee3126bf9a3f55c6a6384ec75cb4a0ea",
+        "paymentTransactions": [
+          "4c8b87e7872d2544a640a19ef80023c3644ddd3b56bdf3df50b8326e911fec1d",
+          "99ca0bcba2bdfe3172a1f71d968432144ad72a753259618fc4cee147f8d357aa"
+        ],
+        "nativeArtifactQualification": "Requires the enclosing unchanged-native-wallet admission and provenance envelope"
+      }
+    },
+    {
+      "path": "logs/original-rust-1.log",
+      "bytes": 110,
+      "sha256": "db072d403d2e3c2d8f37ef031a59163dbc006b97b69ae7b552c483b6dd5707e7",
+      "receipt": {
+        "verified": true,
+        "outcome": "FAIL",
+        "calls": 47,
+        "assertions": 48,
+        "independentReplay": true,
+        "parentInputsBound": 4
+      }
+    },
+    {
+      "path": "logs/repetition-1-verify-native-synthesis.mjs.log",
+      "bytes": 152,
+      "sha256": "911cd04a0204ff546cdcda67f37b5ef180f0b6ad02fb2f98da2966a8b9923cd0",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "transactions": 4,
+        "receipts": 2,
+        "walletIdentity": "03f3bdc33964247a0ab8353511f0469eaeee3126bf9a3f55c6a6384ec75cb4a0ea"
+      }
+    },
+    {
+      "path": "logs/repetition-1-verify-native-trust.mjs.log",
+      "bytes": 892,
+      "sha256": "5774b7553fd87f85d046eeb8dbe8b095dc9dfee3a10fc1ab7e60378b0f526d40",
+      "receipt": {
+        "verified": true,
+        "result": "PASS",
+        "assertions": [
+          {
+            "id": "identity-trust.initial-exclusion",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.public-settings-token",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.cache-expiry",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.positive-discovery",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.settings-restored",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.temporary-token-spent",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.public-boundary-only",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.cleanup",
+            "result": "PASS"
+          }
+        ],
+        "transactions": 2,
+        "claim": "ENGINEERING_OBSERVATION_ONLY",
+        "tamperRejections": [
+          "missing-real-cache-expiry",
+          "changed-original-settings-restoration",
+          "valid-transaction-that-does-not-spend-temporary-token"
+        ]
+      }
+    },
+    {
+      "path": "logs/repetition-1-verify-transport.mjs.log",
+      "bytes": 190,
+      "sha256": "667bc77b2c53114fdb9878243691b92799d0ab602b98654a2b5eca865d94f65c",
+      "receipt": {
+        "verified": true,
+        "assertions": 17,
+        "paidTransactions": [
+          "f9c74055e5ede000557df961ffe226889a11eedeab5d879da41b414476161513",
+          "f44ad554de351eea5b231c59a53199ed5b798911d1cb319f6ba99e6b0afc5bae"
+        ]
+      }
+    },
+    {
+      "path": "logs/repetition-1-verify-wallet-boundary.mjs.log",
+      "bytes": 3563,
+      "sha256": "c613a20089d4ccac1e3c1c61ca1f5fc0972397164670d2d17690f780da5956f0",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "assertions": [
+          {
+            "id": "getPublicKey.identity",
+            "result": "PASS"
+          },
+          {
+            "id": "getNetwork.mainnet",
+            "result": "PASS"
+          },
+          {
+            "id": "getVersion.nonempty",
+            "result": "PASS"
+          },
+          {
+            "id": "isAuthenticated.true",
+            "result": "PASS"
+          },
+          {
+            "id": "waitForAuthentication.true",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeight.controlled",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeaderForHeight.genesis",
+            "result": "PASS"
+          },
+          {
+            "id": "encrypt.bytes",
+            "result": "PASS"
+          },
+          {
+            "id": "decrypt.roundtrip",
+            "result": "PASS"
+          },
+          {
+            "id": "createSignature.independent-verification",
+            "result": "PASS"
+          },
+          {
+            "id": "verifySignature.valid",
+            "result": "PASS"
+          },
+          {
+            "id": "createHmac.length",
+            "result": "PASS"
+          },
+          {
+            "id": "verifyHmac.valid",
+            "result": "PASS"
+          },
+          {
+            "id": "revealCounterpartyKeyLinkage.independent-secret",
+            "result": "PASS"
+          },
+          {
+            "id": "revealSpecificKeyLinkage.independent-secret",
+            "result": "PASS"
+          },
+          {
+            "id": "internalizeAction.mined-descendant-payment",
+            "result": "PASS"
+          },
+          {
+            "id": "createAction.serialized-outputs",
+            "result": "PASS"
+          },
+          {
+            "id": "listActions.metadata",
+            "result": "PASS"
+          },
+          {
+            "id": "listOutputs.metadata",
+            "result": "PASS"
+          },
+          {
+            "id": "abortAction.releases-reservation",
+            "result": "PASS"
+          },
+          {
+            "id": "signAction.serialized-spend",
+            "result": "PASS"
+          },
+          {
+            "id": "relinquishOutput.removes-basket-membership",
+            "result": "PASS"
+          },
+          {
+            "id": "acquireCertificate.signed-fields",
+            "result": "PASS"
+          },
+          {
+            "id": "listCertificates.issuer-scope",
+            "result": "PASS"
+          },
+          {
+            "id": "proveCertificate.selective-disclosure",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-service.publish",
+            "result": "PASS"
+          },
+          {
+            "id": "discoverByIdentityKey.identity-service",
+            "result": "PASS"
+          },
+          {
+            "id": "discoverByAttributes.identity-service",
+            "result": "PASS"
+          },
+          {
+            "id": "relinquishCertificate.tombstone",
+            "result": "PASS"
+          },
+          {
+            "id": "getPublicKey.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "decrypt.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "verifyHmac.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "verifySignature.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "createAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "signAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listOutputs.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listActions.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "internalizeAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeaderForHeight.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "acquireCertificate.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "proveCertificate.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listCertificates.specified-rejection",
+            "result": "PASS"
+          }
+        ],
+        "methodCalls": [
+          {
+            "method": "createAction",
+            "calls": 4
+          },
+          {
+            "method": "signAction",
+            "calls": 2
+          },
+          {
+            "method": "abortAction",
+            "calls": 1
+          },
+          {
+            "method": "listActions",
+            "calls": 2
+          },
+          {
+            "method": "internalizeAction",
+            "calls": 2
+          },
+          {
+            "method": "listOutputs",
+            "calls": 5
+          },
+          {
+            "method": "relinquishOutput",
+            "calls": 1
+          },
+          {
+            "method": "getPublicKey",
+            "calls": 3
+          },
+          {
+            "method": "revealCounterpartyKeyLinkage",
+            "calls": 1
+          },
+          {
+            "method": "revealSpecificKeyLinkage",
+            "calls": 1
+          },
+          {
+            "method": "encrypt",
+            "calls": 1
+          },
+          {
+            "method": "decrypt",
+            "calls": 2
+          },
+          {
+            "method": "createHmac",
+            "calls": 1
+          },
+          {
+            "method": "verifyHmac",
+            "calls": 2
+          },
+          {
+            "method": "createSignature",
+            "calls": 1
+          },
+          {
+            "method": "verifySignature",
+            "calls": 2
+          },
+          {
+            "method": "acquireCertificate",
+            "calls": 2
+          },
+          {
+            "method": "listCertificates",
+            "calls": 3
+          },
+          {
+            "method": "proveCertificate",
+            "calls": 3
+          },
+          {
+            "method": "relinquishCertificate",
+            "calls": 1
+          },
+          {
+            "method": "discoverByIdentityKey",
+            "calls": 1
+          },
+          {
+            "method": "discoverByAttributes",
+            "calls": 1
+          },
+          {
+            "method": "isAuthenticated",
+            "calls": 1
+          },
+          {
+            "method": "waitForAuthentication",
+            "calls": 1
+          },
+          {
+            "method": "getHeight",
+            "calls": 1
+          },
+          {
+            "method": "getHeaderForHeight",
+            "calls": 2
+          },
+          {
+            "method": "getNetwork",
+            "calls": 1
+          },
+          {
+            "method": "getVersion",
+            "calls": 1
+          }
+        ],
+        "completeBRC100Conformance": false,
+        "tamper": {
+          "changedReturnedHeightRejected": true
+        }
+      }
+    },
+    {
+      "path": "logs/repetition-2-verify-native-messaging.mjs.log",
+      "bytes": 425,
+      "sha256": "e329ffb1d40e1eb5b9f4b332008cf75bf593a1306014c61c2ca61e9867773ae5",
+      "receipt": {
+        "verified": true,
+        "assertions": 6,
+        "nativeIdentity": "0260e423ccba54e7cc947bf60148b2d79a9f6e43874559292dc98a0ccf7f0c783a",
+        "paymentTransactions": [
+          "f2a920fc18306f0ea485ecdc6dcb9ae10b28d99ef94e8376cc8b5a3e15a070d0",
+          "ad7d200014b54a829d9b2d8213e74e0842c83a4b2609c84c6a44285d0bd87b5f"
+        ],
+        "nativeArtifactQualification": "Requires the enclosing unchanged-native-wallet admission and provenance envelope"
+      }
+    },
+    {
+      "path": "logs/repetition-2-verify-native-synthesis.mjs.log",
+      "bytes": 152,
+      "sha256": "0c50b831354ff63896ebb5c4a163238f7995b69b526b34e6db37f7997491d044",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "transactions": 4,
+        "receipts": 2,
+        "walletIdentity": "0260e423ccba54e7cc947bf60148b2d79a9f6e43874559292dc98a0ccf7f0c783a"
+      }
+    },
+    {
+      "path": "logs/repetition-2-verify-native-trust.mjs.log",
+      "bytes": 865,
+      "sha256": "70b466fdb1a171717762c3cc46cfaa5b918ab34e7531c9ff0691c541d0e7e902",
+      "receipt": {
+        "verified": true,
+        "result": "PASS",
+        "assertions": [
+          {
+            "id": "identity-trust.initial-exclusion",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.public-settings-token",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.cache-expiry",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.positive-discovery",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.settings-restored",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.temporary-token-spent",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.public-boundary-only",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-trust.cleanup",
+            "result": "PASS"
+          }
+        ],
+        "transactions": 2,
+        "claim": "ENGINEERING_OBSERVATION_ONLY",
+        "tamperRejections": [
+          "missing-real-cache-expiry",
+          "changed-original-settings-restoration",
+          "valid-transaction-that-does-not-spend-temporary-token"
+        ]
+      }
+    },
+    {
+      "path": "logs/repetition-2-verify-transport.mjs.log",
+      "bytes": 190,
+      "sha256": "9898891053b22a3268177938a01ff1f5f31965e2dffd53ecfe66682f61f6791a",
+      "receipt": {
+        "verified": true,
+        "assertions": 17,
+        "paidTransactions": [
+          "57a9829503388dc0110332bfbb25bc86591be8fd6b0062a51c79a361a023ec03",
+          "3e1f20663261a62ae6d94e5f53e2c15e0d236fb490893aa2043d743bfbaa070a"
+        ]
+      }
+    },
+    {
+      "path": "logs/repetition-2-verify-wallet-boundary.mjs.log",
+      "bytes": 3563,
+      "sha256": "c613a20089d4ccac1e3c1c61ca1f5fc0972397164670d2d17690f780da5956f0",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "assertions": [
+          {
+            "id": "getPublicKey.identity",
+            "result": "PASS"
+          },
+          {
+            "id": "getNetwork.mainnet",
+            "result": "PASS"
+          },
+          {
+            "id": "getVersion.nonempty",
+            "result": "PASS"
+          },
+          {
+            "id": "isAuthenticated.true",
+            "result": "PASS"
+          },
+          {
+            "id": "waitForAuthentication.true",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeight.controlled",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeaderForHeight.genesis",
+            "result": "PASS"
+          },
+          {
+            "id": "encrypt.bytes",
+            "result": "PASS"
+          },
+          {
+            "id": "decrypt.roundtrip",
+            "result": "PASS"
+          },
+          {
+            "id": "createSignature.independent-verification",
+            "result": "PASS"
+          },
+          {
+            "id": "verifySignature.valid",
+            "result": "PASS"
+          },
+          {
+            "id": "createHmac.length",
+            "result": "PASS"
+          },
+          {
+            "id": "verifyHmac.valid",
+            "result": "PASS"
+          },
+          {
+            "id": "revealCounterpartyKeyLinkage.independent-secret",
+            "result": "PASS"
+          },
+          {
+            "id": "revealSpecificKeyLinkage.independent-secret",
+            "result": "PASS"
+          },
+          {
+            "id": "internalizeAction.mined-descendant-payment",
+            "result": "PASS"
+          },
+          {
+            "id": "createAction.serialized-outputs",
+            "result": "PASS"
+          },
+          {
+            "id": "listActions.metadata",
+            "result": "PASS"
+          },
+          {
+            "id": "listOutputs.metadata",
+            "result": "PASS"
+          },
+          {
+            "id": "abortAction.releases-reservation",
+            "result": "PASS"
+          },
+          {
+            "id": "signAction.serialized-spend",
+            "result": "PASS"
+          },
+          {
+            "id": "relinquishOutput.removes-basket-membership",
+            "result": "PASS"
+          },
+          {
+            "id": "acquireCertificate.signed-fields",
+            "result": "PASS"
+          },
+          {
+            "id": "listCertificates.issuer-scope",
+            "result": "PASS"
+          },
+          {
+            "id": "proveCertificate.selective-disclosure",
+            "result": "PASS"
+          },
+          {
+            "id": "identity-service.publish",
+            "result": "PASS"
+          },
+          {
+            "id": "discoverByIdentityKey.identity-service",
+            "result": "PASS"
+          },
+          {
+            "id": "discoverByAttributes.identity-service",
+            "result": "PASS"
+          },
+          {
+            "id": "relinquishCertificate.tombstone",
+            "result": "PASS"
+          },
+          {
+            "id": "getPublicKey.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "decrypt.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "verifyHmac.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "verifySignature.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "createAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "signAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listOutputs.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listActions.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "internalizeAction.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "getHeaderForHeight.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "acquireCertificate.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "proveCertificate.specified-rejection",
+            "result": "PASS"
+          },
+          {
+            "id": "listCertificates.specified-rejection",
+            "result": "PASS"
+          }
+        ],
+        "methodCalls": [
+          {
+            "method": "createAction",
+            "calls": 4
+          },
+          {
+            "method": "signAction",
+            "calls": 2
+          },
+          {
+            "method": "abortAction",
+            "calls": 1
+          },
+          {
+            "method": "listActions",
+            "calls": 2
+          },
+          {
+            "method": "internalizeAction",
+            "calls": 2
+          },
+          {
+            "method": "listOutputs",
+            "calls": 5
+          },
+          {
+            "method": "relinquishOutput",
+            "calls": 1
+          },
+          {
+            "method": "getPublicKey",
+            "calls": 3
+          },
+          {
+            "method": "revealCounterpartyKeyLinkage",
+            "calls": 1
+          },
+          {
+            "method": "revealSpecificKeyLinkage",
+            "calls": 1
+          },
+          {
+            "method": "encrypt",
+            "calls": 1
+          },
+          {
+            "method": "decrypt",
+            "calls": 2
+          },
+          {
+            "method": "createHmac",
+            "calls": 1
+          },
+          {
+            "method": "verifyHmac",
+            "calls": 2
+          },
+          {
+            "method": "createSignature",
+            "calls": 1
+          },
+          {
+            "method": "verifySignature",
+            "calls": 2
+          },
+          {
+            "method": "acquireCertificate",
+            "calls": 2
+          },
+          {
+            "method": "listCertificates",
+            "calls": 3
+          },
+          {
+            "method": "proveCertificate",
+            "calls": 3
+          },
+          {
+            "method": "relinquishCertificate",
+            "calls": 1
+          },
+          {
+            "method": "discoverByIdentityKey",
+            "calls": 1
+          },
+          {
+            "method": "discoverByAttributes",
+            "calls": 1
+          },
+          {
+            "method": "isAuthenticated",
+            "calls": 1
+          },
+          {
+            "method": "waitForAuthentication",
+            "calls": 1
+          },
+          {
+            "method": "getHeight",
+            "calls": 1
+          },
+          {
+            "method": "getHeaderForHeight",
+            "calls": 2
+          },
+          {
+            "method": "getNetwork",
+            "calls": 1
+          },
+          {
+            "method": "getVersion",
+            "calls": 1
+          }
+        ],
+        "completeBRC100Conformance": false,
+        "tamper": {
+          "changedReturnedHeightRejected": true
+        }
+      }
+    },
+    {
+      "path": "logs/rust-1-run.log",
+      "bytes": 10403,
+      "sha256": "c78d55fe3a72073b7c7de6d3e67f9db906883f70d153936447a1324b6e15eaed",
+      "receipt": {
+        "schema": "tpnil-component-result@1",
+        "corpus": "tpnil-rust-corpus@3",
+        "graphOracle": {
+          "id": "tpnil-rust-graph-oracle@3.0.0",
+          "manifest": "components/rust/graph-oracle-3.0.0.json",
+          "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+          "operation": "spends-indexed-v3",
+          "cargoFeature": "graph-oracle-v3"
+        },
+        "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+        "components": {
+          "rustSdk": {
+            "repository": "bsv-blockchain/rs-sdk",
+            "commit": "99d2313f2ede48a465aa8be1907d26d098aac8fd"
+          },
+          "typescriptSdk": "4.0.1",
+          "binarySha256": "6edd739490c1577ca4d49062b3cd8ab32ea4ebe05c093b1e47f2675e08af932a",
+          "cargoLockSha256": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402"
+        },
+        "sources": {
+          "scripts/rust-corpus.mjs": "c65bba363b4f0605b1b47db354eb65b49cfeb88a17685d631cea4d9efb26906c",
+          "components/rust/vectors.json": "3396484d7c094b8d116df44c0b4284df1b59fe92bcc2fab07b4d1ab93db954c8",
+          "components/rust/Cargo.toml": "71064a519d63fe7174d6d16f1525321541cba75830b1fa79e8b020eedb693837",
+          "components/rust/Cargo.lock": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402",
+          "components/rust/src/main.rs": "0cacf7baa33a9e4c7b43c810adcb5386c0183d1a7f3e13d50026a7032220f315",
+          "fixtures/teranode/wab-funding-v1.json": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+          "components/transport/package-lock.json": "dda70c2b8b059836108cdf36b8ba3d35faf0a21a16300ef1ba3789bbd8c49fac",
+          "components/rust/src/graph_oracle_v3.rs": "e9b0176a2039d8716f5ae28638991dbe0ef6eb40b29ec6d34d9346689d161a6b",
+          "scripts/run-rust.mjs": "b38c6bb59f5b368c0ac49d2c535075d975efc5df3abe49ddc09e53f4b200e63e",
+          "scripts/verify-rust.mjs": "f896b4c8493025456ecc4dea52180dea47f7544f5db5e46793c94171aeef8ae7",
+          "components/rust/graph-oracle-3.0.0.json": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063"
+        },
+        "inputs": [
+          {
+            "path": "input-1.json",
+            "sourceName": "paid-http.json",
+            "sha256": "b7b9cec5d2ac508e7c1f39ef3fb9fa16fe84ebb7dc3ab9eadeb4c91e2c44b769"
+          },
+          {
+            "path": "input-2.json",
+            "sourceName": "messaging.json",
+            "sha256": "87492d2549173c7df6909b85b794558219cff10acccc868d8da1fc731b2fa1b9"
+          },
+          {
+            "path": "input-3.json",
+            "sourceName": "synthesis-transactions.json",
+            "sha256": "daf3713a4272e7a70ccfb0010b114f0e63b8628686dea2e9b3eb05c5234d121c"
+          },
+          {
+            "path": "input-4.json",
+            "sourceName": "identity-trust.json",
+            "sha256": "fe7920058d1aea69a01db1c2255c3aa6c6bf699e3e0e45b08d2d74f70cd6a460"
+          }
+        ],
+        "assertions": [
+          {
+            "id": "sha256-abc",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-true",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-false",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-equality-positive",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-equality-negative",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "malformed-beef",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "malformed-transaction",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "secp256k1-generator",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "rust-signature-typescript-verification",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "typescript-signature-rust-verification",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "modified-signature-message-rejected",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "brc42-derived-key",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "mined-transaction-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "mined-atomic-beef-and-merkle-root",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "strict-beef-trailing-bytes",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-9fe9077495215c0f1c76c447d3d56cfc11f95678d9703f958feb786a5c9a6f90-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-9fe9077495215c0f1c76c447d3d56cfc11f95678d9703f958feb786a5c9a6f90-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 884,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 861,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-9fe9077495215c0f1c76c447d3d56cfc11f95678d9703f958feb786a5c9a6f90-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f9c74055e5ede000557df961ffe226889a11eedeab5d879da41b414476161513-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f9c74055e5ede000557df961ffe226889a11eedeab5d879da41b414476161513-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 860,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 837,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-f9c74055e5ede000557df961ffe226889a11eedeab5d879da41b414476161513-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f44ad554de351eea5b231c59a53199ed5b798911d1cb319f6ba99e6b0afc5bae-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f44ad554de351eea5b231c59a53199ed5b798911d1cb319f6ba99e6b0afc5bae-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 830,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 807,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-f44ad554de351eea5b231c59a53199ed5b798911d1cb319f6ba99e6b0afc5bae-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-4c8b87e7872d2544a640a19ef80023c3644ddd3b56bdf3df50b8326e911fec1d-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-4c8b87e7872d2544a640a19ef80023c3644ddd3b56bdf3df50b8326e911fec1d-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 800,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 777,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-4c8b87e7872d2544a640a19ef80023c3644ddd3b56bdf3df50b8326e911fec1d-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-99ca0bcba2bdfe3172a1f71d968432144ad72a753259618fc4cee147f8d357aa-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-99ca0bcba2bdfe3172a1f71d968432144ad72a753259618fc4cee147f8d357aa-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 754,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 731,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-99ca0bcba2bdfe3172a1f71d968432144ad72a753259618fc4cee147f8d357aa-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-5afad6b77ef905244bc562a39703cbc9ab414cc72749a78bbbf4014a851b0249-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-5afad6b77ef905244bc562a39703cbc9ab414cc72749a78bbbf4014a851b0249-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 89,
+              "inputSatoshis": 708,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 619,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-5afad6b77ef905244bc562a39703cbc9ab414cc72749a78bbbf4014a851b0249-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-fec5beece08fe97fb832cc0be6c3803fec6804630b3971a0b647f165154792e5-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-fec5beece08fe97fb832cc0be6c3803fec6804630b3971a0b647f165154792e5-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 568,
+              "inputSatoshis": 617,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 49,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-fec5beece08fe97fb832cc0be6c3803fec6804630b3971a0b647f165154792e5-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f57c54c46675443f8f4ccf75c3c663c07dc3d96f5998c90a7c6141286d9a6cc9-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f57c54c46675443f8f4ccf75c3c663c07dc3d96f5998c90a7c6141286d9a6cc9-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 40,
+              "inputSatoshis": 48,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 8,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-f57c54c46675443f8f4ccf75c3c663c07dc3d96f5998c90a7c6141286d9a6cc9-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-e38cde74767c69586d1886b1554315d6cdb59c93166ab6ed3ae7c9b00b12badf-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-e38cde74767c69586d1886b1554315d6cdb59c93166ab6ed3ae7c9b00b12badf-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 587,
+              "inputSatoshis": 1001,
+              "inputs": [
+                true,
+                true
+              ],
+              "outputSatoshis": 414,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-e38cde74767c69586d1886b1554315d6cdb59c93166ab6ed3ae7c9b00b12badf-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-c197bdaf3a7201bc2e7785e08cc895636050c2acf3a6f8fc7c620ef7663f14ed-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-c197bdaf3a7201bc2e7785e08cc895636050c2acf3a6f8fc7c620ef7663f14ed-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 114,
+              "inputSatoshis": 217,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 103,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-c197bdaf3a7201bc2e7785e08cc895636050c2acf3a6f8fc7c620ef7663f14ed-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-628f1d5b4ff288aac735fe04c0fc5ea64293683dbe1c2f9833ccaa9d1316044e-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-628f1d5b4ff288aac735fe04c0fc5ea64293683dbe1c2f9833ccaa9d1316044e-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 31,
+              "inputSatoshis": 683,
+              "inputs": [
+                true,
+                true
+              ],
+              "outputSatoshis": 652,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-628f1d5b4ff288aac735fe04c0fc5ea64293683dbe1c2f9833ccaa9d1316044e-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          }
+        ],
+        "outcome": "PASS",
+        "evidence": [
+          {
+            "path": "calls.json",
+            "sha256": "dd3d59ecf25f91b18bf8e5b54141fdad8b21325c87692c68a369f22c6077091d"
+          },
+          {
+            "path": "build.txt",
+            "sha256": "b206ab4f97e3ce5446a69aa91fe1d96a2848351a3e5dfa832f490572c29ddf54"
+          },
+          {
+            "path": "input-1.json",
+            "sha256": "b7b9cec5d2ac508e7c1f39ef3fb9fa16fe84ebb7dc3ab9eadeb4c91e2c44b769"
+          },
+          {
+            "path": "input-2.json",
+            "sha256": "87492d2549173c7df6909b85b794558219cff10acccc868d8da1fc731b2fa1b9"
+          },
+          {
+            "path": "input-3.json",
+            "sha256": "daf3713a4272e7a70ccfb0010b114f0e63b8628686dea2e9b3eb05c5234d121c"
+          },
+          {
+            "path": "input-4.json",
+            "sha256": "fe7920058d1aea69a01db1c2255c3aa6c6bf699e3e0e45b08d2d74f70cd6a460"
+          }
+        ],
+        "cleanup": {
+          "childProcessesExited": true
+        }
+      }
+    },
+    {
+      "path": "logs/rust-1-verify.log",
+      "bytes": 110,
+      "sha256": "509ed748ddd20b127d5660d940c9155a5ab92557cc737b2488229ea97983b5bb",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "calls": 47,
+        "assertions": 48,
+        "independentReplay": true,
+        "parentInputsBound": 4
+      }
+    },
+    {
+      "path": "logs/rust-2-run.log",
+      "bytes": 10403,
+      "sha256": "0adeb2f26b16fbdc4b1b68828fdd495114034406e60f7bde053700c8b2159061",
+      "receipt": {
+        "schema": "tpnil-component-result@1",
+        "corpus": "tpnil-rust-corpus@3",
+        "graphOracle": {
+          "id": "tpnil-rust-graph-oracle@3.0.0",
+          "manifest": "components/rust/graph-oracle-3.0.0.json",
+          "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+          "operation": "spends-indexed-v3",
+          "cargoFeature": "graph-oracle-v3"
+        },
+        "claim": "INFRASTRUCTURE_QUALIFICATION_ONLY",
+        "components": {
+          "rustSdk": {
+            "repository": "bsv-blockchain/rs-sdk",
+            "commit": "99d2313f2ede48a465aa8be1907d26d098aac8fd"
+          },
+          "typescriptSdk": "4.0.1",
+          "binarySha256": "6edd739490c1577ca4d49062b3cd8ab32ea4ebe05c093b1e47f2675e08af932a",
+          "cargoLockSha256": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402"
+        },
+        "sources": {
+          "scripts/rust-corpus.mjs": "c65bba363b4f0605b1b47db354eb65b49cfeb88a17685d631cea4d9efb26906c",
+          "components/rust/vectors.json": "3396484d7c094b8d116df44c0b4284df1b59fe92bcc2fab07b4d1ab93db954c8",
+          "components/rust/Cargo.toml": "71064a519d63fe7174d6d16f1525321541cba75830b1fa79e8b020eedb693837",
+          "components/rust/Cargo.lock": "2c0ca447f074d3eaaa6028469774db4a382904a4a8b92fd2ddf7560285246402",
+          "components/rust/src/main.rs": "0cacf7baa33a9e4c7b43c810adcb5386c0183d1a7f3e13d50026a7032220f315",
+          "fixtures/teranode/wab-funding-v1.json": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+          "components/transport/package-lock.json": "dda70c2b8b059836108cdf36b8ba3d35faf0a21a16300ef1ba3789bbd8c49fac",
+          "components/rust/src/graph_oracle_v3.rs": "e9b0176a2039d8716f5ae28638991dbe0ef6eb40b29ec6d34d9346689d161a6b",
+          "scripts/run-rust.mjs": "b38c6bb59f5b368c0ac49d2c535075d975efc5df3abe49ddc09e53f4b200e63e",
+          "scripts/verify-rust.mjs": "f896b4c8493025456ecc4dea52180dea47f7544f5db5e46793c94171aeef8ae7",
+          "components/rust/graph-oracle-3.0.0.json": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063"
+        },
+        "inputs": [
+          {
+            "path": "input-1.json",
+            "sourceName": "paid-http.json",
+            "sha256": "c022f19285e73571c3aae17359509026a9d2680855085f828f8063d180c322b8"
+          },
+          {
+            "path": "input-2.json",
+            "sourceName": "messaging.json",
+            "sha256": "d333b5c927aa56cf1b2e3e6377f2af70a30162cf9a33ba9ce6d4a36b353903a5"
+          },
+          {
+            "path": "input-3.json",
+            "sourceName": "synthesis-transactions.json",
+            "sha256": "583f8d7116772da280220f9d50588df8fd08f23ce4adef7541a794168efb6bd7"
+          },
+          {
+            "path": "input-4.json",
+            "sourceName": "identity-trust.json",
+            "sha256": "a587c57ccdc7c150d60e86e72c506110ecb554715c7d8f036a46c792bd1cd478"
+          }
+        ],
+        "assertions": [
+          {
+            "id": "sha256-abc",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-true",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-false",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-equality-positive",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "script-equality-negative",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "malformed-beef",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "malformed-transaction",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "secp256k1-generator",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "rust-signature-typescript-verification",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "typescript-signature-rust-verification",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "modified-signature-message-rejected",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "brc42-derived-key",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "mined-transaction-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "mined-atomic-beef-and-merkle-root",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "strict-beef-trailing-bytes",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-3123dfe423220d0bcfbcdfb7809f05bb66a0b74a9af386896683a27ca71abcc5-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-3123dfe423220d0bcfbcdfb7809f05bb66a0b74a9af386896683a27ca71abcc5-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 884,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 861,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-3123dfe423220d0bcfbcdfb7809f05bb66a0b74a9af386896683a27ca71abcc5-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-57a9829503388dc0110332bfbb25bc86591be8fd6b0062a51c79a361a023ec03-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-57a9829503388dc0110332bfbb25bc86591be8fd6b0062a51c79a361a023ec03-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 860,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 837,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-57a9829503388dc0110332bfbb25bc86591be8fd6b0062a51c79a361a023ec03-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-3e1f20663261a62ae6d94e5f53e2c15e0d236fb490893aa2043d743bfbaa070a-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-3e1f20663261a62ae6d94e5f53e2c15e0d236fb490893aa2043d743bfbaa070a-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 830,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 807,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-3e1f20663261a62ae6d94e5f53e2c15e0d236fb490893aa2043d743bfbaa070a-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f2a920fc18306f0ea485ecdc6dcb9ae10b28d99ef94e8376cc8b5a3e15a070d0-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-f2a920fc18306f0ea485ecdc6dcb9ae10b28d99ef94e8376cc8b5a3e15a070d0-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 800,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 777,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-f2a920fc18306f0ea485ecdc6dcb9ae10b28d99ef94e8376cc8b5a3e15a070d0-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-ad7d200014b54a829d9b2d8213e74e0842c83a4b2609c84c6a44285d0bd87b5f-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-ad7d200014b54a829d9b2d8213e74e0842c83a4b2609c84c6a44285d0bd87b5f-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 23,
+              "inputSatoshis": 754,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 731,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-ad7d200014b54a829d9b2d8213e74e0842c83a4b2609c84c6a44285d0bd87b5f-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-4b88a7de5456aa1c83dec9606d1182d4c319e6e0a4d02b3fa83f48fda2f0e09d-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-4b88a7de5456aa1c83dec9606d1182d4c319e6e0a4d02b3fa83f48fda2f0e09d-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 89,
+              "inputSatoshis": 708,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 619,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-4b88a7de5456aa1c83dec9606d1182d4c319e6e0a4d02b3fa83f48fda2f0e09d-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-5bbc30f600ddb14e459236b3c5f68bc30c5b3e23051a0895b1d4ee9d1ec3d713-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-5bbc30f600ddb14e459236b3c5f68bc30c5b3e23051a0895b1d4ee9d1ec3d713-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 568,
+              "inputSatoshis": 617,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 49,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-5bbc30f600ddb14e459236b3c5f68bc30c5b3e23051a0895b1d4ee9d1ec3d713-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-af33dccf0b8de1daec00ba8f8b5e49c3798bb61698038fa666443bed1a98d966-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-af33dccf0b8de1daec00ba8f8b5e49c3798bb61698038fa666443bed1a98d966-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 40,
+              "inputSatoshis": 48,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 8,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-af33dccf0b8de1daec00ba8f8b5e49c3798bb61698038fa666443bed1a98d966-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-31f462dd3c7dcb516c39ab371a4d0a8a44d339e58c4f37b1359c6ffeabb8795f-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-31f462dd3c7dcb516c39ab371a4d0a8a44d339e58c4f37b1359c6ffeabb8795f-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 587,
+              "inputSatoshis": 1001,
+              "inputs": [
+                true,
+                true
+              ],
+              "outputSatoshis": 414,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-31f462dd3c7dcb516c39ab371a4d0a8a44d339e58c4f37b1359c6ffeabb8795f-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-a2e0edf1974134f4429e0d502a562245414eaf38abeef46b422b7a550669e3c7-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-a2e0edf1974134f4429e0d502a562245414eaf38abeef46b422b7a550669e3c7-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 114,
+              "inputSatoshis": 217,
+              "inputs": [
+                true
+              ],
+              "outputSatoshis": 103,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-a2e0edf1974134f4429e0d502a562245414eaf38abeef46b422b7a550669e3c7-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-c1a31ba3689b6bfdf1acdc5d2bd3f8b8a66c0124c759ecd055e00ef2b481c9a0-serialization",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          },
+          {
+            "id": "joined-payment-c1a31ba3689b6bfdf1acdc5d2bd3f8b8a66c0124c759ecd055e00ef2b481c9a0-scripts-and-value",
+            "result": "PASS",
+            "detail": {
+              "anchoredGraphValid": true,
+              "fee": 31,
+              "inputSatoshis": 683,
+              "inputs": [
+                true,
+                true
+              ],
+              "outputSatoshis": 652,
+              "valid": true
+            }
+          },
+          {
+            "id": "joined-payment-c1a31ba3689b6bfdf1acdc5d2bd3f8b8a66c0124c759ecd055e00ef2b481c9a0-modified-output",
+            "result": "PASS",
+            "detail": "Expected outcome observed"
+          }
+        ],
+        "outcome": "PASS",
+        "evidence": [
+          {
+            "path": "calls.json",
+            "sha256": "073964633454021f79d1042158c3c18ad779e92c2a92547674afa15805585f2a"
+          },
+          {
+            "path": "build.txt",
+            "sha256": "6d77f64dfc8c5325b90fdbe05d8be367bdd578bcccec24f275c5ffee7d03dd6e"
+          },
+          {
+            "path": "input-1.json",
+            "sha256": "c022f19285e73571c3aae17359509026a9d2680855085f828f8063d180c322b8"
+          },
+          {
+            "path": "input-2.json",
+            "sha256": "d333b5c927aa56cf1b2e3e6377f2af70a30162cf9a33ba9ce6d4a36b353903a5"
+          },
+          {
+            "path": "input-3.json",
+            "sha256": "583f8d7116772da280220f9d50588df8fd08f23ce4adef7541a794168efb6bd7"
+          },
+          {
+            "path": "input-4.json",
+            "sha256": "a587c57ccdc7c150d60e86e72c506110ecb554715c7d8f036a46c792bd1cd478"
+          }
+        ],
+        "cleanup": {
+          "childProcessesExited": true
+        }
+      }
+    },
+    {
+      "path": "logs/rust-2-verify.log",
+      "bytes": 110,
+      "sha256": "509ed748ddd20b127d5660d940c9155a5ab92557cc737b2488229ea97983b5bb",
+      "receipt": {
+        "verified": true,
+        "outcome": "PASS",
+        "calls": 47,
+        "assertions": 48,
+        "independentReplay": true,
+        "parentInputsBound": 4
+      }
+    }
+  ]
+}

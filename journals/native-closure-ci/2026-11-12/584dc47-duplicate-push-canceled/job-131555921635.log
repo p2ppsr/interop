@@ -1,0 +1,519 @@
+﻿2026-11-12T23:01:45.3049943Z Current runner version: '2.338.2'
+2026-11-12T23:01:45.3066840Z ##[group]Runner Image Provisioner
+2026-11-12T23:01:45.3067476Z Hosted Compute Agent
+2026-11-12T23:01:45.3067861Z Version: 20261103.629
+2026-11-12T23:01:45.3068262Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-12T23:01:45.3068771Z Build Date: 2026-11-03T17:26:59Z
+2026-11-12T23:01:45.3069234Z Worker ID: {e2699233-ccf2-4917-a112-f490eb4ab1a6}
+2026-11-12T23:01:45.3069866Z Region: westus3
+2026-11-12T23:01:45.3070230Z Cloud: Azure
+2026-11-12T23:01:45.3070580Z ##[endgroup]
+2026-11-12T23:01:45.3071394Z ##[group]Operating System
+2026-11-12T23:01:45.3071790Z Ubuntu
+2026-11-12T23:01:45.3072373Z 24.04.5
+2026-11-12T23:01:45.3072731Z LTS
+2026-11-12T23:01:45.3073079Z ##[endgroup]
+2026-11-12T23:01:45.3073476Z ##[group]Runner Image
+2026-11-12T23:01:45.3073896Z Image: ubuntu-24.04
+2026-11-12T23:01:45.3074316Z Version: 20261111.370.1
+2026-11-12T23:01:45.3075088Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-12T23:01:45.3075965Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-12T23:01:45.3076601Z ##[endgroup]
+2026-11-12T23:01:45.3077305Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T23:01:45.3078624Z Contents: read
+2026-11-12T23:01:45.3079038Z Metadata: read
+2026-11-12T23:01:45.3079421Z ##[endgroup]
+2026-11-12T23:01:45.3080925Z Secret source: Actions
+2026-11-12T23:01:45.3081580Z Cache mode: write
+2026-11-12T23:01:45.3082199Z Prepare workflow directory
+2026-11-12T23:01:45.3271417Z Prepare all required actions
+2026-11-12T23:01:45.3300534Z Getting action download info
+2026-11-12T23:01:45.6688669Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-12T23:01:45.7922855Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-12T23:01:45.9185393Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-12T23:01:46.1607721Z Complete job name: offline-core
+2026-11-12T23:01:46.2154665Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-12T23:01:46.2155191Z with:
+2026-11-12T23:01:46.2155487Z   ref: 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99
+2026-11-12T23:01:46.2155832Z   fetch-depth: 0
+2026-11-12T23:01:46.2156121Z   persist-credentials: false
+2026-11-12T23:01:46.2156432Z   repository: p2ppsr/interop
+2026-11-12T23:01:46.2158426Z   token: ***
+2026-11-12T23:01:46.2158700Z   ssh-strict: true
+2026-11-12T23:01:46.2158976Z   ssh-user: git
+2026-11-12T23:01:46.2159244Z   clean: true
+2026-11-12T23:01:46.2159705Z   sparse-checkout-cone-mode: true
+2026-11-12T23:01:46.2160020Z   fetch-tags: false
+2026-11-12T23:01:46.2160303Z   show-progress: true
+2026-11-12T23:01:46.2160585Z   lfs: false
+2026-11-12T23:01:46.2160853Z   submodules: false
+2026-11-12T23:01:46.2161152Z   set-safe-directory: true
+2026-11-12T23:01:46.2161458Z   allow-unsafe-pr-checkout: false
+2026-11-12T23:01:46.2161844Z env:
+2026-11-12T23:01:46.2162108Z   GIT_CONFIG_COUNT: 1
+2026-11-12T23:01:46.2162411Z   GIT_CONFIG_KEY_0: http.version
+2026-11-12T23:01:46.2162722Z   GIT_CONFIG_VALUE_0: HTTP/1.1
+2026-11-12T23:01:46.2163021Z ##[endgroup]
+2026-11-12T23:01:46.3946815Z Syncing repository: p2ppsr/interop
+2026-11-12T23:01:46.3947772Z ##[group]Getting Git version info
+2026-11-12T23:01:46.3948159Z Working directory is '/home/runner/work/interop/interop'
+2026-11-12T23:01:46.3948735Z [command]/usr/bin/git version
+2026-11-12T23:01:46.4030355Z git version 2.56.1
+2026-11-12T23:01:46.4045035Z ##[endgroup]
+2026-11-12T23:01:46.4054250Z Temporarily overriding HOME='/home/runner/work/_temp/eb9a1399-26fb-4b04-8478-64c859a836f7' before making global git config changes
+2026-11-12T23:01:46.4055423Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T23:01:46.4057626Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T23:01:46.4153368Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-12T23:01:46.4154368Z ##[group]Initializing the repository
+2026-11-12T23:01:46.4154867Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-12T23:01:46.4179150Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T23:01:46.4180010Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T23:01:46.4180510Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T23:01:46.4180917Z hint: call:
+2026-11-12T23:01:46.4181174Z hint:
+2026-11-12T23:01:46.4181486Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T23:01:46.4181837Z hint:
+2026-11-12T23:01:46.4182169Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T23:01:46.4182662Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T23:01:46.4183080Z hint:
+2026-11-12T23:01:46.4183344Z hint: 	git branch -m <name>
+2026-11-12T23:01:46.4183633Z hint:
+2026-11-12T23:01:46.4183999Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T23:01:46.4184636Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-12T23:01:46.4191262Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-12T23:01:46.4227734Z ##[endgroup]
+2026-11-12T23:01:46.4228210Z ##[group]Disabling automatic garbage collection
+2026-11-12T23:01:46.4230453Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-12T23:01:46.4254066Z ##[endgroup]
+2026-11-12T23:01:46.4254647Z ##[group]Setting up auth
+2026-11-12T23:01:46.4258378Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T23:01:46.4284867Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T23:01:46.4550538Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T23:01:46.4574244Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T23:01:46.4743185Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T23:01:46.4767391Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T23:01:46.4934420Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T23:01:46.4962680Z ##[endgroup]
+2026-11-12T23:01:46.4963177Z ##[group]Fetching the repository
+2026-11-12T23:01:46.4969931Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-12T23:01:55.9917923Z From https://github.com/p2ppsr/interop
+2026-11-12T23:01:55.9918737Z  * [new branch]      codex/itcve-go-components-20261106 -> origin/codex/itcve-go-components-20261106
+2026-11-12T23:01:55.9919318Z  * [new branch]      codex/lab-integration-20261106 -> origin/codex/lab-integration-20261106
+2026-11-12T23:01:55.9920043Z  * [new branch]      codex/native-wallet-closure-20261111 -> origin/codex/native-wallet-closure-20261111
+2026-11-12T23:01:55.9920674Z  * [new branch]      codex/native-wallet-conformance-20261109 -> origin/codex/native-wallet-conformance-20261109
+2026-11-12T23:01:55.9921183Z  * [new branch]      main                     -> origin/main
+2026-11-12T23:01:55.9921566Z  * [new tag]         sut-artifacts-2026-09-20 -> sut-artifacts-2026-09-20
+2026-11-12T23:01:55.9927476Z [command]/usr/bin/git rev-parse --verify --quiet 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99^{object}
+2026-11-12T23:01:55.9948736Z 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99
+2026-11-12T23:01:55.9952137Z ##[endgroup]
+2026-11-12T23:01:55.9952533Z ##[group]Determining the checkout info
+2026-11-12T23:01:55.9953094Z ##[endgroup]
+2026-11-12T23:01:55.9955760Z [command]/usr/bin/git sparse-checkout disable
+2026-11-12T23:01:55.9997380Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T23:01:56.0020295Z ##[group]Checking out the ref
+2026-11-12T23:01:56.0022532Z [command]/usr/bin/git checkout --progress --force 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99
+2026-11-12T23:01:57.1350591Z Updating files:  45% (5435/11849)
+2026-11-12T23:01:57.1560425Z Updating files:  46% (5451/11849)
+2026-11-12T23:01:57.1862863Z Updating files:  47% (5570/11849)
+2026-11-12T23:01:57.2373400Z Updating files:  48% (5688/11849)
+2026-11-12T23:01:57.2563712Z Updating files:  49% (5807/11849)
+2026-11-12T23:01:57.2815422Z Updating files:  50% (5925/11849)
+2026-11-12T23:01:57.2982125Z Updating files:  51% (6043/11849)
+2026-11-12T23:01:57.3011220Z Updating files:  52% (6162/11849)
+2026-11-12T23:01:57.3597725Z Updating files:  53% (6280/11849)
+2026-11-12T23:01:57.4017417Z Updating files:  54% (6399/11849)
+2026-11-12T23:01:57.4270041Z Updating files:  55% (6517/11849)
+2026-11-12T23:01:57.4304871Z Updating files:  56% (6636/11849)
+2026-11-12T23:01:57.4336756Z Updating files:  57% (6754/11849)
+2026-11-12T23:01:57.4368806Z Updating files:  58% (6873/11849)
+2026-11-12T23:01:57.4403863Z Updating files:  59% (6991/11849)
+2026-11-12T23:01:57.4444502Z Updating files:  60% (7110/11849)
+2026-11-12T23:01:57.4497914Z Updating files:  61% (7228/11849)
+2026-11-12T23:01:57.4593534Z Updating files:  62% (7347/11849)
+2026-11-12T23:01:57.4694016Z Updating files:  63% (7465/11849)
+2026-11-12T23:01:57.4752697Z Updating files:  64% (7584/11849)
+2026-11-12T23:01:57.4911732Z Updating files:  65% (7702/11849)
+2026-11-12T23:01:57.5195135Z Updating files:  66% (7821/11849)
+2026-11-12T23:01:57.5242598Z Updating files:  67% (7939/11849)
+2026-11-12T23:01:57.5315871Z Updating files:  68% (8058/11849)
+2026-11-12T23:01:57.5409289Z Updating files:  69% (8176/11849)
+2026-11-12T23:01:57.5637238Z Updating files:  70% (8295/11849)
+2026-11-12T23:01:57.5739288Z Updating files:  71% (8413/11849)
+2026-11-12T23:01:57.5820250Z Updating files:  72% (8532/11849)
+2026-11-12T23:01:57.5959655Z Updating files:  73% (8650/11849)
+2026-11-12T23:01:57.6056574Z Updating files:  74% (8769/11849)
+2026-11-12T23:01:57.6095508Z Updating files:  75% (8887/11849)
+2026-11-12T23:01:57.6266108Z Updating files:  76% (9006/11849)
+2026-11-12T23:01:57.6301671Z Updating files:  77% (9124/11849)
+2026-11-12T23:01:57.6346397Z Updating files:  78% (9243/11849)
+2026-11-12T23:01:57.6389455Z Updating files:  79% (9361/11849)
+2026-11-12T23:01:57.6423903Z Updating files:  80% (9480/11849)
+2026-11-12T23:01:57.6489631Z Updating files:  81% (9598/11849)
+2026-11-12T23:01:57.6523490Z Updating files:  82% (9717/11849)
+2026-11-12T23:01:57.6552328Z Updating files:  83% (9835/11849)
+2026-11-12T23:01:57.6605895Z Updating files:  84% (9954/11849)
+2026-11-12T23:01:57.6651774Z Updating files:  85% (10072/11849)
+2026-11-12T23:01:57.7110275Z Updating files:  86% (10191/11849)
+2026-11-12T23:01:57.7220580Z Updating files:  87% (10309/11849)
+2026-11-12T23:01:57.7329436Z Updating files:  88% (10428/11849)
+2026-11-12T23:01:57.7533202Z Updating files:  89% (10546/11849)
+2026-11-12T23:01:57.7583729Z Updating files:  90% (10665/11849)
+2026-11-12T23:01:57.7708912Z Updating files:  91% (10783/11849)
+2026-11-12T23:01:57.7917037Z Updating files:  92% (10902/11849)
+2026-11-12T23:01:57.7969732Z Updating files:  93% (11020/11849)
+2026-11-12T23:01:57.8033668Z Updating files:  94% (11139/11849)
+2026-11-12T23:01:57.8098872Z Updating files:  95% (11257/11849)
+2026-11-12T23:01:57.8159830Z Updating files:  96% (11376/11849)
+2026-11-12T23:01:57.8217993Z Updating files:  97% (11494/11849)
+2026-11-12T23:01:57.8402438Z Updating files:  98% (11613/11849)
+2026-11-12T23:01:57.8455111Z Updating files:  99% (11731/11849)
+2026-11-12T23:01:57.8455494Z Updating files: 100% (11849/11849)
+2026-11-12T23:01:57.8455976Z Updating files: 100% (11849/11849), done.
+2026-11-12T23:01:57.8540847Z Note: switching to '584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99'.
+2026-11-12T23:01:57.8541095Z 
+2026-11-12T23:01:57.8541447Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-12T23:01:57.8541747Z changes and commit them, and you can discard any commits you make in this
+2026-11-12T23:01:57.8541991Z state without impacting any branches by switching back to a branch.
+2026-11-12T23:01:57.8542133Z 
+2026-11-12T23:01:57.8542231Z If you want to create a new branch to retain commits you create, you may
+2026-11-12T23:01:57.8542466Z do so (now or later) by using -c with the switch command. Example:
+2026-11-12T23:01:57.8542601Z 
+2026-11-12T23:01:57.8542659Z   git switch -c <new-branch-name>
+2026-11-12T23:01:57.8542751Z 
+2026-11-12T23:01:57.8542804Z Or undo this operation with:
+2026-11-12T23:01:57.8542889Z 
+2026-11-12T23:01:57.8542934Z   git switch -
+2026-11-12T23:01:57.8543006Z 
+2026-11-12T23:01:57.8543119Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-12T23:01:57.8543276Z 
+2026-11-12T23:01:57.8543422Z HEAD is now at 584dc47 Align unexecuted profile metadata and freeze source-only native successor
+2026-11-12T23:01:57.8697130Z ##[endgroup]
+2026-11-12T23:01:57.8733905Z [command]/usr/bin/git log -1 --format=%H
+2026-11-12T23:01:57.8754569Z 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99
+2026-11-12T23:01:57.8761904Z ##[group]Removing auth
+2026-11-12T23:01:57.8764329Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T23:01:57.8788146Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T23:01:57.8973141Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T23:01:57.8992206Z http.https://github.com/.extraheader
+2026-11-12T23:01:57.8997687Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-12T23:01:57.9030103Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T23:01:57.9212067Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T23:01:57.9234456Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T23:01:57.9410058Z ##[endgroup]
+2026-11-12T23:01:57.9576740Z ##[group]Run [[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]]
+2026-11-12T23:01:57.9576984Z [36;1m[[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]][0m
+2026-11-12T23:01:57.9577197Z [36;1mif [ "$(git rev-parse HEAD)" != "$TPNIL_CI_EVENT_SHA" ]; then[0m
+2026-11-12T23:01:57.9577402Z [36;1m  [[ "$TPNIL_CI_PULL_NUMBER" =~ ^[0-9]+$ ]][0m
+2026-11-12T23:01:57.9577723Z [36;1m  git -c http.version=HTTP/1.1 -c protocol.version=2 fetch --no-tags origin "refs/pull/$TPNIL_CI_PULL_NUMBER/merge"[0m
+2026-11-12T23:01:57.9578041Z [36;1m  test "$(git rev-parse FETCH_HEAD)" = "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-12T23:01:57.9578244Z [36;1m  git checkout --detach "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-12T23:01:57.9578398Z [36;1mfi[0m
+2026-11-12T23:01:57.9578539Z [36;1mtest "$(git rev-parse HEAD)" = "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-12T23:01:57.9595823Z shell: /usr/bin/bash -e {0}
+2026-11-12T23:01:57.9595956Z env:
+2026-11-12T23:01:57.9596099Z   TPNIL_CI_EVENT_SHA: 584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99
+2026-11-12T23:01:57.9596311Z   TPNIL_CI_PULL_NUMBER: 
+2026-11-12T23:01:57.9596433Z ##[endgroup]
+2026-11-12T23:01:57.9717614Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-12T23:01:57.9717822Z with:
+2026-11-12T23:01:57.9717935Z   node-version-file: .nvmrc
+2026-11-12T23:01:57.9718062Z   always-auth: false
+2026-11-12T23:01:57.9718311Z   check-latest: false
+2026-11-12T23:01:57.9719976Z   token: ***
+2026-11-12T23:01:57.9720084Z ##[endgroup]
+2026-11-12T23:01:58.0581421Z Node version file is not JSON file
+2026-11-12T23:01:58.0582117Z Resolved .nvmrc as 24.22.1
+2026-11-12T23:01:58.0592857Z Attempting to download 24.22.1...
+2026-11-12T23:01:58.0687040Z (node:2201) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T23:01:58.0687645Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T23:01:59.2648141Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-12T23:01:59.7358328Z Extracting ...
+2026-11-12T23:01:59.7445100Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/06165cde-0332-45aa-be6e-2469a66a316f -f /home/runner/work/_temp/383fdc2c-6d03-4d8d-bb47-19833b38c9e6
+2026-11-12T23:02:00.6212512Z Adding to the cache ...
+2026-11-12T23:02:02.4779982Z ##[group]Environment details
+2026-11-12T23:02:02.6308769Z node: v24.22.1
+2026-11-12T23:02:02.6308999Z npm: 11.19.1
+2026-11-12T23:02:02.6309156Z yarn: 1.22.22
+2026-11-12T23:02:02.6309731Z ##[endgroup]
+2026-11-12T23:02:02.6456112Z ##[group]Run printf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"
+2026-11-12T23:02:02.6456415Z [36;1mprintf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"[0m
+2026-11-12T23:02:02.6474847Z shell: /usr/bin/bash -e {0}
+2026-11-12T23:02:02.6475449Z ##[endgroup]
+2026-11-12T23:02:02.6512026Z ImageOS=ubuntu24
+2026-11-12T23:02:02.6512216Z ImageVersion=20261111.370.1
+2026-11-12T23:02:02.6531702Z ##[group]Run npm test
+2026-11-12T23:02:02.6531831Z [36;1mnpm test[0m
+2026-11-12T23:02:02.6545836Z shell: /usr/bin/bash -e {0}
+2026-11-12T23:02:02.6545973Z ##[endgroup]
+2026-11-12T23:02:02.7128716Z 
+2026-11-12T23:02:02.7129287Z > tpnil@0.5.0 test
+2026-11-12T23:02:02.7129761Z > node --test test/*.test.mjs
+2026-11-12T23:02:02.7129959Z 
+2026-11-12T23:02:03.3037569Z ✔ actual Git blob above the old stdout limit is exact, including binary NUL bytes (100.456947ms)
+2026-11-12T23:02:03.3050810Z ✔ selector still rejects current and committed byte tampering with a large input (163.190018ms)
+2026-11-12T23:02:03.3051892Z ✔ bounded metadata rejects oversize, missing and non-blob source before reading payload (83.373091ms)
+2026-11-12T23:02:03.3054383Z ✔ same-size corrupted Git object is rejected by its pinned object identity and cleans temporary output (98.914166ms)
+2026-11-12T23:02:03.3055390Z ✔ Git replace refs cannot substitute a different committed blob (65.822085ms)
+2026-11-12T23:02:04.8265485Z ✔ canonical encoding has a fixed known answer and preserves array order (1.015792ms)
+2026-11-12T23:02:04.8266590Z ✔ strict parser rejects ambiguous keys, Unicode, numbers and trailing data (0.826665ms)
+2026-11-12T23:02:04.8274009Z ✔ unsupported schema keywords fail closed (0.278824ms)
+2026-11-12T23:02:04.8274827Z ✔ catalogs distinguish executable vectors from design-only vectors (42.490328ms)
+2026-11-12T23:02:04.8276135Z ✔ plans reject unknown fields, empty suites, repeated IDs and SUT claims (871.496739ms)
+2026-11-12T23:02:04.8276891Z ✔ missing evidence blocks; an explicit observed mismatch fails (48.763912ms)
+2026-11-12T23:02:04.8282318Z ✔ JSON pointer escaping and null evidence are precise (47.517039ms)
+2026-11-12T23:02:04.8283910Z ✔ array pointer cannot claim array length or leading-zero index (45.641177ms)
+2026-11-12T23:02:04.8321988Z ✔ artifact verification rejects changed bytes, path traversal and symlinks (2.209735ms)
+2026-11-12T23:02:04.8337489Z ✔ journal replay retains exact scoped result and immutable objects (110.058645ms)
+2026-11-12T23:02:04.8338363Z ✔ timestamps change record identity without changing semantic result (75.042435ms)
+2026-11-12T23:02:04.8339140Z ✔ tampering with an archived artifact fails replay (63.369797ms)
+2026-11-12T23:02:04.8339866Z ✔ missing archived objects fail replay (56.20262ms)
+2026-11-12T23:02:04.8340802Z ✔ journal truncation and chain rewrites are detected (49.129513ms)
+2026-11-12T23:02:04.8341592Z ✔ known prior journal prefix cannot be replaced by another valid run (352.113687ms)
+2026-11-12T23:02:04.8342416Z ✔ appending retains the prior prefix and duplicate run is rejected (63.026909ms)
+2026-11-12T23:02:04.8343271Z ✔ concurrent/stale writers and reversed timestamps fail closed (55.137115ms)
+2026-11-12T23:02:04.8344058Z ✔ failed and blocked observations remain recorded outcomes (56.69554ms)
+2026-11-12T23:02:04.8344777Z ✔ schema-invalid evidence cannot be appended (51.49191ms)
+2026-11-12T23:02:04.8345506Z ✔ demo cannot overwrite an existing evidence directory (53.996178ms)
+2026-11-12T23:02:04.8395269Z ✔ retained descendant CI archive binds all 46 members and eight fresh runs (97.539484ms)
+2026-11-12T23:02:04.8396258Z ✔ a recomputed outer digest cannot relabel reference evidence as native qualification (4.598631ms)
+2026-11-12T23:02:04.8397108Z ✔ published counts and member inventory must agree with the actual ZIP (93.587855ms)
+2026-11-12T23:02:04.8410997Z ✔ v1 archive cannot claim the prospective exact-history policy (32.662578ms)
+2026-11-12T23:02:04.8412087Z ✔ prospective qualification schema cannot reinterpret a v1 archive (8.672366ms)
+2026-11-12T23:02:04.8412876Z ✔ omitting a provenance file or adding an unlisted file cannot hide an archive (2.350008ms)
+2026-11-12T23:02:04.9329167Z ✔ component3 frozen replay survives current source drift but rejects dependency drift and Git links (113.900092ms)
+2026-11-12T23:02:04.9340697Z ✔ verification requires a complete final receipt, not a zero exit or diagnostic output (23.755675ms)
+2026-11-12T23:02:04.9358914Z ✔ replays a Git archive larger than128MiB and rejects archive attribute transformations (1696.842759ms)
+2026-11-12T23:02:04.9441234Z ✔ publication guard rejects locally present but ignored evidence and incorrect staged bytes (228.920525ms)
+2026-11-12T23:02:04.9442222Z ✔ history guard permits additions but rejects modifications, deletions and type changes (270.953724ms)
+2026-11-12T23:02:04.9443235Z ✔ replacement root preserves prior journal bytes; later history requires an ancestor (318.519895ms)
+2026-11-12T23:02:04.9444327Z ✔ a clean replacement root establishes a baseline without discarded objects; descendants require their base (158.492616ms)
+2026-11-12T23:02:04.9445214Z ✔ source-only intake remains blocked and cannot issue a conformance claim (8.472231ms)
+2026-11-12T23:02:04.9445991Z ✔ verified runtime criteria require runtime evidence, not source inspection (1.836911ms)
+2026-11-12T23:02:04.9446834Z ✔ intake rejects omitted criteria, live-broadcast scope changes, and unknown references (2.166748ms)
+2026-11-12T23:02:04.9447638Z ✔ intake detects altered artifacts and altered referenced evidence (62.967901ms)
+2026-11-12T23:02:04.9448325Z ✔ intake rejects evidence traversal and symlink substitution (1.816475ms)
+2026-11-12T23:02:04.9449105Z ✔ retained intake review verifies from archived objects and detects changes (90.982346ms)
+2026-11-12T23:02:04.9450102Z ✔ current intake permits authorized evaluation without redistribution or participation publicity (3.322176ms)
+2026-11-12T23:02:04.9451087Z ✔ public reproduction needs every reproduction permission and is separate from participation publicity (4.622763ms)
+2026-11-12T23:02:04.9452091Z ✔ evaluation and retention authorization independently gate execution without changing technical readiness (10.042411ms)
+2026-11-12T23:02:04.9453067Z ✔ every granted permission needs rights evidence; malformed and unknown permissions fail closed (3.818129ms)
+2026-11-12T23:02:04.9453938Z ✔ current archived reviews retain permission scope and detect permission tampering (4.293876ms)
+2026-11-12T23:02:04.9454927Z ✔ aggregate rejects omitted lanes, rewritten profile, cleanup failures and altered receipts even with rebound hashes (51.483999ms)
+2026-11-12T23:02:04.9455806Z ✔ aggregate detects modified files before trusting retained observations (2.594627ms)
+2026-11-12T23:02:04.9628292Z ✔ component3 rejects old schemas, relabelled policies and non-UTC cells despite rebound inventories (249.799437ms)
+2026-11-12T23:02:04.9636759Z ✔ component3 explicitly freezes the ninth matrix and never replaces native2 (0.548618ms)
+2026-11-12T23:02:04.9726059Z ✔ preparation defaults to the full closure and rejects unsupported or repeated flags (37.314392ms)
+2026-11-12T23:02:04.9734845Z ✔ verifier selection cannot build Go, discovery or SQLite and uses a separate exact source path (1.217276ms)
+2026-11-12T23:02:04.9735934Z ✔ verifier preparation refuses aliased or complete service caches before mutation or network (2.83162ms)
+2026-11-12T23:02:16.5892706Z ✔ candidate is a distinct explicit engineering artifact while observed version stays unchanged (1779.791834ms)
+2026-11-12T23:02:16.5893842Z ✔ observer2 preserves the official artifact and all392 predicates while explicitly adding34 checks (662.881831ms)
+2026-11-12T23:02:16.5896075Z ✔ candidate and official binding substitutions, unknown selectors and retained archive corruption fail before builds (3884.734821ms)
+2026-11-12T23:02:16.5897124Z ✔ actual 7e39006 ZIP rejects changed files, missing files and official-release substitution (1140.677883ms)
+2026-11-12T23:02:16.5897877Z ✔ actual cb3c2f2 ZIP rejects changed files, missing files and official-release substitution (870.552639ms)
+2026-11-12T23:02:16.5898617Z ✔ actual 4a954ac ZIP rejects changed files, missing files and official-release substitution (852.869149ms)
+2026-11-12T23:02:16.5899423Z ✔ candidate observer3 explicitly binds a positive controlled header while preserving attempted plans (2429.369393ms)
+2026-11-12T23:02:16.6002448Z ✔ accounts for all99 failures while separating oracle corrections and newly added coverage (12.915752ms)
+2026-11-12T23:02:16.6003336Z ✔ rejects missing, duplicated, renamed or mismatched repetition obligations (55.529504ms)
+2026-11-12T23:02:16.6004239Z ✔ reports regressions without hiding them behind improved failure totals (4.25602ms)
+2026-11-12T23:02:16.6005103Z ✔ keeps ITCVE-1@4.1.0 candidate identity and rejects mixed artifacts or release claims (28.816153ms)
+2026-11-12T23:02:16.6005953Z ✔ keeps ITCVE-1@4.2.0 candidate identity and rejects mixed artifacts or release claims (29.99376ms)
+2026-11-12T23:02:16.6006927Z ✔ expanded4.3 comparison binds exact4a intake and all535 observations without changing the original99 denominator (52.4193ms)
+2026-11-12T23:02:16.6007951Z ✔ prospective4.5 arithmetic binds698 observations and exact3e candidate without implying qualification (60.306249ms)
+2026-11-12T23:02:16.6008831Z ✔ all frozen native workers receive every source-bound input in their container (137.625702ms)
+2026-11-12T23:02:16.6010066Z ✔ proposed native inventory accounts for every retained obligation and all 28 methods (1.597825ms)
+2026-11-12T23:02:16.6010819Z ✔ case dependencies, clause references and method links are closed and unambiguous (0.846655ms)
+2026-11-12T23:02:16.6011574Z ✔ planning evidence cannot silently satisfy missing native features or rewrite historical outcomes (0.181284ms)
+2026-11-12T23:02:16.6012364Z ✔ basket and wire matrices retain discriminating boundary cases and exact call-code accountability (0.33189ms)
+2026-11-12T23:02:16.6013289Z ✔ prospective implementation map accounts for every variant without turning implementation into qualification (1.829902ms)
+2026-11-12T23:02:16.6014030Z ✔ expanded profile has a distinct exact selector and535 assertions (1.250516ms)
+2026-11-12T23:02:16.6014711Z ✔ real worker startup selects the explicit expanded plan only with all admission flags (11.273372ms)
+2026-11-12T23:02:16.6015386Z ✔ expanded Rust observer cannot silently reuse a historical profile or pending artifact (1.541425ms)
+2026-11-12T23:02:16.6016097Z ✔ executed observer3 plans, profiles, policies and Rust manifest remain byte-identical (17.750266ms)
+2026-11-12T23:02:16.6016813Z ✔ executed coverage1 selector binds the final4a artifact at its exact frozen source (1801.496212ms)
+2026-11-12T23:02:16.6017424Z ✔ expanded profile has a distinct exact selector and535 assertions (1.616278ms)
+2026-11-12T23:02:16.6018051Z ✔ real worker startup selects the explicit expanded plan only with all admission flags (10.549708ms)
+2026-11-12T23:02:16.6019181Z ✔ expanded Rust observer cannot silently reuse a historical profile or pending artifact (1.49669ms)
+2026-11-12T23:02:16.6020023Z ✔ executed observer3 plans, profiles, policies and Rust manifest remain byte-identical (15.296028ms)
+2026-11-12T23:02:16.6021231Z ✔ recovery selector binds every final source and rejects artifact, profile and observer downgrades (1822.540034ms)
+2026-11-12T23:02:16.6022028Z ✔ coverage2 preserves every executed coverage1 JSON and all535 predicate identities (219.98831ms)
+2026-11-12T23:02:16.6022787Z ✔ completion selector is distinct and current pending inputs cannot start native execution (1.93635ms)
+2026-11-12T23:02:16.6023536Z ✔ worker selects only4.5 with explicit coverage3 and complete identity/observer flags (10.212865ms)
+2026-11-12T23:02:16.6024145Z ✔ coverage3 keeps every executed coverage2 JSON byte-identical (148.383219ms)
+2026-11-12T23:02:16.6024583Z ✔ completion selector is distinct and current pending inputs cannot start native execution (2.371761ms)
+2026-11-12T23:02:16.6025022Z ✔ worker selects only4.6 with explicit coverage4 and complete identity/observer flags (11.737429ms)
+2026-11-12T23:02:16.6025394Z ✔ coverage4 keeps every executed coverage2 JSON byte-identical (302.856499ms)
+2026-11-12T23:02:16.6025766Z ✔ coverage4 freezes all current inputs and admits its complete source fixture (2862.113161ms)
+2026-11-12T23:02:16.6026168Z ✔ coverage4 cannot substitute an input or a release artifact in its source fixture (16.216048ms)
+2026-11-12T23:02:16.6026926Z ✔ completion selector is distinct and current pending inputs cannot start native execution (2.11427ms)
+2026-11-12T23:02:16.6027630Z ✔ worker selects only4.6 with explicit coverage5 and complete identity/observer flags (10.484537ms)
+2026-11-12T23:02:16.6028002Z ✔ coverage5 keeps every executed coverage2 JSON byte-identical (152.220845ms)
+2026-11-12T23:02:16.6028371Z ✔ coverage5 freezes all current inputs and admits its complete source fixture (104.224574ms)
+2026-11-12T23:02:16.6028777Z ✔ coverage5 cannot substitute an input or a release artifact in its source fixture (12.470833ms)
+2026-11-12T23:02:16.6029255Z ✔ source-only metadata correction preserves original unexecuted profile/plan bytes and every actual predicate (13.988727ms)
+2026-11-12T23:02:16.6030484Z ✔ image audit preserves every inherited path and rejects altered bytes, modes, owners, links and extra or missing files (7.850108ms)
+2026-11-12T23:02:16.6031019Z ✔ image audit permits exactly the declared environment additions and retains all runtime config (1.231249ms)
+2026-11-12T23:02:16.6031488Z ✔ complete source overlay includes every staged file and the exact two generated storage inputs (38.257262ms)
+2026-11-12T23:02:16.6032003Z ﹣ replays all three retained reports with their original checker despite incompatible current selector files (0.643888ms) # SKIP
+2026-11-12T23:02:16.6032479Z ✔ rejects changed historical journal bytes instead of replaying a substituted report (50.648299ms)
+2026-11-12T23:02:16.6032888Z ✔ requires a complete semantic receipt and preserves the genuine native FAIL (1.715754ms)
+2026-11-12T23:02:16.6033339Z ✔ rejects stale installed lock metadata, missing required packages and wrong on-disk package versions (4.832703ms)
+2026-11-12T23:02:16.6033805Z ✔ trusted-click archive retains two native engineering repetitions and20 closure selftests (15.122189ms)
+2026-11-12T23:02:16.6034196Z ✔ trusted-click archive rejects changed recorded native evidence (9.140347ms)
+2026-11-12T23:02:16.6034580Z ✔ trusted-click archive rejects missing mandatory source despite rewritten inventory (10.259005ms)
+2026-11-12T23:02:16.6034951Z ✔ trusted-click archive cannot claim native Linux qualification (6.760073ms)
+2026-11-12T23:02:16.6035356Z ✔ permission lifecycle engineering archive preserves every file and original attempt member (43.840618ms)
+2026-11-12T23:02:16.6035731Z ✔ permission archive rejects a changed original artifact byte (8.244919ms)
+2026-11-12T23:02:16.6036384Z ✔ permission archive rejects omission of a mandatory frozen verifier input even with a rewritten inventory (6.946366ms)
+2026-11-12T23:02:16.6036773Z ✔ permission archive rejects an upgraded qualification claim (4.522506ms)
+2026-11-12T23:02:16.6037184Z ✔ portability archive pins the original Git producer while replaying the exact retained semantics (23.230928ms)
+2026-11-12T23:02:16.6037613Z ✔ source bindings use retained semantics even when the current verifier has evolved (0.84953ms)
+2026-11-12T23:02:16.6038065Z ✔ rewriting producer bytes and all corresponding metadata cannot replace the historical Git identity (1.510112ms)
+2026-11-12T23:02:16.6038499Z ✔ retained producer omission is rejected independently of a rewritten inventory (0.272724ms)
+2026-11-12T23:02:16.6039013Z ✔ changed extracted semantic source remains rejected: synthesis/src/wallet-lab/native/verify-conformance-portability.ts (0.576896ms)
+2026-11-12T23:02:16.6039829Z ✔ rewritten retained semantic source remains rejected: synthesis/src/wallet-lab/native/verify-conformance-portability.ts (0.649166ms)
+2026-11-12T23:02:16.6040817Z ✔ changed extracted semantic source remains rejected: synthesis/src/wallet-lab/native/portability-proof.ts (0.506289ms)
+2026-11-12T23:02:16.6041676Z ✔ rewritten retained semantic source remains rejected: synthesis/src/wallet-lab/native/portability-proof.ts (0.378565ms)
+2026-11-12T23:02:16.6042697Z ✔ changed extracted semantic source remains rejected: programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json (0.589785ms)
+2026-11-12T23:02:16.6043949Z ✔ rewritten retained semantic source remains rejected: programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json (0.486329ms)
+2026-11-12T23:02:16.6044938Z ✔ frozen replay materializes the historical producer and transitive modules with synthesis-only dependencies (661.128604ms)
+2026-11-12T23:02:16.6045727Z ✔ frozen replay rejects a changed synthesis lock before any semantic module executes (536.412155ms)
+2026-11-12T23:02:16.6046418Z ✔ frozen replay rejects installed dependency mismatch: hidden-lock-integrity (642.483248ms)
+2026-11-12T23:02:16.6047076Z ✔ frozen replay rejects installed dependency mismatch: package-version (660.257461ms)
+2026-11-12T23:02:16.6047692Z ✔ frozen replay rejects installed dependency mismatch: missing-required (749.795311ms)
+2026-11-12T23:02:16.6048302Z ✔ native evidence archives and verifies offline without issuing conformance (13.668931ms)
+2026-11-12T23:02:16.6048831Z ✔ native verifier rejects modified retained evidence (9.296123ms)
+2026-11-12T23:02:16.6049682Z ✔ prospective reevaluation binds current source without rewriting accepted plan or retained acceptance (15.928013ms)
+2026-11-12T23:02:16.6050431Z ✔ accepted predecessor remains valid under its recorded frozen evaluator sources (16.424284ms)
+2026-11-12T23:02:16.6051181Z ✔ source-2 predecessor remains valid with its exact frozen evaluator source and original ancestry (22.387703ms)
+2026-11-12T23:02:16.6052012Z ✔ source revision rejects predecessor substitution, revision downgrade and changed native or Rust criteria (2.77266ms)
+2026-11-12T23:02:16.6052839Z ✔ prospective run lock binds all nine plan revisions to its real committed evaluator source (627.216659ms)
+2026-11-12T23:02:16.6053522Z ✔ source3 remains valid under its exact executed source and all predecessors (23.839653ms)
+2026-11-12T23:02:16.6054163Z ✔ source4 remains valid under its exact executed source and all predecessors (23.550134ms)
+2026-11-12T23:02:16.6054605Z ✔ source5 remains valid under its exact executed source and all predecessors (27.393418ms)
+2026-11-12T23:02:16.6054989Z ✔ source6 remains valid under its exact executed source and all predecessors (32.296978ms)
+2026-11-12T23:02:16.6055345Z fatal: path 'plan.json' exists on disk, but not in '0000000000000000000000000000000000000000'
+2026-11-12T23:02:16.6055795Z ✔ reevaluation plan binds major3, exact unchanged four-input order and every evaluator/extractor source (6.064588ms)
+2026-11-12T23:02:16.6056336Z ✔ original native9 evidence remains exact, with valid base FAIL and retained Rust failure; mutation/supplement rejected (895.366947ms)
+2026-11-12T23:02:16.6057517Z ✔ publication distinguishes retained reevaluation and rejects partial repetitions or corpus relabels even with rebound inventory (875.506558ms)
+2026-11-12T23:02:16.6058050Z ✔ committed plan/run lock resists rehashed original identity and evaluator-source substitutions (365.297989ms)
+2026-11-12T23:02:16.6058518Z ✔ native callers without explicit binding retain corpus2 without loading optional dependencies (1.450031ms)
+2026-11-12T23:02:16.6058947Z ✔ future native Rust3 requires exact paired variant and digest-addressed binding (163.418991ms)
+2026-11-12T23:02:16.6059375Z ✔ compatibility metadata is bound to its original Git source, preventing c338 retrofits (32.601481ms)
+2026-11-12T23:02:16.6060013Z ✔ every selector/runner/verifier/workflow input must exist unchanged at execution source (394.492836ms)
+2026-11-12T23:02:16.6060436Z ✔ compatibility source inventory and Rust/native policy substitutions fail closed (72.737528ms)
+2026-11-12T23:02:16.6060899Z ✔ future Rust selection leaves the original native2 plan and all ten acceptance inputs byte-identical (26.854003ms)
+2026-11-12T23:02:16.6061353Z ✔ legacy source-binding revision preserves the immutable original compatibility manifest (2.479751ms)
+2026-11-12T23:02:16.6061847Z ✔ new released native profile requires its own Rust3 binding and rejects downgrade or cross-profile substitution (101.454043ms)
+2026-11-12T23:02:16.6062350Z ✔ source2 preserves the exact executed plan, Rust manifest, profile, catalog and source7 evaluator (1048.843184ms)
+2026-11-12T23:02:16.6062892Z ✔ host, worker, parent and Docker all select the explicit same-criteria successor closure (3.223363ms)
+2026-11-12T23:02:16.6063346Z ✔ Rust source-only successor predicates admit the complete fixture and reject criterion changes (49.606556ms)
+2026-11-12T23:02:16.6063776Z ✔ source successor cannot drop a historical input, helper, or predecessor binding (5.266024ms)
+2026-11-12T23:02:16.6064209Z ✔ all frozen inputs reach their exact worker paths through the complete Docker COPY chain (123.757445ms)
+2026-11-12T23:02:16.6064663Z ✔ new official wallet release requires the explicit selector and complete native admission stack (1.463943ms)
+2026-11-12T23:02:16.6065126Z ✔ every legacy selector preserves its original artifact, native plan and optional Rust observer (1.938764ms)
+2026-11-12T23:02:16.6065568Z ✔ unsupported release selectors fail before artifact preparation or runner operations (39.735781ms)
+2026-11-12T23:02:16.6066002Z ✔ new release preserves existing environment, isolated funding and shutdown requirements (0.984545ms)
+2026-11-12T23:02:16.6066421Z ✔ new release uses expanded shutdown policy while retaining the previous policy (0.191461ms)
+2026-11-12T23:02:16.6066838Z ✔ new release admission binds its exact profile, catalog and all accepted policy bytes (89.162757ms)
+2026-11-12T23:02:16.6067190Z ✔ actual worker startup agrees with host selector base (2.321365ms)
+2026-11-12T23:02:16.6067506Z ✔ actual worker startup agrees with host selector --integrated (0.64592ms)
+2026-11-12T23:02:16.6067852Z ✔ actual worker startup agrees with host selector --integrated-trusted (0.485407ms)
+2026-11-12T23:02:16.6068192Z ✔ actual worker startup agrees with host selector --conformance (1.191129ms)
+2026-11-12T23:02:16.6068538Z ✔ actual worker startup agrees with host selector --conformance-coverage (0.537436ms)
+2026-11-12T23:02:16.6068903Z ✔ actual worker startup agrees with host selector --conformance-closure (0.46114ms)
+2026-11-12T23:02:16.6069251Z ✔ actual worker startup agrees with host selector --conformance-5.1.1 (0.51367ms)
+2026-11-12T23:02:16.6069896Z ✔ actual worker startup agrees with host selector --conformance-5.1.1-observer-2 (0.664939ms)
+2026-11-12T23:02:16.6070289Z ✔ actual worker startup agrees with host selector --conformance-pr368-7e39006 (0.736298ms)
+2026-11-12T23:02:16.6070707Z ✔ actual worker startup agrees with host selector --conformance-pr368-cb3c2f2-observer-3 (1.104166ms)
+2026-11-12T23:02:16.6071217Z ✔ actual worker startup agrees with host selector --conformance-pr368-coverage-1 (0.963422ms)
+2026-11-12T23:02:16.6071614Z ✔ actual worker startup agrees with host selector --conformance-pr368-coverage-2 (0.807957ms)
+2026-11-12T23:02:16.6072007Z ✔ actual worker startup agrees with host selector --conformance-pr368-coverage-3 (1.051336ms)
+2026-11-12T23:02:16.6072410Z ✔ actual worker rejects candidate and observer downgrades before starting services (4.794449ms)
+2026-11-12T23:02:16.6072852Z ✔ payment coverage retains both directions, independent self-pairs and every failure variant (17.700143ms)
+2026-11-12T23:02:16.6073341Z ✔ reported Windows identity-key paths stay visible without assigning a confirmed cause or compatibility (29.52351ms)
+2026-11-12T23:02:16.6073819Z ✔ coverage rejects duplicate target IDs, duplicate cases, omitted steps and unknown actor scopes (3.422947ms)
+2026-11-12T23:02:16.6074250Z ✔ source gates reject skipped, pending, missing and false aggregate success reports (0.980449ms)
+2026-11-12T23:02:16.6074657Z ✔ TAP gates require named passing assertions, zero omissions and matching counts (0.716537ms)
+2026-11-12T23:02:16.6075056Z ✔ completion archives reassemble the exact original ZIP from digest-bound parts (5.999688ms)
+2026-11-12T23:02:16.6075480Z ✔ split archive checks reject changed bytes, reordered parts and ambiguous unsplit copies (180.41568ms)
+2026-11-12T23:02:16.6075879Z ✔ split archives preserve size bounds and the versioned completion scope (12.880835ms)
+2026-11-12T23:02:16.6076309Z ✔ published archive integrity binds every byte and complete file set without external dependencies (1.62696ms)
+2026-11-12T23:02:16.6076916Z ✔ ITCVE-1@1.4.0 publication binds its program and preserves incomplete conformance (169.508426ms)
+2026-11-12T23:02:16.6077327Z ✔ ITCVE-1@1.5.0 publication binds its program and preserves incomplete conformance (216.041121ms)
+2026-11-12T23:02:16.6077732Z ✔ ITCVE-1@2.0.0 publication binds its program and preserves incomplete conformance (222.322496ms)
+2026-11-12T23:02:16.6078137Z ✔ ITCVE-1@4.0.0 publication binds its program and preserves incomplete conformance (21.29668ms)
+2026-11-12T23:02:16.6078492Z ✔ unlisted files and duplicate inventory entries cannot verify (7.979074ms)
+2026-11-12T23:02:16.6078839Z ✔ removing a whole provenance manifest cannot hide a published archive (1.546458ms)
+2026-11-12T23:02:16.6079181Z ✔ observer build failures cannot claim native wallet execution (7.574009ms)
+2026-11-12T23:02:16.6079687Z ✔ safe ZIP extraction preserves bytes and rejects CRC damage (1.125448ms)
+2026-11-12T23:02:16.6079977Z ✔ ZIP traversal is rejected before publication (0.47403ms)
+2026-11-12T23:02:16.6080253Z ✔ ZIP absolute path is rejected before publication (0.969312ms)
+2026-11-12T23:02:16.6080517Z ✔ ZIP symlink is rejected before publication (0.271222ms)
+2026-11-12T23:02:16.6080832Z ✔ ZIP local/central name disagreement is rejected before publication (0.442842ms)
+2026-11-12T23:02:16.6081142Z ✔ ZIP duplicate names is rejected before publication (0.480589ms)
+2026-11-12T23:02:16.6081443Z ✔ ZIP case-colliding names is rejected before publication (0.343622ms)
+2026-11-12T23:02:16.6081758Z ✔ ZIP file/directory collision is rejected before publication (0.370293ms)
+2026-11-12T23:02:16.6082062Z ✔ ZIP expansion overflow is rejected before publication (0.301027ms)
+2026-11-12T23:02:16.6082407Z ✔ failed semantic extraction removes its uniquely owned temporary directory (1.089344ms)
+2026-11-12T23:02:16.6082787Z ✔ component counts distinguish outer repetitions and isolated storage runs (0.769909ms)
+2026-11-12T23:02:16.6083192Z ✔ ITCVE-1@1.3.0 component publication requires its own schema and cannot become native (23.541601ms)
+2026-11-12T23:02:16.6083614Z ✔ ITCVE-1@3.0.0 component publication requires its own schema and cannot become native (28.964067ms)
+2026-11-12T23:02:16.6083966Z ✔ component3 cannot be published as a native qualification (2.413464ms)
+2026-11-12T23:02:16.6084381Z ✔ candidate publication admits only its engineering claim, exact program and incomplete conformance (169.095048ms)
+2026-11-12T23:02:16.6084967Z ✔ native child receipt binds profile, program and claim and rejects jointly relabeled candidate metadata (29.405988ms)
+2026-11-12T23:02:16.6085427Z ✔ historical native receipts preserve their original profile, claim and optional program (0.669927ms)
+2026-11-12T23:02:16.6085856Z ✔ observer3 publication requires its new profile/program pair and engineering limits (87.821968ms)
+2026-11-12T23:02:16.6086245Z ✔ expanded publication requires its4.3/5.3 pair and engineering limits (52.319774ms)
+2026-11-12T23:02:16.6086633Z ✔ portable qualification executes, retains raw evidence, and verifies offline (277.016039ms)
+2026-11-12T23:02:16.6086993Z ✔ qualification verifier rejects modified retained evidence (115.273418ms)
+2026-11-12T23:02:16.6087341Z ✔ qualification records assertion failures without issuing conformance (315.380604ms)
+2026-11-12T23:02:16.6087705Z ✔ pinned CHIRP and LCH standard fixtures satisfy independent core checks (17.141874ms)
+2026-11-12T23:02:16.6088036Z ✔ standards qualification rejects changed fixture bytes (271.396514ms)
+2026-11-12T23:02:16.6088383Z ✔ native observation packaging retains and verifies every evidence byte (4.119955ms)
+2026-11-12T23:02:16.6088768Z ✔ published wallet series binds both repetition records and their semantic result (9.8058ms)
+2026-11-12T23:02:16.6089145Z ✔ published joined Arcade, Teranode, and Merkle evidence verifies offline (6.263608ms)
+2026-11-12T23:02:16.6089663Z ✔ published Synthesis Board transaction-services evidence verifies offline (1.327565ms)
+2026-11-12T23:02:16.6090039Z ✔ component evidence rejects a changed retained observation (2.670164ms)
+2026-11-12T23:02:16.6090427Z ✔ published Teranode runtime evidence verifies offline (0.70477ms)
+2026-11-12T23:02:16.6090715Z ✔ runtime evidence rejects a changed retained result (1.21202ms)
+2026-11-12T23:02:16.6091010Z ✔ published synthesis reference evidence verifies offline (6.609605ms)
+2026-11-12T23:02:16.6091307Z ✔ reference evidence rejects a changed retained result (1.317861ms)
+2026-11-12T23:02:16.6091672Z ✔ published orchestrated synthesis stack verifies every linked transaction offline (5.049897ms)
+2026-11-12T23:02:16.6092009Z ✔ synthesis stack rejects a changed linked fixture (6.512578ms)
+2026-11-12T23:02:18.7359957Z ✔ LAB_SELF_TEST_ONLY: independent BRC39 envelope, NFC, header bounds and authenticated tamper rejection (3421.115508ms)
+2026-11-12T23:02:18.7417010Z ℹ tests 231
+2026-11-12T23:02:18.7417227Z ℹ suites 0
+2026-11-12T23:02:18.7417378Z ℹ pass 230
+2026-11-12T23:02:18.7417492Z ℹ fail 0
+2026-11-12T23:02:18.7417608Z ℹ cancelled 0
+2026-11-12T23:02:18.7417732Z ℹ skipped 1
+2026-11-12T23:02:18.7417844Z ℹ todo 0
+2026-11-12T23:02:18.7418024Z ℹ duration_ms 16007.646947
+2026-11-12T23:02:18.7596393Z ##[error]The operation was canceled.
+2026-11-12T23:02:18.7673345Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-12T23:02:18.7673563Z with:
+2026-11-12T23:02:18.7673687Z   name: offline-reference-test-failures
+2026-11-12T23:02:18.7673838Z   path: out/test-evidence
+2026-11-12T23:02:18.7673987Z   if-no-files-found: warn
+2026-11-12T23:02:18.7674107Z   retention-days: 90
+2026-11-12T23:02:18.7674223Z   compression-level: 6
+2026-11-12T23:02:18.7674341Z   overwrite: false
+2026-11-12T23:02:18.7674456Z   include-hidden-files: false
+2026-11-12T23:02:18.7674585Z ##[endgroup]
+2026-11-12T23:02:18.8760945Z (node:8935) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T23:02:18.8761375Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T23:02:18.8783147Z ##[warning]No files were found with the provided path: out/test-evidence. No artifacts will be uploaded.
+2026-11-12T23:02:18.8972115Z Post job cleanup.
+2026-11-12T23:02:18.9519643Z [command]/usr/bin/git version
+2026-11-12T23:02:18.9548810Z git version 2.56.1
+2026-11-12T23:02:18.9569763Z Temporarily overriding HOME='/home/runner/work/_temp/583617b3-e642-42f6-b792-b51c94fabbda' before making global git config changes
+2026-11-12T23:02:18.9570576Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T23:02:18.9573306Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T23:02:18.9602913Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T23:02:18.9629203Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T23:02:18.9824890Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T23:02:18.9851654Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T23:02:19.0045357Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T23:02:19.0071910Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T23:02:19.0418086Z Cleaning up orphan processes
+2026-11-12T23:02:19.0638466Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

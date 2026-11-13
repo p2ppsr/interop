@@ -13,7 +13,10 @@ COPY synthesis/go/go.mod synthesis/go/go.sum synthesis/go/components.lock.json /
 COPY infra/native/yours-go /work/infra/native/yours-go
 COPY infra/plans/isi4-yours-todo-go-controlled-services.json /work/infra/plans/
 COPY out/itcve-go-services out/itcve-mongo /opt/tpnil/
-COPY out/sut-artifacts/yours-wallet-v5.1.0 /work/out/sut-artifacts/yours-wallet-v5.1.0
+ARG TPNIL_WALLET_VERSION=5.1.0
+ARG TPNIL_WALLET_ARTIFACT_DIRECTORY=yours-wallet-v${TPNIL_WALLET_VERSION}
+COPY out/sut-artifacts/${TPNIL_WALLET_ARTIFACT_DIRECTORY} /work/out/sut-artifacts/${TPNIL_WALLET_ARTIFACT_DIRECTORY}
+COPY fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json /work/fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json
 COPY out/sut-artifacts/todo-ts-236733c /work/out/sut-artifacts/todo-ts-236733c
 COPY fixtures/artifacts/todo-ts-236733c-webroot.tgz /work/fixtures/artifacts/
 COPY fixtures/teranode/wab-funding-v1.json /work/fixtures/teranode/

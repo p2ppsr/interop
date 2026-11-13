@@ -1,0 +1,158 @@
+{
+  "schema": "tpnil-source-selector-recovery-independent-review@1",
+  "verified": true,
+  "nativeQualification": false,
+  "originalSource": "69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7",
+  "plan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-3-source-2.json",
+    "sha256": "fa480bf08b902175ae1e7ce988601a91a2c7fb9aa55c8a1d3433769ea3c22acd"
+  },
+  "rust": {
+    "path": "infra/native/conformance/rust-graph-pr368-coverage-3-source-2.json",
+    "sha256": "b1a14fc12b7867338296a476ae84a9adf268b5da63890fa21e483bfef0a10b22"
+  },
+  "criteriaIdenticalToOriginal": true,
+  "observations": 698,
+  "profile": "ITCVE-1@4.5.0",
+  "program": "ISI-4@5.5.0",
+  "inputCount": 394,
+  "unchangedOriginalInputs": 383,
+  "changedExistingInputs": [
+    "infra/native/conformance/Dockerfile",
+    "infra/native/yours-go/Dockerfile.dockerignore",
+    "scripts/check-native-wallet-selector.mjs",
+    "scripts/native-rust-compatibility.mjs",
+    "scripts/native-wallet-profiles.mjs",
+    "scripts/verify-native-integrated.mjs",
+    "synthesis/src/wallet-lab/native/verify.ts",
+    "synthesis/src/wallet-lab/native/worker.ts"
+  ],
+  "addedInputs": [
+    "scripts/read-committed-blob.mjs",
+    "test/committed-blob.test.mjs",
+    "test/native-selector-source2.test.mjs"
+  ],
+  "preservedOriginalFiles": [
+    {
+      "path": "infra/native/conformance/plan-pr368-coverage-3.json",
+      "sha256": "ea36701c05ea6421af3ccd4ec1485725172be0554f90330a5370c29e26f3c921"
+    },
+    {
+      "path": "infra/native/conformance/rust-graph-pr368-coverage-3.json",
+      "sha256": "a475e529d1001a092b80bfa70b7bb7ed40d36b52e08f3a73913f697dfb6651a6"
+    },
+    {
+      "path": "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-7.json",
+      "sha256": "692c8a749eff3b32eed33db8de8c4442b975c72021c2de8bbc2ee7dbfd2724b8"
+    },
+    {
+      "path": "itcves/ITCVE-1/4.5.0/profile.json",
+      "sha256": "684e02624538b6802d761a642bc08f7b441b43efae7a7b886f46c58a13d97c85"
+    },
+    {
+      "path": "programs/ISI-4/5.5.0/catalog.json",
+      "sha256": "14d5cb092791306f5de181844e5e4718bedd17e3e8148e3b8e4f29267609517c"
+    }
+  ],
+  "dockerInputsMappedExactly": 394,
+  "candidateArchiveMembersAllowed": 45,
+  "readerReview": {
+    "maxBlobBytes": 67108864,
+    "metadataAndStderrBytes": 65536,
+    "perGitTimeoutMs": 30000,
+    "requiresExactCommitObject": true,
+    "pinsResolvedBlobObjectId": true,
+    "replacementRefsDisabled": true,
+    "rawFileDescriptorOutput": true,
+    "checksExactSizeAndGitObjectHash": true,
+    "cleanupInNestedFinally": true
+  },
+  "focusedTests": {
+    "path": "out/native-review-43253674251/selector-recovery/focused-tests-final-image-ignore.log",
+    "sha256": "f2eddb71b7f76a233c645b12384f0659128e2d2ffcc6d290dd4ee79044d2c581",
+    "passed": 27,
+    "failed": 0,
+    "skipped": 0,
+    "independentlyRerun": false
+  },
+  "original693MechanicalReplay": {
+    "path": "out/native-review-43253674251/selector-recovery/replay-693-final-reader.stdout",
+    "sha256": "213a07817b3ebf24dc682a217553fea8e8a80121bbd14cf959bfc9fae80459f6",
+    "newReaderOnOriginalSourceOnly": true,
+    "successorAdmission": false
+  },
+  "source7AndRustGraphCarryUnchanged": true,
+  "mappingDecision": "Same CLI/profile variant is source-bound to the explicit SOURCE-2 plan/Rust on the new committed source. Historical693 replay materializes its original selector and exact plan. No old JSON or predicate is overwritten.",
+  "limits": [
+    "Actual default CLI admission against the new committed successor remains a mandatory distinct post-commit/pre-push gate.",
+    "Static Docker projection and ignore checks are not an executed Linux image build.",
+    "No new native wallet session, full semantic suite replay, or native qualification is claimed by this review."
+  ],
+  "reviewedFiles": [
+    {
+      "path": "infra/native/conformance/Dockerfile",
+      "bytes": 6067,
+      "sha256": "4854e43870786114fa0daf48376de1a36a1a156ff066a033bcf5fb49a2a56034"
+    },
+    {
+      "path": "infra/native/yours-go/Dockerfile.dockerignore",
+      "bytes": 1068,
+      "sha256": "9800534f065aa8a9af00932d353fd0baf37c58de54f9a9c1a4d7015440d8f34b"
+    },
+    {
+      "path": "scripts/check-native-wallet-selector.mjs",
+      "bytes": 4568,
+      "sha256": "dd012b0cdd2fec874285704c2d0991d47ed35b0f1d82f8a5d50ce4e51cbeed12"
+    },
+    {
+      "path": "scripts/native-rust-compatibility.mjs",
+      "bytes": 11461,
+      "sha256": "c24d7a5d221647f322895e181bc0b37ba1223e9854a9269067f32da170256f99"
+    },
+    {
+      "path": "scripts/native-wallet-profiles.mjs",
+      "bytes": 5248,
+      "sha256": "55efa1202ecdbeb9a1982db7af6fd5c820af015eb77e5edababb31883dfb0915"
+    },
+    {
+      "path": "scripts/verify-native-integrated.mjs",
+      "bytes": 12233,
+      "sha256": "20439fe685e959f092d96b047a64b63f5a5dcf41fe4ef313bc5cf50790147218"
+    },
+    {
+      "path": "synthesis/src/wallet-lab/native/verify.ts",
+      "bytes": 42328,
+      "sha256": "f9925b1636bf80a90f0a06f5e44038e0eee1fdc7e9cade9c161e7ca34f8dc6b1"
+    },
+    {
+      "path": "synthesis/src/wallet-lab/native/worker.ts",
+      "bytes": 14739,
+      "sha256": "04044e1d9de7fdad048259d794c0511dae04742945d76f805fb45218d73aeb99"
+    },
+    {
+      "path": "scripts/read-committed-blob.mjs",
+      "bytes": 2889,
+      "sha256": "1e5da6099cfd7fdd3bdb0983b61153a3143363507e9b0b6bcfd8a3dcd2444e04"
+    },
+    {
+      "path": "test/committed-blob.test.mjs",
+      "bytes": 5715,
+      "sha256": "eaabc50ab002490508602c89a6a6e5bc9fe46fb5b4665a6380420d2fe3ae795c"
+    },
+    {
+      "path": "test/native-selector-source2.test.mjs",
+      "bytes": 9111,
+      "sha256": "d4585405fe827b10f76f5aaf5de6fc8edcbb60dbdf88eafe3aeeedf742186977"
+    },
+    {
+      "path": "infra/native/conformance/plan-pr368-coverage-3-source-2.json",
+      "bytes": 83138,
+      "sha256": "fa480bf08b902175ae1e7ce988601a91a2c7fb9aa55c8a1d3433769ea3c22acd"
+    },
+    {
+      "path": "infra/native/conformance/rust-graph-pr368-coverage-3-source-2.json",
+      "bytes": 1950,
+      "sha256": "b1a14fc12b7867338296a476ae84a9adf268b5da63890fa21e483bfef0a10b22"
+    }
+  ]
+}

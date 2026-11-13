@@ -1,0 +1,12 @@
+package main
+import("encoding/json";"fmt";"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk")
+func main(){cases:=[]string{
+`{}`,`null`,`{"labels":null,"labelQueryMode":null,"limit":0,"offset":0,"seekPermission":null,"includeInputs":null}`,
+`{"labels":[],"limit":10,"offset":2,"seekPermission":false,"includeInputs":true,"includeOutputLockingScripts":false}`,
+`{"labels":["first","second"],"LABELS":[null],"labels":[null,null],"LIMIT":4,"limit":null,"LaBeLqUeRyMoDe":"any","ignoreMe":99}`,
+`{"labels":["prior"],"labels":[],"LABELS":[null],"includeInputs":true,"INCLUDEINPUTS":null}`,
+`{"labels":["prior"],"labels":null,"LABELS":[null],"labelQueryMode":"any","LABELQUERYMODE":null}`,
+`{"labels":[],"limit":18446744073709551615,"offset":9007199254740993}`,
+`{"ſeekPermission":true,"includeInputSourceLocKingScripts":true}`,
+`{"labels":["\ud800"]}`,`{"labels":["\udc00","\ud800\udc00"]}`,`{"labelQueryMode":"\udfff"}`,`{"limit":1.0}`,`{"limit":1e1}`,`{"offset":-0}`,`{"offset":18446744073709551616}`,`{"includeInputs":1}`,`{"labels":[1]}`,
+}; out:=[]map[string]any{};for _,raw:=range cases{var args wdk.ListActionsArgs;e:=json.Unmarshal([]byte(raw),&args);row:=map[string]any{"input":raw};if e!=nil{row["error"]=e.Error()}else{b,_:=json.Marshal(args);row["typedJSON"]=string(b)};out=append(out,row)};b,_:=json.MarshalIndent(out,"","  ");fmt.Println(string(b))}

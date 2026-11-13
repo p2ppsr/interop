@@ -1,0 +1,36 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-dust-accounting-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-batch-subjects/patch.lock.json",
+  "parentSha256": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+  "files": {
+    "pkg/internal/storage/funder/sql.go": {
+      "before": "73ec28e2021037e8435a3f469160b5e8238a49a87cf876681fbad6e4c23c4e36",
+      "after": "f1b08c0d6b1549903931cac3fa82ce5557d158ec9a64c90d2d1eb8e8aa1ec1e8"
+    },
+    "pkg/internal/storage/funder/funder_result.go": {
+      "before": "478ba5cebb938ac14cb4a30e0f2421b4f7eacf9352a09ee34e5f0a0e17c6220b",
+      "after": "2d527b29aac2155e26a69fd71819c2f8a567326fb1d60b15a5edfe3e4cbb5c61"
+    },
+    "pkg/internal/storage/funder/collector_internal_test.go": {
+      "before": "fc77b1454a880af1fa640ab7a07fd3985cf2fe5cef0d8571743e76b23f4905f5",
+      "after": "aa0753d908d6682f14e63f5f716870e1e4478544c3ff8c802976d3b635bea6d2"
+    },
+    "pkg/internal/storage/funder/sql_test.go": {
+      "before": "cf23d3ebe92850534d1949b3d24ae26c193a79241b6d626458865f9f0ac6d002",
+      "after": "47c444d2e6990be99204766363ba37ea329c73a5c626044ed17628a780c937e7"
+    },
+    "pkg/internal/storage/funder/native_dust_accounting_tpnil_test.go": {
+      "before": null,
+      "after": "cc2d411a3447a3be9668eec89e9988fc9e6d54cd591dc3115b71671c9ced03d3"
+    },
+    "pkg/storage/native_dust_accounting_tpnil_test.go": {
+      "before": null,
+      "after": "68911990a8724f8f84a6975b044ef3a23a1452d287ca65f97fcee2e37638fa14"
+    }
+  }
+}

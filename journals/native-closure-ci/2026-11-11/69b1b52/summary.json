@@ -1,0 +1,215 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "workflows": [
+    {
+      "id": 43165476505,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43165476505",
+      "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+      "conclusion": "success",
+      "jobSeconds": 1347,
+      "jobs": [
+        {
+          "id": 131006229017,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T06:03:39Z",
+          "completedAt": "2026-11-12T06:07:26Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 131006229351,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T06:03:39Z",
+          "completedAt": "2026-11-12T06:17:48Z",
+          "conclusion": "success"
+        },
+        {
+          "id": 131006229409,
+          "name": "go-components",
+          "startedAt": "2026-11-12T06:03:39Z",
+          "completedAt": "2026-11-12T06:08:10Z",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 43165476571,
+      "name": "Retained native evidence reevaluation",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43165476571",
+      "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+      "conclusion": "success",
+      "jobSeconds": 98,
+      "jobs": [
+        {
+          "id": 131006229218,
+          "name": "retained-native-evidence",
+          "startedAt": "2026-11-12T06:03:39Z",
+          "completedAt": "2026-11-12T06:05:17Z",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 163,
+      "fail": 0,
+      "skipped": 1,
+      "total": 164,
+      "skip": "Frozen historical replay unit requires local dependencies; dedicated frozen replay steps subsequently passed."
+    },
+    "synthesis": {
+      "pass": 716,
+      "fail": 0,
+      "skipped": 10,
+      "total": 726,
+      "files": 53,
+      "skipBreakdown": {
+        "goComponents": 8,
+        "shutdown": 1,
+        "listener": 1
+      }
+    },
+    "goComponentsSeparateJob": {
+      "pass": 13
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": {
+      "pass": 5
+    },
+    "typecheck": "PASS"
+  },
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 16,
+    "totalBundles": 30
+  },
+  "retainedReevaluation": {
+    "schema": "tpnil-native-integrated-reevaluation@1",
+    "plan": "YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-4",
+    "planSha256": "4aa127e18d6a29e0d07c6ba04a440cc18c3fcd56a25dd31f260c215715f7d3f5",
+    "newNativeSessions": 0,
+    "originalMembersUnchanged": true,
+    "nativeOutcome": "FAIL",
+    "integrationOutcome": "PASS",
+    "rustOutcome": "PASS",
+    "repetitions": 2,
+    "nativeCountsPerRepetition": {
+      "PASS": 180,
+      "FAIL": 99,
+      "BLOCKED": 1
+    },
+    "integrationCountsPerRepetition": {
+      "PASS": 77,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "rustCountsPerRepetition": {
+      "PASS": 48,
+      "FAIL": 0,
+      "BLOCKED": 0
+    }
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "cost": {
+    "knownJobWallSeconds": 1445,
+    "completedCohortJobSecondsBeforeIncrement": 10350,
+    "completedCohortJobSecondsAfterIncrement": 11795,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "excludesActiveNativeRun": 43165501159,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "976eb26ab",
+      "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99"
+    }
+  },
+  "scope": [
+    "Original API, complete job logs, original artifact ZIPs and per-member byte inventories retained.",
+    "Artifact digests match GitHub API metadata. CI semantic receipts are checked for nonempty structured contents; this archive does not rerun artifact semantic verifiers locally.",
+    "Foundation success retains six Go Message Box observations; retained native replay still has99 failures per session.",
+    "No current candidate native qualification or new native session is asserted by these two CI workflows."
+  ]
+}

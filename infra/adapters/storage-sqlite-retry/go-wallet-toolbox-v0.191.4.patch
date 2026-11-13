@@ -1,0 +1,203 @@
+--- a/pkg/internal/storage/dbretry/dbretry.go
++++ b/pkg/internal/storage/dbretry/dbretry.go
+@@ -1,6 +1,5 @@
+-// Package dbretry re-runs a database transaction the engine rolled back to break a conflict
+-// between concurrent sessions. Such a rollback is not an application error - the same work run
+-// again normally commits. Everything else is returned to the caller untouched.
++// Package dbretry re-runs a whole database transaction after its owner has
++// rolled back a typed concurrency conflict. Everything else is returned untouched.
+ package dbretry
+ 
+ import (
+@@ -11,6 +10,7 @@ import (
+ 	"time"
+ 
+ 	"github.com/jackc/pgx/v5/pgconn"
++	"github.com/mattn/go-sqlite3"
+ 
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/logging"
+ 	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/randomizer"
+@@ -32,24 +32,32 @@ const MaxAttempts = 3
+ // baseBackoff is the delay before the first retry. A var, not a const, so tests can shrink it.
+ var baseBackoff = 20 * time.Millisecond
+ 
+-// Retryable reports whether err is - or wraps - a Postgres class-40 transaction rollback.
++// Retryable recognizes Postgres class-40 rollbacks and SQLite WAL snapshot
++// upgrade conflicts. SQLite requires rollback and a fresh transaction: waiting
++// inside the stale transaction or retrying one statement cannot recover it.
+ // Deliberately narrow: an application error, a constraint violation or a failed CAS re-runs to
+ // the same outcome, so retrying it only holds a connection open.
+ func Retryable(err error) bool {
+ 	var pgErr *pgconn.PgError
+-	if !errors.As(err, &pgErr) {
+-		return false
++	if errors.As(err, &pgErr) {
++		return pgErr.Code == deadlockDetected || pgErr.Code == serializationFailure
+ 	}
+-
+-	return pgErr.Code == deadlockDetected || pgErr.Code == serializationFailure
++	var sqliteErr sqlite3.Error
++	if errors.As(err, &sqliteErr) {
++		return sqliteErr.Code == sqlite3.ErrBusy && sqliteErr.ExtendedCode == sqlite3.ErrBusySnapshot
++	}
++	var sqlitePtr *sqlite3.Error
++	return errors.As(err, &sqlitePtr) && sqlitePtr != nil &&
++		sqlitePtr.Code == sqlite3.ErrBusy && sqlitePtr.ExtendedCode == sqlite3.ErrBusySnapshot
+ }
+ 
+ // Do runs fn while it returns a Retryable error, up to MaxAttempts times, waiting a jittered
+ // backoff in between and returning early if ctx is canceled. A conflict that survives every
+-// attempt surfaces with its original SQLSTATE.
++// attempt surfaces with its original typed database error.
+ //
+-// fn MUST be safe to run more than once: the engine rolled the failed attempt back before Do
+-// saw the error, so a caller that only writes to the database qualifies.
++// fn MUST own and roll back the whole failed transaction before returning to Do,
++// and have no external side effects. SQLite does not automatically roll back a
++// snapshot conflict; GORM Transaction performs the required rollback before return.
+ func Do(ctx context.Context, logger *slog.Logger, random wdk.Randomizer, fn func() error) error {
+ 	for attempt := 1; ; attempt++ {
+ 		err := fn()
+--- /dev/null
++++ b/pkg/internal/storage/dbretry/native_sqlite_retry_tpnil_test.go
+@@ -0,0 +1,29 @@
++package dbretry
++
++import (
++	"errors"
++	"fmt"
++	"testing"
++
++	"github.com/mattn/go-sqlite3"
++	"github.com/stretchr/testify/require"
++)
++
++func TestNativeSQLiteRetryClassificationTPNIL(t *testing.T) {
++	snapshot := sqlite3.Error{Code: sqlite3.ErrBusy, ExtendedCode: sqlite3.ErrBusySnapshot}
++	for name, err := range map[string]error{"value": snapshot, "pointer": &snapshot, "wrapped": fmt.Errorf("cannot save known tx: %w", snapshot)} {
++		t.Run(name, func(t *testing.T) { require.True(t, Retryable(err)) })
++	}
++	for name, err := range map[string]error{
++		"plain busy":           sqlite3.Error{Code: sqlite3.ErrBusy},
++		"busy recovery":        sqlite3.Error{Code: sqlite3.ErrBusy, ExtendedCode: sqlite3.ErrBusyRecovery},
++		"locked":               sqlite3.Error{Code: sqlite3.ErrLocked},
++		"shared cache locked":  sqlite3.Error{Code: sqlite3.ErrLocked, ExtendedCode: sqlite3.ErrLockedSharedCache},
++		"constraint":           sqlite3.Error{Code: sqlite3.ErrConstraint, ExtendedCode: sqlite3.ErrConstraintUnique},
++		"contradictory code":   sqlite3.Error{Code: sqlite3.ErrConstraint, ExtendedCode: sqlite3.ErrBusySnapshot},
++		"unknown text":         errors.New("database is locked"),
++		"wrapped unknown text": fmt.Errorf("cannot save known tx: %w", errors.New("database is locked")),
++	} {
++		t.Run(name, func(t *testing.T) { require.False(t, Retryable(err)) })
++	}
++}
+--- /dev/null
++++ b/pkg/internal/storage/database/native_snapshot_retry_tpnil_test.go
+@@ -0,0 +1,108 @@
++package database
++
++import (
++	"context"
++	"errors"
++	"path/filepath"
++	"testing"
++
++	"github.com/mattn/go-sqlite3"
++	"github.com/stretchr/testify/require"
++	"gorm.io/gorm"
++
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/defs"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/dbretry"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/logging"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/randomizer"
++)
++
++// Exercise the actual configured SQLite driver, GORM rollback, and the same
++// outer retry owner used by the storage UOW. Ordering is deterministic: another
++// pooled connection commits only after the victim holds its read snapshot.
++func TestNativeSnapshotRetryTPNIL(t *testing.T) {
++	for _, mode := range []string{"recover", "bounded", "cancel", "no-retry", "committed-once"} {
++		t.Run(mode, func(t *testing.T) {
++			cfg := defs.DefaultDBConfig()
++			cfg.SQLite.ConnectionString = filepath.Join(t.TempDir(), "wallet.sqlite")
++			db, err := NewDatabase(cfg, logging.NewTestLogger(t))
++			require.NoError(t, err)
++			t.Cleanup(func() { require.NoError(t, db.Close()) })
++			require.NoError(t, db.DB.Exec("CREATE TABLE snapshot_retry (id INTEGER PRIMARY KEY, value INTEGER NOT NULL)").Error)
++			require.NoError(t, db.DB.Exec("INSERT INTO snapshot_retry VALUES (1, 0)").Error)
++			var journal string
++			var timeout int
++			require.NoError(t, db.DB.Raw("PRAGMA journal_mode").Scan(&journal).Error)
++			require.NoError(t, db.DB.Raw("PRAGMA busy_timeout").Scan(&timeout).Error)
++			require.Equal(t, "wal", journal)
++			require.Equal(t, 5000, timeout)
++			ctx, cancel := context.WithCancel(context.Background())
++			defer cancel()
++			attempts, conflicts := 0, 0
++			seen := []int{}
++			work := func() error {
++				attempts++
++				return db.DB.Transaction(func(tx *gorm.DB) error {
++					var before int
++					if err := tx.Raw("SELECT value FROM snapshot_retry WHERE id=1").Scan(&before).Error; err != nil {
++						return err
++					}
++					seen = append(seen, before)
++					if mode != "committed-once" && (attempts == 1 || mode == "bounded") {
++						if err := db.DB.Exec("UPDATE snapshot_retry SET value=value+10 WHERE id=1").Error; err != nil {
++							return err
++						}
++					}
++					err := tx.Exec("UPDATE snapshot_retry SET value=value+1 WHERE id=1").Error
++					if err != nil {
++						var typed sqlite3.Error
++						require.True(t, errors.As(err, &typed))
++						require.Equal(t, sqlite3.ErrBusySnapshot, typed.ExtendedCode)
++						conflicts++
++						if mode == "cancel" {
++							cancel()
++						}
++					}
++					return err
++				})
++			}
++			if mode == "no-retry" {
++				err = dbretry.NoRetry().Do(ctx, work)
++			} else {
++				err = dbretry.Do(ctx, logging.NewTestLogger(t), randomizer.New(), work)
++			}
++			var final int
++			require.NoError(t, db.DB.Raw("SELECT value FROM snapshot_retry WHERE id=1").Scan(&final).Error)
++			switch mode {
++			case "recover":
++				require.NoError(t, err)
++				require.Equal(t, 2, attempts)
++				require.Equal(t, 1, conflicts)
++				require.Equal(t, []int{0, 10}, seen)
++				require.Equal(t, 11, final)
++			case "bounded":
++				require.Error(t, err)
++				require.Equal(t, dbretry.MaxAttempts, attempts)
++				require.Equal(t, attempts, conflicts)
++				require.Equal(t, []int{0, 10, 20}, seen)
++				require.Equal(t, 30, final)
++				var typed sqlite3.Error
++				require.True(t, errors.As(err, &typed))
++				require.Equal(t, sqlite3.ErrBusySnapshot, typed.ExtendedCode)
++			case "cancel":
++				require.ErrorIs(t, err, context.Canceled)
++				require.Equal(t, 1, attempts)
++				require.Equal(t, 10, final)
++			case "no-retry":
++				require.Error(t, err)
++				require.Equal(t, 1, attempts)
++				require.Equal(t, 10, final)
++			case "committed-once":
++				require.NoError(t, err)
++				require.Equal(t, 1, attempts)
++				require.Zero(t, conflicts)
++				require.Equal(t, 1, final)
++			}
++			t.Logf("mode=%s attempts=%d conflicts=%d seen=%v final=%d error=%v", mode, attempts, conflicts, seen, final, err)
++		})
++	}
++}

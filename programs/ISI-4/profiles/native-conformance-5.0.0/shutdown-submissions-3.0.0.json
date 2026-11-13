@@ -1,0 +1,33 @@
+{
+  "schema": "tpnil-native-shutdown-submissions-policy@3.0.0",
+  "id": "tpnil-native-shutdown-submissions@3.0.0",
+  "profile": "ITCVE-1@4.6.0",
+  "selection": "Explicit follow-up coverage4 plan and owned submission ordering. Historical policy1/2 and original completion attempts retain their exact bytes.",
+  "receipt": "shutdown-submissions.json",
+  "workerBinding": "shutdownSubmissionsSha256",
+  "capture": [
+    "Every owned producer appends each submission once to its local ledger and synchronously propagates the same event into the owner journal. Counterpart registration adopts its existing history once; subsequent reads cannot insert events before an already observed global position.",
+    "Await browser context close, every owned service close and profile removal, retaining each actual completion/error and timestamp. Then capture complete provider ledgers through the references that survive ownership-map retirement.",
+    "Retain the exact observed global prefix and its complete provider/index provenance. Capture the final append-only journal after all cleanup, including every provider-local suffix. This is producer-observation order; pre-registration history is adopted at registration and makes no earlier wall-clock ordering claim.",
+    "Write the separate immutable receipt once after shutdown. Bind exact original record, global and module bytes and hashes; the worker binds the final receipt hash and later process-cleanup observation. Cleanup failure cannot qualify."
+  ],
+  "verification": [
+    "Bind the exact provider inventory to immutable conformance/service-counterparts.json. Require every initial and final provider/index position exactly once in the corresponding global journal, provider-local increasing order, identical provider prefixes, the original global/provenance prefixes, and ordered capture/closure/worker timestamps. Late records cannot shift earlier public-call windows.",
+    "From the module's original start index through the final shutdown ledger, reject every submitted transaction containing the controlled denied recipient script with5 or7 satoshis, regardless of its acceptance/rejection verdict. Transactions before the module window retain their original semantics.",
+    "The sole5sat exception requires independently verified native spending approval, exact returned signed transaction bytes equal independent native storage, and that exact receipt position within the original grant window. A matching late repeat is not exempt.",
+    "Bind the complete native permission-coverage report bytes, its independent oracle outcomes and expected wallet identity. Its submission prefix must be identical to the retained global prefix.",
+    "From the new module start through every final provider suffix, reject every transaction paying the separate coverage recipient53,59,61 or67 satoshis under any provider verdict. These are unique denied-request markers and have no approved exceptions. The earlier5/7sat lifecycle checks remain required."
+  ],
+  "implementation": [
+    "synthesis/src/wallet-lab/services.ts",
+    "synthesis/src/wallet-lab/native/shutdown-submissions.ts",
+    "synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts",
+    "synthesis/src/wallet-lab/yours-driver.ts",
+    "synthesis/src/wallet-lab/native/worker.ts"
+  ],
+  "scope": "Prospective observer closure only. No wallet implementation, storage mutation, funding, external network or historical outcome changes.",
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json",
+    "sha256": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131"
+  }
+}

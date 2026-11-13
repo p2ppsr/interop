@@ -1,0 +1,37 @@
+{
+  "claim": "SOURCE_PREFLIGHT_ONLY_NOT_NATIVE_QUALIFICATION",
+  "priorSource": "83d9cf88adff1412ec5e6e205a73e7534898212f",
+  "nativeSessions": 0,
+  "nativeAttempt20Dispatched": false,
+  "corePASS": 237,
+  "synthesisPASS": 1865,
+  "synthesisSKIP": 92,
+  "selectorImagePASS": 8,
+  "PythonPASS": 5,
+  "testTimeoutMilliseconds": 30000,
+  "maximumTestWorkers": 2,
+  "criteriaChanged": false,
+  "Go11ArtifactChanged": false,
+  "nativeInputs": 471,
+  "changedFrozenInputs": [
+    ".github/workflows/ci.yml",
+    "scripts/native-rust-compatibility.mjs",
+    "scripts/native-wallet-profiles.mjs",
+    "scripts/verify-native-integrated.mjs",
+    "synthesis/src/wallet-lab/native/verify.ts",
+    "synthesis/src/wallet-lab/native/worker.ts",
+    "test/native-coverage6-selection.test.mjs"
+  ],
+  "planSha256": "e78449932b32f95aed689c8728bb87bfa47c93787c2e4b5256b07c501e509d54",
+  "rustSha256": "ffd2a85fe4e00ed9d1dbe0e05868ef46ada052de3fb808294a5569817d403e97",
+  "priorEvidenceManifests": {
+    "journals/source-ci/2026-11-13/43423990254/manifest.json": "322a9f0531baadacd7a1240f0c5996dd384ad162c82bb68bbe658634bf90b786",
+    "journals/source-ci/2026-11-13/43423970167/manifest.json": "7382f8944e16aefe4ab7f2f8b5f608afdf3eda72e62828b0f0530989850d2ff6",
+    "journals/native-integrated-reevaluation/2026-11-13/43423970095/provenance.json": "9de727cabb9bc6c4d64009e0b366cb74927d49e9b7e89302035da247815003ab",
+    "journals/native-closure-diagnostics/2026-11-13/go11-deterministic-sync-source8/manifest.json": "55fe25b1279f90371ca9d748f09695b363b282d294734e2dd2b212adc50c8e5d",
+    "journals/native-closure-validation/2026-11-13-journal-index-capacity-source8/manifest.json": "d9947971f9888a45651cd57c294dd06957ba9c8ae8c979936d21678ed9b5f132"
+  },
+  "carriedGo11Verification": "All Go11 artifact input bytes unchanged; prior SDK512,host/storage/wallet/RPC,9replacement and12mutation controls retained. They are not newly executed or native-qualified.",
+  "completedCohortJobSeconds": 89739,
+  "unknownFullCostsAreZero": false
+}

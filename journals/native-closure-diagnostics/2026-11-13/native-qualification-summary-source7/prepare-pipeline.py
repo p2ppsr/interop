@@ -1,0 +1,25 @@
+from pathlib import Path
+import json,hashlib,shutil,subprocess,re,datetime
+r=Path.cwd();old='a2e9de7ecf2e655d52520adaae551e2c13656e50';source=subprocess.check_output(['git','rev-parse','HEAD']).decode().strip();assert source!=old;order=Path('/Users/tyeverett/projects/network-ops/artifacts/ops/itcve-native-closure-20261111/attempt-25-summary-codec-order/work-order.json');o=json.loads(order.read_bytes());assert o['source']==source;sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+for n in ['source17-validation','source17-ci','source17-replay','source17-reevaluation-replay']:(r/'out'/n).mkdir(exist_ok=False)
+def convert(s):
+ s=s.replace(old,source).replace('source16','source17').replace('attempt-24-portability-order','attempt-25-summary-codec-order').replace('plan-pr368-coverage-6-source-6.json','plan-pr368-coverage-6-source-7.json').replace('rust-graph-pr368-coverage-6-source-6.json','rust-graph-pr368-coverage-6-source-7.json').replace('out/current-task-state-v9.json','out/current-task-state-v10.json')
+ return re.sub(r'(?<![A-Za-z0-9])455(?![A-Za-z0-9])','457',s).replace('native18','native19').replace('Native18','Native19')
+for n in ['capture-completed.py','capture-native.py','intake-native.py']:(r/'out/source17-ci'/n).write_text(convert((r/'out/source16-ci'/n).read_text()))
+for n in ['monitor-prerequisites.py','after-reevaluation.py','after-prerequisites.py','monitor-native.py','after-native.py','watch-native.py','prepare-native-observers.py','dispatch-native.py']:
+ s=convert((r/'out/source16-validation'/n).read_text()).replace('ab4a4f4b9aa97570742d30899fcbb71d32c24a9bac15453052361e58e122b777',sha(order)).replace('76325+sum(totals.values())','82331+sum(totals.values())').replace("('1811','126')","('1819','126')").replace("'synthesisPASS':1811","'synthesisPASS':1819")
+ if n=='after-native.py':s=s.replace('2026-11-13T11:49:06.530913+00:00',(datetime.datetime.fromisoformat(o['deadline'])+datetime.timedelta(minutes=20)).isoformat())
+ (r/'out/source17-validation'/n).write_text(s)
+(r/'out/source17-reevaluation-replay/replay.mjs').write_text(convert((r/'out/source16-reevaluation-replay/replay.mjs').read_text()))
+for n in ['prepare.mjs','inventory.py','guarded-replay.mjs','replay-when-authorized.mjs']:
+ s=convert((r/'out/source16-replay'/n).read_text())
+ if n in ['prepare.mjs','inventory.py']:s=s.replace("'docs/native-portability-score-order-source-correction-2026-11-13.md'", "'docs/native-portability-score-order-source-correction-2026-11-13.md','docs/native-qualification-summary-source-correction-2026-11-13.md'")
+ (r/'out/source17-replay'/n).write_text(s)
+for n in ['dependency-byte-closure-v3.json','dependency-guard-tests-v3.json','package-byte-audit.json','messaging-sdk-byte-closure.json','rust-dependency-byte-closure.json','replay-dependency-guard-v3.sb','dependencies.json']:shutil.copyfile(r/'out/source16-replay'/n,r/'out/source17-replay'/n)
+(r/'out/source17-replay/cache-isolation.json').write_text(convert((r/'out/source16-replay/cache-isolation.json').read_text()));(r/'out/source17-replay/fresh-tmp').mkdir();p=r/'out/source17-replay/dependency-byte-closure-v3.json';d=json.loads(p.read_bytes());d['cacheIsolationSha256']=sha(r/'out/source17-replay/cache-isolation.json');p.write_text(json.dumps(d,indent=2)+'\n')
+locks=['synthesis/package-lock.json','components/transport/package-lock.json','integrations/services/package-lock.json','components/rust/Cargo.lock','synthesis/go/go.sum'];assert all((r/n).read_bytes()==subprocess.check_output(['git','show',old+':'+n])for n in locks)
+lineage={'schema':'tpnil-native-source17-preparation-lineage@1','source':source,'priorSource':old,'priorControllerPreflightSha256':sha(r/'out/source16-replay/controller-preflight.json'),'guardUnchanged':sha(r/'out/source17-replay/replay-dependency-guard-v3.sb')==sha(r/'out/source16-replay/replay-dependency-guard-v3.sb'),'dependencyLocksUnchanged':True,'guardTestsCarriedUnchanged':True,'freshNativeRustTargetAndTempRequired':True,'runtimeExecuted':False};(r/'out/source17-replay/preparation-lineage.json').write_text(json.dumps(lineage,indent=2)+'\n')
+(r/'out/source17-ci/runs-config.json').write_text(json.dumps({'source':source,'order':str(order),'orderSha256':sha(order),'deadline':o['deadline'],'native':19,'PR':26},indent=2)+'\n')
+state={'schema':'native-closure-task-state@10','source':source,'sourceTree':o['sourceTree'],'PR':26,'PRState':'DRAFT','order':25,'orderSha256':sha(order),'deadline':o['deadline'],'cohortCompletedBefore':82331,'nativeAttempt':19,'nativeDispatched':False,'nativeInputs':457,'planSha256':o['planSha256'],'rustSha256':o['rustCompatibilitySha256'],'nativeQualification':False,'fullReplayExecuted':False,'previousOrder24Actual':6006};(r/'out/current-task-state-v10.json').write_text(json.dumps(state,indent=2)+'\n')
+(r/'out/source17-validation/read-status.py').write_text(convert((r/'out/source16-validation/read-status.py').read_text()))
+print(json.dumps({'source':source,'inputs':457,'orderSha256':sha(order),'guardUnchanged':lineage['guardUnchanged']}))

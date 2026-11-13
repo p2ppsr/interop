@@ -1,0 +1,31 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-closure-rust-v3",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-coverage-closure.json",
+    "sha256": "eb08ea9808a3cd314d9060c16c466f47cbb36c64ebd3506064085276596432c6",
+    "profile": "ITCVE-1@2.0.0",
+    "program": "ISI-4@4.0.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Prospective source-binding revision selecting Rust observer 3 for the unchanged native 2 plan and all ten acceptance inputs. The original compatibility manifest remains byte-identical and is retained as the explicit predecessor. Existing closure/default callers retain corpus 2; historical evidence replays its recorded source and manifest.",
+  "sources": {
+    "scripts/native-rust-compatibility.mjs": "83249b09f6f96a6ee915050d43cdc7dd3008047adf7de5d5caf5f65bb83612dc",
+    "scripts/native-wallet-profiles.mjs": "f954a536658d5c0fc00b3f6ac419cb18b772227535826f96693c54dcbdf15e12",
+    "scripts/run-native-go-wallet.mjs": "e1d3d3c44012a625b2bc2c24680c72b013a7c4792fb2f01b1f274281f147fe4e",
+    "scripts/verify-native-integrated.mjs": "4cf23b21cea0ad05c97703bbf571df788b03c0eecb1121e2b62bc54fcbb5a5fe",
+    ".github/workflows/isi4-yours-wallet.yml": "f0bdfe5cee1781de67071ba3e93359557ca301d4f62dd0ec2645c8069d418dee"
+  },
+  "sourceBindingRevision": 2,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-3.0.0.json",
+    "sha256": "cdd66c7cec1050a1e20e295a093db03f84cfaf1a4abc22768996c539a686f270"
+  }
+}

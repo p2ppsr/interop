@@ -1,0 +1,162 @@
+{
+  "source": "71d8b58cbbf802377b34cfbcceb056413b2327d1",
+  "run": 43384270997,
+  "claim": "RAW_OBSERVATIONS_NOT_QUALIFIED",
+  "repetitions": [
+    {
+      "repetition": 1,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 685,
+        "FAIL": 1,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    },
+    {
+      "repetition": 2,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 685,
+        "FAIL": 1,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    }
+  ],
+  "differentOutcomes": [],
+  "nativeJobSeconds": 3471,
+  "order23JobSeconds": 5386,
+  "completedCohortJobSeconds": 76325,
+  "actualRustResults": "NOT_EXECUTED",
+  "originalQualificationReceipts": "ABSENT",
+  "independentFullNativeReplay": "NOT_EXECUTED_MISSING_ORIGINAL_QUALIFICATION_AND_RUST",
+  "imageSourceReconstruction": "PASS",
+  "actualFullCostUSD": null,
+  "fullCostReconciled": false,
+  "roots": [
+    "The portability producer emits all nine correct named assertions in execution order. The final profile inventory requires its canonical declared order. All earlier source5 coverage/funding/permission parents execute before this terminal schema failure. Canonicalize producer score rows without changing any predicate, result, trace or causal window."
+  ]
+}

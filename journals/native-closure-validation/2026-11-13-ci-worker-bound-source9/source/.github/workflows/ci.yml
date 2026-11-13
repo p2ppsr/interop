@@ -1,0 +1,183 @@
+name: Foundation checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  offline-core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        env:
+          GIT_CONFIG_COUNT: '1'
+          GIT_CONFIG_KEY_0: http.version
+          GIT_CONFIG_VALUE_0: HTTP/1.1
+        with:
+          # Fetch ordinary full history first; combining all refs with a new
+          # synthetic PR merge can stall GitHub's initial pack generation.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Restore the exact event checkout
+        env:
+          TPNIL_CI_EVENT_SHA: ${{ github.sha }}
+          TPNIL_CI_PULL_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          [[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]]
+          if [ "$(git rev-parse HEAD)" != "$TPNIL_CI_EVENT_SHA" ]; then
+            [[ "$TPNIL_CI_PULL_NUMBER" =~ ^[0-9]+$ ]]
+            git -c http.version=HTTP/1.1 -c protocol.version=2 fetch --no-tags origin "refs/pull/$TPNIL_CI_PULL_NUMBER/merge"
+            test "$(git rev-parse FETCH_HEAD)" = "$TPNIL_CI_EVENT_SHA"
+            git checkout --detach "$TPNIL_CI_EVENT_SHA"
+          fi
+          test "$(git rev-parse HEAD)" = "$TPNIL_CI_EVENT_SHA"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: '.nvmrc'
+      - run: printf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"
+      - run: npm test
+      - run: npm run check
+      - run: npm run qualify:standards
+      - run: npm ci --prefix synthesis --ignore-scripts
+      - run: npm audit --prefix synthesis --audit-level=moderate
+      - run: npm run typecheck --prefix synthesis
+      # Bound parallel cryptographic replay to two workers on shared runners.
+      # Keep each test's 30-second limit and all assertion semantics unchanged.
+      - run: npm test --prefix synthesis -- --testTimeout=30000 --maxWorkers=2
+      - run: node scripts/verify-published-journals.mjs
+      - run: node scripts/verify-native-reserve-reference.mjs
+      - run: node scripts/verify-descendant-storage-archives.mjs --semantic
+      - run: node scripts/verify-native-nosend-oracle4-archive.mjs
+      - run: node scripts/verify-native-permission-lifecycle-archive.mjs --semantic
+      - run: node scripts/verify-native-permission-click-archive.mjs --semantic
+      - run: node scripts/verify-native-portability-archive.mjs
+      - run: python3 scripts/verify-native-clause-journal.py
+      - run: python3 scripts/verify-native-clause-journal.py journals/native-clause-reference/2026-11-09/oracle-3.0.0
+      - run: python3 -m unittest discover -s test -p 'test_*.py' -v
+      - run: npm run demo
+      - run: node bin/tpnil.mjs verify out/demo
+      - run: node scripts/check-journal-history.mjs "$BASE_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - name: Retain failed reference test diagnostics
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: offline-reference-test-failures
+          path: out/test-evidence
+          if-no-files-found: warn
+          retention-days: 90
+  go-components:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: '1.27.3'
+          cache-dependency-path: synthesis/go/go.sum
+      - run: npm ci --prefix synthesis --ignore-scripts
+      - name: Verify Go host, all mixed stacks, faults and recovery
+        run: npm run test:go
+      - name: Retain native component evidence on every outcome
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: itcve-go-components
+          path: out/go-components
+          if-no-files-found: error
+          retention-days: 90
+  integrated-components:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: '1.27.3'
+          cache-dependency-path: synthesis/go/go.sum
+      - name: Prepare exact component closures
+        run: |
+          npm ci --ignore-scripts --prefix synthesis
+          npm ci --ignore-scripts --prefix components/transport
+          npm ci --ignore-scripts --prefix integrations/services
+          npm rebuild better-sqlite3 --prefix integrations/services
+          rustup toolchain install 1.88.0 --profile minimal
+          npm run prepare:go
+          node scripts/prepare-storage-sync-go.mjs
+          node scripts/prepare-storage-portability-go.mjs
+          node scripts/prepare-messaging.mjs
+      - name: Verify all certificate reference and mutation cases
+        env:
+          TPNIL_CERTIFICATE_COVERAGE_TESTS: '1'
+        run: npm test --prefix synthesis -- native-coverage-certificates.test.ts
+      - name: Verify actual Go shutdown and atomic listener lifecycle
+        run: npm test --prefix synthesis -- native-shutdown-submissions.test.ts wallet-services-listeners.test.ts
+      - name: Verify trust and adapter regressions
+        run: |
+          npm test --prefix components/transport
+          npm test --prefix integrations/services
+          RUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml
+          RUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml --features graph-oracle-v3 --target-dir components/rust/target/corpus-v3
+      - name: Verify deterministic Go11 ancestry and direct replacement RPC
+        run: |
+          node scripts/prepare-storage-sync-order-go.mjs
+          node scripts/run-conformance-portability-reference.mjs out/go11-portability-reference go --sync-order-patch --native-wire
+      - name: Retain deterministic replacement evidence
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: go11-portability-reference
+          path: out/go11-portability-reference
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Execute all component matrices with fresh repeated state
+        env:
+          RUSTUP_TOOLCHAIN: 1.88.0
+        run: node scripts/run-integrated-lab.mjs out/integrated-lab --exact-history
+      - name: Verify the complete evidence pack offline
+        run: |
+          node scripts/verify-integrated-lab.mjs out/integrated-lab
+          RUSTUP_TOOLCHAIN=1.88.0 node scripts/verify-published-integrations.mjs --semantic
+          node scripts/test-messaging-verifier.mjs out/integrated-lab/messaging-1
+          RUSTUP_TOOLCHAIN=1.88.0 node scripts/test-rust-verifier.mjs out/integrated-lab/rust-1 out/integrated-lab/transport-typescript-1/paid-http.json out/integrated-lab/transport-go-1/paid-http.json out/integrated-lab/overlay-identity-1/rust-certificate-vectors.json
+      - name: Verify descendant-funded replacement in all four directions
+        run: |
+          node scripts/verify-descendant-storage-matrix.mjs out/integrated-lab/descendant-storage-sync --exact-history
+      - name: Retain descendant replacement evidence
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: descendant-storage-sync
+          path: out/integrated-lab/descendant-storage-sync
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Retain every attempt
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: integrated-lab
+          path: out/integrated-lab
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Retain failed reference test diagnostics
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: integrated-reference-test-failures
+          path: out/test-evidence
+          if-no-files-found: warn
+          retention-days: 90

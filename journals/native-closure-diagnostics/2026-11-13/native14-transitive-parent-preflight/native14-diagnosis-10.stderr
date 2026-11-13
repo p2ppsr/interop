@@ -1,0 +1,23 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'bb:inserted:0'
+- 'C/cIaF9J6JQDB8ZRvrAzJtDoM8G0fs8QrPSTrBS8R6MY8pIYkTt++h/NDn0qFq6VVaX8f96TKbnoR/qvVg=='
+
+    at membership (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/baskets-verifier.ts:50:862)
+    at verifyBasketParent (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/baskets-parent.ts:100:5)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:48:17)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:42:25) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'bb:inserted:0',
+  expected: 'C/cIaF9J6JQDB8ZRvrAzJtDoM8G0fs8QrPSTrBS8R6MY8pIYkTt++h/NDn0qFq6VVaX8f96TKbnoR/qvVg==',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

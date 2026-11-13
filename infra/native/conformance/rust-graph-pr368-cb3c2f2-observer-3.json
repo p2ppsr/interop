@@ -1,0 +1,32 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-cb3c2f2-observer-3",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json",
+    "sha256": "dda0628358ca220df758227b9f853b891d049097f10039d6938e8628f181bff8",
+    "profile": "ITCVE-1@4.2.0",
+    "program": "ISI-4@5.2.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "PR368cb3c2f2 engineering candidate. 426 observations retain all392 predecessor identities and add19 transaction-state predicates,14 certificate-state predicates and one exact fee-inclusive spending-cap predicate. Clause oracle6 uses independently bound revised noSendChange/signing fixtures; conditional oracle2 separates signing and known-input controls and binds BRC153 references to identity-scoped storage. Permission coverage oracle3 measures three accepted payments including real fees against the unchanged100-satoshi cap. All original evidence remains immutable. New state checks bind raw public calls to independent transaction, certificate, storage, route and final provider-ledger evidence. Unsupported native capabilities, unexecuted combinations and normative ambiguities remain explicit; no complete BRC100 claim. Observer3 binds a positive-height controlled header and active-page final captures; historical attempts are unchanged.",
+  "sources": {
+    "scripts/native-rust-compatibility.mjs": "6d875d0b20ea242609ec10d366ef6bfcba36f84c3d10c1d9f93e0ad29aa89878",
+    "scripts/native-wallet-profiles.mjs": "4b2314056143474194ef97e02afc86b9f217e3d20b8bdb9c104d6df87722e076",
+    "scripts/run-native-go-wallet.mjs": "dbbe2edb033306ecd3bb74365f214a81bdbbdd1ef824a116c3acbec59f40cc47",
+    "scripts/verify-native-integrated.mjs": "aa021a2883ba91fecd9f5a59a9d176e4277dda93aee5b61a23d9a771a3e93984",
+    ".github/workflows/isi4-yours-wallet.yml": "d516f8c1438bb9f292d295aea8def9b178bffbfad3df3329691de5ab918a376a",
+    "scripts/check-native-wallet-selector.mjs": "e666b51e5730051a0b202ccd58234179fbbe813bcd1dd65f3ac2f221bc53d02a"
+  },
+  "sourceBindingRevision": 3,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-7e39006.json",
+    "sha256": "f38753cccf57bd0e2dca1f482e92ec55e73f7b49957179b15cc42f6df4ab863d"
+  }
+}

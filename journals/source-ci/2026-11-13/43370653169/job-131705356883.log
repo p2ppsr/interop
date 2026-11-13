@@ -1,0 +1,150 @@
+﻿2026-11-13T05:13:56.7179561Z Current runner version: '2.338.2'
+2026-11-13T05:13:56.7199663Z ##[group]Runner Image Provisioner
+2026-11-13T05:13:56.7200615Z Hosted Compute Agent
+2026-11-13T05:13:56.7200996Z Version: 20261103.629
+2026-11-13T05:13:56.7201458Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-13T05:13:56.7201941Z Build Date: 2026-11-03T17:26:59Z
+2026-11-13T05:13:56.7202381Z Worker ID: {6154e280-d617-42b4-bdb1-4cb182868025}
+2026-11-13T05:13:56.7202889Z Region: centralus
+2026-11-13T05:13:56.7203249Z Cloud: Azure
+2026-11-13T05:13:56.7203854Z ##[endgroup]
+2026-11-13T05:13:56.7204825Z ##[group]Operating System
+2026-11-13T05:13:56.7205227Z Ubuntu
+2026-11-13T05:13:56.7205619Z 24.04.5
+2026-11-13T05:13:56.7205960Z LTS
+2026-11-13T05:13:56.7206320Z ##[endgroup]
+2026-11-13T05:13:56.7206725Z ##[group]Runner Image
+2026-11-13T05:13:56.7207104Z Image: ubuntu-24.04
+2026-11-13T05:13:56.7207559Z Version: 20261111.370.1
+2026-11-13T05:13:56.7208381Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-13T05:13:56.7209361Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-13T05:13:56.7209964Z ##[endgroup]
+2026-11-13T05:13:56.7210743Z ##[group]GITHUB_TOKEN Permissions
+2026-11-13T05:13:56.7212277Z Contents: read
+2026-11-13T05:13:56.7212707Z Metadata: read
+2026-11-13T05:13:56.7213074Z ##[endgroup]
+2026-11-13T05:13:56.7214894Z Secret source: Actions
+2026-11-13T05:13:56.7215604Z Cache mode: write
+2026-11-13T05:13:56.7216044Z Prepare workflow directory
+2026-11-13T05:13:56.7478500Z Prepare all required actions
+2026-11-13T05:13:56.7511519Z Getting action download info
+2026-11-13T05:13:57.0355608Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-13T05:13:57.1488438Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-13T05:13:57.2546376Z Download action repository 'actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e' (SHA:b7ad1dad31e06c5925ef5d2fc7ad053ef454303e)
+2026-11-13T05:13:57.7029085Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-13T05:13:57.9855290Z Complete job name: integrated-components
+2026-11-13T05:13:58.0455860Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-13T05:13:58.0456408Z with:
+2026-11-13T05:13:58.0456647Z   fetch-depth: 0
+2026-11-13T05:13:58.0456907Z   persist-credentials: false
+2026-11-13T05:13:58.0457199Z   repository: p2ppsr/interop
+2026-11-13T05:13:58.0459266Z   token: ***
+2026-11-13T05:13:58.0459502Z   ssh-strict: true
+2026-11-13T05:13:58.0459746Z   ssh-user: git
+2026-11-13T05:13:58.0459983Z   clean: true
+2026-11-13T05:13:58.0460230Z   sparse-checkout-cone-mode: true
+2026-11-13T05:13:58.0460518Z   fetch-tags: false
+2026-11-13T05:13:58.0460763Z   show-progress: true
+2026-11-13T05:13:58.0461032Z   lfs: false
+2026-11-13T05:13:58.0461260Z   submodules: false
+2026-11-13T05:13:58.0461509Z   set-safe-directory: true
+2026-11-13T05:13:58.0461792Z   allow-unsafe-pr-checkout: false
+2026-11-13T05:13:58.0462150Z ##[endgroup]
+2026-11-13T05:13:58.2805272Z Syncing repository: p2ppsr/interop
+2026-11-13T05:13:58.2806765Z ##[group]Getting Git version info
+2026-11-13T05:13:58.2807262Z Working directory is '/home/runner/work/interop/interop'
+2026-11-13T05:13:58.2808037Z [command]/usr/bin/git version
+2026-11-13T05:13:58.2808400Z git version 2.56.1
+2026-11-13T05:13:58.2809308Z ##[endgroup]
+2026-11-13T05:13:58.2819631Z Temporarily overriding HOME='/home/runner/work/_temp/0e71a069-c680-4dd9-b2d3-9fb2349fd5ed' before making global git config changes
+2026-11-13T05:13:58.2820834Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T05:13:58.2823155Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T05:13:58.2868819Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-13T05:13:58.2872015Z ##[group]Initializing the repository
+2026-11-13T05:13:58.2874952Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-13T05:13:58.2964730Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-13T05:13:58.2965599Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-13T05:13:58.2966394Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-13T05:13:58.2967022Z hint: call:
+2026-11-13T05:13:58.2967301Z hint:
+2026-11-13T05:13:58.2967730Z hint: 	git config --global init.defaultBranch <name>
+2026-11-13T05:13:58.2968075Z hint:
+2026-11-13T05:13:58.2968394Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-13T05:13:58.2968898Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-13T05:13:58.2969301Z hint:
+2026-11-13T05:13:58.2969535Z hint: 	git branch -m <name>
+2026-11-13T05:13:58.2969811Z hint:
+2026-11-13T05:13:58.2970152Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-13T05:13:58.2975345Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-13T05:13:58.2982173Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-13T05:13:58.3058569Z ##[endgroup]
+2026-11-13T05:13:58.3059004Z ##[group]Disabling automatic garbage collection
+2026-11-13T05:13:58.3061135Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-13T05:13:58.3088836Z ##[endgroup]
+2026-11-13T05:13:58.3089455Z ##[group]Setting up auth
+2026-11-13T05:13:58.3093229Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T05:13:58.3121750Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T05:13:58.3449087Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T05:13:58.3478772Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T05:13:58.3667920Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T05:13:58.3696842Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T05:13:58.3887264Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-13T05:13:58.3922338Z ##[endgroup]
+2026-11-13T05:13:58.3922864Z ##[group]Fetching the repository
+2026-11-13T05:13:58.3931438Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-13T05:14:10.2327297Z ##[error]The operation was canceled.
+2026-11-13T05:14:10.2426712Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T05:14:10.2427011Z with:
+2026-11-13T05:14:10.2427175Z   name: descendant-storage-sync
+2026-11-13T05:14:10.2427379Z   path: out/integrated-lab/descendant-storage-sync
+2026-11-13T05:14:10.2427587Z   if-no-files-found: warn
+2026-11-13T05:14:10.2427749Z   retention-days: 90
+2026-11-13T05:14:10.2427917Z   compression-level: 6
+2026-11-13T05:14:10.2428072Z   overwrite: false
+2026-11-13T05:14:10.2428226Z   include-hidden-files: false
+2026-11-13T05:14:10.2428395Z ##[endgroup]
+2026-11-13T05:14:10.3602183Z (node:2101) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T05:14:10.3602924Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T05:14:10.3625107Z ##[warning]No files were found with the provided path: out/integrated-lab/descendant-storage-sync. No artifacts will be uploaded.
+2026-11-13T05:14:10.3775522Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T05:14:10.3775810Z with:
+2026-11-13T05:14:10.3775955Z   name: integrated-lab
+2026-11-13T05:14:10.3776115Z   path: out/integrated-lab
+2026-11-13T05:14:10.3776283Z   if-no-files-found: warn
+2026-11-13T05:14:10.3776441Z   retention-days: 7
+2026-11-13T05:14:10.3776589Z   compression-level: 6
+2026-11-13T05:14:10.3776739Z   overwrite: false
+2026-11-13T05:14:10.3776900Z   include-hidden-files: false
+2026-11-13T05:14:10.3777065Z ##[endgroup]
+2026-11-13T05:14:10.4942757Z (node:2115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T05:14:10.4943749Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T05:14:10.4955813Z ##[warning]No files were found with the provided path: out/integrated-lab. No artifacts will be uploaded.
+2026-11-13T05:14:10.5101966Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T05:14:10.5102293Z with:
+2026-11-13T05:14:10.5102473Z   name: integrated-reference-test-failures
+2026-11-13T05:14:10.5102700Z   path: out/test-evidence
+2026-11-13T05:14:10.5102869Z   if-no-files-found: warn
+2026-11-13T05:14:10.5103035Z   retention-days: 90
+2026-11-13T05:14:10.5103195Z   compression-level: 6
+2026-11-13T05:14:10.5103350Z   overwrite: false
+2026-11-13T05:14:10.5103504Z   include-hidden-files: false
+2026-11-13T05:14:10.5103862Z ##[endgroup]
+2026-11-13T05:14:10.6320370Z (node:2127) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T05:14:10.6320947Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T05:14:10.6335246Z ##[warning]No files were found with the provided path: out/test-evidence. No artifacts will be uploaded.
+2026-11-13T05:14:10.6541047Z Post job cleanup.
+2026-11-13T05:14:10.7136886Z [command]/usr/bin/git version
+2026-11-13T05:14:10.7168438Z git version 2.56.1
+2026-11-13T05:14:10.7191580Z Temporarily overriding HOME='/home/runner/work/_temp/b059f21d-2757-4822-8511-d70f3f1c4d91' before making global git config changes
+2026-11-13T05:14:10.7192365Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T05:14:10.7195779Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T05:14:10.7232300Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T05:14:10.7260221Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T05:14:10.7446778Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T05:14:10.7470955Z http.https://github.com/.extraheader
+2026-11-13T05:14:10.7478875Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-13T05:14:10.7515388Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T05:14:10.7699954Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T05:14:10.7727906Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T05:14:10.8067674Z Cleaning up orphan processes
+2026-11-13T05:14:10.8314360Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

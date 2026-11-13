@@ -1,0 +1,661 @@
+--- a/pkg/internal/storage/repo/outputs.go
++++ b/pkg/internal/storage/repo/outputs.go
+@@ -222,7 +222,13 @@
+ 			return fmt.Errorf("count failed: %w", err)
+ 		}
+ 
+-		if err := query.Limit(filter.Limit).Offset(filter.Offset).Order("bsv_outputs.id ASC").Find(&outputs).Error; err != nil {
++		offset, order := filter.Offset, "bsv_outputs.id ASC"
++		if offset < 0 {
++			// BRC-100: -1 is newest, -2 skips one newest item. Preserve the
++			// filtered count and apply descending order before pagination.
++			offset, order = -(offset + 1), "bsv_outputs.id DESC"
++		}
++		if err := query.Limit(filter.Limit).Offset(offset).Order(order).Find(&outputs).Error; err != nil {
+ 			return fmt.Errorf("query failed: %w", err)
+ 		}
+ 		if filter.IncludeTags {
+--- a/pkg/internal/validate/validate_list_actions_args.go
++++ b/pkg/internal/validate/validate_list_actions_args.go
+@@ -22,10 +22,9 @@
+ 	if err := validateListActionsLabels(args.Labels); err != nil {
+ 		return err
+ 	}
+-	if !args.SeekPermission.Value() {
+-		return fmt.Errorf("operation not allowed without permission (seekPermission=false)")
+-	}
+-	return validateListActionsIncludeFlags(args)
++	// App consent belongs to the authenticated wallet, not its storage.
++	// Child script flags are inactive when their parent collection is omitted.
++	return nil
+ }
+ 
+ func validateListActionsPagination(args *wdk.ListActionsArgs) error {
+@@ -54,22 +53,6 @@
+ 	return nil
+ }
+ 
+-func validateListActionsIncludeFlags(args *wdk.ListActionsArgs) error {
+-	if !args.IncludeInputs.Value() {
+-		if args.IncludeInputUnlockingScripts.Value() {
+-			return fmt.Errorf("includeInputUnlockingScripts cannot be true when includeInputs is false")
+-		}
+-		if args.IncludeInputSourceLockingScripts.Value() {
+-			return fmt.Errorf("includeInputSourceLockingScripts cannot be true when includeInputs is false")
+-		}
+-	}
+-
+-	if !args.IncludeOutputs.Value() && args.IncludeOutputLockingScripts.Value() {
+-		return fmt.Errorf("includeOutputLockingScripts cannot be true when includeOutputs is false")
+-	}
+-	return nil
+-}
+-
+ func validateLabel(label primitives.StringUnder300) error {
+ 	if len(label) == 0 || len(label) > 300 {
+ 		return fmt.Errorf("label must be 1-300 characters")
+--- a/pkg/internal/validate/validate_list_actions_args_test.go
++++ b/pkg/internal/validate/validate_list_actions_args_test.go
+@@ -17,6 +17,19 @@
+ 	tests := map[string]struct {
+ 		args *wdk.ListActionsArgs
+ 	}{
++		"seekPermission set to false": {
++			args: &wdk.ListActionsArgs{SeekPermission: to.Ptr(primitives.BooleanDefaultTrue(false))},
++		},
++		"inconsistent includeInputSourceLockingScripts with no includeInputs": {
++			args: &wdk.ListActionsArgs{
++				IncludeInputSourceLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)),
++			},
++		},
++		"inconsistent includeOutputLockingScripts with no includeOutputs": {
++			args: &wdk.ListActionsArgs{
++				IncludeOutputLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)),
++			},
++		},
+ 		"valid labels and defaults": {
+ 			args: &wdk.ListActionsArgs{
+ 				LabelQueryMode: to.Ptr(defs.QueryModeAny),
+@@ -77,9 +90,6 @@
+ 		"invalid labelQueryMode": {
+ 			args: &wdk.ListActionsArgs{LabelQueryMode: to.Ptr(defs.QueryMode("unknown"))},
+ 		},
+-		"seekPermission set to false": {
+-			args: &wdk.ListActionsArgs{SeekPermission: to.Ptr(primitives.BooleanDefaultTrue(false))},
+-		},
+ 		"invalid label - too long": {
+ 			args: &wdk.ListActionsArgs{
+ 				Labels: []primitives.StringUnder300{primitives.StringUnder300(strings.Repeat("x", 301))},
+@@ -88,16 +98,6 @@
+ 		"invalid label - empty": {
+ 			args: &wdk.ListActionsArgs{
+ 				Labels: []primitives.StringUnder300{""},
+-			},
+-		},
+-		"inconsistent includeInputSourceLockingScripts with no includeInputs": {
+-			args: &wdk.ListActionsArgs{
+-				IncludeInputSourceLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)),
+-			},
+-		},
+-		"inconsistent includeOutputLockingScripts with no includeOutputs": {
+-			args: &wdk.ListActionsArgs{
+-				IncludeOutputLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)),
+ 			},
+ 		},
+ 		"duplicate BRC-114 action time from": {
+--- a/pkg/internal/validate/validate_list_certificates_args.go
++++ b/pkg/internal/validate/validate_list_certificates_args.go
+@@ -34,6 +34,16 @@
+ }
+ 
+ func validateListCertificatesPartialArgs(args *wdk.ListCertificatesArgsPartial) error {
++	if args.Type != nil {
++		if err := args.Type.Validate(); err != nil {
++			return fmt.Errorf("invalid partial type argument: %w", err)
++		}
++	}
++	if args.Certifier != nil {
++		if err := args.Certifier.Validate(); err != nil {
++			return fmt.Errorf("invalid partial certifier argument: %w", err)
++		}
++	}
+ 	if args.SerialNumber != nil {
+ 		err := args.SerialNumber.Validate()
+ 		if err != nil {
+--- a/pkg/internal/validate/validate_list_outputs_args.go
++++ b/pkg/internal/validate/validate_list_outputs_args.go
+@@ -28,7 +28,7 @@
+ 	if args.Limit > MaxPaginationLimit {
+ 		return fmt.Errorf("limit exceeds max allowed value of %d", MaxPaginationLimit)
+ 	}
+-	if args.Offset > MaxPaginationOffset {
++	if args.Offset > MaxPaginationOffset || args.Offset < -MaxPaginationOffset-1 {
+ 		return fmt.Errorf("offset is too large")
+ 	}
+ 
+--- a/pkg/storage/internal/actions/list_actions_mapping.go
++++ b/pkg/storage/internal/actions/list_actions_mapping.go
+@@ -2,9 +2,11 @@
+ 
+ import (
+ 	"context"
++	"encoding/base64"
+ 	"encoding/hex"
+ 	"fmt"
+ 	"slices"
++	"strings"
+ 
+ 	"github.com/bsv-blockchain/go-sdk/transaction"
+ 	"github.com/go-softwarelab/common/pkg/must"
+@@ -151,7 +153,9 @@
+ 		action := &actions[i]
+ 
+ 		if args.IncludeLabels.Value() {
+-			l.mapLabelsToAction(action, tx, details.labelMap, timeFilterRequested)
++			if err := l.mapLabelsToAction(action, tx, details.labelMap, timeFilterRequested); err != nil {
++				return err
++			}
+ 		}
+ 
+ 		if args.IncludeOutputs.Value() {
+@@ -171,12 +175,32 @@
+ 	return nil
+ }
+ 
+-func (l *listActions) mapLabelsToAction(action *wdk.WalletAction, tx *pkgentity.Transaction, labelMap map[uint][]string, timeFilterRequested bool) {
++func (l *listActions) mapLabelsToAction(action *wdk.WalletAction, tx *pkgentity.Transaction, labelMap map[uint][]string, timeFilterRequested bool) error {
+ 	if labels, ok := labelMap[tx.ID]; ok {
+ 		action.Labels = append([]string{}, labels...)
+ 	} else {
+ 		action.Labels = []string{}
+ 	}
++
++	// BRC-153 references come only from wallet-authored transaction metadata.
++	// Replace every caller-controlled reserved label before adding the real one.
++	labels := make([]string, 0, len(action.Labels)+1)
++	for _, label := range action.Labels {
++		if !strings.HasPrefix(label, "reference ") {
++			labels = append(labels, label)
++		}
++	}
++	if tx.Reference != "" {
++		ref, err := base64.StdEncoding.Strict().DecodeString(tx.Reference)
++		if err != nil {
++			ref, err = base64.RawStdEncoding.Strict().DecodeString(tx.Reference)
++		}
++		if err != nil || len(ref) == 0 || len(ref) > 145 || (base64.StdEncoding.EncodeToString(ref) != tx.Reference && base64.RawStdEncoding.EncodeToString(ref) != tx.Reference) {
++			return fmt.Errorf("invalid stored action reference")
++		}
++		labels = append(labels, "reference "+hex.EncodeToString(ref))
++	}
++	action.Labels = labels
+ 
+ 	// BRC-114: when time filtering is active, inject computed "action time {ms}" labels.
+ 	if timeFilterRequested && !tx.CreatedAt.IsZero() {
+@@ -185,6 +209,7 @@
+ 			action.Labels = append(action.Labels, timeLabel)
+ 		}
+ 	}
++	return nil
+ }
+ 
+ func (l *listActions) mapOutputsToAction(action *wdk.WalletAction, txID uint, outputMap map[uint][]*pkgentity.Output, includeLockingScripts bool) {
+--- a/pkg/storage/internal/actions/list_outputs.go
++++ b/pkg/storage/internal/actions/list_outputs.go
+@@ -149,7 +149,7 @@
+ 		UserID:                    userID,
+ 		Basket:                    string(args.Basket),
+ 		Limit:                     must.ConvertToIntFromUnsigned(to.NoMoreThan(args.Limit, validate.MaxPaginationLimit)),
+-		Offset:                    must.ConvertToIntFromUnsigned(to.NoMoreThan(args.Offset, validate.MaxPaginationOffset)),
++		Offset:                    int(args.Offset),
+ 		IncludeTags:               args.IncludeTags,
+ 		IncludeLockingScripts:     args.IncludeLockingScripts,
+ 		IncludeCustomInstructions: args.IncludeCustomInstructions,
+--- /dev/null
++++ b/pkg/storage/internal/actions/native_reference_labels_tpnil_test.go
+@@ -0,0 +1,48 @@
++package actions
++
++import (
++	"encoding/base64"
++	"encoding/hex"
++	pkgentity "github.com/bsv-blockchain/go-wallet-toolbox/pkg/entity"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/go-softwarelab/common/pkg/to"
++	"github.com/stretchr/testify/require"
++	"strings"
++	"testing"
++	"time"
++)
++
++func TestTPNILReferenceLabelsAreWalletAuthoredAndStatusStable(t *testing.T) {
++	raw := []byte{0, 1, 2, 0xfa, 0xff}
++	reference := base64.StdEncoding.EncodeToString(raw)
++	for _, status := range []wdk.TxStatus{wdk.TxStatusUnsigned, wdk.TxStatusNoSend, wdk.TxStatusSending, wdk.TxStatusUnproven, wdk.TxStatusCompleted, wdk.TxStatusFailed} {
++		t.Run(string(status), func(t *testing.T) {
++			tx := &pkgentity.Transaction{ID: 1, Reference: reference, Status: status, CreatedAt: time.UnixMilli(1704067200000)}
++			labels := []string{"app label", "reference forged", "reference stale", "another label"}
++			before := append([]string{}, labels...)
++			row := wdk.WalletAction{Satoshis: -19}
++			list := &listActions{}
++			require.NoError(t, list.mapLabelsToAction(&row, tx, map[uint][]string{1: labels}, true))
++			require.Equal(t, []string{"app label", "another label", "reference " + hex.EncodeToString(raw), "action time 1704067200000"}, row.Labels)
++			require.EqualValues(t, -19, row.Satoshis)
++			require.Equal(t, before, labels, "synthetic response must not persist into label storage")
++			decoded, err := hex.DecodeString(row.Labels[2][10:])
++			require.NoError(t, err)
++			require.Equal(t, reference, base64.StdEncoding.EncodeToString(decoded))
++			rows := []wdk.WalletAction{{Satoshis: -19}}
++			require.NoError(t, list.mapInputsOutputsLabels(rows, []*pkgentity.Transaction{tx}, mapActionDetails{labelMap: map[uint][]string{1: labels}}, &wdk.ListActionsArgs{IncludeLabels: to.Ptr(primitives.BooleanDefaultFalse(false))}, false))
++			require.Nil(t, rows[0].Labels)
++		})
++	}
++}
++func TestTPNILReferenceLabelsRejectMalformedStoredIdentity(t *testing.T) {
++	list := &listActions{}
++	row := wdk.WalletAction{}
++	require.ErrorContains(t, list.mapLabelsToAction(&row, &pkgentity.Transaction{ID: 1, Reference: "%%%"}, map[uint][]string{1: {"reference forged"}}, false), "invalid stored action reference")
++	for _, reference := range []string{"Af==", "AQ\nI=", base64.StdEncoding.EncodeToString([]byte(strings.Repeat("x", 146)))} {
++		require.Error(t, list.mapLabelsToAction(&row, &pkgentity.Transaction{ID: 1, Reference: reference}, nil, false))
++	}
++	require.NoError(t, list.mapLabelsToAction(&row, &pkgentity.Transaction{ID: 1, Reference: "AQI"}, map[uint][]string{1: {"normal"}}, false))
++	require.Equal(t, []string{"normal", "reference 0102"}, row.Labels)
++}
+--- /dev/null
++++ b/pkg/storage/native_certificate_tuple_tpnil_test.go
+@@ -0,0 +1,80 @@
++package storage_test
++
++import (
++	"encoding/json"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures/testusers"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/testabilities"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/stretchr/testify/require"
++	"strings"
++	"testing"
++)
++
++// LAB_SELF_TEST_ONLY: authenticated JSON RPC and actual SQLite storage. The
++// TypeScript signer uses this exact partial tuple to authorize key disclosure.
++func TestTPNILNativeCertificateExactTupleRPC(t *testing.T) {
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	certificate := fixtures.DefaultInsertCertAuth(testusers.Alice.ID, primitives.PubKeyHex(testusers.Alice.PubKey(t)))
++	_, err := provider.InsertCertificateAuth(t.Context(), testusers.Alice.AuthID(), certificate)
++	require.NoError(t, err)
++	_, err = provider.InsertCertificateAuth(t.Context(), testusers.Bob.AuthID(), fixtures.DefaultInsertCertAuth(testusers.Bob.ID, primitives.PubKeyHex(testusers.Bob.PubKey(t))))
++	require.NoError(t, err)
++	stop := given.StartedRPCServerFor(provider)
++	defer stop()
++	base := map[string]any{"type": certificate.Type, "certifier": certificate.Certifier, "serialNumber": certificate.SerialNumber, "subject": certificate.Subject, "revocationOutpoint": certificate.RevocationOutpoint, "signature": certificate.Signature}
++	check := func(t *testing.T, partial map[string]any, certifiers, types []string, expected int) {
++		response := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listCertificates", []any{testusers.Alice.AuthID(), map[string]any{"partial": partial, "certifiers": certifiers, "types": types, "limit": 10, "offset": 0}})
++		require.Nil(t, response.Error)
++		var result wdk.ListCertificatesResult
++		require.NoError(t, json.Unmarshal(response.Result, &result))
++		require.EqualValues(t, expected, result.TotalCertificates)
++		require.Len(t, result.Certificates, expected)
++		if expected == 1 {
++			require.Equal(t, certificate.Certifier, result.Certificates[0].Certifier)
++			require.Equal(t, certificate.SerialNumber, result.Certificates[0].SerialNumber)
++			require.Equal(t, certificate.Subject, result.Certificates[0].Subject)
++		}
++	}
++	check(t, base, []string{}, []string{}, 1)
++	for field, value := range map[string]any{"type": "b3RoZXIgdHlwZQ==", "certifier": testusers.Bob.PubKey(t), "serialNumber": "b3RoZXIgc2VyaWFs", "subject": testusers.Bob.PubKey(t), "revocationOutpoint": strings.Repeat("01", 32) + ".1", "signature": "00"} {
++		t.Run("wrong-"+field, func(t *testing.T) {
++			changed := map[string]any{}
++			for key, item := range base {
++				changed[key] = item
++			}
++			changed[field] = value
++			check(t, changed, []string{}, []string{}, 0)
++		})
++	}
++	t.Run("base64-serial-is-case-sensitive", func(t *testing.T) {
++		changed := map[string]any{}
++		for key, item := range base {
++			changed[key] = item
++		}
++		changed["serialNumber"] = strings.ToUpper(string(certificate.SerialNumber))
++		require.NotEqual(t, string(certificate.SerialNumber), changed["serialNumber"])
++		check(t, changed, []string{}, []string{}, 0)
++	})
++	t.Run("list-filter-intersection", func(t *testing.T) {
++		check(t, base, []string{string(certificate.Certifier)}, []string{string(certificate.Type)}, 1)
++		check(t, base, []string{testusers.Bob.PubKey(t)}, []string{}, 0)
++		check(t, base, []string{}, []string{"b3RoZXIgdHlwZQ=="}, 0)
++	})
++	for field, value := range map[string]string{"type": "not base64", "certifier": "not a public key"} {
++		t.Run("malformed-"+field, func(t *testing.T) {
++			response := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listCertificates", []any{testusers.Alice.AuthID(), map[string]any{"partial": map[string]string{field: value}, "certifiers": []string{}, "types": []string{}}})
++			require.NotNil(t, response.Error)
++		})
++	}
++	forbidden := callJSONRPC(t, given.ServerURL(), testusers.Bob, "listCertificates", []any{testusers.Alice.AuthID(), map[string]any{"partial": base, "certifiers": []string{}, "types": []string{}}})
++	require.NotNil(t, forbidden.Error)
++	own := callJSONRPC(t, given.ServerURL(), testusers.Bob, "listCertificates", []any{testusers.Bob.AuthID(), map[string]any{"partial": base, "certifiers": []string{}, "types": []string{}}})
++	require.Nil(t, own.Error)
++	var ownResult wdk.ListCertificatesResult
++	require.NoError(t, json.Unmarshal(own.Result, &ownResult))
++	require.Zero(t, ownResult.TotalCertificates)
++}
+--- /dev/null
++++ b/pkg/storage/native_contracts_tpnil_test.go
+@@ -0,0 +1,170 @@
++package storage_test
++
++import (
++	"encoding/base64"
++	"encoding/hex"
++	"encoding/json"
++	"fmt"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures/testusers"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/satoshi"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/testabilities"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/go-softwarelab/common/pkg/to"
++	"github.com/stretchr/testify/require"
++	"os"
++	"os/exec"
++	"strings"
++	"testing"
++)
++
++// LAB_SELF_TEST_ONLY: real authenticated HTTP and SQLite mutation contracts.
++func TestTPNILNativeRelinquishmentRPC(t *testing.T) {
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	tx, _ := given.Faucet(provider, testusers.Alice).TopUp(100000)
++	certificate := fixtures.DefaultInsertCertAuth(testusers.Alice.ID, primitives.PubKeyHex(testusers.Alice.PubKey(t)))
++	_, err := provider.InsertCertificateAuth(t.Context(), testusers.Alice.AuthID(), certificate)
++	require.NoError(t, err)
++	stop := given.StartedRPCServerFor(provider, allowUnauthenticated)
++	defer stop()
++	cases := []struct {
++		method string
++		args   any
++	}{
++		{"relinquishOutput", wdk.RelinquishOutputArgs{Basket: wdk.BasketNameForChange, Output: string(primitives.NewOutpointString(tx.ID().String(), 0))}},
++		{"relinquishCertificate", wdk.RelinquishCertificateArgs{Type: fixtures.TypeField, SerialNumber: fixtures.SerialNumber, Certifier: fixtures.Certifier}},
++	}
++	for _, tc := range cases {
++		t.Run(tc.method, func(t *testing.T) {
++			denied := callJSONRPC(t, given.ServerURL(), testusers.Bob, tc.method, []any{testusers.Alice.AuthID(), tc.args})
++			require.NotNil(t, denied.Error)
++			require.Contains(t, denied.Error.Message, "identityKey does not match authentication")
++			status, body := postUnauthenticated(t, given.ServerURL(), "/", map[string]any{"jsonrpc": "2.0", "id": 1, "method": tc.method, "params": []any{testusers.Alice.AuthID(), tc.args}})
++			require.Equal(t, 200, status)
++			var unauthed jsonRPCResponse
++			require.NoError(t, json.Unmarshal(body, &unauthed))
++			require.NotNil(t, unauthed.Error)
++			result := callJSONRPC(t, given.ServerURL(), testusers.Alice, tc.method, []any{testusers.Alice.AuthID(), tc.args})
++			require.Nil(t, result.Error)
++			require.JSONEq(t, "1", string(result.Result))
++			repeated := callJSONRPC(t, given.ServerURL(), testusers.Alice, tc.method, []any{testusers.Alice.AuthID(), tc.args})
++			require.NotNil(t, repeated.Error)
++			require.NotEqual(t, "1", string(repeated.Result))
++		})
++	}
++	outputs, err := provider.ListOutputs(t.Context(), testusers.Alice.AuthID(), wdk.ListOutputsArgs{Basket: wdk.BasketNameForChange, Limit: 10})
++	require.NoError(t, err)
++	require.Zero(t, outputs.TotalOutputs)
++	certs, err := provider.ListCertificates(t.Context(), testusers.Alice.AuthID(), wdk.ListCertificatesArgs{})
++	require.NoError(t, err)
++	require.Zero(t, certs.TotalCertificates)
++}
++
++func TestTPNILNativeListOutputsSignedOffsetsRPC(t *testing.T) {
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	var outputs []string
++	for i := 0; i < 4; i++ {
++		tx, _ := given.Faucet(provider, testusers.Alice).TopUp(satoshi.Value(100000 + i))
++		outputs = append(outputs, string(primitives.NewOutpointString(tx.ID().String(), 0)))
++	}
++	given.Faucet(provider, testusers.Bob).TopUp(900000)
++	stop := given.StartedRPCServerFor(provider)
++	defer stop()
++	for _, tc := range []struct {
++		offset int64
++		want   []string
++	}{{0, outputs[:2]}, {1, outputs[1:3]}, {-1, []string{outputs[3], outputs[2]}}, {-2, []string{outputs[2], outputs[1]}}, {-4, outputs[:1]}, {-5, []string{}}, {4, []string{}}} {
++		t.Run(fmt.Sprint(tc.offset), func(t *testing.T) {
++			result := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listOutputs", []any{testusers.Alice.AuthID(), wdk.ListOutputsArgs{Basket: wdk.BasketNameForChange, Limit: 2, Offset: tc.offset}})
++			require.Nil(t, result.Error)
++			var got wdk.ListOutputsResult
++			require.NoError(t, json.Unmarshal(result.Result, &got))
++			require.EqualValues(t, 4, got.TotalOutputs)
++			actual := []string{}
++			for _, row := range got.Outputs {
++				actual = append(actual, string(row.Outpoint))
++			}
++			require.Equal(t, tc.want, actual)
++		})
++	}
++	result := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: []primitives.StringUnder300{}, Limit: 100, SeekPermission: to.Ptr(primitives.BooleanDefaultTrue(false)), IncludeInputUnlockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeInputSourceLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true)), IncludeOutputLockingScripts: to.Ptr(primitives.BooleanDefaultFalse(true))}})
++	require.Nil(t, result.Error)
++	var actions struct {
++		Actions []map[string]any `json:"actions"`
++	}
++	require.NoError(t, json.Unmarshal(result.Result, &actions))
++	require.NotEmpty(t, actions.Actions)
++	for _, action := range actions.Actions {
++		require.NotContains(t, action, "inputs")
++		require.NotContains(t, action, "outputs")
++	}
++	forbidden := callJSONRPC(t, given.ServerURL(), testusers.Bob, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{SeekPermission: to.Ptr(primitives.BooleanDefaultTrue(false))}})
++	require.NotNil(t, forbidden.Error)
++}
++
++func TestTPNILTypeScriptNativeRPCClient(t *testing.T) {
++	script, node := os.Getenv("TPNIL_TS_NATIVE_CONTRACT_TEST"), os.Getenv("TPNIL_NODE")
++	if script == "" || node == "" {
++		t.Skip("cross-language host contract runs in the TPNIL immutable preparer")
++	}
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	tx, _ := given.Faucet(provider, testusers.Alice).TopUp(100000)
++	_, err := provider.InsertCertificateAuth(t.Context(), testusers.Alice.AuthID(), fixtures.DefaultInsertCertAuth(testusers.Alice.ID, primitives.PubKeyHex(testusers.Alice.PubKey(t))))
++	require.NoError(t, err)
++	stop := given.StartedRPCServerFor(provider)
++	defer stop()
++	args, err := json.Marshal(map[string]any{"auth": testusers.Alice.AuthID(), "output": wdk.RelinquishOutputArgs{Basket: wdk.BasketNameForChange, Output: string(primitives.NewOutpointString(tx.ID().String(), 0))}, "certificate": wdk.RelinquishCertificateArgs{Type: fixtures.TypeField, SerialNumber: fixtures.SerialNumber, Certifier: fixtures.Certifier}, "certificatePartial": map[string]any{"type": fixtures.TypeField, "serialNumber": fixtures.SerialNumber, "certifier": fixtures.Certifier, "subject": testusers.Alice.PubKey(t), "revocationOutpoint": fixtures.RevocationOutpoint, "signature": fixtures.Signature}, "otherIdentity": testusers.Bob.PubKey(t)})
++	require.NoError(t, err)
++	cmd := exec.CommandContext(t.Context(), node, script, given.ServerURL(), testusers.Alice.PrivateKey(t).Hex(), string(args))
++	output, err := cmd.CombinedOutput()
++	require.NoError(t, err, string(output))
++	require.Contains(t, string(output), `"verified":true`)
++}
++
++// The label can recover the exact public createAction reference and cannot be
++// forged by a caller label, including when an unsigned action lacks a txid.
++func TestTPNILNativeReferenceRecoveryRPC(t *testing.T) {
++	given, cleanup := testabilities.Given(t)
++	defer cleanup()
++	provider := given.Provider().GORM()
++	given.Faucet(provider, testusers.Alice).TopUp(100000)
++	args := fixtures.DefaultValidCreateActionArgs()
++	args.Labels = []primitives.StringUnder300{"tpnil reference flow", "reference forged"}
++	args.Options.SignAndProcess = to.Ptr(primitives.BooleanDefaultTrue(false))
++	args.IsSignAction = true
++	created, err := provider.CreateAction(t.Context(), testusers.Alice.AuthID(), args)
++	require.NoError(t, err)
++	raw, err := base64.StdEncoding.DecodeString(created.Reference)
++	require.NoError(t, err)
++	expected := "reference " + hex.EncodeToString(raw)
++	stop := given.StartedRPCServerFor(provider)
++	defer stop()
++	result := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: []primitives.StringUnder300{"tpnil reference flow"}, Limit: 10, IncludeLabels: to.Ptr(primitives.BooleanDefaultFalse(true)), SeekPermission: to.Ptr(primitives.BooleanDefaultTrue(false))}})
++	require.Nil(t, result.Error)
++	var listed wdk.ListActionsResult
++	require.NoError(t, json.Unmarshal(result.Result, &listed))
++	require.Len(t, listed.Actions, 1)
++	require.Contains(t, listed.Actions[0].Labels, "tpnil reference flow")
++	refs := []string{}
++	for _, label := range listed.Actions[0].Labels {
++		if strings.HasPrefix(label, "reference ") {
++			refs = append(refs, label)
++		}
++	}
++	require.Equal(t, []string{expected}, refs)
++	decoded, err := hex.DecodeString(refs[0][10:])
++	require.NoError(t, err)
++	recovered := base64.StdEncoding.EncodeToString(decoded)
++	require.Equal(t, created.Reference, recovered)
++	// Abort consumes the same reference recovered from listActions.
++	aborted := callJSONRPC(t, given.ServerURL(), testusers.Alice, "abortAction", []any{testusers.Alice.AuthID(), map[string]string{"reference": recovered}})
++	require.Nil(t, aborted.Error)
++	require.JSONEq(t, `{"aborted":true}`, string(aborted.Result))
++}
+--- a/pkg/storage/provider.go
++++ b/pkg/storage/provider.go
+@@ -5,6 +5,7 @@
+ 	"fmt"
+ 	"log/slog"
+ 	"math"
++	stdslices "slices"
+ 	"sync/atomic"
+ 	"time"
+ 
+@@ -414,23 +415,36 @@
+ 		UserID().
+ 		Equals(*auth.UserID)
+ 
+-	if len(args.Types) > 0 {
++	// TypeScript's signer supplies a complete exact certificate tuple inside
++	// partial. Intersect it with public list filters rather than overwriting
++	// either constraint; an unmatched issuer/type must never reveal field keys.
++	if args.Type != nil {
++		if len(args.Types) > 0 && !stdslices.Contains(args.Types, *args.Type) {
++			return &wdk.ListCertificatesResult{Certificates: []*wdk.CertificateResult{}}, nil
++		}
++		query = query.Type().Equals(string(*args.Type))
++	} else if len(args.Types) > 0 {
+ 		query = query.Type().In(slices.Map(args.Types, to.String)...)
+ 	}
+-	if len(args.Certifiers) > 0 {
++	if args.Certifier != nil {
++		if len(args.Certifiers) > 0 && !stdslices.Contains(args.Certifiers, *args.Certifier) {
++			return &wdk.ListCertificatesResult{Certificates: []*wdk.CertificateResult{}}, nil
++		}
++		query = query.Certifier().Equals(string(*args.Certifier))
++	} else if len(args.Certifiers) > 0 {
+ 		query = query.Certifier().In(slices.Map(args.Certifiers, to.String)...)
+ 	}
+ 	if args.SerialNumber != nil {
+-		query = query.SerialNumber().Like(string(*args.SerialNumber))
++		query = query.SerialNumber().Equals(string(*args.SerialNumber))
+ 	}
+ 	if args.Subject != nil {
+-		query = query.Subject().Like(string(*args.Subject))
++		query = query.Subject().Equals(string(*args.Subject))
+ 	}
+ 	if args.RevocationOutpoint != nil {
+-		query = query.RevocationOutpoint().Like(string(*args.RevocationOutpoint))
++		query = query.RevocationOutpoint().Equals(string(*args.RevocationOutpoint))
+ 	}
+ 	if args.Signature != nil {
+-		query = query.Signature().Like(string(*args.Signature))
++		query = query.Signature().Equals(string(*args.Signature))
+ 	}
+ 
+ 	certsCount, err := query.Count(ctx)
+--- a/pkg/storage/provider_list_actions_test.go
++++ b/pkg/storage/provider_list_actions_test.go
+@@ -273,6 +273,5 @@
+ 	_, err := activeStorage.ListActions(ctx, testusers.Alice.AuthID(), args)
+ 
+ 	// Then:
+-	require.Error(t, err)
+-	require.ErrorContains(t, err, "seekPermission=false")
+-}
++	require.NoError(t, err) // Application consent is resolved by the authenticated wallet.
++}
+--- /dev/null
++++ b/pkg/storage/rpcserver/rpc_typescript_results.go
+@@ -0,0 +1,30 @@
++package rpcserver
++
++import (
++	"context"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"log/slog"
++)
++
++// TypeScriptRPCStorageProvider preserves the TS storage mutation row-count
++// contract while retaining the Go provider's error-only local and REST API.
++// Embedded methods keep the same authenticated identity and user binding.
++type TypeScriptRPCStorageProvider struct{ *RPCStorageProvider }
++
++func NewTypeScriptRPCStorageProvider(logger *slog.Logger, provider wdk.WalletStorageProvider) *TypeScriptRPCStorageProvider {
++	return &TypeScriptRPCStorageProvider{NewRPCStorageProvider(logger, provider)}
++}
++
++func (p *TypeScriptRPCStorageProvider) RelinquishOutput(ctx context.Context, auth wdk.AuthID, args wdk.RelinquishOutputArgs) (int, error) {
++	if err := p.RPCStorageProvider.RelinquishOutput(ctx, auth, args); err != nil {
++		return 0, err
++	}
++	return 1, nil
++}
++
++func (p *TypeScriptRPCStorageProvider) RelinquishCertificate(ctx context.Context, auth wdk.AuthID, args wdk.RelinquishCertificateArgs) (int, error) {
++	if err := p.RPCStorageProvider.RelinquishCertificate(ctx, auth, args); err != nil {
++		return 0, err
++	}
++	return 1, nil
++}
+--- a/pkg/storage/server.go
++++ b/pkg/storage/server.go
+@@ -53,7 +53,7 @@
+ 	// The auth middleware upstream has already verified the caller's identity
+ 	// before the request reaches here, so RPCStorageProvider's identity checks
+ 	// operate on the context values set by that middleware.
+-	rpcProvider := rpcserver.NewRPCStorageProvider(s.logger, s.provider)
++	rpcProvider := rpcserver.NewTypeScriptRPCStorageProvider(s.logger, s.provider)
+ 	rpcHandler := rpcserver.NewRPCHandler(s.logger, "storage", rpcProvider)
+ 	rpcHandler.Register(mux)
+ 
+--- a/pkg/wallet/internal/mapping/mapping_list_outputs.go
++++ b/pkg/wallet/internal/mapping/mapping_list_outputs.go
+@@ -23,7 +23,7 @@
+ 		Basket:                    primitives.NewIdentifier(args.Basket),
+ 		Tags:                      slices.Map(args.Tags, stringToIdentifier),
+ 		Limit:                     primitives.PositiveIntegerDefault10Max10000(to.ValueOr(args.Limit, 10)),
+-		Offset:                    primitives.PositiveInteger(to.ValueOr(args.Offset, 0)),
++		Offset:                    int64(to.ValueOr(args.Offset, 0)),
+ 		IncludeCustomInstructions: optional.OfPtr(args.IncludeCustomInstructions).OrZeroValue(),
+ 		IncludeTags:               optional.OfPtr(args.IncludeTags).OrZeroValue(),
+ 		IncludeLabels:             optional.OfPtr(args.IncludeLabels).OrZeroValue(),
+--- a/pkg/wdk/storage_cert_args.go
++++ b/pkg/wdk/storage_cert_args.go
+@@ -11,6 +11,8 @@
+ 
+ // ListCertificatesArgsPartial is
+ type ListCertificatesArgsPartial struct {
++	Type               *primitives.Base64String   `json:"type"`
++	Certifier          *primitives.PubKeyHex      `json:"certifier"`
+ 	SerialNumber       *primitives.Base64String   `json:"serialNumber"`
+ 	Subject            *primitives.PubKeyHex      `json:"subject"`
+ 	RevocationOutpoint *primitives.OutpointString `json:"revocationOutpoint"`
+--- a/pkg/wdk/storage_outputs_args.go
++++ b/pkg/wdk/storage_outputs_args.go
+@@ -16,7 +16,7 @@
+ 	IncludeTags               bool                                        `json:"includeTags,omitempty"`
+ 	IncludeLabels             bool                                        `json:"includeLabels,omitempty"`
+ 	Limit                     primitives.PositiveIntegerDefault10Max10000 `json:"limit"`
+-	Offset                    primitives.PositiveInteger                  `json:"offset"`
++	Offset                    int64                                       `json:"offset"`
+ 	SeekPermission            bool                                        `json:"seekPermission,omitempty"`
+ 	KnownTxids                []string                                    `json:"knownTxids,omitempty"`
+ }

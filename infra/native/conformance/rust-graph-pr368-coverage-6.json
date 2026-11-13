@@ -1,0 +1,34 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-coverage-6",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-6.json",
+    "sha256": "997f6d153793400d74e06304812b81a0382bc1402e30080aa006e8eb1061c5d1",
+    "profile": "ITCVE-1@4.8.0",
+    "program": "ISI-4@5.8.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Separately frozen4.8 observer profile: same e360 wallet,698 observations, sole admitted mined root and Rust3 criterion bytes. Exact nine-context permission prefix, public listOutputs metadata plus retained opaque bytes,128-depth Node graph resource admission and exact Active Storage summary/detail observer. No original4.7 failed qualification or Rust result is fabricated.",
+  "sources": {
+    ".github/workflows/isi4-yours-wallet.yml": "c75abc6c65734bf6ff7f25194a5740549c25070a6cabe55d48cba8c313a460af",
+    "scripts/check-native-wallet-selector.mjs": "e1cdf750168f592809b7a9bfe890dc8a35930a8ea0fcd452176062e5775bf4cf",
+    "scripts/native-rust-compatibility.mjs": "5bde62003a299418a3117e663d5085cc623540d7e6907d1f9cd3880e1cb42de2",
+    "scripts/native-wallet-profiles.mjs": "377d6fc0481beb50b2c0eb45c4620138e4ff03e7072ec3164b7e3f9eb7018115",
+    "scripts/read-committed-blob.mjs": "1e5da6099cfd7fdd3bdb0983b61153a3143363507e9b0b6bcfd8a3dcd2444e04",
+    "scripts/run-native-go-wallet.mjs": "fc099b6d01c41ca5749f5d34605caa3c0e6f59785a4f3307ae6ab1d96f4a66d6",
+    "scripts/verify-native-integrated.mjs": "87ee4291dcc77d91fc7c73a6a43c0f334ad240d4c75179aed4a4651cb1e09261"
+  },
+  "sourceBindingRevision": 14,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-coverage-5-source-2.json",
+    "sha256": "e0306525ae3eb451df2bf229cf5484e720a63a9918e77837b3da251ba6d5d10e"
+  },
+  "admissionState": "FROZEN"
+}

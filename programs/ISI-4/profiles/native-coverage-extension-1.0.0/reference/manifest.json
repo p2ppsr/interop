@@ -1,0 +1,276 @@
+{
+  "schema": "tpnil-coverage-extension-reference@1",
+  "claim": "LAB_SELF_TEST_ONLY_REAL_TYPESCRIPT_TO_GO_NOT_NATIVE_QUALIFICATION",
+  "baseSource": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "sourceInputs": {
+    "synthesis/src/wallet-lab/native/coverage-extension-model.ts": "b54eb8ab2c80951318752b575b62018c5ce69ae929c6055e9e2904f33debb55b",
+    "synthesis/src/wallet-lab/native/coverage-extension-requests.ts": "2ed8aa5c15c4cfef13c14a6f0ea46e7e3fdfcb9c09f861684959624cbc03cc0b",
+    "synthesis/src/wallet-lab/native/coverage-extension-driver.ts": "1b22bee0d83066d6170e9bb6763beacdf02b6f7cfdeaa8fc2ea4d76bcc8c9d1c",
+    "synthesis/src/wallet-lab/native/coverage-extension-verifier.ts": "f11fe61862bdd4ffbb6e76f02835166d8dc4a9bc725e858912185846e25b91be",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "integrations/services/package-lock.json": "2c871f8e6536c71fa356a51f1d3ea7c4ebc7a2b938c45f928800f31c2a431fc4",
+    "out/itcve-go-storage-native-contracts.json": "8c7f062a9e936f2f4942bb9c0191aaca25d3e76e775bfe0009da68b8c8f14d19",
+    "infra/adapters/storage-native-contracts/patch.lock.json": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+    "programs/ISI-4/profiles/native-coverage-extension-1.0.0/policy.json": "6f9071f0a07a5545d55fd8dd3c75d10ea93a5109efd8c39bd6d8838360b0e231",
+    "fixtures/teranode/wab-funding-v1.json": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a"
+  },
+  "sourceStable": true,
+  "file": {
+    "path": "report.json.gz",
+    "bytes": 33366,
+    "sha256": "39bcc39e3a24fce521b79229d12773da5098d0e550f38c2ea4f33db1a7216706",
+    "rawBytes": 672942,
+    "rawSha256": "b7d8773a41fd06b0b4af444aad14e69522756b153e7ed834417fd763bf6a43fa"
+  },
+  "receipt": {
+    "claim": "LAB_SELF_TEST_ONLY_REAL_TYPESCRIPT_TO_GO_NOT_NATIVE",
+    "elapsedMs": 3021,
+    "publicCalls": 73,
+    "counts": {
+      "PASS": 16,
+      "FAIL": 43,
+      "BLOCKED": 2
+    },
+    "findings": [
+      {
+        "id": "coverage-extension.privileged.missing-reason.getPublicKey",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.getPublicKey did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.revealCounterpartyKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.revealCounterpartyKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.revealSpecificKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.revealSpecificKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.encrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.encrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.decrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.decrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.createHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.createHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.verifyHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.verifyHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.createSignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.createSignature did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.missing-reason.verifySignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.missing-reason.verifySignature did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.getPublicKey",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.getPublicKey did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.revealCounterpartyKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.revealCounterpartyKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.revealSpecificKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.revealSpecificKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.encrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.encrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.decrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.decrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.createHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.createHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.verifyHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.verifyHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.createSignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.createSignature did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.short-reason.verifySignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.short-reason.verifySignature did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.getPublicKey",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.getPublicKey did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.revealCounterpartyKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.revealCounterpartyKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.revealSpecificKeyLinkage",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.revealSpecificKeyLinkage did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.encrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.encrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.decrypt",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.decrypt did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.createHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.createHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.verifyHmac",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.verifyHmac did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.createSignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.createSignature did not hold."
+      },
+      {
+        "id": "coverage-extension.privileged.overlong-reason.verifySignature",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.privileged.overlong-reason.verifySignature did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.bytes-4.createAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.bytes-4.createAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.bytes-4.internalizeAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.bytes-4.internalizeAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.bytes-4.listOutputs",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.bytes-4.listOutputs did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.bytes-4.relinquishOutput",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.bytes-4.relinquishOutput did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.uppercase.createAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.uppercase.createAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.uppercase.internalizeAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.uppercase.internalizeAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.uppercase.listOutputs",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.uppercase.listOutputs did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.uppercase.relinquishOutput",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.uppercase.relinquishOutput did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.double-space.createAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.double-space.createAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.double-space.internalizeAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.double-space.internalizeAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.double-space.listOutputs",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.double-space.listOutputs did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.double-space.relinquishOutput",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.double-space.relinquishOutput did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.trailing-basket.createAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.trailing-basket.createAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.trailing-basket.internalizeAction",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.trailing-basket.internalizeAction did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.trailing-basket.listOutputs",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.trailing-basket.listOutputs did not hold."
+      },
+      {
+        "id": "coverage-extension.basket.trailing-basket.relinquishOutput",
+        "result": "FAIL",
+        "detail": "Independent predicate coverage-extension.basket.trailing-basket.relinquishOutput did not hold."
+      },
+      {
+        "id": "coverage-extension.discovery.identity-match",
+        "result": "BLOCKED",
+        "detail": "Missing completed identity-trust2 anchor"
+      },
+      {
+        "id": "coverage-extension.discovery.attribute-match",
+        "result": "BLOCKED",
+        "detail": "Missing completed identity-trust2 anchor"
+      }
+    ],
+    "goBuildSha256": "8c7f062a9e936f2f4942bb9c0191aaca25d3e76e775bfe0009da68b8c8f14d19"
+  },
+  "command": "node --import ./synthesis/node_modules/tsx/dist/loader.mjs out/native-coverage-extension/reference-attempt3/run.ts",
+  "originalAttemptsPreserved": [
+    "out/native-coverage-extension/reference-attempt1",
+    "out/native-coverage-extension/reference-attempt2"
+  ],
+  "notes": [
+    "All73 public requests executed against the actual TypeScript reference wallet and authenticated Go native-contract storage.",
+    "27 privileged failures are genuine missing privileged-key-manager rejection before reason validation.",
+    "16 basket failures reflect accepted invalid namespaces or lookup errors, never argument validation.",
+    "Two discovery checks are BLOCKED because this reference capture has no native signed-settings/trust2 context. Separate tests use unchanged retained native observations for those checks.",
+    "Expected valid-path fixture transactions are3; maximum attempted8. The reference accepted4 additional invalid-basket creates, whose actual signed bytes and7 total new transactions are retained.",
+    "No current native result, profile admission, or whole BRC100 qualification is inferred."
+  ]
+}

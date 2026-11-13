@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-archive-control-r7q90169/archive/verify.py", line 13, in <module>
+    original=[x for x in rows if not x.get('generated')];assert sha(json.dumps(original,sort_keys=True,separators=(',',':')).encode())==EXPECTED_INVENTORY,'Exact raw evidence inventory changed'
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Exact raw evidence inventory changed

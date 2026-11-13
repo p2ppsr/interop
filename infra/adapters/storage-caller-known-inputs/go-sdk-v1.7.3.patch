@@ -1,0 +1,373 @@
+--- a/transaction/beef.go
++++ b/transaction/beef.go
+@@ -1079,6 +1079,10 @@
+ // - For DataFormat == RawTx or TxIDOnly, checks if the txid appears in BUMPs (has proof)
+ // - For DataFormat == RawTxAndBumpIndex, verifies the bump index is accurate
+ func (b *Beef) ValidateTransactions() *ValidationResult {
++	return b.validateTransactionsWithKnownTxIDs(nil)
++}
++
++func (b *Beef) validateTransactionsWithKnownTxIDs(known map[chainhash.Hash]bool) *ValidationResult {
+ 	// Build a map of txids that appear in BUMPs (have proof)
+ 	txidsInBumps := make(map[chainhash.Hash]bool)
+ 	for _, bump := range b.BUMPs {
+@@ -1112,6 +1116,15 @@
+ 
+ 	// First pass: categorize transactions
+ 	for txid, beefTx := range b.Transactions {
++		if known[txid] {
++			validTxids[txid] = true
++			if beefTx.DataFormat == TxIDOnly {
++				txidOnly = append(txidOnly, beefTx)
++			} else {
++				hasProof = append(hasProof, beefTx)
++			}
++			continue
++		}
+ 		switch beefTx.DataFormat {
+ 		case TxIDOnly:
+ 			// TxIDOnly transactions are valid if they appear in BUMPs
+@@ -1249,10 +1262,31 @@
+ }
+ 
+ func (b *Beef) verifyValid(allowTxidOnly bool) verifyResult {
++	return b.verifyValidWithKnownTxIDs(allowTxidOnly, nil)
++}
++
++func (b *Beef) verifyValidWithKnownTxIDs(allowTxidOnly bool, known map[chainhash.Hash]bool) verifyResult {
+ 	r := verifyResult{valid: false, roots: map[uint32]string{}}
++	if b == nil {
++		return r
++	}
++	// Supplied paths are part of the evidence even when no leaf is marked as
++	// a transaction or when the path is not referenced by a raw transaction.
++	for _, mp := range b.BUMPs {
++		if mp == nil || len(mp.Path) == 0 || len(mp.Path[0]) == 0 {
++			return r
++		}
++		for _, level := range mp.Path {
++			for _, leaf := range level {
++				if leaf == nil || (leaf.Hash == nil && (leaf.Duplicate == nil || !*leaf.Duplicate)) {
++					return r
++				}
++			}
++		}
++	}
+ 
+ 	// Validate and sort transactions
+-	vr := b.ValidateTransactions()
++	vr := b.validateTransactionsWithKnownTxIDs(known)
+ 
+ 	// Check if validation passed
+ 	if len(vr.MissingInputs) > 0 ||
+@@ -1286,12 +1320,17 @@
+ 
+ 	// Verify all BUMPs have consistent roots
+ 	for _, mp := range b.BUMPs {
++		foundHash := false
+ 		for _, n := range mp.Path[0] {
+-			if n.Txid != nil && *n.Txid && n.Hash != nil {
++			if n.Hash != nil {
++				foundHash = true
+ 				if !confirmComputedRoot(mp, n.Hash.String()) {
+ 					return r
+ 				}
+ 			}
++		}
++		if !foundHash {
++			return r
+ 		}
+ 	}
+ 
+@@ -1838,3 +1877,71 @@
+ 	}
+ 	return c, nil
+ }
++
++// VerifyWithKnownTxIDs verifies all supplied proof and every undeclared branch,
++// allowing only the exact caller-declared roots to terminate input ancestry.
++// The trust decision is per invocation. Raw roots remain in the BEEF and are
++// hash-bound to their declared identity; this does not persist or promote trust.
++func (b *Beef) VerifyWithKnownTxIDs(ctx context.Context, tracker chaintracker.ChainTracker, allowTxidOnly bool, knownTxIDs []chainhash.Hash) (bool, error) {
++	if b == nil {
++		return false, fmt.Errorf("nil beef")
++	}
++	if len(knownTxIDs) == 0 {
++		return b.Verify(ctx, tracker, allowTxidOnly)
++	}
++	known := make(map[chainhash.Hash]bool, len(knownTxIDs))
++	for _, id := range knownTxIDs {
++		known[id] = true
++	}
++	// Validate every map/body association, even on trusted roots. Supplied BUMPs
++	// remain subject to all original consistency and independent chain checks.
++	for id, bt := range b.Transactions {
++		if bt == nil {
++			return false, fmt.Errorf("nil beef transaction")
++		}
++		switch bt.DataFormat {
++		case TxIDOnly:
++			if bt.KnownTxID == nil || *bt.KnownTxID != id || bt.Transaction != nil {
++				return false, fmt.Errorf("invalid txid-only identity")
++			}
++		case RawTx, RawTxAndBumpIndex:
++			if bt.Transaction == nil || *bt.Transaction.TxID() != id {
++				return false, fmt.Errorf("raw transaction identity mismatch")
++			}
++			for _, input := range bt.Transaction.Inputs {
++				if input == nil || input.SourceTXID == nil {
++					return false, fmt.Errorf("missing source transaction identity")
++				}
++			}
++		default:
++			return false, fmt.Errorf("unknown beef data format")
++		}
++	}
++	for _, bump := range b.BUMPs {
++		if bump == nil || len(bump.Path) == 0 || len(bump.Path[0]) == 0 {
++			return false, fmt.Errorf("invalid supplied merkle path")
++		}
++		for _, level := range bump.Path {
++			for _, leaf := range level {
++				if leaf == nil {
++					return false, fmt.Errorf("nil merkle path element")
++				}
++			}
++		}
++	}
++	result := b.verifyValidWithKnownTxIDs(allowTxidOnly, known)
++	if !result.valid {
++		return false, nil
++	}
++	for height, root := range result.roots {
++		hash, err := chainhash.NewHashFromHex(root)
++		if err != nil {
++			return false, err
++		}
++		ok, err := tracker.IsValidRootForHeight(ctx, hash, height)
++		if err != nil || !ok {
++			return false, err
++		}
++	}
++	return true, nil
++}
+--- /dev/null
++++ b/transaction/known_roots_prototype_test.go
+@@ -0,0 +1,108 @@
++package transaction_test
++
++import (
++	"context"
++	"encoding/hex"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
++	"github.com/bsv-blockchain/go-sdk/script"
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++type knownRootTracker struct{ calls int }
++
++func (k *knownRootTracker) CurrentHeight(context.Context) (uint32, error) { return 1000, nil }
++func (k *knownRootTracker) IsValidRootForHeight(context.Context, *chainhash.Hash, uint32) (bool, error) {
++	k.calls++
++	return false, nil
++}
++func capturedKnownBeef(t *testing.T) (*transaction.Beef, chainhash.Hash) {
++	raw, err := hex.DecodeString("0200beef000100010000000125db0888dcee5300bf81848cbc505d7b90a5a4ecc39577db23d50f1f85132efb000000000151ffffffff02f401000000000000027551ea010000000000001976a914da242beec042fb58a3678781e061ba06db5a13c488ac00000000")
++	require.NoError(t, err)
++	b, err := transaction.NewBeefFromBytes(raw)
++	require.NoError(t, err)
++	for id := range b.Transactions {
++		return b, id
++	}
++	t.Fatal("empty")
++	return nil, chainhash.Hash{}
++}
++func childOf(t *testing.T, parent *transaction.Transaction, unlock string) *transaction.Transaction {
++	s, err := script.NewFromHex(unlock)
++	require.NoError(t, err)
++	lock, err := script.NewFromHex("7551")
++	require.NoError(t, err)
++	tx := transaction.NewTransaction()
++	tx.AddInput(&transaction.TransactionInput{SourceTXID: parent.TxID(), SourceTxOutIndex: 0, UnlockingScript: s, SequenceNumber: 0xffffffff})
++	tx.AddOutput(&transaction.TransactionOutput{Satoshis: 400, LockingScript: lock})
++	return tx
++}
++func TestCallerKnownRootsAreExactAndRequestScoped(t *testing.T) {
++	for _, kind := range []string{"accept-raw-root", "no-root-declaration", "wrong-root", "raw-mutated-old-claim", "map-key-mismatch", "nil-record", "unknown-format", "mixed-undeclared-branch", "known-root-valid-child", "known-root-child-mutated-parent", "nil-bump", "empty-bump", "false-supplied-proof", "request-isolation", "txid-only-identity-mismatch"} {
++		t.Run(kind, func(t *testing.T) {
++			b, id := capturedKnownBeef(t)
++			tracker := &knownRootTracker{}
++			known := []chainhash.Hash{id}
++			want := kind == "accept-raw-root" || kind == "known-root-valid-child" || kind == "request-isolation"
++			switch kind {
++			case "no-root-declaration":
++				known = nil
++			case "wrong-root":
++				known = []chainhash.Hash{{1}}
++			case "raw-mutated-old-claim":
++				tx := b.Transactions[id].Transaction
++				tx.Outputs[0].Satoshis++
++				delete(b.Transactions, id)
++				b.Transactions[*tx.TxID()] = &transaction.BeefTx{DataFormat: transaction.RawTx, Transaction: tx}
++			case "map-key-mismatch":
++				b.Transactions[id].Transaction.Outputs[0].Satoshis++
++			case "nil-record":
++				b.Transactions[id] = nil
++			case "unknown-format":
++				b.Transactions[id].DataFormat = 99
++			case "mixed-undeclared-branch":
++				tx := childOf(t, b.Transactions[id].Transaction, "51")
++				tx.Inputs[0].SourceTXID = &chainhash.Hash{3}
++				_, err := b.MergeRawTx(tx.Bytes(), nil)
++				require.NoError(t, err)
++			case "known-root-valid-child":
++				tx := childOf(t, b.Transactions[id].Transaction, "51")
++				_, err := b.MergeRawTx(tx.Bytes(), nil)
++				require.NoError(t, err)
++			case "known-root-child-mutated-parent":
++				tx := childOf(t, b.Transactions[id].Transaction, "51")
++				tx.Inputs[0].SourceTXID = &chainhash.Hash{3}
++				_, err := b.MergeRawTx(tx.Bytes(), nil)
++				require.NoError(t, err)
++			case "nil-bump":
++				b.BUMPs = []*transaction.MerklePath{nil}
++			case "empty-bump":
++				b.BUMPs = []*transaction.MerklePath{{BlockHeight: 1}}
++			case "false-supplied-proof":
++				yes := true
++				b.BUMPs = []*transaction.MerklePath{{BlockHeight: 1, Path: [][]*transaction.PathElement{{{Offset: 0, Hash: &id, Txid: &yes}}}}}
++			case "txid-only-identity-mismatch":
++				b.Transactions[id] = &transaction.BeefTx{DataFormat: transaction.TxIDOnly, KnownTxID: &chainhash.Hash{2}}
++			}
++			ok, err := b.VerifyWithKnownTxIDs(t.Context(), tracker, true, known)
++			if want {
++				require.NoError(t, err)
++				require.True(t, ok)
++			} else {
++				require.False(t, ok)
++			}
++			if kind == "false-supplied-proof" {
++				require.Equal(t, 1, tracker.calls)
++			}
++			if kind == "request-isolation" {
++				again, err := b.Verify(t.Context(), tracker, true)
++				require.NoError(t, err)
++				require.False(t, again)
++				again, err = b.VerifyWithKnownTxIDs(t.Context(), tracker, true, nil)
++				require.NoError(t, err)
++				require.False(t, again)
++			}
++		})
++	}
++}
+--- /dev/null
++++ b/transaction/supplied_bump_validation_test.go
+@@ -0,0 +1,106 @@
++package transaction_test
++
++import (
++	"context"
++	"fmt"
++	"github.com/bsv-blockchain/go-sdk/chainhash"
++	"github.com/bsv-blockchain/go-sdk/transaction"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++type exactSuppliedProofTracker struct {
++	calls  int
++	root   chainhash.Hash
++	height uint32
++	accept bool
++}
++
++func (t *exactSuppliedProofTracker) CurrentHeight(context.Context) (uint32, error) { return 1000, nil }
++func (t *exactSuppliedProofTracker) IsValidRootForHeight(_ context.Context, root *chainhash.Hash, height uint32) (bool, error) {
++	t.calls++
++	return t.accept && *root == t.root && height == t.height, nil
++}
++func TestSuppliedBUMPIsVerifiedRegardlessOfMarker(t *testing.T) {
++	for _, known := range []bool{false, true} {
++		for _, marker := range []string{"marked", "unmarked", "nil"} {
++			for _, valid := range []bool{false, true} {
++				t.Run(fmt.Sprintf("known=%v/marker=%s/valid=%v", known, marker, valid), func(t *testing.T) {
++					b, id := capturedKnownBeef(t)
++					flag := marker == "marked"
++					var flagPtr *bool
++					if marker != "nil" {
++						flagPtr = &flag
++					}
++					bump := &transaction.MerklePath{BlockHeight: 1, Path: [][]*transaction.PathElement{{{Offset: 0, Hash: &id, Txid: flagPtr}}}}
++					b.BUMPs = []*transaction.MerklePath{bump}
++					b.Transactions[id].DataFormat = transaction.RawTxAndBumpIndex
++					b.Transactions[id].BumpIndex = 0
++					b.Transactions[id].Transaction.MerklePath = bump
++					wire, err := b.Bytes()
++					require.NoError(t, err)
++					parsed, err := transaction.NewBeefFromBytes(wire)
++					require.NoError(t, err)
++					tracker := &exactSuppliedProofTracker{root: id, height: 1, accept: valid}
++					var ids []chainhash.Hash
++					if known {
++						ids = []chainhash.Hash{id}
++					}
++					ok, err := parsed.VerifyWithKnownTxIDs(t.Context(), tracker, true, ids)
++					require.NoError(t, err)
++					require.Equal(t, valid, ok)
++					require.Equal(t, 1, tracker.calls, "Supplied proof must reach the independent chain tracker")
++				})
++			}
++		}
++	}
++}
++func TestCallerKnownRootCannotDiscardSuppliedProofMetadata(t *testing.T) {
++	for _, kind := range []string{"index-negative", "index-out-of-range", "wrong-membership", "extraneous-unmarked-false", "extraneous-unmarked-valid", "contradictory-height", "empty-path", "nil-upper-element"} {
++		t.Run(kind, func(t *testing.T) {
++			b, id := capturedKnownBeef(t)
++			unmarked := false
++			other := chainhash.Hash{7}
++			bump := &transaction.MerklePath{BlockHeight: 1, Path: [][]*transaction.PathElement{{{Offset: 0, Hash: &id, Txid: &unmarked}}}}
++			b.BUMPs = []*transaction.MerklePath{bump}
++			b.Transactions[id].DataFormat = transaction.RawTxAndBumpIndex
++			b.Transactions[id].BumpIndex = 0
++			b.Transactions[id].Transaction.MerklePath = bump
++			tracker := &exactSuppliedProofTracker{root: id, height: 1, accept: true}
++			switch kind {
++			case "index-negative":
++				b.Transactions[id].BumpIndex = -1
++			case "index-out-of-range":
++				b.Transactions[id].BumpIndex = 1
++			case "wrong-membership":
++				bump.Path[0][0].Hash = &other
++				tracker.root = other
++			case "extraneous-unmarked-false", "extraneous-unmarked-valid":
++				b.Transactions[id].DataFormat = transaction.RawTx
++				b.Transactions[id].Transaction.MerklePath = nil
++				bump.Path[0][0].Hash = &other
++				tracker.root = other
++				tracker.accept = kind == "extraneous-unmarked-valid"
++			case "contradictory-height":
++				b.BUMPs = append(b.BUMPs, &transaction.MerklePath{BlockHeight: 1, Path: [][]*transaction.PathElement{{{Offset: 0, Hash: &other, Txid: &unmarked}}}})
++			case "empty-path":
++				bump.Path = nil
++			case "nil-upper-element":
++				bump.Path = append(bump.Path, []*transaction.PathElement{nil})
++			}
++			ok, _ := b.VerifyWithKnownTxIDs(t.Context(), tracker, true, []chainhash.Hash{id})
++			require.Equal(t, kind == "extraneous-unmarked-valid", ok)
++			if kind == "extraneous-unmarked-valid" || kind == "extraneous-unmarked-false" {
++				require.Equal(t, 1, tracker.calls)
++			}
++		})
++	}
++}
++func TestNilReceiverWithEmptyAndNonemptyKnownRoots(t *testing.T) {
++	var b *transaction.Beef
++	for _, ids := range [][]chainhash.Hash{nil, {{1}}} {
++		ok, err := b.VerifyWithKnownTxIDs(t.Context(), &knownRootTracker{}, true, ids)
++		require.False(t, ok)
++		require.Error(t, err)
++	}
++}

@@ -1,0 +1,32 @@
+{
+  "sourceBefore": "584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99",
+  "actualNativePredicatesChanged": false,
+  "nativeInputs": 418,
+  "nativeInputBytesUnchanged": true,
+  "nativePlanSha256": "adeb0797ea89539201db59a396d1d354ea2459f591dd27f370b363ce66e81386",
+  "reevaluationSourcesUnchanged": {
+    "scripts/reevaluate-native-integrated.mjs": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+    "scripts/verify-native-reevaluation.mjs": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+    "scripts/native-reevaluation.mjs": "6f183257e3bb633cf96b4929bca174cffc865ef6ecbd8d85556279f712a6d2ec",
+    "scripts/frozen-component-replay.mjs": "d92399e29b06f8b40c0a8b1f9e64ceebc550fa1236b41c22e0fb120b355fb9fd",
+    "scripts/verify-published-integrations.mjs": "385d2311eb9aac4142f306b2d315c6e58a6074e1a93aa18f3700e1479acf16a2"
+  },
+  "change": {
+    "path": ".github/workflows/ci.yml",
+    "before": "npm test --prefix synthesis",
+    "after": "npm test --prefix synthesis -- --testTimeout=30000",
+    "scope": "Foundation offline regression runner only; native calls, SUT, predicates, expected results and execution bounds unchanged"
+  },
+  "local": {
+    "corePASS": 231,
+    "synthesisPASS": 1744,
+    "synthesisSKIP": 91,
+    "catalog": true,
+    "pythonPASS": 5
+  },
+  "failedRun": 43325256465,
+  "duplicateCanceled": 43325237332,
+  "order17JobSeconds": 1693,
+  "cohortAfter": 48457,
+  "native13Dispatched": false
+}

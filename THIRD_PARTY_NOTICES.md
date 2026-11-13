@@ -36,6 +36,12 @@ unchanged license texts remain in the resolved module archives; linking or downl
 The digest-pinned MongoDB container used for component qualification retains
 its own license. Original laboratory host and adapter code remains Apache-2.0.
 
+The [Go11 serialization adapter](infra/adapters/storage-sync-order/README.md)
+extends the checksum-bound Go10 compatibility artifact. Its SDK patch retains
+the upstream terms, with unchanged [SDK](infra/adapters/storage-caller-known-inputs/LICENSE-sdk)
+and [toolbox](infra/adapters/storage-caller-known-inputs/LICENSE-toolbox) license
+texts. The original laboratory tests and admission tooling retain Apache-2.0.
+
 ## Integrated service and Rust dependencies
 
 `integrations/services/vendor/` retains selected ChainTracks routes (Open BSV v6)
@@ -47,3 +53,26 @@ the exact sources in `components/messaging/sources.lock.json`; upstream licenses
 remain controlling. The Rust participant links the SDK revision and dependencies
 fixed by `components/rust/Cargo.lock`. These pins and compatibility patches grant
 no new rights and imply no vendor endorsement.
+
+## Retained Yours PR #368 engineering candidate
+
+`fixtures/artifacts/yours-wallet-pr368-7e39006/` retains the exact CI-built ZIP for
+source `7e39006f87a00d8fefaadef410f1bc8f91fe26cb`, independently identified as an
+engineering candidate. It is not the official 5.1.1 release. The directory
+contains the unchanged Yours MIT license, source/CI provenance, exact package
+lock, and license inventory with published package notices for 134 package names / 139 package versions
+identified across top-level and nested installations in the retained source maps. Bundled dependencies, including Open BSV
+licensed packages, keep their original terms. No Apache relicensing, vendor
+endorsement, or broader submission acceptance is asserted.
+
+The earlier, unscored PR368 f9faa candidate remains byte-for-byte under `fixtures/artifacts/yours-wallet-pr368-f9faa/` with its own provenance and license inventory. It is retired from active native selection and cannot be relabeled as an official release.
+
+## Retained Yours PR368 cb3c2f2 candidate
+
+`fixtures/artifacts/yours-wallet-pr368-cb3c2f2/` retains the exact source-owned
+engineering build with public transaction option and cleanup-error corrections.
+Its own provenance binds CI, the original inner/outer archives, all45 members,
+source patches,134 package names/139 versions/145 installed locations and their
+license metadata/notices. Earlier7e39006 andf9faa intakes are unchanged. The new
+candidate is not an official release, vendor endorsement or native qualification;
+all original license terms continue to apply.

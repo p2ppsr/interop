@@ -1,0 +1,13 @@
+/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/sdk/dist/cjs/src/transaction/Beef.js:1086
+            throw new Error(`Serialized BEEF must start with ${BeefConstants_js_1.BEEF_V1} or ${BeefConstants_js_1.BEEF_V2} but starts with ${version}`);
+                  ^
+
+Error: Serialized BEEF must start with 4022206465 or 4022206466 but starts with 1
+    at Beef.fromReader (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/sdk/dist/cjs/src/transaction/Beef.js:1086:19)
+    at Beef.fromBinary (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/node_modules/@bsv/sdk/dist/cjs/src/transaction/Beef.js:1114:21)
+    at file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/nosend-diagnosis.mjs:11:87
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.22.1

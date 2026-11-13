@@ -1,0 +1,13 @@
+{
+  "schema": "tpnil-native-header-fixture-policy@1.0.0",
+  "id": "tpnil-native-controlled-header@1.0.0",
+  "assertionId": "getHeaderForHeight.controlled-mined",
+  "fixture": {
+    "path": "fixtures/teranode/wab-funding-v1.json",
+    "sha256": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a"
+  },
+  "height": 1,
+  "blockHeaderHex": "0100000006226e46111a0b59caaf126043eb5bbf28c34f3a5e332a1fc7b2b73cf188910ff92c04a4c91f3bf86d4c180f010ffb83e794eb4f2cc092aed958e1c0b9061cf86db1b06affff7f2000000000",
+  "scope": "Request the exact positive funding height from the declared controlled mined fixture. This replaces only the prospective header predicate and preserves the 42 assertions across 28 public methods. It is not a genesis-header or public-mainnet-header claim. Legacy selectors retain their original height 0 request and predicate.",
+  "failurePolicy": "The preliminary safe-boundary probe retains a returned header or error without stopping later conformance execution. The method corpus independently scores the same fixed request against this pinned header; errors and mismatched bytes remain FAIL."
+}

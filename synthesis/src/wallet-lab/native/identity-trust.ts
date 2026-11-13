@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
 import { performance } from 'node:perf_hooks'
 import { WalletSettingsManager } from '@bsv/wallet-toolbox'
-import { Beef, PrivateKey, Transaction } from '@bsv/sdk'
+import { Beef, PrivateKey, ProtoWallet, Transaction, VerifiableCertificate } from '@bsv/sdk'
 import { canonicalJson } from '../../determinism.js'
+import { getIdentityTrustOracle2Policy, type IdentityTrustOracleOptions } from './identity-trust-oracle2.js'
 
 export const trustAssertionIds = ['initial-exclusion', 'public-settings-token', 'cache-expiry', 'positive-discovery', 'settings-restored', 'temporary-token-spent', 'public-boundary-only', 'cleanup'].map(id => `identity-trust.${id}`)
 const issuer = PrivateKey.fromHex('36'.repeat(32)).toPublicKey().toString()
@@ -27,7 +28,13 @@ export class PublicSettingsTrust {
   private readonly boundary: any
   private readonly manager: WalletSettingsManager
   private writeAttempted = false
-  constructor(wallet: any) {
+  constructor(wallet: any, options: IdentityTrustOracleOptions & { initialDiscoveryConsent?: 'explicit-allow-v1' } = {}) {
+    if (options.initialDiscoveryConsent) this.observation.initialDiscoveryConsent = options.initialDiscoveryConsent
+    if (options.oracle !== undefined) {
+      const selected = getIdentityTrustOracle2Policy(options.oracle)
+      this.observation.oracle = options.oracle
+      this.observation.oraclePolicySha256 = selected.policySha256
+    }
     this.boundary = new Proxy({}, { get: (_target, name) => {
       if (typeof name !== 'string' || name === 'then') return undefined
       return async (...args: any[]) => {
@@ -49,8 +56,8 @@ export class PublicSettingsTrust {
       this.observation.originalOutputs = await this.outputs()
       assert.ok(this.observation.originalOutputs.totalOutputs <= 1, 'Ambiguous original settings tokens')
       assert.ok(!this.observation.originalSettings.trustSettings.trustedCertifiers.some((c: any) => c.identityKey === issuer), 'Fixture issuer was already trusted')
-      this.observation.initialIdentity = await this.boundary.discoverByIdentityKey({ identityKey: certificate.subject, forceRefresh: true })
-      this.observation.initialAttributes = await this.boundary.discoverByAttributes({ attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true })
+      this.observation.initialIdentity = await this.boundary.discoverByIdentityKey({ identityKey: certificate.subject, forceRefresh: true, ...(this.observation.initialDiscoveryConsent ? { seekPermission: true } : {}) })
+      this.observation.initialAttributes = await this.boundary.discoverByAttributes({ attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true, ...(this.observation.initialDiscoveryConsent ? { seekPermission: true } : {}) })
       const excluded = [this.observation.initialIdentity, this.observation.initialAttributes].every(r => !r.certificates.some((c: any) => isFixture(c, certificate)))
       this.record('initial-exclusion', excluded, 'Both public discovery methods exclude the published, initially untrusted fixture issuer.')
       assert.ok(excluded)
@@ -76,7 +83,30 @@ export class PublicSettingsTrust {
     const certificate = this.observation.certificate
     const discovery = ['discoverByIdentityKey', 'discoverByAttributes'].map(method => corpus?.trace?.find((r: any) => r.method === method))
     this.observation.positiveDiscovery = discovery
-    this.record('positive-discovery', Boolean(certificate && discovery.every(r => r?.result?.certificates?.some((c: any) => isFixture(c, certificate)))), 'The unchanged native wallet discovers the published fixture through both public methods after trust-cache expiry.')
+    let positive = Boolean(certificate && discovery.every(r => r?.result?.certificates?.some((c: any) => isFixture(c, certificate))))
+    if (this.observation.oracle !== undefined) {
+      try {
+        const { policy } = getIdentityTrustOracle2Policy(this.observation.oracle)
+        const proofs = corpus.trace.filter((r: any) => r.method === 'proveCertificate' && r.args?.verifier === policy.binding.verifier)
+        assert.equal(proofs.length, 1)
+        assert.deepEqual(proofs[0].args, { certificate: { type: certificate.type, serialNumber: certificate.serialNumber, certifier: certificate.certifier }, fieldsToReveal: policy.binding.fieldsToReveal, verifier: policy.binding.verifier })
+        assert.equal(proofs[0].error, undefined); assert.deepEqual(proofs[0].result.keyringForVerifier, certificate.keyring)
+        assert.deepEqual(Object.keys(certificate.keyring), policy.binding.fieldsToReveal)
+        for (const response of discovery) {
+          assert.equal(response?.error, undefined)
+          const matches = response?.result?.certificates?.filter((row: any) => isFixture(row, certificate))
+          assert.equal(matches?.length, 1)
+          const found = matches[0]
+          for (const field of ['type', 'serialNumber', 'subject', 'certifier', 'revocationOutpoint', 'fields', 'signature']) assert.deepEqual(found[field], certificate[field])
+          assert.deepEqual(found.publiclyRevealedKeyring, certificate.keyring)
+          assert.deepEqual(found.decryptedFields, policy.binding.expectedPlaintext)
+          const disclosed = VerifiableCertificate.fromCertificate(found, found.publiclyRevealedKeyring)
+          assert.equal(await disclosed.verify(), true)
+          assert.deepEqual(await disclosed.decryptFields(new ProtoWallet('anyone')), policy.binding.expectedPlaintext)
+        }
+      } catch { positive = false }
+    }
+    this.record('positive-discovery', positive, 'The unchanged native wallet discovers the published fixture through both public methods after trust-cache expiry.')
     this.observation.cleanup.attempted = true
     try {
       if (!this.observation.originalSettings || !this.observation.originalOutputs) throw new Error('Original settings snapshot unavailable')

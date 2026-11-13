@@ -11,6 +11,12 @@ import type { RouteObservation } from './model.js'
 import { ControlledOverlayServices, type OverlayObservation, type UmpRecord } from './overlay-services.js'
 import { applyTypeScriptDescendantExport } from '../storage-sync/descendant-export.js'
 import { SubmissionVerdicts, type SubmissionTarget } from './submission-verdicts.js'
+import { assertSnapshotIdentity, validateNativeOutputSnapshot, type OwnedNativeOutputSnapshots, type NativeOutputSnapshotObservation, type NativeOutputProviderRegistry } from './native-output-snapshot.js'
+
+import { assertCertificateInventoryIdentity } from './native-certificate-inventory.js'
+import { validateNativeActionQueryFinalLedger, validateNativeActionQueryCuts } from './native-action-query-ledger.js'
+import { assertTransactionKnowledgeProvider } from './native-transaction-knowledge-inventory.js'
+import type { NativeInventoryObservation, OwnedNativeCertificateInventories, OwnedNativeTransactionKnowledgeInventories, OwnedNativeActionQueryCuts, OwnedNativeFinalActionQueryLedger } from './native-owned-inventories.js'
 
 export interface HeaderRecord {
   version: number
@@ -63,6 +69,8 @@ export interface ControlledServicesOptions {
   walletStorageRootKeyHex?: string
   submitVerdicts?: Array<'ACCEPTED_BY_NETWORK' | 'REJECTED'>
   wabPort?: number
+  /** Explicit prospective global ordering; older profiles retain provider order. */
+  submissionOrdering?: 'tpnil-owned-submission-order@1'
 }
 
 export interface TeranodeWalletFundingFixture {
@@ -171,6 +179,11 @@ export class ControlledWalletServices {
   readonly headers = new Map<number, HeaderRecord>([[0, genesisHeader]])
   readonly routes: RouteObservation[] = []
   private readonly ownSubmissions: SubmittedTransaction[] = []
+  private readonly ownCertificateInventoryObservations: NativeInventoryObservation<OwnedNativeCertificateInventories>[] = []
+  private readonly ownKnowledgeInventoryObservations: NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories>[] = []
+  private readonly ownActionQueryObservations: NativeInventoryObservation<OwnedNativeActionQueryCuts>[] = []
+  private retainedFinalActionQueryLedgers: OwnedNativeFinalActionQueryLedger[] = []
+  private readonly ownOutputSnapshotObservations: NativeOutputSnapshotObservation[] = []
   readonly walletBridgeObservations: WalletBridgeObservation[] = []
   readonly storageRpcObservations: StorageRpcObservation[] = []
   /** Exact public Go storage receipts; prospective terminal-rejection profile only. */
@@ -182,8 +195,16 @@ export class ControlledWalletServices {
   private readonly verdicts: SubmissionVerdicts
   private readonly webroot: string
   private readonly externalOverlayLookups = new Map<string, string>()
+  private readonly scopedOverlayLookups = new Map<string, (question: any) => Promise<unknown>>()
   private readonly externalStorageCounterparts = new Map<string, number>()
+  private readonly controlledRoutes = new Map<string, (request: IncomingMessage, response: ServerResponse) => Promise<void>>()
   private readonly ownedStorageCounterparts = new Map<string, ControlledWalletServices>()
+  readonly submissionOrdering?: 'tpnil-owned-submission-order@1'
+  private submissionParent?: ControlledWalletServices
+  private readonly submissionJournal: Array<{ owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }> = []
+  private readonly submissionEvents = new Set<object>()
+  private readonly submissionListeners = new Set<(event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => void>()
+  private readonly submissionSubscriptions = new Map<ControlledWalletServices, (event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => void>()
   readonly storageEndpointEvents: Array<{ available: boolean; at: string }> = []
   private readonly wabPort?: number
   private routeSequence = 0
@@ -202,6 +223,8 @@ export class ControlledWalletServices {
   }>()
 
   constructor(options: ControlledServicesOptions) {
+    if (options.submissionOrdering !== undefined && options.submissionOrdering !== 'tpnil-owned-submission-order@1') throw new Error('Unsupported owned submission ordering')
+    this.submissionOrdering = options.submissionOrdering
     this.components = selectComponents(options.components)
     this.goOptions = options.go
     this.typescriptDescendantExport = options.typescriptDescendantExport === true
@@ -215,41 +238,98 @@ export class ControlledWalletServices {
 
   /** Prospective native replacement route; authentication remains end to end. */
   createStorageCounterpart(webroot: string, walletStorageRootKeyHex: string): ControlledWalletServices {
-    return new ControlledWalletServices({ webroot, walletStorageRootKeyHex, components: { storage: this.components.storage }, ...(this.goOptions ? { go: { ...this.goOptions } } : {}), ...(this.typescriptDescendantExport ? { typescriptDescendantExport: true } : {}) })
+    return new ControlledWalletServices({ webroot, walletStorageRootKeyHex, components: { storage: this.components.storage }, ...(this.goOptions ? { go: { ...this.goOptions } } : {}), ...(this.typescriptDescendantExport ? { typescriptDescendantExport: true } : {}), ...(this.submissionOrdering ? { submissionOrdering: this.submissionOrdering } : {}) })
   }
 
   registerStorageCounterpart(host: string, endpoint: string, owner?: ControlledWalletServices): void {
-    if (!/^[a-z0-9-]+\.itcve\.test$/.test(host) || this.externalStorageCounterparts.has(host)) throw new Error('Invalid or duplicate storage counterpart hostname')
+    if (!/^[a-z0-9-]+\.itcve\.test$/.test(host) || this.externalStorageCounterparts.has(host) || this.controlledRoutes.has(host)) throw new Error('Invalid or duplicate storage counterpart hostname')
     const url = new URL(endpoint)
     if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !url.port || url.pathname !== '/' || url.search || url.hash || url.username || url.password) throw new Error('Storage counterpart must be an isolated loopback endpoint')
     if (owner && (owner === this || owner.storageUrl !== endpoint || [...this.ownedStorageCounterparts.values()].includes(owner))) throw new Error('Storage counterpart ownership differs from endpoint or is duplicated')
+    if (owner && this.submissionOrdering) {
+      if (owner.submissionOrdering !== this.submissionOrdering || owner.submissionParent) throw new Error('Submission journal requires one compatible owner')
+      for (let ancestor: ControlledWalletServices | undefined = this; ancestor; ancestor = ancestor.submissionParent) if (ancestor === owner) throw new Error('Cyclic storage counterpart ownership')
+    }
     this.externalStorageCounterparts.set(host, Number(url.port))
-    if (owner) this.ownedStorageCounterparts.set(host, owner)
+    if (owner) {
+      this.ownedStorageCounterparts.set(host, owner)
+      if (this.submissionOrdering) {
+        owner.submissionParent = this
+        // Prior owned history is adopted at registration. Future events are
+        // appended synchronously at their producer, never sorted on read.
+        for (const event of owner.submissionJournal) this.appendSubmissionEvent(event)
+        const listener = (event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }) => this.appendSubmissionEvent(event)
+        owner.submissionListeners.add(listener); this.submissionSubscriptions.set(owner, listener)
+      }
+    }
   }
 
   unregisterStorageCounterpart(host: string): void { this.externalStorageCounterparts.delete(host) }
 
-  get submissions(): SubmittedTransaction[] { return this.ownedStorageCounterparts.size === 0 ? this.ownSubmissions : [...this.ownSubmissions, ...[...this.ownedStorageCounterparts.values()].flatMap(service => service.submissions)] }
+  /** Optional, isolated native-coverage fixtures. Registration cannot redirect a
+   * production hostname or replace an existing storage/application service. */
+  registerControlledRoute(host: string, handler: (request: IncomingMessage, response: ServerResponse) => Promise<void>): () => void {
+    const extended = (this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch || this.goOptions?.storageCallerKnownInputsPatch) ? [
+      'permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked',
+      'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection',
+      'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'
+    ].map(name => `${name}.itcve.test`) : []
+    const completion = this.goOptions?.storageCallerKnownInputsPatch ? ['permission-sequence', 'permission-sequence-alt', 'permission-sequence-denied', 'permission-sequence-group', 'permission-sequence-group-alt'].map(name => `${name}.itcve.test`) : []
+    if (!['certifier.itcve.test', 'allowance.itcve.test', ...extended, ...completion].includes(host) || this.controlledRoutes.has(host) || this.externalStorageCounterparts.has(host) || typeof handler !== 'function') throw new Error('Invalid or duplicate controlled coverage route')
+    this.controlledRoutes.set(host, handler)
+    let registered = true
+    return () => {
+      if (!registered) return
+      registered = false
+      if (this.controlledRoutes.get(host) === handler) this.controlledRoutes.delete(host)
+    }
+  }
+
+  get submissions(): SubmittedTransaction[] {
+    if (this.submissionOrdering) return this.submissionJournal.map(event => event.submission)
+    return this.ownedStorageCounterparts.size === 0 ? this.ownSubmissions : [...this.ownSubmissions, ...[...this.ownedStorageCounterparts.values()].flatMap(service => service.submissions)]
+  }
 
   /** Read-only prospective observer. Retained provider references survive close()
    * clearing ownership maps; each provider's actual receipt order is preserved. */
   observeSubmissionClosure() {
-    const providers: Array<{ id: string; rows: SubmittedTransaction[] }> = []
+    const providers: Array<{ id: string; owner: ControlledWalletServices; rows: SubmittedTransaction[] }> = []
     const collect = (service: ControlledWalletServices, id: string) => {
-      providers.push({ id, rows: service.ownSubmissions })
+      providers.push({ id, owner: service, rows: service.ownSubmissions })
       for (const [host, counterpart] of service.ownedStorageCounterparts) collect(counterpart, `${id}/${host}`)
     }
     collect(this, 'source')
     const snapshot = (row: SubmittedTransaction) => ({ txid: row.txid, verdict: row.verdict, beefHex: Buffer.from(row.bytes).toString('hex') })
     const initialProviders = providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) }))
+    const ids = new Map(providers.map(provider => [provider.owner, provider.id]))
+    const captureJournal = () => {
+      const provenance = this.submissionJournal.map(event => {
+        const provider = ids.get(event.owner)
+        if (!provider || event.owner.ownSubmissions[event.providerIndex] !== event.submission) throw new Error('Owned submission journal changed provider identity or local position')
+        return { provider, providerIndex: event.providerIndex }
+      })
+      return { submissions: this.submissionJournal.map(event => snapshot(event.submission)), provenance }
+    }
+    const initialJournal = this.submissionOrdering ? captureJournal() : undefined
     return {
       initialProviders,
-      initialSubmissions: initialProviders.flatMap(provider => provider.submissions),
-      readFinalProviders: () => providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) }))
+      initialSubmissions: initialJournal?.submissions ?? initialProviders.flatMap(provider => provider.submissions),
+      readFinalProviders: () => providers.map(provider => ({ id: provider.id, submissions: provider.rows.map(snapshot) })),
+      ...(initialJournal ? { journal: { ordering: this.submissionOrdering!, initialProvenance: initialJournal.provenance, readFinal: captureJournal } } : {})
     }
   }
 
-  recordSubmission(submission: SubmittedTransaction): void { this.ownSubmissions.push(submission) }
+  private appendSubmissionEvent(event: { owner: ControlledWalletServices; providerIndex: number; submission: SubmittedTransaction }): void {
+    if (this.submissionEvents.has(event)) throw new Error('Repeated owned submission event')
+    this.submissionEvents.add(event); this.submissionJournal.push(event)
+    for (const listener of this.submissionListeners) listener(event)
+  }
+
+  recordSubmission(submission: SubmittedTransaction): void {
+    const providerIndex = this.ownSubmissions.length
+    this.ownSubmissions.push(submission)
+    if (this.submissionOrdering) this.appendSubmissionEvent({ owner: this, providerIndex, submission })
+  }
 
   get storageCounterpartIdentities(): Record<string, unknown> {
     return Object.fromEntries([...this.ownedStorageCounterparts].map(([host, service]) => [host, service.componentIdentity]))
@@ -278,6 +358,19 @@ export class ControlledWalletServices {
       if (!/^ls_[a-z0-9_]+$/.test(service)) throw new Error('Invalid overlay lookup service name')
       if (this.externalOverlayLookups.has(service) && this.externalOverlayLookups.get(service) !== url.origin) throw new Error('Overlay lookup provider already registered')
       this.externalOverlayLookups.set(service, url.origin)
+    }
+  }
+
+  /** Temporarily intercept only the identity fixture's wire lookup. Existing
+   * real provider registrations remain intact and become active on cleanup. */
+  installIdentityCoverageLookup(answer: (question: any) => Promise<unknown>): () => void {
+    if (!(this.goOptions?.storageDustAccountingPatch || this.goOptions?.storageMergeAccountingPatch || this.goOptions?.storageInputAncestryPatch || this.goOptions?.storageSQLiteRetryPatch || this.goOptions?.storageCallerKnownInputsPatch) || this.scopedOverlayLookups.has('ls_identity') || typeof answer !== 'function') throw new Error('Invalid or duplicate scoped identity lookup')
+    this.scopedOverlayLookups.set('ls_identity', answer)
+    let open = true
+    return () => {
+      if (!open) return
+      if (this.scopedOverlayLookups.get('ls_identity') !== answer) throw new Error('Scoped identity lookup ownership changed')
+      this.scopedOverlayLookups.delete('ls_identity'); open = false
     }
   }
 
@@ -358,7 +451,7 @@ export class ControlledWalletServices {
     }
     remoteServices.postBeef = async (beef, txids) => txids.map(txid => {
       const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
-      this.ownSubmissions.push({ txid, bytes, verdict: 'ACCEPTED_BY_NETWORK' })
+      this.recordSubmission({ txid, bytes, verdict: 'ACCEPTED_BY_NETWORK' })
       return {
         name: 'tpnil-controlled-submission',
         status: 'success' as const,
@@ -366,6 +459,38 @@ export class ControlledWalletServices {
       }
     })
     return wallet
+  }
+
+  async nativeActionReferences(identity: string): Promise<Array<{ txid: string; reference: string }>> {
+    if (!/^(02|03)[0-9a-f]{64}$/.test(identity) || BigInt(`0x${identity.slice(2)}`) >= BigInt(`0x${new Curve().p.toString(16)}`) || !PublicKey.fromString(identity).validate()) throw new Error('Invalid action-reference identity')
+    const unique = new Map<string, { txid: string; reference: string }>()
+    const byReference = new Map<string, string>()
+    const visited = new Set<ControlledWalletServices>()
+    const collect = async (service: ControlledWalletServices): Promise<void> => {
+      if (visited.has(service)) return
+      visited.add(service)
+      if (service.goServices === undefined || service.components.storage !== 'go') throw new Error('Native Go storage is absent')
+      const rows: unknown = await service.goServices.actionReferences(identity)
+      if (!Array.isArray(rows) || rows.length > 2048) throw new Error('Action-reference snapshot exceeded its row budget or is not an array')
+      const local = new Set<string>()
+      for (const row of rows) {
+        if (row === null || typeof row !== 'object' || Object.keys(row).sort().join(',') !== 'reference,txid' ||
+          typeof row.txid !== 'string' || !/^[0-9a-f]{64}$/.test(row.txid) || local.has(row.txid) ||
+          typeof row.reference !== 'string' || row.reference.length === 0 || row.reference.length > 300 ||
+          Buffer.from(row.reference, 'base64').toString('base64') !== row.reference) throw new Error('Invalid or ambiguous stored action reference')
+        local.add(row.txid)
+        if ((unique.has(row.txid) && unique.get(row.txid)!.reference !== row.reference) ||
+          (byReference.has(row.reference) && byReference.get(row.reference) !== row.txid)) throw new Error('Counterparts disagree on action-reference identity')
+        unique.set(row.txid, { txid: row.txid, reference: row.reference })
+        byReference.set(row.reference, row.txid)
+        if (unique.size > 2048) throw new Error('Combined action-reference snapshot exceeded its row budget')
+      }
+      // Include retained owners after route withdrawal: their storage remains
+      // part of the run's evidence until the service is finally closed.
+      for (const counterpart of service.ownedStorageCounterparts.values()) await collect(counterpart)
+    }
+    await collect(this)
+    return [...unique.values()].sort((a, b) => a.txid < b.txid ? -1 : a.txid > b.txid ? 1 : 0)
   }
 
   async nativeTransactions(): Promise<Array<{ txid: string; rawTxHex: string }>> {
@@ -378,6 +503,119 @@ export class ControlledWalletServices {
       unique.set(transaction.txid, transaction)
     }
     return [...unique.values()]
+  }
+
+  /** Read every retained owned provider, including a withdrawn old endpoint.
+   * Provider-local IDs and metadata stay separate: sync may legitimately leave
+   * an older provider behind, and must never hide a rejected request's write. */
+  get nativeOutputSnapshotObservations(): NativeOutputSnapshotObservation[] { return structuredClone(this.ownOutputSnapshotObservations) }
+  get nativeOutputProviderRegistry(): NativeOutputProviderRegistry {
+    const providers: NativeOutputProviderRegistry = [], seen = new Set<ControlledWalletServices>()
+    const collect = (service: ControlledWalletServices, id: string) => {
+      if (seen.has(service)) throw new Error('Duplicate or cyclic output provider registry')
+      seen.add(service); providers.push({ id, identityKey: service.identityKey, componentIdentity: service.componentIdentity })
+      if (providers.length > 16) throw new Error('Owned output provider registry budget exceeded')
+      for (const [host, counterpart] of service.ownedStorageCounterparts) collect(counterpart, `${id}/${host}`)
+    }
+    collect(this, 'source'); return structuredClone(providers)
+  }
+  async nativeOutputSnapshots(identity: string): Promise<OwnedNativeOutputSnapshots> {
+    const observation: NativeOutputSnapshotObservation = { sequence: this.ownOutputSnapshotObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '' }
+    this.ownOutputSnapshotObservations.push(observation)
+    try {
+      const snapshots = await this.collectNativeOutputSnapshots(identity)
+      observation.snapshots = structuredClone(snapshots)
+      return snapshots
+    } catch (error) {
+      observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }
+      throw error
+    } finally { observation.endedAt = new Date().toISOString() }
+  }
+  private async collectNativeOutputSnapshots(identity: string): Promise<OwnedNativeOutputSnapshots> {
+    assertSnapshotIdentity(identity)
+    const providers: OwnedNativeOutputSnapshots['providers'] = [], seen = new Set<ControlledWalletServices>(), keys = new Set<string>()
+    const collect = async (service: ControlledWalletServices, id: string): Promise<void> => {
+      if (seen.has(service)) throw new Error('Duplicate or cyclic owned output provider')
+      seen.add(service)
+      if (!service.goServices || service.components.storage !== 'go') throw new Error('Owned native output provider is not Go storage')
+      if (keys.has(service.identityKey)) throw new Error('Duplicate owned storage identity')
+      keys.add(service.identityKey)
+      const snapshot = await service.goServices.outputSnapshot(identity)
+      validateNativeOutputSnapshot(snapshot, identity, service.identityKey)
+      providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      if (providers.length > 16) throw new Error('Owned output provider budget exceeded')
+      for (const [host, counterpart] of service.ownedStorageCounterparts) await collect(counterpart, `${id}/${host}`)
+    }
+    await collect(this, 'source')
+    return { schema: 'tpnil-native-owned-output-snapshots@1.0.0', identityKey: identity, providers }
+  }
+
+  get nativeCertificateInventoryObservations(): NativeInventoryObservation<OwnedNativeCertificateInventories>[] { return structuredClone(this.ownCertificateInventoryObservations) }
+  get nativeTransactionKnowledgeInventoryObservations(): NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories>[] { return structuredClone(this.ownKnowledgeInventoryObservations) }
+  /** Capture a fixed source-owned provider list before awaiting any control call.
+   * Withdrawn providers stay owned; concurrent registry changes invalidate the cut. */
+  private inventoryProviders(): Array<{ id: string; service: ControlledWalletServices }> {
+    const rows: Array<{ id: string; service: ControlledWalletServices }> = [], seen = new Set<ControlledWalletServices>(), keys = new Set<string>()
+    const visit = (service: ControlledWalletServices, id: string) => {
+      if (seen.has(service) || keys.has(service.identityKey)) throw new Error('Duplicate or cyclic inventory provider')
+      if (!service.goServices || service.components.storage !== 'go' || !service.goOptions?.storageCallerKnownInputsPatch) throw new Error('Complete inventories require owned caller-known-inputs Go providers')
+      seen.add(service); keys.add(service.identityKey); rows.push({ id, service })
+      if (rows.length > 16) throw new Error('Owned inventory provider budget exceeded')
+      for (const [host, child] of service.ownedStorageCounterparts) visit(child, `${id}/${host}`)
+    }
+    visit(this, 'source'); return rows
+  }
+  get nativeActionQueryObservations(): NativeInventoryObservation<OwnedNativeActionQueryCuts>[] { return structuredClone(this.ownActionQueryObservations) }
+  get nativeFinalActionQueryLedgers(): OwnedNativeFinalActionQueryLedger[] { return structuredClone(this.retainedFinalActionQueryLedgers) }
+  async nativeActionQueryCuts(identity: string): Promise<OwnedNativeActionQueryCuts> {
+    const observation: NativeInventoryObservation<OwnedNativeActionQueryCuts> = { sequence: this.ownActionQueryObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownActionQueryObservations.push(observation)
+    try {
+      assertSnapshotIdentity(identity)
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeActionQueryCuts = { schema: 'tpnil-native-owned-action-query-cuts@1.0.0', identityKey: identity, providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.actionQueryCuts(identity)
+        validateNativeActionQueryCuts(snapshot, identity, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned action registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
+  }
+  async nativeCertificateInventories(identity: string): Promise<OwnedNativeCertificateInventories> {
+    const observation: NativeInventoryObservation<OwnedNativeCertificateInventories> = { sequence: this.ownCertificateInventoryObservations.length, identityKey: identity, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownCertificateInventoryObservations.push(observation)
+    try {
+      assertSnapshotIdentity(identity)
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeCertificateInventories = { schema: 'tpnil-native-owned-certificate-inventories@1.0.0', identityKey: identity, providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.certificateInventory(identity)
+        assertCertificateInventoryIdentity(snapshot, identity, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned certificate registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
+  }
+  async nativeTransactionKnowledgeInventories(): Promise<OwnedNativeTransactionKnowledgeInventories> {
+    const observation: NativeInventoryObservation<OwnedNativeTransactionKnowledgeInventories> = { sequence: this.ownKnowledgeInventoryObservations.length, startedAt: new Date().toISOString(), endedAt: '', registry: [] }
+    this.ownKnowledgeInventoryObservations.push(observation)
+    try {
+      const providers = this.inventoryProviders(); observation.registry = this.nativeOutputProviderRegistry
+      const snapshots: OwnedNativeTransactionKnowledgeInventories = { schema: 'tpnil-native-owned-transaction-knowledge-inventories@1.0.0', providers: [] }
+      for (const { id, service } of providers) {
+        const snapshot = await service.goServices!.transactionKnowledgeInventory()
+        assertTransactionKnowledgeProvider(snapshot, service.identityKey)
+        snapshots.providers.push({ id, componentIdentity: service.componentIdentity, snapshot })
+      }
+      if (JSON.stringify(observation.registry) !== JSON.stringify(this.nativeOutputProviderRegistry)) throw new Error('Owned knowledge registry changed during observation')
+      observation.snapshots = structuredClone(snapshots); return snapshots
+    } catch (error) { observation.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; throw error }
+    finally { observation.endedAt = new Date().toISOString() }
   }
 
   async payNativeWallet(publicKey: string, satoshis: number): Promise<{ txid: string; tx: number[] }> {
@@ -525,9 +763,9 @@ export class ControlledWalletServices {
         : host === 'usercom.babbage.systems' || host === 'overlay.itcve.test' || host === 'overlay-us-1.bsvb.tech' ||
           host === 'overlay-eu-1.bsvb.tech' || host === 'overlay-ap-1.bsvb.tech' || host === 'users.bapp.dev'
           ? 'controlled-service'
-        : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test'
+        : host === 'todo.itcve.test' || host === 'alternate.itcve.test' || host === 'deny.itcve.test' || host === 'allowance.itcve.test' && this.controlledRoutes.has(host)
           ? 'controlled-application'
-          : host === 'api.1sat.app' || host === 'messagebox.1sat.app'
+          : host === 'api.1sat.app' || host === 'messagebox.1sat.app' || this.controlledRoutes.has(host)
             ? 'controlled-service'
             : 'blocked-egress'
       this.routes.push({
@@ -632,7 +870,7 @@ export class ControlledWalletServices {
       txids.map(txid => {
         const bytes = Uint8Array.from(beef.toBinaryAtomic(txid))
         const verdict = this.verdicts.consume(txid, bytes)
-        this.ownSubmissions.push({ txid, bytes, verdict })
+        this.recordSubmission({ txid, bytes, verdict })
         this.routes.push({
           sequence: ++this.routeSequence,
           method: 'POST',
@@ -692,6 +930,10 @@ export class ControlledWalletServices {
 
   async restartGoComponents(): Promise<void> {
     if (this.goServices === undefined) throw new Error('No Go components selected')
+    // The prospective observer owns one exclusive durable journal per host
+    // lifecycle. Do not restart into it or discard history; epoch-based restart
+    // admission is not implemented and no native completion scenario uses it.
+    if (this.goServices.actionObserverActive) throw new Error('Action-observed Go storage restart requires a separately retained lifecycle epoch')
     await this.faucetWallet?.destroy()
     this.faucetWallet = undefined
     await this.goServices.close()
@@ -700,6 +942,13 @@ export class ControlledWalletServices {
   }
 
   async close(): Promise<void> {
+    // Retain exact source-owned provider references before recursive close clears
+    // child maps and removes temporary directories. Each GoServices instance
+    // reads its finalized journal immediately after its actual process exit.
+    const failures: unknown[] = []
+    let actionProviders: Array<{ id: string; componentIdentity: Record<string, unknown>; providerIdentityKey: string; go: GoServices }> = []
+    try { if (this.goServices?.actionObserverActive && this.retainedFinalActionQueryLedgers.length === 0) actionProviders = this.inventoryProviders().map(({ id, service }) => ({ id, componentIdentity: service.componentIdentity, providerIdentityKey: service.identityKey, go: service.goServices! })) }
+    catch (error) { failures.push(error) }
     if (this.proxy !== undefined) {
       for (const client of this.proxy.wsServer?.clients ?? []) client.terminate()
       for (const client of this.proxy.wssServer?.clients ?? []) client.terminate()
@@ -713,11 +962,13 @@ export class ControlledWalletServices {
       }
       this.proxy.close()
     }
-    const failures: unknown[] = []
     const clean = async (operation: () => Promise<unknown>): Promise<void> => { try { await operation() } catch (error) { failures.push(error) } }
     for (const counterpart of this.ownedStorageCounterparts.values()) await clean(() => counterpart.close())
+    for (const [owner, listener] of this.submissionSubscriptions) owner.submissionListeners.delete(listener)
+    this.submissionSubscriptions.clear()
     this.ownedStorageCounterparts.clear()
     this.externalStorageCounterparts.clear()
+    this.controlledRoutes.clear()
     await clean(async () => this.faucetWallet?.destroy())
     this.faucetWallet = undefined
     if (this.goStorageServer !== undefined) {
@@ -732,6 +983,16 @@ export class ControlledWalletServices {
     await clean(async () => this.closeTypeScriptStorageServer())
     await clean(async () => this.storageSetup?.wallet.destroy())
     await clean(async () => this.storageSetup?.activeStorage.destroy())
+    if (actionProviders.length) {
+      this.retainedFinalActionQueryLedgers = actionProviders.map(({ id, componentIdentity, providerIdentityKey, go }) => {
+        const row: OwnedNativeFinalActionQueryLedger = { id, componentIdentity, providerIdentityKey }
+        const rawFailure = go.actionQueryFailureBundle
+        if (rawFailure !== undefined) row.rawFailure = rawFailure
+        try { const ledger = go.finalActionQueryLedger; if (!ledger) throw new Error('Final owned action query ledger missing'); row.ledger = validateNativeActionQueryFinalLedger(ledger, providerIdentityKey); if (row.rawFailure !== undefined || !ledger.final.finalized || ledger.final.inFlight !== 0 || ledger.final.terminalErrors.length) throw new Error('Final owned action query ledger failed') }
+        catch (error) { row.error = { name: error instanceof Error ? error.name : 'Error', message: error instanceof Error ? error.message : String(error) }; failures.push(error) }
+        return row
+      })
+    }
     fs.rmSync(this.temporaryDirectory, { recursive: true, force: true })
     if (failures.length > 0) throw new AggregateError(failures, 'Controlled service cleanup failed')
   }
@@ -792,7 +1053,7 @@ export class ControlledWalletServices {
       for await (const chunk of request) { size += chunk.length; if (size > 4 * 1024 * 1024) throw new Error('Submission exceeds limit'); chunks.push(Buffer.from(chunk)) }
       const tx = Transaction.fromHex(Buffer.concat(chunks).toString('utf8'))
       const verdict = this.verdicts.consume(tx.id('hex'), tx.toUint8Array())
-      this.ownSubmissions.push({ txid: tx.id('hex'), bytes: tx.toUint8Array(), verdict })
+      this.recordSubmission({ txid: tx.id('hex'), bytes: tx.toUint8Array(), verdict })
       sendJson(response, verdict === 'REJECTED' ? 400 : 200, { txid: tx.id('hex'), verdict })
       return
     }
@@ -805,6 +1066,12 @@ export class ControlledWalletServices {
         })
         .end()
       return
+    }
+    const controlledRoute = this.controlledRoutes.get(host)
+    if (controlledRoute) {
+      response.setHeader('access-control-allow-origin', '*')
+      response.setHeader('access-control-expose-headers', '*')
+      return controlledRoute(request, response)
     }
     if (host === 'api.1sat.app') return this.handleOneSat(request, response, url)
     if (host === 'usercom.babbage.systems' && request.method === 'POST' && url.pathname === '/signals') {
@@ -828,7 +1095,15 @@ export class ControlledWalletServices {
         for await (const chunk of request) { size += chunk.length; if (size > 4 * 1024 * 1024) throw new Error('Lookup exceeds limit'); chunks.push(Buffer.from(chunk)) }
         const body = Buffer.concat(chunks)
         const question = JSON.parse(body.toString()) as { service?: string; query?: { service?: string } }
-        const lookupOrigin = this.externalOverlayLookups.get(question.service === 'ls_slap' ? question.query?.service ?? '' : question.service ?? '')
+        const lookupName = question.service === 'ls_slap' ? question.query?.service ?? '' : question.service ?? ''
+        const scopedLookup = this.scopedOverlayLookups.get(lookupName)
+        if (scopedLookup) {
+          const answer = await scopedLookup(question)
+          this.routes.push({ sequence: ++this.routeSequence, method: 'POST', host, pathname: url.pathname, disposition: 'controlled-service', status: 200 })
+          sendJson(response, 200, answer)
+          return
+        }
+        const lookupOrigin = this.externalOverlayLookups.get(lookupName)
         if (lookupOrigin !== undefined) {
           const result = await fetch(`${lookupOrigin}/lookup`, { method: 'POST', headers: { 'content-type': 'application/json' }, body, redirect: 'error', signal: AbortSignal.timeout(15_000) })
           const answer = await result.json()
@@ -978,7 +1253,7 @@ export class ControlledWalletServices {
         const txid = beef.atomicTxid
         if (txid === undefined) throw new Error('Atomic transaction id is absent')
         const verdict = this.verdicts.consume(txid, bytes)
-        this.ownSubmissions.push({ txid, bytes, verdict })
+        this.recordSubmission({ txid, bytes, verdict })
         sendJson(response, verdict === 'REJECTED' ? 400 : 200, {
           txid,
           txStatus: verdict,
@@ -1024,7 +1299,7 @@ export class ControlledWalletServices {
       const beef = Beef.fromBinary(bytes)
       const txid = beef.atomicTxid ?? Transaction.fromBEEF(bytes).id('hex')
       const verdict = this.verdicts.consume(txid, bytes)
-      this.ownSubmissions.push({ txid, bytes, verdict })
+      this.recordSubmission({ txid, bytes, verdict })
       sendJson(response, verdict === 'REJECTED' ? 400 : 200, {
         txid,
         txStatus: verdict,

@@ -1,0 +1,50 @@
+{
+  "schema": "tpnil-native-ci-dispatch-prerequisite-independent-review@1",
+  "verified": true,
+  "checkedAt": "2026-11-12T15:57:39.365879+00:00",
+  "source": "69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7",
+  "runs": [
+    {
+      "run": 43249807860,
+      "conclusion": "success",
+      "acquisitionSha256": "c0125c9033e32bc8db02b0211994577244990e2e98759e53bbbb72d61894319f",
+      "artifacts": 3,
+      "jobs": 3
+    },
+    {
+      "run": 43249807970,
+      "conclusion": "success",
+      "acquisitionSha256": "78c40163e5a641bd0d6ec303a5db21542a57b09360d30c92a67a9aa85a99ddf4",
+      "artifacts": 2,
+      "jobs": 1
+    }
+  ],
+  "artifacts": 5,
+  "artifactMembers": 483,
+  "sourceInputs": 391,
+  "sourcePlanSha256": "ea36701c05ea6421af3ccd4ec1485725172be0554f90330a5370c29e26f3c921",
+  "sourceReviewSha256": "eeafb981996b5386ad3b9e30eb0c0e9f18af8ffa32d3c55307d12461b9db0b90",
+  "localValidationArchiveSha256": "d385fc517b93c3db44a63edaa32689726cde0683b0635035a9a5e733e7017a80",
+  "bothCIWorkflowsSucceeded": true,
+  "jobSeconds": 1826.0,
+  "knownCohortJobSeconds": 26946,
+  "withinBoundedOrderAtReview": true,
+  "workOrder": {
+    "repository": "network-ops",
+    "commit": "3eafaf64c09da6b9d3adea42ba05bd84019abfcd",
+    "path": "artifacts/ops/itcve-native-closure-20261111/attempt-7-completion-order/work-order.json",
+    "sha256": "74845f47f71a435e0b21facc02cb5aa44024ae7a8963104009461145d2a18335",
+    "totalJobSecondEnvelope": 9600,
+    "ciEnvelope": 5400,
+    "nativeEnvelope": 4200,
+    "deadline": "2026-11-12T18:02:37.530402+00:00",
+    "latestNativeDispatch": "2026-11-12T16:52:37.530402+00:00"
+  },
+  "nativeQualification": false,
+  "newNativeSessionsInTheseWorkflows": 0,
+  "limitations": [
+    "CI success does not mean all component assertions passed; six retained Go messaging failures remain findings.",
+    "No fresh native qualification or additional semantic replay is claimed by this integrity review.",
+    "Root must recheck latest dispatch deadline immediately before dispatch; final CI publication sidecar may be sealed in parallel."
+  ]
+}

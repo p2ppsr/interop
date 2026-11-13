@@ -1,0 +1,62 @@
+{
+  "schema": "tpnil-native-511-independent-artifact-review@1",
+  "workflowRun": 43143722884,
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "newNativeSessions": 0,
+  "claim": "INDEPENDENT_REPLAY_OF_RETAINED_NATIVE_ATTEMPT",
+  "startedAt": "2026-11-12T03:26:40.038Z",
+  "snapshot": {
+    "root": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43143722884/source",
+    "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+    "files": 514,
+    "reused": [
+      "synthesis/node_modules",
+      "integrations/services/node_modules",
+      "components/transport/node_modules",
+      "components/rust/target",
+      "out"
+    ],
+    "preparedAt": "2026-11-12T02:50:44.429Z",
+    "node": "v24.22.1"
+  },
+  "steps": [],
+  "result": "NOT_VERIFIED",
+  "exactMessagingDependencyPreparationVerified": true,
+  "workflowConclusion": "failure",
+  "workflowUrl": "https://github.com/p2ppsr/interop/actions/runs/43143722884",
+  "artifact": {
+    "id": 13912542052,
+    "name": "native-go-yours-wallet-5.1.1",
+    "sha256": "a16bb501d97cb674e9859a61f968d1bfe5c3b44734b373cedf3b7e7ce4f26922",
+    "bytes": 5802560,
+    "githubDigestVerified": true
+  },
+  "jobConclusions": [
+    {
+      "id": 130936541551,
+      "name": "all-go-native",
+      "conclusion": "failure"
+    },
+    {
+      "id": 130936543497,
+      "name": "yours-wallet",
+      "conclusion": "skipped"
+    }
+  ],
+  "originalMembers": 266,
+  "originalInventorySha256": "13f4766b855fbedea01acba02c41c5bbbd224da9cd876ddc4e69d0121d43f69a",
+  "planSha256": "b059a62f37b4243408f65df0e087afef72304ee4859eb8170b78f1fdde52e7eb",
+  "missingCompleteAttemptFiles": [
+    "qualification.json",
+    "integrated-qualification.json",
+    "rust-repetition-1/result.json",
+    "rust-repetition-2/result.json"
+  ],
+  "failure": {
+    "name": "AssertionError",
+    "message": "Incomplete native attempt retained; complete qualification/replay is unavailable\n\n4 !== 0\n",
+    "stack": "AssertionError [ERR_ASSERTION]: Incomplete native attempt retained; complete qualification/replay is unavailable\n\n4 !== 0\n\n    at file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43143722884/review.mjs:55:9"
+  },
+  "originalMembersUnchanged": true,
+  "completedAt": "2026-11-12T03:26:40.291Z"
+}

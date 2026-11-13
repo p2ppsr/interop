@@ -1,0 +1,24 @@
+{
+  "schema": "tpnil-native-identity-trust-oracle@2.0.0",
+  "id": "tpnil-native-identity-trust-oracle@2.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "scope": "Prospective discovery keyring field correction. Eight existing public settings and trust predicates are retained. Historical reports and the default verifier retain their original keyring field semantics.",
+  "source": {
+    "contract": "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json",
+    "methods": ["discoverByIdentityKey", "discoverByAttributes"],
+    "responseField": "publiclyRevealedKeyring"
+  },
+  "binding": {
+    "verifier": "0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "fieldsToReveal": ["name"],
+    "expectedPlaintext": { "name": "TPNIL boundary identity" },
+    "requirements": [
+      "Exactly one preceding public anyone proof for the acquired certificate type, serial number and certifier.",
+      "The report certificate keyring, the proof keyringForVerifier and each discovered publiclyRevealedKeyring are exactly equal, with exactly the selected name field.",
+      "Every discovered certificate matches the complete acquired signed certificate, independently verifies its issuer signature and decrypts through the public anyone verifier to the exact expected field.",
+      "No fallback to a legacy keyring response field; missing or contradictory key material cannot pass.",
+      "Existing native identity, ordering, public settings token, real cache expiry, restoration, retirement and transaction checks remain mandatory."
+    ]
+  },
+  "completeBRC100Conformance": false
+}

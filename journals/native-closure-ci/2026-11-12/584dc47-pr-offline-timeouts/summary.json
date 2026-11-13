@@ -1,0 +1,28 @@
+{
+  "source": "584dc47e3c1f5e69ca06d9f9c8e78882b7c30c99",
+  "run": 43325256465,
+  "conclusion": "cancelled",
+  "jobSeconds": 1595,
+  "jobSecondsByName": {
+    "integrated-components": 812,
+    "offline-core": 519,
+    "go-components": 264
+  },
+  "nativeSessions": 0,
+  "nativeQualification": false,
+  "native13Dispatched": false,
+  "actualFullCostUSD": null,
+  "fullCostReconciled": false,
+  "offlineConclusion": "failure",
+  "core": {
+    "PASS": 230,
+    "SKIP": 1
+  },
+  "synthesis": {
+    "PASS": 1699,
+    "FAIL": 13,
+    "SKIP": 123
+  },
+  "failureClass": "All thirteen failures are default5000ms Vitest test timeouts, not assertion mismatches.",
+  "recovery": "Only the Foundation offline npm test invocation receives --testTimeout=30000. All418 frozen native inputs and native deadlines/assertions stay byte-identical."
+}

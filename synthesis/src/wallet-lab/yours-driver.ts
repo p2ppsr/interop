@@ -1,3 +1,4 @@
+import {withNativeProofResources} from './native/proof-resources.js'
 import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import os from 'node:os'
@@ -16,8 +17,11 @@ import {
 import { chromium, type BrowserContext, type Page } from 'playwright'
 import { sha256Hex } from '../determinism.js'
 import { EvidenceBundle } from './evidence.js'
+import { captureWithNativeCleanup, nativeFailureSnapshot, nativeShutdownFailure } from './native/failure.js'
 import {
   aggregateOutcome,
+  identifiesYoursCandidate,
+  matchesYoursCandidate,
   type ArtifactIdentity,
   type PermissionObservation,
   type VectorResult,
@@ -26,6 +30,11 @@ import {
 import type { ComponentSelection } from './go-services.js'
 import { ControlledWalletServices, type TeranodeWalletFundingFixture } from './services.js'
 import { bindTodoSubmissionWindow, todoProtocol, todoSubmissionBinding, type TodoSubmissionWindow } from './native/todo-submission-binding.js'
+import { getControlledHeaderFixture, type ControlledHeaderFixture } from './native/controlled-header-fixture.js'
+
+export function nativeControlledDestinations(profile?: string): string[] {
+  return [...(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '') ? ['permission-sequence', 'permission-sequence-alt', 'permission-sequence-denied', 'permission-sequence-group', 'permission-sequence-group-alt'].map(name => `${name}.itcve.test`) : []), 'wallet.1sat.app', 'api.1sat.app', 'messagebox.1sat.app', 'todo.itcve.test', 'alternate.itcve.test', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '') ? ['deny.itcve.test', 'usercom.babbage.systems', 'overlay.itcve.test', 'overlay-us-1.bsvb.tech', 'overlay-eu-1.bsvb.tech', 'overlay-ap-1.bsvb.tech', 'users.bapp.dev', 'replacement-wallet.itcve.test', 'certifier.itcve.test', 'allowance.itcve.test'] : []), ...(['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '') ? ['permission-extension', 'permission-extension-alt', 'permission-extension-subset', 'permission-extension-unchecked', 'permission-extension-overcap', 'permission-extension-concurrent', 'permission-extension-abort', 'permission-extension-rejection', 'permission-extension-nosend', 'certificate-identity', 'certificate-attribute'].map(name => `${name}.itcve.test`) : [])]
+}
 
 interface CwiBoundary {
   [method: string]: (args: Record<string, unknown>) => Promise<Record<string, unknown>>
@@ -46,6 +55,37 @@ interface CwiBoundary {
   getHeaderForHeight: (args: Record<string, unknown>) => Promise<Record<string, unknown>>
 }
 
+/** Serializable browser-side baseline probe. The positive-header observer
+ * retains a failure so the later method corpus can score its fixed request. */
+export async function captureNativeSafeBoundary(headerFixture?: { height: number }): Promise<{
+  decrypted: number[]; signatureVerified: boolean; hmacVerified: boolean; height: Record<string, unknown>
+  headerRequest?: { height: number }; header?: Record<string, unknown>
+  headerError?: { name?: string; message: string; code?: number }
+}> {
+  const wallet = (window as unknown as { CWI: CwiBoundary }).CWI
+  const plaintext = Array.from(new TextEncoder().encode('TPNIL boundary fixture'))
+  const encrypted = await wallet.encrypt({ plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const decrypted = await wallet.decrypt({ ciphertext: encrypted.ciphertext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const signature = await wallet.createSignature({ data: plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const verified = await wallet.verifySignature({ data: plaintext, signature: signature.signature, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const hmac = await wallet.createHmac({ data: plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const hmacVerified = await wallet.verifyHmac({ data: plaintext, hmac: hmac.hmac, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
+  const height = await wallet.getHeight({})
+  const headerRequest = headerFixture ? { height: headerFixture.height } : undefined
+  let headerObservation: Record<string, unknown>
+  if (headerRequest) {
+    try { headerObservation = { headerRequest, header: await wallet.getHeaderForHeight(headerRequest) } }
+    catch (error) { headerObservation = { headerRequest, headerError: error instanceof Error ? { name: error.name, message: error.message, ...(typeof (error as any).code === 'number' ? { code: (error as any).code } : {}) } : { message: String(error) } } }
+  } else headerObservation = { header: await wallet.getHeaderForHeight({ height: 0 }) }
+  return {
+    decrypted: Array.from((decrypted.plaintext as number[]) ?? []),
+    signatureVerified: Boolean(verified.valid),
+    hmacVerified: Boolean(hmacVerified.valid),
+    height,
+    ...headerObservation
+  }
+}
+
 interface OutputProjection {
   outpoint: string
   satoshis: number
@@ -60,17 +100,35 @@ interface ListOutputProjection {
 }
 
 export interface NativeScenarioContext {
+  integratedProfile?: YoursRunOptions['integratedProfile']
   application: Page; context: BrowserContext; extensionId: string; password: string
   services: ControlledWalletServices; evidence: EvidenceBundle; baselineVectors: VectorResult[]
   manualPrompt: <T>(operation: () => Promise<T>) => Promise<T>
+  restartBrowser?: () => Promise<{ application: Page; context: BrowserContext; receipt: NativeBrowserRestartReceipt }>
+}
+
+export interface NativeBrowserRestartReceipt {
+  schema: 'tpnil-native-browser-restart@1'; sequence: number; profileBinding: string; extensionId: string
+  startedAt: string; closedAt: string; openedAt: string; unlockedAt: string; endedAt: string
+  oldPageCount: number; oldPagesClosed: boolean; version: string; identity: string; sandboxEvidence?: string
+}
+
+/** A final capture must belong to the browser that still owns the run. */
+export function activeNativeApplication(context: BrowserContext, application: Page): Page {
+  if (application.isClosed() || application.context() !== context) throw new Error('Native application page does not belong to the active browser context')
+  return application
 }
 
 export interface YoursRunOptions {
-  shutdownSubmissionPolicy?: 'tpnil-native-shutdown-submissions@1.0.0'
-  integratedProfile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0'
+  headerFixture?: ControlledHeaderFixture
+  shutdownSubmissionPolicy?: 'tpnil-native-shutdown-submissions@1.0.0' | 'tpnil-native-shutdown-submissions@2.0.0' | 'tpnil-native-shutdown-submissions@3.0.0'
+  submissionOrdering?: 'tpnil-owned-submission-order@1'
+  walletCandidate?: Record<string, unknown>
+  integratedProfile?: 'ITCVE-1@1.3.0' | 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0'
   go?: import('./go-services.js').GoServiceOptions
   prepareScenario?: (context: NativeScenarioContext) => Promise<void>
   additionalScenario?: (context: NativeScenarioContext) => Promise<void | { vectors: VectorResult[] }>
+  nativeActionReferenceEvidence?: boolean
   nativeQualification?: { fundingFixture: TeranodeWalletFundingFixture; sandbox: true }
   components?: ComponentSelection
   extensionDirectory: string
@@ -144,7 +202,15 @@ async function waitForTodoOutputs(
 }
 
 export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLabResult> {
+  return withNativeProofResources(options.integratedProfile, () => runYoursWalletWithResources(options))
+}
+
+async function runYoursWalletWithResources(options: YoursRunOptions): Promise<WalletLabResult> {
   const startedAt = new Date().toISOString()
+  if (options.integratedProfile === 'ITCVE-1@4.1.0' || options.integratedProfile === 'ITCVE-1@4.2.0' || options.integratedProfile === 'ITCVE-1@4.3.0' || options.integratedProfile === 'ITCVE-1@4.4.0' || ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+    if (options.walletCandidate?.officialRelease !== false || !matchesYoursCandidate(options.walletArtifact, options.integratedProfile)) throw new Error('Candidate native profile requires its explicit artifact and engineering metadata')
+  } else if (identifiesYoursCandidate(options.walletArtifact) || options.walletCandidate !== undefined) throw new Error('Candidate build cannot enter an official release profile')
+  const expectedWalletVersion = ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'yours-wallet-5.1.1' : 'yours-wallet-5.1.0'
   const task = options.task ?? 'TPNIL controlled task'
   const amount = options.amount ?? 2
   const extensionDirectory = path.resolve(options.extensionDirectory)
@@ -152,23 +218,29 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
   const outputDirectory = path.resolve(options.outputDirectory)
   const runId = path.basename(outputDirectory)
   const evidence = new EvidenceBundle(outputDirectory)
-  if (options.go?.storageSyncPatch && !['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')) throw new Error('Patched native services require the prospective integrated profile')
-  if (options.go?.terminalRejectionReceipts && !['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')) throw new Error('Terminal submission receipts require the prospective conformance profile')
-  if (options.shutdownSubmissionPolicy && options.shutdownSubmissionPolicy !== 'tpnil-native-shutdown-submissions@1.0.0') throw new Error('Unknown shutdown submission policy')
-  if (options.shutdownSubmissionPolicy && options.integratedProfile !== 'ITCVE-1@2.0.0') throw new Error('Shutdown submission receipts require prospective coverage mode')
+  if (options.go?.storageSyncPatch && !['ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) throw new Error('Patched native services require the prospective integrated profile')
+  if (options.go?.terminalRejectionReceipts && !['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) throw new Error('Terminal submission receipts require the prospective conformance profile')
+  if (options.shutdownSubmissionPolicy && options.shutdownSubmissionPolicy !== (['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'tpnil-native-shutdown-submissions@3.0.0' : ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'tpnil-native-shutdown-submissions@2.0.0' : 'tpnil-native-shutdown-submissions@1.0.0')) throw new Error('Unknown or mismatched shutdown submission policy')
+  if (options.shutdownSubmissionPolicy && !['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) throw new Error('Shutdown submission receipts require prospective coverage mode')
   let submissionClosure: ReturnType<ControlledWalletServices['observeSubmissionClosure']> | undefined
   let initialSubmissionCaptureAt: string | undefined
-  const services = new ControlledWalletServices({ webroot, components: options.components, go: options.go })
+  let completionInventoryObserver: ReturnType<typeof import('./native/completion-observer-ledger.js').observeCompletionInventoryClosure> | undefined
+  if (['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') && options.submissionOrdering !== 'tpnil-owned-submission-order@1') throw new Error('Completion requires explicit owned submission ordering')
+  if (options.submissionOrdering && !['ITCVE-1@4.6.0','ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) throw new Error('Owned submission ordering requires the completion profile')
+  const services = new ControlledWalletServices({ webroot, components: options.components, go: options.go, submissionOrdering: options.submissionOrdering })
   const permissions: PermissionObservation[] = []
   const consoleErrors: string[] = []
   const profileDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-yours-profile-'))
   let context: BrowserContext | undefined
+  let primaryFailure: { error: unknown } | undefined
   let promptPoll: NodeJS.Timeout | undefined
   let permissionSequence = 0
   let browserVersion = 'unknown'
   const handledPromptUrls = new Set<string>()
   const activeAutomaticPrompts = new Set<Promise<void>>()
   let manualPromptActive = false
+  const browserContexts: Array<Record<string, unknown>> = []
+  const profileBinding = sha256Hex(Buffer.from(profileDirectory))
   const manualPrompt = async <T>(operation: () => Promise<T>): Promise<T> => {
     if (manualPromptActive) throw new Error('Nested manual permission scenario')
     manualPromptActive = true
@@ -204,7 +276,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       evidence.addText('controlled-ca.pem', fs.readFileSync(certificate, 'utf8'))
       evidence.addText('native-trust.txt', execFileSync('certutil', ['-L', '-d', `sql:${nss}`], { encoding: 'utf8' }))
     }
-    context = await chromium.launchPersistentContext(profileDirectory, {
+    const launchBrowser = () => chromium.launchPersistentContext(profileDirectory, {
       headless: options.headless ?? true,
       chromiumSandbox: options.nativeQualification?.sandbox ?? false,
       ignoreHTTPSErrors: options.nativeQualification === undefined,
@@ -217,6 +289,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         '--disable-background-networking'
       ]
     })
+    context = await launchBrowser()
     browserVersion = context.browser()?.version() ?? 'chromium-persistent-context'
     const handlePrompt = async (page: Page): Promise<void> => {
       if (manualPromptActive) return
@@ -261,7 +334,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       activeAutomaticPrompts.add(operation)
       void operation.finally(() => activeAutomaticPrompts.delete(operation))
     }
-    context.on('page', page => {
+    const observePages = (activeContext: BrowserContext) => activeContext.on('page', page => {
       page.on('console', message => {
         if (message.type() === 'error') consoleErrors.push(message.text().slice(0, 2_000))
       })
@@ -271,6 +344,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       })
       attempt()
     })
+    observePages(context)
     promptPoll = setInterval(() => {
       for (const page of context!.pages())
         automaticPrompt(page)
@@ -289,6 +363,10 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       await securityPage.close()
     }
     const extensionId = new URL(worker.url()).host
+    if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+      browserContexts.push({ sequence: 0, profileBinding, extensionId, openedAt: new Date().toISOString() })
+      evidence.addJson('native-browser-contexts.json', { schema: 'tpnil-native-browser-contexts@1', contexts: browserContexts })
+    }
     const walletPage = await context.newPage()
     await walletPage.goto(`chrome-extension://${extensionId}/index.html`)
     await walletPage.getByText('Create New Wallet', { exact: true }).click()
@@ -302,9 +380,56 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     await walletPage.getByRole('button', { name: 'Enter', exact: true }).click()
     progress('wallet initialized')
 
-    const application = await context.newPage()
+    let application = await context.newPage()
     await application.goto('https://todo.itcve.test/')
     await waitForText(application, 'ToDo List', 30_000)
+    const restartBrowser = async (): Promise<{ application: Page; context: BrowserContext; receipt: NativeBrowserRestartReceipt }> => {
+      if (!['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') || !manualPromptActive || !context) throw new Error('Browser restart requires the declared native coverage scenario with automatic prompts suspended')
+      await Promise.allSettled([...activeAutomaticPrompts])
+      const oldContext = context, oldPages = oldContext.pages(), sequence = browserContexts.length
+      const startedAt = new Date().toISOString()
+      await oldContext.close()
+      const closedAt = new Date().toISOString()
+      if (!oldPages.every(page => page.isClosed())) throw new Error('Previous native browser pages survived restart')
+      browserContexts[sequence - 1]!.closedAt = closedAt
+      context = await launchBrowser()
+      observePages(context)
+      const openedAt = new Date().toISOString()
+      const nextWorker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker', { timeout: 30_000 })
+      if (new URL(nextWorker.url()).host !== extensionId) throw new Error('Restart changed native extension identity')
+      nextWorker.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text().slice(0, 2_000)) })
+      let sandboxEvidence: string | undefined
+      if (options.nativeQualification) {
+        const page = await context.newPage(); await page.goto('chrome://sandbox')
+        const body = await page.locator('body').innerText(); await page.close()
+        if (!/PID namespaces\s+Yes/.test(body) || !/Seccomp-BPF sandbox\s+Yes/.test(body)) throw new Error('Restarted browser lost native sandbox isolation')
+        sandboxEvidence = `native-sandbox-restart-${sequence}.txt`; evidence.addText(sandboxEvidence, body)
+      }
+      const unlock = await context.newPage(); await unlock.goto(`chrome-extension://${extensionId}/index.html`)
+      await unlock.getByPlaceholder('Password', { exact: true }).fill('TPNIL-Fixture-Only-2026!')
+      await unlock.getByRole('button', { name: 'Unlock', exact: true }).click()
+      await unlock.getByPlaceholder('Password', { exact: true }).waitFor({ state: 'hidden', timeout: 45_000 })
+      const unlockedAt = new Date().toISOString()
+      evidence.addBytes(`conformance/restart-${sequence}-unlocked.png`, await unlock.screenshot())
+      await unlock.close()
+      const nextApplication = await context.newPage(); await nextApplication.goto('https://todo.itcve.test/')
+      await waitForText(nextApplication, 'ToDo List', 30_000)
+      await nextApplication.waitForFunction(() => typeof (window as any).CWI?.getPublicKey === 'function', undefined, { timeout: 30_000 })
+      const observed = await within('restarted native version and identity', 30_000, nextApplication.evaluate(async () => {
+        const wallet = (window as any).CWI
+        return { version: (await wallet.getVersion({})).version, identity: (await wallet.getPublicKey({ identityKey: true, seekPermission: false })).publicKey }
+      })).catch(error => {
+        evidence.addJson(`conformance/restart-${sequence}-failure.json`, { sequence, profileBinding, extensionId, startedAt, closedAt, openedAt, unlockedAt, failedAt: new Date().toISOString(), error: error instanceof Error ? error.message : String(error) })
+        throw error
+      })
+      if (observed.version !== expectedWalletVersion) throw new Error('Restart changed native wallet version')
+      if (typeof observed.identity !== 'string' || !/^(02|03)[0-9a-f]{64}$/.test(observed.identity) || !PublicKey.fromString(observed.identity).validate()) throw new Error('Restart did not return a valid native identity')
+      const receipt: NativeBrowserRestartReceipt = { schema: 'tpnil-native-browser-restart@1', sequence, profileBinding, extensionId, startedAt, closedAt, openedAt, unlockedAt, endedAt: new Date().toISOString(), oldPageCount: oldPages.length, oldPagesClosed: true, version: observed.version, identity: observed.identity, ...(sandboxEvidence ? { sandboxEvidence } : {}) }
+      browserContexts.push({ sequence, profileBinding, extensionId, openedAt, restart: receipt })
+      evidence.addJson('native-browser-contexts.json', { schema: 'tpnil-native-browser-contexts@1', contexts: browserContexts })
+      application = activeNativeApplication(context, nextApplication)
+      return { application, context, receipt }
+    }
     const boundaryCall = async (method: 'getVersion' | 'getNetwork' | 'isAuthenticated') => {
       progress(`boundary ${method}: requesting`)
       const result = await within(`wallet boundary ${method}`, 30_000, application.evaluate(async method => {
@@ -384,11 +509,11 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     evidence.addJson('funding.json', { fundingTxid, fundingHeight, fixtureProofValid, internalized })
     vectors.push({
       id: 'ISI-4-V001',
-      outcome: walletVersion === 'yours-wallet-5.1.0' && walletNetwork === 'mainnet' && authenticated && fixtureProofValid
+      outcome: walletVersion === expectedWalletVersion && walletNetwork === 'mainnet' && authenticated && fixtureProofValid
         ? 'PASS'
         : 'FAIL',
       assertions: [
-        { id: 'artifact-and-version', outcome: walletVersion === 'yours-wallet-5.1.0' ? 'PASS' : 'FAIL', detail: walletVersion, evidence: ['artifact.json'] },
+        { id: 'artifact-and-version', outcome: walletVersion === expectedWalletVersion ? 'PASS' : 'FAIL', detail: walletVersion, evidence: ['artifact.json'] },
         { id: 'mainnet-configuration', outcome: walletNetwork === 'mainnet' ? 'PASS' : 'FAIL', detail: walletNetwork, evidence: ['boundary.json'] },
         { id: 'controlled-fixture-proof', outcome: fixtureProofValid ? 'PASS' : 'FAIL', detail: fundingTxid, evidence: ['funding.atomicbeef', 'funding.json'] }
       ],
@@ -399,9 +524,18 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     progress('controlled funding internalized')
 
     if (options.prepareScenario !== undefined) {
-      await options.prepareScenario({ application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt: async () => { throw new Error('Preparation does not own manual permission UI') } })
+      await options.prepareScenario({ integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt: async () => { throw new Error('Preparation does not own manual permission UI') } })
       evidence.addJson('conformance/scenario-start.json', { startedAt: new Date().toISOString(), stage: 'before-all-customer-scenarios' })
       progress('declared initial conformance reserves internalized before customer scenarios')
+    }
+
+    if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+      if (!options.prepareScenario) throw new Error('Expanded permissions require declared upfront funding')
+      const preludeContext: NativeScenarioContext = { integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors: structuredClone(vectors), manualPrompt, restartBrowser }
+      await (await import('./native/permission-prelude.js')).runNativePermissionPrelude(preludeContext, ['ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? { identityPermission: 'explicit-allow-v1' } : undefined)
+      application = activeNativeApplication(preludeContext.context, preludeContext.application)
+      context = preludeContext.context
+      progress('fresh funded native permission prelude completed before ToDo scenarios')
     }
 
     const createUrl = new URL('https://todo.itcve.test/')
@@ -563,7 +697,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       submission?: { txid: string; verdict: 'ACCEPTED_BY_NETWORK' | 'REJECTED'; sha256: string }
       submissionWindow?: TodoSubmissionWindow
     }> => {
-      services.enqueueVerdict(verdict, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '') ? { kind: 'todo-output', protocol: todoProtocol, amount: 2 } : undefined)
+      services.enqueueVerdict(verdict, ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? { kind: 'todo-output', protocol: todoProtocol, amount: 2 } : undefined)
       const submissionsBefore = services.submissions.length
       const phaseStartedAt = new Date().toISOString()
       const casePage = await context!.newPage()
@@ -597,7 +731,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         while (Date.now() < deadline) {
           body = await within(`immediate ${verdict} page observation`, 5_000,
             casePage.locator('body').innerText())
-          if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')) {
+          if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
             const candidate = bindTodoSubmissionWindow(services.submissions, submissionsBefore, name, phaseStartedAt, new Date().toISOString())
             if (candidate.selection !== 'none') break
           } else if (services.submissions.length > submissionsBefore) break
@@ -615,7 +749,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
       } finally {
         await casePage.close().catch(() => undefined)
       }
-      const submissionWindow = ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')
+      const submissionWindow = ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')
         ? bindTodoSubmissionWindow(services.submissions, submissionsBefore, name, phaseStartedAt, new Date().toISOString()) : undefined
       const observed = submissionWindow === undefined
         ? services.submissions.length > submissionsBefore ? services.submissions.at(-1) : undefined
@@ -643,7 +777,7 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     const rejectedPassed = rejected.submission?.verdict === 'REJECTED' && rejectedStatePreserved
     const recoveryPassed = recovered.submission?.verdict === 'ACCEPTED_BY_NETWORK' && recoveredStateAdvanced
     evidence.addJson('broadcast-lifecycle.json', {
-      ...(['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '') ? { submissionBinding: todoSubmissionBinding } : {}),
+      ...(['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? { submissionBinding: todoSubmissionBinding } : {}),
       accepted,
       rejected,
       recovered,
@@ -691,25 +825,10 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     const methodInventory = await application.evaluate(() =>
       Object.keys((window as unknown as { CWI: CwiBoundary }).CWI).sort()
     )
-    const safeBoundary = await application.evaluate(async () => {
-      const wallet = (window as unknown as { CWI: CwiBoundary }).CWI
-      const plaintext = Array.from(new TextEncoder().encode('TPNIL boundary fixture'))
-      const encrypted = await wallet.encrypt({ plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      const decrypted = await wallet.decrypt({ ciphertext: encrypted.ciphertext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      const signature = await wallet.createSignature({ data: plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      const verified = await wallet.verifySignature({ data: plaintext, signature: signature.signature, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      const hmac = await wallet.createHmac({ data: plaintext, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      const hmacVerified = await wallet.verifyHmac({ data: plaintext, hmac: hmac.hmac, protocolID: [1, 'tpnil boundary'], keyID: '1', counterparty: 'self' })
-      return {
-        decrypted: Array.from((decrypted.plaintext as number[]) ?? []),
-        signatureVerified: Boolean(verified.valid),
-        hmacVerified: Boolean(hmacVerified.valid),
-        height: await wallet.getHeight({}),
-        header: await wallet.getHeaderForHeight({ height: 0 })
-      }
-    })
+    const controlledHeader = options.headerFixture === undefined ? undefined : getControlledHeaderFixture(options.headerFixture)
+    const safeBoundary = await application.evaluate(captureNativeSafeBoundary, controlledHeader)
     const cryptoRoundtrip = Buffer.from(safeBoundary.decrypted).toString() === 'TPNIL boundary fixture'
-    evidence.addJson('method-inventory.json', { methods: methodInventory, safeBoundary })
+    evidence.addJson('method-inventory.json', { methods: methodInventory, safeBoundary, ...(controlledHeader ? { headerFixture: controlledHeader.id, headerFixturePolicySha256: controlledHeader.policySha256, headerFundingFixtureSha256: controlledHeader.fixtureSha256 } : {}) })
     vectors.push({
       id: 'ISI-4-V008',
       outcome: 'BLOCKED',
@@ -724,9 +843,9 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     if (options.additionalScenario !== undefined) {
       progress('additional integrated component scenario: starting')
       const baselineVectors = structuredClone(vectors)
-      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')) evidence.addJson('conformance/baseline-vectors.json', baselineVectors)
-      const additional = await options.additionalScenario({ application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors, manualPrompt })
-      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '')) {
+      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) evidence.addJson('conformance/baseline-vectors.json', baselineVectors)
+      const additional = await options.additionalScenario({ integratedProfile: options.integratedProfile, application, context, extensionId, password: 'TPNIL-Fixture-Only-2026!', services, evidence, baselineVectors, manualPrompt, ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? { restartBrowser } : {}) })
+      if (['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
         if (!additional || additional.vectors.length !== 8 || additional.vectors.some((vector, i) => vector.id !== `ISI-4-V00${i + 1}`)) throw new Error('Conformance scenario omitted required vector outcomes')
         vectors.splice(0, vectors.length, ...additional.vectors)
         evidence.addJson('conformance/service-counterparts.json', services.storageCounterpartIdentities)
@@ -736,6 +855,20 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
 
     if (options.nativeQualification !== undefined) {
       evidence.addJson('native-transactions.json', await services.nativeTransactions())
+      if (options.nativeActionReferenceEvidence) {
+        const { publicKey: identity } = await activeNativeApplication(context, application).evaluate(() => (window as any).CWI.getPublicKey({ identityKey: true, seekPermission: false }))
+        evidence.addJson('native-action-references.json', { identity, references: await services.nativeActionReferences(identity) })
+      }
+      if (['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+        evidence.addJson('native-output-snapshot-observations.json', services.nativeOutputSnapshotObservations)
+        evidence.addJson('native-output-provider-registry.json', services.nativeOutputProviderRegistry)
+      }
+      if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+        const { captureCompletionInventoryLedger, completionInventoryLedgerFile } = await import('./native/completion-observer-ledger.js')
+        const identity = JSON.parse(evidence.readBytes('integrated/result.json').toString()).walletIdentity
+        await services.nativeActionQueryCuts(identity)
+        evidence.addJson(completionInventoryLedgerFile, captureCompletionInventoryLedger(services, options.integratedProfile))
+      }
       if (options.shutdownSubmissionPolicy) {
         submissionClosure = services.observeSubmissionClosure()
         initialSubmissionCaptureAt = new Date().toISOString()
@@ -747,9 +880,10 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     const resultWithoutEvidence: Omit<WalletLabResult, 'evidence'> = {
       schema: 'tpnil-isi4-wallet-run@1.0.0',
       claim: Object.values(services.components).includes('go') ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT',
-      program: options.integratedProfile === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : options.integratedProfile === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : options.integratedProfile === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0',
+      program: options.integratedProfile === 'ITCVE-1@4.8.0' ? 'ISI-4@5.8.0' : options.integratedProfile === 'ITCVE-1@4.7.0' ? 'ISI-4@5.7.0' : ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'ISI-4@5.6.0' : options.integratedProfile === 'ITCVE-1@4.5.0' ? 'ISI-4@5.5.0' : options.integratedProfile === 'ITCVE-1@4.4.0' ? 'ISI-4@5.4.0' : ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'ISI-4@5.3.0' : options.integratedProfile === 'ITCVE-1@4.2.0' ? 'ISI-4@5.2.0' : options.integratedProfile === 'ITCVE-1@4.1.0' ? 'ISI-4@5.1.0' : options.integratedProfile === 'ITCVE-1@4.0.0' ? 'ISI-4@5.0.0' : options.integratedProfile === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : options.integratedProfile === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : options.integratedProfile === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0',
       itcve: options.integratedProfile ?? (Object.values(services.components).includes('go') ? 'ITCVE-1@1.1.0' : 'ITCVE-1@1.0.0'),
-      profile: ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(options.integratedProfile ?? '') ? 'production-wallet-native-conformance' : 'production-wallet-todo-controlled-services',
+      ...(options.walletCandidate ? { walletCandidate: options.walletCandidate } : {}),
+      profile: ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'candidate-wallet-native-engineering' : ['ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '') ? 'production-wallet-native-conformance' : 'production-wallet-todo-controlled-services',
       runId,
       startedAt,
       endedAt: new Date().toISOString(),
@@ -766,7 +900,8 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
         walletNetwork: 'mainnet',
         publicMainnetBroadcast: false,
         applicationOrigin: 'https://todo.itcve.test',
-        controlledDestinations: ['wallet.1sat.app', 'api.1sat.app', 'messagebox.1sat.app', 'todo.itcve.test', 'alternate.itcve.test'],
+        controlledDestinations: nativeControlledDestinations(options.integratedProfile),
+        ...(options.submissionOrdering ? { submissionOrdering: options.submissionOrdering } : {}),
         undeclaredEgress: 'blocked'
       },
       observations: {
@@ -800,7 +935,8 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     }
     return evidence.write(resultWithoutEvidence)
   } catch (error) {
-    evidence.addJson('attempt-failure.json', { message: error instanceof Error ? error.message : String(error), vectors, routes: services.routes, storageRpc: services.storageRpcObservations, consoleErrors, permissions })
+    primaryFailure = { error }
+    evidence.addJson('attempt-failure.json', { error: nativeFailureSnapshot(error), message: error instanceof Error ? error.message : String(error), vectors, routes: services.routes, storageRpc: services.storageRpcObservations, consoleErrors, permissions })
     if (options.nativeQualification !== undefined && context !== undefined) {
       for (const [index, page] of context.pages().filter(page => page.url().startsWith('https://todo.itcve.test/')).entries()) {
         try { evidence.addBytes(`attempt-application-${index}.png`, await page.screenshot({ timeout: 5000 })) } catch { /* Preserve the original observer failure. */ }
@@ -811,21 +947,39 @@ export async function runYoursWallet(options: YoursRunOptions): Promise<WalletLa
     throw error
   } finally {
     if (promptPoll !== undefined) clearInterval(promptPoll)
-    const cleanupFailures: unknown[] = []
+    const cleanupFailures: unknown[] = [], evidenceFailures: unknown[] = []
+    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+      try {
+        const { observeCompletionInventoryClosure } = await import('./native/completion-observer-ledger.js')
+        completionInventoryObserver = observeCompletionInventoryClosure(services, options.integratedProfile)
+      } catch (error) { evidenceFailures.push(error) }
+    }
     if (options.shutdownSubmissionPolicy) {
-      submissionClosure ??= services.observeSubmissionClosure()
-      initialSubmissionCaptureAt ??= new Date().toISOString()
-      const { closeWithSubmissionReceipt } = await import('./native/shutdown-submissions.js')
-      const closed = await closeWithSubmissionReceipt({ directory: outputDirectory, observer: submissionClosure, initialCapturedAt: initialSubmissionCaptureAt,
+      const closed = await captureWithNativeCleanup(async closers => {
+        submissionClosure ??= services.observeSubmissionClosure()
+        initialSubmissionCaptureAt ??= new Date().toISOString()
+        const { closeWithSubmissionReceipt } = await import('./native/shutdown-submissions.js')
+        return await closeWithSubmissionReceipt({ directory: outputDirectory, observer: submissionClosure, initialCapturedAt: initialSubmissionCaptureAt,
+          profile: options.integratedProfile as 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0',
+          ...closers })
+      }, {
         closeBrowser: async () => { if (!context) throw new Error('Native browser context is absent'); await context.close() },
         closeServices: async () => { await services.close() },
-        removeProfile: () => fs.rmSync(profileDirectory, { recursive: true, force: true }) })
-      cleanupFailures.push(...closed.errors)
+        removeProfile: () => fs.rmSync(profileDirectory, { recursive: true, force: true })
+      })
+      cleanupFailures.push(...closed.cleanupErrors)
+      evidenceFailures.push(...closed.evidenceErrors)
     } else {
       try { await context?.close() } catch (error) { cleanupFailures.push(error) }
       try { await services.close() } catch (error) { cleanupFailures.push(error) }
       try { fs.rmSync(profileDirectory, { recursive: true, force: true }) } catch (error) { cleanupFailures.push(error) }
     }
-    if (options.nativeQualification !== undefined && cleanupFailures.length > 0) throw new AggregateError(cleanupFailures, 'Native wallet cleanup failed')
+    if (['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(options.integratedProfile ?? '')) {
+      try {
+        const { closeCompletionInventoryLedger } = await import('./native/completion-observer-ledger.js')
+        evidenceFailures.push(...closeCompletionInventoryLedger(outputDirectory, completionInventoryObserver ?? services).errors)
+      } catch (error) { evidenceFailures.push(error) }
+    }
+    if (options.nativeQualification !== undefined && (cleanupFailures.length > 0 || evidenceFailures.length > 0)) throw nativeShutdownFailure(primaryFailure, cleanupFailures, evidenceFailures)
   }
 }

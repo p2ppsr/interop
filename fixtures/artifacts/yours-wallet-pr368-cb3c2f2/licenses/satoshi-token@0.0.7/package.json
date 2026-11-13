@@ -1,0 +1,32 @@
+{
+  "version": "0.0.7",
+  "name": "satoshi-token",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "author": "Luke Rohenaz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/b-open-io/satoshi-token"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && bun build src/index.ts --outdir dist --minify && bun build src/index.ts --outfile dist/index.cjs --target node --minify && tsc --emitDeclarationOnly",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

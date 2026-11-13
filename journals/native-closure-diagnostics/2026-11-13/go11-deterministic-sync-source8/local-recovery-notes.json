@@ -1,0 +1,25 @@
+{
+  "claim": "LAB_SELF_TEST_ONLY",
+  "nativeSessions": 0,
+  "newNativeQualification": false,
+  "intentionalNegativeControl": "go-order-before.log reproduces both native19 graph ordering failures under unmodified Go10 SDK.",
+  "correctedBeforeCommitPushOrPaidAdmission": [
+    {
+      "log": "typecheck-first.log",
+      "reason": "New startup dependency guard required an explicit undefined check."
+    },
+    {
+      "log": "go11-build-first.log",
+      "reason": "Go mod edit requires the host/toolbox module directory."
+    },
+    {
+      "log": "core-first.log",
+      "reason": "Extractor correction invalidated evaluator10 source hashes; append evaluator11 with identical original/Rust/native criteria."
+    },
+    {
+      "log": "publication-first.log",
+      "reason": "Archive kind previously only admitted observer errors. Preserve the sealed genuine integration-mismatch sample under its explicit non-qualification claim, with false-qualification rejection controls."
+    }
+  ],
+  "paidWorkflowReruns": 0
+}

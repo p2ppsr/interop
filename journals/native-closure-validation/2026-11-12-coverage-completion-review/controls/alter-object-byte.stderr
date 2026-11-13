@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion-review/review.py", line 101, in <module>
+    adversarial(sys.argv[sys.argv.index('--case') + 1])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion-review/review.py", line 98, in adversarial
+    exec(compile(V, str(BASE / 'verify.py'), 'exec'), {'__file__': str(BASE / 'verify.py'), '__name__': '__main__'})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/journals/native-closure-validation/2026-11-12-coverage-completion/verify.py", line 22, in <module>
+    b=regular(BASE/name);assert len(b)==row['bytes'] and SHA(b)==row['sha256'],name
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: objects/0031d748f3c14114eae944b0263b82d759d162b3edffcb9ba9c82cf91eb6c080.gz

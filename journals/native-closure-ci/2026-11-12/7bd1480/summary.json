@@ -1,0 +1,256 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+  "workflows": [
+    {
+      "id": 43185320652,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43185320652",
+      "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+      "conclusion": "failure",
+      "jobSeconds": 1265,
+      "jobs": [
+        {
+          "id": 131070928238,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T08:43:43Z",
+          "completedAt": "2026-11-12T08:57:50Z",
+          "jobSeconds": 847,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131070928492,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T08:43:43Z",
+          "completedAt": "2026-11-12T08:46:20Z",
+          "jobSeconds": 157,
+          "conclusion": "failure",
+          "failedSteps": [
+            "Run npm test --prefix synthesis"
+          ],
+          "skippedSteps": [
+            "Run node scripts/verify-published-journals.mjs",
+            "Run node scripts/verify-native-reserve-reference.mjs",
+            "Run node scripts/verify-descendant-storage-archives.mjs --semantic",
+            "Run node scripts/verify-native-nosend-oracle4-archive.mjs",
+            "Run node scripts/verify-native-permission-lifecycle-archive.mjs --semantic",
+            "Run node scripts/verify-native-permission-click-archive.mjs --semantic",
+            "Run node scripts/verify-native-portability-archive.mjs",
+            "Run python3 scripts/verify-native-clause-journal.py",
+            "Run python3 scripts/verify-native-clause-journal.py journals/native-clause-reference/2026-11-09/oracle-3.0.0",
+            "Run python3 -m unittest discover -s test -p 'test_*.py' -v",
+            "Run npm run demo",
+            "Run node bin/tpnil.mjs verify out/demo",
+            "Run node scripts/check-journal-history.mjs \"$BASE_SHA\"",
+            "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
+          ]
+        },
+        {
+          "id": 131070928635,
+          "name": "go-components",
+          "startedAt": "2026-11-12T08:43:43Z",
+          "completedAt": "2026-11-12T08:48:04Z",
+          "jobSeconds": 261,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    },
+    {
+      "id": 43185320587,
+      "name": "Retained native evidence reevaluation",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43185320587",
+      "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+      "conclusion": "success",
+      "jobSeconds": 146,
+      "jobs": [
+        {
+          "id": 131070927899,
+          "name": "retained-native-evidence",
+          "startedAt": "2026-11-12T08:43:43Z",
+          "completedAt": "2026-11-12T08:46:09Z",
+          "jobSeconds": 146,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 172,
+      "fail": 0,
+      "skipped": 1,
+      "total": 173
+    },
+    "synthesis": {
+      "reportedPass": 1037,
+      "reportedSkipped": 27,
+      "declaredTotal": 1102,
+      "unreported": 38,
+      "reportedPassedFiles": 63,
+      "reportedSkippedFiles": 2,
+      "declaredFiles": 66,
+      "runnerErrors": 1,
+      "completeSuitePassed": false,
+      "missingFile": "native-coverage-certificates.test.ts"
+    },
+    "goComponents": {
+      "pass": 13
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": "NOT_EXECUTED_AFTER_SYNTHESIS_FAILURE",
+    "typecheck": "PASS"
+  },
+  "failure": {
+    "stage": "offline-core npm test --prefix synthesis",
+    "primarySourceDiagnosis": "Missing integrations/services dependency closure for the new certificate reference child. Independently reproduced MODULE_NOT_FOUND mongodb-memory-server.",
+    "secondarySourceDiagnosis": "Vitest inline-map recovery misreads the literal sourceMappingURL template in TSX register module; independently reproduces replacement-character JSON parse exception.",
+    "ciOriginalChildStderrAvailable": false,
+    "timeoutProven": false,
+    "initialHypothesisRetained": true,
+    "localCorrectionOrNativeQualificationClaimedByThisArchive": false
+  },
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 17,
+    "totalBundles": 31
+  },
+  "descendantMatrix": {
+    "verified": true,
+    "directions": 4,
+    "result": "PASS"
+  },
+  "retainedReevaluation": {
+    "plan": "YOURS-5.1.0-NATIVE-42711700295-RUST-3.0.0-CANONICAL-REEVALUATION-SOURCE-5",
+    "planSha256": "3c7b9ba53566eaae153aed5734266f58d1bd91746a1d4bb9e08f2002e91c263b",
+    "newNativeSessions": 0,
+    "originalMembersUnchanged": true,
+    "nativeOutcome": "FAIL",
+    "integrationOutcome": "PASS",
+    "rustOutcome": "PASS",
+    "repetitions": 2,
+    "nativeCountsPerRepetition": {
+      "PASS": 180,
+      "FAIL": 99,
+      "BLOCKED": 1
+    },
+    "integrationCountsPerRepetition": {
+      "PASS": 77,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "rustCountsPerRepetition": {
+      "PASS": 48,
+      "FAIL": 0,
+      "BLOCKED": 0
+    }
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "currentCandidateNativeSessions": 0,
+  "native7bdAdmission": "BLOCKED_BY_FOUNDATION_FAILURE_NOT_DISPATCHED",
+  "cost": {
+    "knownJobWallSeconds": 1411,
+    "completedCohortJobSecondsBeforeIncrement": 14252,
+    "completedCohortJobSecondsAfterIncrement": 15663,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "unusedNativeAllowanceIsActualCost": false,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "4d5659e8199f3ec4365570940b6087c5ea706070",
+      "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999"
+    }
+  },
+  "scope": [
+    "Original API, complete job logs, original artifact ZIPs and all483 member byte inventories retained.",
+    "Nonempty producer and independent CI verifier receipts checked, including exact original native/Rust counts. This archive does not rerun frozen artifact semantic verifiers locally.",
+    "The failed CI suite and missing38 tests remain failures/unobserved; source diagnosis is separately reproduced local evidence, not recovered original childstderr.",
+    "No current candidate native qualification/new native execution; source7bd native allowance unused."
+  ]
+}

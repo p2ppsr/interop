@@ -1,0 +1,169 @@
+{
+  "schema": "tpnil-ci-cost-increment@1",
+  "claim": "PARTIAL_COST_ACCOUNTING_ONLY",
+  "includedRunIds": [
+    43157083493,
+    43157083517,
+    43157163535,
+    43158448284
+  ],
+  "includedCompletedJobs": 10,
+  "knownJobWallSeconds": 2723.0,
+  "runs": [
+    {
+      "id": 43157083493,
+      "source": "e7a4b536d851c08a8b1fc3c6537141dac79615c4",
+      "conclusion": "cancelled",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43157083493",
+      "jobs": [
+        {
+          "id": 130979401380,
+          "name": "integrated-components",
+          "conclusion": "cancelled",
+          "startedAt": "2026-11-12T04:47:32Z",
+          "completedAt": "2026-11-12T04:48:53Z",
+          "seconds": 81.0
+        },
+        {
+          "id": 130979401531,
+          "name": "offline-core",
+          "conclusion": "cancelled",
+          "startedAt": "2026-11-12T04:47:32Z",
+          "completedAt": "2026-11-12T04:48:52Z",
+          "seconds": 80.0
+        },
+        {
+          "id": 130979401628,
+          "name": "go-components",
+          "conclusion": "cancelled",
+          "startedAt": "2026-11-12T04:47:31Z",
+          "completedAt": "2026-11-12T04:48:54Z",
+          "seconds": 83.0
+        }
+      ],
+      "jobSeconds": 244.0,
+      "runApiSha256": "56029f82dfae2600bd198e0b9861c6fb60f6f92b8b877e3805274e94095d37aa",
+      "jobsApiSha256": "649939c48d59798851d50689a1ccfbb93fe97abba28d12f3716db25c9ca5fda1"
+    },
+    {
+      "id": 43157083517,
+      "source": "e7a4b536d851c08a8b1fc3c6537141dac79615c4",
+      "conclusion": "success",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43157083517",
+      "jobs": [
+        {
+          "id": 130979401240,
+          "name": "retained-native-evidence",
+          "conclusion": "success",
+          "startedAt": "2026-11-12T04:47:31Z",
+          "completedAt": "2026-11-12T04:49:03Z",
+          "seconds": 92.0
+        }
+      ],
+      "jobSeconds": 92.0,
+      "runApiSha256": "9c0266d5d5bdb5f9f96c78ffdbe1f1e1bbb0f668c28a66e52467582a5eaa9f22",
+      "jobsApiSha256": "29ecce113300d90ca6b73a0973ea1f31690983b4fcf27223cc99ceeecbb23a05"
+    },
+    {
+      "id": 43157163535,
+      "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+      "conclusion": "failure",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43157163535",
+      "jobs": [
+        {
+          "id": 130979659790,
+          "name": "offline-core",
+          "conclusion": "failure",
+          "startedAt": "2026-11-12T04:48:19Z",
+          "completedAt": "2026-11-12T04:50:49Z",
+          "seconds": 150.0
+        },
+        {
+          "id": 130979660007,
+          "name": "go-components",
+          "conclusion": "success",
+          "startedAt": "2026-11-12T04:48:18Z",
+          "completedAt": "2026-11-12T04:53:09Z",
+          "seconds": 291.0
+        },
+        {
+          "id": 130979660009,
+          "name": "integrated-components",
+          "conclusion": "failure",
+          "startedAt": "2026-11-12T04:48:19Z",
+          "completedAt": "2026-11-12T05:01:25Z",
+          "seconds": 786.0
+        }
+      ],
+      "jobSeconds": 1227.0,
+      "runApiSha256": "fc302c84e1189d3a114f3cf405a671ced5d6d38d9ba3e85fbd29db3960499cca",
+      "jobsApiSha256": "8260521fb7783189a3a048996ac4148e9cac8c9d33aecd2a93b9a32f338c0602"
+    },
+    {
+      "id": 43158448284,
+      "source": "10291cfbe19721d5d7de8bcb52d7e861386a4445",
+      "conclusion": "failure",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43158448284",
+      "jobs": [
+        {
+          "id": 130983762628,
+          "name": "integrated-components",
+          "conclusion": "failure",
+          "startedAt": "2026-11-12T05:00:28Z",
+          "completedAt": "2026-11-12T05:11:30Z",
+          "seconds": 662.0
+        },
+        {
+          "id": 130983762930,
+          "name": "go-components",
+          "conclusion": "success",
+          "startedAt": "2026-11-12T05:00:29Z",
+          "completedAt": "2026-11-12T05:05:28Z",
+          "seconds": 299.0
+        },
+        {
+          "id": 130983763051,
+          "name": "offline-core",
+          "conclusion": "failure",
+          "startedAt": "2026-11-12T05:00:29Z",
+          "completedAt": "2026-11-12T05:03:48Z",
+          "seconds": 199.0
+        }
+      ],
+      "jobSeconds": 1160.0,
+      "runApiSha256": "de160dd823b0d502b13d7ed0762eb548a39d01b174d92ee5fd34ef7da83cd32c",
+      "jobsApiSha256": "a91d2f30474e263fea7f431d435f290695bf049d7aabe1c491529e9263ece63b"
+    }
+  ],
+  "measurement": "Sum of terminal job completed_at minus started_at, including setup/execution/cleanup. This is observed duration, not provider billing, queue time or cost per accepted pack.",
+  "latestWorkOrder": {
+    "repository": "network-ops",
+    "commit": "2fc86c108",
+    "appliesToRun": 43158448284,
+    "jobSecondsBound": 4200,
+    "observedJobSeconds": 1160,
+    "withinTimeBound": true
+  },
+  "currency": "USD",
+  "reservedUSD": null,
+  "estimatedUSD": null,
+  "accruedUSD": null,
+  "invoicedUSD": null,
+  "actualCIChargeUSD": null,
+  "storageAndEgressUSD": null,
+  "operatorEffortUSD": null,
+  "developmentAgentUsageUSD": null,
+  "allocatedOwnedCapacityUSD": null,
+  "totalFullCostUSD": null,
+  "acceptedNativeCustomerPacks": null,
+  "costPerAcceptedPackUSD": null,
+  "unknownCostsAreZero": false,
+  "fullCostReconciled": false,
+  "thirtyTwoFoldImprovementMeasured": false,
+  "newNativeSessions": 0,
+  "exclusions": [
+    "The earlier completed5190-job-second cohort and separate older20670-job-second cohort remain in their existing ledgers; neither is included or reset here.",
+    "Native attempts43157433977 and43157437280 are outside this CI increment and require separate accounting.",
+    "No inference of free hosted CI, agent work, local capacity or qualified native customer packs."
+  ]
+}

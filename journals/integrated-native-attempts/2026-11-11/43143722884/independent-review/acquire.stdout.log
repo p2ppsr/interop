@@ -1,0 +1,60 @@
+{
+  "schema": "tpnil-native-attempt-original-acquisition@1",
+  "runId": 43143722884,
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "startedAt": "2026-11-12T03:24:34.512Z",
+  "files": [
+    {
+      "path": "run.json",
+      "bytes": 11981,
+      "sha256": "8e7affa4031e1f94b4de48b6860d30c20f16e1ab85fa980df819c078c63c4198",
+      "endpoint": "repos/p2ppsr/interop/actions/runs/43143722884"
+    },
+    {
+      "path": "jobs.json",
+      "bytes": 4728,
+      "sha256": "6f59708ebe976728e8e7494d69e29bb41acb23fcd97e4501d6d909f579b35e75",
+      "endpoint": "repos/p2ppsr/interop/actions/runs/43143722884/jobs?per_page=100"
+    },
+    {
+      "path": "artifacts.json",
+      "bytes": 749,
+      "sha256": "7011791377dc22e31d5610bc23e41c48258df60d04608b36bd9f567fad7fd58b",
+      "endpoint": "repos/p2ppsr/interop/actions/runs/43143722884/artifacts?per_page=100"
+    },
+    {
+      "path": "all-job-logs.zip",
+      "bytes": 86839,
+      "sha256": "b74ef995b7bf2eabee06cba8fb25d9ef1321f29a73f894abe5f9c41bf2c379f4",
+      "endpoint": "repos/p2ppsr/interop/actions/runs/43143722884/logs"
+    },
+    {
+      "path": "original-native.zip",
+      "bytes": 5802560,
+      "sha256": "a16bb501d97cb674e9859a61f968d1bfe5c3b44734b373cedf3b7e7ce4f26922",
+      "endpoint": "repos/p2ppsr/interop/actions/artifacts/13912542052/zip"
+    }
+  ],
+  "result": "ORIGINAL_BYTES_VERIFIED",
+  "conclusion": "failure",
+  "workflowUrl": "https://github.com/p2ppsr/interop/actions/runs/43143722884",
+  "artifact": {
+    "id": 13912542052,
+    "name": "native-go-yours-wallet-5.1.1",
+    "githubDigest": "sha256:a16bb501d97cb674e9859a61f968d1bfe5c3b44734b373cedf3b7e7ce4f26922",
+    "githubDigestVerified": true
+  },
+  "zipIntegrity": [
+    {
+      "path": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43143722884/acquisition/original-native.zip",
+      "members": 266,
+      "crc": "PASS"
+    },
+    {
+      "path": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43143722884/acquisition/all-job-logs.zip",
+      "members": 14,
+      "crc": "PASS"
+    }
+  ],
+  "completedAt": "2026-11-12T03:24:48.262Z"
+}

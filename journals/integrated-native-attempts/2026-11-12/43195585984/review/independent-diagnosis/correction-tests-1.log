@@ -1,0 +1,37 @@
+
+ RUN  v4.1.12 /Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis
+
+stdout | test/native-permission-startup.test.ts
+◇ injected env (0) from .env // tip: ⌘ suppress logs { quiet: true }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+
+ ❯ test/native-permission-startup.test.ts (23 tests | 1 failed) 2342ms
+     × binds explicit identity consent to the actual level1 prompt, native click and image bytes 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/native-permission-startup.test.ts > prospective permission startup recovery > binds explicit identity consent to the actual level1 prompt, native click and image bytes
+AssertionError: expected [Function] to not throw an error but 'AssertionError [ERR_ASSERTION]: Expec…' was thrown
+
+- Expected:
+undefined
+
++ Received:
+"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '[\"Protocol Permission\",\"An application is requesting permission to use protocol \\\\\"identity key retrieval\\\\\" with security level 1.\",\"Origin\",\"permission-extension.itcve.test\",\"Protocol\",\"identity key retrieval\",\"Security\",\"Level 1 Â· this app only\",\"AllowDeny\"]'
+- '[\"Protocol Permission\",\"An application is requesting permission to use protocol \\\\\"identity key retrieval\\\\\" with security level 1.\",\"Origin\",\"permission-extension.itcve.test\",\"Protocol\",\"identity key retrieval\",\"Security\",\"Level 1 · this app only\",\"Allow\",\"Deny\"]'
+"
+
+ ❯ test/native-permission-startup.test.ts:63:102
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 22 passed (23)
+   Start at  02:27:47
+   Duration  3.01s (transform 195ms, setup 0ms, import 604ms, tests 2.34s, environment 0ms)
+

@@ -1,0 +1,134 @@
+{
+  "schema": "tpnil-native-permission-coverage-policy@4.0.0",
+  "oracle": "tpnil-native-permission-coverage-oracle@5.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "interface": "Native public CWI, trusted visible permission controls, and actual browser close/relaunch on the same isolated profile",
+  "categories": [
+    "protocol",
+    "basket",
+    "certificate",
+    "counterparty-linkage",
+    "specific-linkage"
+  ],
+  "configuration": {
+    "application": "https://todo.itcve.test",
+    "primary": "https://deny.itcve.test",
+    "alternate": "https://alternate.itcve.test",
+    "allowance": "https://allowance.itcve.test",
+    "protocol": [
+      2,
+      "tpnil coverage protocol v1"
+    ],
+    "keyID": "coverage grant persistence",
+    "linkageProtocol": [
+      2,
+      "tpnil coverage linkage v1"
+    ],
+    "linkageKeyID": "coverage linkage key",
+    "basket": "tpnil coverage persistence v1",
+    "basketAmount": 3,
+    "certificateTypeByte": 61,
+    "certificateSerialByte": 62,
+    "fields": {
+      "name": "TPNIL permission coverage subject",
+      "private": "Never disclosed by this permission scenario"
+    },
+    "issuerKeyHex": "6464646464646464646464646464646464646464646464646464646464646464",
+    "peerKeyHex": "6565656565656565656565656565656565656565656565656565656565656565",
+    "verifierKeyHex": "6666666666666666666666666666666666666666666666666666666666666666",
+    "paymentRecipientKeyHex": "6868686868686868686868686868686868686868686868686868686868686868",
+    "allowanceSatoshis": 100,
+    "paymentAmounts": {
+      "first": 11,
+      "second": 13,
+      "third": 7,
+      "overflow": 53,
+      "alternate": 59,
+      "revoked": 61,
+      "revokedRestart": 67
+    },
+    "requestTimeoutMs": 25000
+  },
+  "assertionSuffixes": [
+    "protocol-grant-cache",
+    "basket-grant-cache",
+    "certificate-grant-cache",
+    "counterparty-linkage-grant-cache",
+    "specific-linkage-grant-cache",
+    "protocol-origin-isolation",
+    "basket-origin-isolation",
+    "certificate-origin-isolation",
+    "counterparty-linkage-origin-isolation",
+    "specific-linkage-origin-isolation",
+    "restart-identity",
+    "protocol-restart-persistence",
+    "basket-restart-persistence",
+    "certificate-restart-persistence",
+    "counterparty-linkage-restart-persistence",
+    "specific-linkage-restart-persistence",
+    "revocation-ui",
+    "protocol-revocation-persistence",
+    "basket-revocation-persistence",
+    "certificate-revocation-persistence",
+    "counterparty-linkage-revocation-persistence",
+    "specific-linkage-revocation-persistence",
+    "manifest-selection",
+    "standing-allowance",
+    "exact-fee-inclusive-cap",
+    "cumulative-allowance-boundary",
+    "allowance-origin-isolation",
+    "allowance-revocation",
+    "cleanup"
+  ],
+  "deniedPayments": [
+    "allowance-overflow",
+    "allowance-alternate",
+    "allowance-revoked",
+    "allowance-revoked-restart"
+  ],
+  "remainingCoverage": [
+    {
+      "id": "privileged-keyring",
+      "status": "NOT_CLAIMED",
+      "reason": "This profile does not establish a distinct privileged keyring or privileged authorization lifecycle."
+    },
+    {
+      "id": "finite-expiry",
+      "status": "NOT_CLAIMED",
+      "reason": "No supported native UI for selecting finite grant expiry is exercised; neither clocks nor private grant stores are changed."
+    },
+    {
+      "id": "complete-wire-conformance",
+      "status": "NOT_CLAIMED",
+      "reason": "Public CWI observations do not establish every BRC wire encoding or framing requirement."
+    },
+    {
+      "id": "complete-conditional-permission-matrix",
+      "status": "NOT_CLAIMED",
+      "reason": "This finite scenario establishes the declared origin, restart, revocation and spending cases; all peer/verifier/key/field mutations and calendar-boundary cases remain separate obligations."
+    }
+  ],
+  "completeBRC100Conformance": false,
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json",
+    "sha256": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+    "retainedResults": "Policies1\u20134 and all original reports remain unchanged."
+  },
+  "revisionRationale": {
+    "exactCap": "The grouped manifest grants a fixed100-satoshi cap before three11/13/7 payments. Require the fresh managed funding prerequisite; setup-basket spends3 from one large source and leaves large change. The intended one-input/two-output fee regime produces34+36+30=100. Independently derive all actual fees from signed bytes and require exact100; never infer fee23 or adapt the cap after returned results. Any mismatch is retained as fixture failure.",
+    "uiObservation": "Before revocation, wait for the expanded standing-allowance card to show the exact cap, spent amount and consistent remaining balance, then capture a stable body/card pair. Require exact beforeBody equality with the trusted click; no normalization or ignored suffix.",
+    "sutBoundary": "All three accepted payments must settle with no new permission prompt, including the third payment at the exact cap. The 53, 59, 61 and 67-satoshi denied markers and recipient remain unchanged. The 7-satoshi accepted payment uses the coverage recipient key 68, distinct from the legacy 7-satoshi denial marker. No private grant store, wallet clock or post-outcome allowance is changed.",
+    "prelude": "Both base and additional permission modules execute before customer transactions. The initial snapshot contains exactlythree native-managed10000-satoshi spendable default outputs and no other native outputs. Snapshot bytes, identity, observation sequence, time and submission indexes bind through parent provenance."
+  },
+  "fundingPrerequisite": {
+    "id": "fresh-managed-funding",
+    "evidencePath": "conformance/permission-prelude.json",
+    "schema": "tpnil-native-permission-prelude@1.0.0",
+    "outputObservationSequence": 0,
+    "outputCount": 3,
+    "eachSatoshis": 10000,
+    "basketName": "default",
+    "spendable": true,
+    "phase": "After native reserve preparation and scenario-start; before ToDo, Board, identity and other customer transactions. Parent independently joins all three exact fixture outpoints and authenticated initial snapshot."
+  }
+}

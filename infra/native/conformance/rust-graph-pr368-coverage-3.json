@@ -1,0 +1,33 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-coverage-3",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-3.json",
+    "sha256": "ea36701c05ea6421af3ccd4ec1485725172be0554f90330a5370c29e26f3c921",
+    "profile": "ITCVE-1@4.5.0",
+    "program": "ISI-4@5.5.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Exact prospective4.5 source binding for698 native observations and the unchanged Rust3 corpus. Native admission and all child proofs remain required; no complete BRC100 or historical readmission claim.",
+  "sources": {
+    "scripts/native-rust-compatibility.mjs": "07ac6761a7197dff58043ccd726ba5d742c921a1471e3ebab810d96d1e529d75",
+    "scripts/native-wallet-profiles.mjs": "f72ac34868c376f0bcfc049e6100b3e56459b065120011e6e9bf9cfd3fee2c5b",
+    "scripts/run-native-go-wallet.mjs": "3ffa31a5da900a7e81111288183feb974d61ca580944458664a191ebbb3ee421",
+    "scripts/verify-native-integrated.mjs": "7edd9ba7378ab700b3eadb38dec4faa3950ccb2eca4935d39100bcea769fb870",
+    ".github/workflows/isi4-yours-wallet.yml": "2163807eb791e5b4a7ee4871c64de992940c300765b6288ac8c5aa586de52a5f",
+    "scripts/check-native-wallet-selector.mjs": "603fea9e01fddbed0eb3d480f7ac458f75125b9304de57c9e61b93d068589f41"
+  },
+  "sourceBindingRevision": 6,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-coverage-2.json",
+    "sha256": "9135d97c5d0f5387b55adc7ac69dca5e06d6234123bcf153f8400d84f7d7ef3e"
+  },
+  "admissionState": "FROZEN"
+}

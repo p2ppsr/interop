@@ -1,0 +1,100 @@
+{
+  "schema": "tpnil-test-harness-correction-archive@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "sourceBase": "585211c193d0288effeb466bda38fe6ef23ac94d",
+  "changedFiles": {
+    "synthesis/test/native-certificate-states.test.ts": "cd9bd2788ac1bcd5904fc9ee901a0322dd5cc4bdb35bcfd91aa4cad59b3c695c",
+    "synthesis/test/native-conditional-verifier.test.ts": "a6a5cee5f7f1c0c40aa697da050473c0010a266516a0cc0d06920b5912cce5c0",
+    "synthesis/test/native-shutdown-ancestry.test.ts": "f51add701c194c4be3fd6929044900e9c9e972af2c27e4e3cec4a5da7a6cf27b"
+  },
+  "files": [
+    {
+      "path": "ci-final--test-harness-correction.json.gz",
+      "sourcePath": "out/native-closure-20261111/ci-final/test-harness-correction.json",
+      "sha256": "7dc7b272cb1462340c34c1734e634b8f116eaa47fa5433da99936136c8bdab84",
+      "bytes": 997,
+      "rawSha256": "7b889be38b50d30c82d121f5ab5e61cedc304f0bb49582277a3e4dcd20e968a6",
+      "rawBytes": 2012
+    },
+    {
+      "path": "ci-final--crypto-timeout-bounded-workers.log.gz",
+      "sourcePath": "out/native-closure-20261111/ci-final/crypto-timeout-bounded-workers.log",
+      "sha256": "3bc640815df0475db1658a42d8167b7782d6158dec2a88c72bb1f2877c1cb529",
+      "bytes": 225,
+      "rawSha256": "10136b3fa8882d22828cda54a85b653a27e615fcfa8b07139ff2d484e102a07f",
+      "rawBytes": 287
+    },
+    {
+      "path": "ci-final--synthesis-test-harness-full-workers2.log.gz",
+      "sourcePath": "out/native-closure-20261111/ci-final/synthesis-test-harness-full-workers2.log",
+      "sha256": "417d4f093c6c571d8abf0bcf4dcd2d07a2501c95370d0ae7fe3a33ff963f8e32",
+      "bytes": 238,
+      "rawSha256": "096e66ead4546aee6db91f5e4b727de87cb24ad50edd3834a61438e66d76cc21",
+      "rawBytes": 304
+    },
+    {
+      "path": "reproduce-certificate-idle-teardown.mts.gz",
+      "sourcePath": "out/native-closure-20261111/reproduce-certificate-idle-teardown.mts",
+      "sha256": "22e835cb8136a3ad879d8ddd3d7e0f9649d66adadf7e573ee15ab9e8c7941281",
+      "bytes": 583,
+      "rawSha256": "88051227709c86da01ebc43a8a68c9204b68d626dcafbff96564f1904ca04106",
+      "rawBytes": 1094
+    },
+    {
+      "path": "reproduce-certificate-idle-teardown.log.gz",
+      "sourcePath": "out/native-closure-20261111/reproduce-certificate-idle-teardown.log",
+      "sha256": "4adca9854b43ae23fc0c76a005f94835ad67d426f248f43df86f562cd658a5bf",
+      "bytes": 321,
+      "rawSha256": "aec6af5245fcfd09007e20851d6cf4aa98576c96a8ce21a4c5113bce0bac3b33",
+      "rawBytes": 464
+    },
+    {
+      "path": "certificate-early-cleanup-control.mts.gz",
+      "sourcePath": "out/native-closure-20261111/certificate-early-cleanup-control.mts",
+      "sha256": "32356ec15c534c8e6f5ea8c9ab575707e95f9f34b370ab8ff71373ca90daf70b",
+      "bytes": 607,
+      "rawSha256": "d38d778ff8d3349e653b5ca88248393edb00f2771fa830bcd4a0f31b37686aba",
+      "rawBytes": 1206
+    },
+    {
+      "path": "certificate-early-cleanup-control.log.gz",
+      "sourcePath": "out/native-closure-20261111/certificate-early-cleanup-control.log",
+      "sha256": "578e8562c366707dc70b58c3ac59147fdd709c334b52a1ca6e2478913b44f32f",
+      "bytes": 242,
+      "rawSha256": "2f4079e73c57a5483949bb0b0c04a17e0f02f0ca78d7a1feac7c26652ffca1e6",
+      "rawBytes": 324
+    },
+    {
+      "path": "certificate-teardown-typecheck.log.gz",
+      "sourcePath": "out/native-closure-20261111/certificate-teardown-typecheck.log",
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8",
+      "bytes": 72,
+      "rawSha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "rawBytes": 52
+    }
+  ],
+  "nativeRuntimeAndPoliciesUnchanged": true,
+  "tests": {
+    "focused": {
+      "PASS": 69,
+      "files": 2,
+      "maxWorkers": 2,
+      "seconds": 47.5
+    },
+    "full": {
+      "PASS": 629,
+      "SKIP": 8,
+      "FAIL": 0,
+      "files": 46,
+      "maxWorkers": 2,
+      "seconds": 60.0
+    },
+    "typecheck": "PASS recorded certificate-teardown-typecheck.log"
+  },
+  "linuxCI": "REQUIRES_NEW_RUN",
+  "originalFailureRetained": 43157163535,
+  "actualCost": null,
+  "operatorCost": null,
+  "developmentAgentCost": null,
+  "completeBRC100Conformance": false
+}

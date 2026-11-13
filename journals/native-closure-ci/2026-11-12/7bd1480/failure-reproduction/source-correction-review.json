@@ -1,0 +1,315 @@
+{
+  "schema": "tpnil-ci-reference-harness-correction-review@1",
+  "claim": "LOCAL_ENGINEERING_DIAGNOSTIC_AND_REGRESSION_ONLY",
+  "nativeSessions": 0,
+  "sourceBeforeCorrection": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+  "ciFailure": {
+    "run": 43185320652,
+    "job": 131070928492,
+    "log": "out/native-closure-20261111/ci-7bd1480/43185320652/job-131070928492.log",
+    "sha256": "89c8780bf9df5aae0709ffdfd2b69c25620901f6fe613766a7b7cd7eb72c730c",
+    "reportedPassed": 1037,
+    "reportedSkipped": 27,
+    "reportedTotal": 1102,
+    "unaccountedAggregate": 38,
+    "actualCertificateFileCases": 39
+  },
+  "rootCause": [
+    "Offline job installs only synthesis dependencies, while this reference requires integrations/services mongodb-memory-server and OverlayExpress.",
+    "Exact frozen source with only synthesis dependency closure exits1 with MODULE_NOT_FOUND mongodb-memory-server. Timeout is not established.",
+    "execFile embeds stderr loader frames in its error stack. Pinned Vitest source-map reader mistakes a multiline tsx sourceMappingURL template for an actual inline map and throws the exact secondary Unexpectedtoken replacement-character JSON exception."
+  ],
+  "correction": [
+    "Explicit certificate suite gate with a required39-case step in integrated-components after locked integration dependencies are installed.",
+    "Original child stdout/stderr/error metadata retained before a fresh failing Error, avoiding inherited malformed-source-map stack.",
+    "Reference outputs retained on child/startup or subsequent test failure; successful suite cleanup retained. Both affected jobs always upload failure evidence."
+  ],
+  "validation": {
+    "focusedExplicitPassed": 42,
+    "certificateCasesPassed": 39,
+    "diagnosticCasesPassed": 3,
+    "defaultFocusedPassed": 3,
+    "defaultCertificateCasesSkipped": 39,
+    "typecheck": "PASS",
+    "nestedActualVitestMissingModuleExit": 1,
+    "nestedErrorRenderedNormally": true,
+    "injectedPostReferenceAssertionExit": 1,
+    "injectedPostReferenceEvidenceRetained": true,
+    "childCleanupFailures": [],
+    "runtimeInputsUnchanged": 157,
+    "planRustSource5Unchanged": true
+  },
+  "changedFiles": {
+    ".github/workflows/ci.yml": "0d2b58a5fd0d4c22453780543896fc4671f57a0e421f0a58c025f147781dce12",
+    "synthesis/test/native-coverage-certificates.test.ts": "cd33c990e635903d12e31e64e8a483219b32047974c95f89879b0dc0552c00b7",
+    "synthesis/test/reference-child.ts": "4ba69e61fa03e3e4f87213819c502ee3888a5ac9d857511996b7cd803f8c3b81",
+    "synthesis/test/native-reference-child.test.ts": "5f098398f6cebf600e1afaff5460c30ebf8f1db5594b3aa0de25d1f226547fb8"
+  },
+  "actualDependencyFiles": {
+    "synthesis/node_modules/tsx/package.json": "1712340c8942ca0af1efaf2b42fd0cd608fb023f6a4fae427399ed08c61cf0f4",
+    "synthesis/node_modules/@vitest/utils/package.json": "f7dc399df4aba16359fd4add7ed14d0c3be1bc35ffe567449f831dd2fd7b23f1",
+    "synthesis/node_modules/convert-source-map/package.json": "e6bf802e6ee220d66321808ce3d619fbb85ff4d5729ea4f649bd65dfe9ee8956",
+    "synthesis/node_modules/tsx/dist/register-D46fvsV_.cjs": "7f0e410a859fadcc75a452160e69c860543f5e13e2321b934c0bc4e3d14c01f6",
+    "synthesis/node_modules/tsx/dist/register-CFH5oNdT.mjs": "7c7d2d4f757a1a35610b483e0348aee2eb1140968631f4b2105c4b4ad9ffbf0a",
+    "synthesis/node_modules/@vitest/utils/dist/source-map/node.js": "799916b49140c773daeeced4d4c49e466ac8c67d071ab360b41ed6489140f22c",
+    "synthesis/node_modules/@vitest/utils/dist/source-map.js": "bdc41c45e4bffd79dcc39422c85b98dca5f44e355bd17ef2c72d3e97aea15b50",
+    "synthesis/node_modules/convert-source-map/index.js": "a842755693061e7bd3124513ca21f6b69d389b5776cdfbe097d62f66dc1f59dc"
+  },
+  "pinnedNode": "24.22.1",
+  "preservedFailedExperiments": [
+    "dependency-absent first snapshot lacked synthesis/go/components.lock.json; corrected snapshot2 establishes actual missing dependency.",
+    "dependency-present first control snapshot lacked vendored identity files; explicit actual checkout39-case run supplies complete-dependency positive control.",
+    "typecheck1 caught nullable Error in new diagnostic test; corrected typecheck2/3 PASS."
+  ],
+  "files": {
+    "out/native-closure-20261111/ci-source-map-review/execfile.stdout.log": {
+      "sha256": "d4c16c3a13443cb53bf2785224d939c8605fd1e2b1d58f18a4c61578997bca24",
+      "bytes": 158
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-assertion-retention.log": {
+      "sha256": "0f3e838305116dd4bfcc992cc75a373ded1c235dcaee2cacfeebe2b476df31ba",
+      "bytes": 937
+    },
+    "out/native-closure-20261111/ci-source-map-review/certificate-explicit-tests-1.log": {
+      "sha256": "7cee4b7189a79f3806bb8246f798ecaafc5c5b2330b060e573cd91b411ce2f0d",
+      "bytes": 369
+    },
+    "out/native-closure-20261111/ci-source-map-review/typecheck-1.log": {
+      "sha256": "46908c3e28b85b3dffb68c4d88a2b4bc08a8411b390bb62ff5e9c3675e56ff34",
+      "bytes": 273
+    },
+    "out/native-closure-20261111/ci-source-map-review/corrected-explicit-tests-2.log": {
+      "sha256": "1e127ce7ad3d0d02a7aa1ff0fc25d3260275371b0ab4003abab89b15aa42535b",
+      "bytes": 400
+    },
+    "out/native-closure-20261111/ci-source-map-review/typecheck-2.log": {
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "bytes": 52
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-missing-2.log": {
+      "sha256": "e82c56ff4364d5860342a1dfb1e6d0159de69274c666ed33b5fcde6aea3951fc",
+      "bytes": 2498
+    },
+    "out/native-closure-20261111/ci-source-map-review/final-full-synthesis.log": {
+      "sha256": "1b0265d701db8f3586e6deb7fa4d02c8b5bc95415b1f7bb7fbe716146ffa1ec3",
+      "bytes": 160
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-child-error.json": {
+      "sha256": "4bb2f232f6770000b95904ed549d36a8d3b89032ba6118ea6e889efd3c5ae8a2",
+      "bytes": 1630
+    },
+    "out/native-closure-20261111/ci-source-map-review/typecheck-3.log": {
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "bytes": 52
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent.stdout.log": {
+      "sha256": "8fac6300c99a0e9e7b6a3c8e22bf6b34a43651e58a1371ebf6ccaf95d00b540f",
+      "bytes": 165
+    },
+    "out/native-closure-20261111/ci-source-map-review/expected-failure-vitest.stderr.log": {
+      "sha256": "2b6c28e836148054aacd450b276c7e53774f4afd62c89ac02bbd40108268c900",
+      "bytes": 607
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent-2.stdout.log": {
+      "sha256": "aa55a8b3c3535b6f774030cdb36f558149854b45a67c59dbcaf468201b5be21f",
+      "bytes": 158
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-present.stdout.log": {
+      "sha256": "1c52ebee25a6f2a2d6db6fb13850df7faedec7087f08dee45c4988b972e19628",
+      "bytes": 152
+    },
+    "out/native-closure-20261111/ci-source-map-review/assertion-retention.stderr.log": {
+      "sha256": "b22e03bf80ad015d36a4ddd02197c8b9b27bd2d786e78b58cbbb382eec88bdd9",
+      "bytes": 977
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-map.json": {
+      "sha256": "ba6a3baa07d4704582d5112e250c0311c728552a36a41a9a69b4b5733b19968c",
+      "bytes": 6775
+    },
+    "out/native-closure-20261111/ci-source-map-review/execfile.stderr.log": {
+      "sha256": "2abe318ac3b42d3a438decb9b3873dd08487ffc9a859ff9c5c253147c239b7c3",
+      "bytes": 1924
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-missing.py": {
+      "sha256": "ec19aeacaa2d2b074be257ede848717a5d7fa5adc181fcc4540cd5ea08b3c774",
+      "bytes": 2470
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent-2.json": {
+      "sha256": "adf08a101eaf57ad3c80ee9c168045ead1bebd42a6915da719b4f7e3a02613ac",
+      "bytes": 48565
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-map.mjs": {
+      "sha256": "8aacad735a23ff0384316cd316bbbc22e6a552728bcf4a939389317bda38fcfc",
+      "bytes": 1255
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-present.json": {
+      "sha256": "b1fbc6ebfe821ce70c3c1e9a906ef6fbe9c65a4478f8bff033661b1247f34ee8",
+      "bytes": 1240
+    },
+    "out/native-closure-20261111/ci-source-map-review/default-gate-tests.log": {
+      "sha256": "2dd00816006ffaacb946f46d4ba7fdd6e4d6483aeb4957c26ced766837f85b90",
+      "bytes": 422
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-missing-2.py": {
+      "sha256": "3c56d88ed3aaac7b91d39d61e21f77e426ef9fc5f15bae8665367ad91fe365a2",
+      "bytes": 2499
+    },
+    "out/native-closure-20261111/ci-source-map-review/execfile.raw-stack.log": {
+      "sha256": "68db8b08b5792eb74512750f3ff2aa751482719cf5251ff3a59f0df3c40f6af7",
+      "bytes": 2942
+    },
+    "out/native-closure-20261111/ci-source-map-review/expected-failure-vitest.json": {
+      "sha256": "e8b808bf6ceb00c3cd5ce123b4e4920e53f5c12b2b5031c0fa01cdd5970dd15c",
+      "bytes": 811
+    },
+    "out/native-closure-20261111/ci-source-map-review/diagnostic-tests-1.log": {
+      "sha256": "a5e6e427f9fcf304a0a4781069be19567febf3b510f2f30297de37fda5af2701",
+      "bytes": 357
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent.stderr.log": {
+      "sha256": "82d7f27041fbcb788897aa24e782aea59edd1c3568527f76cc98b5bef5072d86",
+      "bytes": 1536
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-assertion-retention.py": {
+      "sha256": "0dfe496f8795034fcfd45f1b415997c21315d77eadfbcfafe2185ca0aa0384db",
+      "bytes": 3066
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-missing.log": {
+      "sha256": "165cd20a90d93dcce5c734ec9c73901a5f1325b99783887a3ecb85e82daa9d7a",
+      "bytes": 2110
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-present.stderr.log": {
+      "sha256": "95ebd391327fb1baf994711607008f88ea8a3873bfa4a05e2ed16cde0a5979ee",
+      "bytes": 1895
+    },
+    "out/native-closure-20261111/ci-source-map-review/assertion-retention.json": {
+      "sha256": "0f3e838305116dd4bfcc992cc75a373ded1c235dcaee2cacfeebe2b476df31ba",
+      "bytes": 937
+    },
+    "out/native-closure-20261111/ci-source-map-review/assertion-retention.stdout.log": {
+      "sha256": "ff72f7a5ba565d453a7d22d84d47537b92104cc9d5d360896f5122b5cfbc5a9a",
+      "bytes": 5503
+    },
+    "out/native-closure-20261111/ci-source-map-review/expected-failure-vitest.stdout.log": {
+      "sha256": "c2fedf501849226b5c6d6401365976e5530e9be669e085ea74b8ea1615e0c3d5",
+      "bytes": 708
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent-2.stderr.log": {
+      "sha256": "2abe318ac3b42d3a438decb9b3873dd08487ffc9a859ff9c5c253147c239b7c3",
+      "bytes": 1924
+    },
+    "out/native-closure-20261111/ci-source-map-review/dependency-absent.json": {
+      "sha256": "f3b3e5c67e039dd5970b4291063bc7030b36608f57a6dd237cf9b78c1eb4118d",
+      "bytes": 19343
+    },
+    "out/native-closure-20261111/ci-source-map-review/reproduce-child-error.mjs": {
+      "sha256": "14adec283cb6b4420a1828e733f41e7a5d000fe23b6168d8fa73f6eb493da9be",
+      "bytes": 2701
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/stderr.log": {
+      "sha256": "71244cea69939ea8f82c5a84e6c6de28721229c2db73129bb4c3dfddc6215c3f",
+      "bytes": 15645
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/report.json": {
+      "sha256": "e69051f4ca6fb1240f66f83c1e3975d4bf99cafbcbab882473a2f1e61f68adaf",
+      "bytes": 4257403
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source-before.json": {
+      "sha256": "a3719cbe24ce7e7af5ce8c4d98383272603953eeb081d8da74b26a6f3f8e01b6",
+      "bytes": 2012
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source-after.json": {
+      "sha256": "a3719cbe24ce7e7af5ce8c4d98383272603953eeb081d8da74b26a6f3f8e01b6",
+      "bytes": 2012
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/stdout.log": {
+      "sha256": "025344c8e017c0621a6283b64391aa6be9092ef42a6beba7949d9b4cbc05cdda",
+      "bytes": 8237
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/cleanup.json": {
+      "sha256": "796c4c14e96a550c0a864f3ea98bceabdd5dec430e60f965354d02a6da03fcd0",
+      "bytes": 21
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/verification.json": {
+      "sha256": "cbd10b1a11b77232060afb75be55101a04672d75a6e64ef574f95f64f64c6bfc",
+      "bytes": 2508
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/parent-ledgers.json": {
+      "sha256": "7e9668c1ae6ce858313a01c6005beba999ad5992ea50e86db510de2def4e8a88",
+      "bytes": 87092
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/overlay/overlay.sqlite": {
+      "sha256": "9b11e548112af8ff77921c99db9524eaa7e7c6fb0fab872656900841f4ca7b48",
+      "bytes": 131072
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/package-lock.json": {
+      "sha256": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+      "bytes": 119650
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/fixtures/teranode/wab-funding-v1.json": {
+      "sha256": "7c4fd4d2c98f8c80b4ac41614b09c9baed91c087b1a418e0f15edc6b8e55560a",
+      "bytes": 2563
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json": {
+      "sha256": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+      "bytes": 1769
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/integrations/services/package-lock.json": {
+      "sha256": "2c871f8e6536c71fa356a51f1d3ea7c4ebc7a2b938c45f928800f31c2a431fc4",
+      "bytes": 115181
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/integrations/services/src/overlay.ts": {
+      "sha256": "063c15763edf0fe709d1eb424a5ad3996f141aa6c68ba3b797ab9b7cadb18b94",
+      "bytes": 6686
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/storage-sync/fixture-wallet.ts": {
+      "sha256": "33991ea24ee8cf150f86aa3c9389d330b66ff311ef64995a61017c4219bdbb23",
+      "bytes": 1928
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/certificate-fixture.ts": {
+      "sha256": "105a89b1d84f115855dfbf99508a4150f40e39ff848027be377a5cc8920a6ca9",
+      "bytes": 1886
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/services.ts": {
+      "sha256": "31343426cac2568d993eda57444cc2e395dff9455cf4369308111e3ee055fbf3",
+      "bytes": 64923
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts": {
+      "sha256": "4ac93a04d749d3ca74540d9121adbbc9408327cbfa712ed8926aa98987c8902c",
+      "bytes": 10784
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/coverage-certificates-model.ts": {
+      "sha256": "652d0dbb7cab843b048d9ce1767f3260d0b3e0c7ee37d0bc3b21203e20747428",
+      "bytes": 2860
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/permission-click.ts": {
+      "sha256": "b1486a48d00e61a39517c580070d710298766d25ce9501e4e00f4bdd1d2ac8a2",
+      "bytes": 7304
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/coverage-certificates-reference.ts": {
+      "sha256": "6b5a32e4266aa423448145948a845ede8789d4f72ab2e9d84355324de77ebe9f",
+      "bytes": 9371
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/coverage-certificates-verify.ts": {
+      "sha256": "4183bb623d0fbf8107def06e8b14d6c8ba8f8cf842ce3999b42f3efe918e2833",
+      "bytes": 38707
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts": {
+      "sha256": "68761637d4254764fdc3b1e5e78b491728e16f98e05b5c6886a0d5204aa111cf",
+      "bytes": 9502
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/verify-identity-trust.ts": {
+      "sha256": "2d1a5b9e7dc56335a9c5a2a706a64263d250d6bf1efbb4d6a70bf04ccb08681c",
+      "bytes": 17092
+    },
+    "out/test-evidence/certificate-coverage-ce5yzi/source/synthesis/src/wallet-lab/native/coverage-certificates-run.ts": {
+      "sha256": "449d93b7abea6063c5d68d748877f17f91ba67cbd5eaa08507a9bcca977c4a01",
+      "bytes": 15059
+    }
+  },
+  "result": "PASS",
+  "limitations": [
+    "No CI rerun or native session was performed by this review.",
+    "The deliberately injected assertion and subprocess failures are negative controls, not product or native-wallet findings."
+  ]
+}

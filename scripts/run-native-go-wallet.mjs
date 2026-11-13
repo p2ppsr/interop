@@ -4,21 +4,17 @@ import os from 'node:os';
 import { spawnSync, execFileSync } from 'node:child_process';
 import { randomBytes, createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { nativeRustBinding, nativeRustV3Flag, nativeRustV3Variant } from './native-rust-compatibility.mjs';
+import { nativeRustBinding } from './native-rust-compatibility.mjs';
+import { selectNativeWalletProfile } from './native-wallet-profiles.mjs';
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const [image, outputArgument] = process.argv.slice(2);
 if (!image || !outputArgument) throw new Error('Usage: run-native-go-wallet IMAGE NEW_OUTPUT');
-if (process.argv.length > 5 || ![undefined, '--integrated', '--integrated-trusted', '--conformance', '--conformance-coverage', '--conformance-closure', nativeRustV3Flag].includes(process.argv[4])) throw new Error('Unknown native qualification profile flag');
+if (process.argv.length > 5) throw new Error('Unknown native qualification profile flag');
+const { wallet511, walletVersion, observerRevision, coverageRevision, rustV3, closure, coverage, conformance, trustedIdentity, integrated, planPath } = selectNativeWalletProfile(process.argv[4]);
 const output = path.resolve(outputArgument);
 if (fs.existsSync(output)) throw new Error('Native qualification output already exists');
 fs.mkdirSync(output, { recursive: true });
-const rustV3 = process.argv[4] === nativeRustV3Flag;
-const closure = rustV3 || process.argv[4] === '--conformance-closure';
-const coverage = closure || process.argv[4] === '--conformance-coverage';
-const conformance = coverage || process.argv[4] === '--conformance';
-const trustedIdentity = conformance || process.argv[4] === '--integrated-trusted';
-const integrated = trustedIdentity || process.argv[4] === '--integrated';
-const planFile = path.join(root, closure ? 'infra/native/conformance/plan-coverage-closure.json' : coverage ? 'infra/native/conformance/plan-coverage.json' : conformance ? 'infra/native/conformance/plan.json' : trustedIdentity ? 'infra/native/integrated/plan-trusted.json' : integrated ? 'infra/native/integrated/plan.json' : 'infra/native/yours-go/plan.json');
+const planFile = path.join(root, planPath);
 const plan = JSON.parse(fs.readFileSync(planFile));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const docker = args => execFileSync('docker', args, { encoding: 'utf8', timeout: 30000 });
@@ -29,7 +25,7 @@ const dirty = execFileSync('git', ['status', '--porcelain'], { cwd: root, encodi
 if (dirty) throw new Error('Qualification requires committed source');
 const rustCompatibility = rustV3 ? await nativeRustBinding(plan,sha(fs.readFileSync(planFile)),source) : undefined;
 if (process.platform !== 'linux' || process.arch !== 'x64') throw new Error('This admitted lane requires native Linux/amd64 execution');
-save('run-lock.json', { schema: 'tpnil-native-wallet-run-lock@1.0.0', source, plan, planSha256: sha(fs.readFileSync(planFile)), ...(rustCompatibility ? {executionVariant:nativeRustV3Variant,rustCompatibility} : {}), image: { id: imageInfo.Id, os: imageInfo.Os, architecture: imageInfo.Architecture, layers: imageInfo.RootFS.Layers }, runner: { os: os.release(), node: process.version, platform: process.platform, architecture: process.arch }, startedAt: new Date().toISOString() });
+save('run-lock.json', { schema: 'tpnil-native-wallet-run-lock@1.0.0', source, plan, planSha256: sha(fs.readFileSync(planFile)), ...(rustCompatibility ? {executionVariant:rustCompatibility.variant,rustCompatibility} : {}), image: { id: imageInfo.Id, os: imageInfo.Os, architecture: imageInfo.Architecture, layers: imageInfo.RootFS.Layers }, runner: { os: os.release(), node: process.version, platform: process.platform, architecture: process.arch }, startedAt: new Date().toISOString() });
 function receipt(info) {
   return { id: info.Id, image: info.Image, user: info.Config.User, networkMode: info.HostConfig.NetworkMode, networks: info.NetworkSettings.Networks, privileged: info.HostConfig.Privileged, capAdd: info.HostConfig.CapAdd, capDrop: info.HostConfig.CapDrop, readonly: info.HostConfig.ReadonlyRootfs, pidMode: info.HostConfig.PidMode, init: info.HostConfig.Init, mounts: info.Mounts.map(mount => ({ destination: mount.Destination, rw: mount.RW, type: mount.Type })), state: info.State };
 }
@@ -49,7 +45,7 @@ for (let index = 1; index <= plan.repetitions; index++) {
   fs.mkdirSync(repetition, { mode: 0o755 });
   let id, error, removed = false;
   try {
-    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, ...(trustedIdentity ? ['--env', 'TPNIL_NATIVE_IDENTITY_TRUST=1'] : []), ...(conformance ? ['--env', 'TPNIL_NATIVE_CONFORMANCE=1'] : []), ...(coverage ? ['--env', 'TPNIL_NATIVE_COVERAGE=1'] : []), ...(closure ? ['--env', 'TPNIL_NATIVE_CLOSURE=1'] : []), image]).trim();
+    id = docker(['create', '--name', name, '--network', 'none', '--cap-drop', 'ALL', '--security-opt', 'seccomp=unconfined', '--security-opt', 'apparmor=unconfined', '--read-only', '--init', '--pids-limit', '512', '--memory', '4g', '--cpus', '2', '--shm-size', '1g', '--tmpfs', '/tmp:rw,nosuid,nodev,size=2g,mode=1777', '--user', `${process.getuid()}:${process.getgid()}`, '--mount', `type=bind,src=${repetition},dst=/evidence`, ...(trustedIdentity ? ['--env', 'TPNIL_NATIVE_IDENTITY_TRUST=1'] : []), ...(conformance ? ['--env', 'TPNIL_NATIVE_CONFORMANCE=1'] : []), ...(coverage ? ['--env', 'TPNIL_NATIVE_COVERAGE=1'] : []), ...(closure ? ['--env', 'TPNIL_NATIVE_CLOSURE=1'] : []), ...(wallet511 ? ['--env', `TPNIL_NATIVE_WALLET_VERSION=${walletVersion}`] : []), ...(observerRevision ? ['--env', `TPNIL_NATIVE_OBSERVER_REVISION=${observerRevision}`] : []), ...(coverageRevision ? ['--env', `TPNIL_NATIVE_COVERAGE_REVISION=${coverageRevision}`] : []), image]).trim();
     save(`host-repetition-${index}-before.json`, receipt(JSON.parse(docker(['inspect', id]))[0]));
     const log = fs.openSync(path.join(repetition, 'console.log'), 'wx');
     const run = spawnSync('docker', ['start', '-a', id], { stdio: ['ignore', log, log], timeout: (plan.timeoutSecondsPerRepetition + 60) * 1000 });
@@ -72,5 +68,5 @@ for (let index = 1; index <= plan.repetitions; index++) {
   save('host-userns.json', { before: usernsBefore, active: usernsActive, restored, restoredSuccessfully: restored === usernsBefore });
   if (restored !== usernsBefore) throw new Error('Host user namespace policy restoration failed');
 }
-const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
+const verify = spawnSync(path.join(root, 'synthesis/node_modules/.bin/tsx'), [path.join(root, 'synthesis/src/wallet-lab/native/verify.ts'), output], { cwd: root, stdio: 'inherit', timeout: coverageRevision === 6 ? 900000 : [1, 2, 3, 4].includes(coverageRevision) ? 180000 : 60000, env: { ...process.env, ...(integrated ? { TPNIL_NATIVE_INTEGRATED: '1' } : {}) } });
 if (verify.status !== 0) throw new Error('Native conformance evidence verification failed');

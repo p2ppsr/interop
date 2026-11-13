@@ -1,0 +1,102 @@
+{
+  "schema": "tpnil-native-attempt-initial-diagnosis@1",
+  "claim": "UNQUALIFIED_PARTIAL_DIAGNOSTIC_NOT_COMPLETE_CONFORMANCE",
+  "run": 43195585984,
+  "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "candidateOnly": true,
+  "officialRelease": false,
+  "profile": "ITCVE-1@4.3.0",
+  "program": "ISI-4@5.3.0",
+  "originalArtifactSha256": "f8b4a33821d7b91c1e265117bccc340e23be074a4a0cebf9f5285422a74cb232",
+  "originalMembers": 91,
+  "allOriginalMemberBytesVerified": true,
+  "jobSeconds": 1180,
+  "jobs": [
+    {
+      "id": 131105586591,
+      "name": "all-go-native",
+      "conclusion": "failure",
+      "seconds": 1180
+    },
+    {
+      "id": 131105588141,
+      "name": "yours-wallet",
+      "conclusion": "skipped",
+      "seconds": 0
+    }
+  ],
+  "workerSeconds": 122.913,
+  "primaryAttemptFailure": "Native wallet settings page is absent",
+  "outerWorkerFailure": "Native wallet cleanup failed",
+  "shutdownErrors": [
+    "Error: ENOENT: no such file or directory, open '/evidence/record.json'",
+    "Error: ENOENT: no such file or directory, open '/evidence/evidence/conformance/permission-lifecycle.json'",
+    "Error: ENOENT: no such file or directory, open '/evidence/evidence/conformance/service-counterparts.json'"
+  ],
+  "actualCleanup": {
+    "browser": {
+      "startedAt": "2026-11-12T10:13:59.189Z",
+      "closed": true,
+      "endedAt": "2026-11-12T10:13:59.335Z"
+    },
+    "services": {
+      "startedAt": "2026-11-12T10:13:59.335Z",
+      "closed": true,
+      "endedAt": "2026-11-12T10:13:59.525Z"
+    },
+    "profile": {
+      "startedAt": "2026-11-12T10:13:59.525Z",
+      "closed": true,
+      "endedAt": "2026-11-12T10:13:59.529Z"
+    }
+  },
+  "availableRawModuleObservations": {
+    "permissionCoverage": {
+      "PASS": 29
+    },
+    "permissionExtension": {
+      "FAIL": 15
+    }
+  },
+  "permissionExtensionScope": {
+    "executedPublicCalls": 1,
+    "id": "identity",
+    "method": "getPublicKey",
+    "observerClicked": "Deny",
+    "publicError": {
+      "code": "ERR_PERMISSION_DENIED",
+      "description": "Wallet request failed: Permission denied.",
+      "message": "Permission denied.",
+      "name": "Error",
+      "status": "error"
+    },
+    "scenarioCasesExecutedAfterIdentity": 0,
+    "rawCommonFailure": "Unknown point format from empty identity; raw15FAIL preserved, not15independentlyexecuted wallet failures"
+  },
+  "absent": [
+    "repetition-1/record.json",
+    "repetition-2",
+    "qualification.json",
+    "repetition-1/rust"
+  ],
+  "full535Outcome": "NOT_AVAILABLE",
+  "original99Transitions": "PENDING_INDEPENDENT_PARTIAL_REPLAY_NO_COUNTS_INFERRED",
+  "nativeQualification": false,
+  "completeBRC100Conformance": false,
+  "cost": {
+    "knownJobWallSeconds": 1180,
+    "completedCohortBefore": 18537,
+    "completedCohortAfter": 19717,
+    "historicalSeparateCohort": 20670,
+    "actualCIChargeUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "storageAndEgressUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false
+  },
+  "sourceWrites": false,
+  "retryDispatched": false
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "tpnil-native-clause-fixture-policy@1",
+  "oracle": "tpnil-brc100-clause-oracle@6.0.0",
+  "inherits": "tpnil-brc100-clause-oracle@5.0.0",
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json",
+    "sha256": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b"
+  },
+  "source": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "gitBlobSha": "ec25ff75b7d5c584a892e52dbcef07dfae6d9747",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "bytes": 172505
+  },
+  "fixtureRevision": 2,
+  "noSendChange": {
+    "anchorSatoshis": 997,
+    "reason": "The prior one-satoshi anchor could consume an exact one-satoshi input and return no change, leaving both change assertions without a positive control. Request a larger anchor from the already admitted reserves. Independently reconstruct actual signed wallet-managed change; never invent an outpoint or accept absent change."
+  },
+  "preserved": [
+    "All233 assertion identities and coverage gaps",
+    "Exact reserved namespace calls and error matcher from oracle5",
+    "Independent signed ancestry, default-basket change scripts and public action bindings",
+    "Historical fixture/oracle results unchanged"
+  ],
+  "claim": "PROSPECTIVE_ORACLE_POLICY_NOT_NATIVE_QUALIFICATION"
+}

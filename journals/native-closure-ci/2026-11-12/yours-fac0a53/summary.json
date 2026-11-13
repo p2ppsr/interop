@@ -1,0 +1,43 @@
+{
+  "schema": "tpnil-wallet-candidate-failed-ci@1",
+  "source": "fac0a53ddc7ca043839f916d0eadd2433c6fa12e",
+  "run": 43228729253,
+  "job": 131218590665,
+  "claim": "FAILED_CI_SANDBOX_HELPER_PREFLIGHT",
+  "nativeQualification": false,
+  "candidateArtifactProduced": false,
+  "artifactCount": 0,
+  "tests": {
+    "executed": false,
+    "passed": null,
+    "failed": null,
+    "browserBehaviorExecuted": false
+  },
+  "cause": "Runner-owned sandbox helper preflight exited1 before checksum emission. The log does not distinguish executable/setuid/owner check failure; all tests and builds were skipped.",
+  "actualJobSeconds": 18,
+  "completedCohortBefore": 25008,
+  "completedCohortAfter": 25026,
+  "actualCIChargeUSD": null,
+  "operatorCostUSD": null,
+  "agentCostUSD": null,
+  "allocatedCapacityUSD": null,
+  "storageEgressUSD": null,
+  "totalFullCostUSD": null,
+  "unknownCostsAreZero": false,
+  "workOrder": {
+    "commit": "c9f6a12bca7530c092c7834cf2ea2312ed5e847a",
+    "sha256": "a72df11a3462a8c119676badcfdc13a0966c6d8a445231102070e448b3ee90ca",
+    "maximumJobSeconds": 900,
+    "deadline": "2026-11-12T13:59:40.452771Z"
+  },
+  "checkout": {
+    "sha": "bc98bad8ab757eab254a966102d89b4d9f4893d9",
+    "sourceAndMergeTreesEqual": true,
+    "tree": "0620100424d7e727f77c8ad24bac9b1fd34c4352"
+  },
+  "rawJobLog": {
+    "path": "job-131218590665.log.gz",
+    "uncompressedBytes": 25554,
+    "uncompressedSha256": "b6a59efe00bbdd0a88cbdd8cebc52ae5147540de5b0c86c00a41274a48f476c2"
+  }
+}

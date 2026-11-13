@@ -1,0 +1,241 @@
+{
+  "schema": "tpnil-retained-reevaluation-ci-log-review@1",
+  "run": 43143699270,
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "conclusion": "success",
+  "knownJobSeconds": 113.0,
+  "actualMonetaryCostUSD": null,
+  "terminalReceiptCount": 2,
+  "terminalSemanticReceipt": {
+    "verified": true,
+    "claim": "RETAINED_NATIVE_EVIDENCE_REEVALUATION",
+    "originalNativeSource": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+    "evaluatorSource": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+    "newNativeSessions": 0,
+    "nativeOutcome": "FAIL",
+    "integrationOutcome": "PASS",
+    "rustOutcome": "PASS",
+    "repetitions": 2
+  },
+  "perRepetition": [
+    {
+      "counts": {
+        "PASS": 77,
+        "FAIL": 0,
+        "BLOCKED": 0
+      },
+      "native": {
+        "assertions": 280,
+        "counts": {
+          "PASS": 180,
+          "FAIL": 99,
+          "BLOCKED": 1
+        },
+        "vectors": [
+          {
+            "id": "ISI-4-V001",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V002",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V003",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V004",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V005",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V006",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V007",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V008",
+            "outcome": "FAIL"
+          }
+        ]
+      },
+      "rust": {
+        "corpus": "tpnil-rust-corpus@3",
+        "assertions": 48,
+        "counts": {
+          "PASS": 48,
+          "FAIL": 0,
+          "BLOCKED": 0
+        },
+        "outcome": "PASS",
+        "resultSha256": "ded1dfc59a60516dc400c323281c3be6b421a84a845f681755e3b06626024608",
+        "inputs": [
+          {
+            "name": "paid-http.json",
+            "sha256": "b7b9cec5d2ac508e7c1f39ef3fb9fa16fe84ebb7dc3ab9eadeb4c91e2c44b769"
+          },
+          {
+            "name": "messaging.json",
+            "sha256": "87492d2549173c7df6909b85b794558219cff10acccc868d8da1fc731b2fa1b9"
+          },
+          {
+            "name": "synthesis-transactions.json",
+            "sha256": "daf3713a4272e7a70ccfb0010b114f0e63b8628686dea2e9b3eb05c5234d121c"
+          },
+          {
+            "name": "identity-trust.json",
+            "sha256": "fe7920058d1aea69a01db1c2255c3aa6c6bf699e3e0e45b08d2d74f70cd6a460"
+          }
+        ]
+      }
+    },
+    {
+      "counts": {
+        "PASS": 77,
+        "FAIL": 0,
+        "BLOCKED": 0
+      },
+      "native": {
+        "assertions": 280,
+        "counts": {
+          "PASS": 180,
+          "FAIL": 99,
+          "BLOCKED": 1
+        },
+        "vectors": [
+          {
+            "id": "ISI-4-V001",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V002",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V003",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V004",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V005",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V006",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V007",
+            "outcome": "PASS"
+          },
+          {
+            "id": "ISI-4-V008",
+            "outcome": "FAIL"
+          }
+        ]
+      },
+      "rust": {
+        "corpus": "tpnil-rust-corpus@3",
+        "assertions": 48,
+        "counts": {
+          "PASS": 48,
+          "FAIL": 0,
+          "BLOCKED": 0
+        },
+        "outcome": "PASS",
+        "resultSha256": "0a3f8ffd7dd597e5306d3eb8242dfd23d1daa6bfb90e824fdd750f8c4ee0b4e7",
+        "inputs": [
+          {
+            "name": "paid-http.json",
+            "sha256": "c022f19285e73571c3aae17359509026a9d2680855085f828f8063d180c322b8"
+          },
+          {
+            "name": "messaging.json",
+            "sha256": "d333b5c927aa56cf1b2e3e6377f2af70a30162cf9a33ba9ce6d4a36b353903a5"
+          },
+          {
+            "name": "synthesis-transactions.json",
+            "sha256": "583f8d7116772da280220f9d50588df8fd08f23ce4adef7541a794168efb6bd7"
+          },
+          {
+            "name": "identity-trust.json",
+            "sha256": "a587c57ccdc7c150d60e86e72c506110ecb554715c7d8f036a46c792bd1cd478"
+          }
+        ]
+      }
+    }
+  ],
+  "rustRegressionTests": {
+    "pass": 14,
+    "fail": 0
+  },
+  "scope": "API and complete job logs. No new native sessions; no qualification artifacts downloaded. Historic5.1.0 native failures preserved.",
+  "receipts": {
+    "artifacts.json": {
+      "sha256": "d3b00a1064b730cca1da1ec7d1536a01d0f96b1166f0cf50450491fcbeb2282c",
+      "bytes": 1469
+    },
+    "jobs-20261112T024857Z.json": {
+      "sha256": "9ae0995c2fba665fc843430183cc497580563d91196af41a775bf4992cf98383",
+      "bytes": 3242
+    },
+    "jobs-20261112T024956Z.json": {
+      "sha256": "9ae0995c2fba665fc843430183cc497580563d91196af41a775bf4992cf98383",
+      "bytes": 3242
+    },
+    "jobs-20261112T025052Z.json": {
+      "sha256": "9ae0995c2fba665fc843430183cc497580563d91196af41a775bf4992cf98383",
+      "bytes": 3242
+    },
+    "jobs-initial.json": {
+      "sha256": "d4d8809e549a0abf2b4795e9e0f6346b4c23cbbaa9bc77cc6cdbb2caf4fe0a4e",
+      "bytes": 2831
+    },
+    "jobs.json": {
+      "sha256": "9ae0995c2fba665fc843430183cc497580563d91196af41a775bf4992cf98383",
+      "bytes": 3242
+    },
+    "retained-native-evidence-full-job.log": {
+      "sha256": "faff4d8d1265f4a092f8fc3f2431dbad5df114505fe141004511b9b40ffaabb2",
+      "bytes": 49587
+    },
+    "run-20261112T024857Z.json": {
+      "sha256": "af59a55096330ca08f3c4ea0f9df83f5dff2ae140bc267bbab023c2c10b8c3a4",
+      "bytes": 11998
+    },
+    "run-20261112T024956Z.json": {
+      "sha256": "af59a55096330ca08f3c4ea0f9df83f5dff2ae140bc267bbab023c2c10b8c3a4",
+      "bytes": 11998
+    },
+    "run-20261112T025052Z.json": {
+      "sha256": "af59a55096330ca08f3c4ea0f9df83f5dff2ae140bc267bbab023c2c10b8c3a4",
+      "bytes": 11998
+    },
+    "run-initial.json": {
+      "sha256": "1f3c62d71e50187a433f9ac0772064bc0046b5c5d2743de7ade987139721416b",
+      "bytes": 11995
+    },
+    "run-logs.zip": {
+      "sha256": "f6d1bf93e104b04c1783d8d34f76b03e2c059f55c0cdeb66690550db549a26e4",
+      "bytes": 31209
+    },
+    "run.json": {
+      "sha256": "af59a55096330ca08f3c4ea0f9df83f5dff2ae140bc267bbab023c2c10b8c3a4",
+      "bytes": 11998
+    },
+    "terminal-receipts.json": {
+      "sha256": "a25f265e2a972033301998d398175dda312967e7c2292a1f0607adb15a348f5e",
+      "bytes": 23406
+    }
+  }
+}

@@ -1,0 +1,169 @@
+?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	(cached)
+ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-batch-subjects	(cached)
+ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-coverage-observers	(cached)
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/database	0.581s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/dbretry	0.435s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/services	1.554s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/txutils	0.266s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/funder	1.038s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/repo	0.941s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage	99.703s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk	0.276s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/actions	0.297s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/validate	0.687s
+ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/wallet/internal/mapping	0.241s
+ok  	github.com/bsv-blockchain/go-sdk/transaction	0.528s
+{
+  "schema": "tpnil-storage-caller-known-inputs-go-build@1.0.0",
+  "patchLockSha256": "b0bc4cad3ea89a4e09b17104b9233b264d7388c101fb1587a445c6abb2138c32",
+  "parentPatchLockSha256": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+  "patchSha256": "fb0268601be79c243f5c796f578f994176f18b4ca82d397a8306ac7f5795bfea",
+  "upstream": {
+    "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+    "version": "v0.191.4",
+    "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+  },
+  "replacementModule": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-caller-known-inputs-go-source",
+  "sdkReplacement": {
+    "module": "github.com/bsv-blockchain/go-sdk",
+    "version": "v1.7.3",
+    "sum": "h1:U4NuOoJcn3NPgzGyc0GPrGQygya6stRDxlfJC8ksUx0=",
+    "source": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-caller-known-inputs-sdk-source",
+    "patchSha256": "6d73728c448242ec95493fbb4da3c7eeadafbf50b6da1be056d9b0685f43f4d6",
+    "postimages": {
+      "transaction/beef.go": "11b457e07527839369866ee370abff4cbe6d49f5f3b19a123734abecc7d9a41b",
+      "transaction/known_roots_prototype_test.go": "3a10af207d5b46e5bb8c575aedee8db84c76088152aae504c3e8733b2b09cbc4",
+      "transaction/supplied_bump_validation_test.go": "415d86194b16a40db532f3cf164836af49497778a0586ea2d2fa0653752396e9"
+    }
+  },
+  "generatedModuleFiles": {
+    "hostMod": "1e828a3dc765d3dd08ff44da90d322420c0a062be4746909a23729cfef6b5b7f",
+    "hostSum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "toolboxMod": "4b4ec6b9fddb85e49c36c6bf7701cddb8e90e013a5563eaf979b3000e2a0cd35",
+    "toolboxSum": "566fab15bee3fa7e67ca7858280c0e2e8bf3f0fb4e287e66210f060261ca9a53"
+  },
+  "toolchain": "go1.27.3",
+  "binarySha256": "ff7d5cdfab19f7a738aeb964f4c17e1b8442311840ed3029e29ae8e8ff2fb200",
+  "generatedHost": {
+    "action_ledger.go": "c5b2b4be3fef5177a4f272561ba5f5970ccb03429b84457b9d77d0c50ca14352",
+    "action_observer_pool.go": "f188aaaa1dafa05fc092be123fda946f5cea875bb8833b40b8bb10ae81741d54",
+    "action_provider_cut.go": "9135f40e28f62aea25f5063bc561f9a7dbbdd6e1fa84283f53d8db2f687d9628",
+    "action_query_cut.go": "99886b04b4457be24bc5246949f811a3179be9e1dddcccb50a28e66b58dc16f4",
+    "action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "action_snapshot.go": "861c6214b2b17e0d02d583f467d32921e82b4d7f4b8de11b93449854f67f60ed",
+    "certificate_inventory.go": "8efa3577e0783530b299c8896aef241dc9986c309daeea2050a221f9a3cae33a",
+    "main.go": "77011ef8523feb99394492fce763d63f4078dee7cc4d3e2a5f54feeb0f1accad",
+    "native_output_snapshot.go": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+    "sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "transaction_knowledge_inventory.go": "0f7f5482c4dc7064791a40b9b8f004f2e0e4def42bdfae73899801a976e26f17"
+  },
+  "patchInputs": {
+    "infra/adapters/storage-caller-known-inputs/patch.lock.json": "b0bc4cad3ea89a4e09b17104b9233b264d7388c101fb1587a445c6abb2138c32",
+    "infra/adapters/storage-sqlite-retry/patch.lock.json": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+    "infra/adapters/storage-input-ancestry/patch.lock.json": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+    "infra/adapters/storage-merge-accounting/patch.lock.json": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+    "infra/adapters/storage-dust-accounting/patch.lock.json": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+    "infra/adapters/storage-batch-subjects/patch.lock.json": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+    "infra/adapters/storage-native-contracts/patch.lock.json": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+    "infra/adapters/storage-list-actions/patch.lock.json": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+    "infra/adapters/storage-portability/patch.lock.json": "b9f229391f4fd8a953fd76b6c73cc7585818d91fe6c1802e9fc8667a86c1fcef",
+    "infra/adapters/storage-sync/patch.lock.json": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+    "infra/adapters/storage-sync/go-wallet-toolbox-v0.191.4.patch": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+    "infra/adapters/storage-portability/go-wallet-toolbox-v0.191.4.patch": "5e1fff193191565fa0032f2b9954bf07054c9806a78e6103049a14122a947e0c",
+    "infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch": "b916d1bc65839d599c60f03ed8c1b01d260e7793112b5b5ab9b912ea5994a9ee",
+    "infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+    "infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+    "infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+    "infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+    "infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+    "infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+    "infra/adapters/storage-caller-known-inputs/go-wallet-toolbox-v0.191.4.patch": "fb0268601be79c243f5c796f578f994176f18b4ca82d397a8306ac7f5795bfea",
+    "infra/adapters/storage-caller-known-inputs/go-sdk-v1.7.3.patch": "6d73728c448242ec95493fbb4da3c7eeadafbf50b6da1be056d9b0685f43f4d6"
+  },
+  "validation": {
+    "callerDeclaredKnownInputs": "PASS",
+    "completeCurrentSpendValidation": "PASS",
+    "suppliedUnmarkedAndExtraneousProofs": "PASS",
+    "legacyCustomVerifierCompatibility": "PASS",
+    "certificateInventory": "PASS",
+    "transactionKnowledgeInventory": "PASS",
+    "actionQueryAuthenticatedRPCLedger": "PASS",
+    "actionQuerySeparateReadOnlyPool": "PASS",
+    "actionQueryCWIJoin": "UNAVAILABLE",
+    "typedSQLiteSnapshotRollbackRetry": "PASS",
+    "callerOwnedInputResponseAncestry": "PASS",
+    "mergedCreditsAndOwnerCAS": "PASS",
+    "dustConservationAndAuthenticatedDebit": "PASS",
+    "batchHTTPAndPreparationSuites": "PASS",
+    "outputSnapshotSuite": "PASS",
+    "claim": "LAB_SELF_TEST_ONLY",
+    "hostSuite": "PASS",
+    "storageSuiteIncludingAuthenticatedTypeScriptRPC": "PASS",
+    "mappingActionsValidationSuites": "PASS"
+  },
+  "inputs": {
+    "scripts/prepare-storage-caller-known-inputs-go.mjs": "b11a82f93f6629ed4b8742a9ecdc7811a1d1e8612db70081ed519918d5919bcf",
+    "infra/adapters/storage-native-contracts/rpc-contract-test.mjs": "22a56c72b7134272dddd8d28d1fca83aca5907f858b1e9ae16f67758e5058df1",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "infra/adapters/storage-caller-known-inputs/LICENSE-sdk": "d869a62568556cc7f61304b768074b40d7511ddb414f4e546101f860ee0ea853",
+    "infra/adapters/storage-caller-known-inputs/LICENSE-toolbox": "d869a62568556cc7f61304b768074b40d7511ddb414f4e546101f860ee0ea853",
+    "infra/adapters/storage-caller-known-inputs/upstream-toolbox.go.mod": "d8815280e9089af0178cb5bfb528b2db9e676f307824465b77ee773711531f27",
+    "infra/adapters/storage-caller-known-inputs/module-projection.json": "04e9a68e2dd25a30f4ab544e7cd3b4adf828926c3522b48eefdeadd82dabc923",
+    "synthesis/go/components.lock.json": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+    "synthesis/go/go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+    "synthesis/go/go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "synthesis/go/cmd/itcve-mongo/main.go": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go": "89e1ca67c9937214534e22e27076539b21183fdcbc3d0b3084515294adc0fd4c",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_ledger.go": "c5b2b4be3fef5177a4f272561ba5f5970ccb03429b84457b9d77d0c50ca14352",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_ledger_test.go": "3f1857cab280c1a12b4ad7075ad71e31356857cad169cc4257458a0a6c21b5f4",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_observer_pool.go": "f188aaaa1dafa05fc092be123fda946f5cea875bb8833b40b8bb10ae81741d54",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_observer_pool_test.go": "2006f1153e71f9b23e6a2a2947400058ddc84991824a5b5aeb2400291c615d56",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_owner_binding_test.go": "3a4051d50f53eac5fe95c302439b6eaec40ee39feb8bbc47a38c03d9cda0b5e8",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_pool_test.go": "25f9619fc5e75707afbaf85307eb1b6e90254d01a8619681b592360b249d1ec6",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_precision_test.go": "2b67f53e87e56063c2144afec7af11359296275d3499826dcf93bf2bc73c55fe",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_provider_cut.go": "9135f40e28f62aea25f5063bc561f9a7dbbdd6e1fa84283f53d8db2f687d9628",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_provider_cut_test.go": "88c604e0377558d7c8613d6b281b17f06b8ab76e848a0e6d6ae63b302e48ff1e",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_query_cut.go": "99886b04b4457be24bc5246949f811a3179be9e1dddcccb50a28e66b58dc16f4",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_query_cut_test.go": "4cad3a8351bef799fff5d6b868cb14454931271c64e0afc203dfb869029320bb",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_snapshot.go": "861c6214b2b17e0d02d583f467d32921e82b4d7f4b8de11b93449854f67f60ed",
+    "synthesis/go/cmd/itcve-services-coverage-observers/action_snapshot_test.go": "fe6ae142e0c1ed230c3bf77dba75512603257070b7c1f9fb1929038350f1301b",
+    "synthesis/go/cmd/itcve-services-coverage-observers/certificate_inventory.go": "8efa3577e0783530b299c8896aef241dc9986c309daeea2050a221f9a3cae33a",
+    "synthesis/go/cmd/itcve-services-coverage-observers/certificate_inventory_test.go": "c001a2a5829eed1bfe6f38ba3e3eda5c964b6d41a5f9e24fe31646914f1aacd9",
+    "synthesis/go/cmd/itcve-services-coverage-observers/transaction_knowledge_inventory.go": "0f7f5482c4dc7064791a40b9b8f004f2e0e4def42bdfae73899801a976e26f17",
+    "synthesis/go/cmd/itcve-services-coverage-observers/transaction_knowledge_inventory_test.go": "0b097d67720f430723f5e246b0a4fb8c2192029cdef437e3e0376a94c6095796",
+    "synthesis/go/cmd/itcve-services/action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "synthesis/go/cmd/itcve-services/action_references_test.go": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+    "synthesis/go/cmd/itcve-services/lifecycle_test.go": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+    "synthesis/go/cmd/itcve-services/main.go": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+    "synthesis/go/cmd/itcve-services/main_test.go": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+    "synthesis/go/cmd/itcve-services/sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "synthesis/go/cmd/itcve-services/sync_test.go": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf"
+  }
+}
+go: cannot find main module, but -modfile was set.
+	-modfile cannot be used to set the module root directory.
+node:internal/errors:986
+  const err = new Error(message);
+              ^
+
+Error: Command failed: go mod edit -modfile=/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-sync-order-go.mod -replace=github.com/bsv-blockchain/go-sdk=/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-sync-order-sdk-source
+    at genericNodeError (node:internal/errors:986:15)
+    at wrappedFn (node:internal/errors:540:14)
+    at checkExecSyncError (node:child_process:943:11)
+    at execFileSync (node:child_process:979:15)
+    at go (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/scripts/prepare-storage-sync-order-go.mjs:21:34)
+    at file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/scripts/prepare-storage-sync-order-go.mjs:23:270
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [ null, '', null ],
+  pid: 99403,
+  stdout: '',
+  stderr: null
+}
+
+Node.js v24.22.1

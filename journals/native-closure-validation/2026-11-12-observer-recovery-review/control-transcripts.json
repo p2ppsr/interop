@@ -1,0 +1,98 @@
+[
+  {
+    "case": "valid",
+    "exitCode": 0,
+    "expected": "PASS",
+    "expectationMet": true,
+    "stdout": "{\"verified\": true, \"claim\": \"LOCAL_ENGINEERING_PREFLIGHT_ONLY\", \"files\": 274, \"sourceFiles\": 183, \"runtimeInputs\": 164, \"historicalJson\": 94, \"nativeSessions\": 0, \"currentSourceChecked\": false, \"stagedInventoryChecked\": false}\n",
+    "stderr": ""
+  },
+  {
+    "case": "omit-runtime-input",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-r29rs_ai/archive/verify.py\", line 33, in verify\n    assert plan['expectedObservations']==535 and plan['conformanceInputs']==m['runtimeInputs'] and len(m['runtimeInputs'])==164\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "native-plan-downgrade",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-v7vygy4s/archive/verify.py\", line 31, in verify\n    assert m['nativePlan']=={'path':planname,'sha256':sha(sources[planname]),'predicates':535}\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "source6-executed-claim",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-0z715voo/archive/verify.py\", line 15, in verify\n    assert m['actualSource6Execution']=='PENDING_CLEAN_COMMITTED_SOURCE_AND_CI'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "omit-source6-input",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-5hbdha2a/archive/verify.py\", line 46, in verify\n    for name,digest in reeval['evaluatorSources'].items():assert sha(sources[name])==digest,name\n                                                                     ~~~~~~~^^^^^^\nKeyError: 'scripts/frozen-component-replay.mjs'\n"
+  },
+  {
+    "case": "omit-all-completed-checks",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-agiywz9k/archive/verify.py\", line 88, in verify\n    complete=json.loads(decoded['completion.json.gz']);assert complete==m['completedValidation'] and complete['completed'] is True\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "omit-all-linked-evidence",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-55r_7z3h/archive/verify.py\", line 58, in verify\n    assert len(m['linkedEvidence'])==9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "replace-historical-json-with-arbitrary-git-file",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-p_hhj3l8/archive/verify.py\", line 57, in verify\n    assert set(m['unchangedHistoricalJson'])==expectedHistorical and len(expectedHistorical)==94\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "duplicate-linked-reference",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-biynxt1d/archive/verify.py\", line 59, in verify\n    assert sha(json.dumps(m['linkedEvidence'],sort_keys=True,separators=(',',':')).encode())==LINKED_EVIDENCE_SHA256\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "change-linked-reference-digest",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-9xs_tpjw/archive/verify.py\", line 59, in verify\n    assert sha(json.dumps(m['linkedEvidence'],sort_keys=True,separators=(',',':')).encode())==LINKED_EVIDENCE_SHA256\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "unknown-charge-zero",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-8ogdska_/archive/verify.py\", line 86, in verify\n    assert all(m['costs'][key] is None for key in ['monetaryCharges','operatorCost','developmentAgentCost'])\n           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  {
+    "case": "promote-complete-conformance",
+    "exitCode": 1,
+    "expected": "REJECT",
+    "expectationMet": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import importlib.util,sys,json;from pathlib import Path;s=importlib.util.spec_from_file_location(\"archive\",sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);print(json.dumps(m.verify(Path(sys.argv[2]),Path(sys.argv[3]))))\n                                                                                                                                                                                                          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-coverage2-archive-review-ec4p2g71/archive/verify.py\", line 14, in verify\n    assert m['claim']=='LOCAL_ENGINEERING_PREFLIGHT_ONLY' and m['nativeSessions']==0 and m['completeBRC100Conformance'] is False\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+]

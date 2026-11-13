@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Getter or internalization emitted a submission
+
+82 !== 83
+
+    at deriveTransactionCoveragePaymentRoots (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/funding-roots.ts:59:34)
+    at async deriveCompletionNativeFundingRoots (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/synthesis/src/wallet-lab/native/coverage-completion/funding-roots.ts:114:20)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/source12-intake/diagnose-native14.mts:21:16) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 82,
+  expected: 83,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

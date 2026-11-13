@@ -9,10 +9,23 @@ import type { EvidenceBundle } from '../evidence.js'
 import { nativeWalletBoundary } from './integrated.js'
 import { ObservedStorageClient, readDataset, type Transcript } from '../../storage-sync/run.js'
 import { projectDataset } from '../../storage-sync/projection.js'
+import { projectDatasetWithReferenceOnlyRows } from '../../storage-sync/projection-reference-rows.js'
 import { canonicalJson } from '../../determinism.js'
 import { verifyPortableProofClosure } from './portability-proof.js'
 
 export const portabilityAssertions = ['same-identity', 'distinct-counterparts', 'native-mediated-sync', 'complete-logical-dataset', 'source-unavailable', 'cold-wallet-reload', 'cold-task-recovery', 'replacement-redemption', 'cleanup'].map(id => `portability.${id}`)
+/** Score rows follow the frozen profile inventory. Causal execution order is
+ * retained separately in trace, UI, RPC and read-window observations. */
+export function canonicalPortabilityAssertions<T extends { id: string }>(rows: readonly T[]): T[] {
+  assert.equal(rows.length, portabilityAssertions.length, 'Portability assertion count differs from the frozen inventory')
+  const byId = new Map(rows.map(row => [row.id, row]))
+  assert.equal(byId.size, rows.length, 'Duplicate portability assertion')
+  return portabilityAssertions.map(id => {
+    const row = byId.get(id)
+    assert.ok(row, `Missing frozen portability assertion ${id}`)
+    return row
+  })
+}
 const replacementHost = 'replacement-wallet.itcve.test'
 const replacementUrl = `https://${replacementHost}`
 export const portableTask = 'TPNIL native storage replacement'
@@ -76,11 +89,13 @@ export interface PortabilityControls {
  * wallet's own supported settings UI performs synchronization and replacement. */
 export async function qualifyStoragePortability(options: {
   wallet: WalletInterface; source: ControlledWalletServices; destination: ControlledWalletServices
-  controls: PortabilityControls; mode: 'native-ui' | 'reference-engineering'; proofOracle?: 'v2' | 'v3'
+  controls: PortabilityControls; mode: 'native-ui' | 'reference-engineering'; proofOracle?: 'v2' | 'v3' | 'v4'
 }) {
   const { wallet, source, destination, controls } = options
-  const v3 = options.proofOracle === 'v3'
-  const report: any = { schema: v3 ? 'tpnil-native-storage-portability@3' : options.proofOracle === 'v2' ? 'tpnil-native-storage-portability@2' : 'tpnil-native-storage-portability@1', ...(options.proofOracle ? { oracle: v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' } : {}), claim: 'ENGINEERING_OBSERVATION_ONLY', mode: options.mode, assertions: [], trace: [], storage: [], readWindows: {}, ui: [], cleanup: { sourceRestored: false } }
+  const v4 = options.proofOracle === 'v4'
+  const v3 = v4 || options.proofOracle === 'v3'
+  const project = v4 ? projectDatasetWithReferenceOnlyRows : projectDataset
+  const report: any = { schema: v4 ? 'tpnil-native-storage-portability@4' : v3 ? 'tpnil-native-storage-portability@3' : options.proofOracle === 'v2' ? 'tpnil-native-storage-portability@2' : 'tpnil-native-storage-portability@1', ...(options.proofOracle ? { oracle: v4 ? 'tpnil-native-portability-oracle@4.0.0' : v3 ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0' } : {}), claim: 'ENGINEERING_OBSERVATION_ONLY', mode: options.mode, assertions: [], trace: [], storage: [], readWindows: {}, ui: [], cleanup: { sourceRestored: false } }
   const check = (id: string, pass: boolean, detail: string) => report.assertions.push({ id: `portability.${id}`, result: pass ? 'PASS' : 'FAIL', detail })
   const call = async (method: string, args: any): Promise<any> => {
     const row: any = { method, args, startedAt: new Date().toISOString() }; report.trace.push(row)
@@ -117,7 +132,7 @@ export async function qualifyStoragePortability(options: {
     // Read after the native mediator completes; the harness never writes chunks.
     report.source = await dataset('source', reader, identity)
     report.destination = await dataset('destination', target, identity)
-    let complete = report.source.transactions.length >= 2 && report.source.outputs.length >= 2 && canonicalJson(projectDataset(report.source)) === canonicalJson(projectDataset(report.destination))
+    let complete = report.source.transactions.length >= 2 && report.source.outputs.length >= 2 && canonicalJson(project(report.source)) === canonicalJson(project(report.destination))
     if (options.proofOracle) {
       try {
         const fixture = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../../../fixtures/teranode/wab-funding-v1.json'), 'utf8'))
@@ -207,6 +222,7 @@ export async function qualifyStoragePortability(options: {
     check('cleanup', true, 'The source listener is restored; caller retires the isolated replacement after evidence collection.')
   }
   for (const id of portabilityAssertions) if (!report.assertions.some((a: any) => a.id === id)) report.assertions.push({ id, result: 'FAIL', detail: 'A preceding operation prevented this observation.' })
+  report.assertions = canonicalPortabilityAssertions(report.assertions)
   report.result = report.assertions.every((a: any) => a.result === 'PASS') ? 'PASS' : 'FAIL'
   return clean(report)
 }
@@ -236,7 +252,11 @@ export function nativePortabilityControls(application: Page, walletPage: Page, p
     async activateAndRemoveSource(url) {
       await walletPage.getByRole('button').filter({ hasText: new URL(url).host }).first().click()
       await walletPage.getByRole('button', { name: 'Make Active', exact: true }).click()
-      await walletPage.getByText(`Active: ${new URL(url).host}`, { exact: true }).waitFor({ timeout: 60_000 })
+      // The success snackbar is transient. The exact selected provider's durable
+      // detail card and disappearance of its activation control prove the handoff.
+      const detail = walletPage.getByText(url, { exact: true })
+      await detail.waitFor({ timeout: 60_000 })
+      await walletPage.getByRole('button', { name: 'Make Active', exact: true }).waitFor({ state: 'hidden', timeout: 60_000 })
       await walletPage.getByText('In use', { exact: true }).first().waitFor({ timeout: 30_000 }); await snapshot('replacement-active')
       await backups()
       await walletPage.getByRole('button').filter({ hasText: 'wallet.1sat.app' }).first().click()
@@ -274,9 +294,31 @@ export function nativePortabilityControls(application: Page, walletPage: Page, p
   }
 }
 
-export async function runNativePortability({ application, services, evidence, password, oracle = 'tpnil-native-portability-oracle@2.0.0' }: {
-  application: Page; services: ControlledWalletServices; evidence: EvidenceBundle; password: string
-  oracle?: 'tpnil-native-portability-oracle@2.0.0' | 'tpnil-native-portability-oracle@3.0.0'
+/** A prospective run owns its settings tab. Earlier browser restarts may
+ * legitimately have closed every index page; no unrelated extension is used. */
+export async function withNativePortabilitySettingsPage<T>(application: Page, extensionId: string, operation: (page: Page) => Promise<T>): Promise<T> {
+  assert.match(extensionId, /^[a-p]{32}$/)
+  const page = await application.context().newPage()
+  let primary: { error: unknown } | undefined
+  try {
+    const url = `chrome-extension://${extensionId}/index.html`
+    await page.goto(url, { timeout: 30_000 }); assert.equal(page.url(), url)
+    await page.getByText('Settings', { exact: true }).last().waitFor({ state: 'visible', timeout: 30_000 })
+    return await operation(page)
+  } catch (error) { primary = { error }; throw error }
+  finally {
+    let timer: ReturnType<typeof setTimeout> | undefined
+    try {
+      await Promise.race([page.close({ runBeforeUnload: false }), new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error('Owned portability settings page did not close within 10 seconds')), 10_000) })])
+      assert.equal(page.isClosed(), true)
+    } catch (error) { if (primary) throw new AggregateError([primary.error, error], 'Native portability operation and owned settings cleanup failed', { cause: primary.error }); throw error }
+    finally { if (timer) clearTimeout(timer) }
+  }
+}
+
+export async function runNativePortability({ application, services, evidence, password, extensionId, oracle = 'tpnil-native-portability-oracle@2.0.0' }: {
+  application: Page; services: ControlledWalletServices; evidence: EvidenceBundle; password: string; extensionId?: string
+  oracle?: 'tpnil-native-portability-oracle@2.0.0' | 'tpnil-native-portability-oracle@3.0.0' | 'tpnil-native-portability-oracle@4.0.0'
 }) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-native-portability-'))
   fs.writeFileSync(path.join(directory, 'index.html'), '<title>Isolated storage counterpart</title>')
@@ -288,10 +330,14 @@ export async function runNativePortability({ application, services, evidence, pa
     await replacement.start()
     services.registerStorageCounterpart(replacementHost, replacement.storageUrl, replacement)
     retained = true
-    const walletPage = application.context().pages().find(page => /^chrome-extension:\/\/.+\/index.html/.test(page.url()))
-    if (!walletPage) throw new Error('Native wallet settings page is absent')
     const ui: any[] = []
-    report = await qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, oracle === 'tpnil-native-portability-oracle@3.0.0'), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
+    const execute = (walletPage: Page) => qualifyStoragePortability({ wallet: nativeWalletBoundary(application), source: services, destination: replacement, controls: nativePortabilityControls(application, walletPage, password, ui, ['tpnil-native-portability-oracle@3.0.0', 'tpnil-native-portability-oracle@4.0.0'].includes(oracle ?? '')), mode: 'native-ui', proofOracle: oracle === 'tpnil-native-portability-oracle@4.0.0' ? 'v4' : oracle === 'tpnil-native-portability-oracle@3.0.0' ? 'v3' : 'v2' })
+    if (extensionId !== undefined) report = await withNativePortabilitySettingsPage(application, extensionId, execute)
+    else {
+      const walletPage = application.context().pages().find(page => /^chrome-extension:\/\/.+\/index.html/.test(page.url()))
+      if (!walletPage) throw new Error('Native wallet settings page is absent')
+      report = await execute(walletPage)
+    }
     report.ui = ui
     report.components = { source: services.componentIdentity, replacement: replacement.componentIdentity }
     report.cleanup.replacementOwnedByServiceGraph = true

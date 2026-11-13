@@ -1,0 +1,61 @@
+{
+  "schema": "tpnil-native-attempt-diagnosis@1",
+  "claim": "UNQUALIFIED_DIAGNOSTIC",
+  "workflowRun": 43165501159,
+  "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+  "qualifiedEnvironment": false,
+  "nativeQualification": false,
+  "candidateOnly": true,
+  "officialRelease": false,
+  "rawNativeEach": {
+    "total": 426,
+    "PASS": 418,
+    "FAIL": 6,
+    "BLOCKED": 2
+  },
+  "rawIntegrationEach": {
+    "total": 77,
+    "PASS": 74,
+    "BLOCKED": 3
+  },
+  "original99Outcomes": {
+    "PASS": 98,
+    "FAIL": 1,
+    "BLOCKED": 0
+  },
+  "namespaceOracleCorrections": 2,
+  "changedArtifactAndComponentsOtherOriginalFailuresNowPassing": 96,
+  "singleCauseAttribution": false,
+  "original280Regressions": 0,
+  "originalRust": "NOT_EXECUTED",
+  "failure": {
+    "stage": "FROZEN_HOST_ADMISSION",
+    "message": "transaction-states/input-absent-from-beef: transaction spends outside independently declared native payments",
+    "reproducedOnFrozenSource": true,
+    "diagnosis": "Public returned BEEF has an unresolved ancestor and no admitted mined proof. Exact independently stored target bodies hydrate to declared reserves and pass cryptographic verification; the public proof failure remains a child FAIL. Frozen parent rejects ownership before classifying that public proof failure. No historical evaluator or result was modified."
+  },
+  "integrationFailure": {
+    "protocol": [
+      2,
+      "TPNIL synthesis board"
+    ],
+    "error": "WERR_INVALID_PARAMETER: The protocolID parameter must be a protocol name containing only lowercase letters, numbers and spaces",
+    "blocked": [
+      "NATIVE-SYNTHESIS-BOARD",
+      "NATIVE-SYNTHESIS-LCH",
+      "NATIVE-SYNTHESIS-REVISION"
+    ],
+    "missingEvidence": "synthesis-lch.json"
+  },
+  "independent": {
+    "modules": 10,
+    "originalModuleVerdictsReproduced": true,
+    "componentExecutions": 10,
+    "componentPass": 8,
+    "componentSynthesisRejections": 2,
+    "fullParent": "FAIL",
+    "scopedSafety": "See exact frozen gate receipt; does not qualify the environment."
+  },
+  "actualJobSeconds": 2256,
+  "completeBRC100Conformance": false
+}

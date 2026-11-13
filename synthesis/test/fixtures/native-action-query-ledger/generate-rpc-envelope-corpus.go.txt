@@ -1,0 +1,56 @@
+package main
+import("bytes";"encoding/json";"io";"os";"fmt";"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk")
+type actionProviderObservation struct {IdentityKey string `json:"identityKey"`;Args json.RawMessage `json:"args"`;Result json.RawMessage `json:"result"`;Error string `json:"error,omitempty"`}
+func bindActionRPCBytes(request, response []byte, observation actionProviderObservation) bool {
+	canonical := func(raw []byte) []byte {
+		var value any
+		decoder := json.NewDecoder(bytes.NewReader(raw))
+		decoder.UseNumber()
+		if decoder.Decode(&value) != nil {
+			return nil
+		}
+		var trailing any
+		if decoder.Decode(&trailing) != io.EOF {
+			return nil
+		}
+		b, _ := json.Marshal(value)
+		return b
+	}
+	var req struct {
+		JSONRPC string            `json:"jsonrpc"`
+		ID      json.RawMessage   `json:"id"`
+		Method  string            `json:"method"`
+		Params  []json.RawMessage `json:"params"`
+	}
+	var resp struct {
+		JSONRPC string          `json:"jsonrpc"`
+		ID      json.RawMessage `json:"id"`
+		Result  json.RawMessage `json:"result"`
+		Error   json.RawMessage `json:"error"`
+	}
+	if json.Unmarshal(request, &req) != nil || json.Unmarshal(response, &resp) != nil || req.JSONRPC != "2.0" || resp.JSONRPC != "2.0" || len(req.Params) != 2 || !bytes.Equal(req.ID, resp.ID) {
+		return false
+	}
+	var auth wdk.AuthID
+	var args wdk.ListActionsArgs
+	if json.Unmarshal(req.Params[0], &auth) != nil || auth.IdentityKey != observation.IdentityKey || json.Unmarshal(req.Params[1], &args) != nil {
+		return false
+	}
+	encoded, e := json.Marshal(args)
+	if e != nil || !bytes.Equal(canonical(encoded), canonical(observation.Args)) {
+		return false
+	}
+	if observation.Error != "" {
+		var failure map[string]json.RawMessage
+		return len(resp.Result) == 0 && json.Unmarshal(resp.Error, &failure) == nil && len(failure["message"]) > 0
+	}
+	if len(resp.Error) > 0 && string(resp.Error) != "null" {
+		return false
+	}
+
+	actual, expected := canonical(resp.Result), canonical(observation.Result)
+	return actual != nil && expected != nil && bytes.Equal(actual, expected)
+}
+
+
+func main(){b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};var cases []map[string]json.RawMessage;if e=json.Unmarshal(b,&cases);e!=nil{panic(e)};for _,c:=range cases{var req,res string;var obs actionProviderObservation;json.Unmarshal(c["request"],&req);json.Unmarshal(c["response"],&res);json.Unmarshal(c["observation"],&obs);var env struct{Method string `json:"method"`;ID json.RawMessage `json:"id"`};e=json.Unmarshal([]byte(req),&env);bound:=e==nil&&(env.Method=="listActions"||env.Method=="storage.listActions")&&bindActionRPCBytes([]byte(req),[]byte(res),obs);c["expectedBound"],_=json.Marshal(bound)};b,e=json.MarshalIndent(cases,"","  ");if e!=nil{panic(e)};fmt.Println(string(b))}

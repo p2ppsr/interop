@@ -1,0 +1,241 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "39ddc7bf657df8c4c7f1a5a96e0ecfeec5200b18",
+  "workflows": [
+    {
+      "id": 43189667881,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43189667881",
+      "source": "39ddc7bf657df8c4c7f1a5a96e0ecfeec5200b18",
+      "conclusion": "failure",
+      "jobSeconds": 1374,
+      "jobs": [
+        {
+          "id": 131085482183,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T09:14:15Z",
+          "completedAt": "2026-11-12T09:29:01Z",
+          "jobSeconds": 886,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131085482559,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T09:14:15Z",
+          "completedAt": "2026-11-12T09:18:34Z",
+          "jobSeconds": 259,
+          "conclusion": "failure",
+          "failedSteps": [
+            "Run npm test --prefix synthesis"
+          ],
+          "skippedSteps": [
+            "Run node scripts/verify-published-journals.mjs",
+            "Run node scripts/verify-native-reserve-reference.mjs",
+            "Run node scripts/verify-descendant-storage-archives.mjs --semantic",
+            "Run node scripts/verify-native-nosend-oracle4-archive.mjs",
+            "Run node scripts/verify-native-permission-lifecycle-archive.mjs --semantic",
+            "Run node scripts/verify-native-permission-click-archive.mjs --semantic",
+            "Run node scripts/verify-native-portability-archive.mjs",
+            "Run python3 scripts/verify-native-clause-journal.py",
+            "Run python3 scripts/verify-native-clause-journal.py journals/native-clause-reference/2026-11-09/oracle-3.0.0",
+            "Run python3 -m unittest discover -s test -p 'test_*.py' -v",
+            "Run npm run demo",
+            "Run node bin/tpnil.mjs verify out/demo",
+            "Run node scripts/check-journal-history.mjs \"$BASE_SHA\"",
+            "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020"
+          ]
+        },
+        {
+          "id": 131085483060,
+          "name": "go-components",
+          "startedAt": "2026-11-12T09:14:15Z",
+          "completedAt": "2026-11-12T09:18:04Z",
+          "jobSeconds": 229,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 172,
+      "fail": 0,
+      "skipped": 1,
+      "total": 173
+    },
+    "synthesis": {
+      "pass": 1038,
+      "fail": 2,
+      "skipped": 65,
+      "total": 1105,
+      "passedFiles": 62,
+      "failedFiles": 2,
+      "skippedFiles": 3,
+      "totalFiles": 67,
+      "completeSuitePassed": false,
+      "skipBreakdown": {
+        "certificateReferenceMovedToRequiredIntegratedJob": 39,
+        "goComponents": 8,
+        "permissionUIReference": 1,
+        "shutdown": 1,
+        "goCoverageAdmission": 13,
+        "goCoverageExtensionReferences": 2,
+        "listener": 1
+      }
+    },
+    "goComponents": {
+      "pass": 13
+    },
+    "certificateReferenceAndMutationsSeparateJob": {
+      "pass": 39,
+      "required": true
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": "NOT_EXECUTED_AFTER_SYNTHESIS_FAILURE",
+    "typecheck": "PASS"
+  },
+  "failure": {
+    "stage": "offline-core npm test --prefix synthesis",
+    "kind": "TWO_EXPLICIT_5000MS_TEST_TIMEOUTS",
+    "cases": [
+      {
+        "file": "native-coverage-extension.test.ts",
+        "line": 91,
+        "name": "retains lookup-not-found as a basket failure, never a namespace-validation pass"
+      },
+      {
+        "file": "native-shutdown-ancestry.test.ts",
+        "line": 94,
+        "name": "requires explicit expanded profile for permission5 and retains every denied ancestor guard"
+      }
+    ],
+    "assertionsNotRelaxed": true,
+    "suiteDurationSeconds": 215.63,
+    "previousMissingDependencyAndSourceMapIssue": "Required separate39-case certificate CI step succeeded; current failures are distinct."
+  },
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 17,
+    "totalBundles": 31
+  },
+  "descendantMatrix": {
+    "verified": true,
+    "directions": 4,
+    "result": "PASS"
+  },
+  "previousRetainedReevaluation": {
+    "run": 43185320587,
+    "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+    "archive": "../7bd1480",
+    "newRunOnThisSource": false,
+    "jobSecondsIncludedAgain": false
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "currentCandidateNativeSessions": 0,
+  "native39ddAdmission": "BLOCKED_BY_FOUNDATION_FAILURE_NOT_DISPATCHED",
+  "cost": {
+    "knownJobWallSeconds": 1374,
+    "completedCohortJobSecondsBeforeIncrement": 15663,
+    "completedCohortJobSecondsAfterIncrement": 17037,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "unusedNativeAllowanceIsActualCost": false,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "de99021411289af04b46fbdfa382aba80089edd8",
+      "source": "39ddc7bf657df8c4c7f1a5a96e0ecfeec5200b18"
+    }
+  },
+  "scope": [
+    "All raw API snapshots, complete job logs, original artifact ZIPs and member byte inventories retained.",
+    "Nonempty CI producer/child-verifier receipts checked. This archive does not rerun frozen artifact semantic verifiers locally.",
+    "Two timed-out regression tests remain FAIL; no new native session or current candidate qualification.",
+    "Separate required39 certificate cases passed after the previous dependency-placement fix.",
+    "Retained source5 was not rerun or charged twice; no matching workflow push-path changed."
+  ]
+}

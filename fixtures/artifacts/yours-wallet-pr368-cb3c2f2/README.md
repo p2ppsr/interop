@@ -1,0 +1,9 @@
+# Yours PR #368 engineering candidate cb3c2f2
+
+Exact CI archive for source `cb3c2f20e016948b58823f6c8b624b9065f8a693`, built at synthetic PR merge `1a915a9bc9fa1227be1ac50a8f09156447003298` with identical Git tree `6571dd3c3de53a85fb9cbddf13ccc757b1896135`. This is **ENGINEERING_OBSERVATION_ONLY**, not the official5.1.1 release. Embedded manifest5.1.1 and CWI `yours-wallet-5.1.1` are upstream inherited identifiers; artifact admission uses `5.1.1-pr368.cb3c2f2` and the exact ZIP digest.
+
+CI run43163193556 passed183 tests,1151 expectations across15 files, typecheck, formatting, all4 bundles and build verification. The completed job took109 seconds; actual monetary, operator, agent and allocated capacity costs remain unknown.
+
+The archive and all45 member checksums are retained unchanged. `ci/` retains raw GitHub APIs, full job and run logs, and the original outer artifact ZIP. `ci-review.json` binds the actual merge checkout, parents, tree and source-map modules. `source/` preserves the committed Bun patch bindings and patches for allowance accounting, long basket permission tags, certificate keyring revealers wallet-known input hydration, public transaction options and original-error preservation after failed cleanup. The CI source maps match the clean installed patched modules exactly. Patched maps preserve unchanged upstream mappings and explicitly map replacement spans; original upstream toolbox maps remain available in the package.
+
+`licenses.json` inventories 134 package names, 139 versions and 145 top-level/nested installations, with published license metadata/notices retained under `licenses/`. These sources are not relicensed. Prior `yours-wallet-pr368-7e39006` intake remains unchanged; this intake establishes no native qualification. The predecessor candidate failed before conformance observations; its exact intake and failed sample remain unchanged.

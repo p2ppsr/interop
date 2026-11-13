@@ -1,0 +1,27 @@
+{
+  "status": "ADDRESSED",
+  "findings": [
+    {
+      "stage": "provisional-pin-only",
+      "finding": "Retained verifier imports producer constants, so executing current producer left transitive semantics mutable.",
+      "correction": "Materialize and verify all1520 historical Git files; replay only within that complete tree."
+    },
+    {
+      "stage": "frozen-tree-draft",
+      "finding": "Tracked lock equality did not independently check installed dependency metadata.",
+      "correction": "Reuse source-owned installed hidden-lock/metadata/required-package/version validator before symlink and execution."
+    }
+  ],
+  "failuresRetained": [
+    "before.stderr.log",
+    "provisional-focused-tests.log",
+    "provisional-semantic-replay.stdout.log",
+    "pre-dependency-review-frozen-semantic.stdout.log",
+    "core-tests.log"
+  ],
+  "ambientNodeFailure": {
+    "observed": "26.12.1",
+    "required": "24.22.1",
+    "classification": "LOCAL_TOOLING_RUNTIME_MISMATCH_NOT_NATIVE_SUT_FAILURE"
+  }
+}

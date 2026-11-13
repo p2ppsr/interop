@@ -1,0 +1,2880 @@
+{
+  "schema": "tpnil-native-observer-recovery-validation@1",
+  "claim": "LOCAL_ENGINEERING_PREFLIGHT_ONLY",
+  "nativeSessions": 0,
+  "completeBRC100Conformance": false,
+  "actualSource6Execution": "PENDING_CLEAN_COMMITTED_SOURCE_AND_CI",
+  "sourceBeforeCorrection": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "correctionSourceCommit": null,
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-2.json",
+    "sha256": "b7b2dcd4ed50df0cd5ce3b9d4c2828b1be3953d6da4a34a3f9cd31fceb57b1cd",
+    "predicates": 535
+  },
+  "runtimeInputs": {
+    ".github/workflows/isi4-yours-wallet.yml": "8008ccc25615dc7582cd6a3be5a66cf886dcd14c6b36db1e9b907c8f74b7f9d9",
+    "fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json": "ee425f6f95e00fc711b6d426634e536e199786592452ace41370c1b6cd1f63ac",
+    "fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json": "5475f47592964e9e5af7924d6269cc0e302c3d7a6fbf67130ff739a40149ab03",
+    "infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+    "infra/adapters/storage-batch-subjects/patch.lock.json": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+    "infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+    "infra/adapters/storage-dust-accounting/patch.lock.json": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+    "infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+    "infra/adapters/storage-input-ancestry/patch.lock.json": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+    "infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch": "b916d1bc65839d599c60f03ed8c1b01d260e7793112b5b5ab9b912ea5994a9ee",
+    "infra/adapters/storage-list-actions/patch.lock.json": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+    "infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+    "infra/adapters/storage-merge-accounting/patch.lock.json": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+    "infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+    "infra/adapters/storage-native-contracts/patch.lock.json": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+    "infra/adapters/storage-native-contracts/rpc-contract-test.mjs": "22a56c72b7134272dddd8d28d1fca83aca5907f858b1e9ae16f67758e5058df1",
+    "infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+    "infra/adapters/storage-sqlite-retry/patch.lock.json": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+    "infra/native/conformance/Dockerfile": "75b90cfe570135db764f9b890ab7b73fe8bb37e48b133321d1010e7f8e74365d",
+    "infra/native/integrated/Dockerfile": "11c68ae765602d2b94267cb0fb55499a6654ddff3d7f34b0efde9ebbb29bb55d",
+    "infra/native/integrated/identity-trust-oracle-2.0.0.json": "7997dfa28032a5cfcd6c2e1c97cbad211acb1561156b629c592c09e5a3294c8c",
+    "infra/native/yours-go/Dockerfile": "3b0dd8f806c469da7a4f5539b4bdd98f1400f72f1905996c548927f85af3341f",
+    "infra/native/yours-go/Dockerfile.dockerignore": "6093c48785d1b3959efe24db973bef159f38120ffd2ec3d2d270288187a7ac56",
+    "infra/native/yours-go/verify-installed.py": "09b04401b78561c8c2c2bbd8b1c248e02e0e5ee1fd2bb124e772c9e730cb00bd",
+    "integrations/services/src/identity.ts": "f53941315b09a0214e3880331682080c8e150165e6a3e57e8767fbe441c3e17c",
+    "itcves/ITCVE-1/4.1.0/profile.json": "902941056de45f4a598b7eaa09a52eea95ddeef64da7896fb60d493553768d20",
+    "itcves/ITCVE-1/4.2.0/profile.json": "43c4c9a4e35a610fafde067f938d290fafef100c9c6e6729db5c3fb97e9a057f",
+    "itcves/ITCVE-1/4.3.0/profile.json": "9a289853871fcf18b3e6e3aa11973617360eeecce2d3f7fd6ed56332d7da3f44",
+    "itcves/ITCVE-1/4.4.0/profile.json": "c9581894247f8654ed3fb42cfdbb24e3f30e1fd83804cee90ad3b80bb7a83f5c",
+    "programs/ISI-4/5.1.0/catalog.json": "ad8b44fa63ac9240a9f48c2159250776f7bab5f01c4ef71bcfcf8ab239b4b0cc",
+    "programs/ISI-4/5.2.0/catalog.json": "0f866d0eab7fb47d30e79257444c1ad65799932e8b9e24ed656bd35ef2bc7338",
+    "programs/ISI-4/5.3.0/catalog.json": "4dadf831518d3181cb87ce6819790cd93f077a9fb1569babd026b8605849116b",
+    "programs/ISI-4/5.4.0/catalog.json": "8ca82f26d92e577c5be345c9ad532ae2fc06bf040583481f6f9484f985ae40c7",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json": "0d910a7ca41883a064bb65fc7c6b1ce4bef58f26d8eadb02d44c69cf6f96ad2e",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json": "9cd945fb5a57eb8ded04d8d8569955f31039ebfdbd6ff1991cd5d3507a3eef7b",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json": "ad803952399a66f099ea9f9efa664a37801866284c5a01064d3357878199a8eb",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json": "7f7585d34920cad911531099009fa2e3b8cf6e0e1f9037bb4812f9bb09e8fe95",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json": "215efe521a229779a3ead0ea3f03b304d63a8d8fd754c6c9994a810cba5a5be4",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json": "266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json": "8395291e84398404816a1e91eeeebbe3322c5568ae5e2371af058e0d40e7b0de",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json": "f67d74120e4edb6a5f91f0e1aa169f6d2cb98f6f547c33b7931d0995f1db3b0c",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json": "671fe862e96a281bb982d6d30d0124ae272180d63998d49c66a9ea6688c3ac19",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json": "10e1ef1a72c1af24224b26e956c6ee3f0153aacad6b3a36ad9a40cb224f7ea4a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json": "ebc4fd6d55badf77b08967010cbe885bce964e71839295804cca6e16f9771122",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json": "ae5a2efcf6135c4667ba14ce324a1a5cbf991051e572674296fcbfe9c6c3b035",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json": "601846e4c52730cf3103e78bbf7e2446bc3f7a47a0df2f36a3c37c2813c96ebf",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+    "programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json": "20f8d35df252fa308c87087bac80e3278712a7731e848384eb7497b8ba1c3a47",
+    "programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json": "d66694d5363360ccd0b05225276e9c70173b5a50d37c4d7478dcb7f652e609cb",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111.json": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+    "scripts/check-native-wallet-selector.mjs": "3acd31bd489c8b7248b3eadd26dd17d77c98f838817d03cd669ebc067523ef23",
+    "scripts/native-rust-compatibility.mjs": "22b2419f1d08ca70831a82a60f109c6a4e703e3284e5304211a4a2357e0db266",
+    "scripts/native-wallet-profiles.mjs": "085d93a78538b8abad094d7fa09111aacd4b730a5e1b57b5f2b251e5b695905a",
+    "scripts/prepare-storage-batch-subjects-go.mjs": "70cc99af9b161a0f247e3e26b406b649c4003a4e63394025854cfcae071d8e82",
+    "scripts/prepare-storage-dust-accounting-go.mjs": "b4c5c88fbf60d2f9f9ee3c445ef1b80c584940995ff7e3e08e291718d1b79f0c",
+    "scripts/prepare-storage-input-ancestry-go.mjs": "7a65ea9b6d3391a387e53d33fa9bf95f91f28591e62a60475960c6ce20bc4aba",
+    "scripts/prepare-storage-list-actions-go.mjs": "fd1083ebfc6e7b196153cdb855ff0e6da626acef607ddba6ba45dd1207459972",
+    "scripts/prepare-storage-merge-accounting-go.mjs": "6a2cab432ae119b0e6b3b4867cecd0bdb5ebc796cd558e4435bc9a127d957420",
+    "scripts/prepare-storage-native-contracts-go.mjs": "c2ff897b84436fbde335cae8d3c880a2025ca533042ec71fd2ebefe11a364da4",
+    "scripts/prepare-storage-sqlite-retry-go.mjs": "d08386e772e659556b1bc1b82bb1b9cdbd017f937fc2a69f90324f604ae924f5",
+    "scripts/prepare-yours-wallet-run.sh": "396d2a1e9a38935b8cde9a69751bce527ed1760f99b46fa7694e597824fa9fd9",
+    "scripts/run-native-go-wallet.mjs": "541fbf6d5922a954ddc96baf66c97c4b39a6674b88cf06482cb377c5b3cef329",
+    "scripts/verify-native-integrated.mjs": "00ccb658d5f2d42c09de95bc5aeaf321e785e729b20ffa3f192fbf264a0e80dd",
+    "scripts/verify-native-synthesis.mjs": "727563463610106d81e6b2a095f23f3c47026fd2d725850755cf37721970f91f",
+    "scripts/verify-native-trust.mjs": "400dba9182364ba1009562ba6b011a6d999c0ce5da95ed10fea9640cbd763b00",
+    "synthesis/go/cmd/itcve-mongo/main.go": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go": "89e1ca67c9937214534e22e27076539b21183fdcbc3d0b3084515294adc0fd4c",
+    "synthesis/go/cmd/itcve-services/action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "synthesis/go/cmd/itcve-services/action_references_test.go": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+    "synthesis/go/cmd/itcve-services/lifecycle_test.go": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+    "synthesis/go/cmd/itcve-services/main.go": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+    "synthesis/go/cmd/itcve-services/main_test.go": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+    "synthesis/go/cmd/itcve-services/sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "synthesis/go/cmd/itcve-services/sync_test.go": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf",
+    "synthesis/go/components.lock.json": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+    "synthesis/go/go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+    "synthesis/go/go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "synthesis/src/board.ts": "603b1288d03d9aab2225d5f01b29171c9d3d1a8e14e169f8c952c23fd620bdfe",
+    "synthesis/src/wallet-lab/boundary-corpus.ts": "e55ebb5346d9c7eac8d579cbd07bcaba575390e3b0a2a7b0e5926921631a9bc4",
+    "synthesis/src/wallet-lab/evidence.ts": "7e4a4287e62c52c8f793d9fa22c4c8e185e029e0fa98b570de3470e8925bccef",
+    "synthesis/src/wallet-lab/go-batch-build.ts": "f368664330a4dceb7814248addc596873cfbf6001c819f59558d442a5f182991",
+    "synthesis/src/wallet-lab/go-services.ts": "f836463089f2e3ce37229ca0ad11bc01c00976a5e178c2f0f6b7a9066c8de373",
+    "synthesis/src/wallet-lab/model.ts": "d15db394ebb48a7ba568f79b7c2fe727d6822c259cfc542664b6631d088ab7ec",
+    "synthesis/src/wallet-lab/native-output-snapshot.ts": "0c3c4e01a5304cb50314696ba22fdf2d5e635e26a2ed28a3616c7cbb4a21f477",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states-model.ts": "89b0f2a63f481d55bee251f318393da173f664a7d8287aa51f358d989b8ec528",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states.ts": "2c56e2959e71e034c3a53bc247b2e9b9ac131169257532ae2176c8da2b2ce329",
+    "synthesis/src/wallet-lab/native/conformance-clauses.ts": "916498405577d3f3dc3c0851e408008e02877dc116aea23eccc36c08fe2b82a8",
+    "synthesis/src/wallet-lab/native/conformance-conditional-issuer.ts": "ec32438a0fa33c6195e9b7eaadda78887894135d903627c55f83c963d2637d2a",
+    "synthesis/src/wallet-lab/native/conformance-conditional-model.ts": "cb8f503b4456a5e82b00ded9f54f8428e08c602a93f01f60dd3f127855cd58ea",
+    "synthesis/src/wallet-lab/native/conformance-conditional.ts": "d1f68071db8c2c7487880a0a464c16add1990907d794d2e1ad82f8c0dbef86a4",
+    "synthesis/src/wallet-lab/native/conformance-namespace-oracle5.ts": "c3c598b3e3b873b1c1accbc5cab6f431c729d744a1b152374467a9395a4b314a",
+    "synthesis/src/wallet-lab/native/conformance-nosend-change.ts": "407efdd647d3b16534d92b035d6faf7f9371c8a9d9083b09552086b757741339",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage-model.ts": "61ee50f33883dbad6275b0fabbe194d801346d372eef1df009336e980bfcb001",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage.ts": "90c6b99dc33467d03782d66fc903879e25983448efa84f75afbe1040b63b62ac",
+    "synthesis/src/wallet-lab/native/conformance-portability.ts": "185f854de99df08499817b93dd902c01fb8acada93587708a8745170991ced78",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states-model.ts": "23fcb3de2a3dc6a4fe5a3dafb8483715a966fe4e2ff3eb4624ca52ab05519bbb",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states.ts": "3b94500ed6bcfafa18536b66747b853a604205f3d3c3b16ab68266d1dec4db68",
+    "synthesis/src/wallet-lab/native/conformance.ts": "f7f10f52d61ee741cfd5f5eb85359227598d53942757819cb8b1095de39f5f0f",
+    "synthesis/src/wallet-lab/native/controlled-header-fixture.ts": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+    "synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts": "68761637d4254764fdc3b1e5e78b491728e16f98e05b5c6886a0d5204aa111cf",
+    "synthesis/src/wallet-lab/native/coverage-certificates-model.ts": "652d0dbb7cab843b048d9ce1767f3260d0b3e0c7ee37d0bc3b21203e20747428",
+    "synthesis/src/wallet-lab/native/coverage-certificates-reference.ts": "6b5a32e4266aa423448145948a845ede8789d4f72ab2e9d84355324de77ebe9f",
+    "synthesis/src/wallet-lab/native/coverage-certificates-run.ts": "449d93b7abea6063c5d68d748877f17f91ba67cbd5eaa08507a9bcca977c4a01",
+    "synthesis/src/wallet-lab/native/coverage-certificates-verify.ts": "4183bb623d0fbf8107def06e8b14d6c8ba8f8cf842ce3999b42f3efe918e2833",
+    "synthesis/src/wallet-lab/native/coverage-extension-driver.ts": "249eae8deec288d93b1c94ecfb09082a917b080b2d2d926c9323360977ebadad",
+    "synthesis/src/wallet-lab/native/coverage-extension-model.ts": "829d7e5e5bce36d6b599916784913f50952ef9efeeee5026d4a6999713b8ba0b",
+    "synthesis/src/wallet-lab/native/coverage-extension-requests.ts": "69bd1da37d0757d443b8b0a480534d1622aa481ff989516d44a99b165c70ca32",
+    "synthesis/src/wallet-lab/native/coverage-extension-verifier.ts": "d29fd14c3b98b747ec95b4d2d87488a15008344299a6518a7cd466fc78005abb",
+    "synthesis/src/wallet-lab/native/coverage-permissions-driver.ts": "790f806495b0671037c20055a886de4462097245d2d24d5711b2bd6643ce692b",
+    "synthesis/src/wallet-lab/native/coverage-permissions-model.ts": "5378de530dab1b7d77a6cd0fd887a6891822e815b1d86b0a03c4d7b102890535",
+    "synthesis/src/wallet-lab/native/coverage-permissions-observer.ts": "138da2c70d317cc35db2d32f866c0df3cdeed34ef60e6ce25151a5e657cd6875",
+    "synthesis/src/wallet-lab/native/coverage-permissions-ui.ts": "8e72143bd2edecba21ace05787482a4b7dc33ded9821552bd20170a076f84976",
+    "synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts": "20dec224b933a6c94ee631e1f85bba2b53c535d72cecf85b0d2d5d3e945f3243",
+    "synthesis/src/wallet-lab/native/coverage-suite.ts": "90379a999f1eede6e1baee584780fdb6e336f8cffd94a70863a00b4066c2143d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-model.ts": "42fac40342b68f414ace5420622255bbb6eea8878cd0e86b054009e9d1c9d9ba",
+    "synthesis/src/wallet-lab/native/coverage-transactions-producer.ts": "c90f5a42c32c77d5eebc3b15a5b9ee0827d296fb8a665387602f019e72fa2f90",
+    "synthesis/src/wallet-lab/native/coverage-transactions-program.ts": "f6c7a427b821c7585a64afd4b1779cec0a70542573a412e4a3a3d6ed72415e6d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts": "ecccf3bb4134ac562f3fbfea19ec5f84c0996846d6775bc90c6e849a6e9432af",
+    "synthesis/src/wallet-lab/native/failure.ts": "bea6a0aaedd19334aa8687849bd471ac56d68b49bc480e9e808b57773d77a70e",
+    "synthesis/src/wallet-lab/native/identity-trust-oracle2.ts": "a02212c9bb1a54470ab2828adce9635d13c5c11e8034be6f568c7f6eedd5c93e",
+    "synthesis/src/wallet-lab/native/identity-trust.ts": "d669a9471b9fd56ac933df5db1afc86d91b007283e7a8771c4fc8698d11536e5",
+    "synthesis/src/wallet-lab/native/integrated.ts": "265eaf13681ed6dc858334c60173f820b10c0814ccb3a9a3bd0fa695156843a1",
+    "synthesis/src/wallet-lab/native/permission-coverage-observer.ts": "f0f2a7e0b071f44828a05295274082863eb9fa784d2e87c82d9b6879eda6c053",
+    "synthesis/src/wallet-lab/native/permission-prelude.ts": "09862d1e1c2b024b17d75bc17176de9545f835323ba6f9b2398fd2712b2278f1",
+    "synthesis/src/wallet-lab/native/shutdown-submissions.ts": "dd2a903f0bc36399d5c317a723b30b560cd2720e388ef187c273016b13155710",
+    "synthesis/src/wallet-lab/native/synthesis.ts": "9e42b18cf4a95ea078847a554f4e4be6e8aefc2ff155665e49f7171ef2315f66",
+    "synthesis/src/wallet-lab/native/verify-certificate-states.ts": "c6b291a2e2753cb003c783e5421a2e13355535a0fa1d9e6e4f6ea8e88a0f8c54",
+    "synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts": "bd63edda2df77356caa9fa121aea43d57100f102d6a2cf69258ee128d4c19483",
+    "synthesis/src/wallet-lab/native/verify-conformance-clauses.ts": "3106648ad732d23531baecb815700469a5998aa48c55d71cdb14e0496f2771d9",
+    "synthesis/src/wallet-lab/native/verify-conformance-conditional.ts": "a2a08c3fc3b58c455d3150b49d19ada9d83a9b1cee585700ad10b1f6a38f58be",
+    "synthesis/src/wallet-lab/native/verify-conformance-nosend-change.ts": "c3b32bfef4329cbdbf954f32bef8eb1e03317dcdec4117b79eecdb1c661fd53d",
+    "synthesis/src/wallet-lab/native/verify-conformance-permission-coverage.ts": "42ad17df7586c6415ed1e04b64da7288836f13286cfbc0bf356b8760717f9c65",
+    "synthesis/src/wallet-lab/native/verify-conformance.ts": "7cabb74bfdfa721a0fafdbd042f3159106cce4895ee7455ce7965675dda3e9f6",
+    "synthesis/src/wallet-lab/native/verify-coverage-suite.ts": "99f3b14cfbd22506db8216e52fa96cc91138530574df1df63b64aab026dd566b",
+    "synthesis/src/wallet-lab/native/verify-identity-publication.ts": "4e5dba3996324fcb6c24dca3d8c3edf1651c7bcfed581adc7a7b41445df412e6",
+    "synthesis/src/wallet-lab/native/verify-identity-trust.ts": "2d1a5b9e7dc56335a9c5a2a706a64263d250d6bf1efbb4d6a70bf04ccb08681c",
+    "synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts": "a6ab31e0998b768464dbbc89153528119c18e83a1b40cac37d74d14afd31c463",
+    "synthesis/src/wallet-lab/native/verify-submission-ancestry.ts": "9d63ab9896c60f1c462606ec666804b6a9ba0eb9c1aca6d7d2201828de8716d3",
+    "synthesis/src/wallet-lab/native/verify-synthesis.ts": "58a8efb506cba4c51642112d3e0574a8dc91d3eb8d76ac0cf1b8800cd89e8b78",
+    "synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts": "4ac93a04d749d3ca74540d9121adbbc9408327cbfa712ed8926aa98987c8902c",
+    "synthesis/src/wallet-lab/native/verify-transaction-states.ts": "176b9cc87f272d1316cc307f922fad62663a701ffa8caa11a9cb8352e9aa6cf0",
+    "synthesis/src/wallet-lab/native/verify.ts": "ae0b1b8d71c990b221d2f1a89289e50a511b2537a78bbcdeaf32859ae964e716",
+    "synthesis/src/wallet-lab/native/worker.ts": "fce1358e204b6688c877c18bffa34e92db7cc1015cbd8170235c1cbff68e0927",
+    "synthesis/src/wallet-lab/run-boundary.ts": "0d19b84a7361f2f963ba3ef256262e671e1fbdaabfb2cfcd66ef27eccc738567",
+    "synthesis/src/wallet-lab/services.ts": "31343426cac2568d993eda57444cc2e395dff9455cf4369308111e3ee055fbf3",
+    "synthesis/src/wallet-lab/verify-boundary.ts": "29785131fc2b051463b9c42e18fea854fe787b56da0e6a7aa946776d13265813",
+    "synthesis/src/wallet-lab/yours-driver.ts": "3f6c9e89f7ca2bc1e089c32105e3127f0dbc86004117c15960cc69ef3abddd6a",
+    "synthesis/test/fixtures/native5-identity-prompt.json": "779dbb6dd7501b4543854aa5b03a460869e2aa3ad8b258fa0c0f7c16dcb37cac",
+    "synthesis/test/native-failure.test.ts": "480cc4e8e111acab66f888f6c18330d995e987a2f9c2fbd4c16a10202ef00d44",
+    "synthesis/test/native-permission-startup.test.ts": "7942410d98003bee173ae3c755f314eaff5912a7c72d677108ebe0b5ef5763e5"
+  },
+  "sourceFiles": {
+    ".github/workflows/isi4-yours-wallet.yml": "8008ccc25615dc7582cd6a3be5a66cf886dcd14c6b36db1e9b907c8f74b7f9d9",
+    ".github/workflows/native-evidence-reevaluation.yml": "16a438e717a331a3f48aa90b8c0e377db474c1f8787068df401133b1992ab388",
+    "fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json": "ee425f6f95e00fc711b6d426634e536e199786592452ace41370c1b6cd1f63ac",
+    "fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json": "5475f47592964e9e5af7924d6269cc0e302c3d7a6fbf67130ff739a40149ab03",
+    "infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+    "infra/adapters/storage-batch-subjects/patch.lock.json": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+    "infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+    "infra/adapters/storage-dust-accounting/patch.lock.json": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+    "infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+    "infra/adapters/storage-input-ancestry/patch.lock.json": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+    "infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch": "b916d1bc65839d599c60f03ed8c1b01d260e7793112b5b5ab9b912ea5994a9ee",
+    "infra/adapters/storage-list-actions/patch.lock.json": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+    "infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+    "infra/adapters/storage-merge-accounting/patch.lock.json": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+    "infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+    "infra/adapters/storage-native-contracts/patch.lock.json": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+    "infra/adapters/storage-native-contracts/rpc-contract-test.mjs": "22a56c72b7134272dddd8d28d1fca83aca5907f858b1e9ae16f67758e5058df1",
+    "infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+    "infra/adapters/storage-sqlite-retry/patch.lock.json": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+    "infra/native/conformance/Dockerfile": "75b90cfe570135db764f9b890ab7b73fe8bb37e48b133321d1010e7f8e74365d",
+    "infra/native/conformance/plan-pr368-coverage-2.json": "b7b2dcd4ed50df0cd5ce3b9d4c2828b1be3953d6da4a34a3f9cd31fceb57b1cd",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json": "2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f",
+    "infra/native/conformance/rust-graph-pr368-coverage-2.json": "9135d97c5d0f5387b55adc7ac69dca5e06d6234123bcf153f8400d84f7d7ef3e",
+    "infra/native/integrated/Dockerfile": "11c68ae765602d2b94267cb0fb55499a6654ddff3d7f34b0efde9ebbb29bb55d",
+    "infra/native/integrated/identity-trust-oracle-2.0.0.json": "7997dfa28032a5cfcd6c2e1c97cbad211acb1561156b629c592c09e5a3294c8c",
+    "infra/native/yours-go/Dockerfile": "3b0dd8f806c469da7a4f5539b4bdd98f1400f72f1905996c548927f85af3341f",
+    "infra/native/yours-go/Dockerfile.dockerignore": "6093c48785d1b3959efe24db973bef159f38120ffd2ec3d2d270288187a7ac56",
+    "infra/native/yours-go/verify-installed.py": "09b04401b78561c8c2c2bbd8b1c248e02e0e5ee1fd2bb124e772c9e730cb00bd",
+    "integrations/services/src/identity.ts": "f53941315b09a0214e3880331682080c8e150165e6a3e57e8767fbe441c3e17c",
+    "itcves/ITCVE-1/4.1.0/profile.json": "902941056de45f4a598b7eaa09a52eea95ddeef64da7896fb60d493553768d20",
+    "itcves/ITCVE-1/4.2.0/profile.json": "43c4c9a4e35a610fafde067f938d290fafef100c9c6e6729db5c3fb97e9a057f",
+    "itcves/ITCVE-1/4.3.0/profile.json": "9a289853871fcf18b3e6e3aa11973617360eeecce2d3f7fd6ed56332d7da3f44",
+    "itcves/ITCVE-1/4.4.0/README.md": "dc709fdaf5da851096a04daeff726437833bcba26e6cd68b90ad72a082c5262a",
+    "itcves/ITCVE-1/4.4.0/profile.json": "c9581894247f8654ed3fb42cfdbb24e3f30e1fd83804cee90ad3b80bb7a83f5c",
+    "programs/ISI-4/5.1.0/catalog.json": "ad8b44fa63ac9240a9f48c2159250776f7bab5f01c4ef71bcfcf8ab239b4b0cc",
+    "programs/ISI-4/5.2.0/catalog.json": "0f866d0eab7fb47d30e79257444c1ad65799932e8b9e24ed656bd35ef2bc7338",
+    "programs/ISI-4/5.3.0/catalog.json": "4dadf831518d3181cb87ce6819790cd93f077a9fb1569babd026b8605849116b",
+    "programs/ISI-4/5.4.0/README.md": "fadcf4c4a1d3613374e3fa026a32b778f7d3af5b16d47bd04eb033e1f578a387",
+    "programs/ISI-4/5.4.0/catalog.json": "8ca82f26d92e577c5be345c9ad532ae2fc06bf040583481f6f9484f985ae40c7",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json": "0d910a7ca41883a064bb65fc7c6b1ce4bef58f26d8eadb02d44c69cf6f96ad2e",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json": "9cd945fb5a57eb8ded04d8d8569955f31039ebfdbd6ff1991cd5d3507a3eef7b",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json": "ad803952399a66f099ea9f9efa664a37801866284c5a01064d3357878199a8eb",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json": "7f7585d34920cad911531099009fa2e3b8cf6e0e1f9037bb4812f9bb09e8fe95",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json": "215efe521a229779a3ead0ea3f03b304d63a8d8fd754c6c9994a810cba5a5be4",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json": "266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json": "8395291e84398404816a1e91eeeebbe3322c5568ae5e2371af058e0d40e7b0de",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json": "f67d74120e4edb6a5f91f0e1aa169f6d2cb98f6f547c33b7931d0995f1db3b0c",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json": "671fe862e96a281bb982d6d30d0124ae272180d63998d49c66a9ea6688c3ac19",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json": "10e1ef1a72c1af24224b26e956c6ee3f0153aacad6b3a36ad9a40cb224f7ea4a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json": "ebc4fd6d55badf77b08967010cbe885bce964e71839295804cca6e16f9771122",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json": "ae5a2efcf6135c4667ba14ce324a1a5cbf991051e572674296fcbfe9c6c3b035",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json": "601846e4c52730cf3103e78bbf7e2446bc3f7a47a0df2f36a3c37c2813c96ebf",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+    "programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json": "20f8d35df252fa308c87087bac80e3278712a7731e848384eb7497b8ba1c3a47",
+    "programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json": "d66694d5363360ccd0b05225276e9c70173b5a50d37c4d7478dcb7f652e609cb",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111.json": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+    "scripts/check-native-wallet-selector.mjs": "3acd31bd489c8b7248b3eadd26dd17d77c98f838817d03cd669ebc067523ef23",
+    "scripts/compare-native-conformance.mjs": "b8a9eb74de1634153f3f5f1caaa879020578a1db48aecddbfa3bee6daa826b46",
+    "scripts/frozen-component-replay.mjs": "d92399e29b06f8b40c0a8b1f9e64ceebc550fa1236b41c22e0fb120b355fb9fd",
+    "scripts/native-reevaluation.mjs": "6026d5d7a5e0ef2d2d0f98f90fb6ba635ecae486c3284f08f811f39696c35f75",
+    "scripts/native-rust-compatibility.mjs": "22b2419f1d08ca70831a82a60f109c6a4e703e3284e5304211a4a2357e0db266",
+    "scripts/native-wallet-profiles.mjs": "085d93a78538b8abad094d7fa09111aacd4b730a5e1b57b5f2b251e5b695905a",
+    "scripts/prepare-storage-batch-subjects-go.mjs": "70cc99af9b161a0f247e3e26b406b649c4003a4e63394025854cfcae071d8e82",
+    "scripts/prepare-storage-dust-accounting-go.mjs": "b4c5c88fbf60d2f9f9ee3c445ef1b80c584940995ff7e3e08e291718d1b79f0c",
+    "scripts/prepare-storage-input-ancestry-go.mjs": "7a65ea9b6d3391a387e53d33fa9bf95f91f28591e62a60475960c6ce20bc4aba",
+    "scripts/prepare-storage-list-actions-go.mjs": "fd1083ebfc6e7b196153cdb855ff0e6da626acef607ddba6ba45dd1207459972",
+    "scripts/prepare-storage-merge-accounting-go.mjs": "6a2cab432ae119b0e6b3b4867cecd0bdb5ebc796cd558e4435bc9a127d957420",
+    "scripts/prepare-storage-native-contracts-go.mjs": "c2ff897b84436fbde335cae8d3c880a2025ca533042ec71fd2ebefe11a364da4",
+    "scripts/prepare-storage-sqlite-retry-go.mjs": "d08386e772e659556b1bc1b82bb1b9cdbd017f937fc2a69f90324f604ae924f5",
+    "scripts/prepare-yours-wallet-run.sh": "396d2a1e9a38935b8cde9a69751bce527ed1760f99b46fa7694e597824fa9fd9",
+    "scripts/reevaluate-native-integrated.mjs": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+    "scripts/run-native-go-wallet.mjs": "541fbf6d5922a954ddc96baf66c97c4b39a6674b88cf06482cb377c5b3cef329",
+    "scripts/verify-native-integrated.mjs": "00ccb658d5f2d42c09de95bc5aeaf321e785e729b20ffa3f192fbf264a0e80dd",
+    "scripts/verify-native-reevaluation.mjs": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+    "scripts/verify-native-synthesis.mjs": "727563463610106d81e6b2a095f23f3c47026fd2d725850755cf37721970f91f",
+    "scripts/verify-native-trust.mjs": "400dba9182364ba1009562ba6b011a6d999c0ce5da95ed10fea9640cbd763b00",
+    "scripts/verify-published-integrations.mjs": "c74425ca7ef1df31fae28338e3bc03dbc39b3c06dc7233aeafa90a4885bd5ae5",
+    "synthesis/go/cmd/itcve-mongo/main.go": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+    "synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go": "89e1ca67c9937214534e22e27076539b21183fdcbc3d0b3084515294adc0fd4c",
+    "synthesis/go/cmd/itcve-services/action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "synthesis/go/cmd/itcve-services/action_references_test.go": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+    "synthesis/go/cmd/itcve-services/lifecycle_test.go": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+    "synthesis/go/cmd/itcve-services/main.go": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+    "synthesis/go/cmd/itcve-services/main_test.go": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+    "synthesis/go/cmd/itcve-services/sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "synthesis/go/cmd/itcve-services/sync_test.go": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf",
+    "synthesis/go/components.lock.json": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+    "synthesis/go/go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+    "synthesis/go/go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "synthesis/src/board.ts": "603b1288d03d9aab2225d5f01b29171c9d3d1a8e14e169f8c952c23fd620bdfe",
+    "synthesis/src/wallet-lab/boundary-corpus.ts": "e55ebb5346d9c7eac8d579cbd07bcaba575390e3b0a2a7b0e5926921631a9bc4",
+    "synthesis/src/wallet-lab/evidence.ts": "7e4a4287e62c52c8f793d9fa22c4c8e185e029e0fa98b570de3470e8925bccef",
+    "synthesis/src/wallet-lab/go-batch-build.ts": "f368664330a4dceb7814248addc596873cfbf6001c819f59558d442a5f182991",
+    "synthesis/src/wallet-lab/go-services.ts": "f836463089f2e3ce37229ca0ad11bc01c00976a5e178c2f0f6b7a9066c8de373",
+    "synthesis/src/wallet-lab/model.ts": "d15db394ebb48a7ba568f79b7c2fe727d6822c259cfc542664b6631d088ab7ec",
+    "synthesis/src/wallet-lab/native-output-snapshot.ts": "0c3c4e01a5304cb50314696ba22fdf2d5e635e26a2ed28a3616c7cbb4a21f477",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states-model.ts": "89b0f2a63f481d55bee251f318393da173f664a7d8287aa51f358d989b8ec528",
+    "synthesis/src/wallet-lab/native/conformance-certificate-states.ts": "2c56e2959e71e034c3a53bc247b2e9b9ac131169257532ae2176c8da2b2ce329",
+    "synthesis/src/wallet-lab/native/conformance-clauses.ts": "916498405577d3f3dc3c0851e408008e02877dc116aea23eccc36c08fe2b82a8",
+    "synthesis/src/wallet-lab/native/conformance-conditional-issuer.ts": "ec32438a0fa33c6195e9b7eaadda78887894135d903627c55f83c963d2637d2a",
+    "synthesis/src/wallet-lab/native/conformance-conditional-model.ts": "cb8f503b4456a5e82b00ded9f54f8428e08c602a93f01f60dd3f127855cd58ea",
+    "synthesis/src/wallet-lab/native/conformance-conditional.ts": "d1f68071db8c2c7487880a0a464c16add1990907d794d2e1ad82f8c0dbef86a4",
+    "synthesis/src/wallet-lab/native/conformance-namespace-oracle5.ts": "c3c598b3e3b873b1c1accbc5cab6f431c729d744a1b152374467a9395a4b314a",
+    "synthesis/src/wallet-lab/native/conformance-nosend-change.ts": "407efdd647d3b16534d92b035d6faf7f9371c8a9d9083b09552086b757741339",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage-model.ts": "61ee50f33883dbad6275b0fabbe194d801346d372eef1df009336e980bfcb001",
+    "synthesis/src/wallet-lab/native/conformance-permission-coverage.ts": "90c6b99dc33467d03782d66fc903879e25983448efa84f75afbe1040b63b62ac",
+    "synthesis/src/wallet-lab/native/conformance-portability.ts": "185f854de99df08499817b93dd902c01fb8acada93587708a8745170991ced78",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states-model.ts": "23fcb3de2a3dc6a4fe5a3dafb8483715a966fe4e2ff3eb4624ca52ab05519bbb",
+    "synthesis/src/wallet-lab/native/conformance-transaction-states.ts": "3b94500ed6bcfafa18536b66747b853a604205f3d3c3b16ab68266d1dec4db68",
+    "synthesis/src/wallet-lab/native/conformance.ts": "f7f10f52d61ee741cfd5f5eb85359227598d53942757819cb8b1095de39f5f0f",
+    "synthesis/src/wallet-lab/native/controlled-header-fixture.ts": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+    "synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts": "68761637d4254764fdc3b1e5e78b491728e16f98e05b5c6886a0d5204aa111cf",
+    "synthesis/src/wallet-lab/native/coverage-certificates-model.ts": "652d0dbb7cab843b048d9ce1767f3260d0b3e0c7ee37d0bc3b21203e20747428",
+    "synthesis/src/wallet-lab/native/coverage-certificates-reference.ts": "6b5a32e4266aa423448145948a845ede8789d4f72ab2e9d84355324de77ebe9f",
+    "synthesis/src/wallet-lab/native/coverage-certificates-run.ts": "449d93b7abea6063c5d68d748877f17f91ba67cbd5eaa08507a9bcca977c4a01",
+    "synthesis/src/wallet-lab/native/coverage-certificates-verify.ts": "4183bb623d0fbf8107def06e8b14d6c8ba8f8cf842ce3999b42f3efe918e2833",
+    "synthesis/src/wallet-lab/native/coverage-extension-driver.ts": "249eae8deec288d93b1c94ecfb09082a917b080b2d2d926c9323360977ebadad",
+    "synthesis/src/wallet-lab/native/coverage-extension-model.ts": "829d7e5e5bce36d6b599916784913f50952ef9efeeee5026d4a6999713b8ba0b",
+    "synthesis/src/wallet-lab/native/coverage-extension-requests.ts": "69bd1da37d0757d443b8b0a480534d1622aa481ff989516d44a99b165c70ca32",
+    "synthesis/src/wallet-lab/native/coverage-extension-verifier.ts": "d29fd14c3b98b747ec95b4d2d87488a15008344299a6518a7cd466fc78005abb",
+    "synthesis/src/wallet-lab/native/coverage-permissions-driver.ts": "790f806495b0671037c20055a886de4462097245d2d24d5711b2bd6643ce692b",
+    "synthesis/src/wallet-lab/native/coverage-permissions-model.ts": "5378de530dab1b7d77a6cd0fd887a6891822e815b1d86b0a03c4d7b102890535",
+    "synthesis/src/wallet-lab/native/coverage-permissions-observer.ts": "138da2c70d317cc35db2d32f866c0df3cdeed34ef60e6ce25151a5e657cd6875",
+    "synthesis/src/wallet-lab/native/coverage-permissions-ui.ts": "8e72143bd2edecba21ace05787482a4b7dc33ded9821552bd20170a076f84976",
+    "synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts": "20dec224b933a6c94ee631e1f85bba2b53c535d72cecf85b0d2d5d3e945f3243",
+    "synthesis/src/wallet-lab/native/coverage-suite.ts": "90379a999f1eede6e1baee584780fdb6e336f8cffd94a70863a00b4066c2143d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-model.ts": "42fac40342b68f414ace5420622255bbb6eea8878cd0e86b054009e9d1c9d9ba",
+    "synthesis/src/wallet-lab/native/coverage-transactions-producer.ts": "c90f5a42c32c77d5eebc3b15a5b9ee0827d296fb8a665387602f019e72fa2f90",
+    "synthesis/src/wallet-lab/native/coverage-transactions-program.ts": "f6c7a427b821c7585a64afd4b1779cec0a70542573a412e4a3a3d6ed72415e6d",
+    "synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts": "ecccf3bb4134ac562f3fbfea19ec5f84c0996846d6775bc90c6e849a6e9432af",
+    "synthesis/src/wallet-lab/native/failure.ts": "bea6a0aaedd19334aa8687849bd471ac56d68b49bc480e9e808b57773d77a70e",
+    "synthesis/src/wallet-lab/native/identity-trust-oracle2.ts": "a02212c9bb1a54470ab2828adce9635d13c5c11e8034be6f568c7f6eedd5c93e",
+    "synthesis/src/wallet-lab/native/identity-trust.ts": "d669a9471b9fd56ac933df5db1afc86d91b007283e7a8771c4fc8698d11536e5",
+    "synthesis/src/wallet-lab/native/integrated.ts": "265eaf13681ed6dc858334c60173f820b10c0814ccb3a9a3bd0fa695156843a1",
+    "synthesis/src/wallet-lab/native/permission-coverage-observer.ts": "f0f2a7e0b071f44828a05295274082863eb9fa784d2e87c82d9b6879eda6c053",
+    "synthesis/src/wallet-lab/native/permission-prelude.ts": "09862d1e1c2b024b17d75bc17176de9545f835323ba6f9b2398fd2712b2278f1",
+    "synthesis/src/wallet-lab/native/shutdown-submissions.ts": "dd2a903f0bc36399d5c317a723b30b560cd2720e388ef187c273016b13155710",
+    "synthesis/src/wallet-lab/native/synthesis.ts": "9e42b18cf4a95ea078847a554f4e4be6e8aefc2ff155665e49f7171ef2315f66",
+    "synthesis/src/wallet-lab/native/verify-certificate-states.ts": "c6b291a2e2753cb003c783e5421a2e13355535a0fa1d9e6e4f6ea8e88a0f8c54",
+    "synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts": "bd63edda2df77356caa9fa121aea43d57100f102d6a2cf69258ee128d4c19483",
+    "synthesis/src/wallet-lab/native/verify-conformance-clauses.ts": "3106648ad732d23531baecb815700469a5998aa48c55d71cdb14e0496f2771d9",
+    "synthesis/src/wallet-lab/native/verify-conformance-conditional.ts": "a2a08c3fc3b58c455d3150b49d19ada9d83a9b1cee585700ad10b1f6a38f58be",
+    "synthesis/src/wallet-lab/native/verify-conformance-nosend-change.ts": "c3b32bfef4329cbdbf954f32bef8eb1e03317dcdec4117b79eecdb1c661fd53d",
+    "synthesis/src/wallet-lab/native/verify-conformance-permission-coverage.ts": "42ad17df7586c6415ed1e04b64da7288836f13286cfbc0bf356b8760717f9c65",
+    "synthesis/src/wallet-lab/native/verify-conformance.ts": "7cabb74bfdfa721a0fafdbd042f3159106cce4895ee7455ce7965675dda3e9f6",
+    "synthesis/src/wallet-lab/native/verify-coverage-suite.ts": "99f3b14cfbd22506db8216e52fa96cc91138530574df1df63b64aab026dd566b",
+    "synthesis/src/wallet-lab/native/verify-identity-publication.ts": "4e5dba3996324fcb6c24dca3d8c3edf1651c7bcfed581adc7a7b41445df412e6",
+    "synthesis/src/wallet-lab/native/verify-identity-trust.ts": "2d1a5b9e7dc56335a9c5a2a706a64263d250d6bf1efbb4d6a70bf04ccb08681c",
+    "synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts": "a6ab31e0998b768464dbbc89153528119c18e83a1b40cac37d74d14afd31c463",
+    "synthesis/src/wallet-lab/native/verify-submission-ancestry.ts": "9d63ab9896c60f1c462606ec666804b6a9ba0eb9c1aca6d7d2201828de8716d3",
+    "synthesis/src/wallet-lab/native/verify-synthesis.ts": "58a8efb506cba4c51642112d3e0574a8dc91d3eb8d76ac0cf1b8800cd89e8b78",
+    "synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts": "4ac93a04d749d3ca74540d9121adbbc9408327cbfa712ed8926aa98987c8902c",
+    "synthesis/src/wallet-lab/native/verify-transaction-states.ts": "176b9cc87f272d1316cc307f922fad62663a701ffa8caa11a9cb8352e9aa6cf0",
+    "synthesis/src/wallet-lab/native/verify.ts": "ae0b1b8d71c990b221d2f1a89289e50a511b2537a78bbcdeaf32859ae964e716",
+    "synthesis/src/wallet-lab/native/worker.ts": "fce1358e204b6688c877c18bffa34e92db7cc1015cbd8170235c1cbff68e0927",
+    "synthesis/src/wallet-lab/run-boundary.ts": "0d19b84a7361f2f963ba3ef256262e671e1fbdaabfb2cfcd66ef27eccc738567",
+    "synthesis/src/wallet-lab/services.ts": "31343426cac2568d993eda57444cc2e395dff9455cf4369308111e3ee055fbf3",
+    "synthesis/src/wallet-lab/verify-boundary.ts": "29785131fc2b051463b9c42e18fea854fe787b56da0e6a7aa946776d13265813",
+    "synthesis/src/wallet-lab/yours-driver.ts": "3f6c9e89f7ca2bc1e089c32105e3127f0dbc86004117c15960cc69ef3abddd6a",
+    "synthesis/test/fixtures/native5-identity-prompt.json": "779dbb6dd7501b4543854aa5b03a460869e2aa3ad8b258fa0c0f7c16dcb37cac",
+    "synthesis/test/native-coverage-go-admission.test.ts": "2d00c962b765b4cd124ad754f9cf9ab89fc1235ede1af79d0d8f755c99d4d7c1",
+    "synthesis/test/native-coverage2-admission.test.ts": "fa2866d83b92cdad5a245204326dee3d096fab3700a91a1121a5081e439ef916",
+    "synthesis/test/native-failure.test.ts": "480cc4e8e111acab66f888f6c18330d995e987a2f9c2fbd4c16a10202ef00d44",
+    "synthesis/test/native-permission-startup.test.ts": "7942410d98003bee173ae3c755f314eaff5912a7c72d677108ebe0b5ef5763e5",
+    "test/frozen-component-replay.test.mjs": "de30baba2587939d13c11f372742100ca2da9a7526d2ef8cea261fcb02cc9686",
+    "test/native-container-source-closure.test.mjs": "4579965af03efd66f0651e43b48e9740bc8414c0ed7f09d36ef4453ccf4a8636",
+    "test/native-coverage1-selection.test.mjs": "2690830deedb97b9264991c98ca9d2748b5d39eff0e29ef6ce9c59249bb055dc",
+    "test/native-coverage2-selection.test.mjs": "d0a7f6c25235db88afe5b35846eb8d64937d624d1a1c1c813007bde0607fbcb5",
+    "test/native-reevaluation-revisions.test.mjs": "a611be1f61d3502a1524bab50fbe52d217a3298133548df1869e94c766fccda6"
+  },
+  "unchangedHistoricalJson": {
+    "infra/native/conformance/plan-5.1.1-observer-2.json": "6986c9ab566c28df0e455c6540aff51442b69325a27698287fd2209fd0749353",
+    "infra/native/conformance/plan-5.1.1.json": "b059a62f37b4243408f65df0e087afef72304ee4859eb8170b78f1fdde52e7eb",
+    "infra/native/conformance/plan-coverage-closure.json": "eb08ea9808a3cd314d9060c16c466f47cbb36c64ebd3506064085276596432c6",
+    "infra/native/conformance/plan-coverage.json": "ec37b83e25592af662b382cc5cc5da5e2238ffbdb7b4f00442d9b2bcfe229755",
+    "infra/native/conformance/plan-pr368-7e39006.json": "323b797d8d068e214c982452e9923f42ca6f51e60dc620742b848d45d7d04fbd",
+    "infra/native/conformance/plan-pr368-cb3c2f2-observer-3.json": "dda0628358ca220df758227b9f853b891d049097f10039d6938e8628f181bff8",
+    "infra/native/conformance/plan-pr368-coverage-1.json": "a67ed62b96732bb321c8dd08de5ee4903853d5c460a85bf58899eb6e9a1d0b48",
+    "infra/native/conformance/plan.json": "208837ffda4b126b9f1023f655579fbe07dd490cf076123e8f7a3d99da57c660",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-2.json": "1c61f19354185589e5be2f2304f04778adea4e82866ebf8d160a14eec80c7f66",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-3.json": "2308c7f5fdbc717029e4a654f09b5938afb4992298e299ac26ae93ae95f560ea",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-4.json": "4aa127e18d6a29e0d07c6ba04a440cc18c3fcd56a25dd31f260c215715f7d3f5",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-5.json": "3c7b9ba53566eaae153aed5734266f58d1bd91746a1d4bb9e08f2002e91c263b",
+    "infra/native/conformance/reevaluation-42711700295-rust-3.0.0.json": "f49f2dbb984ce227cebd305bbe31e827908dfd683b304b63488b4bbd9b863aef",
+    "infra/native/conformance/rust-graph-3.0.0-selector-2.json": "28cf82088bb01f076189731eb01445dfc1949703a992a5cd54031e632dd737a0",
+    "infra/native/conformance/rust-graph-3.0.0.json": "cdd66c7cec1050a1e20e295a093db03f84cfaf1a4abc22768996c539a686f270",
+    "infra/native/conformance/rust-graph-5.1.1-selector-2.json": "bd999b7d6b2f2a5876f39c253ad85c835be0693ba6fb77e761ec4d099e6b0cc3",
+    "infra/native/conformance/rust-graph-5.1.1.json": "74611cdfa05ebab4d428c3543a7036fd180b77f8abb7a2a0a97238706609e9ef",
+    "infra/native/conformance/rust-graph-pr368-7e39006.json": "f38753cccf57bd0e2dca1f482e92ec55e73f7b49957179b15cc42f6df4ab863d",
+    "infra/native/conformance/rust-graph-pr368-cb3c2f2-observer-3.json": "e2df7cf9a5ae1ec61b752b55876a9216f2bda08136ff83a56c373cc84070fbc0",
+    "infra/native/conformance/rust-graph-pr368-coverage-1.json": "462af1b2c6221c6c407056e8fa3431830dee9180c4c6d6ad85317532c073a274",
+    "itcves/ITCVE-1/0.1.0/profile.json": "36dec6547921c43d79d93566e304ef57bb2896854677633249b9c8214c574e78",
+    "itcves/ITCVE-1/1.0.0/profile.json": "83c328f3a418aec42815ee326b7cfc7fb2a14e965864af2c01e7df7376af80ee",
+    "itcves/ITCVE-1/1.1.0/profile.json": "ac9d0705e9627365c4ab79b8ae9a0fbc89814240dd8b2cf698b6ecdf4aed8945",
+    "itcves/ITCVE-1/1.2.0/profile.json": "492adc719d3bfd95f5347b07cb78a7e5e702e280fe70bc899cc19c0d43ab07c8",
+    "itcves/ITCVE-1/1.3.0/profile.json": "17a506cdc72db7ee150ddaac18241e3db78163f00bf43bb3f3bb3964aa41738b",
+    "itcves/ITCVE-1/1.4.0/profile.json": "7250be68fa829261b6e3743202716895ec3f0c470912584529a8e95bfa3aa3cb",
+    "itcves/ITCVE-1/1.5.0/profile.json": "1fe3565488a3745c9985bf273d8e59ab1890e651059b84d31fe15f152374f1c4",
+    "itcves/ITCVE-1/2.0.0/profile.json": "1d9fd67b907a40b39384d1ae8cc1547be5f8edd77d8c917aed68cf4c7ca0d477",
+    "itcves/ITCVE-1/3.0.0/profile.json": "9b8a8e794e28e9a49744fd4985f091c18fdea4bc6fcb65d40344ce3f0ea1cd8d",
+    "itcves/ITCVE-1/4.0.0/profile.json": "7e0dbd7d7cdea466c5edc6b1b01ef02c60255a12393b33f564617fa4d48e7585",
+    "itcves/ITCVE-1/4.1.0/profile.json": "902941056de45f4a598b7eaa09a52eea95ddeef64da7896fb60d493553768d20",
+    "itcves/ITCVE-1/4.2.0/profile.json": "43c4c9a4e35a610fafde067f938d290fafef100c9c6e6729db5c3fb97e9a057f",
+    "itcves/ITCVE-1/4.3.0/profile.json": "9a289853871fcf18b3e6e3aa11973617360eeecce2d3f7fd6ed56332d7da3f44",
+    "programs/ISI-4/0.1.0/catalog.json": "65ad045cd8b3398dbf5492a2dd69e990a85e46713bf605744910b0195a9cf5c1",
+    "programs/ISI-4/1.0.0/catalog.json": "c9b5d406714af51d47a4cdab3c825177fc79dce4b102494486d24c06e1e760f7",
+    "programs/ISI-4/2.0.0/catalog.json": "5b3aa926c55f050fd1e72ae8af076798021b79dd258a80d67b1c2f526ed9409e",
+    "programs/ISI-4/3.0.0/catalog.json": "b9ef1df78f846901df2782265bacfdf0bfc888bd666090ded68b540a4b257b0a",
+    "programs/ISI-4/4.0.0/catalog.json": "0cc0bf3cd657e81b675a0f3a17c767b8cd355a0cd4dfab20b115cf27e1bd82c5",
+    "programs/ISI-4/5.0.0/catalog.json": "ee13156fc6137af409736b241fa782bd0bc22821fd43c1720818edea1b000bfa",
+    "programs/ISI-4/5.1.0/catalog.json": "ad8b44fa63ac9240a9f48c2159250776f7bab5f01c4ef71bcfcf8ab239b4b0cc",
+    "programs/ISI-4/5.2.0/catalog.json": "0f866d0eab7fb47d30e79257444c1ad65799932e8b9e24ed656bd35ef2bc7338",
+    "programs/ISI-4/5.3.0/catalog.json": "4dadf831518d3181cb87ce6819790cd93f077a9fb1569babd026b8605849116b",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/coverage.json": "8e701a7c23edb8a951e48d9fdd782f4225fbaa6c1ee37489d9f01e65378b25fd",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json": "0d910a7ca41883a064bb65fc7c6b1ce4bef58f26d8eadb02d44c69cf6f96ad2e",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json": "9cd945fb5a57eb8ded04d8d8569955f31039ebfdbd6ff1991cd5d3507a3eef7b",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native.json": "f825d8a4e84f92b36f17e9ae50a0690a717a5a357e036cfa3b5de5e84ff0f367",
+    "programs/ISI-4/profiles/brc100-boundary-1.0.0/profile.json": "a803434b5a554894009b45b66ca74b5f44e4553018ca16c2fa6739242c04815c",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json": "ad803952399a66f099ea9f9efa664a37801866284c5a01064d3357878199a8eb",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json": "7f7585d34920cad911531099009fa2e3b8cf6e0e1f9037bb4812f9bb09e8fe95",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/oracle-3.0.0.json": "4a80fb9f8df8a7ebe02bf33fe14721099091cbbeefb5c68dc29e1c7886e1c623",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/portability-oracle-2.0.0.json": "000277ef4a928d4fc9b047f1caffc083c6ed7ad0a94d62c105e7682704d39cba",
+    "programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json": "215efe521a229779a3ead0ea3f03b304d63a8d8fd754c6c9994a810cba5a5be4",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/oracle-4.0.0.json": "b3df2d9a60571f19bb2e48fc19a2b0b60704392aef62b3d8855c136ce1201e3c",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/permission-lifecycle-oracle-1.0.0.json": "5f9f69e6235187cd6bf756d4827aaca0338cc3d64ce3052d72b582bdbbc2f87b",
+    "programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json": "266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json": "8395291e84398404816a1e91eeeebbe3322c5568ae5e2371af058e0d40e7b0de",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json": "f67d74120e4edb6a5f91f0e1aa169f6d2cb98f6f547c33b7931d0995f1db3b0c",
+    "programs/ISI-4/profiles/native-conformance-4.0.0/shutdown-submissions-1.0.0.json": "b579b46714532f9625e562e2842bfac414262e497c9628ab3a6b95554a84acb8",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json": "671fe862e96a281bb982d6d30d0124ae272180d63998d49c66a9ea6688c3ac19",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json": "10e1ef1a72c1af24224b26e956c6ee3f0153aacad6b3a36ad9a40cb224f7ea4a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json": "ebc4fd6d55badf77b08967010cbe885bce964e71839295804cca6e16f9771122",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json": "ae5a2efcf6135c4667ba14ce324a1a5cbf991051e572674296fcbfe9c6c3b035",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json": "601846e4c52730cf3103e78bbf7e2446bc3f7a47a0df2f36a3c37c2813c96ebf",
+    "programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+    "programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+    "programs/ISI-4/profiles/native-coverage-extension-1.0.0/policy.json": "6f9071f0a07a5545d55fd8dd3c75d10ea93a5109efd8c39bd6d8838360b0e231",
+    "programs/ISI-4/profiles/native-coverage-extension-1.0.0/reference/manifest.json": "4583d0a87c7f61567a5f773c1665b79d6e1a12fa07884628d2147b60817039d7",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json": "20f8d35df252fa308c87087bac80e3278712a7731e848384eb7497b8ba1c3a47",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/prior-source/manifest.json": "dd8715017df94b86693e4569c5e3b67d9aab6b5ebd98f6ce77e43bbe63f88aee",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/prior-source/policy.json": "6f9071f0a07a5545d55fd8dd3c75d10ea93a5109efd8c39bd6d8838360b0e231",
+    "programs/ISI-4/profiles/native-coverage-extension-2.0.0/reference/manifest.json": "f31dce0c2d4e6800681f6ba2d6f8176e498b9d2049d7a22aa8b6b57ddf5653ac",
+    "programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json": "d66694d5363360ccd0b05225276e9c70173b5a50d37c4d7478dcb7f652e609cb",
+    "programs/ISI-4/profiles/native-coverage-transactions-1.0.0/policy.json": "2a121604b2bb8d41ccc2ac626702931b5e3e880514b7637fed7c5a5d05bbc96d",
+    "programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/provenance.json": "611690de7121ac9c5659a9edff9dfe0e047c4ed1e452553b10a70b82ddf92f8c",
+    "programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference-batch-fixed/source-preserved-before-oracle2/manifest.json": "da25522cb8fd73a2248802162788a90635f7726eb179ab040a75b8427c9dffb1",
+    "programs/ISI-4/profiles/native-coverage-transactions-1.0.0/reference/provenance.json": "7eeacf5680f24944d465284daef558c1dd3bd65839c4cee8a669fc44bfd249c6",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/reference-sqlite-retry/manifest.json": "63dff8fd59c40082b5c54964a63ff1d8cb045c074ab8c4294b720833f3b4ec2b",
+    "programs/ISI-4/profiles/native-coverage-transactions-2.0.0/reference/manifest.json": "141bd9f7a52749ae24a94b4fc2d081bd6e6c94c12e427412fc9dbb1775380cde",
+    "programs/ISI-4/proposals/brc100-list-actions-signed-value-clarification-20261112.json": "6c941c0552dd692e764d319d67e56e1cca69c638246190df8361c97ea5e2abc6",
+    "programs/ISI-4/proposals/native-coverage-accountability-20261111.json": "10ca15726ecdcbf545987c8a9af249b334545d7f1e79eb1a50b17ef7a84f8868",
+    "programs/ISI-4/proposals/native-coverage-accountability-20261112-extension-delta.json": "ac7b4639a735d10bd8aca440940dee96f3e232d90034fd071e87efcfa2005ad9",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
+    "programs/ISI-4/proposals/native-coverage-closure-20261111.json": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+    "programs/ISI-4/proposals/payment-journeys/0.1.0/profile.json": "bbcc9476c2125a3e2a6fc02cba6bb5ed4e2fbed8fb90c93d3977088f305f760e"
+  },
+  "freezeReceipt": "scaffolding/freeze-2.json.gz",
+  "diagnosisReview": "diagnosis/review.json.gz",
+  "cleanupReview": "recovery/cost-review-failure-preservation.json.gz",
+  "linkedEvidence": [
+    {
+      "path": "journals/integrated-native-attempts/2026-11-12/43195585984/attempt.json",
+      "bytes": 37470,
+      "sha256": "5f377127638d342ebd72ea708462ace3fdbbc58ed8cb2637b25cbde88052e614"
+    },
+    {
+      "path": "journals/integrated-native-attempts/2026-11-12/43195585984/diagnosis.json",
+      "bytes": 1810,
+      "sha256": "2ab5ed7b6be91d78033abc9b810efa09905e5b64474490bfce4018765c7596d2"
+    },
+    {
+      "path": "journals/integrated-native-attempts/2026-11-12/43195585984/review/prepare.stderr.log",
+      "bytes": 2671,
+      "sha256": "b94a0fbc1940b14fdd94bddeb5e89e224030bca85dd8443d3abee9f379eed3d3"
+    },
+    {
+      "path": "journals/integrated-native-attempts/2026-11-12/43195585984/native-integrated.zip",
+      "bytes": 1083055,
+      "sha256": "f8b4a33821d7b91c1e265117bccc340e23be074a4a0cebf9f5285422a74cb232"
+    },
+    {
+      "path": "journals/integrated-native-attempts/2026-11-12/43195585984/original/run-lock.json",
+      "bytes": 48565,
+      "sha256": "c605af25cff4beed059c95d68afea232038804ee304685005af1111fe9968e5f"
+    },
+    {
+      "path": "journals/native-closure-validation/2026-11-12-native5-review/manifest.json",
+      "bytes": 1748,
+      "sha256": "d9dd6bc9340c14d81e0f29b4cca51398a97e2292afc4a7b24d8838c18d384e1d"
+    },
+    {
+      "path": "journals/native-closure-ci/2026-11-12/c648022/manifest.json",
+      "bytes": 17411,
+      "sha256": "63903f29432038ebda76c07ceab53af6498c60cf52de9662fb97acf1fa6bbd44"
+    },
+    {
+      "path": "journals/native-closure-ci/2026-11-12/c648022/summary.json",
+      "bytes": 6168,
+      "sha256": "e556bcc31c24d75564cf2a1bec375495636243012359a82c941b5791bffdb8b3"
+    },
+    {
+      "path": "fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json",
+      "bytes": 43499,
+      "sha256": "ee425f6f95e00fc711b6d426634e536e199786592452ace41370c1b6cd1f63ac"
+    }
+  ],
+  "resultsAreAdditive": false,
+  "completedValidation": {
+    "completed": true,
+    "pending": [],
+    "actualSource6Execution": "PENDING_CLEAN_COMMITTED_SOURCE_AND_CI",
+    "checks": [
+      {
+        "id": "full-synthesis",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/synthesis.log",
+        "exitCode": 0,
+        "bytes": 365,
+        "sha256": "e8d18d7ac8aae35540e23a59c52c82bc8a21662c4d57a2a6431580c9c9503610",
+        "expected": [
+          "1080 passed | 63 skipped (1143)",
+          "67 passed | 3 skipped (70)"
+        ]
+      },
+      {
+        "id": "full-core",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/core-2.log",
+        "exitCode": 0,
+        "bytes": 17609,
+        "sha256": "5f13b27f921e5e77adbc851f34132cb0a3d223a0f050ba87a2c28a96fed0fae7",
+        "expected": [
+          "tests 181",
+          "pass 181",
+          "fail 0"
+        ]
+      },
+      {
+        "id": "python",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/python.log",
+        "exitCode": 0,
+        "bytes": 710,
+        "sha256": "b3d6a5a7be35eb527e98d72e4e1676506c607a2b8f9bb2ae8bd4e482bfca2438",
+        "expected": [
+          "Ran 5 tests",
+          "OK"
+        ]
+      },
+      {
+        "id": "typecheck",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/typecheck.log",
+        "exitCode": 0,
+        "bytes": 52,
+        "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+        "expected": [
+          "tsc --noEmit"
+        ]
+      },
+      {
+        "id": "catalog",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/check.log",
+        "exitCode": 0,
+        "bytes": 233,
+        "sha256": "baa33431367858d930c5009e8d05cd2cda11023cb2f667ab89fa5cbbf0299d10",
+        "expected": [
+          "\"catalogs\": 4",
+          "ITCVE-1 1.1.0: three pinned Go implementations, eight selectable combinations"
+        ]
+      },
+      {
+        "id": "standards",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/standards.log",
+        "exitCode": 0,
+        "bytes": 362,
+        "sha256": "d0560516f217a4d43a2dfd8d2891c2a436d0bff1d50b2a0199840abc4e2bf528",
+        "expected": [
+          "\"designation\": \"LAB_SELF_TEST_ONLY\"",
+          "\"outcome\": \"PASS\"",
+          "\"fixtureCount\": 2"
+        ]
+      },
+      {
+        "id": "selector-source6-lineage",
+        "sourcePath": "out/native-closure-20261111/coverage2-scaffolding/selector-tests-2.log",
+        "exitCode": 0,
+        "bytes": 2152,
+        "sha256": "acbf24ab84b7b44bbd12fe15f4154664b4986622440529f4e09dc7c69c30baa5",
+        "expected": [
+          "tests 20",
+          "pass 20",
+          "fail 0"
+        ]
+      },
+      {
+        "id": "actual-go-and-bundle-admission",
+        "sourcePath": "out/native-closure-20261111/coverage2-scaffolding/admission-tests-2.log",
+        "exitCode": 0,
+        "bytes": 648,
+        "sha256": "2517d5819b22c1d7a25e327f56fdf63eb73f44bd770e236a3003a4adc4d8a3c8",
+        "expected": [
+          "17 passed (17)"
+        ]
+      },
+      {
+        "id": "observer-correction",
+        "sourcePath": "out/native-review-43195585984/independent-diagnosis/correction-tests-3.log",
+        "exitCode": 0,
+        "bytes": 286,
+        "sha256": "c9fa1fc45cd818a5cc1725f38f79ee03b4c2f55b82c1a2c535b07a62b41caa27",
+        "expected": [
+          "86 passed (86)"
+        ]
+      },
+      {
+        "id": "failure-preservation",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/shutdown-tests-2.log",
+        "exitCode": 0,
+        "bytes": 422,
+        "sha256": "030776cac3ab3c79f3c98b9ebea20982995ccd95e2d24938292531df0723fa77",
+        "expected": [
+          "25 passed (25)"
+        ]
+      },
+      {
+        "id": "materializer-mutations",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/frozen-source-tests.log",
+        "exitCode": 0,
+        "bytes": 441,
+        "sha256": "3af3a739e16e9a3c2078ee6e408c11e73a815916d4587a854c06124cc2f5108f",
+        "expected": [
+          "tests 3",
+          "pass 3",
+          "fail 0"
+        ]
+      },
+      {
+        "id": "actual-c648-materialization",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/frozen-c648-source.log",
+        "exitCode": 0,
+        "bytes": 570,
+        "sha256": "700d2a7d1d2d4b83a1843e4559cbb2aa06f14a020014a8d158e2026172897c5d",
+        "expected": [
+          "\"verified\": true",
+          "\"files\": 2499",
+          "\"ownedReplayTreeRemoved\":true"
+        ]
+      },
+      {
+        "id": "published-semantic",
+        "sourcePath": "out/native-closure-20261111/observer-recovery/publication-2.log",
+        "exitCode": 0,
+        "bytes": 11883,
+        "sha256": "3269810aa19eed0763194d7ab970da90ed982c67615f4d2ecfb9f9431eafbeca",
+        "expected": [
+          "\"verifiedPublishedIntegrationArchives\": 14",
+          "\"verifiedPublishedIntegrationAttempts\": 18",
+          "\"semantic\": true"
+        ]
+      }
+    ],
+    "terminalStatusSource": "Parent observed every process terminal exit0; completed logs captured after that confirmation."
+  },
+  "logBindings": {
+    "out/native-closure-20261111/observer-recovery/synthesis.log": "recovery/synthesis.log.gz",
+    "out/native-closure-20261111/observer-recovery/core-2.log": "recovery/core-2.log.gz",
+    "out/native-closure-20261111/observer-recovery/python.log": "recovery/python.log.gz",
+    "out/native-closure-20261111/observer-recovery/typecheck.log": "recovery/typecheck.log.gz",
+    "out/native-closure-20261111/observer-recovery/check.log": "recovery/check.log.gz",
+    "out/native-closure-20261111/observer-recovery/standards.log": "recovery/standards.log.gz",
+    "out/native-closure-20261111/coverage2-scaffolding/selector-tests-2.log": "scaffolding/selector-tests-2.log.gz",
+    "out/native-closure-20261111/coverage2-scaffolding/admission-tests-2.log": "scaffolding/admission-tests-2.log.gz",
+    "out/native-review-43195585984/independent-diagnosis/correction-tests-3.log": "diagnosis/correction-tests-3.log.gz",
+    "out/native-closure-20261111/observer-recovery/shutdown-tests-2.log": "recovery/shutdown-tests-2.log.gz",
+    "out/native-closure-20261111/observer-recovery/frozen-source-tests.log": "recovery/frozen-source-tests.log.gz",
+    "out/native-closure-20261111/observer-recovery/frozen-c648-source.log": "recovery/frozen-c648-source.log.gz",
+    "out/native-closure-20261111/observer-recovery/publication-2.log": "recovery/publication-2.log.gz"
+  },
+  "costs": {
+    "nativeSessions": 0,
+    "monetaryCharges": null,
+    "operatorCost": null,
+    "developmentAgentCost": null
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3409,
+      "sha256": "4e09febe5da75785bbddd81335e9738d7baf2e8353bff6a9c704c25ef353ae95",
+      "rawBytes": 3409,
+      "rawSha256": "4e09febe5da75785bbddd81335e9738d7baf2e8353bff6a9c704c25ef353ae95",
+      "encoding": "identity"
+    },
+    {
+      "path": "build.py",
+      "bytes": 9300,
+      "sha256": "e768ccc7845e4f366fc9a5dc725acdf9b809020d0f4426cb1f5b0a3151735476",
+      "rawBytes": 9300,
+      "rawSha256": "e768ccc7845e4f366fc9a5dc725acdf9b809020d0f4426cb1f5b0a3151735476",
+      "encoding": "identity"
+    },
+    {
+      "path": "completion.json.gz",
+      "bytes": 1560,
+      "sha256": "fdd07e991d768dddb03dd3e1bcfcc9eac31517303eb434fa4affca3c3a30810e",
+      "rawBytes": 4824,
+      "rawSha256": "4ed3ef8c8d14e7e11af2f6f9012f3b08727d8335f4691a17def8944cec2980d9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/build-review.py.gz",
+      "bytes": 2844,
+      "sha256": "a2828c9f105aa7eb26e68c367f4623852d517b0bded84aa542fff4efdfa16ca6",
+      "rawBytes": 6284,
+      "rawSha256": "74a1b9a26b0514df8fb45ab82a7abd19bb9f8c34e13426687db8542548e687f2",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/src/wallet-lab/native/conformance-portability.ts.gz",
+      "bytes": 7821,
+      "sha256": "928e03cd3f9a90e9304cf304ec45a7ac12f25cb9b2ee076d52579d7402d7f763",
+      "rawBytes": 26776,
+      "rawSha256": "185f854de99df08499817b93dd902c01fb8acada93587708a8745170991ced78",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/src/wallet-lab/native/coverage-permissions-driver.ts.gz",
+      "bytes": 4394,
+      "sha256": "092194039c07a7a826e7ae24dd9c2de32cfd526074c82f36d3f5026aba80f064",
+      "rawBytes": 15246,
+      "rawSha256": "790f806495b0671037c20055a886de4462097245d2d24d5711b2bd6643ce692b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/src/wallet-lab/native/coverage-permissions-model.ts.gz",
+      "bytes": 2374,
+      "sha256": "65907bc5bf981f80f7a526993b8bcf19564f9e359a99d377a8766145b1ff6a65",
+      "rawBytes": 6494,
+      "rawSha256": "5378de530dab1b7d77a6cd0fd887a6891822e815b1d86b0a03c4d7b102890535",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts.gz",
+      "bytes": 11718,
+      "sha256": "d0b1c02694e87766e7a4f389c6a2bfea85601910c79e41fc33ad879bf71a2b71",
+      "rawBytes": 46825,
+      "rawSha256": "20dec224b933a6c94ee631e1f85bba2b53c535d72cecf85b0d2d5d3e945f3243",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/test/fixtures/native5-identity-prompt.json.gz",
+      "bytes": 838,
+      "sha256": "fe2f313a27e32eada9f19abece6bb8536419d25a9fe5f0cd8a7da4d840de9cfc",
+      "rawBytes": 1522,
+      "rawSha256": "779dbb6dd7501b4543854aa5b03a460869e2aa3ad8b258fa0c0f7c16dcb37cac",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-source/synthesis/test/native-permission-startup.test.ts.gz",
+      "bytes": 3666,
+      "sha256": "053c04a331d86b8f583f1bfae064b2875f3bc6381c0b99e9409def17d920c614",
+      "rawBytes": 11181,
+      "rawSha256": "7942410d98003bee173ae3c755f314eaff5912a7c72d677108ebe0b5ef5763e5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-tests-1.log.gz",
+      "bytes": 805,
+      "sha256": "0b4a3eafbb6b421919b9d6dc2d6f44d1759776ff5eaa987f00b5ec4e59bcdf94",
+      "rawBytes": 1881,
+      "rawSha256": "2aaf29b5cd4de5f92c9fdcaf864804f399ae253e1579f491c6191ed2e20b5c28",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-tests-2.log.gz",
+      "bytes": 224,
+      "sha256": "b5619c4418ed2d80235f8511529af2de63710387794cd0d15e5238035b919576",
+      "rawBytes": 285,
+      "rawSha256": "1a90e342cd00dca866f6544304798d36a4ba47772ca6e3471f2399a480561d8c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-tests-3.log.gz",
+      "bytes": 223,
+      "sha256": "b2885edd586b8f815f6e8bec3741ab3fe05c1f9d0943e8e7464aaabb7f69d41c",
+      "rawBytes": 286,
+      "rawSha256": "c9fa1fc45cd818a5cc1725f38f79ee03b4c2f55b82c1a2c535b07a62b41caa27",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-tests-source-failed-v1.ts.txt.gz",
+      "bytes": 3256,
+      "sha256": "b556730d8e00043d747ca5fa229e28b33b236b0214f7abce02a7c1c955addc4d",
+      "rawBytes": 9858,
+      "rawSha256": "e7ad5046145d5f2f591592c9cb1288c1a6985ffeb2bb2d8dcb65a01429763854",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-typecheck-1.log.gz",
+      "bytes": 175,
+      "sha256": "5fcb6c73906f1ad6f08f7cb14270a241e781bd78f3b59d7c0c5a32383cf4ed59",
+      "rawBytes": 224,
+      "rawSha256": "7f232df828f48a6b7ba82d24ecc938044a987413600de0f9878dde0a36c4cdab",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/correction-typecheck-2.log.gz",
+      "bytes": 258,
+      "sha256": "0c76732513ee08e5c1d2fed42c4082400731c9645d27a9a13cdff268c72ab364",
+      "rawBytes": 494,
+      "rawSha256": "bed6d3d269fd7ec69ddac5ccdb5193924d4c74bf529f0dc7b7db0272c4e83fec",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction-headless-shell-failed-v1.json.gz",
+      "bytes": 357,
+      "sha256": "1b6d2c54dd3bb1045f21dc1e90096c55fc9e2126ac389141d27e04f7ea9321da",
+      "rawBytes": 471,
+      "rawSha256": "e5d9b267e1d9c47ef83cbb032c86ddee8933ca2229a390b10e29db1046df6b71",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction-headless-shell-failed-v1.mjs.gz",
+      "bytes": 2466,
+      "sha256": "547ce323bf2a9ec0e2797d9c30bd2f493b0a9b3cbbaeff9626832be40727fda8",
+      "rawBytes": 6354,
+      "rawSha256": "4ed618c8bcbaa96d8d5165c23713871abaa1e1fa560276d5caf6229209beb97a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction-headless-shell-failed-v1.stderr.log.gz",
+      "bytes": 324,
+      "sha256": "7ab41fb4c65a484903324002a9c566d475a5eadf8291a20ca90845a52e646be8",
+      "rawBytes": 415,
+      "rawSha256": "bfc7447ed4f9a482d06f59bb353a1f8c08ab4cb73e277fc812a5690e87cf22f5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction-headless-shell-failed-v1.stdout.log.gz",
+      "bytes": 141,
+      "sha256": "4165c66211914067442d033ef4f17e0d2ef101f58ee619438dcb7cc3e8011711",
+      "rawBytes": 171,
+      "rawSha256": "cd776a803bacd92892b28aad9d89bd9a8b5eb9502fbb90e4731b14bc6c172760",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction.json.gz",
+      "bytes": 1719,
+      "sha256": "25ec661ff7293bf25ab2eee13984c6f0990dfdc4ca8ba213f49527aa9ff50412",
+      "rawBytes": 8012,
+      "rawSha256": "26d8483a3b83079bbb6ec176a9c1d94e2f7f17e7622b9f9a7916c78410cb3579",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction.mjs.gz",
+      "bytes": 2476,
+      "sha256": "60c5c28963a41c3c5f047093973c34ae14bb1e11c42457eab8c1c00431c63f36",
+      "rawBytes": 6373,
+      "rawSha256": "dc3af10c8b20e052fd51c8c5c0225f37faf9a582c05060e133062173fca7e9ed",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawBytes": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/observer-reproduction.stdout.log.gz",
+      "bytes": 135,
+      "sha256": "20759802790780ca0fe2622cc6f05a2d4439ad5f020df0cf20a46d5f40c245c4",
+      "rawBytes": 171,
+      "rawSha256": "44770ea8a477a43cdd8c399ee01137ca1a1ca1e0130d290aabc6ed0e32dc9b0f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/partial-replay.json.gz",
+      "bytes": 2815,
+      "sha256": "a3450efbdf21c862b783e5d580b8cdfcc54e18804aa08d56919ff6c616e0d4cd",
+      "rawBytes": 21422,
+      "rawSha256": "fccda56a7ff2821aa2244376b960f6905d9c223edc156b45359d6e8254bf014c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/partial-replay.mjs.gz",
+      "bytes": 1464,
+      "sha256": "d0bd7d91e01154e76b232e8d70ea56720825467d5dfc6a6a577d3aa25edd9608",
+      "rawBytes": 3517,
+      "rawSha256": "bcbf6dda85073c27f858842fd4ee8465db87e53e7290bec97cad8ed0fde419d0",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/partial-replay.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawBytes": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/partial-replay.stdout.log.gz",
+      "bytes": 2883,
+      "sha256": "b129062e8209e4b0fc6b374e156f1511c0cb654ade1c3bb60c5a64ddffc7981e",
+      "rawBytes": 21574,
+      "rawSha256": "177b034fe0dcc03cc100aaeedd54f2118fbebf5873a365e72db30ccc49250ec5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "diagnosis/review.json.gz",
+      "bytes": 3816,
+      "sha256": "f7332e8aa6bf27f99299bea39eeaa40e61e532a12102e2c3cafdd8653d389616",
+      "rawBytes": 10899,
+      "rawSha256": "eac777566f92f0556676f718d71012d2bd8ca4900a3055bbce69a4c7bf64fe96",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/check-freeze.py.gz",
+      "bytes": 2303,
+      "sha256": "94c38b7c56a69e5894f1f734aa273dd10924b57ad23583d02fc14cbb78a13319",
+      "rawBytes": 5659,
+      "rawSha256": "0c68b43ebcd213ce2ab2558cfeb2adc0c4f0a81003993110f1c04d78ffd21344",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/materializer-mutations.json.gz",
+      "bytes": 398,
+      "sha256": "2ee14596d617d8096ae7631c26b40711d1a4386187cc13d5d3a7dcd948c6aa34",
+      "rawBytes": 608,
+      "rawSha256": "e1e645d20dc8c4b0c789c575dbfca6d663e60694f6e8bbd755aa226617bc4239",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/materializer-mutations.log.gz",
+      "bytes": 368,
+      "sha256": "4f028287afb830ed75b16c8a8aa576ff24deeeecd68158fab62b18beaa854ff9",
+      "rawBytes": 487,
+      "rawSha256": "5e17221910de5a0b287028042dd596e2e65648c690ad646699535a24c508db8a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/materializer-mutations.mjs.gz",
+      "bytes": 1388,
+      "sha256": "5c66fe49e08362ec349436539797a526d1eff9281eadbe459c698efef67fc1e7",
+      "rawBytes": 3191,
+      "rawSha256": "23886053d85fcdc0484db46169fc36647c28f3f4d6a3407edcc4a6d185494464",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/materializer-mutations.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawBytes": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations-2.log.gz",
+      "bytes": 489,
+      "sha256": "9e77ad2b425a440c2849fbfc2775393155ae9d14889fcced8a9404766750e352",
+      "rawBytes": 1002,
+      "rawSha256": "afadad9c1c89a415afa472a6685d1e9cc6ba1c14f635b573ab2845f2204a89a7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations-2.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawBytes": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations-startup-failed.mjs.gz",
+      "bytes": 1396,
+      "sha256": "f96d0804542a7defde9157574aefdbc06ca134afabad21c5529cdc07835d060d",
+      "rawBytes": 3386,
+      "rawSha256": "27a8ce289a16c331e307571352623827dd47b194f43c1118a5c47f8a6c998f1e",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations-startup-failure.json.gz",
+      "bytes": 295,
+      "sha256": "952628f581f98d473d9ec8ed8f2d694be4f8faf129606a50714a12aef138f9bc",
+      "rawBytes": 379,
+      "rawSha256": "d18fcf70e3e6fd62c4d3e6864a38d098d1edb64f9b3ce7f8627ec755614aa490",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations.json.gz",
+      "bytes": 517,
+      "sha256": "8eb1bd0496317eae23b827abd4f04ff549716c885de1dbcbb8f77a6d4dcd0278",
+      "rawBytes": 1365,
+      "rawSha256": "ce24964e7431a80c716448f10df206b2fb09f2435e2381abbd45d678d1d4e080",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "rawBytes": 0,
+      "rawSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/publication-mutations.mjs.gz",
+      "bytes": 1396,
+      "sha256": "f186afa9d614310d6eb2e91a51cb661d577294cf6bf7f739b8782322b5d171cc",
+      "rawBytes": 3380,
+      "rawSha256": "0dae5114e00c96161294d51c75ada4ce46ee9ddf9a5f7d9899b39737209872e7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/review.json.gz",
+      "bytes": 2528,
+      "sha256": "1f82cf84c44f2cf6dd086fe4159c5832f7f5e8b3d9e7f07da71dc5db9a3ad5bc",
+      "rawBytes": 6096,
+      "rawSha256": "e6bdc3acf1f1effc6287043c8bca86c43bd6012551facde9c36d6983cb013f79",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/source-review-2.json.gz",
+      "bytes": 12422,
+      "sha256": "bf5673612c8b26fd8e9f5cc39793196fec1ea923f6ea67b8b792da1831f37208",
+      "rawBytes": 38547,
+      "rawSha256": "728b27aee41925ca0265aa97a5c5e6ecdffdc5a92dcd6d8814e3fb677f07481a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/source-review.json.gz",
+      "bytes": 12423,
+      "sha256": "16e66421468da17f7a5b52ab075606894285776a3f004c102289be3b0c88e60b",
+      "rawBytes": 38547,
+      "rawSha256": "8e8809efdda2b6f09be1e19f99992430e33ebcf246379dfc77692cc26edaad30",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations-2.json.gz",
+      "bytes": 1274,
+      "sha256": "0d159749b8ef5a5442050bdd71e48dd620961714a91f6f8e176c671768b1f7bc",
+      "rawBytes": 6758,
+      "rawSha256": "5be2243e8177f711e7b633b6e44063b8ce0fed8c735a99d431c8de078d4be3c0",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations-3.json.gz",
+      "bytes": 1306,
+      "sha256": "ee11d056933a9f1998572e1b5f2e5c82f9a5eb448d9f60098c1603880efc8472",
+      "rawBytes": 7203,
+      "rawSha256": "c4764d3db7a9fbff8a799dc40a00f15ea384b600c2d281ecbfb3553629308bdd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations-noncanonical.json.gz",
+      "bytes": 933,
+      "sha256": "8862d1357a2ab1659889ad2fd3b38b2ebee75898d439f0e5f990be23ad7bf05b",
+      "rawBytes": 7699,
+      "rawSha256": "d1ff2df24b8e24e11261aa7852b684f8ef4983d22bfaf146230c1b95631aaf30",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations-noncanonical.py.gz",
+      "bytes": 1100,
+      "sha256": "64583ad44082df1d2a0adf0716bcf554dc0e8ae483e36fbd4f3e2c223bbd9ca9",
+      "rawBytes": 2175,
+      "rawSha256": "f5a0838b82f48ec31e1f5fe8e720df593cde15878273da8ccc3eb39bd80ce16b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations-pre-history.py.gz",
+      "bytes": 1105,
+      "sha256": "66575fbff0268525667822c4a4522748e9b73c12077c1a73471815bcbd140bb7",
+      "rawBytes": 2189,
+      "rawSha256": "5b09b28dff8ae0b61207027bb91c11ea2bca94f4dd225c92b0af4735fb722f09",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations.json.gz",
+      "bytes": 933,
+      "sha256": "8862d1357a2ab1659889ad2fd3b38b2ebee75898d439f0e5f990be23ad7bf05b",
+      "rawBytes": 7699,
+      "rawSha256": "d1ff2df24b8e24e11261aa7852b684f8ef4983d22bfaf146230c1b95631aaf30",
+      "encoding": "gzip"
+    },
+    {
+      "path": "independent/validation-mutations.py.gz",
+      "bytes": 1273,
+      "sha256": "281008496cc788fd6fe6a714897335863384fd96490da45681f9d86dff1a72bd",
+      "rawBytes": 2539,
+      "rawSha256": "1514f89e1b79534ecaaa80cea3ef0cf3af137b6366965250e82e25f8c68da0b7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/check.log.gz",
+      "bytes": 192,
+      "sha256": "84c5325b355e2a9870f22988c514542208e548f7f99c8f9eb227c0fa8655797f",
+      "rawBytes": 233,
+      "rawSha256": "baa33431367858d930c5009e8d05cd2cda11023cb2f667ab89fa5cbbf0299d10",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/core-2.log.gz",
+      "bytes": 6014,
+      "sha256": "dca1715ef5054165316a1132c44269a521de7fe4a091d578947ae5f04fae6be5",
+      "rawBytes": 17609,
+      "rawSha256": "5f13b27f921e5e77adbc851f34132cb0a3d223a0f050ba87a2c28a96fed0fae7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/core.log.gz",
+      "bytes": 5969,
+      "sha256": "4334bef5b5dacf6e7181f9841f4c0073f6970042e0a29acf78759ff90837a71b",
+      "rawBytes": 17536,
+      "rawSha256": "eb03738f80e7716b3259da42d82369b5a1c9729363129b5179b57d5420bd0a63",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/cost-review-failure-preservation.json.gz",
+      "bytes": 1148,
+      "sha256": "cdfbea3514af38d72765e763c3ccb3ad1fcfb4b115130be735e37d29079688fd",
+      "rawBytes": 2284,
+      "rawSha256": "8d17d360355d4e4d3ef6ff04efea0c8fb205021ee0103e9e8b0aa94626159cf5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/frozen-c648-source.log.gz",
+      "bytes": 380,
+      "sha256": "a51e2b2e5f31fcb30e39f9c97895c30224d4a81fcaba28e8d309d6bf288798e9",
+      "rawBytes": 570,
+      "rawSha256": "700d2a7d1d2d4b83a1843e4559cbb2aa06f14a020014a8d158e2026172897c5d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/frozen-source-tests.log.gz",
+      "bytes": 303,
+      "sha256": "733eecb88a1668642c82cab0d8381b32cba513db377c047960107b04d0258557",
+      "rawBytes": 441,
+      "rawSha256": "3af3a739e16e9a3c2078ee6e408c11e73a815916d4587a854c06124cc2f5108f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/go-admission.log.gz",
+      "bytes": 268,
+      "sha256": "7117c965db27dbc6ce18514123f3428195453e17b16595b0ee8de493381944ba",
+      "rawBytes": 366,
+      "rawSha256": "036f11ac8999387bb84a389ea1c1ec608933764e46884cd4cdac7e3b619958f1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/publication-2.log.gz",
+      "bytes": 1473,
+      "sha256": "551de28060ba1f778211b20bc74aff61c7a4f92656b9eb7b305241b83d78630d",
+      "rawBytes": 11883,
+      "rawSha256": "3269810aa19eed0763194d7ab970da90ed982c67615f4d2ecfb9f9431eafbeca",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/publication.log.gz",
+      "bytes": 491,
+      "sha256": "c445a0a3dbeeeca4d8d10bbea4c0908975ada6d3b33bf84e017bd80afb5bff2d",
+      "rawBytes": 921,
+      "rawSha256": "1c9b255458ad5a9e18658bd4f36f81da24ac49a9a7ea527e6987a9832d1972d9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/python.log.gz",
+      "bytes": 236,
+      "sha256": "65a6c3706d462fb6f4063bba3b145c50f71cac310c70f3c14be013f7ee5dd7d4",
+      "rawBytes": 710,
+      "rawSha256": "b3d6a5a7be35eb527e98d72e4e1676506c607a2b8f9bb2ae8bd4e482bfca2438",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/shutdown-tests-2.log.gz",
+      "bytes": 290,
+      "sha256": "bd4f6d3d94a31407b0c5274675bfccbc675ca02d7d5c2612711b43396aee89fa",
+      "rawBytes": 422,
+      "rawSha256": "030776cac3ab3c79f3c98b9ebea20982995ccd95e2d24938292531df0723fa77",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/shutdown-tests.log.gz",
+      "bytes": 289,
+      "sha256": "d0ed21d5693a03305ca206dca18fd0bb1f81cba4b7ea7160ce41e8a8f087b5a5",
+      "rawBytes": 422,
+      "rawSha256": "8530a737bf15ed5e9ae88bb903431917bc5118e0d944a2cb54492afb1e0a4886",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/standards.log.gz",
+      "bytes": 254,
+      "sha256": "5eca30db66d89c6b5761471b5c7345258a59b284e000816dfec4d487592f1f09",
+      "rawBytes": 362,
+      "rawSha256": "d0560516f217a4d43a2dfd8d2891c2a436d0bff1d50b2a0199840abc4e2bf528",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/synthesis.log.gz",
+      "bytes": 271,
+      "sha256": "9747e376fc293dad9c5203303af1022be4df2cb7dd564be1408ff4d8e779eb23",
+      "rawBytes": 365,
+      "rawSha256": "e8d18d7ac8aae35540e23a59c52c82bc8a21662c4d57a2a6431580c9c9503610",
+      "encoding": "gzip"
+    },
+    {
+      "path": "recovery/typecheck.log.gz",
+      "bytes": 72,
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8",
+      "rawBytes": 52,
+      "rawSha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/admission-tests-1.log.gz",
+      "bytes": 321,
+      "sha256": "10a738ac5f0b10da703f21eda5a99295b727680ba901f4be46f078cfa4271527",
+      "rawBytes": 453,
+      "rawSha256": "13ae788560adf7e35d5701a72b4395458996d5245ad986de64e55476e35e631a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/admission-tests-2.log.gz",
+      "bytes": 340,
+      "sha256": "0cdc6025922f7468e6008cf51d715f55b68ca666dba091e2ba9a2c7e1f802636",
+      "rawBytes": 648,
+      "rawSha256": "2517d5819b22c1d7a25e327f56fdf63eb73f44bd770e236a3003a4adc4d8a3c8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/build-archive.py.gz",
+      "bytes": 3777,
+      "sha256": "cef3b76fefd387be9c637ca01f53378b1d9f928373b0ccf017a361b3a1135af0",
+      "rawBytes": 9300,
+      "rawSha256": "e768ccc7845e4f366fc9a5dc725acdf9b809020d0f4426cb1f5b0a3151735476",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/completion-draft.json.gz",
+      "bytes": 1398,
+      "sha256": "4373b417811f3a99810785f2b678f759bafa762b057f41ef629dc2ef642695ef",
+      "rawBytes": 4309,
+      "rawSha256": "826f6a799606a1ec29d47ee0833aad45992786ef987ea58ac7812e9a8610c5eb",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/final-change-inventory.json.gz",
+      "bytes": 2721,
+      "sha256": "31c8b493ebed1486e93d4e8da74f5dda462f3b0824ff69105ab9cf6cf2021ee5",
+      "rawBytes": 5957,
+      "rawSha256": "9b728c11f32fa70a733f207be7ba67ed0a177363c9b86f7369f37ca80882534b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze-1.json.gz",
+      "bytes": 8818,
+      "sha256": "16ef872d89af17913f4fb1d2c2977b18ef1168bf21a906b2f7f02f5d82f59e36",
+      "rawBytes": 22809,
+      "rawSha256": "d4569630bf052b975a8a9598131efe4739a8d5a590a70d4fb9201061e998091f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze-2.json.gz",
+      "bytes": 8819,
+      "sha256": "560430874a369f09836948a58d75632ab7e6d937f1ae7ed138c59b4758632845",
+      "rawBytes": 22809,
+      "rawSha256": "2b846687e8375d8ac91ad65916dac349c7d58e28998778033905417442fa12f2",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze.py.gz",
+      "bytes": 1769,
+      "sha256": "f18905b99bab312be379e230417fbd5f23c9da362da29929950d80006dbbbf6b",
+      "rawBytes": 4200,
+      "rawSha256": "a945c305c0ba4afaa10aa8a380910465f44c07cf7f8551ac4c28b1823c8ea353",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json.gz",
+      "bytes": 1233,
+      "sha256": "c8fc631cac70cba96a259267f8299c7e53cb5bfe7e2603958e110982ae89e570",
+      "rawBytes": 2327,
+      "rawSha256": "e92f64b9cacf12ca4314b006365e4c5b985291ff115d5d405c84b0db409387b3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/inventory.json.gz",
+      "bytes": 422,
+      "sha256": "a47b353444240f3f4c06f8cb16a23ab4851e69b2b864a9b1760a0f16537ec46c",
+      "rawBytes": 706,
+      "rawSha256": "e2fed34d81233b78159d348c57911b216c6a9984a97091ed5c54f8c4bc765b2f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/scripts/frozen-component-replay.mjs.gz",
+      "bytes": 1899,
+      "sha256": "afe8af3848d4d1ecaadfbb4ceacf9356cd5d2fcdcc871ffc5a1cfafc3250889e",
+      "rawBytes": 4180,
+      "rawSha256": "9f9201d3061b96dffa2822d631817f5518b64cd2a7721165c141989730dadcf8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/scripts/native-reevaluation.mjs.gz",
+      "bytes": 5435,
+      "sha256": "c9435a9422408d513217dd2f833196dfdf89d419bd4ced33e16128407f974bf9",
+      "rawBytes": 19424,
+      "rawSha256": "6026d5d7a5e0ef2d2d0f98f90fb6ba635ecae486c3284f08f811f39696c35f75",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/scripts/reevaluate-native-integrated.mjs.gz",
+      "bytes": 901,
+      "sha256": "19ceb9b03d2ef86eb991ac4dc55d5b01a414fe9bf41453b48249aa320c6113ce",
+      "rawBytes": 2319,
+      "rawSha256": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/scripts/verify-native-reevaluation.mjs.gz",
+      "bytes": 551,
+      "sha256": "a2b3fdfa61f5ea7b7e06fdc13c0e85ed4b8736eb36e92817b6de6089679c3160",
+      "rawBytes": 1246,
+      "rawSha256": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/freeze1-sources/scripts/verify-published-integrations.mjs.gz",
+      "bytes": 6058,
+      "sha256": "7fa39656f6bc0e5f8607aff7b41bb74a9b0704e75d153b2f9e9ddb7c1d1c9da9",
+      "rawBytes": 20330,
+      "rawSha256": "c74425ca7ef1df31fae28338e3bc03dbc39b3c06dc7233aeafa90a4885bd5ae5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/legacy-before.json.gz",
+      "bytes": 2691,
+      "sha256": "fdb9aaf8efcba3c03e287def1a889a7213a1e901d356fd74025f8671dad46230",
+      "rawBytes": 6861,
+      "rawSha256": "d0a6b17815969b0e38569468acc58d4549a4a7c21a2df36471f688e4014193db",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/prior-archive-v1-build.py.gz",
+      "bytes": 3577,
+      "sha256": "9011d9a660a90f6e5314e9d4f543b8afa3c3549594c64fcd8f92762f6a92659c",
+      "rawBytes": 8767,
+      "rawSha256": "22ea320b54024c8a7aa84676b7a161af2ef29acd472dcad5f3c847ed322a8e22",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/prior-archive-v1-validation.json.gz",
+      "bytes": 39798,
+      "sha256": "3e269f944b8c7b01c5237828887b8cb50df54e0b3fc279ac01fb72f36fbf7030",
+      "rawBytes": 154822,
+      "rawSha256": "b089e1edb294c72fb44e24cfe561f10e6b07c710f34d010034eddfb9bb60ac26",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/prior-archive-v1-verify.py.gz",
+      "bytes": 3054,
+      "sha256": "30c1060cbc6db47defd4ca54aca6d7d2a913670a9773a557e117c8897106493d",
+      "rawBytes": 9038,
+      "rawSha256": "623168f8a80cca8ee7f0852ce9cf66ddfaba4a3e6ae809a4f55af2633cbc7069",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/selector-tests-1.log.gz",
+      "bytes": 1279,
+      "sha256": "6eabf48330ccdaf39e2bd883af2b604797fc9540f914baa487f998033ac990f7",
+      "rawBytes": 3494,
+      "rawSha256": "4d55c47cce3a1a9642cbc99cce9bf470713e770380af008275701c0d697047fd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/selector-tests-2.log.gz",
+      "bytes": 812,
+      "sha256": "c96f1bfa5b4b514beac66364bbbc2ac348738c593581fa9a398cc94e08540896",
+      "rawBytes": 2152,
+      "rawSha256": "acbf24ab84b7b44bbd12fe15f4154664b4986622440529f4e09dc7c69c30baa5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/typecheck-1.log.gz",
+      "bytes": 72,
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8",
+      "rawBytes": 52,
+      "rawSha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/typecheck-2.log.gz",
+      "bytes": 72,
+      "sha256": "099250af0ff1001eb7de6ab0744247b355064ebaad9cdf33fc2ef580d3afe2d8",
+      "rawBytes": 52,
+      "rawSha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "scaffolding/verify-archive.py.gz",
+      "bytes": 3154,
+      "sha256": "a8b9beb31dea77518ec4bdf0dca2e735ed32ca612eed9336c24f2bc3f8b4439d",
+      "rawBytes": 9487,
+      "rawSha256": "5e4c0ce94ea87aaae41b22af8bfa8fb3b039f1716cacded6c2cc95583225d539",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/.github/workflows/isi4-yours-wallet.yml.gz",
+      "bytes": 2246,
+      "sha256": "0ca3dddf7ec1d830c6967e6af85f547167448f0f52eb1c8d04b4b83ffb953b24",
+      "rawBytes": 11385,
+      "rawSha256": "8008ccc25615dc7582cd6a3be5a66cf886dcd14c6b36db1e9b907c8f74b7f9d9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/.github/workflows/native-evidence-reevaluation.yml.gz",
+      "bytes": 1158,
+      "sha256": "abadb0ae66bd7838662712e3f8cb63dc554cae513b0089657ba2290c87253931",
+      "rawBytes": 3703,
+      "rawSha256": "16a438e717a331a3f48aa90b8c0e377db474c1f8787068df401133b1992ab388",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/fixtures/artifacts/yours-wallet-pr368-4a954ac/provenance.json.gz",
+      "bytes": 15449,
+      "sha256": "e0535390fcd577ea60cd46745ef27332d5a1716bafd6d7bbf41527fd6ea399c4",
+      "rawBytes": 43499,
+      "rawSha256": "ee425f6f95e00fc711b6d426634e536e199786592452ace41370c1b6cd1f63ac",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/fixtures/artifacts/yours-wallet-pr368-7e39006/provenance.json.gz",
+      "bytes": 14993,
+      "sha256": "428812da9ded2813964ec0fe7d8767235b0c8b0d42418d3595df628fffcc82bb",
+      "rawBytes": 42622,
+      "rawSha256": "5475f47592964e9e5af7924d6269cc0e302c3d7a6fbf67130ff739a40149ab03",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 4436,
+      "sha256": "6c1618b285bfcc13d1c7e45fd9253e44d60fe948beeb1d8f0158a1f517f65152",
+      "rawBytes": 14888,
+      "rawSha256": "677cc74e26a712480016319ef489300c588451a1b3eee65def8d1eeadfaf1cf3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-batch-subjects/patch.lock.json.gz",
+      "bytes": 724,
+      "sha256": "821fba96e8079576cb999e961f1543c8b1d3d7386d2d92f5a91500191edf5773",
+      "rawBytes": 1267,
+      "rawSha256": "da6b0d21c41e774a7797875bd1ad7c1b756c996af279d7f86da93a3bc5454fca",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2848,
+      "sha256": "b980633ef36e0eaba3c429d4f38aa42b4a8e6a9d202e3e3b6b348cf12e8314d5",
+      "rawBytes": 8526,
+      "rawSha256": "1743508586cc07110d81421447f64caaa67612ab5e97fec4a6f6a1d4f9b0b3e5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-dust-accounting/patch.lock.json.gz",
+      "bytes": 887,
+      "sha256": "d2005768db38c330a5f3476eaf872ce9e64cc83ec0cd65aaf17d6bfaffe39c1f",
+      "rawBytes": 1768,
+      "rawSha256": "28759d7c59e1a4e35d52ca012d4f5527fc7aa695d3aa881fe2c8b2cbcf7711a1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 1940,
+      "sha256": "20f47f3be10900866c34fee7567a3c1619cbcbd3e1215fa9b60d7d79e3812328",
+      "rawBytes": 5164,
+      "rawSha256": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-input-ancestry/patch.lock.json.gz",
+      "bytes": 564,
+      "sha256": "9de708a452fd6f4f5010f28639ed39c0a9d4b0cd05e8ce08a40eb84a51f99dd1",
+      "rawBytes": 901,
+      "rawSha256": "c54fbc413b9e3329850eb7088d793f2c478c3124c4628ec5171356c3f2c5ba7b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3772,
+      "sha256": "f1ddface869d40c2bea67d0622f8aa867d7d4daa2b3a6fe6b6afa1ce3ea89e2f",
+      "rawBytes": 14692,
+      "rawSha256": "b916d1bc65839d599c60f03ed8c1b01d260e7793112b5b5ab9b912ea5994a9ee",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-list-actions/patch.lock.json.gz",
+      "bytes": 879,
+      "sha256": "7579c980756df6558552eed9c0e8691f631cb30195054fd67784da47cb34945d",
+      "rawBytes": 1743,
+      "rawSha256": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3509,
+      "sha256": "724e1d16cb951232a1789556300104602519583baa12b5b786cc9e8c99ba3ab6",
+      "rawBytes": 12433,
+      "rawSha256": "c4de9ed8d70bee574c1eb640890de01ad1143097cb19be980d8ace82f3e165e8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-merge-accounting/patch.lock.json.gz",
+      "bytes": 802,
+      "sha256": "135313fbd369bf5797d3ad77dd98e85266ad4555e517d19f3830a518387f4a59",
+      "rawBytes": 1547,
+      "rawSha256": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 7421,
+      "sha256": "56480ccf437a44df6f7661e0bf58eb418cd0ee2bf6f57008db807246e63ea417",
+      "rawBytes": 31343,
+      "rawSha256": "a46b9f0aee3a44e035fc109fb66f92e0669a8f575c7606859a523c9e8973d79f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/patch.lock.json.gz",
+      "bytes": 1846,
+      "sha256": "81308a35487eef69098cbcf3a8dfff6b1e62dbadf63de4b8dfe359fc89ff6fe9",
+      "rawBytes": 4119,
+      "rawSha256": "e712337a8e1ffebe63661873e6039e57b019199ecf8931c97604d62a0dc0f351",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-native-contracts/rpc-contract-test.mjs.gz",
+      "bytes": 1286,
+      "sha256": "ea4ad7c7ea2b5e68ac856a0cdde52351f8818abfac0fb32d842784c91990ec96",
+      "rawBytes": 3380,
+      "rawSha256": "22a56c72b7134272dddd8d28d1fca83aca5907f858b1e9ae16f67758e5058df1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2839,
+      "sha256": "c2c5b80fadc69a11b0cdf13ccb340a7d34ef854d8e826529ee75531964ca3299",
+      "rawBytes": 8563,
+      "rawSha256": "784ed8cebe7e297274621af714aa2d0afc092fdbe9a0cd1340a275c5ef865be5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/adapters/storage-sqlite-retry/patch.lock.json.gz",
+      "bytes": 619,
+      "sha256": "75e5eb38f7a86884a464337f32b7e6f5cbbfe66402f8f0fdf540a9943f1377f0",
+      "rawBytes": 1099,
+      "rawSha256": "dd00ac15acdc7e612802e299cbe7dbcf9f184422f08cf685b80fe4cc9163fc38",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/conformance/Dockerfile.gz",
+      "bytes": 951,
+      "sha256": "e6c15589771d5e039dec3d9a8815f0dbaeb9b2d7ca0d9441dda5f365c6b841fc",
+      "rawBytes": 4914,
+      "rawSha256": "75b90cfe570135db764f9b890ab7b73fe8bb37e48b133321d1010e7f8e74365d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/conformance/plan-pr368-coverage-2.json.gz",
+      "bytes": 13095,
+      "sha256": "8e20c855ef3946fa19d1928c37d2a8c3f5c78e86b973c27a1e58fa116d7c6c74",
+      "rawBytes": 40165,
+      "rawSha256": "b7b2dcd4ed50df0cd5ce3b9d4c2828b1be3953d6da4a34a3f9cd31fceb57b1cd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json.gz",
+      "bytes": 1233,
+      "sha256": "d070526038475441e6016ca6dca1f9a06d5d3c585de3f5dd9aa413f91b01f13e",
+      "rawBytes": 2327,
+      "rawSha256": "2a2401e1e8150ff21e966ca9aeb540ee10e527c47dcd183fc72bb708d0c6959f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/conformance/rust-graph-pr368-coverage-2.json.gz",
+      "bytes": 1381,
+      "sha256": "847f31c3775c3df92dc40cbe0220c034d009198157924e4b90621151dc4314ac",
+      "rawBytes": 2579,
+      "rawSha256": "9135d97c5d0f5387b55adc7ac69dca5e06d6234123bcf153f8400d84f7d7ef3e",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/integrated/Dockerfile.gz",
+      "bytes": 542,
+      "sha256": "48b625bd9232a8ee009ca56cb9f5feb9c461a1268058fb5a903e68c62c7636fd",
+      "rawBytes": 1382,
+      "rawSha256": "11c68ae765602d2b94267cb0fb55499a6654ddff3d7f34b0efde9ebbb29bb55d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/integrated/identity-trust-oracle-2.0.0.json.gz",
+      "bytes": 834,
+      "sha256": "3f8e7a7fe3adc04e6a286d5ccf7beebd0228117991803a57a7e7a3863aa92acc",
+      "rawBytes": 1616,
+      "rawSha256": "7997dfa28032a5cfcd6c2e1c97cbad211acb1561156b629c592c09e5a3294c8c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/yours-go/Dockerfile.dockerignore.gz",
+      "bytes": 300,
+      "sha256": "6a0f30f29553b885b6eea4d13c46ae113b72f2d2fde8af0acc9085988b19b392",
+      "rawBytes": 972,
+      "rawSha256": "6093c48785d1b3959efe24db973bef159f38120ffd2ec3d2d270288187a7ac56",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/yours-go/Dockerfile.gz",
+      "bytes": 1000,
+      "sha256": "cca5f8caffd1694c2bbcc66539ccaaa26d6ab6340f0f8e36aef3c9e2da079f7b",
+      "rawBytes": 2072,
+      "rawSha256": "3b0dd8f806c469da7a4f5539b4bdd98f1400f72f1905996c548927f85af3341f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/infra/native/yours-go/verify-installed.py.gz",
+      "bytes": 1691,
+      "sha256": "f8c51e17b0fd218accdd6cc668195313b384a716e570a39fd4111c0cdd151312",
+      "rawBytes": 4335,
+      "rawSha256": "09b04401b78561c8c2c2bbd8b1c248e02e0e5ee1fd2bb124e772c9e730cb00bd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/integrations/services/src/identity.ts.gz",
+      "bytes": 1327,
+      "sha256": "c68427b2e8bdaa85543a6e9c0d788f9f4970fa5a0d8a71d1688b06bc4837899e",
+      "rawBytes": 3356,
+      "rawSha256": "f53941315b09a0214e3880331682080c8e150165e6a3e57e8767fbe441c3e17c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.1.0/profile.json.gz",
+      "bytes": 7139,
+      "sha256": "0356aa21581c4730df12b623c4e145994510e58dac133de518457a6717ba2a1c",
+      "rawBytes": 32990,
+      "rawSha256": "902941056de45f4a598b7eaa09a52eea95ddeef64da7896fb60d493553768d20",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.2.0/profile.json.gz",
+      "bytes": 7079,
+      "sha256": "da6726b6396280643ed6e4e2e9af80194b547428ff7084a643288cfadb750b73",
+      "rawBytes": 33567,
+      "rawSha256": "43c4c9a4e35a610fafde067f938d290fafef100c9c6e6729db5c3fb97e9a057f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.3.0/profile.json.gz",
+      "bytes": 8846,
+      "sha256": "07775f963c679067c136e5246b961675ea6f91adbb32a3e2f36d37a6dd4d373b",
+      "rawBytes": 49452,
+      "rawSha256": "9a289853871fcf18b3e6e3aa11973617360eeecce2d3f7fd6ed56332d7da3f44",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.4.0/README.md.gz",
+      "bytes": 452,
+      "sha256": "3b8401a93b68f45f98f4f7e987bbd82667bb1267effa95fd0a948beef36c868e",
+      "rawBytes": 717,
+      "rawSha256": "dc709fdaf5da851096a04daeff726437833bcba26e6cd68b90ad72a082c5262a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/itcves/ITCVE-1/4.4.0/profile.json.gz",
+      "bytes": 8946,
+      "sha256": "9a4cf0aa68b680c3a6fe4470d036ce9f7b20479a70aa41c5bb9128e5da2f8932",
+      "rawBytes": 49704,
+      "rawSha256": "c9581894247f8654ed3fb42cfdbb24e3f30e1fd83804cee90ad3b80bb7a83f5c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/5.1.0/catalog.json.gz",
+      "bytes": 6924,
+      "sha256": "a6e9c88e888faff34afa588df8e27ebd4c1aad6356f121c35a1dbad601cff6e1",
+      "rawBytes": 25500,
+      "rawSha256": "ad8b44fa63ac9240a9f48c2159250776f7bab5f01c4ef71bcfcf8ab239b4b0cc",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/5.2.0/catalog.json.gz",
+      "bytes": 6953,
+      "sha256": "f8c7bf7a50b2c413def84f4da52180851b1ea4d42faf50db48ee47ef79b13647",
+      "rawBytes": 25585,
+      "rawSha256": "0f866d0eab7fb47d30e79257444c1ad65799932e8b9e24ed656bd35ef2bc7338",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/5.3.0/catalog.json.gz",
+      "bytes": 7387,
+      "sha256": "cb96b96800291cfd6341c226865db7765f0e822ca7ba11eac4543238e3fc64cd",
+      "rawBytes": 27969,
+      "rawSha256": "4dadf831518d3181cb87ce6819790cd93f077a9fb1569babd026b8605849116b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/5.4.0/README.md.gz",
+      "bytes": 449,
+      "sha256": "78a8b7aee5a8f69a12a0b8750e3f91e666ae4fccdbc04e53b77077d8422d78be",
+      "rawBytes": 715,
+      "rawSha256": "fadcf4c4a1d3613374e3fa026a32b778f7d3af5b16d47bd04eb033e1f578a387",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/5.4.0/catalog.json.gz",
+      "bytes": 7387,
+      "sha256": "0b66abe34d816c1a8700d448952b260baa3ff7bfde5790e4a4b2508f73d28607",
+      "rawBytes": 27969,
+      "rawSha256": "8ca82f26d92e577c5be345c9ad532ae2fc06bf040583481f6f9484f985ae40c7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/controlled-header-1.0.0.json.gz",
+      "bytes": 669,
+      "sha256": "5543b3c30eddb1e122cb8ac235a083e3f685ff4724dd0475bf57dbc37048ea4a",
+      "rawBytes": 1126,
+      "rawSha256": "d0af0830d34adfa86917817e08f34afaf3a967dc9965aaf5c35941efd583ccb3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-2.json.gz",
+      "bytes": 1561,
+      "sha256": "4b10388b48cf5b0b892dcefc8d9b6a654fb69962f23e9cb92a9b4fe0e59794c7",
+      "rawBytes": 4112,
+      "rawSha256": "0d910a7ca41883a064bb65fc7c6b1ce4bef58f26d8eadb02d44c69cf6f96ad2e",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/brc100-boundary-1.0.0/profile-trusted-native-3.json.gz",
+      "bytes": 1660,
+      "sha256": "9f3aad9c2addc5c9b0208c182bffdebb7529cd0f970ac70d364075512cef39db",
+      "rawBytes": 4409,
+      "rawSha256": "9cd945fb5a57eb8ded04d8d8569955f31039ebfdbd6ff1991cd5d3507a3eef7b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/brc100-contract.json.gz",
+      "bytes": 4706,
+      "sha256": "efde937cc296755331e67b29f3116d5616c998a73cd43626b36764081d41075d",
+      "rawBytes": 79032,
+      "rawSha256": "ad803952399a66f099ea9f9efa664a37801866284c5a01064d3357878199a8eb",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/lifecycle-oracle-3.0.0.json.gz",
+      "bytes": 1012,
+      "sha256": "3da47b513164b07031f18b5cb2afb705930bd5865fc1a14a53eebbf15e4149ae",
+      "rawBytes": 1844,
+      "rawSha256": "7f7585d34920cad911531099009fa2e3b8cf6e0e1f9037bb4812f9bb09e8fe95",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-2.0.0/todo-submission-binding-1.0.0.json.gz",
+      "bytes": 1067,
+      "sha256": "d4ca80251dd91c1894686a593f7ed458394815f4082507b2349bcd0f258c2231",
+      "rawBytes": 2320,
+      "rawSha256": "215efe521a229779a3ead0ea3f03b304d63a8d8fd754c6c9994a810cba5a5be4",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-3.0.0/portability-oracle-3.0.0.json.gz",
+      "bytes": 1124,
+      "sha256": "b64e88acf67d65d3fd31524a7e9716ec76aca69f8e6d84facbd30d59ac02da68",
+      "rawBytes": 2490,
+      "rawSha256": "266c34829ec30f343bfe6d4899f139d27f0eb30b6fdbe84919b6850a1a47893f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-4.0.0/permission-lifecycle-oracle-2.0.0.json.gz",
+      "bytes": 2487,
+      "sha256": "881246b731105c08449f3ee58f6335f857d2b08e43b4f0b2e5d946b3f7cc4530",
+      "rawBytes": 5967,
+      "rawSha256": "8395291e84398404816a1e91eeeebbe3322c5568ae5e2371af058e0d40e7b0de",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-4.0.0/permission-oracle-2.0.0.json.gz",
+      "bytes": 1492,
+      "sha256": "cc50e5b5f845db6aab45b90999deca71bfd2f216c658cc4863379524cdc32de4",
+      "rawBytes": 3062,
+      "rawSha256": "f67d74120e4edb6a5f91f0e1aa169f6d2cb98f6f547c33b7931d0995f1db3b0c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/certificate-states-1.0.0.json.gz",
+      "bytes": 2320,
+      "sha256": "86d74721811d337201ada30e517a79e7fc1cddbad70a19d79f0014101675e967",
+      "rawBytes": 5724,
+      "rawSha256": "1a210587096a71cef5de5ae827da0b9a12aa3e376b6d87c660f3d09dc17c4f50",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json.gz",
+      "bytes": 840,
+      "sha256": "6c48454be53c906285e684aa71c4da0c0356effc2346f397db992be93bdfd756",
+      "rawBytes": 1430,
+      "rawSha256": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-1.0.0.json.gz",
+      "bytes": 2405,
+      "sha256": "a337cf639f90683081af1d77029b10f6334d2e31691eeec7c924f3fa0d97f485",
+      "rawBytes": 6607,
+      "rawSha256": "b04fb45c945824e21b57ebfb77ff39ae2d93a0047953d9a05942a24455c6c7aa",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/conditional-oracle-2.0.0.json.gz",
+      "bytes": 3330,
+      "sha256": "8d5da9c9c97a04ad9047651d642c2f17a35d0696094a22814e1d2165ad945087",
+      "rawBytes": 8940,
+      "rawSha256": "6e0f4b60c2722e2bcda8487ba08cbbdfb6bd39acac7461c85354dd7f739840d9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/namespace-oracle-5.0.0.json.gz",
+      "bytes": 1179,
+      "sha256": "290ff2479af9351cc186ea14eae99edd6495d48cd6d607ebebeabcf74a9025e2",
+      "rawBytes": 2305,
+      "rawSha256": "019c5ee3d1cb5a40c924065792fb227863a612f0b2a3a1602a24e4087ccd2f8b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-1.0.0.json.gz",
+      "bytes": 1247,
+      "sha256": "3ba36c68522c9aac14aaa57a38b4df620eef48b787a3d2c05c1c1933f27ef8d4",
+      "rawBytes": 3536,
+      "rawSha256": "671fe862e96a281bb982d6d30d0124ae272180d63998d49c66a9ea6688c3ac19",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-2.0.0.json.gz",
+      "bytes": 1813,
+      "sha256": "16a1a90c75c841281b659b1646905b60ecd05b1f5006fc6274de9383d645acc9",
+      "rawBytes": 5030,
+      "rawSha256": "10e1ef1a72c1af24224b26e956c6ee3f0153aacad6b3a36ad9a40cb224f7ea4a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-3.0.0.json.gz",
+      "bytes": 2028,
+      "sha256": "ab6384bf54f1937e6a19874ba7d228192f42f42f10ae6aff2a9be9703a760056",
+      "rawBytes": 5601,
+      "rawSha256": "406dd542c4ad0969249f34b42c83d378bc4c5a526a196485216b9f4678139b0a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-4.0.0.json.gz",
+      "bytes": 2181,
+      "sha256": "fba4c6d280b3995ba20254ff1fab06e5904f10cd300343e26b15034ee5af51ee",
+      "rawBytes": 5857,
+      "rawSha256": "a7564cd5fcee0e29d73d569d465377ba5bb8dc680deac13124d5dcd8f0722ea8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/permission-coverage-5.0.0.json.gz",
+      "bytes": 2316,
+      "sha256": "a5243f36e7d464e4fd9462638a7b44314dea536262ff80026aeb131f3e330aef",
+      "rawBytes": 6250,
+      "rawSha256": "ebc4fd6d55badf77b08967010cbe885bce964e71839295804cca6e16f9771122",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/shutdown-submissions-2.0.0.json.gz",
+      "bytes": 1384,
+      "sha256": "96b48aa8efd8c2ae2b3a7d963792afcab0d5f769b1becba60ae4590cda9e7763",
+      "rawBytes": 3214,
+      "rawSha256": "d547d91e31c3a515bd0a6887dd543c6e290b6bb27853b683030eeb487237a131",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/submission-ancestry-1.0.0.json.gz",
+      "bytes": 655,
+      "sha256": "c57d3a6645aca68036196f9ada4a4adb44b36dc682a61471de42063c36f21893",
+      "rawBytes": 1264,
+      "rawSha256": "ae5a2efcf6135c4667ba14ce324a1a5cbf991051e572674296fcbfe9c6c3b035",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-1.0.0.json.gz",
+      "bytes": 2145,
+      "sha256": "41dcd5a77961ea39aa72ee2b83960e004868a76ec821e0bf447dd0425224a529",
+      "rawBytes": 5116,
+      "rawSha256": "601846e4c52730cf3103e78bbf7e2446bc3f7a47a0df2f36a3c37c2813c96ebf",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-conformance-5.0.0/transaction-states-2.0.0.json.gz",
+      "bytes": 2771,
+      "sha256": "23e1e9b1a2c88aadd65970d6d9f445a115bfd52bd338a125de4b953fdf8af444",
+      "rawBytes": 6932,
+      "rawSha256": "920623aff8da50b255f0c52352282e3f943f0b4507d73bb9aa3be7e912665b74",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-certificates-1.0.0/policy.json.gz",
+      "bytes": 1000,
+      "sha256": "48804a49d8e51500c2decb88dccf10ea9be1b3d901a61da2b81be0d5268fd078",
+      "rawBytes": 1769,
+      "rawSha256": "daaa9f15105c519dc791112836dc8b71ae917c441d565339c8fd1e2836adfb68",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-extension-2.0.0/policy.json.gz",
+      "bytes": 2861,
+      "sha256": "489ed2abef3b42bb630607d79ba105b625f3a4ec5dc9afb158ce9e18e90c3b6a",
+      "rawBytes": 13617,
+      "rawSha256": "20f8d35df252fa308c87087bac80e3278712a7731e848384eb7497b8ba1c3a47",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-permissions-1.0.0/policy.json.gz",
+      "bytes": 1516,
+      "sha256": "08689e1e3d7300b21bdc5252f63730bf3542108a3c9153eae992ffc9a976d026",
+      "rawBytes": 9954,
+      "rawSha256": "d66694d5363360ccd0b05225276e9c70173b5a50d37c4d7478dcb7f652e609cb",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/profiles/native-coverage-transactions-2.0.0/policy.json.gz",
+      "bytes": 3593,
+      "sha256": "6e4ee662d0e4325d10d3336c9fec98916c8a7af0d1fff06002fc45da21cc839f",
+      "rawBytes": 17055,
+      "rawSha256": "15502eb40491268451fa661ecb2d2c60326d93a211db994546fd97fd21900c33",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-closure-20261111-execution-map.json.gz",
+      "bytes": 5426,
+      "sha256": "8f6cc79e561f09849192da8d22fc5ff96a15cdf758d009cbb8bb4b95b24d2def",
+      "rawBytes": 161276,
+      "rawSha256": "dabcc2a43268962f470d9518c9e98f8c182af1b29111a6e5aa03f4d9d1e09de3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/programs/ISI-4/proposals/native-coverage-closure-20261111.json.gz",
+      "bytes": 15477,
+      "sha256": "7b6ea8346f1104d445efb589f0cb3eb821f2456e450ccc4f24bac76ddf93cfe8",
+      "rawBytes": 107168,
+      "rawSha256": "e71cd860b516f45a51c066295a1d3152d1a818943b0fa26c3c2707fe4913a4c2",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/check-native-wallet-selector.mjs.gz",
+      "bytes": 1724,
+      "sha256": "65d89c53ea936e08c2fcfe14b50d223ed52cc29baf8b8ae2c0ebcdadbb6db5e9",
+      "rawBytes": 4481,
+      "rawSha256": "3acd31bd489c8b7248b3eadd26dd17d77c98f838817d03cd669ebc067523ef23",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/compare-native-conformance.mjs.gz",
+      "bytes": 2686,
+      "sha256": "17c9100a8c6bc2bd6ff041291d57638a3fdaf7de4c013a44e8de797c5da7b3cc",
+      "rawBytes": 6933,
+      "rawSha256": "b8a9eb74de1634153f3f5f1caaa879020578a1db48aecddbfa3bee6daa826b46",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/frozen-component-replay.mjs.gz",
+      "bytes": 2908,
+      "sha256": "fe9bc36259dfdc6185930d26f8ef026e3be0a8105ccfb91191b23e872dc63ec7",
+      "rawBytes": 6870,
+      "rawSha256": "d92399e29b06f8b40c0a8b1f9e64ceebc550fa1236b41c22e0fb120b355fb9fd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/native-reevaluation.mjs.gz",
+      "bytes": 5435,
+      "sha256": "c9435a9422408d513217dd2f833196dfdf89d419bd4ced33e16128407f974bf9",
+      "rawBytes": 19424,
+      "rawSha256": "6026d5d7a5e0ef2d2d0f98f90fb6ba635ecae486c3284f08f811f39696c35f75",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/native-rust-compatibility.mjs.gz",
+      "bytes": 2272,
+      "sha256": "f63e6b0578173665422d07c65324fe5e9177c9c58fc70ee833a2f878ccb87315",
+      "rawBytes": 9154,
+      "rawSha256": "22b2419f1d08ca70831a82a60f109c6a4e703e3284e5304211a4a2357e0db266",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/native-wallet-profiles.mjs.gz",
+      "bytes": 926,
+      "sha256": "acb762018fb9715ce66fc36450158b039db69c630f280c475b895d58f57b6a36",
+      "rawBytes": 4443,
+      "rawSha256": "085d93a78538b8abad094d7fa09111aacd4b730a5e1b57b5f2b251e5b695905a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-batch-subjects-go.mjs.gz",
+      "bytes": 2667,
+      "sha256": "b7a07c97ca81d8bf7e1e2a24ca5fafe8f08cb15129e8769c1647e76b07ba9285",
+      "rawBytes": 7847,
+      "rawSha256": "70cc99af9b161a0f247e3e26b406b649c4003a4e63394025854cfcae071d8e82",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-dust-accounting-go.mjs.gz",
+      "bytes": 2703,
+      "sha256": "e6a8068f539ef7b591d0c8ea7fc44a6f923947739f6820866ee5fc2e37c3ed8f",
+      "rawBytes": 7934,
+      "rawSha256": "b4c5c88fbf60d2f9f9ee3c445ef1b80c584940995ff7e3e08e291718d1b79f0c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-input-ancestry-go.mjs.gz",
+      "bytes": 2744,
+      "sha256": "341144bdfe1d75f41c521fb52f75d665c26e9e70f286b8f72b61b0d0c0f55bc0",
+      "rawBytes": 8034,
+      "rawSha256": "7a65ea9b6d3391a387e53d33fa9bf95f91f28591e62a60475960c6ce20bc4aba",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-list-actions-go.mjs.gz",
+      "bytes": 1620,
+      "sha256": "a38271f9886feb4fb27994987a35890e705b8e480221e30ac8fd1294bc73d57a",
+      "rawBytes": 4468,
+      "rawSha256": "fd1083ebfc6e7b196153cdb855ff0e6da626acef607ddba6ba45dd1207459972",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-merge-accounting-go.mjs.gz",
+      "bytes": 2727,
+      "sha256": "6da834fe5c5c453ffd0c8f1a6aabf269f182672e2530b0d8da6db81e61e8cf21",
+      "rawBytes": 8006,
+      "rawSha256": "6a2cab432ae119b0e6b3b4867cecd0bdb5ebc796cd558e4435bc9a127d957420",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-native-contracts-go.mjs.gz",
+      "bytes": 2074,
+      "sha256": "8f78c53b8f2f6d1bbfedd73a1df37be5c142e9fc56983778460c049eff442fa7",
+      "rawBytes": 5834,
+      "rawSha256": "c2ff897b84436fbde335cae8d3c880a2025ca533042ec71fd2ebefe11a364da4",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-storage-sqlite-retry-go.mjs.gz",
+      "bytes": 2781,
+      "sha256": "e1ceef90437b861d8effb4d91dc348a81a415eaf1a124388573fbaeb7ad8f74c",
+      "rawBytes": 8131,
+      "rawSha256": "d08386e772e659556b1bc1b82bb1b9cdbd017f937fc2a69f90324f604ae924f5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/prepare-yours-wallet-run.sh.gz",
+      "bytes": 1331,
+      "sha256": "432db018c2eebfc2093464ebe324a5cc0aa85f61cff7f8a2eff345b86800f126",
+      "rawBytes": 3472,
+      "rawSha256": "396d2a1e9a38935b8cde9a69751bce527ed1760f99b46fa7694e597824fa9fd9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/reevaluate-native-integrated.mjs.gz",
+      "bytes": 901,
+      "sha256": "19ceb9b03d2ef86eb991ac4dc55d5b01a414fe9bf41453b48249aa320c6113ce",
+      "rawBytes": 2319,
+      "rawSha256": "e8271f6cba048065dfd9195d4103724459476a98120a4aebb5497488209216a8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/run-native-go-wallet.mjs.gz",
+      "bytes": 2675,
+      "sha256": "c220a64359cda24bcda51bbb4ccbc80a159fc7f07d5749afe0a48b280fc316cd",
+      "rawBytes": 6811,
+      "rawSha256": "541fbf6d5922a954ddc96baf66c97c4b39a6674b88cf06482cb377c5b3cef329",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/verify-native-integrated.mjs.gz",
+      "bytes": 3809,
+      "sha256": "870de092f8516b9016011028eb35ce41bdce56e7e8527486dced31ff60ce1a74",
+      "rawBytes": 11744,
+      "rawSha256": "00ccb658d5f2d42c09de95bc5aeaf321e785e729b20ffa3f192fbf264a0e80dd",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/verify-native-reevaluation.mjs.gz",
+      "bytes": 551,
+      "sha256": "a2b3fdfa61f5ea7b7e06fdc13c0e85ed4b8736eb36e92817b6de6089679c3160",
+      "rawBytes": 1246,
+      "rawSha256": "40fd325e9a93b9e0b5109608f51e33cde6d4defb1c2c7de13cb45666912d2af8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/verify-native-synthesis.mjs.gz",
+      "bytes": 293,
+      "sha256": "24515845f7992febf98dffb73a856ef67dede68f761c1c9f3518867e2a0875ae",
+      "rawBytes": 460,
+      "rawSha256": "727563463610106d81e6b2a095f23f3c47026fd2d725850755cf37721970f91f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/verify-native-trust.mjs.gz",
+      "bytes": 422,
+      "sha256": "cf4875f44af1e8cb35b26cf0eb6737c7e50e0d802df911b0ded5516d251703cd",
+      "rawBytes": 705,
+      "rawSha256": "400dba9182364ba1009562ba6b011a6d999c0ce5da95ed10fea9640cbd763b00",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/scripts/verify-published-integrations.mjs.gz",
+      "bytes": 6058,
+      "sha256": "7fa39656f6bc0e5f8607aff7b41bb74a9b0704e75d153b2f9e9ddb7c1d1c9da9",
+      "rawBytes": 20330,
+      "rawSha256": "c74425ca7ef1df31fae28338e3bc03dbc39b3c06dc7233aeafa90a4885bd5ae5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-mongo/main.go.gz",
+      "bytes": 682,
+      "sha256": "1fa3cff171f62935dde01cc4b027878a08b1fe5558182ced8887e67cb920a75d",
+      "rawBytes": 1499,
+      "rawSha256": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0",
+      "rawBytes": 8022,
+      "rawSha256": "f40cc098d59c806a4039e4fac035416117fa90cd4ff495011d19a90366479118",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go.gz",
+      "bytes": 2502,
+      "sha256": "33b42335b2ffaadd5ade0bd0c3a5d3fdc47b1c187f6d88b21d6d802cbe09f35d",
+      "rawBytes": 7941,
+      "rawSha256": "89e1ca67c9937214534e22e27076539b21183fdcbc3d0b3084515294adc0fd4c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae",
+      "rawBytes": 2526,
+      "rawSha256": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/action_references_test.go.gz",
+      "bytes": 1801,
+      "sha256": "dbfa609bc2a3691ad881b1920e70ef2cf0b476e9fa641ea38a8fe119ad84071f",
+      "rawBytes": 5132,
+      "rawSha256": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/lifecycle_test.go.gz",
+      "bytes": 1239,
+      "sha256": "671e93b89af1c3a504542096e289ce3a4754e056725bc1d0bcde00a45c5670dc",
+      "rawBytes": 3241,
+      "rawSha256": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/main.go.gz",
+      "bytes": 8158,
+      "sha256": "83976f7098d6dbe32c291e95a81b50c9524f064f40e17ce386e19846e08b0b8f",
+      "rawBytes": 26138,
+      "rawSha256": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/main_test.go.gz",
+      "bytes": 1368,
+      "sha256": "392e6666150dcc5a4885c6b8f5956ab2968e90a90b4cd273937284c21cf15264",
+      "rawBytes": 3982,
+      "rawSha256": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba",
+      "rawBytes": 2278,
+      "rawSha256": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/cmd/itcve-services/sync_test.go.gz",
+      "bytes": 929,
+      "sha256": "698de1224efabfe8bf634b9b6aa05a22688a6ef9b56dc059c0d85ce955e6a984",
+      "rawBytes": 2169,
+      "rawSha256": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/components.lock.json.gz",
+      "bytes": 635,
+      "sha256": "57dc1670c72ea16498b9d9ae49f5cd1767abb5e9964fc47c00f975cfc3494262",
+      "rawBytes": 1159,
+      "rawSha256": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/go.mod.gz",
+      "bytes": 3963,
+      "sha256": "d186ddfac0f0a40af94cd14fade2fdc0028d451a6f7be705cff5af9885839c12",
+      "rawBytes": 15823,
+      "rawSha256": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/go/go.sum.gz",
+      "bytes": 39480,
+      "sha256": "d5e3e4aa0b61ce3cd1061b4b81e018e84983a1b99b0b56fd387c989b69bdf27f",
+      "rawBytes": 85700,
+      "rawSha256": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/package-lock.json.gz",
+      "bytes": 27759,
+      "sha256": "66ca4a2f910de53b94c2ab14d28ecd39d044229790c4c9fd0ba49aef3759983a",
+      "rawBytes": 119650,
+      "rawSha256": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/board.ts.gz",
+      "bytes": 2031,
+      "sha256": "e950d786be63d14637e2a503f86eac177dab13dba191251f1b818b5b03009476",
+      "rawBytes": 6346,
+      "rawSha256": "603b1288d03d9aab2225d5f01b29171c9d3d1a8e14e169f8c952c23fd620bdfe",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/boundary-corpus.ts.gz",
+      "bytes": 5262,
+      "sha256": "8891b905b85dc2e45c4e414a9fe0727c1c5623c1a3f86adee1369843765a467e",
+      "rawBytes": 19540,
+      "rawSha256": "e55ebb5346d9c7eac8d579cbd07bcaba575390e3b0a2a7b0e5926921631a9bc4",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/evidence.ts.gz",
+      "bytes": 3040,
+      "sha256": "2da8b78defcf4962d40f5a7c64cb12c3c50818c1fe337fc313d976f3ce1b6f09",
+      "rawBytes": 10494,
+      "rawSha256": "7e4a4287e62c52c8f793d9fa22c4c8e185e029e0fa98b570de3470e8925bccef",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-batch-build.ts.gz",
+      "bytes": 1432,
+      "sha256": "3a04a1e49dde63e78e8f238c53fb4e2d7c4799be9bebacb9a451a4f8e2bb09b0",
+      "rawBytes": 3628,
+      "rawSha256": "f368664330a4dceb7814248addc596873cfbf6001c819f59558d442a5f182991",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/go-services.ts.gz",
+      "bytes": 6533,
+      "sha256": "6e4ef848054bec17514f0223734d2fdbb49bd6b10e46f96689d61c1f04acab25",
+      "rawBytes": 27041,
+      "rawSha256": "f836463089f2e3ce37229ca0ad11bc01c00976a5e178c2f0f6b7a9066c8de373",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/model.ts.gz",
+      "bytes": 2049,
+      "sha256": "a18566271ad06e1da61052bbd28e700ca29dbde772a0595ac028f520d0ed071a",
+      "rawBytes": 5556,
+      "rawSha256": "d15db394ebb48a7ba568f79b7c2fe727d6822c259cfc542664b6631d088ab7ec",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native-output-snapshot.ts.gz",
+      "bytes": 1707,
+      "sha256": "c40e4411fe00d658ea359ecc88004a9f50cd1c1bb07b97a8f6cde628ade99084",
+      "rawBytes": 4992,
+      "rawSha256": "0c3c4e01a5304cb50314696ba22fdf2d5e635e26a2ed28a3616c7cbb4a21f477",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-certificate-states-model.ts.gz",
+      "bytes": 1232,
+      "sha256": "841cf0465f79cac4a723533097c167fb1358f52d2290c1fed45537f538acb713",
+      "rawBytes": 3136,
+      "rawSha256": "89b0f2a63f481d55bee251f318393da173f664a7d8287aa51f358d989b8ec528",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-certificate-states.ts.gz",
+      "bytes": 1842,
+      "sha256": "c3bcec635b2e1dc8e23bec749d13584f6e05b01f7e03df4a5a29500a55ed21b1",
+      "rawBytes": 5109,
+      "rawSha256": "2c56e2959e71e034c3a53bc247b2e9b9ac131169257532ae2176c8da2b2ce329",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-clauses.ts.gz",
+      "bytes": 5111,
+      "sha256": "7374601ff5e050dd5216de5c0cf31d0fd28de833c87985a020489d7bea1c5e81",
+      "rawBytes": 18020,
+      "rawSha256": "916498405577d3f3dc3c0851e408008e02877dc116aea23eccc36c08fe2b82a8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional-issuer.ts.gz",
+      "bytes": 2936,
+      "sha256": "5af93b12607821d072b2dc8d6702a751e45ae42e428c65541848cb3c52026b87",
+      "rawBytes": 9260,
+      "rawSha256": "ec32438a0fa33c6195e9b7eaadda78887894135d903627c55f83c963d2637d2a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional-model.ts.gz",
+      "bytes": 1742,
+      "sha256": "2113798e19d7466d94cb0611fdfafd585de81501449c634e46618e2415ca71b8",
+      "rawBytes": 5638,
+      "rawSha256": "cb8f503b4456a5e82b00ded9f54f8428e08c602a93f01f60dd3f127855cd58ea",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-conditional.ts.gz",
+      "bytes": 4411,
+      "sha256": "e1ed1a85e8a225582ae32623baf09457fe8cc9d8d091091d452227a31cafb3bb",
+      "rawBytes": 16419,
+      "rawSha256": "d1f68071db8c2c7487880a0a464c16add1990907d794d2e1ad82f8c0dbef86a4",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-namespace-oracle5.ts.gz",
+      "bytes": 686,
+      "sha256": "20be894000e8fa1753809452ffba34188aa4a568cffe664aa3f919013b6dca78",
+      "rawBytes": 1355,
+      "rawSha256": "c3c598b3e3b873b1c1accbc5cab6f431c729d744a1b152374467a9395a4b314a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-nosend-change.ts.gz",
+      "bytes": 1081,
+      "sha256": "22bbc40ae2ac91bd399195cd13eaf76cbce1897173e5e133e4a95b6999a00430",
+      "rawBytes": 2570,
+      "rawSha256": "407efdd647d3b16534d92b035d6faf7f9371c8a9d9083b09552086b757741339",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-permission-coverage-model.ts.gz",
+      "bytes": 2697,
+      "sha256": "09fb118d828e0635389ba2f2e4643c2c29e61880cded3211ab0012964f01c27e",
+      "rawBytes": 9185,
+      "rawSha256": "61ee50f33883dbad6275b0fabbe194d801346d372eef1df009336e980bfcb001",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-permission-coverage.ts.gz",
+      "bytes": 4006,
+      "sha256": "05bac77dcd996cbc11b16e555dbeef37e79732d6503fa1c72b418af464777c42",
+      "rawBytes": 12768,
+      "rawSha256": "90c6b99dc33467d03782d66fc903879e25983448efa84f75afbe1040b63b62ac",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-portability.ts.gz",
+      "bytes": 7821,
+      "sha256": "928e03cd3f9a90e9304cf304ec45a7ac12f25cb9b2ee076d52579d7402d7f763",
+      "rawBytes": 26776,
+      "rawSha256": "185f854de99df08499817b93dd902c01fb8acada93587708a8745170991ced78",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-transaction-states-model.ts.gz",
+      "bytes": 1400,
+      "sha256": "b8ab04c5a425e34d2759148387b55678b97e45cf086294a8a5b6765377ddb673",
+      "rawBytes": 3848,
+      "rawSha256": "23fcb3de2a3dc6a4fe5a3dafb8483715a966fe4e2ff3eb4624ca52ab05519bbb",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance-transaction-states.ts.gz",
+      "bytes": 2554,
+      "sha256": "18a964a3c4ab40008da6dc2246671ee59bfe42ccd1aa317085f2cac4bfda4b0a",
+      "rawBytes": 8173,
+      "rawSha256": "3b94500ed6bcfafa18536b66747b853a604205f3d3c3b16ab68266d1dec4db68",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/conformance.ts.gz",
+      "bytes": 2776,
+      "sha256": "0bb06843f6578d3b3ac31fb13bc0cc4f5183b9c5e9955848f46f57f100e57071",
+      "rawBytes": 10245,
+      "rawSha256": "f7f10f52d61ee741cfd5f5eb85359227598d53942757819cb8b1095de39f5f0f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/controlled-header-fixture.ts.gz",
+      "bytes": 769,
+      "sha256": "18df1eaf3539b1a885f47782fc755c01f950b8ab5bba4fd2933422267bd329b8",
+      "rawBytes": 1979,
+      "rawSha256": "9d1c7be887d07b075f7376bd45f39b76d8d5f0a89330fea75006c8505d5e0537",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-issuer.ts.gz",
+      "bytes": 2984,
+      "sha256": "430f2618c204f8c344fea2ee4cb7dafd9dbf7983ead0740e0a5886d40d3cafdc",
+      "rawBytes": 9502,
+      "rawSha256": "68761637d4254764fdc3b1e5e78b491728e16f98e05b5c6886a0d5204aa111cf",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-model.ts.gz",
+      "bytes": 1163,
+      "sha256": "bc1b83cdc4c7d690a2cbd28bca9ac0c6e0a80618e27d6f981dd1c0cea52cbb4f",
+      "rawBytes": 2860,
+      "rawSha256": "652d0dbb7cab843b048d9ce1767f3260d0b3e0c7ee37d0bc3b21203e20747428",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-reference.ts.gz",
+      "bytes": 3341,
+      "sha256": "32b418239f3ad0c71f6130b54b8706bc6e9dbb9daea6dfd9a802397a384179d5",
+      "rawBytes": 9371,
+      "rawSha256": "6b5a32e4266aa423448145948a845ede8789d4f72ab2e9d84355324de77ebe9f",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-run.ts.gz",
+      "bytes": 4655,
+      "sha256": "7eeae2146a1cd1c77b28a558cc63d60f99027b08cdaa68efc418dbb014fc5c04",
+      "rawBytes": 15059,
+      "rawSha256": "449d93b7abea6063c5d68d748877f17f91ba67cbd5eaa08507a9bcca977c4a01",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-certificates-verify.ts.gz",
+      "bytes": 9690,
+      "sha256": "1191a6321337bc405f1914b30d26954912fa51adce4ebc434a60a102cd57d23c",
+      "rawBytes": 38707,
+      "rawSha256": "4183bb623d0fbf8107def06e8b14d6c8ba8f8cf842ce3999b42f3efe918e2833",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-driver.ts.gz",
+      "bytes": 1888,
+      "sha256": "8a66a67e1763786fd67a58959306191527c1aa73bfdf6973b07b0f8231880359",
+      "rawBytes": 5297,
+      "rawSha256": "249eae8deec288d93b1c94ecfb09082a917b080b2d2d926c9323360977ebadad",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-model.ts.gz",
+      "bytes": 1839,
+      "sha256": "78e26e43a7b0acf5db0b6661cc76a880ce04da1c4d736d86fd6f81aa4f2ae2cd",
+      "rawBytes": 5134,
+      "rawSha256": "829d7e5e5bce36d6b599916784913f50952ef9efeeee5026d4a6999713b8ba0b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-requests.ts.gz",
+      "bytes": 2003,
+      "sha256": "fc3d517c8f36414eef9509ae052f02b2996054c0b9d35dc9ad69b761fadd0213",
+      "rawBytes": 6829,
+      "rawSha256": "69bd1da37d0757d443b8b0a480534d1622aa481ff989516d44a99b165c70ca32",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-extension-verifier.ts.gz",
+      "bytes": 10530,
+      "sha256": "c348770f5b888149e2cfd186cde16164e15b2fb2e340e7bbe01ca377b7f1d37b",
+      "rawBytes": 40929,
+      "rawSha256": "d29fd14c3b98b747ec95b4d2d87488a15008344299a6518a7cd466fc78005abb",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-driver.ts.gz",
+      "bytes": 4394,
+      "sha256": "092194039c07a7a826e7ae24dd9c2de32cfd526074c82f36d3f5026aba80f064",
+      "rawBytes": 15246,
+      "rawSha256": "790f806495b0671037c20055a886de4462097245d2d24d5711b2bd6643ce692b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-model.ts.gz",
+      "bytes": 2374,
+      "sha256": "65907bc5bf981f80f7a526993b8bcf19564f9e359a99d377a8766145b1ff6a65",
+      "rawBytes": 6494,
+      "rawSha256": "5378de530dab1b7d77a6cd0fd887a6891822e815b1d86b0a03c4d7b102890535",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-observer.ts.gz",
+      "bytes": 4183,
+      "sha256": "f15175841947319eb943c5b478e9409250b7448d9b6df0251b235a1da692c50f",
+      "rawBytes": 12294,
+      "rawSha256": "138da2c70d317cc35db2d32f866c0df3cdeed34ef60e6ce25151a5e657cd6875",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-ui.ts.gz",
+      "bytes": 1429,
+      "sha256": "735c5f53fc92f02e8890c5cc94ee668aed6a0926f06ebaa6d0f88eddc3b077b0",
+      "rawBytes": 3320,
+      "rawSha256": "8e72143bd2edecba21ace05787482a4b7dc33ded9821552bd20170a076f84976",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-verifier.ts.gz",
+      "bytes": 11718,
+      "sha256": "d0b1c02694e87766e7a4f389c6a2bfea85601910c79e41fc33ad879bf71a2b71",
+      "rawBytes": 46825,
+      "rawSha256": "20dec224b933a6c94ee631e1f85bba2b53c535d72cecf85b0d2d5d3e945f3243",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-suite.ts.gz",
+      "bytes": 2211,
+      "sha256": "6b0d1dd08c749dfa180ced10899f8b641f1b4aef88fe41246f635f08ab103b7d",
+      "rawBytes": 5914,
+      "rawSha256": "90379a999f1eede6e1baee584780fdb6e336f8cffd94a70863a00b4066c2143d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-model.ts.gz",
+      "bytes": 1324,
+      "sha256": "0fda12b415d128e597edc2171af51cf61c0373bb267c61bfde2031804c0c5c4b",
+      "rawBytes": 3432,
+      "rawSha256": "42fac40342b68f414ace5420622255bbb6eea8878cd0e86b054009e9d1c9d9ba",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-producer.ts.gz",
+      "bytes": 1085,
+      "sha256": "8daee7cd91e4cf9d95cf69eb06dad424b5ad2a4c1885d3f05aa255ec73f853e4",
+      "rawBytes": 2973,
+      "rawSha256": "c90f5a42c32c77d5eebc3b15a5b9ee0827d296fb8a665387602f019e72fa2f90",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-program.ts.gz",
+      "bytes": 4692,
+      "sha256": "aedf9d1e7a77985a54f28bd52e5d2de5b36ae797bc5d3be623169e86617f91f7",
+      "rawBytes": 17894,
+      "rawSha256": "f6c7a427b821c7585a64afd4b1779cec0a70542573a412e4a3a3d6ed72415e6d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts.gz",
+      "bytes": 9376,
+      "sha256": "dfcd22e8a42bc3901a58c0016aef1e6a43632df29702fdd4e8e758a75d79e485",
+      "rawBytes": 36689,
+      "rawSha256": "ecccf3bb4134ac562f3fbfea19ec5f84c0996846d6775bc90c6e849a6e9432af",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/failure.ts.gz",
+      "bytes": 1292,
+      "sha256": "cbdd12cacc4f4a30b2984e38c2705a5e57f5aa88cc02e7b15016d78f5c27170c",
+      "rawBytes": 3535,
+      "rawSha256": "bea6a0aaedd19334aa8687849bd471ac56d68b49bc480e9e808b57773d77a70e",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/identity-trust-oracle2.ts.gz",
+      "bytes": 634,
+      "sha256": "a3f764b19e78742801cf039433c16dd9b88eb7e9b526cf35498589c7fa4da2c7",
+      "rawBytes": 1270,
+      "rawSha256": "a02212c9bb1a54470ab2828adce9635d13c5c11e8034be6f568c7f6eedd5c93e",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/identity-trust.ts.gz",
+      "bytes": 3979,
+      "sha256": "9588940d4372dbc1e3ad722fa87c2b824998e2523d343cfb95bb52af74dc555d",
+      "rawBytes": 12489,
+      "rawSha256": "d669a9471b9fd56ac933df5db1afc86d91b007283e7a8771c4fc8698d11536e5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/integrated.ts.gz",
+      "bytes": 3030,
+      "sha256": "47cdfcd9a6a8ce107524d3089b8047e5ee671a403ba667be00d2698b4ea81134",
+      "rawBytes": 9032,
+      "rawSha256": "265eaf13681ed6dc858334c60173f820b10c0814ccb3a9a3bd0fa695156843a1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/permission-coverage-observer.ts.gz",
+      "bytes": 3997,
+      "sha256": "8daf2887dacce98af8741256f30639d49c6c1ae06705c9fdf93b8d4e83f8e74b",
+      "rawBytes": 11528,
+      "rawSha256": "f0f2a7e0b071f44828a05295274082863eb9fa784d2e87c82d9b6879eda6c053",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/permission-prelude.ts.gz",
+      "bytes": 1052,
+      "sha256": "7ccb5428d3d7f73042b145139e66be38683a372a10224014c1914b931c6839ae",
+      "rawBytes": 2813,
+      "rawSha256": "09862d1e1c2b024b17d75bc17176de9545f835323ba6f9b2398fd2712b2278f1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/shutdown-submissions.ts.gz",
+      "bytes": 1554,
+      "sha256": "35ca5eb0ba38bb768fd758ad8cad60f07065ec408d38545b96012bb4d9de254c",
+      "rawBytes": 4400,
+      "rawSha256": "dd2a903f0bc36399d5c317a723b30b560cd2720e388ef187c273016b13155710",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/synthesis.ts.gz",
+      "bytes": 5884,
+      "sha256": "f416e83e1ad246164bb7d408833093d0389af9cd601a7d2795403f3308fb2e2e",
+      "rawBytes": 18326,
+      "rawSha256": "9e42b18cf4a95ea078847a554f4e4be6e8aefc2ff155665e49f7171ef2315f66",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-certificate-states.ts.gz",
+      "bytes": 5760,
+      "sha256": "b25db30d86206a249b655376e63499c55f4c5b1f287e8ae4ba2ed9f4ac46d97b",
+      "rawBytes": 21460,
+      "rawSha256": "c6b291a2e2753cb003c783e5421a2e13355535a0fa1d9e6e4f6ea8e88a0f8c54",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conditional-transaction-bindings.ts.gz",
+      "bytes": 3539,
+      "sha256": "a95df2da103c744d11de74fe3a40380e7157c16765e743b29468e531b3cef069",
+      "rawBytes": 10214,
+      "rawSha256": "bd63edda2df77356caa9fa121aea43d57100f102d6a2cf69258ee128d4c19483",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-clauses.ts.gz",
+      "bytes": 6061,
+      "sha256": "f3ef177268b010701808be343ee654c156219ff3c59f5ef21e8871e254e0845c",
+      "rawBytes": 22029,
+      "rawSha256": "3106648ad732d23531baecb815700469a5998aa48c55d71cdb14e0496f2771d9",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-conditional.ts.gz",
+      "bytes": 11472,
+      "sha256": "da6bedb8cd2fbaef910f2fba2a8a8ae700cfb5dd5825b78a10d827eb2acb3b3e",
+      "rawBytes": 51370,
+      "rawSha256": "a2a08c3fc3b58c455d3150b49d19ada9d83a9b1cee585700ad10b1f6a38f58be",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-nosend-change.ts.gz",
+      "bytes": 1672,
+      "sha256": "48ad65c40c05716c025af17afb3e9a1e26c1f8cb50cb8800f2257138c0c81e59",
+      "rawBytes": 4113,
+      "rawSha256": "c3b32bfef4329cbdbf954f32bef8eb1e03317dcdec4117b79eecdb1c661fd53d",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance-permission-coverage.ts.gz",
+      "bytes": 8074,
+      "sha256": "4352ef08cbf5638b8fa7bc4c132541b26c0a8cd6fa252672e17073b9d089768a",
+      "rawBytes": 29436,
+      "rawSha256": "42ad17df7586c6415ed1e04b64da7288836f13286cfbc0bf356b8760717f9c65",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-conformance.ts.gz",
+      "bytes": 3601,
+      "sha256": "627a54551468a7a2e3e408d8717f1a0aa16bf454bd470ebc652c1fbcd1d922fb",
+      "rawBytes": 15212,
+      "rawSha256": "7cabb74bfdfa721a0fafdbd042f3159106cce4895ee7455ce7965675dda3e9f6",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-coverage-suite.ts.gz",
+      "bytes": 5331,
+      "sha256": "a69df1d2b521f445699096efc2996ac9a6b0c3451c65cfde52cc3e4863d607b1",
+      "rawBytes": 18561,
+      "rawSha256": "99f3b14cfbd22506db8216e52fa96cc91138530574df1df63b64aab026dd566b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-identity-publication.ts.gz",
+      "bytes": 1246,
+      "sha256": "c433972543053b399ad495c703fd32e8b64d1d4988629ccbd45657a60eb22a39",
+      "rawBytes": 3180,
+      "rawSha256": "4e5dba3996324fcb6c24dca3d8c3edf1651c7bcfed581adc7a7b41445df412e6",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-identity-trust.ts.gz",
+      "bytes": 4739,
+      "sha256": "a7c9668af68ff3e2f3e772a39523d15a660379aa557892149a6e134fa7331da1",
+      "rawBytes": 17092,
+      "rawSha256": "2d1a5b9e7dc56335a9c5a2a706a64263d250d6bf1efbb4d6a70bf04ccb08681c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-shutdown-submissions.ts.gz",
+      "bytes": 3411,
+      "sha256": "6766b82b857f818cdb3322d8b9c33645d6e39503191fcd4781ffdb1556a3c30b",
+      "rawBytes": 11485,
+      "rawSha256": "a6ab31e0998b768464dbbc89153528119c18e83a1b40cac37d74d14afd31c463",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-submission-ancestry.ts.gz",
+      "bytes": 1838,
+      "sha256": "d518f396d2311b1b4f5194edbbf6c206fff9cbb3644676ab03853fac9605f5ed",
+      "rawBytes": 5652,
+      "rawSha256": "9d63ab9896c60f1c462606ec666804b6a9ba0eb9c1aca6d7d2201828de8716d3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-synthesis.ts.gz",
+      "bytes": 2621,
+      "sha256": "0d15f93532410e757fa95202ca621a340d1e6d6b80d39e8df8dfccb6b42ea701",
+      "rawBytes": 7747,
+      "rawSha256": "58a8efb506cba4c51642112d3e0574a8dc91d3eb8d76ac0cf1b8800cd89e8b78",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts.gz",
+      "bytes": 3284,
+      "sha256": "57da9d37d041cef86c390d17f337b522fa906a07ef4dd33e5d611613ad4634bc",
+      "rawBytes": 10784,
+      "rawSha256": "4ac93a04d749d3ca74540d9121adbbc9408327cbfa712ed8926aa98987c8902c",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-transaction-states.ts.gz",
+      "bytes": 6883,
+      "sha256": "4086ca9d9fbea467413e8a99a5c5f60c13d06ed795470e48605b111ff2ef76e3",
+      "rawBytes": 26083,
+      "rawSha256": "176b9cc87f272d1316cc307f922fad62663a701ffa8caa11a9cb8352e9aa6cf0",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify.ts.gz",
+      "bytes": 9449,
+      "sha256": "e36a56be39b031fb9e110796245c0b1317a8a4dc6567a9b4f8f9cea51e81c290",
+      "rawBytes": 37579,
+      "rawSha256": "ae0b1b8d71c990b221d2f1a89289e50a511b2537a78bbcdeaf32859ae964e716",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/worker.ts.gz",
+      "bytes": 4350,
+      "sha256": "c83c7b7bc150f5facab734ad806cfa269d05d5808ca019b7859718b1f8915eab",
+      "rawBytes": 13571,
+      "rawSha256": "fce1358e204b6688c877c18bffa34e92db7cc1015cbd8170235c1cbff68e0927",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/run-boundary.ts.gz",
+      "bytes": 2757,
+      "sha256": "a2b0786f5df35d847a1c5b59a30030bfd20acde9ad803cde94fa48f5b55cbeaa",
+      "rawBytes": 7165,
+      "rawSha256": "0d19b84a7361f2f963ba3ef256262e671e1fbdaabfb2cfcd66ef27eccc738567",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/services.ts.gz",
+      "bytes": 15435,
+      "sha256": "214ad39ec80e9dba07cec600e1850147ccd69a1e41b9e2044b712e8ecf08f739",
+      "rawBytes": 64923,
+      "rawSha256": "31343426cac2568d993eda57444cc2e395dff9455cf4369308111e3ee055fbf3",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/verify-boundary.ts.gz",
+      "bytes": 4759,
+      "sha256": "56339be7526772d0e1f831b627c434c11372495ea388d1c16655ff423cc26478",
+      "rawBytes": 15183,
+      "rawSha256": "29785131fc2b051463b9c42e18fea854fe787b56da0e6a7aa946776d13265813",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/yours-driver.ts.gz",
+      "bytes": 14156,
+      "sha256": "0ccc6a6a5b2bc6911c21320fa00827989dd01916ef9bf55f148dfb965d36abae",
+      "rawBytes": 59802,
+      "rawSha256": "3f6c9e89f7ca2bc1e089c32105e3127f0dbc86004117c15960cc69ef3abddd6a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/test/fixtures/native5-identity-prompt.json.gz",
+      "bytes": 838,
+      "sha256": "fe2f313a27e32eada9f19abece6bb8536419d25a9fe5f0cd8a7da4d840de9cfc",
+      "rawBytes": 1522,
+      "rawSha256": "779dbb6dd7501b4543854aa5b03a460869e2aa3ad8b258fa0c0f7c16dcb37cac",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-go-admission.test.ts.gz",
+      "bytes": 2459,
+      "sha256": "365802cfe9aa2ea0510e9408b30bb978374ca98bc1ce24401a3279f84ecd3981",
+      "rawBytes": 7311,
+      "rawSha256": "2d00c962b765b4cd124ad754f9cf9ab89fc1235ede1af79d0d8f755c99d4d7c1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage2-admission.test.ts.gz",
+      "bytes": 1665,
+      "sha256": "e767206dc52a6b7dc53a0581b4a204be3c8834287f5e75df749ef127c8b45ee3",
+      "rawBytes": 3970,
+      "rawSha256": "fa2866d83b92cdad5a245204326dee3d096fab3700a91a1121a5081e439ef916",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/test/native-failure.test.ts.gz",
+      "bytes": 1796,
+      "sha256": "94a70938d67ef93bdbeae3d02aa086df0121dd5b90c4c7c27dd87f45bfdd5b31",
+      "rawBytes": 6022,
+      "rawSha256": "480cc4e8e111acab66f888f6c18330d995e987a2f9c2fbd4c16a10202ef00d44",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/synthesis/test/native-permission-startup.test.ts.gz",
+      "bytes": 3666,
+      "sha256": "053c04a331d86b8f583f1bfae064b2875f3bc6381c0b99e9409def17d920c614",
+      "rawBytes": 11181,
+      "rawSha256": "7942410d98003bee173ae3c755f314eaff5912a7c72d677108ebe0b5ef5763e5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/test/frozen-component-replay.test.mjs.gz",
+      "bytes": 2285,
+      "sha256": "61900ee2beadb73c6789e21dca1c3f547e149bf06ed044379ab0e6533870b8b7",
+      "rawBytes": 7222,
+      "rawSha256": "de30baba2587939d13c11f372742100ca2da9a7526d2ef8cea261fcb02cc9686",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/test/native-container-source-closure.test.mjs.gz",
+      "bytes": 1009,
+      "sha256": "c132f1f2c93e6999a9198f0b3029e50c9dca76445b24672c0ca2af092aaeac35",
+      "rawBytes": 2383,
+      "rawSha256": "4579965af03efd66f0651e43b48e9740bc8414c0ed7f09d36ef4453ccf4a8636",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/test/native-coverage1-selection.test.mjs.gz",
+      "bytes": 2694,
+      "sha256": "342f687dd0d2106143e75adea4b9685fc8d69dd2446d432a9ce5a0ec25f153aa",
+      "rawBytes": 7581,
+      "rawSha256": "2690830deedb97b9264991c98ca9d2748b5d39eff0e29ef6ce9c59249bb055dc",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/test/native-coverage2-selection.test.mjs.gz",
+      "bytes": 2945,
+      "sha256": "d3dc63338af0b44f3db76cdadc98b3565ced175ad21802ec59bf3a250e36d124",
+      "rawBytes": 8655,
+      "rawSha256": "d0a7f6c25235db88afe5b35846eb8d64937d624d1a1c1c813007bde0607fbcb5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source/test/native-reevaluation-revisions.test.mjs.gz",
+      "bytes": 2037,
+      "sha256": "65b27692eed9269f1ddb7b6d0cf5b6bf33a61fa1c80b2b4af22e7a4b2659361b",
+      "rawBytes": 8493,
+      "rawSha256": "a611be1f61d3502a1524bab50fbe52d217a3298133548df1869e94c766fccda6",
+      "encoding": "gzip"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 9568,
+      "sha256": "f20cd86aa06af6a7a5a2e72b6e8d564f3e712ca4a134d9c7bdc4708a9c09ba53",
+      "rawBytes": 9568,
+      "rawSha256": "f20cd86aa06af6a7a5a2e72b6e8d564f3e712ca4a134d9c7bdc4708a9c09ba53",
+      "encoding": "identity"
+    }
+  ]
+}

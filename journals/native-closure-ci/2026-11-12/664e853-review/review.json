@@ -1,0 +1,59 @@
+{
+  "schema": "tpnil-ci-final-archive-independent-review@2",
+  "verified": true,
+  "archiveSha256": "0564a90aa8a39510cabcb892cf2ee6019133e049c084d6f95e3a772b0cada27a",
+  "source": "664e8539031109174e7233390262d76ca6c81240",
+  "archiveFiles": 91,
+  "artifactCount": 3,
+  "artifactMembers": 262,
+  "nativeInputs": 394,
+  "expectedNativeObservationSlots": 698,
+  "nativeQualification": false,
+  "newNativeSessions": 0,
+  "semanticReplayExecuted": false,
+  "source7Reexecuted": false,
+  "technicalReviewSha256": "1ed991110aa098774e3fd3a0796bb39b0a97d251535ef69234863022548722ff",
+  "technicalReviewResult": "PASS",
+  "ciJobSeconds": 1410.0,
+  "knownCohortJobSeconds": 28378.0,
+  "componentCounts": {
+    "PASS": 584,
+    "FAIL": 6
+  },
+  "publishedArchives": 14,
+  "publishedAttempts": 20,
+  "controls": [
+    {
+      "id": "positive",
+      "expectedSuccess": true,
+      "exitCode": 0,
+      "result": "PASS",
+      "stdoutSha256": "a729f8f2e04d6b50fe785907f778d424afb41b9e74456719a807f9475637a575",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "omit-generated-verifier",
+      "expectedSuccess": false,
+      "exitCode": 1,
+      "result": "PASS",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "032ce6e646cfdbf6f9bec299fe45a4bf05751287e95391bc9670277c42e5554b"
+    },
+    {
+      "id": "coherently-rehash-substitute-verifier",
+      "expectedSuccess": false,
+      "exitCode": 1,
+      "result": "PASS",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "8de4999151a493b25cafce52d80e2183865d2884a938194aebe3015607633272"
+    }
+  ],
+  "archiveOriginalsUnchanged": true,
+  "scope": "Independent stored/decoded inventory and all3 original artifact262member checks,394 committed/current source bindings, retained technical review and exactly two generated-verifier adversarial controls. No native/runtime/CI rerun.",
+  "limits": [
+    "Trusted executing verifier bytes and the independently supplied archive manifest SHA are external trust anchors; rewriting all code and anchors is outside this check.",
+    "Six retained Go Messaging findings remain FAIL; CI SUCCESS does not qualify native execution.",
+    "Carried source7 run43249807970 is historical135seconds already counted; no reexecution or double charge.",
+    "The separate running native8 result is not part of this archive or this review."
+  ]
+}

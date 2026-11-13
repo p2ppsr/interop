@@ -1,0 +1,34 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-coverage-5",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-5-source-2.json",
+    "sha256": "adeb0797ea89539201db59a396d1d354ea2459f591dd27f370b363ce66e81386",
+    "profile": "ITCVE-1@4.7.0",
+    "program": "ISI-4@5.7.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Source-only metadata correction: align redundant profile extension label with the already selected oracle4 manifest and runtime. Same exact e360 wallet,698 predicates, basket policy2 and full native parent/Rust3 requirements. Original unexecuted source1 plan/profile are retained byte-identically; source2 is frozen before native13.",
+  "sources": {
+    ".github/workflows/isi4-yours-wallet.yml": "0f3c77c47eb20b2e191c065be42025346be67ddae5bb78525059291c869fab25",
+    "scripts/check-native-wallet-selector.mjs": "591f9b648113d15fa4b59307ef2a59cbb5bb69314b8f81116f277e74b26a0d51",
+    "scripts/native-rust-compatibility.mjs": "4de454ae9c5a78effceca9b5a51307a8c330fe2addc82560b4b91297ff285b2f",
+    "scripts/native-wallet-profiles.mjs": "23e1156ab1d2484ab21b8e5849e0343122f21eca81b1eb8ed028f8fcc8765db1",
+    "scripts/read-committed-blob.mjs": "1e5da6099cfd7fdd3bdb0983b61153a3143363507e9b0b6bcfd8a3dcd2444e04",
+    "scripts/run-native-go-wallet.mjs": "6a9a0897d7e5dc0676737bafa7efcc618f8a8aa59f56165251374c9e2c7c66b6",
+    "scripts/verify-native-integrated.mjs": "6b6e5cd0e1994b683ab60bcf360df966062bc1665bf3f9dd77a3c8a820a108ee"
+  },
+  "sourceBindingRevision": 13,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-coverage-5.json",
+    "sha256": "ba508773bb5b4126c8fd11be6431139d46cf53ad96709bcc2b6fec23b7edaf8a"
+  },
+  "admissionState": "FROZEN"
+}

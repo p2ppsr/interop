@@ -1,0 +1,40 @@
+{
+  "schema": "tpnil-ci-cost-increment@1",
+  "claim": "PARTIAL_COST_ACCOUNTING_ONLY",
+  "currency": "USD",
+  "includedRunIds": [
+    43157437280
+  ],
+  "includedCompletedJobs": 1,
+  "knownJobWallSeconds": 828,
+  "failedWorkflowJobSecondsIncluded": 828,
+  "measurement": "GitHub non-skipped job completed_at minus started_at, including setup, image builds, failed native execution, upload and cleanup; not a monetary charge.",
+  "workOrder": {
+    "repository": "network-ops",
+    "commit": "4540cd258",
+    "path": "artifacts/ops/itcve-native-closure-20261111/native-attempt-3/work-order.json",
+    "deadline": "2026-11-12T06:15:00Z",
+    "workflowTimeoutMinutes": 50
+  },
+  "newPaidCapacity": false,
+  "reservedUSD": null,
+  "estimatedUSD": null,
+  "accruedUSD": null,
+  "invoicedUSD": null,
+  "creditedUSD": null,
+  "actualCIChargeUSD": null,
+  "storageAndEgressUSD": null,
+  "operatorEffortUSD": null,
+  "developmentAgentUsageUSD": null,
+  "allocatedOwnedCapacityUSD": null,
+  "totalFullCostUSD": null,
+  "acceptedNativeCustomerPacks": 0,
+  "costPerAcceptedPackUSD": null,
+  "unknownCostsAreZero": false,
+  "fullCostReconciled": false,
+  "thirtyTwoFoldImprovementMeasured": false,
+  "exclusions": [
+    "Official native run43157433977, Foundation/reevaluation workflows, upstream wallet CI and later retries belong to separate increments.",
+    "Prospective local reference and development-agent cost remains unknown; it is not inferred to be zero from absent billing."
+  ]
+}

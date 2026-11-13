@@ -3,12 +3,14 @@ import fs from 'node:fs'
 import { createCipheriv, createDecipheriv, createHash, createHmac } from 'node:crypto'
 import { PrivateKey, ProtoWallet, Signature, Transaction } from '@bsv/sdk'
 import { clauseAssertionIds, clauseOracle4AssertionIds, clauseContract, clauseCoverageGaps, clauseOracle4CoverageGaps, clauseCrypto, clauseOracleId, conforms, invalidClauses, semanticClauseIds, specifiedError } from './conformance-clauses-model.js'
-import { clauseOracle4Id, noSendChangeInputId, noSendChangeOutputId } from './conformance-nosend-change.js'
+import { clauseOracle4Id, clauseOracle7Id, noSendChangeInputId, noSendChangeOutputId } from './conformance-nosend-change.js'
 import { verifyNoSendChangeFixture } from './verify-conformance-nosend-change.js'
+import { clauseOracle6Id, clauseOracle5Id, reservedNamespaceRejection } from './conformance-namespace-oracle5.js'
 class ClauseBlocked extends Error {}
 
 export async function deriveClauseOutcomes(report: any) {
-  const oracle4 = report.oracle === clauseOracle4Id
+  const oracle5 = (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)
+  const oracle4 = report.oracle === clauseOracle4Id || oracle5
   const assertionIds = oracle4 ? clauseOracle4AssertionIds : clauseAssertionIds
   let noSendChange: ReturnType<typeof verifyNoSendChangeFixture> | undefined
   const changeFixture = () => noSendChange ??= verifyNoSendChangeFixture(report)
@@ -156,11 +158,11 @@ export async function deriveClauseOutcomes(report: any) {
   const basketNames = { default: 'default', admin: 'admin tpnil', reserved: 'p tpnil clauses' }
   for (const [suffix, protocol] of Object.entries(protocolNames)) predicates[`namespace.protocol.${suffix}`] = () => {
     const row = call(`namespace.protocol.${suffix}`, 'getPublicKey', { ...context, protocolID: [0, protocol] })
-    assert.ok(row.result === undefined && specifiedError(row.error, 'protocol'), 'The exact forbidden protocol name must be explicitly rejected')
+    assert.ok(row.result === undefined && (specifiedError(row.error, 'protocol') || oracle5 && reservedNamespaceRejection(report, row)), 'The exact forbidden protocol name must be explicitly rejected')
   }
   for (const [suffix, basket] of Object.entries(basketNames)) predicates[`namespace.basket.${suffix}`] = () => {
     const row = call(`namespace.basket.${suffix}`, 'listOutputs', { basket })
-    assert.ok(row.result === undefined && specifiedError(row.error, 'basket'), 'The exact forbidden basket name must be explicitly rejected')
+    assert.ok(row.result === undefined && (specifiedError(row.error, 'basket') || oracle5 && reservedNamespaceRejection(report, row)), 'The exact forbidden basket name must be explicitly rejected')
   }
   const metadataCreation = () => {
     call('setup.metadata', 'createAction', { description: 'TPNIL native clause metadata', outputs: [0, 1, 2].map(index => ({ satoshis: 2 + index, lockingScript: '51', basket: 'tpnil native metadata', tags: ['clause', `row${index}`], customInstructions: `metadata:${index}`, outputDescription: `TPNIL metadata output ${index}` })), labels: ['tpnil-clause-metadata'], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } })
@@ -238,12 +240,12 @@ export async function deriveClauseOutcomes(report: any) {
 export async function verifyNativeClauseConformance(report: any, boundaryReport?: any) {
   assert.equal(report.schema, 'tpnil-native-brc100-clauses@2.0.0')
   assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY'); assert.ok(['unchanged-native-window.CWI', 'reference-toolbox-public-api'].includes(report.substrate))
-  assert.ok(report.oracle === clauseOracleId || report.oracle === clauseOracle4Id || report.oracle === undefined && report.substrate === 'reference-toolbox-public-api', 'Native qualification requires an independently versioned clause oracle; omitted IDs admit historical reference diagnostics only')
-  const gaps = report.oracle === clauseOracle4Id ? clauseOracle4CoverageGaps : clauseCoverageGaps
+  assert.ok(report.oracle === clauseOracleId || report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id) || report.oracle === undefined && report.substrate === 'reference-toolbox-public-api', 'Native qualification requires an independently versioned clause oracle; omitted IDs admit historical reference diagnostics only')
+  const gaps = (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)) ? clauseOracle4CoverageGaps : clauseCoverageGaps
   assert.deepEqual(report.source, clauseContract.source); assert.deepEqual(report.coverageGaps, gaps)
   assert.equal(report.completeBRC100Conformance, false)
   if (boundaryReport) assert.deepEqual(report.positives, JSON.parse(JSON.stringify(Object.keys(clauseContract.methods).map(method => ({ method, observations: boundaryReport.trace.filter((r: any) => r.method === method && r.result !== undefined).map((r: any) => ({ args: r.args, result: r.result })) })))))
-  assert.deepEqual(report.assertions.map((r: any) => r.id), report.oracle === clauseOracle4Id ? clauseOracle4AssertionIds : clauseAssertionIds)
+  assert.deepEqual(report.assertions.map((r: any) => r.id), (report.oracle === clauseOracle4Id || (report.oracle === clauseOracle5Id || report.oracle === clauseOracle6Id || report.oracle === clauseOracle7Id)) ? clauseOracle4AssertionIds : clauseAssertionIds)
   const assertions = await deriveClauseOutcomes(report)
   assert.deepEqual(report.assertions.map(({ id, result }: any) => ({ id, result })), assertions.map(({ id, result }) => ({ id, result })))
   const result = assertions.some(r => r.result === 'FAIL') ? 'FAIL' : 'BLOCKED'

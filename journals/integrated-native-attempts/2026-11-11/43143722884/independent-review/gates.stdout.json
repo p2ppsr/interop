@@ -1,0 +1,1334 @@
+◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+{
+  "schema": "tpnil-native-failed-attempt-scoped-gate-review@1",
+  "claim": "DIAGNOSTIC_SCOPED_REVIEW_NOT_ENVIRONMENT_QUALIFICATION",
+  "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+  "newNativeSessions": 0,
+  "qualifiedEnvironment": false,
+  "derivedErrorDetailsOnly": true,
+  "repetitions": [
+    {
+      "index": 1,
+      "gates": {
+        "conditionalStructureWithRederivedDetails": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "assertions": [
+              {
+                "id": "fixture.call-inventory",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "fixture.population",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.defaults",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-pagination",
+                "result": "FAIL",
+                "detail": "outputs-newest: {\"message\":\"WalletStorageClient rpcCall: network error 500\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'WalletStorageClient rpcCall: network error 500',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "query.outputs-includes",
+                "result": "FAIL",
+                "detail": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'admin month 2026-11',\n+   'admin originator todo.itcve.test',\n    'tpnil conditional even',\n    'tpnil conditional population'\n  ]\n"
+              },
+              {
+                "id": "query.actions-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-pagination",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-includes",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "basket.ascii-299",
+                "result": "FAIL",
+                "detail": "basket-ascii-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-300",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-301",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-399",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-400",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-401",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-299",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-300",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-301",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-399",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-400",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-401",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.conflicting-inputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.known-proof-omission",
+                "result": "FAIL",
+                "detail": "known-proof-omission: {\"message\":\"Every signableTransaction input must have a sourceTransaction\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'Every signableTransaction input must have a sourceTransaction',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.signable-and-sign",
+                "result": "FAIL",
+                "detail": "signable: {\"message\":\"failed to process createAction: failed to process inputs: failed to process input 2f6fc660c12fdd6478694ddc05bd0d2ad8a2088c16d0793e80ac20644cbad10d.1: output 2f6fc660c12fdd6478694ddc05bd0d2ad8a2088c16d0793e80ac20644cbad10d.1 is not spendable\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'failed to process createAction: failed to process inputs: failed to process input 2f6fc660c12fdd6478694ddc05bd0d2ad8a2088c16d0793e80ac20644cbad10d.1: output 2f6fc660c12fdd6478694ddc05bd0d2ad8a2088c16d0793e80ac20644cbad10d.1 is not spendable',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.abort-release",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.batch-release",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.direct",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.default-pagination",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.required-field",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.bad-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.bad-keyring",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.alternate-revealer",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.wrong-revealer",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.selective-proof",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.verifier-separation",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.relinquishment",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.issuance",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-server-nonce",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-serial",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-type",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-subject",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-certifier",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-fields",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-certificate",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-server-nonce",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-any-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-empty-tags",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-no-match",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-limit1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-offset1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-minus2",
+                "result": "FAIL",
+                "detail": "outputs-minus2: {\"message\":\"WalletStorageClient rpcCall: network error 500\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'WalletStorageClient rpcCall: network error 500',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "query.outputs-max-limit",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-locking-scripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeTags",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeLabels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeCustomInstructions",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-any-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-empty-labels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-no-match",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-overlap",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-limit1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-offset1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-max-limit",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeLabels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputSourceLockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputUnlockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeOutputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeOutputLockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-scripts-without-parents",
+                "result": "FAIL",
+                "detail": "actions-scripts-without-parents: {\"message\":\"invalid listActions args: includeInputUnlockingScripts cannot be true when includeInputs is false\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'invalid listActions args: includeInputUnlockingScripts cannot be true when includeInputs is false',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.missing-revocationOutpoint",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-keyringRevealer",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-keyringForSubject",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-field-key",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-all",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-unknown-field",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-alternate-verifier",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-url",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "coverage.remaining-obligations",
+                "result": "BLOCKED",
+                "detail": "privileged-secondary-keyring: Neither reviewed release wires a supported secondary privileged keyring. Ordinary-key crypto cannot replace it. abi-substrate: Neither reviewed release exposes an identified publisher-native Wallet Wire endpoint. finite-expiry-configuration: No supported finite-expiry control was identified; private state mutation is forbidden. Nonexpiring grants and monthly allowances are separate claims. conditional-inventory-remainder: The36-group/306-variant design inventory remains the accountability baseline. Transaction trust/batch/noSendChange/internalization branches, spent-token revocation semantics, discovery adversaries, permission calendar/concurrency cases and unresolved optional-field interpretations are explicitly unexecuted work for a later frozen attempt, not a claim that fixture implementation is an unsupported native capability."
+              }
+            ],
+            "assertionCount": 84,
+            "counts": {
+              "PASS": 62,
+              "FAIL": 21,
+              "BLOCKED": 1
+            },
+            "completeBRC100Conformance": false
+          }
+        },
+        "immutableEvidenceBundle": {
+          "verified": true
+        },
+        "minedInitialFunding": {
+          "verified": true,
+          "result": {
+            "fixture": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+            "initialFunding": "33e12308fbfd680464a8450143bab92a03d933ddc37ee009c2d7b4fdeb27f5bd"
+          }
+        },
+        "initialReserves": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "roots": [
+              "fc71d50cefbfad8d50fbddc39eae2c570835a27ec5fca79ea89b10a99cf1e1ea",
+              "7810ed3067e4367c9a9fd986f9a4d51043e315794ed52b544104e8c1939b30bc"
+            ]
+          }
+        },
+        "methodCorpusFundingRoot": {
+          "verified": true,
+          "result": "84171c9113652426f746441046be502fdf1c04f25e98e529a5aa67764ab29a31.0"
+        },
+        "conditionalReturnedTransactionBindingsWithRederivedDetails": {
+          "verified": true,
+          "result": {
+            "verifiedEvidence": true,
+            "scope": "createAction/signAction top-level transaction responses",
+            "transactions": [
+              {
+                "role": "conditional/population-0",
+                "txid": "2f6fc660c12fdd6478694ddc05bd0d2ad8a2088c16d0793e80ac20644cbad10d"
+              },
+              {
+                "role": "conditional/population-1",
+                "txid": "a6e99a0b5b7e4ad1391977115d8c2f972f2c8365cb516c52cfd6bc900e06d246"
+              },
+              {
+                "role": "conditional/population-2",
+                "txid": "fe38cec0117fa1666c7950752587b937bde6a6ed7f5a82eca66299027065765e"
+              },
+              {
+                "role": "conditional/population-3",
+                "txid": "01104520bccd01811433c0ea5033b05da46a34444fb1a310e1e047a8e777752a"
+              },
+              {
+                "role": "conditional/population-4",
+                "txid": "051edca964f747cb32694fc45241c88bfe1bdbf44bfbd0a97c239c4e15ad3642"
+              },
+              {
+                "role": "conditional/population-5",
+                "txid": "bdc83edda2d98c483748a81526b584a80fa8935d77f4ff86d24fd1c9d0f6fb22"
+              },
+              {
+                "role": "conditional/population-6",
+                "txid": "e891bccb1466f4a0a162c4e7bd40d86403245c7ecc3ff5dca178fde2cb1df410"
+              },
+              {
+                "role": "conditional/population-7",
+                "txid": "f8baf11144a28ffa52505aca960a8cc58321b6b5a824be2526a3a324bba2b72f"
+              },
+              {
+                "role": "conditional/population-8",
+                "txid": "2ec5d3c86ae9eda1067bb69cf8ff1d15eeeea558a13a482c427b4745c4b3d35d"
+              },
+              {
+                "role": "conditional/population-9",
+                "txid": "5ab298b2be317f1f6ee2a11362d7a23ce6f32720470123f43e851472d74f68ca"
+              },
+              {
+                "role": "conditional/population-10",
+                "txid": "1dc3915db5ed416e68ce8d49e23b7d354acc2d706d5e840d963637f58b96f29b"
+              },
+              {
+                "role": "conditional/batch-held",
+                "txid": "403e5e38ee273649ab0025f99aa4825467835c7b63fda6e092463e9a6241bd97"
+              }
+            ],
+            "invalidNativeResponses": [],
+            "allReturnedTransactionsProven": true,
+            "claim": "INDEPENDENTLY_BOUND_NATIVE_TRANSACTIONS"
+          }
+        },
+        "permissionAndClauseTransactionBindings": {
+          "verified": true,
+          "result": {
+            "verified": {
+              "verified": true,
+              "transactions": [
+                {
+                  "role": "setup-basket",
+                  "txid": "c55b495ddaab6d51fb73c5f7e01ea37a0e0fc24b49621b0de7e45a7457dde7ad"
+                },
+                {
+                  "role": "spending-allow",
+                  "txid": "1523d010c1b753724fdb075d544a88870939742252bf5b1f4ae29365742ea286"
+                },
+                {
+                  "role": "permission-coverage/setup-basket",
+                  "txid": "15c91017187571babe63a62c66dfea49cb4cd01c0255c7d00e45b8b614dd7da1"
+                },
+                {
+                  "role": "clause-nosend-anchor",
+                  "txid": "bf68b2e4fa4e98a19d88ac19ba1c915dc6c124dbfc6eabb71b160fd16ee61788"
+                }
+              ]
+            },
+            "rows": 4
+          }
+        },
+        "strictShutdown": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "policy": "tpnil-native-shutdown-submissions@2.0.0",
+            "initialCount": 62,
+            "finalCount": 62,
+            "tailCount": 0,
+            "providers": 2,
+            "deniedPaymentsCheckedThroughShutdown": true,
+            "coverage": {
+              "verified": true,
+              "checked": 1,
+              "deniedAmounts": [
+                53,
+                59,
+                61,
+                67
+              ]
+            }
+          }
+        }
+      },
+      "originalConditionalSha256": "863e0efc037b45955ff288a95c3fa117bb27ab2b1800bbd71c73a61695610319",
+      "conditionalSemanticOutcomesMatch": true,
+      "derivedDetailPredicateIds": [
+        "fixture.call-inventory",
+        "fixture.population",
+        "transaction.defaults",
+        "query.outputs-default",
+        "query.outputs-filter",
+        "query.outputs-pagination",
+        "query.outputs-includes",
+        "query.actions-default",
+        "query.actions-filter",
+        "query.actions-pagination",
+        "query.actions-includes",
+        "basket.ascii-299",
+        "basket.ascii-300",
+        "basket.ascii-301",
+        "basket.ascii-399",
+        "basket.ascii-400",
+        "basket.ascii-401",
+        "basket.utf8-299",
+        "basket.utf8-300",
+        "basket.utf8-301",
+        "basket.utf8-399",
+        "basket.utf8-400",
+        "basket.utf8-401",
+        "transaction.conflicting-inputs",
+        "transaction.known-proof-omission",
+        "transaction.signable-and-sign",
+        "transaction.abort-release",
+        "transaction.batch-release",
+        "certificate.direct",
+        "certificate.default-pagination",
+        "certificate.filter",
+        "certificate.required-field",
+        "certificate.bad-signature",
+        "certificate.bad-keyring",
+        "certificate.alternate-revealer",
+        "certificate.wrong-revealer",
+        "certificate.selective-proof",
+        "certificate.verifier-separation",
+        "certificate.relinquishment",
+        "certificate.issuance",
+        "certificate.issuance-bad-signature",
+        "certificate.issuance-bad-server-nonce",
+        "certificate.issuance-bad-serial",
+        "certificate.issuance-bad-type",
+        "certificate.issuance-bad-subject",
+        "certificate.issuance-bad-certifier",
+        "certificate.issuance-bad-fields",
+        "certificate.issuance-missing-certificate",
+        "certificate.issuance-missing-server-nonce",
+        "query.outputs-any-default",
+        "query.outputs-empty-tags",
+        "query.outputs-no-match",
+        "query.outputs-limit1",
+        "query.outputs-offset1",
+        "query.outputs-minus2",
+        "query.outputs-max-limit",
+        "query.outputs-only-locking-scripts",
+        "query.outputs-only-includeTags",
+        "query.outputs-only-includeLabels",
+        "query.outputs-only-includeCustomInstructions",
+        "query.actions-any-default",
+        "query.actions-empty-labels",
+        "query.actions-no-match",
+        "query.actions-overlap",
+        "query.actions-limit1",
+        "query.actions-offset1",
+        "query.actions-max-limit",
+        "query.actions-only-includeLabels",
+        "query.actions-only-includeInputs",
+        "query.actions-only-includeInputSourceLockingScripts",
+        "query.actions-only-includeInputUnlockingScripts",
+        "query.actions-only-includeOutputs",
+        "query.actions-only-includeOutputLockingScripts",
+        "query.actions-scripts-without-parents",
+        "certificate.missing-revocationOutpoint",
+        "certificate.missing-signature",
+        "certificate.missing-keyringRevealer",
+        "certificate.missing-keyringForSubject",
+        "certificate.missing-field-key",
+        "certificate.proof-all",
+        "certificate.proof-unknown-field",
+        "certificate.proof-alternate-verifier",
+        "certificate.issuance-missing-url",
+        "coverage.remaining-obligations"
+      ]
+    },
+    {
+      "index": 2,
+      "gates": {
+        "conditionalStructureWithRederivedDetails": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "assertions": [
+              {
+                "id": "fixture.call-inventory",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "fixture.population",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.defaults",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-pagination",
+                "result": "FAIL",
+                "detail": "outputs-newest: {\"message\":\"WalletStorageClient rpcCall: network error 500\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'WalletStorageClient rpcCall: network error 500',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "query.outputs-includes",
+                "result": "FAIL",
+                "detail": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   'admin month 2026-11',\n+   'admin originator todo.itcve.test',\n    'tpnil conditional even',\n    'tpnil conditional population'\n  ]\n"
+              },
+              {
+                "id": "query.actions-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-pagination",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-includes",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "basket.ascii-299",
+                "result": "FAIL",
+                "detail": "basket-ascii-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-300",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-301",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-399",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-400",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.ascii-401",
+                "result": "FAIL",
+                "detail": "basket-ascii-300: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-299",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-300",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-301",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-399",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-400",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "basket.utf8-401",
+                "result": "FAIL",
+                "detail": "basket-query-299: {\"message\":\"The tag parameter must be no more than 300 length.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The tag parameter must be no more than 300 length.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.conflicting-inputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.known-proof-omission",
+                "result": "FAIL",
+                "detail": "known-proof-omission: {\"message\":\"Every signableTransaction input must have a sourceTransaction\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'Every signableTransaction input must have a sourceTransaction',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.signable-and-sign",
+                "result": "FAIL",
+                "detail": "signable: {\"message\":\"failed to process createAction: failed to process inputs: failed to process input 0607f0a295bc8d3f13881195c839f8721a856aa801956638d652c3da112c4cfa.0: output 0607f0a295bc8d3f13881195c839f8721a856aa801956638d652c3da112c4cfa.0 is not spendable\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'failed to process createAction: failed to process inputs: failed to process input 0607f0a295bc8d3f13881195c839f8721a856aa801956638d652c3da112c4cfa.0: output 0607f0a295bc8d3f13881195c839f8721a856aa801956638d652c3da112c4cfa.0 is not spendable',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "transaction.abort-release",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "transaction.batch-release",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.direct",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.default-pagination",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.filter",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.required-field",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.bad-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.bad-keyring",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.alternate-revealer",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.wrong-revealer",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.selective-proof",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.verifier-separation",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.relinquishment",
+                "result": "FAIL",
+                "detail": "certificate-alternate-revealer: {\"message\":\"The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'The args parameter must be valid encrypted and signed certificate and keyring from revealer. WERR_UNKNOWN: Failed to decrypt all master certificate fields.',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.issuance",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-server-nonce",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-serial",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-type",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-subject",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-certifier",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-bad-fields",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-certificate",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-server-nonce",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-any-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-empty-tags",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-no-match",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-limit1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-offset1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-minus2",
+                "result": "FAIL",
+                "detail": "outputs-minus2: {\"message\":\"WalletStorageClient rpcCall: network error 500\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'WalletStorageClient rpcCall: network error 500',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "query.outputs-max-limit",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-locking-scripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeTags",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeLabels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.outputs-only-includeCustomInstructions",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-any-default",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-empty-labels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-no-match",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-overlap",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-limit1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-offset1",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-max-limit",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeLabels",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputSourceLockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeInputUnlockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeOutputs",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-only-includeOutputLockingScripts",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "query.actions-scripts-without-parents",
+                "result": "FAIL",
+                "detail": "actions-scripts-without-parents: {\"message\":\"invalid listActions args: includeInputUnlockingScripts cannot be true when includeInputs is false\",\"name\":\"Error\"}\n+ actual - expected\n\n+ {\n+   message: 'invalid listActions args: includeInputUnlockingScripts cannot be true when includeInputs is false',\n+   name: 'Error'\n+ }\n- undefined\n"
+              },
+              {
+                "id": "certificate.missing-revocationOutpoint",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-signature",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-keyringRevealer",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-keyringForSubject",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.missing-field-key",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-all",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-unknown-field",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.proof-alternate-verifier",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "certificate.issuance-missing-url",
+                "result": "PASS",
+                "detail": "Independent fixed-policy predicate verified against original public observations."
+              },
+              {
+                "id": "coverage.remaining-obligations",
+                "result": "BLOCKED",
+                "detail": "privileged-secondary-keyring: Neither reviewed release wires a supported secondary privileged keyring. Ordinary-key crypto cannot replace it. abi-substrate: Neither reviewed release exposes an identified publisher-native Wallet Wire endpoint. finite-expiry-configuration: No supported finite-expiry control was identified; private state mutation is forbidden. Nonexpiring grants and monthly allowances are separate claims. conditional-inventory-remainder: The36-group/306-variant design inventory remains the accountability baseline. Transaction trust/batch/noSendChange/internalization branches, spent-token revocation semantics, discovery adversaries, permission calendar/concurrency cases and unresolved optional-field interpretations are explicitly unexecuted work for a later frozen attempt, not a claim that fixture implementation is an unsupported native capability."
+              }
+            ],
+            "assertionCount": 84,
+            "counts": {
+              "PASS": 62,
+              "FAIL": 21,
+              "BLOCKED": 1
+            },
+            "completeBRC100Conformance": false
+          }
+        },
+        "immutableEvidenceBundle": {
+          "verified": true
+        },
+        "minedInitialFunding": {
+          "verified": true,
+          "result": {
+            "fixture": "f81c06b9c0e158d9ae92c02c4feb94e783fb0f010f184c6df83b1fc9a4042cf9",
+            "initialFunding": "bdc1fb8ca1baa96451a50d3d22682a93f171b928a398ba1aa0d283807c3b7275"
+          }
+        },
+        "initialReserves": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "roots": [
+              "57edc9216a8e8f859301a979f4a653022a8b5fba8ba19d565093d9cf534e0881",
+              "b8c7223b2366c15ff5cfd7648dd8bb6bd04ef4b3c5039bcb5e1048f7873536c7"
+            ]
+          }
+        },
+        "methodCorpusFundingRoot": {
+          "verified": true,
+          "result": "94a4386e5b971b69c7fbc1e73884dca6fa092e959602855cf52d27170ffd4fbf.0"
+        },
+        "conditionalReturnedTransactionBindingsWithRederivedDetails": {
+          "verified": true,
+          "result": {
+            "verifiedEvidence": true,
+            "scope": "createAction/signAction top-level transaction responses",
+            "transactions": [
+              {
+                "role": "conditional/population-0",
+                "txid": "0607f0a295bc8d3f13881195c839f8721a856aa801956638d652c3da112c4cfa"
+              },
+              {
+                "role": "conditional/population-1",
+                "txid": "c72e9b319abc39c93c0ed650f6de0155b17ec0e75db1e929177b24038b7291fb"
+              },
+              {
+                "role": "conditional/population-2",
+                "txid": "d242e8d9de30b9ebe9b3d6f5c5528fc062c52e3a5abb9c6d19ae489886c01489"
+              },
+              {
+                "role": "conditional/population-3",
+                "txid": "e222e04fd7b82c56d7f29a02ef4b741b8ee464d060703a2db3e1c256c8f239bc"
+              },
+              {
+                "role": "conditional/population-4",
+                "txid": "e7451f637bc67c1ad9599909c18c2d286495def67dd947d9dd1f18c8259b47a9"
+              },
+              {
+                "role": "conditional/population-5",
+                "txid": "59e5c7fc4e0aa2d742fbf9918a544602c5db4badd948d51a8261d991c4a06ee1"
+              },
+              {
+                "role": "conditional/population-6",
+                "txid": "9c6a1b74e683e14d10ec2d0482785c362885a6a25a744f3d5d8d0158c92d3033"
+              },
+              {
+                "role": "conditional/population-7",
+                "txid": "896d220c42aad6231f02968c3def6a50a7be0139bbcb63a151a6202488ef79b3"
+              },
+              {
+                "role": "conditional/population-8",
+                "txid": "f46e01552ac0b6ef8465dd2172d600eb550cb9880684fd70292ddbc85fbcf9c2"
+              },
+              {
+                "role": "conditional/population-9",
+                "txid": "a20bd899ffd33a3278c1362af07dd2d9cb87499495bb89edf6130aa01a10397e"
+              },
+              {
+                "role": "conditional/population-10",
+                "txid": "31afc43ca0c06fd431da0ef5af23a588e5e2fa4d68608aad5e71593fa4e61177"
+              },
+              {
+                "role": "conditional/batch-held",
+                "txid": "5e7e5478a1ce4f17689dd5534451e6b848a046617619bebd224e1f7aaad02672"
+              }
+            ],
+            "invalidNativeResponses": [],
+            "allReturnedTransactionsProven": true,
+            "claim": "INDEPENDENTLY_BOUND_NATIVE_TRANSACTIONS"
+          }
+        },
+        "permissionAndClauseTransactionBindings": {
+          "verified": true,
+          "result": {
+            "verified": {
+              "verified": true,
+              "transactions": [
+                {
+                  "role": "setup-basket",
+                  "txid": "4a3612d68cc34b73f0b8c44db989ae8f6b87830b8fbcbcc37223c1ea313d999c"
+                },
+                {
+                  "role": "spending-allow",
+                  "txid": "946f4dd887ec93374aa842ef55bf094b0a88f937e22f0de70cf8c7158729a5f5"
+                },
+                {
+                  "role": "permission-coverage/setup-basket",
+                  "txid": "ade2355bd85b03a959d5bf2a242a715257cbb0388502725bfcb72722fdc539e9"
+                },
+                {
+                  "role": "clause-nosend-anchor",
+                  "txid": "b6c7e9c139026b470b5ccc157020be983bae0494d77f30239f40d6615ae2fe40"
+                }
+              ]
+            },
+            "rows": 4
+          }
+        },
+        "strictShutdown": {
+          "verified": true,
+          "result": {
+            "verified": true,
+            "policy": "tpnil-native-shutdown-submissions@2.0.0",
+            "initialCount": 62,
+            "finalCount": 62,
+            "tailCount": 0,
+            "providers": 2,
+            "deniedPaymentsCheckedThroughShutdown": true,
+            "coverage": {
+              "verified": true,
+              "checked": 1,
+              "deniedAmounts": [
+                53,
+                59,
+                61,
+                67
+              ]
+            }
+          }
+        }
+      },
+      "originalConditionalSha256": "855aa5631cbbe6dc7be9ea53af0d01b4236009d5f05097f3fbb27479d81e1c6c",
+      "conditionalSemanticOutcomesMatch": true,
+      "derivedDetailPredicateIds": [
+        "fixture.call-inventory",
+        "fixture.population",
+        "transaction.defaults",
+        "query.outputs-default",
+        "query.outputs-filter",
+        "query.outputs-pagination",
+        "query.outputs-includes",
+        "query.actions-default",
+        "query.actions-filter",
+        "query.actions-pagination",
+        "query.actions-includes",
+        "basket.ascii-299",
+        "basket.ascii-300",
+        "basket.ascii-301",
+        "basket.ascii-399",
+        "basket.ascii-400",
+        "basket.ascii-401",
+        "basket.utf8-299",
+        "basket.utf8-300",
+        "basket.utf8-301",
+        "basket.utf8-399",
+        "basket.utf8-400",
+        "basket.utf8-401",
+        "transaction.conflicting-inputs",
+        "transaction.known-proof-omission",
+        "transaction.signable-and-sign",
+        "transaction.abort-release",
+        "transaction.batch-release",
+        "certificate.direct",
+        "certificate.default-pagination",
+        "certificate.filter",
+        "certificate.required-field",
+        "certificate.bad-signature",
+        "certificate.bad-keyring",
+        "certificate.alternate-revealer",
+        "certificate.wrong-revealer",
+        "certificate.selective-proof",
+        "certificate.verifier-separation",
+        "certificate.relinquishment",
+        "certificate.issuance",
+        "certificate.issuance-bad-signature",
+        "certificate.issuance-bad-server-nonce",
+        "certificate.issuance-bad-serial",
+        "certificate.issuance-bad-type",
+        "certificate.issuance-bad-subject",
+        "certificate.issuance-bad-certifier",
+        "certificate.issuance-bad-fields",
+        "certificate.issuance-missing-certificate",
+        "certificate.issuance-missing-server-nonce",
+        "query.outputs-any-default",
+        "query.outputs-empty-tags",
+        "query.outputs-no-match",
+        "query.outputs-limit1",
+        "query.outputs-offset1",
+        "query.outputs-minus2",
+        "query.outputs-max-limit",
+        "query.outputs-only-locking-scripts",
+        "query.outputs-only-includeTags",
+        "query.outputs-only-includeLabels",
+        "query.outputs-only-includeCustomInstructions",
+        "query.actions-any-default",
+        "query.actions-empty-labels",
+        "query.actions-no-match",
+        "query.actions-overlap",
+        "query.actions-limit1",
+        "query.actions-offset1",
+        "query.actions-max-limit",
+        "query.actions-only-includeLabels",
+        "query.actions-only-includeInputs",
+        "query.actions-only-includeInputSourceLockingScripts",
+        "query.actions-only-includeInputUnlockingScripts",
+        "query.actions-only-includeOutputs",
+        "query.actions-only-includeOutputLockingScripts",
+        "query.actions-scripts-without-parents",
+        "certificate.missing-revocationOutpoint",
+        "certificate.missing-signature",
+        "certificate.missing-keyringRevealer",
+        "certificate.missing-keyringForSubject",
+        "certificate.missing-field-key",
+        "certificate.proof-all",
+        "certificate.proof-unknown-field",
+        "certificate.proof-alternate-verifier",
+        "certificate.issuance-missing-url",
+        "coverage.remaining-obligations"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "tpnil-storage-native-contracts-go-build@1.0.0",
+  "patchLockSha256": "48d3bd6128c7d2dd1c9ecb8e47044f3a7022236d98f32a72720f483bddce6bba",
+  "parentPatchLockSha256": "542e487549cdd6f7b7f769b35810103a27c77156e74b164caadadaa99ffec8a1",
+  "patchSha256": "1ec8311fa6bbd62e4da4647d5d21aac6ad1908a5f1f28866c4acaca6b2e32d99",
+  "upstream": {
+    "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+    "version": "v0.191.4",
+    "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+  },
+  "replacementModule": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/storage-native-contracts-go-source",
+  "toolchain": "go1.27.3",
+  "binarySha256": "d0013391c115d7416377ad629e2abe233fbe035ad71acea12f78fce6b986dc8f",
+  "validation": {
+    "claim": "LAB_SELF_TEST_ONLY",
+    "hostSuite": "PASS",
+    "storageSuiteIncludingAuthenticatedTypeScriptRPC": "PASS",
+    "mappingActionsValidationSuites": "PASS"
+  },
+  "inputs": {
+    "scripts/prepare-storage-native-contracts-go.mjs": "c2ff897b84436fbde335cae8d3c880a2025ca533042ec71fd2ebefe11a364da4",
+    "infra/adapters/storage-native-contracts/rpc-contract-test.mjs": "4a435c5e67ec146bc1fa7c70bff2fc05f47fd3d566f60139708ccbd7ef09eff0",
+    "synthesis/package-lock.json": "14b17cdddc06c8d10788d32ea6ba9938e64631e533160f731fc55aa77b0a5790",
+    "synthesis/go/components.lock.json": "c217fef579707eb1f5614ea6b97fc932674296c67aaf7fabc297383f7f481047",
+    "synthesis/go/go.mod": "6591deefcb01570359a07e69e39d4898b78e71f1f3838835c58695fd25b61a4c",
+    "synthesis/go/go.sum": "957658a619b1821ef677152de04e71d9ce1a37f5648de2c2c45851e1ea74338a",
+    "synthesis/go/cmd/itcve-mongo/main.go": "fdc77bb9336eaf595e3ebe24c4b32192cf04b55a5309854e289deae24c8f38c6",
+    "synthesis/go/cmd/itcve-services/action_references.go": "708f2995e3b2012f244947d35e0454b9d7ad4d0acf3667e01dbe5943fd3ec100",
+    "synthesis/go/cmd/itcve-services/action_references_test.go": "a7dfdd1b86810278ad542753afcb7db7171a07aafad42987da699260357d664b",
+    "synthesis/go/cmd/itcve-services/lifecycle_test.go": "6d63402316c9a3f2193d846df99164d1a47a24c1074e92619b1c172f39af3044",
+    "synthesis/go/cmd/itcve-services/main.go": "d7a5aafd22cd21b8c83daf02cc29dc7821cd688d904068f3dd00dba11c966c01",
+    "synthesis/go/cmd/itcve-services/main_test.go": "62a7617b6efc2ae401d09e4d419652aa7c9143c0284d3638fcb36afd25c9fbf8",
+    "synthesis/go/cmd/itcve-services/sync.go": "6096b3f8571560dca893eda2ad2758fcc3779497942246f1f4da82c7228b2463",
+    "synthesis/go/cmd/itcve-services/sync_test.go": "6e6f538306d63eac1f98607deb8f1c5362829a32b131b7d125a3fd2e1824cacf"
+  }
+}

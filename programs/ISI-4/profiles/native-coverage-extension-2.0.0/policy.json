@@ -1,0 +1,271 @@
+{
+  "schema": "tpnil-native-coverage-extension-policy@2.0.0",
+  "oracle": "tpnil-native-coverage-extension-oracle@2.0.0",
+  "claim": "ENGINEERING_OBSERVATION_ONLY",
+  "completeBRC100Conformance": false,
+  "historicalInputsMutable": false,
+  "specification": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "lines": [
+      "351-365",
+      "958-1005",
+      "1149-1215",
+      "1369-1457",
+      "307-307"
+    ]
+  },
+  "bounds": {
+    "maximumPublicCalls": 90,
+    "expectedPublicCalls": 77,
+    "maximumExpectedNewSignedTransactions": 4,
+    "extraFunding": false,
+    "proofDepthOverride": false,
+    "maximumAttemptedSignedTransactions": 8
+  },
+  "assertionIds": [
+    "coverage-extension.crypto.data-only",
+    "coverage-extension.crypto.hash-only",
+    "coverage-extension.crypto.neither-data-nor-hash",
+    "coverage-extension.crypto.forSelf-false-default",
+    "coverage-extension.crypto.forSelf-true",
+    "coverage-extension.crypto.anyone-counterparty",
+    "coverage-extension.crypto.identityKey-override",
+    "coverage-extension.privileged.missing-reason.getPublicKey",
+    "coverage-extension.privileged.missing-reason.revealCounterpartyKeyLinkage",
+    "coverage-extension.privileged.missing-reason.revealSpecificKeyLinkage",
+    "coverage-extension.privileged.missing-reason.encrypt",
+    "coverage-extension.privileged.missing-reason.decrypt",
+    "coverage-extension.privileged.missing-reason.createHmac",
+    "coverage-extension.privileged.missing-reason.verifyHmac",
+    "coverage-extension.privileged.missing-reason.createSignature",
+    "coverage-extension.privileged.missing-reason.verifySignature",
+    "coverage-extension.privileged.short-reason.getPublicKey",
+    "coverage-extension.privileged.short-reason.revealCounterpartyKeyLinkage",
+    "coverage-extension.privileged.short-reason.revealSpecificKeyLinkage",
+    "coverage-extension.privileged.short-reason.encrypt",
+    "coverage-extension.privileged.short-reason.decrypt",
+    "coverage-extension.privileged.short-reason.createHmac",
+    "coverage-extension.privileged.short-reason.verifyHmac",
+    "coverage-extension.privileged.short-reason.createSignature",
+    "coverage-extension.privileged.short-reason.verifySignature",
+    "coverage-extension.privileged.overlong-reason.getPublicKey",
+    "coverage-extension.privileged.overlong-reason.revealCounterpartyKeyLinkage",
+    "coverage-extension.privileged.overlong-reason.revealSpecificKeyLinkage",
+    "coverage-extension.privileged.overlong-reason.encrypt",
+    "coverage-extension.privileged.overlong-reason.decrypt",
+    "coverage-extension.privileged.overlong-reason.createHmac",
+    "coverage-extension.privileged.overlong-reason.verifyHmac",
+    "coverage-extension.privileged.overlong-reason.createSignature",
+    "coverage-extension.privileged.overlong-reason.verifySignature",
+    "coverage-extension.basket.bytes-0.createAction",
+    "coverage-extension.basket.bytes-0.internalizeAction",
+    "coverage-extension.basket.bytes-0.listOutputs",
+    "coverage-extension.basket.bytes-0.relinquishOutput",
+    "coverage-extension.basket.bytes-4.createAction",
+    "coverage-extension.basket.bytes-4.internalizeAction",
+    "coverage-extension.basket.bytes-4.listOutputs",
+    "coverage-extension.basket.bytes-4.relinquishOutput",
+    "coverage-extension.basket.bytes-5.createAction",
+    "coverage-extension.basket.bytes-5.internalizeAction",
+    "coverage-extension.basket.bytes-5.listOutputs",
+    "coverage-extension.basket.bytes-5.relinquishOutput",
+    "coverage-extension.basket.uppercase.createAction",
+    "coverage-extension.basket.uppercase.internalizeAction",
+    "coverage-extension.basket.uppercase.listOutputs",
+    "coverage-extension.basket.uppercase.relinquishOutput",
+    "coverage-extension.basket.double-space.createAction",
+    "coverage-extension.basket.double-space.internalizeAction",
+    "coverage-extension.basket.double-space.listOutputs",
+    "coverage-extension.basket.double-space.relinquishOutput",
+    "coverage-extension.basket.trailing-basket.createAction",
+    "coverage-extension.basket.trailing-basket.internalizeAction",
+    "coverage-extension.basket.trailing-basket.listOutputs",
+    "coverage-extension.basket.trailing-basket.relinquishOutput",
+    "coverage-extension.discovery.identity-match",
+    "coverage-extension.discovery.attribute-match",
+    "coverage-extension.query.relinquished-excluded"
+  ],
+  "variantRows": [
+    {
+      "row": "crypto.conditional-signatures/data-only",
+      "predicates": [
+        "coverage-extension.crypto.data-only"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/hash-only",
+      "predicates": [
+        "coverage-extension.crypto.hash-only"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/neither-data-nor-hash",
+      "predicates": [
+        "coverage-extension.crypto.neither-data-nor-hash"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/forSelf-false-default",
+      "predicates": [
+        "coverage-extension.crypto.forSelf-false-default"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/forSelf-true",
+      "predicates": [
+        "coverage-extension.crypto.forSelf-true"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/anyone-counterparty",
+      "predicates": [
+        "coverage-extension.crypto.anyone-counterparty"
+      ]
+    },
+    {
+      "row": "crypto.conditional-signatures/identityKey-override",
+      "predicates": [
+        "coverage-extension.crypto.identityKey-override"
+      ]
+    },
+    {
+      "row": "privileged.authorization/missing-reason",
+      "predicates": [
+        "coverage-extension.privileged.missing-reason.getPublicKey",
+        "coverage-extension.privileged.missing-reason.revealCounterpartyKeyLinkage",
+        "coverage-extension.privileged.missing-reason.revealSpecificKeyLinkage",
+        "coverage-extension.privileged.missing-reason.encrypt",
+        "coverage-extension.privileged.missing-reason.decrypt",
+        "coverage-extension.privileged.missing-reason.createHmac",
+        "coverage-extension.privileged.missing-reason.verifyHmac",
+        "coverage-extension.privileged.missing-reason.createSignature",
+        "coverage-extension.privileged.missing-reason.verifySignature"
+      ]
+    },
+    {
+      "row": "privileged.authorization/short-reason",
+      "predicates": [
+        "coverage-extension.privileged.short-reason.getPublicKey",
+        "coverage-extension.privileged.short-reason.revealCounterpartyKeyLinkage",
+        "coverage-extension.privileged.short-reason.revealSpecificKeyLinkage",
+        "coverage-extension.privileged.short-reason.encrypt",
+        "coverage-extension.privileged.short-reason.decrypt",
+        "coverage-extension.privileged.short-reason.createHmac",
+        "coverage-extension.privileged.short-reason.verifyHmac",
+        "coverage-extension.privileged.short-reason.createSignature",
+        "coverage-extension.privileged.short-reason.verifySignature"
+      ]
+    },
+    {
+      "row": "privileged.authorization/overlong-reason",
+      "predicates": [
+        "coverage-extension.privileged.overlong-reason.getPublicKey",
+        "coverage-extension.privileged.overlong-reason.revealCounterpartyKeyLinkage",
+        "coverage-extension.privileged.overlong-reason.revealSpecificKeyLinkage",
+        "coverage-extension.privileged.overlong-reason.encrypt",
+        "coverage-extension.privileged.overlong-reason.decrypt",
+        "coverage-extension.privileged.overlong-reason.createHmac",
+        "coverage-extension.privileged.overlong-reason.verifyHmac",
+        "coverage-extension.privileged.overlong-reason.createSignature",
+        "coverage-extension.privileged.overlong-reason.verifySignature"
+      ]
+    },
+    {
+      "row": "basket.ascii-length/bytes-0",
+      "predicates": [
+        "coverage-extension.basket.bytes-0.createAction",
+        "coverage-extension.basket.bytes-0.internalizeAction",
+        "coverage-extension.basket.bytes-0.listOutputs",
+        "coverage-extension.basket.bytes-0.relinquishOutput"
+      ]
+    },
+    {
+      "row": "basket.ascii-length/bytes-4",
+      "predicates": [
+        "coverage-extension.basket.bytes-4.createAction",
+        "coverage-extension.basket.bytes-4.internalizeAction",
+        "coverage-extension.basket.bytes-4.listOutputs",
+        "coverage-extension.basket.bytes-4.relinquishOutput"
+      ]
+    },
+    {
+      "row": "basket.ascii-length/bytes-5",
+      "predicates": [
+        "coverage-extension.basket.bytes-5.createAction",
+        "coverage-extension.basket.bytes-5.internalizeAction",
+        "coverage-extension.basket.bytes-5.listOutputs",
+        "coverage-extension.basket.bytes-5.relinquishOutput"
+      ]
+    },
+    {
+      "row": "basket.unicode-and-namespace/uppercase",
+      "predicates": [
+        "coverage-extension.basket.uppercase.createAction",
+        "coverage-extension.basket.uppercase.internalizeAction",
+        "coverage-extension.basket.uppercase.listOutputs",
+        "coverage-extension.basket.uppercase.relinquishOutput"
+      ]
+    },
+    {
+      "row": "basket.unicode-and-namespace/double-space",
+      "predicates": [
+        "coverage-extension.basket.double-space.createAction",
+        "coverage-extension.basket.double-space.internalizeAction",
+        "coverage-extension.basket.double-space.listOutputs",
+        "coverage-extension.basket.double-space.relinquishOutput"
+      ]
+    },
+    {
+      "row": "basket.unicode-and-namespace/trailing-basket",
+      "predicates": [
+        "coverage-extension.basket.trailing-basket.createAction",
+        "coverage-extension.basket.trailing-basket.internalizeAction",
+        "coverage-extension.basket.trailing-basket.listOutputs",
+        "coverage-extension.basket.trailing-basket.relinquishOutput"
+      ]
+    },
+    {
+      "row": "certificate.discovery/identity-match",
+      "predicates": [
+        "coverage-extension.discovery.identity-match"
+      ]
+    },
+    {
+      "row": "certificate.discovery/attribute-match",
+      "predicates": [
+        "coverage-extension.discovery.attribute-match"
+      ]
+    },
+    {
+      "row": "query.output-filters/relinquished-excluded",
+      "predicates": [
+        "coverage-extension.query.relinquished-excluded"
+      ]
+    }
+  ],
+  "interpretations": [
+    "BRC100 line307 permits SDK trimming and lowercase normalization before namespace checks. Uppercase input therefore has an exact normalized-basket positive control. Minimum five characters, single-space and non-basket-suffix constraints remain separately enforced; the300-versus400 maximum conflict remains unresolved.",
+    "Privileged:true absent/four-character/51-character reason requests must be rejected specifically for privilegedReason. A generic unsupported secondary keyring or user denial never passes. No successful privileged authorization or distinct private root is claimed.",
+    "Identity override uses otherwise valid derivation inputs. No malformed inactive-field acceptance is assumed.",
+    "Discovery name, description and numerical trust are bound to the independently verified signed public settings token. iconUrl remains presentation metadata: require an absolute HTTPS URL, without claiming ownership or image-content authenticity.",
+    "All native FAIL outcomes remain retained. Missing preexisting anchors block only their dependent predicates; they never become invented success.",
+    "No-spend claims are provisional until the explicit parent verifier joins the complete verified shutdown ledger, including rejected submissions and all reachable unmined ancestors.",
+    "The extension is not automatically admitted by4.2 or any existing profile; no existing99/426 gate, policy or schema is changed."
+  ],
+  "evidenceRules": [
+    "Exactly61 predicate IDs and exactly the declared ordered public requests; every complete argument object is independently bound.",
+    "Every cryptographic ordinary control is independently authenticated using external peer/verifier fixture keys.",
+    "Every recoverable returned transaction, including failed negative calls, is exposed for parent identity/storage/mined-root binding; no failed predicate excuses provenance.",
+    "Basket mutations use isolated native source indices and a controlled external transaction; all transaction bytes, output indices and metadata are checked.",
+    "Parent must compare embedded boundary/clauses/trust anchors and storage/submission snapshots to authoritative original evidence.",
+    "Unknown native costs remain unknown; reference self-tests never qualify native behavior."
+  ],
+  "prospectiveCorrections": {
+    "uppercaseIdentifiers": "BRC100 line307 explicitly says interoperability SDK identifier handling trims and lowercases. Preserve uppercase caller inputs; require exact normalized-basket state across create/internalize/list/relinquish. This changes only the four uppercase predicates prospectively.",
+    "rejectedInternalizationPersistence": "For each malformed insertion, capture every independently owned Go provider before and after the exact public call. A complete unchanged identity/provider-scoped output snapshot is required for PASS. Missing observations are BLOCKED; any output state change despite a rejection is FAIL. Final parent joins the separate append-only observation ledger and complete owned provider registry.",
+    "priorEvidence": "Oracle1 report, source and policy remain immutable; oracle2 observations are separate."
+  }
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-closure-20261111/ci-1f9fe0f/mutation-review.py", line 24, in <module>
+    if case=='false-historical-producer-receipt':rewrite(d,'43213879582/job-131168098216.log',lambda b:b.replace(b'"currentProducerExecuted": false',b'"currentProducerExecuted": true'))
+                                                 ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-closure-20261111/ci-1f9fe0f/mutation-review.py", line 5, in rewrite
+    m=json.loads((d/'manifest.json').read_text());e=next(x for x in m['files']if x['originalPath']==name);p=d/e['path'];raw=gzip.decompress(p.read_bytes())if e['encoding']=='gzip'else p.read_bytes();before=raw;raw=fn(raw);assert raw!=before,('Mutation did not change bytes',name);stored=gzip.compress(raw,mtime=0)if e['encoding']=='gzip'else raw;p.write_bytes(stored);e.update(bytes=len(stored),sha256=sha(stored),originalBytes=len(raw),originalSha256=sha(raw));(d/'manifest.json').write_text(json.dumps(m,indent=2)+'\n')
+                                                                                                                                                                                                                                     ^^^^^^^^^^^
+AssertionError: ('Mutation did not change bytes', '43213879582/job-131168098216.log')

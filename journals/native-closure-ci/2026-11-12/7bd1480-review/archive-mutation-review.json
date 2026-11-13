@@ -1,0 +1,51 @@
+{
+  "schema": "tpnil-ci-archive-adversarial-review@1",
+  "verified": true,
+  "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+  "manifestSha256": "3d022d9e3d5a481c9b78ed9f12025125fbd6380271fb3b37c3a975745ada9fc2",
+  "controls": [
+    {
+      "case": "valid-control",
+      "exitCode": 0,
+      "expected": "PASS",
+      "stdout": "{\"verified\": true, \"claim\": \"CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY\", \"files\": 70, \"artifactMembers\": 483, \"jobSeconds\": 1411, \"completedCohortJobSeconds\": 15663, \"newNativeSessions\": 0, \"foundation\": \"failure\", \"nativeConformanceClosed\": false}\n",
+      "stderr": ""
+    },
+    {
+      "case": "zip-corruption",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-s5xk53g5/archive/verify.py\", line 9, in <module>\n    b=(root/p).read_bytes();assert len(b)==e['bytes']and hashlib.sha256(b).hexdigest()==e['sha256'];assert e['encoding']in['identity','gzip'];raw=gzip.decompress(b)if e['encoding']=='gzip'else b\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "missing-core-log-rebound-inventory",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-b2pks73v/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-7bd-pq46qpio/review.py\", line 20, in <module>\n    raw=(folder/f\"job-{j['id']}.log\").read_text();assert source in raw;logs[j['name']]=clean(raw)\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 787, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-7bd-pq46qpio/43185320652/job-131070928492.log'\n\n"
+    },
+    {
+      "case": "zero-cost-rebound-summary",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-e1kcjlti/archive/verify.py\", line 15, in <module>\n    assert json.loads((d/'summary.json').read_text())==summary,'Summary differs from raw CI evidence'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Summary differs from raw CI evidence\n"
+    },
+    {
+      "case": "false-component-child-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-9utn3_4r/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-7bd-4oqr9k_2/review.py\", line 38, in <module>\n    ij=objects(integrated);sem=[v for v in ij if v.get('childOraclesVerified')is True];assert len(sem)==1 and sem[0]['source']==source and len(sem[0]['findings'])==6\n                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "case": "false-reevaluation-verifier-receipt",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-mutation-mx4ojl_2/archive/verify.py\", line 14, in <module>\n    summary=json.loads((d/'summary.json').read_text());result=subprocess.run([sys.executable,str(d/'review.py')],capture_output=True,text=True);assert result.returncode==0,result.stderr\n                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-ci-7bd-3u4ijrjv/review.py\", line 42, in <module>\n    rj=objects(reeval);verified=[v for v in rj if v.get('claim')=='RETAINED_NATIVE_EVIDENCE_REEVALUATION'and v.get('verified')is True];assert len(verified)==1;v=verified[0];assert v['evaluatorSource']==source and v['newNativeSessions']==0 and v['repetitions']==2\n                                                                                                                                              ^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    }
+  ],
+  "nativeSessions": 0
+}

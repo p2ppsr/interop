@@ -5,7 +5,8 @@ import type { BoundaryWallet } from '../boundary-corpus.js'
 import type { EvidenceBundle } from '../evidence.js'
 import { clauseContract, clauseCoverageGaps, clauseOracle4CoverageGaps, clauseCrypto, clauseOracleId, conforms, invalidClauses, type Shape } from './conformance-clauses-model.js'
 import { deriveClauseOutcomes } from './verify-conformance-clauses.js'
-import { clauseOracle4Id, prepareNoSendChangeFixture } from './conformance-nosend-change.js'
+import { clauseOracle4Id, clauseOracle7Id, prepareNoSendChangeFixture } from './conformance-nosend-change.js'
+import { clauseOracle6Id, clauseOracle5Id } from './conformance-namespace-oracle5.js'
 
 const peer = new ProtoWallet(PrivateKey.fromHex('61'.repeat(32)))
 export function captureClauseError(error: any) {
@@ -55,8 +56,8 @@ function completeBase(base: any, shape: Shape, parts: (string | number)[], ident
 }
 
 /** Public calls only. The parent supplies the same native CWI boundary used by the application. */
-export async function runNativeClauseConformance({ wallet, evidence, boundaryReport, substrate = 'unchanged-native-window.CWI', oracle = clauseOracleId }: { wallet: BoundaryWallet; evidence: EvidenceBundle; boundaryReport: any; substrate?: 'unchanged-native-window.CWI' | 'reference-toolbox-public-api'; oracle?: typeof clauseOracleId | typeof clauseOracle4Id }) {
-  if (oracle !== clauseOracleId && oracle !== clauseOracle4Id) throw Error('Unsupported native clause oracle')
+export async function runNativeClauseConformance({ wallet, evidence, boundaryReport, substrate = 'unchanged-native-window.CWI', oracle = clauseOracleId }: { wallet: BoundaryWallet; evidence: EvidenceBundle; boundaryReport: any; substrate?: 'unchanged-native-window.CWI' | 'reference-toolbox-public-api'; oracle?: typeof clauseOracleId | typeof clauseOracle4Id | typeof clauseOracle5Id | typeof clauseOracle6Id | typeof clauseOracle7Id }) {
+  if (oracle !== clauseOracleId && oracle !== clauseOracle4Id && oracle !== clauseOracle5Id && oracle !== clauseOracle6Id && oracle !== clauseOracle7Id) throw Error('Unsupported native clause oracle')
   const trace: any[] = [], cleanup: any[] = []
   async function call(id: string, method: string, args: any) {
     const row: any = { id, method, args: structuredClone(args) }; trace.push(row)
@@ -101,8 +102,8 @@ export async function runNativeClauseConformance({ wallet, evidence, boundaryRep
     }
     if (fixture.method === 'createAction' && fixture.path[0] === 'inputBEEF') base.inputBEEF = inputFixture.result?.tx
     if (fixture.method === 'createAction' && fixture.path.includes('noSendChange')) {
-      if (oracle === clauseOracle4Id) {
-        const prepared = await prepareNoSendChangeFixture(call)
+      if (oracle === clauseOracle4Id || oracle === clauseOracle5Id || oracle === clauseOracle6Id || oracle === clauseOracle7Id) {
+        const prepared = await prepareNoSendChangeFixture(call, oracle === clauseOracle7Id ? 3 : oracle === clauseOracle6Id ? 2 : 1)
         pendingBatch = prepared.pendingBatch
         base.options.noSendChange = prepared.outpoints
       } else {
@@ -185,7 +186,7 @@ export async function runNativeClauseConformance({ wallet, evidence, boundaryRep
   await call('metadata.labels-outputs', 'listActions', { labels: ['tpnil-clause-metadata'], includeLabels: true, includeOutputs: true, includeOutputLockingScripts: true, limit: 100 })
   await call('metadata.pagination', 'listOutputs', { basket: 'tpnil native metadata', tags: ['clause'], tagQueryMode: 'all', limit: 1, offset: 1, includeCustomInstructions: true })
   if (cert) await call('cleanup.certificate', 'relinquishCertificate', { type: cert.type, serialNumber: cert.serialNumber, certifier: cert.certifier })
-  const report: any = { schema: 'tpnil-native-brc100-clauses@2.0.0', oracle, claim: 'ENGINEERING_OBSERVATION_ONLY', source: clauseContract.source, substrate, identity, positives, trace, cleanup, coverageGaps: oracle === clauseOracle4Id ? clauseOracle4CoverageGaps : clauseCoverageGaps, completeBRC100Conformance: false, metadataTxid: creation.result?.txid }
+  const report: any = { schema: 'tpnil-native-brc100-clauses@2.0.0', oracle, claim: 'ENGINEERING_OBSERVATION_ONLY', source: clauseContract.source, substrate, identity, positives, trace, cleanup, coverageGaps: (oracle === clauseOracle4Id || oracle === clauseOracle5Id || oracle === clauseOracle6Id || oracle === clauseOracle7Id) ? clauseOracle4CoverageGaps : clauseCoverageGaps, completeBRC100Conformance: false, metadataTxid: creation.result?.txid }
   report.assertions = await deriveClauseOutcomes(report)
   report.result = report.assertions.some((r: any) => r.result === 'FAIL') ? 'FAIL' : report.assertions.some((r: any) => r.result === 'BLOCKED') ? 'BLOCKED' : 'PASS'
   // Omitted optional JavaScript properties remain absent in the JSON transport evidence.

@@ -1,0 +1,29 @@
+{
+  "schema": "tpnil-native-portability-oracle@4.0.0",
+  "reportSchema": "tpnil-native-storage-portability@4",
+  "parent": "tpnil-native-portability-oracle@3.0.0",
+  "assertions": [
+    "portability.same-identity",
+    "portability.distinct-counterparts",
+    "portability.native-mediated-sync",
+    "portability.complete-logical-dataset",
+    "portability.source-unavailable",
+    "portability.cold-wallet-reload",
+    "portability.cold-task-recovery",
+    "portability.replacement-redemption",
+    "portability.cleanup"
+  ],
+  "changes": [
+    "Preserve aborted reference-only transactions and all planned output metadata, ownership, logical relationships and tags without inventing signed transaction bytes or dropping these rows. Require one canonical base64 parent reference, same authenticated owner, no signed identity/raw body, and unspendable outputs with no spender.",
+    "All rows with a signed transaction identity still require exact raw bytes and derived output scripts/offsets. Full authenticated pagination, complete logical equality, mined proof closure for every signed transaction, supported native sync and cold replacement/redemption are unchanged.",
+    "Compare missing/different reference-only metadata as failure; an unsigned planned output is never counted as signed proof, spendable funds or successful redemption."
+  ],
+  "implementation": [
+    "synthesis/src/wallet-lab/native/conformance-portability.ts",
+    "synthesis/src/wallet-lab/native/verify-conformance-portability.ts",
+    "synthesis/src/wallet-lab/native/portability-proof.ts",
+    "synthesis/src/storage-sync/projection-reference-rows.ts"
+  ],
+  "legacy": "Schemas1\u20133 preserve their historical semantics. Native43216478235 remains failed and unqualified; its retained equal reference-only rows support a prospective projection regression, not a retroactive native portability PASS.",
+  "scope": "Prospective ITCVE-1@4.5.0 only; no private mutation, added funding, native session or full-BRC100 claim."
+}

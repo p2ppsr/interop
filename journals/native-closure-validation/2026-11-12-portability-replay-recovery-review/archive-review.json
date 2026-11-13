@@ -1,0 +1,59 @@
+{
+  "schema": "tpnil-portability-recovery-archive-independent-review@1",
+  "verified": true,
+  "manifestSha256": "e0a9171eb25d8069658f62c012709047ea78182ca4ffce2dc674117ff05d0638",
+  "positive": 1,
+  "negativeRejected": 6,
+  "controls": [
+    {
+      "case": "valid",
+      "expected": "PASS",
+      "exitCode": 0,
+      "stdout": "{\"verified\": true, \"files\": 58, \"nativeInputsUnchanged\": 164, \"source6InputsUnchanged\": 5, \"nativeSessions\": 0, \"corePASS\": 196, \"focusedPASS\": 15, \"pythonPASS\": 5, \"historicalReplay\": true, \"currentSourceChecked\": false}\n",
+      "stderr": ""
+    },
+    {
+      "case": "omitted-native-input",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-xpgiaupb/archive/verify.py\", line 23, in <module>\n    assert m['nativeInputs']==plan['conformanceInputs'] and len(m['nativeInputs'])==164\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "omitted-source6-input",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-6j5kup6_/archive/verify.py\", line 26, in <module>\n    assert m['source6Inputs']==r['evaluatorSources'] and len(m['source6Inputs'])==5\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "omitted-linked-evidence",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-6gx8pku_/archive/verify.py\", line 14, in <module>\n    assert m['linkedEvidence']==[{'path': 'journals/native-closure-ci/2026-11-12/e47873a/manifest.json', 'bytes': 55961, 'sha256': '1304e87b20ee409e5080e5c1c47429fbb9308c008495210dc17a29da4d4736cc'}, {'path': 'journals/native-closure-validation/2026-11-12-observer-recovery/validation.json', 'bytes': 157987, 'sha256': 'e56eb5b3b6254bcf7f6d053b950dbd13df493087f81555cbe5b834dabab10748'}, {'path': 'journals/native-portability-reference/2026-11-09/signed-completion-v3/summary.json', 'bytes': 5518, 'sha256': '73b9e9a387628f50e6de55181e422305beb9a91598c881bf86922660f948989d'}, {'path': 'journals/native-portability-reference/2026-11-09/signed-completion-v3/evidence.json.gz', 'bytes': 3920142, 'sha256': '5f6237c95e175fe41518928dd5e4e33c7605303f74b0e700750c0ec9a118fdc8'}]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "rebound-core-count",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-n5dnpjtl/archive/verify.py\", line 29, in <module>\n    text=decoded['preflight/'+name].decode();assert re.search(r'pass '+str(count)+r'\\b',text) and re.search(r'fail 0\\b',text) and re.search(r'skipped 0\\b',text)\n                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "rebound-semantic-false",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-_0vptucd/archive/verify.py\", line 32, in <module>\n    assert receipt['verified'] is True and receipt['attempts']==3 and receipt['retainedFailures']==2 and receipt['nativeEngineeringAssertions']==9\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "case": "missing-member",
+      "expected": "REJECT",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/portability-archive-review-je83c1ov/archive/verify.py\", line 15, in <module>\n    assert [x['path'] for x in m['files']]==['README.md', 'build-archive.py', 'frozen/infra/native/conformance/plan-pr368-coverage-2.json', 'frozen/infra/native/conformance/reevaluation-42711700295-rust-3.0.0-source-6.json', 'frozen/infra/native/conformance/rust-graph-pr368-coverage-2.json', 'independent/clause-1.log.gz', 'independent/clause-3.log.gz', 'independent/demo-verify.log.gz', 'independent/demo.log.gz', 'independent/history.log.gz', 'independent/independent-draft-review.json', 'independent/independent-final-review.json', 'independent/python.log.gz', 'preflight/archive-first-builder.py', 'preflight/archive-first-check.log.gz', 'preflight/archive-first-validation.json', 'preflight/archive-first-verify.py', 'preflight/before.stderr.log.gz', 'preflight/before.stdout.log.gz', 'preflight/check-2.log.gz', 'preflight/check-3.log.gz', 'preflight/check.log.gz', 'preflight/ci-failure-excerpt.log.gz', 'preflight/core-tests-2.log.gz', 'preflight/core-tests-3.log.gz', 'preflight/core-tests.log.gz', 'preflight/focused-tests-2.log.gz', 'preflight/focused-tests-3.log.gz', 'preflight/focused-tests.log.gz', 'preflight/frozen-semantic-2.stderr.log.gz', 'preflight/frozen-semantic-2.stdout.log.gz', 'preflight/frozen-semantic.stderr.log.gz', 'preflight/frozen-semantic.stdout.log.gz', 'preflight/native-portability-archive.test.mjs', 'preflight/pre-dependency-review-core-tests-2.log.gz', 'preflight/pre-dependency-review-focused-tests-2.log.gz', 'preflight/pre-dependency-review-frozen-semantic.stderr.log.gz', 'preflight/pre-dependency-review-frozen-semantic.stdout.log.gz', 'preflight/provisional-focused-tests.log.gz', 'preflight/provisional-semantic-replay.stderr.log.gz', 'preflight/provisional-semantic-replay.stdout.log.gz', 'preflight/python-tests-2.log.gz', 'preflight/python-tests-3.log.gz', 'preflight/python-tests.log.gz', 'preflight/review-findings.json', 'preflight/runtime-after.json', 'preflight/runtime-before.json', 'preflight/semantic-replay.stderr.log.gz', 'preflight/semantic-replay.stdout.log.gz', 'preflight/source.diff.gz', 'preflight/unchanged-source-and-evidence.json', 'preflight/verify-native-portability-archive.after.mjs', 'preflight/verify-native-portability-archive.before.mjs', 'preflight/verify-native-portability-archive.frozen-draft.mjs', 'preflight/verify-native-portability-archive.provisional.mjs', 'source/scripts/verify-native-nosend-oracle4-archive.mjs', 'source/scripts/verify-native-portability-archive.mjs', 'source/test/native-portability-archive.test.mjs']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "nativeSessions": 0
+}

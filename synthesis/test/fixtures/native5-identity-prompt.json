@@ -1,0 +1,35 @@
+{
+  "schema": "tpnil-retained-native-identity-prompt-fixture@1",
+  "claim": "FAILED_NATIVE_OBSERVATION_NOT_QUALIFICATION",
+  "run": 43195585984,
+  "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "artifactSha256": "f8b4a33821d7b91c1e265117bccc340e23be074a4a0cebf9f5285422a74cb232",
+  "member": "repetition-1/evidence/conformance/permission-extension.json",
+  "memberSha256": "3bfc819da82fbd3c8fb21be8ee9d3d33c8d8368b4de80fb168ecfdbca31b9f48",
+  "call": {
+    "id": "identity",
+    "method": "getPublicKey",
+    "args": {
+      "identityKey": true
+    },
+    "origin": "https://permission-extension.itcve.test"
+  },
+  "prompt": {
+    "body": "Protocol Permission\n\nAn application is requesting permission to use protocol \"identity key retrieval\" with security level 1.\n\nOrigin\npermission-extension.itcve.test\nProtocol\nidentity key retrieval\nSecurity\nLevel 1 \u00b7 this app only\nAllow\nDeny",
+    "button": "Deny",
+    "decision": "deny",
+    "url": "chrome-extension://bdcmbgajohcgfjginpgmfnjfbfiecchg/prompt.html?kind=permission&requestID=proto%3Apermission-extension.itcve.test%3Afalse%3A1%2Cidentity+key+retrieval%3A%3AidentityKey"
+  },
+  "outcome": {
+    "error": {
+      "code": "ERR_PERMISSION_DENIED",
+      "description": "Wallet request failed: Permission denied.",
+      "message": "Permission denied.",
+      "name": "Error",
+      "status": "error"
+    },
+    "requestNonce": "d8e4852b-a1a2-4696-bfbc-6235f2dbd142",
+    "settledAt": "2026-11-12T10:13:12.532Z",
+    "status": "rejected"
+  }
+}

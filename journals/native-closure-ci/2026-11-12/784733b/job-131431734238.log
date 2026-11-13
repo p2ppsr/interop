@@ -1,0 +1,1550 @@
+﻿2026-11-12T19:22:41.3807944Z Current runner version: '2.338.2'
+2026-11-12T19:22:41.3829113Z ##[group]Runner Image Provisioner
+2026-11-12T19:22:41.3829906Z Hosted Compute Agent
+2026-11-12T19:22:41.3830448Z Version: 20261028.624
+2026-11-12T19:22:41.3831006Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-12T19:22:41.3831696Z Build Date: 2026-10-28T21:51:42Z
+2026-11-12T19:22:41.3832260Z Worker ID: {35c706fe-970a-431b-b0f3-0cf7ac56e0fe}
+2026-11-12T19:22:41.3832939Z Region: westcentralus
+2026-11-12T19:22:41.3833430Z Cloud: Azure
+2026-11-12T19:22:41.3833921Z ##[endgroup]
+2026-11-12T19:22:41.3835048Z ##[group]Operating System
+2026-11-12T19:22:41.3835575Z Ubuntu
+2026-11-12T19:22:41.3836075Z 24.04.5
+2026-11-12T19:22:41.3836601Z LTS
+2026-11-12T19:22:41.3837037Z ##[endgroup]
+2026-11-12T19:22:41.3837607Z ##[group]Runner Image
+2026-11-12T19:22:41.3838121Z Image: ubuntu-24.04
+2026-11-12T19:22:41.3838821Z Version: 20261101.360.1
+2026-11-12T19:22:41.3839887Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-12T19:22:41.3841183Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-12T19:22:41.3842004Z ##[endgroup]
+2026-11-12T19:22:41.3842971Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T19:22:41.3844731Z Contents: read
+2026-11-12T19:22:41.3845306Z Metadata: read
+2026-11-12T19:22:41.3845794Z ##[endgroup]
+2026-11-12T19:22:41.3847715Z Secret source: Actions
+2026-11-12T19:22:41.3848953Z Cache mode: write
+2026-11-12T19:22:41.3849535Z Prepare workflow directory
+2026-11-12T19:22:41.4153851Z Prepare all required actions
+2026-11-12T19:22:41.4193214Z Getting action download info
+2026-11-12T19:22:41.7411126Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-12T19:22:41.8211674Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-12T19:22:41.9352442Z Download action repository 'actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e' (SHA:b7ad1dad31e06c5925ef5d2fc7ad053ef454303e)
+2026-11-12T19:22:42.4664183Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-12T19:22:42.7364391Z Complete job name: integrated-components
+2026-11-12T19:22:42.8092756Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-12T19:22:42.8093645Z with:
+2026-11-12T19:22:42.8094029Z   fetch-depth: 0
+2026-11-12T19:22:42.8094431Z   persist-credentials: false
+2026-11-12T19:22:42.8094897Z   repository: p2ppsr/interop
+2026-11-12T19:22:42.8098274Z   token: ***
+2026-11-12T19:22:42.8098805Z   ssh-strict: true
+2026-11-12T19:22:42.8099202Z   ssh-user: git
+2026-11-12T19:22:42.8099587Z   clean: true
+2026-11-12T19:22:42.8099979Z   sparse-checkout-cone-mode: true
+2026-11-12T19:22:42.8100437Z   fetch-tags: false
+2026-11-12T19:22:42.8100832Z   show-progress: true
+2026-11-12T19:22:42.8101265Z   lfs: false
+2026-11-12T19:22:42.8101640Z   submodules: false
+2026-11-12T19:22:42.8102037Z   set-safe-directory: true
+2026-11-12T19:22:42.8102475Z   allow-unsafe-pr-checkout: false
+2026-11-12T19:22:42.8103834Z ##[endgroup]
+2026-11-12T19:22:43.1109314Z Syncing repository: p2ppsr/interop
+2026-11-12T19:22:43.1111015Z ##[group]Getting Git version info
+2026-11-12T19:22:43.1111728Z Working directory is '/home/runner/work/interop/interop'
+2026-11-12T19:22:43.1112710Z [command]/usr/bin/git version
+2026-11-12T19:22:43.1113705Z git version 2.56.0
+2026-11-12T19:22:43.1116486Z ##[endgroup]
+2026-11-12T19:22:43.1121231Z Temporarily overriding HOME='/home/runner/work/_temp/51191f2f-6c2d-4dd7-b3e4-43d46e2c89f6' before making global git config changes
+2026-11-12T19:22:43.1123368Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T19:22:43.1124917Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T19:22:43.1146653Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-12T19:22:43.1150865Z ##[group]Initializing the repository
+2026-11-12T19:22:43.1153509Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-12T19:22:43.1221439Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T19:22:43.1222844Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T19:22:43.1223685Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T19:22:43.1224332Z hint: call:
+2026-11-12T19:22:43.1224864Z hint:
+2026-11-12T19:22:43.1225348Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T19:22:43.1225974Z hint:
+2026-11-12T19:22:43.1226559Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T19:22:43.1227432Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T19:22:43.1228586Z hint:
+2026-11-12T19:22:43.1229185Z hint: 	git branch -m <name>
+2026-11-12T19:22:43.1229857Z hint:
+2026-11-12T19:22:43.1230728Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T19:22:43.1232000Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-12T19:22:43.1237252Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-12T19:22:43.1273477Z ##[endgroup]
+2026-11-12T19:22:43.1274166Z ##[group]Disabling automatic garbage collection
+2026-11-12T19:22:43.1276459Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-12T19:22:43.1302097Z ##[endgroup]
+2026-11-12T19:22:43.1302745Z ##[group]Setting up auth
+2026-11-12T19:22:43.1306767Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T19:22:43.1334057Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T19:22:43.1606056Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T19:22:43.1634292Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T19:22:43.1823732Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T19:22:43.1851732Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T19:22:43.2041192Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T19:22:43.2073901Z ##[endgroup]
+2026-11-12T19:22:43.2074874Z ##[group]Fetching the repository
+2026-11-12T19:22:43.2083982Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-12T19:22:50.8335519Z From https://github.com/p2ppsr/interop
+2026-11-12T19:22:50.8337236Z  * [new branch]      codex/itcve-go-components-20261106 -> origin/codex/itcve-go-components-20261106
+2026-11-12T19:22:50.8338029Z  * [new branch]      codex/lab-integration-20261106 -> origin/codex/lab-integration-20261106
+2026-11-12T19:22:50.8339158Z  * [new branch]      codex/native-wallet-closure-20261111 -> origin/codex/native-wallet-closure-20261111
+2026-11-12T19:22:50.8340164Z  * [new branch]      codex/native-wallet-conformance-20261109 -> origin/codex/native-wallet-conformance-20261109
+2026-11-12T19:22:50.8340933Z  * [new branch]      main                     -> origin/main
+2026-11-12T19:22:50.8341451Z  * [new tag]         sut-artifacts-2026-09-20 -> sut-artifacts-2026-09-20
+2026-11-12T19:22:50.8346698Z [command]/usr/bin/git branch --list --remote origin/codex/native-wallet-closure-20261111
+2026-11-12T19:22:50.8370775Z   origin/codex/native-wallet-closure-20261111
+2026-11-12T19:22:50.8378071Z [command]/usr/bin/git rev-parse refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-12T19:22:50.8397117Z 784733b9cfdb1e29f0e4922d6ca90e768144bfee
+2026-11-12T19:22:50.8407648Z ##[endgroup]
+2026-11-12T19:22:50.8408236Z ##[group]Determining the checkout info
+2026-11-12T19:22:50.8409002Z ##[endgroup]
+2026-11-12T19:22:50.8411909Z [command]/usr/bin/git sparse-checkout disable
+2026-11-12T19:22:50.8450696Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T19:22:50.8478794Z ##[group]Checking out the ref
+2026-11-12T19:22:50.8479715Z [command]/usr/bin/git checkout --progress --force -B codex/native-wallet-closure-20261111 refs/remotes/origin/codex/native-wallet-closure-20261111
+2026-11-12T19:22:51.8703892Z Updating files:  46% (5240/11194)
+2026-11-12T19:22:51.9170005Z Updating files:  47% (5262/11194)
+2026-11-12T19:22:51.9377732Z Updating files:  48% (5374/11194)
+2026-11-12T19:22:51.9541432Z Updating files:  49% (5486/11194)
+2026-11-12T19:22:51.9742922Z Updating files:  50% (5597/11194)
+2026-11-12T19:22:51.9770899Z Updating files:  51% (5709/11194)
+2026-11-12T19:22:52.0600400Z Updating files:  52% (5821/11194)
+2026-11-12T19:22:52.0986684Z Updating files:  53% (5933/11194)
+2026-11-12T19:22:52.1259910Z Updating files:  54% (6045/11194)
+2026-11-12T19:22:52.1317882Z Updating files:  55% (6157/11194)
+2026-11-12T19:22:52.1363957Z Updating files:  56% (6269/11194)
+2026-11-12T19:22:52.1414633Z Updating files:  57% (6381/11194)
+2026-11-12T19:22:52.1462159Z Updating files:  58% (6493/11194)
+2026-11-12T19:22:52.1566975Z Updating files:  59% (6605/11194)
+2026-11-12T19:22:52.1633287Z Updating files:  60% (6717/11194)
+2026-11-12T19:22:52.1786412Z Updating files:  61% (6829/11194)
+2026-11-12T19:22:52.1879669Z Updating files:  62% (6941/11194)
+2026-11-12T19:22:52.1964997Z Updating files:  63% (7053/11194)
+2026-11-12T19:22:52.2378731Z Updating files:  64% (7165/11194)
+2026-11-12T19:22:52.2429530Z Updating files:  65% (7277/11194)
+2026-11-12T19:22:52.2488336Z Updating files:  66% (7389/11194)
+2026-11-12T19:22:52.2562479Z Updating files:  67% (7500/11194)
+2026-11-12T19:22:52.2679970Z Updating files:  68% (7612/11194)
+2026-11-12T19:22:52.2943426Z Updating files:  69% (7724/11194)
+2026-11-12T19:22:52.3108919Z Updating files:  70% (7836/11194)
+2026-11-12T19:22:52.3148821Z Updating files:  71% (7948/11194)
+2026-11-12T19:22:52.3296966Z Updating files:  72% (8060/11194)
+2026-11-12T19:22:52.3435459Z Updating files:  73% (8172/11194)
+2026-11-12T19:22:52.3476389Z Updating files:  74% (8284/11194)
+2026-11-12T19:22:52.3677730Z Updating files:  75% (8396/11194)
+2026-11-12T19:22:52.3718431Z Updating files:  76% (8508/11194)
+2026-11-12T19:22:52.3757009Z Updating files:  77% (8620/11194)
+2026-11-12T19:22:52.3813569Z Updating files:  78% (8732/11194)
+2026-11-12T19:22:52.3846203Z Updating files:  79% (8844/11194)
+2026-11-12T19:22:52.3919727Z Updating files:  80% (8956/11194)
+2026-11-12T19:22:52.3951533Z Updating files:  81% (9068/11194)
+2026-11-12T19:22:52.3990512Z Updating files:  82% (9180/11194)
+2026-11-12T19:22:52.4044291Z Updating files:  83% (9292/11194)
+2026-11-12T19:22:52.4083646Z Updating files:  84% (9403/11194)
+2026-11-12T19:22:52.4176912Z Updating files:  85% (9515/11194)
+2026-11-12T19:22:52.4382093Z Updating files:  86% (9627/11194)
+2026-11-12T19:22:52.4470099Z Updating files:  87% (9739/11194)
+2026-11-12T19:22:52.4748914Z Updating files:  88% (9851/11194)
+2026-11-12T19:22:52.4809788Z Updating files:  89% (9963/11194)
+2026-11-12T19:22:52.4857768Z Updating files:  90% (10075/11194)
+2026-11-12T19:22:52.5022671Z Updating files:  91% (10187/11194)
+2026-11-12T19:22:52.5241238Z Updating files:  92% (10299/11194)
+2026-11-12T19:22:52.5290682Z Updating files:  93% (10411/11194)
+2026-11-12T19:22:52.5348949Z Updating files:  94% (10523/11194)
+2026-11-12T19:22:52.5403003Z Updating files:  95% (10635/11194)
+2026-11-12T19:22:52.5459018Z Updating files:  96% (10747/11194)
+2026-11-12T19:22:52.5522206Z Updating files:  97% (10859/11194)
+2026-11-12T19:22:52.5736035Z Updating files:  98% (10971/11194)
+2026-11-12T19:22:52.5792978Z Updating files:  99% (11083/11194)
+2026-11-12T19:22:52.5793655Z Updating files: 100% (11194/11194)
+2026-11-12T19:22:52.5793982Z Updating files: 100% (11194/11194), done.
+2026-11-12T19:22:52.5913902Z Switched to a new branch 'codex/native-wallet-closure-20261111'
+2026-11-12T19:22:52.5918873Z branch 'codex/native-wallet-closure-20261111' set up to track 'origin/codex/native-wallet-closure-20261111'.
+2026-11-12T19:22:52.6039401Z ##[endgroup]
+2026-11-12T19:22:52.6081170Z [command]/usr/bin/git log -1 --format=%H
+2026-11-12T19:22:52.6102782Z 784733b9cfdb1e29f0e4922d6ca90e768144bfee
+2026-11-12T19:22:52.6111477Z ##[group]Removing auth
+2026-11-12T19:22:52.6116409Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T19:22:52.6142010Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T19:22:52.6354855Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T19:22:52.6379059Z http.https://github.com/.extraheader
+2026-11-12T19:22:52.6384693Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-12T19:22:52.6430025Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T19:22:52.6631377Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T19:22:52.6659726Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T19:22:52.6866052Z ##[endgroup]
+2026-11-12T19:22:52.7092578Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-12T19:22:52.7092920Z with:
+2026-11-12T19:22:52.7093104Z   node-version-file: .nvmrc
+2026-11-12T19:22:52.7093309Z   always-auth: false
+2026-11-12T19:22:52.7093503Z   check-latest: false
+2026-11-12T19:22:52.7095616Z   token: ***
+2026-11-12T19:22:52.7095789Z ##[endgroup]
+2026-11-12T19:22:52.8252228Z Node version file is not JSON file
+2026-11-12T19:22:52.8253984Z Resolved .nvmrc as 24.22.1
+2026-11-12T19:22:52.8267915Z Attempting to download 24.22.1...
+2026-11-12T19:22:52.8380175Z (node:2286) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T19:22:52.8381070Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T19:22:53.8221966Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-12T19:22:54.3704212Z Extracting ...
+2026-11-12T19:22:54.3827739Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/bd131745-dc85-40e8-8790-4f480974b55d -f /home/runner/work/_temp/e17a8178-ffe8-4c73-9358-3ca35f83cdec
+2026-11-12T19:22:55.4252737Z Adding to the cache ...
+2026-11-12T19:22:57.6247282Z ##[group]Environment details
+2026-11-12T19:22:57.8155627Z node: v24.22.1
+2026-11-12T19:22:57.8155944Z npm: 11.19.1
+2026-11-12T19:22:57.8156193Z yarn: 1.22.22
+2026-11-12T19:22:57.8156677Z ##[endgroup]
+2026-11-12T19:22:57.8347565Z ##[group]Run actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+2026-11-12T19:22:57.8347881Z with:
+2026-11-12T19:22:57.8348046Z   go-version: 1.27.3
+2026-11-12T19:22:57.8348252Z   cache-dependency-path: synthesis/go/go.sum
+2026-11-12T19:22:57.8348687Z   check-latest: false
+2026-11-12T19:22:57.8350775Z   token: ***
+2026-11-12T19:22:57.8350939Z   cache: true
+2026-11-12T19:22:57.8351108Z ##[endgroup]
+2026-11-12T19:22:57.9330206Z Setup go version spec 1.27.3
+2026-11-12T19:22:57.9332392Z Attempting to download 1.27.3...
+2026-11-12T19:22:58.9490247Z matching 1.27.3...
+2026-11-12T19:22:58.9494190Z Acquiring 1.27.3 from https://github.com/actions/go-versions/releases/download/1.27.3-39437817176/go-1.27.3-linux-x64.tar.gz
+2026-11-12T19:22:59.5423665Z Extracting Go...
+2026-11-12T19:22:59.5521426Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/2b48628e-49a3-4c42-90ac-237d63c0a5fb -f /home/runner/work/_temp/11d88fc9-9994-444d-9d9d-f600e8ff9d79
+2026-11-12T19:23:00.9679488Z Successfully extracted go to /home/runner/work/_temp/2b48628e-49a3-4c42-90ac-237d63c0a5fb
+2026-11-12T19:23:00.9680144Z Adding to the cache ...
+2026-11-12T19:23:05.5769502Z Successfully cached go to /opt/hostedtoolcache/go/1.27.3/x64
+2026-11-12T19:23:05.5770740Z Added go to the path
+2026-11-12T19:23:05.5772743Z Successfully set up Go version 1.27.3
+2026-11-12T19:23:05.5947041Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOMODCACHE
+2026-11-12T19:23:05.5981896Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOCACHE
+2026-11-12T19:23:05.6015895Z /home/runner/go/pkg/mod
+2026-11-12T19:23:05.6032741Z /home/runner/.cache/go-build
+2026-11-12T19:23:05.9613728Z Cache hit for: setup-go-Linux-x64-ubuntu24-go-1.27.3-39def735ed8c2dfdb21c2002a828c41dc26a5e08075b577b46d16c8563f66d1f
+2026-11-12T19:23:07.1713627Z Received 83886080 of 1332719475 (6.3%), 79.9 MBs/sec
+2026-11-12T19:23:08.1716107Z Received 268435456 of 1332719475 (20.1%), 127.9 MBs/sec
+2026-11-12T19:23:09.1723227Z Received 444596224 of 1332719475 (33.4%), 141.2 MBs/sec
+2026-11-12T19:23:10.1751780Z Received 620756992 of 1332719475 (46.6%), 147.9 MBs/sec
+2026-11-12T19:23:11.1768888Z Received 792723456 of 1332719475 (59.5%), 151.0 MBs/sec
+2026-11-12T19:23:12.1772541Z Received 939524096 of 1332719475 (70.5%), 149.2 MBs/sec
+2026-11-12T19:23:13.1769400Z Received 1098907648 of 1332719475 (82.5%), 149.6 MBs/sec
+2026-11-12T19:23:14.1784217Z Received 1262485504 of 1332719475 (94.7%), 150.3 MBs/sec
+2026-11-12T19:23:14.5911357Z Received 1332719475 of 1332719475 (100.0%), 150.9 MBs/sec
+2026-11-12T19:23:14.5911865Z Cache Size: ~1271 MB (1332719475 B)
+2026-11-12T19:23:14.6012860Z [command]/usr/bin/tar -xf /home/runner/work/_temp/985483ad-5647-4b02-a846-eee5cd3fe2b3/cache.tzst -P -C /home/runner/work/interop/interop --use-compress-program unzstd
+2026-11-12T19:23:39.5617003Z Cache restored successfully
+2026-11-12T19:23:39.6282074Z Cache restored from key: setup-go-Linux-x64-ubuntu24-go-1.27.3-39def735ed8c2dfdb21c2002a828c41dc26a5e08075b577b46d16c8563f66d1f
+2026-11-12T19:23:39.6287383Z go version go1.27.3 linux/amd64
+2026-11-12T19:23:39.6287620Z 
+2026-11-12T19:23:39.6288134Z ##[group]go env
+2026-11-12T19:23:39.6422680Z AR='ar'
+2026-11-12T19:23:39.6423016Z CC='gcc'
+2026-11-12T19:23:39.6423319Z CGO_CFLAGS='-O2 -g'
+2026-11-12T19:23:39.6423570Z CGO_CPPFLAGS=''
+2026-11-12T19:23:39.6423875Z CGO_CXXFLAGS='-O2 -g'
+2026-11-12T19:23:39.6424145Z CGO_ENABLED='1'
+2026-11-12T19:23:39.6424432Z CGO_FFLAGS='-O2 -g'
+2026-11-12T19:23:39.6424699Z CGO_LDFLAGS='-O2 -g'
+2026-11-12T19:23:39.6424972Z CXX='g++'
+2026-11-12T19:23:39.6425232Z GCCGO='gccgo'
+2026-11-12T19:23:39.6425494Z GO111MODULE=''
+2026-11-12T19:23:39.6425751Z GOAMD64='v1'
+2026-11-12T19:23:39.6426011Z GOARCH='amd64'
+2026-11-12T19:23:39.6426290Z GOAUTH='netrc'
+2026-11-12T19:23:39.6426584Z GOBIN='/home/runner/go/bin'
+2026-11-12T19:23:39.6426980Z GOCACHE='/home/runner/.cache/go-build'
+2026-11-12T19:23:39.6427347Z GOCACHEPROG=''
+2026-11-12T19:23:39.6427607Z GODEBUG=''
+2026-11-12T19:23:39.6428345Z GOENV='/home/runner/.config/go/env'
+2026-11-12T19:23:39.6428769Z GOEXE=''
+2026-11-12T19:23:39.6428939Z GOEXPERIMENT=''
+2026-11-12T19:23:39.6429117Z GOFIPS140='off'
+2026-11-12T19:23:39.6429283Z GOFLAGS=''
+2026-11-12T19:23:39.6429995Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build3362620869=/tmp/go-build -gno-record-gcc-switches'
+2026-11-12T19:23:39.6430527Z GOHOSTARCH='amd64'
+2026-11-12T19:23:39.6430709Z GOHOSTOS='linux'
+2026-11-12T19:23:39.6430892Z GOINSECURE=''
+2026-11-12T19:23:39.6431088Z GOMOD='/dev/null'
+2026-11-12T19:23:39.6431318Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-11-12T19:23:39.6431544Z GONOPROXY=''
+2026-11-12T19:23:39.6431710Z GONOSUMDB=''
+2026-11-12T19:23:39.6453494Z GOOS='linux'
+2026-11-12T19:23:39.6453815Z GOPACKAGESDRIVER=''
+2026-11-12T19:23:39.6454131Z GOPATH='/home/runner/go'
+2026-11-12T19:23:39.6454435Z GOPRIVATE=''
+2026-11-12T19:23:39.6454978Z GOPROXY='https://proxy.golang.org,direct'
+2026-11-12T19:23:39.6455485Z GOROOT='/opt/hostedtoolcache/go/1.27.3/x64'
+2026-11-12T19:23:39.6455887Z GOSUMDB='sum.golang.org'
+2026-11-12T19:23:39.6456214Z GOTELEMETRY='local'
+2026-11-12T19:23:39.6456610Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-11-12T19:23:39.6457055Z GOTMPDIR=''
+2026-11-12T19:23:39.6457339Z GOTOOLCHAIN='local'
+2026-11-12T19:23:39.6457939Z GOTOOLDIR='/opt/hostedtoolcache/go/1.27.3/x64/pkg/tool/linux_amd64'
+2026-11-12T19:23:39.6458758Z GOVCS=''
+2026-11-12T19:23:39.6459138Z GOVERSION='go1.27.3'
+2026-11-12T19:23:39.6459517Z GOWORK=''
+2026-11-12T19:23:39.6459956Z PKG_CONFIG='pkg-config'
+2026-11-12T19:23:39.6460207Z 
+2026-11-12T19:23:39.6460705Z ##[endgroup]
+2026-11-12T19:23:39.7289213Z ##[group]Run npm ci --ignore-scripts --prefix synthesis
+2026-11-12T19:23:39.7289669Z [36;1mnpm ci --ignore-scripts --prefix synthesis[0m
+2026-11-12T19:23:39.7290010Z [36;1mnpm ci --ignore-scripts --prefix components/transport[0m
+2026-11-12T19:23:39.7290341Z [36;1mnpm ci --ignore-scripts --prefix integrations/services[0m
+2026-11-12T19:23:39.7290674Z [36;1mnpm rebuild better-sqlite3 --prefix integrations/services[0m
+2026-11-12T19:23:39.7291031Z [36;1mrustup toolchain install 1.88.0 --profile minimal[0m
+2026-11-12T19:23:39.7291303Z [36;1mnpm run prepare:go[0m
+2026-11-12T19:23:39.7291540Z [36;1mnode scripts/prepare-storage-sync-go.mjs[0m
+2026-11-12T19:23:39.7291924Z [36;1mnode scripts/prepare-storage-portability-go.mjs[0m
+2026-11-12T19:23:39.7292287Z [36;1mnode scripts/prepare-messaging.mjs[0m
+2026-11-12T19:23:39.7313160Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:23:39.7313381Z env:
+2026-11-12T19:23:39.7313550Z   GOTOOLCHAIN: local
+2026-11-12T19:23:39.7313789Z ##[endgroup]
+2026-11-12T19:23:42.8549638Z 
+2026-11-12T19:23:42.8550315Z added 193 packages, and audited 194 packages in 3s
+2026-11-12T19:23:42.8550603Z 
+2026-11-12T19:23:42.8550751Z 58 packages are looking for funding
+2026-11-12T19:23:42.8551115Z   run `npm fund` for details
+2026-11-12T19:23:42.8558148Z 
+2026-11-12T19:23:42.8558352Z found 0 vulnerabilities
+2026-11-12T19:23:44.3843647Z 
+2026-11-12T19:23:44.3844274Z added 103 packages, and audited 104 packages in 1s
+2026-11-12T19:23:44.3844566Z 
+2026-11-12T19:23:44.3844993Z 34 packages are looking for funding
+2026-11-12T19:23:44.3845468Z   run `npm fund` for details
+2026-11-12T19:23:44.3853773Z 
+2026-11-12T19:23:44.3854054Z found 0 vulnerabilities
+2026-11-12T19:23:45.5507300Z npm warn deprecated prebuild-install@7.1.3: No longer maintained. Please contact the author of the relevant native addon; alternatives are available.
+2026-11-12T19:23:47.2481049Z 
+2026-11-12T19:23:47.2481798Z added 226 packages, and audited 227 packages in 3s
+2026-11-12T19:23:47.2482057Z 
+2026-11-12T19:23:47.2482285Z 57 packages are looking for funding
+2026-11-12T19:23:47.2482613Z   run `npm fund` for details
+2026-11-12T19:23:47.2490368Z 
+2026-11-12T19:23:47.2490638Z found 0 vulnerabilities
+2026-11-12T19:23:50.6752055Z npm warn rebuild 4 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+2026-11-12T19:23:50.6753317Z rebuilt dependencies successfully
+2026-11-12T19:23:50.7109890Z info: syncing channel updates for 1.88.0-x86_64-unknown-linux-gnu
+2026-11-12T19:23:51.0781895Z info: latest update on 2025-06-26 for version 1.88.0 (6b00bc388 2025-06-23)
+2026-11-12T19:23:51.0783444Z info: downloading 3 components
+2026-11-12T19:23:58.3687600Z 
+2026-11-12T19:23:58.4487094Z   1.88.0-x86_64-unknown-linux-gnu installed - rustc 1.88.0 (6b00bc388 2025-06-23)
+2026-11-12T19:23:58.4487535Z 
+2026-11-12T19:23:58.5434787Z 
+2026-11-12T19:23:58.5435358Z > tpnil@0.5.0 prepare:go
+2026-11-12T19:23:58.5435747Z > node scripts/prepare-itcve-go.mjs
+2026-11-12T19:23:58.5435923Z 
+2026-11-12T19:23:58.5985046Z ITCVE-1 1.1.0: three pinned Go implementations, eight selectable combinations
+2026-11-12T19:24:14.0119750Z ?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+2026-11-12T19:24:14.0120360Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	0.151s
+2026-11-12T19:24:14.0120897Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-batch-subjects	0.702s
+2026-11-12T19:24:14.0121490Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-coverage-observers	2.412s
+2026-11-12T19:26:57.8445055Z Built ITCVE Go services with go1.27.3
+2026-11-12T19:27:27.5476769Z ?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+2026-11-12T19:27:27.5477316Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	0.079s
+2026-11-12T19:27:27.5479763Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-batch-subjects	(cached)
+2026-11-12T19:27:27.5481108Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-coverage-observers	2.146s
+2026-11-12T19:27:49.2543844Z {
+2026-11-12T19:27:49.2544400Z   "schema": "tpnil-storage-sync-go-build@1.0.0",
+2026-11-12T19:27:49.2545228Z   "patchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+2026-11-12T19:27:49.2546056Z   "patchSha256": "197f465236907f146297015b609e193c5815006ce6e8ae920db55779f90e2074",
+2026-11-12T19:27:49.2546610Z   "upstream": {
+2026-11-12T19:27:49.2547103Z     "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+2026-11-12T19:27:49.2547610Z     "version": "v0.191.4",
+2026-11-12T19:27:49.2548127Z     "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+2026-11-12T19:27:49.2548974Z   },
+2026-11-12T19:27:49.2549555Z   "replacementModule": "/home/runner/work/interop/interop/out/storage-sync-go-source",
+2026-11-12T19:27:49.2549957Z   "toolchain": "go1.27.3",
+2026-11-12T19:27:49.2550410Z   "binarySha256": "aa05d7b6919a8ad295d015c8c5d6a79917dff1098cc61a9c67f3fa99447d2869"
+2026-11-12T19:27:49.2550934Z }
+2026-11-12T19:28:20.0833220Z ?   	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-mongo	[no test files]
+2026-11-12T19:28:20.0834023Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services	0.090s
+2026-11-12T19:28:20.0834846Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-batch-subjects	(cached)
+2026-11-12T19:28:20.0835740Z ok  	github.com/p2ppsr/interop/synthesis/go/cmd/itcve-services-coverage-observers	3.307s
+2026-11-12T19:28:20.1047624Z go: downloading github.com/bsv-blockchain/universal-test-vectors v0.6.1
+2026-11-12T19:28:20.1054929Z go: downloading github.com/jarcoal/httpmock v1.4.2
+2026-11-12T19:28:20.1055367Z go: downloading go.uber.org/mock v0.6.0
+2026-11-12T19:28:20.1295414Z go: downloading github.com/bsv-blockchain/go-chaintracks v1.4.5
+2026-11-12T19:28:20.2071823Z go: downloading golang.org/x/tools v0.51.0
+2026-11-12T19:28:20.5135412Z go: downloading golang.org/x/exp v0.0.0-20261007192929-f45ad48fbe92
+2026-11-12T19:28:20.6257667Z go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20261005182115-fad411399dd8
+2026-11-12T19:28:20.7643558Z go: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.31.0
+2026-11-12T19:28:20.9277618Z go: downloading github.com/bsv-blockchain/teranode v0.16.1-beta-1
+2026-11-12T19:28:20.9278348Z go: downloading github.com/libp2p/go-libp2p v0.50.0
+2026-11-12T19:28:20.9289534Z go: downloading golang.org/x/mod v0.41.0
+2026-11-12T19:28:20.9942667Z go: downloading google.golang.org/genproto/googleapis/api v0.0.0-20261005182115-fad411399dd8
+2026-11-12T19:28:21.0398869Z go: downloading github.com/libp2p/go-libp2p-kad-dht v0.42.2
+2026-11-12T19:28:21.0687815Z go: downloading github.com/libp2p/go-libp2p-pubsub v0.18.0
+2026-11-12T19:28:21.1069279Z go: downloading github.com/bsv-blockchain/go-wire v1.4.0
+2026-11-12T19:28:21.1070567Z go: downloading github.com/quic-go/quic-go v0.63.0
+2026-11-12T19:28:21.2168001Z go: downloading github.com/pion/webrtc/v4 v4.2.23
+2026-11-12T19:28:21.2176300Z go: downloading github.com/prometheus/common v0.72.0
+2026-11-12T19:28:21.2789394Z go: downloading github.com/prometheus/procfs v0.22.0
+2026-11-12T19:28:21.3200600Z go: downloading github.com/pion/ice/v4 v4.4.7
+2026-11-12T19:28:21.3727964Z go: downloading github.com/pion/transport/v5 v5.1.1
+2026-11-12T19:28:21.3845387Z go: downloading github.com/pion/dtls/v3 v3.1.10
+2026-11-12T19:28:21.4560227Z go: downloading github.com/pion/interceptor v0.1.49
+2026-11-12T19:28:21.5067575Z go: downloading github.com/pion/rtcp v1.2.19
+2026-11-12T19:28:21.5068147Z go: downloading github.com/pion/rtp v1.10.5
+2026-11-12T19:28:21.5422111Z go: downloading github.com/klauspost/cpuid/v2 v2.4.0
+2026-11-12T19:28:21.5735368Z go: downloading github.com/pion/transport/v4 v4.1.1
+2026-11-12T19:28:21.6142901Z go: downloading github.com/pion/turn/v5 v5.1.2
+2026-11-12T19:28:23.9298097Z go: downloading github.com/bsv-blockchain/go-subtree v1.6.0
+2026-11-12T19:28:23.9298999Z go: downloading github.com/bsv-blockchain/go-tx-map v1.5.0
+2026-11-12T19:28:23.9305411Z go: downloading github.com/twmb/franz-go v1.22.1
+2026-11-12T19:28:24.0140437Z go: downloading github.com/twmb/franz-go/pkg/kmsg v1.14.0
+2026-11-12T19:28:24.0144961Z go: downloading github.com/stretchr/objx v0.5.3
+2026-11-12T19:28:24.0479408Z go: downloading modernc.org/sqlite v1.60.1
+2026-11-12T19:28:24.1081233Z go: downloading github.com/klauspost/compress v1.20.1
+2026-11-12T19:28:24.5728600Z go: downloading k8s.io/api v0.37.1
+2026-11-12T19:28:24.5729528Z go: downloading k8s.io/apimachinery v0.37.1
+2026-11-12T19:28:24.7145891Z go: downloading k8s.io/client-go v0.37.1
+2026-11-12T19:28:25.2971534Z go: downloading github.com/aws/aws-sdk-go-v2 v1.47.2
+2026-11-12T19:28:25.2972310Z go: downloading github.com/aws/aws-sdk-go-v2/config v1.33.8
+2026-11-12T19:28:25.3830039Z go: downloading github.com/aws/aws-sdk-go-v2/feature/s3/transfermanager v0.4.15
+2026-11-12T19:28:25.4204153Z go: downloading github.com/aws/aws-sdk-go-v2/service/s3 v1.114.2
+2026-11-12T19:28:25.5112769Z go: downloading k8s.io/utils v0.0.0-20260707023825-cf1189d6abe3
+2026-11-12T19:28:25.5572503Z go: downloading github.com/aws/smithy-go v1.28.4
+2026-11-12T19:28:25.6407060Z go: downloading github.com/aws/aws-sdk-go-v2/credentials v1.20.8
+2026-11-12T19:28:25.6716350Z go: downloading github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.20.2
+2026-11-12T19:28:25.6717472Z go: downloading github.com/aws/aws-sdk-go-v2/service/signin v1.10.3
+2026-11-12T19:28:25.6718374Z go: downloading github.com/aws/aws-sdk-go-v2/service/sso v1.38.3
+2026-11-12T19:28:25.6719440Z go: downloading github.com/aws/aws-sdk-go-v2/service/ssooidc v1.43.3
+2026-11-12T19:28:25.7047711Z go: downloading github.com/aws/aws-sdk-go-v2/service/sts v1.51.3
+2026-11-12T19:28:25.7062683Z go: downloading modernc.org/libc v1.77.1
+2026-11-12T19:28:25.7106324Z go: downloading github.com/fxamacker/cbor/v2 v2.9.6
+2026-11-12T19:28:25.7385933Z go: downloading github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.21
+2026-11-12T19:28:25.7668230Z go: downloading github.com/aws/aws-sdk-go-v2/internal/configsources v1.5.5
+2026-11-12T19:28:25.7669199Z go: downloading github.com/aws/aws-sdk-go-v2/internal/v4a v1.5.5
+2026-11-12T19:28:25.7935242Z go: downloading github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.20
+2026-11-12T19:28:25.7975348Z go: downloading github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.11.6
+2026-11-12T19:28:25.8234438Z go: downloading github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.14.5
+2026-11-12T19:28:25.8255318Z go: downloading github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.20.5
+2026-11-12T19:28:25.8571730Z go: downloading github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.8.5
+2026-11-12T19:28:25.8576738Z go: downloading github.com/emicklei/go-restful/v3 v3.13.0
+2026-11-12T19:30:17.1376784Z ok  	github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage	3.139s
+2026-11-12T19:30:29.5048034Z {
+2026-11-12T19:30:29.5048734Z   "schema": "tpnil-storage-portability-go-build@1.0.0",
+2026-11-12T19:30:29.5049573Z   "patchLockSha256": "b9f229391f4fd8a953fd76b6c73cc7585818d91fe6c1802e9fc8667a86c1fcef",
+2026-11-12T19:30:29.5050283Z   "parentPatchLockSha256": "73b327cb785ab061d58678ff6c26eefa46a9aa838d09d5f8bfee50aae3fb4391",
+2026-11-12T19:30:29.5051124Z   "patchSha256": "5e1fff193191565fa0032f2b9954bf07054c9806a78e6103049a14122a947e0c",
+2026-11-12T19:30:29.5051464Z   "upstream": {
+2026-11-12T19:30:29.5051790Z     "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+2026-11-12T19:30:29.5052104Z     "version": "v0.191.4",
+2026-11-12T19:30:29.5052456Z     "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U="
+2026-11-12T19:30:29.5052722Z   },
+2026-11-12T19:30:29.5053157Z   "replacementModule": "/home/runner/work/interop/interop/out/storage-portability-go-source",
+2026-11-12T19:30:29.5053565Z   "toolchain": "go1.27.3",
+2026-11-12T19:30:29.5054223Z   "binarySha256": "7d6a543d12311e5c950933c6b28f893439d06125439ec1ad6a2e306e22cfd2fa"
+2026-11-12T19:30:29.5054565Z }
+2026-11-12T19:30:40.1371814Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+2026-11-12T19:30:42.1530793Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-12T19:30:42.1609708Z npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-12T19:30:42.1969114Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-11-12T19:30:44.5687963Z 
+2026-11-12T19:30:44.5688942Z added 755 packages in 7s
+2026-11-12T19:30:45.2954489Z npm warn rebuild 7 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+2026-11-12T19:30:45.2955597Z rebuilt dependencies successfully
+2026-11-12T19:30:47.3229421Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-11-12T19:30:47.6393472Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-11-12T19:30:47.6558822Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-11-12T19:30:47.7624514Z npm warn deprecated eslint-config-standard-with-typescript@23.0.0: Please use eslint-config-love, instead.
+2026-11-12T19:30:48.0281253Z npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+2026-11-12T19:30:48.0284803Z npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+2026-11-12T19:30:49.4070050Z npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+2026-11-12T19:30:50.0663759Z 
+2026-11-12T19:30:50.0664327Z added 562 packages in 4s
+2026-11-12T19:30:52.7459273Z all modules verified
+2026-11-12T19:30:52.7787148Z go: downloading firebase.google.com/go/v4 v4.22.0
+2026-11-12T19:30:52.7791778Z go: downloading google.golang.org/api v0.309.0
+2026-11-12T19:30:52.9487910Z go: downloading cloud.google.com/go/firestore v1.26.0
+2026-11-12T19:30:53.0253919Z go: downloading cloud.google.com/go v0.123.0
+2026-11-12T19:30:55.7319101Z go: downloading github.com/googleapis/gax-go/v2 v2.26.2
+2026-11-12T19:30:55.7320222Z go: downloading google.golang.org/genproto v0.0.0-20261012220534-4341edf3f941
+2026-11-12T19:30:55.7322284Z go: downloading github.com/golang-jwt/jwt/v4 v4.5.2
+2026-11-12T19:30:55.7322899Z go: downloading github.com/MicahParks/keyfunc v1.9.0
+2026-11-12T19:30:55.8406878Z go: downloading cloud.google.com/go/storage v1.69.0
+2026-11-12T19:30:55.8432028Z go: downloading cloud.google.com/go/auth v0.24.1
+2026-11-12T19:30:55.8443389Z go: downloading cloud.google.com/go/longrunning v1.3.0
+2026-11-12T19:30:55.9124936Z go: downloading google.golang.org/genproto/googleapis/api v0.0.0-20261012220534-4341edf3f941
+2026-11-12T19:30:55.9440111Z go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20261019180522-ce908d29299b
+2026-11-12T19:30:55.9482480Z go: downloading cloud.google.com/go/compute/metadata v0.10.0
+2026-11-12T19:30:55.9641074Z go: downloading cloud.google.com/go/auth/oauth2adapt v0.3.0
+2026-11-12T19:30:55.9777441Z go: downloading github.com/google/s2a-go v0.1.11
+2026-11-12T19:30:56.0229232Z go: downloading cloud.google.com/go/iam v1.14.0
+2026-11-12T19:30:56.1739345Z go: downloading github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.62.0
+2026-11-12T19:30:56.1921703Z go: downloading go.opentelemetry.io/contrib/detectors/gcp v1.47.0
+2026-11-12T19:30:56.2453986Z go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.23
+2026-11-12T19:30:56.2454963Z go: downloading cloud.google.com/go/monitoring v1.31.0
+2026-11-12T19:30:56.2455558Z go: downloading github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.62.0
+2026-11-12T19:30:56.2709463Z go: downloading github.com/envoyproxy/go-control-plane/envoy v1.40.0
+2026-11-12T19:30:56.3004906Z go: downloading github.com/spiffe/go-spiffe/v2 v2.9.0
+2026-11-12T19:30:56.8724461Z go: downloading github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2
+2026-11-12T19:30:56.8724949Z go: downloading github.com/go-jose/go-jose/v4 v4.1.8
+2026-11-12T19:30:56.9031574Z go: downloading github.com/envoyproxy/protoc-gen-validate v1.3.3
+2026-11-12T19:30:56.9032186Z go: downloading cel.dev/expr v0.25.3
+2026-11-12T19:31:19.7343629Z Prepared pinned TS/Go Message Box and discovery components.
+2026-11-12T19:31:19.7609212Z ##[group]Run npm test --prefix synthesis -- native-coverage-certificates.test.ts
+2026-11-12T19:31:19.7609724Z [36;1mnpm test --prefix synthesis -- native-coverage-certificates.test.ts[0m
+2026-11-12T19:31:19.7651340Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:31:19.7651562Z env:
+2026-11-12T19:31:19.7651736Z   GOTOOLCHAIN: local
+2026-11-12T19:31:19.7651944Z   TPNIL_CERTIFICATE_COVERAGE_TESTS: 1
+2026-11-12T19:31:19.7652182Z ##[endgroup]
+2026-11-12T19:31:19.8477231Z 
+2026-11-12T19:31:19.8477809Z > @tpnil/synthesis@0.1.0 test
+2026-11-12T19:31:19.8478304Z > vitest run native-coverage-certificates.test.ts
+2026-11-12T19:31:19.8478695Z 
+2026-11-12T19:31:20.0550180Z 
+2026-11-12T19:31:20.0553763Z [1m[30m[46m RUN [49m[39m[22m [36mv4.1.12 [39m[90m/home/runner/work/interop/interop/synthesis[39m
+2026-11-12T19:31:20.0554296Z 
+2026-11-12T19:31:20.6411397Z [90mstdout[2m | test/native-coverage-certificates.test.ts
+2026-11-12T19:31:20.6412633Z [22m[39m◇ injected env (0) from .env // tip: ◈ secrets for agents [www.dotenvx.com]
+2026-11-12T19:31:20.6413339Z ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-11-12T19:31:20.6413653Z 
+2026-11-12T19:31:49.1583251Z  [32m✓[39m test/native-coverage-certificates.test.ts [2m([22m[2m42 tests[22m[2m)[22m[33m 28237[2mms[22m[39m
+2026-11-12T19:31:49.1584200Z      [33m[2m✓[22m[39m executes real public operations with explicit native-only gaps [33m 844[2mms[22m[39m
+2026-11-12T19:31:49.1585327Z      [33m[2m✓[22m[39m replays sorted canonical object keys without changing details [33m 366[2mms[22m[39m
+2026-11-12T19:31:49.1586474Z      [33m[2m✓[22m[39m rejects forged public settings readback [33m 360[2mms[22m[39m
+2026-11-12T19:31:49.1588306Z      [33m[2m✓[22m[39m rejects a changed signed trust-token ciphertext [33m 367[2mms[22m[39m
+2026-11-12T19:31:49.1589804Z      [33m[2m✓[22m[39m retains and rejects malformed hole bytes through the prospective observation codec [33m 541[2mms[22m[39m
+2026-11-12T19:31:49.1596651Z      [33m[2m✓[22m[39m retains and rejects malformed undefined bytes through the prospective observation codec [33m 542[2mms[22m[39m
+2026-11-12T19:31:49.1599257Z      [33m[2m✓[22m[39m retains and rejects malformed nonfinite bytes through the prospective observation codec [33m 543[2mms[22m[39m
+2026-11-12T19:31:49.1601553Z      [33m[2m✓[22m[39m rejects trailing bytes in the actual revocation spend [33m 628[2mms[22m[39m
+2026-11-12T19:31:49.1603146Z      [33m[2m✓[22m[39m rejects mismatched final settings output count [33m 582[2mms[22m[39m
+2026-11-12T19:31:49.1604624Z      [33m[2m✓[22m[39m binds restored settings to the final actual decrypt response [33m 613[2mms[22m[39m
+2026-11-12T19:31:49.1606261Z      [33m[2m✓[22m[39m rejects a claimed transport identity unsupported by signatures [33m 599[2mms[22m[39m
+2026-11-12T19:31:49.1607671Z      [33m[2m✓[22m[39m rejects authenticated issuance payload substitution [33m 611[2mms[22m[39m
+2026-11-12T19:31:49.1609623Z      [33m[2m✓[22m[39m rejects a bad server nonce even with a claimed auth receipt [33m 635[2mms[22m[39m
+2026-11-12T19:31:49.1610995Z      [33m[2m✓[22m[39m allows a correctly authenticated early identity rejection without demanding issuance [33m 603[2mms[22m[39m
+2026-11-12T19:31:49.1612961Z      [33m[2m✓[22m[39m rejects a timeout masquerading as identity validation [33m 650[2mms[22m[39m
+2026-11-12T19:31:49.1614719Z      [33m[2m✓[22m[39m rejects persistence after the wrong authenticated identity [33m 650[2mms[22m[39m
+2026-11-12T19:31:49.1616114Z      [33m[2m✓[22m[39m checks inventory even when native restart is unavailable [33m 327[2mms[22m[39m
+2026-11-12T19:31:49.1617324Z      [33m[2m✓[22m[39m independently decrypts the new randomized selective proof after restart [33m 326[2mms[22m[39m
+2026-11-12T19:31:49.1618242Z      [33m[2m✓[22m[39m rejects revocation of an unrelated output [33m 652[2mms[22m[39m
+2026-11-12T19:31:49.1632957Z      [33m[2m✓[22m[39m rejects a revoked certificate still present after relinquishment [33m 652[2mms[22m[39m
+2026-11-12T19:31:49.1633836Z      [33m[2m✓[22m[39m rejects absent-attribute query substitution [33m 653[2mms[22m[39m
+2026-11-12T19:31:49.1635071Z      [33m[2m✓[22m[39m requires both authenticated controls for multiple-certifiers [33m 609[2mms[22m[39m
+2026-11-12T19:31:49.1635851Z      [33m[2m✓[22m[39m requires both authenticated controls for bad-signature [33m 602[2mms[22m[39m
+2026-11-12T19:31:49.1636566Z      [33m[2m✓[22m[39m requires both authenticated controls for bad-keyring [33m 597[2mms[22m[39m
+2026-11-12T19:31:49.1637256Z      [33m[2m✓[22m[39m requires actual malicious lookup bytes for bad-signature [33m 596[2mms[22m[39m
+2026-11-12T19:31:49.1638410Z      [33m[2m✓[22m[39m requires actual malicious lookup bytes for bad-keyring [33m 597[2mms[22m[39m
+2026-11-12T19:31:49.1639799Z      [33m[2m✓[22m[39m rejects invalid certificate inclusion despite valid controls [33m 627[2mms[22m[39m
+2026-11-12T19:31:49.1640965Z      [33m[2m✓[22m[39m rejects a missing teardown with otherwise successful cases [33m 568[2mms[22m[39m
+2026-11-12T19:31:49.1642275Z      [33m[2m✓[22m[39m preserves an independently issued preexisting certificate during cleanup [33m 575[2mms[22m[39m
+2026-11-12T19:31:49.1643589Z      [33m[2m✓[22m[39m binds parent identity, complete route window and submission prefix [33m 962[2mms[22m[39m
+2026-11-12T19:31:49.1644358Z      [33m[2m✓[22m[39m rejects valid revocation target replayed in the final tail [33m 377[2mms[22m[39m
+2026-11-12T19:31:49.1645021Z      [33m[2m✓[22m[39m rejects unbound stored raw transaction bytes [33m 328[2mms[22m[39m
+2026-11-12T19:31:49.1645298Z 
+2026-11-12T19:31:49.1645549Z [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+2026-11-12T19:31:49.1645981Z [2m      Tests [22m [1m[32m42 passed[39m[22m[90m (42)[39m
+2026-11-12T19:31:49.1646334Z [2m   Start at [22m 19:31:20
+2026-11-12T19:31:49.1646931Z [2m   Duration [22m 29.10s[2m (transform 274ms, setup 0ms, import 752ms, tests 28.24s, environment 0ms)[22m
+2026-11-12T19:31:49.1647427Z 
+2026-11-12T19:31:49.2276170Z ##[group]Run npm test --prefix synthesis -- native-shutdown-submissions.test.ts wallet-services-listeners.test.ts
+2026-11-12T19:31:49.2276989Z [36;1mnpm test --prefix synthesis -- native-shutdown-submissions.test.ts wallet-services-listeners.test.ts[0m
+2026-11-12T19:31:49.2294691Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:31:49.2294906Z env:
+2026-11-12T19:31:49.2295079Z   GOTOOLCHAIN: local
+2026-11-12T19:31:49.2295275Z ##[endgroup]
+2026-11-12T19:31:49.3044352Z 
+2026-11-12T19:31:49.3044931Z > @tpnil/synthesis@0.1.0 test
+2026-11-12T19:31:49.3045651Z > vitest run native-shutdown-submissions.test.ts wallet-services-listeners.test.ts
+2026-11-12T19:31:49.3046129Z 
+2026-11-12T19:31:49.5079773Z 
+2026-11-12T19:31:49.5082829Z [1m[30m[46m RUN [49m[39m[22m [36mv4.1.12 [39m[90m/home/runner/work/interop/interop/synthesis[39m
+2026-11-12T19:31:49.5083357Z 
+2026-11-12T19:31:49.9653094Z [90mstdout[2m | test/wallet-services-listeners.test.ts
+2026-11-12T19:31:49.9654483Z [22m[39m◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-11-12T19:31:49.9659153Z ◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+2026-11-12T19:31:49.9659722Z 
+2026-11-12T19:31:50.2267706Z [90mstdout[2m | test/native-shutdown-submissions.test.ts
+2026-11-12T19:31:50.2271850Z [22m[39m◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+2026-11-12T19:31:50.2273079Z ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-11-12T19:31:50.2273615Z 
+2026-11-12T19:31:51.3791313Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.3799928Z [22m[39mWalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:51.3800608Z WalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:51.3800919Z 
+2026-11-12T19:31:51.3840165Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.3859270Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:51.3889069Z SNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:51.3899048Z 
+2026-11-12T19:31:51.4991383Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.4999646Z [22m[39mhttps server started on 33209
+2026-11-12T19:31:51.5000048Z 
+2026-11-12T19:31:51.5001435Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.5002805Z [22m[39mhttps server started on 44703
+2026-11-12T19:31:51.5003249Z 
+2026-11-12T19:31:51.6940894Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.6942546Z [22m[39mWalletStorageServer listening at http://127.0.0.1:39615
+2026-11-12T19:31:51.6943096Z 
+2026-11-12T19:31:51.9298852Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:51.9299724Z [22m[39mWalletStorageServer listening at http://127.0.0.1:44359
+2026-11-12T19:31:51.9299967Z 
+2026-11-12T19:31:52.4368698Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.4370262Z [22m[39mWalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:52.4371105Z WalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:52.4371560Z 
+2026-11-12T19:31:52.4393133Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.4394910Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:52.4419106Z SNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:52.4448815Z 
+2026-11-12T19:31:52.5002359Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.5003265Z [22m[39mhttps server started on 37321
+2026-11-12T19:31:52.5003742Z 
+2026-11-12T19:31:52.5471655Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.5473194Z [22m[39mhttps server started on 44321
+2026-11-12T19:31:52.5473715Z 
+2026-11-12T19:31:52.6865597Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.6867272Z [22m[39mWalletStorageServer listening at http://127.0.0.1:44117
+2026-11-12T19:31:52.6867934Z 
+2026-11-12T19:31:52.8981745Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:52.8983395Z [22m[39mWalletStorageServer listening at http://127.0.0.1:45463
+2026-11-12T19:31:52.8983923Z 
+2026-11-12T19:31:53.6654679Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:53.6656345Z [22m[39mWalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:53.6657205Z WalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:31:53.6657699Z 
+2026-11-12T19:31:53.6682743Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:53.6684954Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:53.6685610Z SNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:53.6685968Z 
+2026-11-12T19:31:53.7270961Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:53.7272456Z [22m[39mhttps server started on 45823
+2026-11-12T19:31:53.7272871Z 
+2026-11-12T19:31:53.7999565Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:53.8009716Z [22m[39mhttps server started on 39383
+2026-11-12T19:31:53.8010250Z 
+2026-11-12T19:31:53.9204678Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:53.9205543Z [22m[39mWalletStorageServer listening at http://127.0.0.1:44985
+2026-11-12T19:31:53.9205777Z 
+2026-11-12T19:31:54.1413312Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent typescript service listeners and publishes their actual live ports
+2026-11-12T19:31:54.1414849Z [22m[39mWalletStorageServer listening at http://127.0.0.1:43977
+2026-11-12T19:31:54.1415498Z 
+2026-11-12T19:31:54.6841270Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:54.6859540Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:54.6868986Z 
+2026-11-12T19:31:54.7290982Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:54.7309828Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:54.7310823Z 
+2026-11-12T19:31:54.7563151Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:54.7564811Z [22m[39mhttps server started on 36733
+2026-11-12T19:31:54.7565183Z 
+2026-11-12T19:31:54.8116574Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:54.8117925Z [22m[39mhttps server started on 36527
+2026-11-12T19:31:54.8118342Z 
+2026-11-12T19:31:56.2260835Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:56.2262333Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:56.2262928Z 
+2026-11-12T19:31:56.2857011Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:56.2858266Z [22m[39mhttps server started on 44857
+2026-11-12T19:31:56.2858877Z 
+2026-11-12T19:31:56.3004310Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:56.3009522Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:56.3009839Z 
+2026-11-12T19:31:56.3773565Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:56.3774753Z [22m[39mhttps server started on 45109
+2026-11-12T19:31:56.3775178Z 
+2026-11-12T19:31:57.8570834Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:57.8572293Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:57.8572719Z 
+2026-11-12T19:31:57.9163860Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:57.9165273Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:31:57.9165784Z 
+2026-11-12T19:31:57.9617014Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:57.9618038Z [22m[39mhttps server started on 36579
+2026-11-12T19:31:57.9618395Z 
+2026-11-12T19:31:58.0488209Z [90mstdout[2m | test/wallet-services-listeners.test.ts[2m > [22m[2matomically binds concurrent go service listeners and publishes their actual live ports
+2026-11-12T19:31:58.0489713Z [22m[39mhttps server started on 46455
+2026-11-12T19:31:58.0490524Z 
+2026-11-12T19:31:59.1175210Z  [32m✓[39m test/wallet-services-listeners.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 8850[2mms[22m[39m
+2026-11-12T19:31:59.1177178Z    [33m[2m✓[22m[39m atomically binds concurrent typescript service listeners and publishes their actual live ports [33m 3968[2mms[22m[39m
+2026-11-12T19:31:59.1179173Z    [33m[2m✓[22m[39m atomically binds concurrent go service listeners and publishes their actual live ports [33m 4846[2mms[22m[39m
+2026-11-12T19:32:05.2564425Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.2565222Z [22m[39mWalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:32:05.2565448Z 
+2026-11-12T19:32:05.2586305Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.2588926Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:32:05.2589787Z 
+2026-11-12T19:32:05.4118798Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.4119849Z [22m[39mhttps server started on 41535
+2026-11-12T19:32:05.4120228Z 
+2026-11-12T19:32:05.5947876Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.5949289Z [22m[39mWalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:32:05.5949619Z 
+2026-11-12T19:32:05.5950977Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.5951894Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:32:05.5952088Z 
+2026-11-12T19:32:05.6536460Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual typescript counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.6537270Z [22m[39mhttps server started on 45617
+2026-11-12T19:32:05.6537582Z 
+2026-11-12T19:32:05.9342532Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual go counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.9344042Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:32:05.9344546Z 
+2026-11-12T19:32:05.9809367Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual go counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:05.9810053Z [22m[39mhttps server started on 37051
+2026-11-12T19:32:05.9810230Z 
+2026-11-12T19:32:06.2368020Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual go counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:06.2369160Z [22m[39mSNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:32:06.2369397Z 
+2026-11-12T19:32:06.3060048Z [90mstdout[2m | test/native-shutdown-submissions.test.ts[2m > [22m[2mretains actual go counterpart arrays after service ownership maps are retired
+2026-11-12T19:32:06.3061017Z [22m[39mhttps server started on 40971
+2026-11-12T19:32:06.3061428Z 
+2026-11-12T19:32:07.6746978Z  [32m✓[39m test/native-shutdown-submissions.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 17346[2mms[22m[39m
+2026-11-12T19:32:07.6748068Z    [33m[2m✓[22m[39m awaits each cleanup stage and retains late provider-local suffixes without changing immutable global/module prefixes [33m 1444[2mms[22m[39m
+2026-11-12T19:32:07.6749495Z    [33m[2m✓[22m[39m rejects delayed denied payments under every verdict: ACCEPTED_BY_NETWORK [33m 2664[2mms[22m[39m
+2026-11-12T19:32:07.6750636Z    [33m[2m✓[22m[39m rejects delayed denied payments under every verdict: REJECTED [33m 2860[2mms[22m[39m
+2026-11-12T19:32:07.6751803Z    [33m[2m✓[22m[39m rejects delayed denied payments under every verdict: REJECTED_INVALID_TX [33m 2705[2mms[22m[39m
+2026-11-12T19:32:07.6752921Z    [33m[2m✓[22m[39m rejects delayed denied payments under every verdict: UNKNOWN [33m 2386[2mms[22m[39m
+2026-11-12T19:32:07.6754174Z    [33m[2m✓[22m[39m rejects a delayed repeat of the approved payment outside the exact original grant window [33m 1196[2mms[22m[39m
+2026-11-12T19:32:07.6755564Z    [33m[2m✓[22m[39m rejects rebound metadata, clipped prefixes, incomplete provenance and premature capture [33m 1341[2mms[22m[39m
+2026-11-12T19:32:07.6756918Z    [33m[2m✓[22m[39m retains actual typescript counterpart arrays after service ownership maps are retired [33m 725[2mms[22m[39m
+2026-11-12T19:32:07.6758202Z    [33m[2m✓[22m[39m retains actual go counterpart arrays after service ownership maps are retired [33m 669[2mms[22m[39m
+2026-11-12T19:32:07.6760269Z    [33m[2m✓[22m[39m does not reclassify a same-script5sat receipt before the permission module began [33m 1343[2mms[22m[39m
+2026-11-12T19:32:07.6830495Z 
+2026-11-12T19:32:07.6849810Z [2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+2026-11-12T19:32:07.6857229Z [2m      Tests [22m [1m[32m14 passed[39m[22m[90m (14)[39m
+2026-11-12T19:32:07.6857761Z [2m   Start at [22m 19:31:49
+2026-11-12T19:32:07.6858765Z [2m   Duration [22m 18.17s[2m (transform 233ms, setup 0ms, import 1.35s, tests 26.20s, environment 0ms)[22m
+2026-11-12T19:32:07.6859378Z 
+2026-11-12T19:32:07.7406597Z ##[group]Run npm test --prefix components/transport
+2026-11-12T19:32:07.7406947Z [36;1mnpm test --prefix components/transport[0m
+2026-11-12T19:32:07.7407224Z [36;1mnpm test --prefix integrations/services[0m
+2026-11-12T19:32:07.7407601Z [36;1mRUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml[0m
+2026-11-12T19:32:07.7408304Z [36;1mRUSTUP_TOOLCHAIN=1.88.0 cargo test --locked --manifest-path components/rust/Cargo.toml --features graph-oracle-v3 --target-dir components/rust/target/corpus-v3[0m
+2026-11-12T19:32:07.7427617Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:32:07.7427831Z env:
+2026-11-12T19:32:07.7428011Z   GOTOOLCHAIN: local
+2026-11-12T19:32:07.7428220Z ##[endgroup]
+2026-11-12T19:32:07.8221301Z 
+2026-11-12T19:32:07.8221695Z > test
+2026-11-12T19:32:07.8222002Z > node --test test/*.test.mjs
+2026-11-12T19:32:07.8222167Z 
+2026-11-12T19:32:08.5310788Z ✔ published relay and pairing clients enforce the complete protocol boundary (252.94953ms)
+2026-11-12T19:32:08.5545228Z ✔ separate processes admit exactly one claim and preserve it after restart (114.364799ms)
+2026-11-12T19:32:08.5546272Z ✔ expiry, inclusive boundary, capacity and invalid values fail closed (1.644946ms)
+2026-11-12T19:32:08.5547164Z ✔ Rust corpus2 remains the default and has no graph-v3 policy (1.616774ms)
+2026-11-12T19:32:08.5548023Z ✔ graph manifest requires the entire exact source inventory (7.904535ms)
+2026-11-12T19:32:08.5549157Z ✔ graph manifest rejects source byte changes and policy/pin substitution (7.020349ms)
+2026-11-12T19:32:08.5550267Z ✔ explicit corpus3 changes only joined spend operation and subject binding (48.306822ms)
+2026-11-12T19:32:08.5551477Z ✔ removing native compatibility fields cannot relabel corpus3 as default2, or corpus2 as explicit3 (1.863657ms)
+2026-11-12T19:32:08.5552203Z ℹ tests 8
+2026-11-12T19:32:08.5552490Z ℹ suites 0
+2026-11-12T19:32:08.5552760Z ℹ pass 8
+2026-11-12T19:32:08.5553016Z ℹ fail 0
+2026-11-12T19:32:08.5553279Z ℹ cancelled 0
+2026-11-12T19:32:08.5553576Z ℹ skipped 0
+2026-11-12T19:32:08.5553838Z ℹ todo 0
+2026-11-12T19:32:08.5554150Z ℹ duration_ms 703.921335
+2026-11-12T19:32:08.6356162Z 
+2026-11-12T19:32:08.6356558Z > @tpnil/services-integration@0.1.0 test
+2026-11-12T19:32:08.6356924Z > node --import tsx --test test/*.test.ts
+2026-11-12T19:32:08.6357105Z 
+2026-11-12T19:32:10.2802313Z ◇ injected env (0) from .env // tip: ⌘ override existing { override: true }
+2026-11-12T19:32:10.2803999Z ◇ injected env (0) from .env // tip: ⌘ custom filepath { path: '/custom/path/.env' }
+2026-11-12T19:32:10.8060190Z WalletStorageServer listening at http://127.0.0.1:0
+2026-11-12T19:32:10.8078593Z SNI enabled. Clients not supporting SNI may fail
+2026-11-12T19:32:10.9544243Z https server started on 40925
+2026-11-12T19:32:11.3485515Z ✔ zero-prefix fixture passes actual Toolbox 2.13 public certificate operations and strict SDK4 disclosure (993.19427ms)
+2026-11-12T19:32:11.3993081Z ✔ outpoint-node duplication is removed while genuine conflicting transactions remain rejected (9.460056ms)
+2026-11-12T19:32:11.3994657Z ✔ fixture2 publishes subject-owned signed identity token and rejects altered identity/origin (337.362715ms)
+2026-11-12T19:32:11.3999220Z ✔ LCH boundary derives the same real BRC-29 key on both sides and canonicalizes remittance (43.175417ms)
+2026-11-12T19:32:11.4302441Z ✔ joined real Go storage result verifies signed receipts, transactions, content and overlay evidence offline (181.120338ms)
+2026-11-12T19:32:11.4304419Z ✔ forged receipt cannot retain a successful native-synthesis result (79.505734ms)
+2026-11-12T19:32:11.4305465Z ✔ forged plaintext cannot retain a successful native-synthesis result (44.955097ms)
+2026-11-12T19:32:11.4306164Z ✔ forged replica cannot retain a successful native-synthesis result (90.511544ms)
+2026-11-12T19:32:11.4307970Z ✔ forged recipient cannot retain a successful native-synthesis result (60.1629ms)
+2026-11-12T19:32:12.1490980Z ✔ retained real service evidence passes its independent semantic checks (44.929198ms)
+2026-11-12T19:32:12.1676656Z ✔ a forged passing lookup cannot substitute an already synchronized payload (18.698851ms)
+2026-11-12T19:32:12.1755025Z ✔ altered header still fails after its evidence digest is rebound (7.572649ms)
+2026-11-12T19:32:12.1875362Z ✔ altered issuer signature still fails after its evidence digest is rebound (12.344614ms)
+2026-11-12T19:32:12.1932465Z ✔ omitted source provenance cannot retain PASS (5.432829ms)
+2026-11-12T19:32:12.2290063Z ✔ incomplete cleanup cannot retain PASS (35.506962ms)
+2026-11-12T19:32:12.2712362Z ℹ tests 15
+2026-11-12T19:32:12.2712602Z ℹ suites 0
+2026-11-12T19:32:12.2712831Z ℹ pass 15
+2026-11-12T19:32:12.2713021Z ℹ fail 0
+2026-11-12T19:32:12.2713211Z ℹ cancelled 0
+2026-11-12T19:32:12.2713416Z ℹ skipped 0
+2026-11-12T19:32:12.2713605Z ℹ todo 0
+2026-11-12T19:32:12.2713823Z ℹ duration_ms 3609.110594
+2026-11-12T19:32:12.3112710Z     Updating git repository `https://github.com/bsv-blockchain/rs-sdk.git`
+2026-11-12T19:32:13.4789195Z     Updating crates.io index
+2026-11-12T19:32:13.7590156Z  Downloading crates ...
+2026-11-12T19:32:13.8769118Z   Downloaded quote v1.0.47
+2026-11-12T19:32:13.8883261Z   Downloaded itoa v1.0.18
+2026-11-12T19:32:13.8982642Z   Downloaded ryu v1.0.23
+2026-11-12T19:32:13.9069430Z   Downloaded equivalent v1.0.3
+2026-11-12T19:32:13.9086917Z   Downloaded hex v0.4.3
+2026-11-12T19:32:13.9126564Z   Downloaded cfg-if v1.0.5
+2026-11-12T19:32:13.9277029Z   Downloaded async-trait v0.1.92
+2026-11-12T19:32:13.9320744Z   Downloaded getrandom v0.2.17
+2026-11-12T19:32:13.9344752Z   Downloaded thiserror v2.0.21
+2026-11-12T19:32:13.9413609Z   Downloaded thiserror-impl v2.0.21
+2026-11-12T19:32:13.9426306Z   Downloaded unicode-ident v1.0.27
+2026-11-12T19:32:13.9450028Z   Downloaded serde_core v1.0.229
+2026-11-12T19:32:13.9472869Z   Downloaded proc-macro2 v1.0.107
+2026-11-12T19:32:13.9497174Z   Downloaded memchr v2.8.3
+2026-11-12T19:32:13.9540429Z   Downloaded indexmap v2.14.2
+2026-11-12T19:32:13.9574486Z   Downloaded hashbrown v0.17.1
+2026-11-12T19:32:13.9618760Z   Downloaded serde_json v1.0.145
+2026-11-12T19:32:13.9682416Z   Downloaded syn v3.0.9
+2026-11-12T19:32:13.9773447Z   Downloaded libc v0.2.191
+2026-11-12T19:32:14.0294253Z    Compiling proc-macro2 v1.0.107
+2026-11-12T19:32:14.0294749Z    Compiling unicode-ident v1.0.27
+2026-11-12T19:32:14.0296068Z    Compiling quote v1.0.47
+2026-11-12T19:32:14.0296480Z    Compiling serde_core v1.0.229
+2026-11-12T19:32:14.0827989Z    Compiling libc v0.2.191
+2026-11-12T19:32:14.2350281Z    Compiling thiserror v2.0.21
+2026-11-12T19:32:14.4109782Z    Compiling serde_json v1.0.145
+2026-11-12T19:32:14.5571482Z    Compiling memchr v2.8.3
+2026-11-12T19:32:14.9609684Z    Compiling syn v3.0.9
+2026-11-12T19:32:15.1809776Z    Compiling ryu v1.0.23
+2026-11-12T19:32:15.2909798Z    Compiling itoa v1.0.18
+2026-11-12T19:32:15.3859979Z    Compiling equivalent v1.0.3
+2026-11-12T19:32:15.4123717Z    Compiling cfg-if v1.0.5
+2026-11-12T19:32:15.4349699Z    Compiling hashbrown v0.17.1
+2026-11-12T19:32:15.4583992Z    Compiling getrandom v0.2.17
+2026-11-12T19:32:15.5519773Z    Compiling hex v0.4.3
+2026-11-12T19:32:15.9520989Z    Compiling indexmap v2.14.2
+2026-11-12T19:32:17.1663983Z    Compiling thiserror-impl v2.0.21
+2026-11-12T19:32:17.1664360Z    Compiling async-trait v0.1.92
+2026-11-12T19:32:17.8737445Z    Compiling bsv-sdk v0.8.1 (https://github.com/bsv-blockchain/rs-sdk.git?rev=99d2313f2ede48a465aa8be1907d26d098aac8fd#99d2313f)
+2026-11-12T19:32:20.7095632Z    Compiling tpnil-rust-participant v0.1.0 (/home/runner/work/interop/interop/components/rust)
+2026-11-12T19:32:21.1187492Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 8.83s
+2026-11-12T19:32:21.1263892Z      Running unittests src/main.rs (components/rust/target/debug/deps/tpnil_rust_participant-0dce492ed788423f)
+2026-11-12T19:32:21.1275725Z 
+2026-11-12T19:32:21.1275932Z running 1 test
+2026-11-12T19:32:21.1278364Z test tests::repeated_outpoint_cannot_inflate_input_value ... ok
+2026-11-12T19:32:21.1278826Z 
+2026-11-12T19:32:21.1279598Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-11-12T19:32:21.1280023Z 
+2026-11-12T19:32:21.1774093Z    Compiling proc-macro2 v1.0.107
+2026-11-12T19:32:21.1774827Z    Compiling unicode-ident v1.0.27
+2026-11-12T19:32:21.1775484Z    Compiling quote v1.0.47
+2026-11-12T19:32:21.1775839Z    Compiling serde_core v1.0.229
+2026-11-12T19:32:21.2409889Z    Compiling libc v0.2.191
+2026-11-12T19:32:21.3772746Z    Compiling serde_json v1.0.145
+2026-11-12T19:32:21.5239915Z    Compiling thiserror v2.0.21
+2026-11-12T19:32:21.9328586Z    Compiling syn v3.0.9
+2026-11-12T19:32:21.9539595Z    Compiling cfg-if v1.0.5
+2026-11-12T19:32:21.9819785Z    Compiling equivalent v1.0.3
+2026-11-12T19:32:22.0049592Z    Compiling itoa v1.0.18
+2026-11-12T19:32:22.1129767Z    Compiling ryu v1.0.23
+2026-11-12T19:32:22.2109780Z    Compiling memchr v2.8.3
+2026-11-12T19:32:22.5527561Z    Compiling hashbrown v0.17.1
+2026-11-12T19:32:22.7889727Z    Compiling getrandom v0.2.17
+2026-11-12T19:32:22.8865291Z    Compiling hex v0.4.3
+2026-11-12T19:32:23.1446240Z    Compiling indexmap v2.14.2
+2026-11-12T19:32:24.2688381Z    Compiling thiserror-impl v2.0.21
+2026-11-12T19:32:24.2689020Z    Compiling async-trait v0.1.92
+2026-11-12T19:32:24.9750847Z    Compiling bsv-sdk v0.8.1 (https://github.com/bsv-blockchain/rs-sdk.git?rev=99d2313f2ede48a465aa8be1907d26d098aac8fd#99d2313f)
+2026-11-12T19:32:27.8344064Z    Compiling tpnil-rust-participant v0.1.0 (/home/runner/work/interop/interop/components/rust)
+2026-11-12T19:32:28.6233379Z     Finished `test` profile [unoptimized + debuginfo] target(s) in 7.48s
+2026-11-12T19:32:28.6249809Z      Running unittests src/main.rs (components/rust/target/corpus-v3/debug/deps/tpnil_rust_participant-7e99a1c704af3d35)
+2026-11-12T19:32:28.6261602Z 
+2026-11-12T19:32:28.6261748Z running 14 tests
+2026-11-12T19:32:28.6282206Z test graph_oracle_v3::tests::cycles_and_index_aliases_fail_closed ... ok
+2026-11-12T19:32:28.6283390Z test graph_oracle_v3::tests::bad_ancestor_script_is_checked_even_when_subject_script_is_valid ... ok
+2026-11-12T19:32:28.6289881Z test graph_oracle_v3::tests::duplicate_beef_entries_are_rejected_instead_of_last_writer_winning ... ok
+2026-11-12T19:32:28.6307843Z test graph_oracle_v3::tests::duplicate_subject_inputs_cannot_inflate_available_value ... ok
+2026-11-12T19:32:28.6308967Z test graph_oracle_v3::tests::malformed_subject_framing_and_height_are_rejected ... ok
+2026-11-12T19:32:28.6319558Z test graph_oracle_v3::tests::forged_ancestor_bytes_cannot_keep_the_old_transaction_identity ... ok
+2026-11-12T19:32:28.6349433Z test graph_oracle_v3::tests::parsed_but_reordered_beef_table_has_the_same_graph ... ok
+2026-11-12T19:32:28.6375455Z test graph_oracle_v3::tests::missing_and_txid_only_ancestor_cannot_borrow_from_another_request ... ok
+2026-11-12T19:32:28.6376789Z test graph_oracle_v3::tests::mutated_script_value_root_height_and_missing_output_do_not_pass ... ok
+2026-11-12T19:32:28.6390509Z test graph_oracle_v3::tests::shared_dag_is_valid_in_both_input_orders_without_expanding_duplicate_trees ... ok
+2026-11-12T19:32:28.6395804Z test tests::repeated_outpoint_cannot_inflate_input_value ... ok
+2026-11-12T19:32:28.6397033Z test graph_oracle_v3::tests::two_distinct_ancestors_cannot_spend_the_same_outpoint ... ok
+2026-11-12T19:32:28.6580590Z test graph_oracle_v3::tests::ancestry_depth_limit_retains_the_original_64_edge_boundary ... ok
+2026-11-12T19:32:28.6813050Z test graph_oracle_v3::tests::shallow_memoized_visits_do_not_hide_a_deep_dag_path ... ok
+2026-11-12T19:32:28.6813504Z 
+2026-11-12T19:32:28.6813988Z test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+2026-11-12T19:32:28.6814904Z 
+2026-11-12T19:32:28.6863218Z ##[group]Run node scripts/run-integrated-lab.mjs out/integrated-lab --exact-history
+2026-11-12T19:32:28.6863703Z [36;1mnode scripts/run-integrated-lab.mjs out/integrated-lab --exact-history[0m
+2026-11-12T19:32:28.6881241Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:32:28.6881453Z env:
+2026-11-12T19:32:28.6881620Z   GOTOOLCHAIN: local
+2026-11-12T19:32:28.6881814Z   RUSTUP_TOOLCHAIN: 1.88.0
+2026-11-12T19:32:28.6882017Z ##[endgroup]
+2026-11-12T19:32:28.7644872Z [integrated-lab] storage-sync: starting
+2026-11-12T19:32:58.4394404Z [integrated-lab] storage-sync: exit 0; 88 observations
+2026-11-12T19:32:58.4395358Z [integrated-lab] descendant-storage-sync: starting
+2026-11-12T19:33:21.5419546Z [integrated-lab] descendant-storage-sync: exit 0; 80 observations
+2026-11-12T19:33:21.5420222Z [integrated-lab] overlay-identity-1: starting
+2026-11-12T19:33:28.2497709Z [integrated-lab] overlay-identity-1: exit 0; 14 observations
+2026-11-12T19:33:28.2498341Z [integrated-lab] overlay-identity-2: starting
+2026-11-12T19:33:34.9535030Z [integrated-lab] overlay-identity-2: exit 0; 14 observations
+2026-11-12T19:33:34.9535720Z [integrated-lab] messaging-1: starting
+2026-11-12T19:33:59.3483806Z [integrated-lab] messaging-1: exit 0; 41 observations
+2026-11-12T19:33:59.3484381Z [integrated-lab] messaging-2: starting
+2026-11-12T19:34:13.9060230Z [integrated-lab] messaging-2: exit 0; 41 observations
+2026-11-12T19:34:13.9060668Z [integrated-lab] transport-typescript-1: starting
+2026-11-12T19:34:16.6526636Z [integrated-lab] transport-typescript-1: exit 0; 17 observations
+2026-11-12T19:34:16.6527316Z [integrated-lab] transport-typescript-2: starting
+2026-11-12T19:34:19.3442018Z [integrated-lab] transport-typescript-2: exit 0; 17 observations
+2026-11-12T19:34:19.3442685Z [integrated-lab] transport-go-1: starting
+2026-11-12T19:34:21.8978781Z [integrated-lab] transport-go-1: exit 0; 17 observations
+2026-11-12T19:34:21.8979229Z [integrated-lab] transport-go-2: starting
+2026-11-12T19:34:24.3795134Z [integrated-lab] transport-go-2: exit 0; 17 observations
+2026-11-12T19:34:24.3795805Z [integrated-lab] boundary-typescript-1: starting
+2026-11-12T19:34:28.2356825Z [integrated-lab] boundary-typescript-1: exit 0; 43 observations
+2026-11-12T19:34:28.2357289Z [integrated-lab] boundary-typescript-2: starting
+2026-11-12T19:34:32.7519996Z [integrated-lab] boundary-typescript-2: exit 0; 43 observations
+2026-11-12T19:34:32.7520638Z [integrated-lab] boundary-go-1: starting
+2026-11-12T19:34:36.3078146Z [integrated-lab] boundary-go-1: exit 0; 43 observations
+2026-11-12T19:34:36.3078712Z [integrated-lab] boundary-go-2: starting
+2026-11-12T19:34:39.9268766Z [integrated-lab] boundary-go-2: exit 0; 43 observations
+2026-11-12T19:34:39.9269331Z [integrated-lab] rust-1: starting
+2026-11-12T19:34:41.1138170Z [integrated-lab] rust-1: exit 0; 36 observations
+2026-11-12T19:34:41.1138899Z [integrated-lab] rust-2: starting
+2026-11-12T19:34:41.6986063Z [integrated-lab] rust-2: exit 0; 36 observations
+2026-11-12T19:34:41.8188979Z {"schema":"tpnil-integrated-verification@2","verified":true,"source":"784733b9cfdb1e29f0e4922d6ca90e768144bfee","profile":"ITCVE-1@3.0.0","lanes":9,"findings":[{"lane":"messaging","resultFile":"messaging-1/result.json","run":0,"implementation":"go","id":"paid-internalization","result":"FAIL"},{"lane":"messaging","resultFile":"messaging-1/result.json","run":0,"implementation":"go","id":"payment-replay-after-acknowledgment","result":"FAIL"},{"lane":"messaging","resultFile":"messaging-1/result.json","run":0,"implementation":"go","id":"payment-replay-rejected","result":"FAIL"},{"lane":"messaging","resultFile":"messaging-2/result.json","run":0,"implementation":"go","id":"paid-internalization","result":"FAIL"},{"lane":"messaging","resultFile":"messaging-2/result.json","run":0,"implementation":"go","id":"payment-replay-after-acknowledgment","result":"FAIL"},{"lane":"messaging","resultFile":"messaging-2/result.json","run":0,"implementation":"go","id":"payment-replay-rejected","result":"FAIL"}]}
+2026-11-12T19:34:41.8295623Z ##[group]Run node scripts/verify-integrated-lab.mjs out/integrated-lab
+2026-11-12T19:34:41.8296240Z [36;1mnode scripts/verify-integrated-lab.mjs out/integrated-lab[0m
+2026-11-12T19:34:41.8296674Z [36;1mRUSTUP_TOOLCHAIN=1.88.0 node scripts/verify-published-integrations.mjs --semantic[0m
+2026-11-12T19:34:41.8297135Z [36;1mnode scripts/test-messaging-verifier.mjs out/integrated-lab/messaging-1[0m
+2026-11-12T19:34:41.8298074Z [36;1mRUSTUP_TOOLCHAIN=1.88.0 node scripts/test-rust-verifier.mjs out/integrated-lab/rust-1 out/integrated-lab/transport-typescript-1/paid-http.json out/integrated-lab/transport-go-1/paid-http.json out/integrated-lab/overlay-identity-1/rust-certificate-vectors.json[0m
+2026-11-12T19:34:41.8316829Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:34:41.8317036Z env:
+2026-11-12T19:34:41.8317214Z   GOTOOLCHAIN: local
+2026-11-12T19:34:41.8317396Z ##[endgroup]
+2026-11-12T19:34:57.1118979Z {
+2026-11-12T19:34:57.1119357Z   "schema": "tpnil-integrated-verification@2",
+2026-11-12T19:34:57.1119751Z   "verified": true,
+2026-11-12T19:34:57.1120057Z   "source": "784733b9cfdb1e29f0e4922d6ca90e768144bfee",
+2026-11-12T19:34:57.1120348Z   "profile": "ITCVE-1@3.0.0",
+2026-11-12T19:34:57.1120576Z   "lanes": 9,
+2026-11-12T19:34:57.1120755Z   "findings": [
+2026-11-12T19:34:57.1120925Z     {
+2026-11-12T19:34:57.1121126Z       "lane": "messaging",
+2026-11-12T19:34:57.1121415Z       "resultFile": "messaging-1/result.json",
+2026-11-12T19:34:57.1121661Z       "run": 0,
+2026-11-12T19:34:57.1121875Z       "implementation": "go",
+2026-11-12T19:34:57.1122144Z       "id": "paid-internalization",
+2026-11-12T19:34:57.1122384Z       "result": "FAIL"
+2026-11-12T19:34:57.1122567Z     },
+2026-11-12T19:34:57.1122726Z     {
+2026-11-12T19:34:57.1122916Z       "lane": "messaging",
+2026-11-12T19:34:57.1123191Z       "resultFile": "messaging-1/result.json",
+2026-11-12T19:34:57.1123531Z       "run": 0,
+2026-11-12T19:34:57.1123871Z       "implementation": "go",
+2026-11-12T19:34:57.1124361Z       "id": "payment-replay-after-acknowledgment",
+2026-11-12T19:34:57.1124770Z       "result": "FAIL"
+2026-11-12T19:34:57.1125021Z     },
+2026-11-12T19:34:57.1125229Z     {
+2026-11-12T19:34:57.1125490Z       "lane": "messaging",
+2026-11-12T19:34:57.1125919Z       "resultFile": "messaging-1/result.json",
+2026-11-12T19:34:57.1126274Z       "run": 0,
+2026-11-12T19:34:57.1126581Z       "implementation": "go",
+2026-11-12T19:34:57.1126987Z       "id": "payment-replay-rejected",
+2026-11-12T19:34:57.1127345Z       "result": "FAIL"
+2026-11-12T19:34:57.1127600Z     },
+2026-11-12T19:34:57.1127822Z     {
+2026-11-12T19:34:57.1128091Z       "lane": "messaging",
+2026-11-12T19:34:57.1130675Z       "resultFile": "messaging-2/result.json",
+2026-11-12T19:34:57.1131077Z       "run": 0,
+2026-11-12T19:34:57.1131375Z       "implementation": "go",
+2026-11-12T19:34:57.1131765Z       "id": "paid-internalization",
+2026-11-12T19:34:57.1132128Z       "result": "FAIL"
+2026-11-12T19:34:57.1132398Z     },
+2026-11-12T19:34:57.1132615Z     {
+2026-11-12T19:34:57.1132892Z       "lane": "messaging",
+2026-11-12T19:34:57.1133325Z       "resultFile": "messaging-2/result.json",
+2026-11-12T19:34:57.1133678Z       "run": 0,
+2026-11-12T19:34:57.1133977Z       "implementation": "go",
+2026-11-12T19:34:57.1134451Z       "id": "payment-replay-after-acknowledgment",
+2026-11-12T19:34:57.1134866Z       "result": "FAIL"
+2026-11-12T19:34:57.1135123Z     },
+2026-11-12T19:34:57.1135343Z     {
+2026-11-12T19:34:57.1135604Z       "lane": "messaging",
+2026-11-12T19:34:57.1136024Z       "resultFile": "messaging-2/result.json",
+2026-11-12T19:34:57.1136396Z       "run": 0,
+2026-11-12T19:34:57.1136698Z       "implementation": "go",
+2026-11-12T19:34:57.1137111Z       "id": "payment-replay-rejected",
+2026-11-12T19:34:57.1137475Z       "result": "FAIL"
+2026-11-12T19:34:57.1137736Z     }
+2026-11-12T19:34:57.1137948Z   ],
+2026-11-12T19:34:57.1138224Z   "childOraclesVerified": true
+2026-11-12T19:34:57.1138668Z }
+2026-11-12T19:36:55.9325050Z {
+2026-11-12T19:36:55.9325807Z   "verifiedPublishedIntegrationArchives": 14,
+2026-11-12T19:36:55.9326352Z   "verifiedPublishedIntegrationAttempts": 23,
+2026-11-12T19:36:55.9326635Z   "semantic": true,
+2026-11-12T19:36:55.9326843Z   "bundles": [
+2026-11-12T19:36:55.9327023Z     {
+2026-11-12T19:36:55.9327244Z       "kind": "component",
+2026-11-12T19:36:55.9327711Z       "path": "journals/integrated-component-qualification/2026-11-06/42304588035",
+2026-11-12T19:36:55.9328180Z       "source": "9b94f0ec358093c164119b5973b3e42eded4999d",
+2026-11-12T19:36:55.9328724Z       "files": 8,
+2026-11-12T19:36:55.9329033Z       "semantic": true,
+2026-11-12T19:36:55.9329310Z       "extracted": {
+2026-11-12T19:36:55.9329524Z         "entries": 141,
+2026-11-12T19:36:55.9329744Z         "bytes": 17049881
+2026-11-12T19:36:55.9329955Z       },
+2026-11-12T19:36:55.9330145Z       "assertions": {
+2026-11-12T19:36:55.9330356Z         "total": 510,
+2026-11-12T19:36:55.9330561Z         "outcomes": {
+2026-11-12T19:36:55.9330777Z           "PASS": 504,
+2026-11-12T19:36:55.9330997Z           "FAIL": 6
+2026-11-12T19:36:55.9331192Z         }
+2026-11-12T19:36:55.9331370Z       },
+2026-11-12T19:36:55.9331592Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9331803Z     },
+2026-11-12T19:36:55.9331972Z     {
+2026-11-12T19:36:55.9332173Z       "kind": "component",
+2026-11-12T19:36:55.9332607Z       "path": "journals/integrated-component-qualification/2026-11-06/42305420953",
+2026-11-12T19:36:55.9333081Z       "source": "c768a577cd4bf2798deaf1fda07e942d590ae424",
+2026-11-12T19:36:55.9333362Z       "files": 8,
+2026-11-12T19:36:55.9333579Z       "semantic": true,
+2026-11-12T19:36:55.9333797Z       "extracted": {
+2026-11-12T19:36:55.9334012Z         "entries": 141,
+2026-11-12T19:36:55.9334231Z         "bytes": 17031880
+2026-11-12T19:36:55.9334434Z       },
+2026-11-12T19:36:55.9334620Z       "assertions": {
+2026-11-12T19:36:55.9334830Z         "total": 510,
+2026-11-12T19:36:55.9335032Z         "outcomes": {
+2026-11-12T19:36:55.9335526Z           "PASS": 504,
+2026-11-12T19:36:55.9335983Z           "FAIL": 6
+2026-11-12T19:36:55.9336361Z         }
+2026-11-12T19:36:55.9336733Z       },
+2026-11-12T19:36:55.9337138Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9337512Z     },
+2026-11-12T19:36:55.9337843Z     {
+2026-11-12T19:36:55.9338261Z       "kind": "component",
+2026-11-12T19:36:55.9339172Z       "path": "journals/integrated-component-qualification/2026-11-06/42309037195",
+2026-11-12T19:36:55.9341250Z       "source": "28916cb6355f120c790a0cd97a5d97d7d52116c2",
+2026-11-12T19:36:55.9341784Z       "files": 8,
+2026-11-12T19:36:55.9342105Z       "semantic": true,
+2026-11-12T19:36:55.9342444Z       "extracted": {
+2026-11-12T19:36:55.9342794Z         "entries": 141,
+2026-11-12T19:36:55.9343160Z         "bytes": 16953552
+2026-11-12T19:36:55.9343486Z       },
+2026-11-12T19:36:55.9343807Z       "assertions": {
+2026-11-12T19:36:55.9344133Z         "total": 510,
+2026-11-12T19:36:55.9344470Z         "outcomes": {
+2026-11-12T19:36:55.9344821Z           "PASS": 504,
+2026-11-12T19:36:55.9345172Z           "FAIL": 6
+2026-11-12T19:36:55.9345483Z         }
+2026-11-12T19:36:55.9345756Z       },
+2026-11-12T19:36:55.9346109Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9346450Z     },
+2026-11-12T19:36:55.9346695Z     {
+2026-11-12T19:36:55.9347007Z       "kind": "component",
+2026-11-12T19:36:55.9347744Z       "path": "journals/integrated-component-qualification/2026-11-06/42312093738",
+2026-11-12T19:36:55.9350222Z       "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+2026-11-12T19:36:55.9350621Z       "files": 8,
+2026-11-12T19:36:55.9350841Z       "semantic": true,
+2026-11-12T19:36:55.9351060Z       "extracted": {
+2026-11-12T19:36:55.9351284Z         "entries": 141,
+2026-11-12T19:36:55.9351532Z         "bytes": 17059480
+2026-11-12T19:36:55.9351744Z       },
+2026-11-12T19:36:55.9351945Z       "assertions": {
+2026-11-12T19:36:55.9352176Z         "total": 510,
+2026-11-12T19:36:55.9352386Z         "outcomes": {
+2026-11-12T19:36:55.9352622Z           "PASS": 504,
+2026-11-12T19:36:55.9352848Z           "FAIL": 6
+2026-11-12T19:36:55.9353277Z         }
+2026-11-12T19:36:55.9353673Z       },
+2026-11-12T19:36:55.9353921Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9354159Z     },
+2026-11-12T19:36:55.9354332Z     {
+2026-11-12T19:36:55.9354551Z       "kind": "component",
+2026-11-12T19:36:55.9355008Z       "path": "journals/integrated-component-qualification/2026-11-09/42661301489",
+2026-11-12T19:36:55.9355490Z       "source": "ec6cff827e6bc29d0c53951a5ed6a9cae72e724b",
+2026-11-12T19:36:55.9355809Z       "files": 8,
+2026-11-12T19:36:55.9356035Z       "semantic": true,
+2026-11-12T19:36:55.9356265Z       "extracted": {
+2026-11-12T19:36:55.9356489Z         "entries": 141,
+2026-11-12T19:36:55.9356730Z         "bytes": 17015666
+2026-11-12T19:36:55.9356945Z       },
+2026-11-12T19:36:55.9357130Z       "assertions": {
+2026-11-12T19:36:55.9357360Z         "total": 510,
+2026-11-12T19:36:55.9357576Z         "outcomes": {
+2026-11-12T19:36:55.9357789Z           "PASS": 504,
+2026-11-12T19:36:55.9358021Z           "FAIL": 6
+2026-11-12T19:36:55.9358218Z         }
+2026-11-12T19:36:55.9358388Z       },
+2026-11-12T19:36:55.9358888Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9359196Z     },
+2026-11-12T19:36:55.9359433Z     {
+2026-11-12T19:36:55.9359747Z       "kind": "component",
+2026-11-12T19:36:55.9360402Z       "path": "journals/integrated-component-qualification/2026-11-09/42666966132",
+2026-11-12T19:36:55.9361072Z       "source": "60c87315cccdfef86523b03a9ce2390bae639dae",
+2026-11-12T19:36:55.9361477Z       "files": 8,
+2026-11-12T19:36:55.9361768Z       "semantic": true,
+2026-11-12T19:36:55.9362064Z       "extracted": {
+2026-11-12T19:36:55.9362371Z         "entries": 141,
+2026-11-12T19:36:55.9362695Z         "bytes": 17030100
+2026-11-12T19:36:55.9362968Z       },
+2026-11-12T19:36:55.9363270Z       "assertions": {
+2026-11-12T19:36:55.9363626Z         "total": 510,
+2026-11-12T19:36:55.9363906Z         "outcomes": {
+2026-11-12T19:36:55.9364247Z           "PASS": 504,
+2026-11-12T19:36:55.9364569Z           "FAIL": 6
+2026-11-12T19:36:55.9364901Z         }
+2026-11-12T19:36:55.9365146Z       },
+2026-11-12T19:36:55.9365489Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9365820Z     },
+2026-11-12T19:36:55.9366050Z     {
+2026-11-12T19:36:55.9366354Z       "kind": "component",
+2026-11-12T19:36:55.9366834Z       "path": "journals/integrated-component-qualification/2026-11-09/42674635670",
+2026-11-12T19:36:55.9367297Z       "source": "def98acc4d5dcf37b9ef7d52d9dbd13fe70023b8",
+2026-11-12T19:36:55.9367572Z       "files": 8,
+2026-11-12T19:36:55.9367774Z       "semantic": true,
+2026-11-12T19:36:55.9367975Z       "extracted": {
+2026-11-12T19:36:55.9368183Z         "entries": 141,
+2026-11-12T19:36:55.9368391Z         "bytes": 17018201
+2026-11-12T19:36:55.9368792Z       },
+2026-11-12T19:36:55.9368975Z       "assertions": {
+2026-11-12T19:36:55.9369172Z         "total": 510,
+2026-11-12T19:36:55.9369377Z         "outcomes": {
+2026-11-12T19:36:55.9369586Z           "PASS": 504,
+2026-11-12T19:36:55.9369785Z           "FAIL": 6
+2026-11-12T19:36:55.9369966Z         }
+2026-11-12T19:36:55.9370126Z       },
+2026-11-12T19:36:55.9370342Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9370540Z     },
+2026-11-12T19:36:55.9370704Z     {
+2026-11-12T19:36:55.9370890Z       "kind": "component",
+2026-11-12T19:36:55.9371295Z       "path": "journals/integrated-component-qualification/2026-11-09/42680171419",
+2026-11-12T19:36:55.9371741Z       "source": "3f9cbead7c05a17b663f9c2c52b93abdf04eac69",
+2026-11-12T19:36:55.9372007Z       "files": 8,
+2026-11-12T19:36:55.9372198Z       "semantic": true,
+2026-11-12T19:36:55.9372399Z       "extracted": {
+2026-11-12T19:36:55.9372601Z         "entries": 141,
+2026-11-12T19:36:55.9372807Z         "bytes": 17015740
+2026-11-12T19:36:55.9372994Z       },
+2026-11-12T19:36:55.9373174Z       "assertions": {
+2026-11-12T19:36:55.9373373Z         "total": 510,
+2026-11-12T19:36:55.9373571Z         "outcomes": {
+2026-11-12T19:36:55.9373778Z           "PASS": 504,
+2026-11-12T19:36:55.9373979Z           "FAIL": 6
+2026-11-12T19:36:55.9374151Z         }
+2026-11-12T19:36:55.9374486Z       },
+2026-11-12T19:36:55.9374802Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9375000Z     },
+2026-11-12T19:36:55.9375147Z     {
+2026-11-12T19:36:55.9375348Z       "kind": "component",
+2026-11-12T19:36:55.9375756Z       "path": "journals/integrated-component-qualification/2026-11-09/42689603169",
+2026-11-12T19:36:55.9376188Z       "source": "d02414f58d888e3d11913dedd888a3e5871bf29f",
+2026-11-12T19:36:55.9376449Z       "files": 8,
+2026-11-12T19:36:55.9376643Z       "semantic": true,
+2026-11-12T19:36:55.9376840Z       "extracted": {
+2026-11-12T19:36:55.9377046Z         "entries": 141,
+2026-11-12T19:36:55.9377249Z         "bytes": 17026354
+2026-11-12T19:36:55.9377434Z       },
+2026-11-12T19:36:55.9377631Z       "assertions": {
+2026-11-12T19:36:55.9377837Z         "total": 510,
+2026-11-12T19:36:55.9378038Z         "outcomes": {
+2026-11-12T19:36:55.9378248Z           "PASS": 504,
+2026-11-12T19:36:55.9378593Z           "FAIL": 6
+2026-11-12T19:36:55.9378801Z         }
+2026-11-12T19:36:55.9378969Z       },
+2026-11-12T19:36:55.9379194Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9379401Z     },
+2026-11-12T19:36:55.9379552Z     {
+2026-11-12T19:36:55.9379746Z       "kind": "component",
+2026-11-12T19:36:55.9380168Z       "path": "journals/integrated-component-qualification/2026-11-09/42697115971",
+2026-11-12T19:36:55.9380613Z       "source": "cc3cf756272b8d3826612d71e8f6356239fed6fa",
+2026-11-12T19:36:55.9380887Z       "files": 8,
+2026-11-12T19:36:55.9381088Z       "semantic": true,
+2026-11-12T19:36:55.9381293Z       "extracted": {
+2026-11-12T19:36:55.9381504Z         "entries": 141,
+2026-11-12T19:36:55.9381717Z         "bytes": 16919085
+2026-11-12T19:36:55.9381907Z       },
+2026-11-12T19:36:55.9382086Z       "assertions": {
+2026-11-12T19:36:55.9382295Z         "total": 510,
+2026-11-12T19:36:55.9382491Z         "outcomes": {
+2026-11-12T19:36:55.9382693Z           "PASS": 504,
+2026-11-12T19:36:55.9382901Z           "FAIL": 6
+2026-11-12T19:36:55.9383077Z         }
+2026-11-12T19:36:55.9383236Z       },
+2026-11-12T19:36:55.9383464Z       "isolatedExecutions": 22
+2026-11-12T19:36:55.9383663Z     },
+2026-11-12T19:36:55.9383820Z     {
+2026-11-12T19:36:55.9384010Z       "kind": "component",
+2026-11-12T19:36:55.9384418Z       "path": "journals/integrated-component-qualification/2026-11-09/42711677744",
+2026-11-12T19:36:55.9384859Z       "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+2026-11-12T19:36:55.9385121Z       "files": 9,
+2026-11-12T19:36:55.9385312Z       "semantic": true,
+2026-11-12T19:36:55.9385519Z       "extracted": {
+2026-11-12T19:36:55.9385719Z         "entries": 193,
+2026-11-12T19:36:55.9385943Z         "bytes": 29882551
+2026-11-12T19:36:55.9386127Z       },
+2026-11-12T19:36:55.9386312Z       "assertions": {
+2026-11-12T19:36:55.9386512Z         "total": 590,
+2026-11-12T19:36:55.9386706Z         "outcomes": {
+2026-11-12T19:36:55.9386913Z           "PASS": 584,
+2026-11-12T19:36:55.9387114Z           "FAIL": 6
+2026-11-12T19:36:55.9387286Z         }
+2026-11-12T19:36:55.9387453Z       },
+2026-11-12T19:36:55.9387662Z       "isolatedExecutions": 30
+2026-11-12T19:36:55.9387862Z     },
+2026-11-12T19:36:55.9388009Z     {
+2026-11-12T19:36:55.9388198Z       "kind": "component",
+2026-11-12T19:36:55.9388734Z       "path": "journals/integrated-component-qualification/2026-11-09/42720213646",
+2026-11-12T19:36:55.9389177Z       "source": "8055aabb731df2c2a4020c885445ae621b57e492",
+2026-11-12T19:36:55.9389443Z       "files": 50,
+2026-11-12T19:36:55.9389644Z       "semantic": true,
+2026-11-12T19:36:55.9389841Z       "extracted": {
+2026-11-12T19:36:55.9390052Z         "entries": 193,
+2026-11-12T19:36:55.9390261Z         "bytes": 29807765
+2026-11-12T19:36:55.9390445Z       },
+2026-11-12T19:36:55.9390630Z       "assertions": {
+2026-11-12T19:36:55.9390829Z         "total": 590,
+2026-11-12T19:36:55.9391022Z         "outcomes": {
+2026-11-12T19:36:55.9391221Z           "PASS": 584,
+2026-11-12T19:36:55.9391424Z           "FAIL": 6
+2026-11-12T19:36:55.9391603Z         }
+2026-11-12T19:36:55.9391769Z       },
+2026-11-12T19:36:55.9392129Z       "isolatedExecutions": 30
+2026-11-12T19:36:55.9392422Z     },
+2026-11-12T19:36:55.9392615Z     {
+2026-11-12T19:36:55.9392800Z       "kind": "native",
+2026-11-12T19:36:55.9393186Z       "path": "journals/integrated-native-qualification/2026-11-06/42312095022",
+2026-11-12T19:36:55.9393627Z       "source": "56a1de95b01308fee612b80a49bfdf1b034a2d66",
+2026-11-12T19:36:55.9393891Z       "files": 9,
+2026-11-12T19:36:55.9394086Z       "semantic": true,
+2026-11-12T19:36:55.9394288Z       "extracted": {
+2026-11-12T19:36:55.9394492Z         "entries": 124,
+2026-11-12T19:36:55.9394700Z         "bytes": 5826350
+2026-11-12T19:36:55.9394890Z       },
+2026-11-12T19:36:55.9395075Z       "repetitions": 2,
+2026-11-12T19:36:55.9395278Z       "assertions": {
+2026-11-12T19:36:55.9395475Z         "total": 154,
+2026-11-12T19:36:55.9395707Z         "outcomes": {
+2026-11-12T19:36:55.9395918Z           "PASS": 154
+2026-11-12T19:36:55.9396094Z         }
+2026-11-12T19:36:55.9396261Z       }
+2026-11-12T19:36:55.9396428Z     },
+2026-11-12T19:36:55.9396582Z     {
+2026-11-12T19:36:55.9396774Z       "kind": "attempt",
+2026-11-12T19:36:55.9397143Z       "path": "journals/integrated-native-attempts/2026-11-06/42304592193",
+2026-11-12T19:36:55.9397551Z       "source": "9b94f0ec358093c164119b5973b3e42eded4999d",
+2026-11-12T19:36:55.9397814Z       "files": 3,
+2026-11-12T19:36:55.9398100Z       "semantic": false,
+2026-11-12T19:36:55.9398638Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9398932Z     },
+2026-11-12T19:36:55.9399089Z     {
+2026-11-12T19:36:55.9399268Z       "kind": "attempt",
+2026-11-12T19:36:55.9399634Z       "path": "journals/integrated-native-attempts/2026-11-06/42305419944",
+2026-11-12T19:36:55.9400049Z       "source": "c768a577cd4bf2798deaf1fda07e942d590ae424",
+2026-11-12T19:36:55.9400308Z       "files": 3,
+2026-11-12T19:36:55.9400500Z       "semantic": false,
+2026-11-12T19:36:55.9400864Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9401142Z     },
+2026-11-12T19:36:55.9401296Z     {
+2026-11-12T19:36:55.9401484Z       "kind": "attempt",
+2026-11-12T19:36:55.9401847Z       "path": "journals/integrated-native-attempts/2026-11-06/42309035783",
+2026-11-12T19:36:55.9402240Z       "source": "28916cb6355f120c790a0cd97a5d97d7d52116c2",
+2026-11-12T19:36:55.9402495Z       "files": 5,
+2026-11-12T19:36:55.9402690Z       "semantic": false,
+2026-11-12T19:36:55.9403038Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9403317Z     },
+2026-11-12T19:36:55.9403466Z     {
+2026-11-12T19:36:55.9403646Z       "kind": "attempt",
+2026-11-12T19:36:55.9404001Z       "path": "journals/integrated-native-attempts/2026-11-09/42667035861",
+2026-11-12T19:36:55.9404401Z       "source": "60c87315cccdfef86523b03a9ce2390bae639dae",
+2026-11-12T19:36:55.9404661Z       "files": 14,
+2026-11-12T19:36:55.9404858Z       "semantic": false,
+2026-11-12T19:36:55.9405209Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9405486Z     },
+2026-11-12T19:36:55.9405630Z     {
+2026-11-12T19:36:55.9405811Z       "kind": "attempt",
+2026-11-12T19:36:55.9406163Z       "path": "journals/integrated-native-attempts/2026-11-09/42674638927",
+2026-11-12T19:36:55.9406568Z       "source": "def98acc4d5dcf37b9ef7d52d9dbd13fe70023b8",
+2026-11-12T19:36:55.9406839Z       "files": 15,
+2026-11-12T19:36:55.9407035Z       "semantic": false,
+2026-11-12T19:36:55.9407374Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9407649Z     },
+2026-11-12T19:36:55.9407793Z     {
+2026-11-12T19:36:55.9407969Z       "kind": "attempt",
+2026-11-12T19:36:55.9408325Z       "path": "journals/integrated-native-attempts/2026-11-09/42680240116",
+2026-11-12T19:36:55.9408912Z       "source": "3f9cbead7c05a17b663f9c2c52b93abdf04eac69",
+2026-11-12T19:36:55.9409174Z       "files": 16,
+2026-11-12T19:36:55.9409373Z       "semantic": false,
+2026-11-12T19:36:55.9409863Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9410225Z     },
+2026-11-12T19:36:55.9410371Z     {
+2026-11-12T19:36:55.9410555Z       "kind": "attempt",
+2026-11-12T19:36:55.9410914Z       "path": "journals/integrated-native-attempts/2026-11-09/42690318194",
+2026-11-12T19:36:55.9411309Z       "source": "d02414f58d888e3d11913dedd888a3e5871bf29f",
+2026-11-12T19:36:55.9411572Z       "files": 35,
+2026-11-12T19:36:55.9411765Z       "semantic": false,
+2026-11-12T19:36:55.9412106Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9412379Z     },
+2026-11-12T19:36:55.9412528Z     {
+2026-11-12T19:36:55.9412703Z       "kind": "attempt",
+2026-11-12T19:36:55.9413063Z       "path": "journals/integrated-native-attempts/2026-11-09/42697283161",
+2026-11-12T19:36:55.9413462Z       "source": "cc3cf756272b8d3826612d71e8f6356239fed6fa",
+2026-11-12T19:36:55.9413715Z       "files": 36,
+2026-11-12T19:36:55.9413912Z       "semantic": false,
+2026-11-12T19:36:55.9414262Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9414529Z     },
+2026-11-12T19:36:55.9414679Z     {
+2026-11-12T19:36:55.9414856Z       "kind": "attempt",
+2026-11-12T19:36:55.9415208Z       "path": "journals/integrated-native-attempts/2026-11-09/42711700295",
+2026-11-12T19:36:55.9415607Z       "source": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+2026-11-12T19:36:55.9415864Z       "files": 50,
+2026-11-12T19:36:55.9416056Z       "semantic": false,
+2026-11-12T19:36:55.9416392Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9416666Z     },
+2026-11-12T19:36:55.9416815Z     {
+2026-11-12T19:36:55.9416992Z       "kind": "attempt",
+2026-11-12T19:36:55.9417349Z       "path": "journals/integrated-native-attempts/2026-11-09/42720214271",
+2026-11-12T19:36:55.9417748Z       "source": "8055aabb731df2c2a4020c885445ae621b57e492",
+2026-11-12T19:36:55.9417998Z       "files": 14,
+2026-11-12T19:36:55.9418195Z       "semantic": false,
+2026-11-12T19:36:55.9418687Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9418967Z     },
+2026-11-12T19:36:55.9419118Z     {
+2026-11-12T19:36:55.9419296Z       "kind": "attempt",
+2026-11-12T19:36:55.9419649Z       "path": "journals/integrated-native-attempts/2026-11-11/43143722884",
+2026-11-12T19:36:55.9420050Z       "source": "6b174e0b903225923999a44fb1de7d67cc4e2959",
+2026-11-12T19:36:55.9420300Z       "files": 84,
+2026-11-12T19:36:55.9420492Z       "semantic": false,
+2026-11-12T19:36:55.9420842Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9421134Z     },
+2026-11-12T19:36:55.9421290Z     {
+2026-11-12T19:36:55.9421470Z       "kind": "attempt",
+2026-11-12T19:36:55.9421831Z       "path": "journals/integrated-native-attempts/2026-11-11/43157433977",
+2026-11-12T19:36:55.9422223Z       "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+2026-11-12T19:36:55.9422481Z       "files": 183,
+2026-11-12T19:36:55.9422687Z       "semantic": false,
+2026-11-12T19:36:55.9423065Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9423330Z     },
+2026-11-12T19:36:55.9423490Z     {
+2026-11-12T19:36:55.9423667Z       "kind": "attempt",
+2026-11-12T19:36:55.9424020Z       "path": "journals/integrated-native-attempts/2026-11-11/43157437280",
+2026-11-12T19:36:55.9424417Z       "source": "585211c193d0288effeb466bda38fe6ef23ac94d",
+2026-11-12T19:36:55.9424672Z       "files": 180,
+2026-11-12T19:36:55.9424864Z       "semantic": false,
+2026-11-12T19:36:55.9425216Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9425482Z     },
+2026-11-12T19:36:55.9425628Z     {
+2026-11-12T19:36:55.9425811Z       "kind": "attempt",
+2026-11-12T19:36:55.9438641Z       "path": "journals/integrated-native-attempts/2026-11-11/43165501159",
+2026-11-12T19:36:55.9439337Z       "source": "69b1b52f0c3d46cbfac91c78b38eb2e4dffbac99",
+2026-11-12T19:36:55.9439761Z       "files": 352,
+2026-11-12T19:36:55.9440303Z       "semantic": false,
+2026-11-12T19:36:55.9441028Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9441411Z     },
+2026-11-12T19:36:55.9441579Z     {
+2026-11-12T19:36:55.9441778Z       "kind": "attempt",
+2026-11-12T19:36:55.9442182Z       "path": "journals/integrated-native-attempts/2026-11-12/43195585984",
+2026-11-12T19:36:55.9442628Z       "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+2026-11-12T19:36:55.9442909Z       "files": 198,
+2026-11-12T19:36:55.9443116Z       "semantic": false,
+2026-11-12T19:36:55.9443495Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9443785Z     },
+2026-11-12T19:36:55.9443940Z     {
+2026-11-12T19:36:55.9444128Z       "kind": "attempt",
+2026-11-12T19:36:55.9444511Z       "path": "journals/integrated-native-attempts/2026-11-12/43216478235",
+2026-11-12T19:36:55.9445030Z       "source": "1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41",
+2026-11-12T19:36:55.9445318Z       "files": 566,
+2026-11-12T19:36:55.9445527Z       "semantic": false,
+2026-11-12T19:36:55.9445887Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9446170Z     },
+2026-11-12T19:36:55.9446328Z     {
+2026-11-12T19:36:55.9446510Z       "kind": "attempt",
+2026-11-12T19:36:55.9446874Z       "path": "journals/integrated-native-attempts/2026-11-12/43253674251",
+2026-11-12T19:36:55.9447299Z       "source": "69386efcea077e4bbe5b6e07f71fc6fe3b1f87f7",
+2026-11-12T19:36:55.9447567Z       "files": 27,
+2026-11-12T19:36:55.9447766Z       "semantic": false,
+2026-11-12T19:36:55.9448127Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9448406Z     },
+2026-11-12T19:36:55.9448703Z     {
+2026-11-12T19:36:55.9448897Z       "kind": "attempt",
+2026-11-12T19:36:55.9449262Z       "path": "journals/integrated-native-attempts/2026-11-12/43262928941",
+2026-11-12T19:36:55.9449674Z       "source": "664e8539031109174e7233390262d76ca6c81240",
+2026-11-12T19:36:55.9449958Z       "files": 137,
+2026-11-12T19:36:55.9450157Z       "semantic": false,
+2026-11-12T19:36:55.9450508Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9450787Z     },
+2026-11-12T19:36:55.9450941Z     {
+2026-11-12T19:36:55.9451124Z       "kind": "attempt",
+2026-11-12T19:36:55.9451479Z       "path": "journals/integrated-native-attempts/2026-11-12/43268040660",
+2026-11-12T19:36:55.9451931Z       "source": "664e8539031109174e7233390262d76ca6c81240",
+2026-11-12T19:36:55.9452206Z       "files": 410,
+2026-11-12T19:36:55.9452412Z       "semantic": false,
+2026-11-12T19:36:55.9452797Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9453088Z     },
+2026-11-12T19:36:55.9453242Z     {
+2026-11-12T19:36:55.9453439Z       "kind": "attempt",
+2026-11-12T19:36:55.9453816Z       "path": "journals/integrated-native-attempts/2026-11-12/43285086155",
+2026-11-12T19:36:55.9454243Z       "source": "dad2a6e21c5dddc6f582db2b7ff1e3a33c5c2c7b",
+2026-11-12T19:36:55.9454526Z       "files": 14,
+2026-11-12T19:36:55.9454734Z       "semantic": false,
+2026-11-12T19:36:55.9455089Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9455380Z     },
+2026-11-12T19:36:55.9455530Z     {
+2026-11-12T19:36:55.9455711Z       "kind": "attempt",
+2026-11-12T19:36:55.9456101Z       "path": "journals/integrated-component-attempts/2026-11-09/42663404897",
+2026-11-12T19:36:55.9456533Z       "source": "8f23d1c638fd97d176e12c6d634e65401c03e82f",
+2026-11-12T19:36:55.9456797Z       "files": 10,
+2026-11-12T19:36:55.9457003Z       "semantic": false,
+2026-11-12T19:36:55.9457370Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9457656Z     },
+2026-11-12T19:36:55.9457805Z     {
+2026-11-12T19:36:55.9457993Z       "kind": "attempt",
+2026-11-12T19:36:55.9458370Z       "path": "journals/integrated-component-attempts/2026-11-09/42705007019",
+2026-11-12T19:36:55.9459117Z       "source": "3505d92a01fe7aeef7bb90fa1ed52f6eda003c54",
+2026-11-12T19:36:55.9459485Z       "files": 9,
+2026-11-12T19:36:55.9459685Z       "semantic": false,
+2026-11-12T19:36:55.9460066Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9460361Z     },
+2026-11-12T19:36:55.9460513Z     {
+2026-11-12T19:36:55.9460697Z       "kind": "attempt",
+2026-11-12T19:36:55.9461086Z       "path": "journals/integrated-component-attempts/2026-11-09/42706097914",
+2026-11-12T19:36:55.9461518Z       "source": "4e7c1e1050bbb29a31093e19dfd4e8c089d12451",
+2026-11-12T19:36:55.9461785Z       "files": 12,
+2026-11-12T19:36:55.9461992Z       "semantic": false,
+2026-11-12T19:36:55.9462347Z       "reason": "Failed observer attempt issues no wallet qualification"
+2026-11-12T19:36:55.9462632Z     },
+2026-11-12T19:36:55.9462781Z     {
+2026-11-12T19:36:55.9462987Z       "kind": "reevaluation",
+2026-11-12T19:36:55.9463398Z       "path": "journals/native-integrated-reevaluation/2026-11-11/43059172140",
+2026-11-12T19:36:55.9463834Z       "source": "9cded11fae9c8a48fc23894157bbab0b561077e5",
+2026-11-12T19:36:55.9464112Z       "files": 19,
+2026-11-12T19:36:55.9464311Z       "semantic": true,
+2026-11-12T19:36:55.9464518Z       "extracted": {
+2026-11-12T19:36:55.9464736Z         "entries": 220,
+2026-11-12T19:36:55.9464957Z         "bytes": 30324581
+2026-11-12T19:36:55.9465150Z       },
+2026-11-12T19:36:55.9465511Z       "originalNativeSource": "c338a93c97ffebeeef318e679ff82b7dbf309dd5",
+2026-11-12T19:36:55.9465854Z       "newNativeSessions": 0,
+2026-11-12T19:36:55.9466080Z       "repetitions": 2,
+2026-11-12T19:36:55.9466316Z       "nativeOutcome": "FAIL",
+2026-11-12T19:36:55.9466601Z       "rustAssertions": 96
+2026-11-12T19:36:55.9466791Z     }
+2026-11-12T19:36:55.9466943Z   ]
+2026-11-12T19:36:55.9467111Z }
+2026-11-12T19:36:56.1797591Z Messaging verifier: 2 independent negative cases passed
+2026-11-12T19:36:58.4249702Z {"verified":true,"mutationsRejected":5,"validFailurePreserved":true}
+2026-11-12T19:36:58.4432025Z ##[group]Run node scripts/verify-descendant-storage-matrix.mjs out/integrated-lab/descendant-storage-sync --exact-history
+2026-11-12T19:36:58.4432776Z [36;1mnode scripts/verify-descendant-storage-matrix.mjs out/integrated-lab/descendant-storage-sync --exact-history[0m
+2026-11-12T19:36:58.4451106Z shell: /usr/bin/bash -e {0}
+2026-11-12T19:36:58.4451414Z env:
+2026-11-12T19:36:58.4451595Z   GOTOOLCHAIN: local
+2026-11-12T19:36:58.4451787Z ##[endgroup]
+2026-11-12T19:36:59.0823617Z ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
+2026-11-12T19:36:59.0831352Z ◇ injected env (0) from .env // tip: ◈ encrypted .env [www.dotenvx.com]
+2026-11-12T19:36:59.6224206Z {
+2026-11-12T19:36:59.6224549Z   "verified": true,
+2026-11-12T19:36:59.6224815Z   "result": "PASS",
+2026-11-12T19:36:59.6225023Z   "projection": {
+2026-11-12T19:36:59.6225333Z     "profile": "ISI-3/descendant-storage@2.0.0",
+2026-11-12T19:36:59.6225859Z     "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+2026-11-12T19:36:59.6226428Z     "projectionManifestSha256": "3549779398c8c562cd01e7253377b6c4c9b5a2f636028940ff7ddf817a6c9fb2",
+2026-11-12T19:36:59.6226866Z     "storageProjection": {
+2026-11-12T19:36:59.6227189Z       "profile": "ISI-3/storage-http-sync@2.0.0",
+2026-11-12T19:36:59.6227616Z       "projectionPolicy": "tpnil-storage-history-projection@2.0.0",
+2026-11-12T19:36:59.6228217Z       "projectionManifestSha256": "02d213f1215ecdde54b813e04d93b9a8be8464063fbfdefb07c1a3ad4b740062"
+2026-11-12T19:36:59.6228798Z     }
+2026-11-12T19:36:59.6228959Z   },
+2026-11-12T19:36:59.6229134Z   "directions": 4,
+2026-11-12T19:36:59.6229337Z   "freshExecutions": 8,
+2026-11-12T19:36:59.6229551Z   "independentIdentities": 8,
+2026-11-12T19:36:59.6229770Z   "assertions": 80,
+2026-11-12T19:36:59.6230150Z   "binarySha256": "7d6a543d12311e5c950933c6b28f893439d06125439ec1ad6a2e306e22cfd2fa",
+2026-11-12T19:36:59.6230590Z   "sourceCommit": "784733b9cfdb1e29f0e4922d6ca90e768144bfee",
+2026-11-12T19:36:59.6230961Z   "claim": "ENGINEERING_REFERENCE_STORAGE_QUALIFICATION_ONLY"
+2026-11-12T19:36:59.6231596Z }
+2026-11-12T19:36:59.6713416Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-12T19:36:59.6713748Z with:
+2026-11-12T19:36:59.6713945Z   name: descendant-storage-sync
+2026-11-12T19:36:59.6714189Z   path: out/integrated-lab/descendant-storage-sync
+2026-11-12T19:36:59.6714446Z   if-no-files-found: warn
+2026-11-12T19:36:59.6714645Z   retention-days: 90
+2026-11-12T19:36:59.6714835Z   compression-level: 6
+2026-11-12T19:36:59.6715019Z   overwrite: false
+2026-11-12T19:36:59.6715203Z   include-hidden-files: false
+2026-11-12T19:36:59.6715402Z env:
+2026-11-12T19:36:59.6715570Z   GOTOOLCHAIN: local
+2026-11-12T19:36:59.6715742Z ##[endgroup]
+2026-11-12T19:36:59.8149901Z (node:35544) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T19:36:59.8150565Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T19:36:59.8283767Z With the provided path, there will be 51 files uploaded
+2026-11-12T19:36:59.8287077Z Artifact name is valid!
+2026-11-12T19:36:59.8287496Z Root directory input is valid!
+2026-11-12T19:37:00.1472433Z Beginning upload of artifact content to blob storage
+2026-11-12T19:37:00.3949604Z (node:35544) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-12T19:37:00.8867562Z Uploaded bytes 1533301
+2026-11-12T19:37:00.9423479Z Finished uploading artifact content to blob storage!
+2026-11-12T19:37:00.9424399Z SHA256 digest of uploaded artifact zip is 3adf77d66321cfc98d65f15b9dfd12b2332746309e8fe4b846ff8be0915de40d
+2026-11-12T19:37:00.9425263Z Finalizing artifact upload
+2026-11-12T19:37:01.2986824Z Artifact descendant-storage-sync.zip successfully finalized. Artifact ID 13977113183
+2026-11-12T19:37:01.2987822Z Artifact descendant-storage-sync has been successfully uploaded! Final size is 1533301 bytes. Artifact ID is 13977113183
+2026-11-12T19:37:01.2992860Z Artifact download URL: https://github.com/p2ppsr/interop/actions/runs/43289524357/artifacts/13977113183
+2026-11-12T19:37:01.3157027Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-12T19:37:01.3157568Z with:
+2026-11-12T19:37:01.3157844Z   name: integrated-lab
+2026-11-12T19:37:01.3158154Z   path: out/integrated-lab
+2026-11-12T19:37:01.3158806Z   if-no-files-found: warn
+2026-11-12T19:37:01.3159134Z   retention-days: 7
+2026-11-12T19:37:01.3159425Z   compression-level: 6
+2026-11-12T19:37:01.3159726Z   overwrite: false
+2026-11-12T19:37:01.3160019Z   include-hidden-files: false
+2026-11-12T19:37:01.3160344Z env:
+2026-11-12T19:37:01.3160605Z   GOTOOLCHAIN: local
+2026-11-12T19:37:01.3160890Z ##[endgroup]
+2026-11-12T19:37:01.4465268Z (node:35556) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T19:37:01.4466372Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T19:37:01.4774075Z With the provided path, there will be 193 files uploaded
+2026-11-12T19:37:01.4778635Z Artifact name is valid!
+2026-11-12T19:37:01.4779064Z Root directory input is valid!
+2026-11-12T19:37:01.7748213Z Beginning upload of artifact content to blob storage
+2026-11-12T19:37:02.2814154Z (node:35556) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-12T19:37:02.8295890Z Uploaded bytes 3369276
+2026-11-12T19:37:02.8855837Z Finished uploading artifact content to blob storage!
+2026-11-12T19:37:02.8856829Z SHA256 digest of uploaded artifact zip is 7c0c86e70370118510e1e15b0bf5646e3ef5f52d3d1679d1f1490d65ee63e951
+2026-11-12T19:37:02.8857756Z Finalizing artifact upload
+2026-11-12T19:37:03.2366084Z Artifact integrated-lab.zip successfully finalized. Artifact ID 13976929242
+2026-11-12T19:37:03.2367166Z Artifact integrated-lab has been successfully uploaded! Final size is 3369276 bytes. Artifact ID is 13976929242
+2026-11-12T19:37:03.2372167Z Artifact download URL: https://github.com/p2ppsr/interop/actions/runs/43289524357/artifacts/13976929242
+2026-11-12T19:37:03.2548088Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-12T19:37:03.2548424Z with:
+2026-11-12T19:37:03.2548860Z   name: integrated-reference-test-failures
+2026-11-12T19:37:03.2549117Z   path: out/test-evidence
+2026-11-12T19:37:03.2549324Z   if-no-files-found: warn
+2026-11-12T19:37:03.2549529Z   retention-days: 90
+2026-11-12T19:37:03.2549720Z   compression-level: 6
+2026-11-12T19:37:03.2549917Z   overwrite: false
+2026-11-12T19:37:03.2550110Z   include-hidden-files: false
+2026-11-12T19:37:03.2550327Z env:
+2026-11-12T19:37:03.2550490Z   GOTOOLCHAIN: local
+2026-11-12T19:37:03.2550679Z ##[endgroup]
+2026-11-12T19:37:03.3890841Z (node:35568) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T19:37:03.3891536Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T19:37:03.3949026Z ##[warning]No files were found with the provided path: out/test-evidence. No artifacts will be uploaded.
+2026-11-12T19:37:03.4098718Z Post job cleanup.
+2026-11-12T19:37:03.5122014Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOMODCACHE
+2026-11-12T19:37:03.5159004Z [command]/opt/hostedtoolcache/go/1.27.3/x64/bin/go env GOCACHE
+2026-11-12T19:37:03.5185047Z /home/runner/go/pkg/mod
+2026-11-12T19:37:03.5205031Z /home/runner/.cache/go-build
+2026-11-12T19:37:03.5210334Z Cache hit occurred on the primary key setup-go-Linux-x64-ubuntu24-go-1.27.3-39def735ed8c2dfdb21c2002a828c41dc26a5e08075b577b46d16c8563f66d1f, not saving cache.
+2026-11-12T19:37:03.5319327Z Post job cleanup.
+2026-11-12T19:37:03.6363551Z (node:35602) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T19:37:03.6364210Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T19:37:03.6512959Z Post job cleanup.
+2026-11-12T19:37:03.7285612Z [command]/usr/bin/git version
+2026-11-12T19:37:03.7320597Z git version 2.56.0
+2026-11-12T19:37:03.7350383Z Temporarily overriding HOME='/home/runner/work/_temp/335f2430-0eb8-4280-96d9-7c8e5498089f' before making global git config changes
+2026-11-12T19:37:03.7351614Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T19:37:03.7354983Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-12T19:37:03.7388070Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T19:37:03.7419633Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T19:37:03.7653285Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T19:37:03.7682925Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T19:37:03.7898119Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T19:37:03.7926374Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T19:37:03.8265080Z Cleaning up orphan processes
+2026-11-12T19:37:03.8624631Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

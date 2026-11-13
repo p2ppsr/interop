@@ -1,0 +1,58 @@
+{
+  "schema": "tpnil-native-frozen-replay-preparation@1",
+  "claim": "SOURCE_AND_DEPENDENCY_ADMISSION_ONLY_NO_NATIVE_RESULTS_YET",
+  "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "run": 43195585984,
+  "expectedProfile": "ITCVE-1@4.3.0",
+  "expectedNativePredicatesPerRepetition": 535,
+  "repetitions": 2,
+  "expectedIntegrationPredicatesPerRepetition": 77,
+  "expectedRustPredicatesPerRepetition": 48,
+  "sourceFiles": 2499,
+  "exactGitBytes": 167137763,
+  "canonicalSource": "/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43195585984/source",
+  "dependencies": "Three exact installed npm lock metadata closures verified; all package tarballs not rehashed",
+  "cargoExecution": "NOT_STARTED",
+  "originalArtifact": "NOT_AVAILABLE_YET",
+  "files": [
+    {
+      "path": "snapshot.json",
+      "sha256": "c8751e5f3fff71fd755eb650f2a04934dbec6dd1f1bd6183171eb982e31d12dd",
+      "bytes": 660
+    },
+    {
+      "path": "source-inventory.json",
+      "sha256": "6eae07052066cc9851b2244ff34789048740240399806f3dbd644d759f96189d",
+      "bytes": 684074
+    },
+    {
+      "path": "dependencies.json",
+      "sha256": "05d1f8821f85d2d43b968809cdd28a0dbbe785f43350bdb2c358c9b18e8b2ac9",
+      "bytes": 1626
+    },
+    {
+      "path": "prepare-streamed.py",
+      "sha256": "59a65f0f7782f2383d3125d44556b9eacd11aaa6c13223d6d188462c30904c3a",
+      "bytes": 3478
+    },
+    {
+      "path": "replay.mjs",
+      "sha256": "44316f55a8c03e3009fde0d6ffa0be88d6d6bb2c0820ea282f58b9acc466688d",
+      "bytes": 5483
+    },
+    {
+      "path": "partial.mjs",
+      "sha256": "5af3357592173696092c2abae71773ead030761e1e46f2af7734eeb676747d46",
+      "bytes": 4985
+    },
+    {
+      "path": "components-all.mjs",
+      "sha256": "a72120656f224591b605851571d3f9630855b4efefcdca0535c05e1792e4a635",
+      "bytes": 3474
+    }
+  ],
+  "preservedFailedPreparation": {
+    "log": "prepare.stderr.log",
+    "reason": "Frozen helper128MiB archive buffer exceeded; streamed exact Git archive succeeds without changing frozen sources"
+  }
+}

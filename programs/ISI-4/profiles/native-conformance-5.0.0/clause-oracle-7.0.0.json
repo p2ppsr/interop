@@ -1,0 +1,36 @@
+{
+  "schema": "tpnil-native-clause-fixture-policy@1",
+  "oracle": "tpnil-brc100-clause-oracle@7.0.0",
+  "inherits": "tpnil-brc100-clause-oracle@6.0.0",
+  "predecessor": {
+    "path": "programs/ISI-4/profiles/native-conformance-5.0.0/clause-oracle-6.0.0.json",
+    "sha256": "f712d65cd35566c8c0350dfaa1d54c98dbb93753e9c1c46d27dcc7f3cde39255"
+  },
+  "source": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "gitBlobSha": "ec25ff75b7d5c584a892e52dbcef07dfae6d9747",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "bytes": 172505
+  },
+  "fixtureRevision": 3,
+  "noSendChange": {
+    "sourceSatoshis": 1000,
+    "sourceLockingScript": "7551",
+    "anchorSatoshis": 1,
+    "anchorExplicitInputs": 1,
+    "maximumAnchorFeeSatoshis": 100,
+    "minimumManagedChangeSatoshis": 899,
+    "additionalPublicCalls": 1,
+    "reason": "Create a fixed-value public push-unlocked OP_DROP OP_TRUE source and spend exactly that independently verified source, eliminating dependency on automatic wallet coin selection. Verify exact source intent, full mined ancestry, single explicit input, bounded fee and real public wallet-managed change. Old997 fixture and its failed samples remain unchanged.",
+    "anchorUnlockingScript": "51"
+  },
+  "preserved": [
+    "All233 assertion identities and coverage gaps",
+    "Exact reserved namespace calls and error matcher from oracle5",
+    "Independent signed ancestry, default-basket change scripts and public action bindings",
+    "Historical fixture/oracle results unchanged"
+  ],
+  "claim": "PROSPECTIVE_ORACLE_POLICY_NOT_NATIVE_QUALIFICATION"
+}

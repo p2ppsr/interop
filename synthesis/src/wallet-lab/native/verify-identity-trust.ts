@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
-import { Beef, PushDrop, Signature, Transaction, type LockingScript } from '@bsv/sdk'
+import { Beef, ProtoWallet, PushDrop, Signature, Transaction, VerifiableCertificate, type LockingScript } from '@bsv/sdk'
 import { canonicalJson } from '../../determinism.js'
 import { trustAssertionIds } from './identity-trust.js'
+import { getIdentityTrustOracle2Policy, identityTrustOracle2Id, type IdentityTrustOracleOptions } from './identity-trust-oracle2.js'
 
 const root = path.resolve(import.meta.dirname, '../../../..')
 const fixture = JSON.parse(fs.readFileSync(path.join(root, 'fixtures/teranode/wab-funding-v1.json'), 'utf8'))
@@ -17,7 +18,10 @@ export function verifySettingsTokenSignature(script: LockingScript) {
   assert.ok(Signature.fromDER(decoded.fields[1]!).verify(decoded.fields[0]!, decoded.lockingPublicKey), 'Settings token data signature invalid')
   return decoded
 }
-export async function verifyNativeTrust(report: any, boundary: any) {
+export async function verifyNativeTrust(report: any, boundary: any, options: IdentityTrustOracleOptions = {}) {
+  const selected = options.oracle === undefined ? undefined : getIdentityTrustOracle2Policy(options.oracle)
+  assert.equal(report.oracle, options.oracle, 'Native trust oracle differs from explicit parent selection')
+  assert.equal(report.oraclePolicySha256, selected?.policySha256, 'Native trust policy binding differs')
   assert.equal(report.schema, 'tpnil-native-identity-trust@1')
   assert.equal(report.profile, 'native-public-settings-token@1.0.0')
   assert.deepEqual(report.assertions.map((r: any) => r.id).sort(), [...trustAssertionIds].sort())
@@ -59,11 +63,11 @@ export async function verifyNativeTrust(report: any, boundary: any) {
   }
   const predicates: Record<string, () => Promise<void> | void> = {
     'identity-trust.initial-exclusion': () => {
-      assert.ok(cert)
+      assert.ok(cert); assert.ok(report.initialDiscoveryConsent === undefined || report.initialDiscoveryConsent === 'explicit-allow-v1')
       assert.ok(!report.originalSettings.trustSettings.trustedCertifiers.some((r: any) => r.identityKey === cert.certifier))
       for (const [method, response] of [['discoverByIdentityKey', report.initialIdentity], ['discoverByAttributes', report.initialAttributes]]) {
         const row = findTrace(method, response); assert.ok(row)
-        assert.deepEqual(row.args[0], method === 'discoverByIdentityKey' ? { identityKey: cert.subject, forceRefresh: true } : { attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true })
+        assert.deepEqual(row.args[0], method === 'discoverByIdentityKey' ? { identityKey: cert.subject, forceRefresh: true, ...(report.initialDiscoveryConsent === 'explicit-allow-v1' ? { seekPermission: true } : {}) } : { attributes: { name: 'TPNIL boundary identity' }, forceRefresh: true, ...(report.initialDiscoveryConsent === 'explicit-allow-v1' ? { seekPermission: true } : {}) })
         assert.ok(Array.isArray(response.certificates)); assert.ok(!response.certificates.some((r: any) => match(r, cert)))
       }
     },
@@ -86,7 +90,7 @@ export async function verifyNativeTrust(report: any, boundary: any) {
       const restoration = trace.slice(trace.indexOf(readback) + 1)
       assert.ok(restoration.length > 0 && restoration.every(r => Date.parse(r.startedAt) >= end), 'Cache wait must finish before restoration begins')
     },
-    'identity-trust.positive-discovery': () => {
+    'identity-trust.positive-discovery': async () => {
       assert.equal(boundary.discoveryExpectation, 'published')
       const expected = ['discoverByIdentityKey', 'discoverByAttributes'].map(method => boundary.trace.find((r: any) => r.method === method))
       assert.equal(boundary.trace.filter((r: any) => ['discoverByIdentityKey', 'discoverByAttributes'].includes(r.method)).length, 2)
@@ -94,14 +98,32 @@ export async function verifyNativeTrust(report: any, boundary: any) {
       const proofIndex = boundary.trace.findIndex((r: any) => r.method === 'proveCertificate' && r.args?.verifier === '0279be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798')
       const retirementIndex = boundary.trace.findIndex((r: any) => r.method === 'relinquishCertificate')
       assert.ok(proofIndex >= 0 && retirementIndex > proofIndex)
+      if (selected) {
+        const proof = boundary.trace[proofIndex]
+        assert.equal(boundary.trace.filter((r: any) => r.method === 'proveCertificate' && r.args?.verifier === selected.policy.binding.verifier).length, 1)
+        assert.deepEqual(proof.args, { certificate: { type: cert.type, serialNumber: cert.serialNumber, certifier: cert.certifier }, fieldsToReveal: selected.policy.binding.fieldsToReveal, verifier: selected.policy.binding.verifier })
+        assert.equal(proof.error, undefined); assert.ok(proof.result?.keyringForVerifier)
+        assert.deepEqual(Object.keys(cert.keyring), selected.policy.binding.fieldsToReveal)
+        assert.deepEqual(proof.result.keyringForVerifier, cert.keyring, 'Public proof must bind the published certificate keyring')
+      }
       assert.ok(boundary.trace.indexOf(expected[0]) < boundary.trace.indexOf(expected[1]), 'Identity and attribute discovery must retain source order')
       for (const response of expected) {
+        if (selected) assert.equal(response?.error, undefined)
         assert.deepEqual(response?.args, response?.method === 'discoverByIdentityKey' ? { identityKey: cert.subject, seekPermission: true } : { attributes: { name: 'TPNIL boundary identity' }, seekPermission: true })
         const index = boundary.trace.indexOf(response)
         assert.ok(index > proofIndex && index < retirementIndex, 'Discovery must follow publication preparation and precede certificate retirement')
-        const found = response?.result?.certificates.find((r: any) => match(r, cert)); assert.ok(found)
-        for (const field of certificateFields) assert.deepEqual(found[field], cert[field], `Discovered certificate differs: ${field}`)
+        const matches = response?.result?.certificates.filter((r: any) => match(r, cert)); const found = matches?.[0]; assert.ok(found)
+        if (selected) assert.equal(matches.length, 1, 'Ambiguous discovered certificate')
+        for (const field of certificateFields) {
+          const responseField = selected && field === 'keyring' ? selected.policy.source.responseField : field
+          assert.deepEqual(found[responseField], cert[field], `Discovered certificate differs: ${responseField}`)
+        }
         assert.deepEqual(found.decryptedFields, { name: 'TPNIL boundary identity' })
+        if (selected) {
+          const disclosed = VerifiableCertificate.fromCertificate(found, found.publiclyRevealedKeyring)
+          assert.equal(await disclosed.verify(), true, 'Discovered certificate issuer signature invalid')
+          assert.deepEqual(await disclosed.decryptFields(new ProtoWallet('anyone')), selected.policy.binding.expectedPlaintext, 'Discovered fields do not decrypt with the independent public verifier')
+        }
       }
     },
     'identity-trust.settings-restored': async () => {
@@ -149,24 +171,26 @@ export async function verifyNativeTrust(report: any, boundary: any) {
   }
   const result = assertions.every(r => r.result === 'PASS') ? 'PASS' : 'FAIL'
   assert.equal(report.result, result)
-  return { verified: true, result, assertions, transactions: report.transactions?.length ?? 0, claim: 'ENGINEERING_OBSERVATION_ONLY' }
+  return { verified: true, ...(selected ? { oracle: options.oracle, oraclePolicySha256: selected.policySha256 } : {}), result, assertions, transactions: report.transactions?.length ?? 0, claim: 'ENGINEERING_OBSERVATION_ONLY' }
 }
 if (process.argv[1] === import.meta.filename) {
+  assert.ok(process.argv.length === 3 || process.argv.length === 4 && process.argv[3] === '--oracle-2', 'Usage: verify-identity-trust.ts DIRECTORY [--oracle-2]')
+  const options: IdentityTrustOracleOptions = process.argv[3] === '--oracle-2' ? { oracle: identityTrustOracle2Id } : {}
   const directory = path.resolve(process.argv[2]!)
   const report = JSON.parse(fs.readFileSync(path.join(directory, 'identity-trust.json'), 'utf8'))
   const boundary = JSON.parse(fs.readFileSync(path.join(directory, 'boundary.json'), 'utf8'))
-  const result = await verifyNativeTrust(report, boundary)
+  const result = await verifyNativeTrust(report, boundary, options)
   const tamperRejections = []
   if (report.assertions.find((r: any) => r.id === 'identity-trust.cache-expiry')?.result === 'PASS') {
     const tampered = structuredClone(report)
     tampered.wait.endedAt = tampered.wait.startedAt
-    await assert.rejects(verifyNativeTrust(tampered, boundary), /Independent native trust predicate differs/)
+    await assert.rejects(verifyNativeTrust(tampered, boundary, options), /Independent native trust predicate differs/)
     tamperRejections.push('missing-real-cache-expiry')
   }
   if (report.assertions.find((r: any) => r.id === 'identity-trust.settings-restored')?.result === 'PASS') {
     const tampered = structuredClone(report)
     tampered.restoredSettings.currency = 'ALTERED'
-    await assert.rejects(verifyNativeTrust(tampered, boundary), /Independent native trust predicate differs/)
+    await assert.rejects(verifyNativeTrust(tampered, boundary, options), /Independent native trust predicate differs/)
     tamperRejections.push('changed-original-settings-restoration')
   }
   if (report.assertions.find((r: any) => r.id === 'identity-trust.temporary-token-spent')?.result === 'PASS') {
@@ -174,7 +198,7 @@ if (process.argv[1] === import.meta.filename) {
     const txid = report.temporaryOutputs.outputs[0].outpoint.split('.')[0]
     const written = report.transactions.find((r: any) => r.txid === txid)
     tampered.retirementTransaction = { txid: written.txid, raw: written.rawHex, beef: [...Buffer.from(written.beefHex, 'hex')] }
-    await assert.rejects(verifyNativeTrust(tampered, boundary), /Independent native trust predicate differs/)
+    await assert.rejects(verifyNativeTrust(tampered, boundary, options), /Independent native trust predicate differs/)
     tamperRejections.push('valid-transaction-that-does-not-spend-temporary-token')
   }
   console.log(JSON.stringify({ ...result, tamperRejections }))

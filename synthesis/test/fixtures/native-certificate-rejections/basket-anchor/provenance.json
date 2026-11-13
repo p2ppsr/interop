@@ -1,0 +1,83 @@
+{
+  "schema": "tpnil-certificate-rejection-reference@1.0.0",
+  "claim": "ACTUAL_4A954AC_BROWSER_LIBRARY_REFERENCE_NOT_NATIVE_EXTENSION",
+  "nativeQualification": false,
+  "calls": 114,
+  "ownedCuts": 44,
+  "results": {
+    "SCOPED_PASS": 19,
+    "FAIL": 0,
+    "BLOCKED": 1
+  },
+  "sourceAttempt": "out/native-closure-20261111/certificate-rejections-promotion/attempt-1794492141454",
+  "hostManifestSha256": "107bc873161930d44babada527d1be08437f743213726464a2d2b0e005409894",
+  "notes": [
+    "Authenticated issuance uses exact controlled CA/leaf under real Chromium browser library, not native extension qualification.",
+    "Restart reopens reference client only; native restart remains BLOCKED.",
+    "Original failed first startup (copied binary missing execute bit) retained separately.",
+    "Runtime source hashes captured before/after match; readonly replay tests may add stronger checks without rewriting capture.",
+    "This separate capture uses the actual retained basket external output15; the preceding original mined-anchor capture remains unchanged."
+  ],
+  "files": [
+    {
+      "path": "report.json.gz",
+      "originalSha256": "89bb5b75aa8805dceb6797a738a969e3bccc866479a85b53166103df14580638",
+      "gzipSha256": "d45387dcd74893758a6cf1df37d99edc6e0a64f534adb25d4993e9220f32d567",
+      "bytes": 1116123
+    },
+    {
+      "path": "observer-ledger.json.gz",
+      "originalSha256": "ded6a3203e064c691856a08344526cea8d64a018c3764e3b0bb29d913eb1a6cd",
+      "gzipSha256": "88c861d76453547c29234c6d7c7cc1d8270143e42ab0b4afea37cd23068bba41",
+      "bytes": 411349
+    },
+    {
+      "path": "routes.json.gz",
+      "originalSha256": "3fa7c834dbe60be3c150e93ae2a0371e10a484ee861dee230c61fad9e2972586",
+      "gzipSha256": "109bff814b48548c2c9e99708533979c45b8cfece1ba35caa8fc2a59c860d3d6",
+      "bytes": 3924
+    },
+    {
+      "path": "verification.json.gz",
+      "originalSha256": "69854ff0c411363a47a77a17045de9cc7b0ee791c80afc1cb057f762609e8601",
+      "gzipSha256": "c64eec0f35691d2708ad1cebc6e96bee3858ced3ea1b8e6ce5b83f0630497784",
+      "bytes": 6012
+    },
+    {
+      "path": "source-before.json.gz",
+      "originalSha256": "7384fab382073c20c0962ce3d61614567eb9890aa8158d9196beb738eb758262",
+      "gzipSha256": "6bfa5f0c263b399667e567402290293eda19289efb825f1e5ed3c56f0a2e3f91",
+      "bytes": 13474
+    },
+    {
+      "path": "source-after.json.gz",
+      "originalSha256": "7384fab382073c20c0962ce3d61614567eb9890aa8158d9196beb738eb758262",
+      "gzipSha256": "6bfa5f0c263b399667e567402290293eda19289efb825f1e5ed3c56f0a2e3f91",
+      "bytes": 13474
+    },
+    {
+      "path": "cleanup.json.gz",
+      "originalSha256": "e07dda076b2e5ccff565518195d9ee6de3004f5bea60d5b65a24615c58aa7583",
+      "gzipSha256": "57934e361319a6faceedb6122969996a12bf77499cf6d4d3a54f733c947ec807",
+      "bytes": 64
+    },
+    {
+      "path": "authenticated-issuer-preflight.json.gz",
+      "originalSha256": "6f486ae25011046847666a48c8e50937443a6b20ce87bef79a273efe32b33cbb",
+      "gzipSha256": "c7470dcb9f4991784523e72e23b0f0a1a7fde5b9db7e204d122cf500ec1af5b4",
+      "bytes": 38654
+    },
+    {
+      "path": "browser-trust.json.gz",
+      "originalSha256": "09521812151a9550015fd7b95d607f8d3816040982cdbc8322005dfd26df36a2",
+      "gzipSha256": "10d07053cfb10e30312d793759d6a280c3d89e5191f660a2ffa046cc577b4d66",
+      "bytes": 546
+    },
+    {
+      "path": "revocation-anchor.json.gz",
+      "originalSha256": "71790fb1af0079335d42cc3bb26e98ba05164facbe5e13d536bf0cb494173a21",
+      "gzipSha256": "d38c2840b876599086b83b60e2bede76d18f8cbe8d75430e982b23320f30cb67",
+      "bytes": 1431
+    }
+  ]
+}

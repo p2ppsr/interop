@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Final submission has unresolved unmined ancestry
+    at walk (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts:73:29)
+    at observedSubmissionTransactions (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts:77:3)
+    at verifyTransactionStateFinalSubmissions (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts:124:55)
+    at async verifyNativeTransactionStateBindings (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify-transaction-state-bindings.ts:138:34)
+    at async verifyNativeWallet (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify.ts:340:40)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/source/synthesis/src/wallet-lab/native/verify.ts:375:18) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

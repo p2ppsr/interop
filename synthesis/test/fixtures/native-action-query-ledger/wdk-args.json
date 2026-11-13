@@ -1,0 +1,74 @@
+[
+  {
+    "input": "{}",
+    "typedJSON": "{\"labels\":null,\"labelQueryMode\":null}"
+  },
+  {
+    "input": "null",
+    "typedJSON": "{\"labels\":null,\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labels\":null,\"labelQueryMode\":null,\"limit\":0,\"offset\":0,\"seekPermission\":null,\"includeInputs\":null}",
+    "typedJSON": "{\"labels\":null,\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labels\":[],\"limit\":10,\"offset\":2,\"seekPermission\":false,\"includeInputs\":true,\"includeOutputLockingScripts\":false}",
+    "typedJSON": "{\"labels\":[],\"limit\":10,\"offset\":2,\"labelQueryMode\":null,\"seekPermission\":false,\"includeInputs\":true,\"includeOutputLockingScripts\":false}"
+  },
+  {
+    "input": "{\"labels\":[\"first\",\"second\"],\"LABELS\":[null],\"labels\":[null,null],\"LIMIT\":4,\"limit\":null,\"LaBeLqUeRyMoDe\":\"any\",\"ignoreMe\":99}",
+    "typedJSON": "{\"labels\":[\"first\",\"second\"],\"limit\":4,\"labelQueryMode\":\"any\"}"
+  },
+  {
+    "input": "{\"labels\":[\"prior\"],\"labels\":[],\"LABELS\":[null],\"includeInputs\":true,\"INCLUDEINPUTS\":null}",
+    "typedJSON": "{\"labels\":[\"\"],\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labels\":[\"prior\"],\"labels\":null,\"LABELS\":[null],\"labelQueryMode\":\"any\",\"LABELQUERYMODE\":null}",
+    "typedJSON": "{\"labels\":[\"\"],\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labels\":[],\"limit\":18446744073709551615,\"offset\":9007199254740993}",
+    "typedJSON": "{\"labels\":[],\"limit\":18446744073709551615,\"offset\":9007199254740993,\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"ſeekPermission\":true,\"includeInputSourceLocKingScripts\":true}",
+    "typedJSON": "{\"labels\":null,\"labelQueryMode\":null,\"seekPermission\":true,\"includeInputSourceLockingScripts\":true}"
+  },
+  {
+    "input": "{\"labels\":[\"\\ud800\"]}",
+    "typedJSON": "{\"labels\":[\"�\"],\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labels\":[\"\\udc00\",\"\\ud800\\udc00\"]}",
+    "typedJSON": "{\"labels\":[\"�\",\"𐀀\"],\"labelQueryMode\":null}"
+  },
+  {
+    "input": "{\"labelQueryMode\":\"\\udfff\"}",
+    "typedJSON": "{\"labels\":null,\"labelQueryMode\":\"�\"}"
+  },
+  {
+    "error": "json: cannot unmarshal number 1.0 into Go struct field ListActionsArgs.limit of type primitives.PositiveIntegerDefault10Max10000",
+    "input": "{\"limit\":1.0}"
+  },
+  {
+    "error": "json: cannot unmarshal number 1e1 into Go struct field ListActionsArgs.limit of type primitives.PositiveIntegerDefault10Max10000",
+    "input": "{\"limit\":1e1}"
+  },
+  {
+    "error": "json: cannot unmarshal number -0 into Go struct field ListActionsArgs.offset of type primitives.PositiveInteger",
+    "input": "{\"offset\":-0}"
+  },
+  {
+    "error": "json: cannot unmarshal number 18446744073709551616 into Go struct field ListActionsArgs.offset of type primitives.PositiveInteger",
+    "input": "{\"offset\":18446744073709551616}"
+  },
+  {
+    "error": "json: cannot unmarshal number into Go struct field ListActionsArgs.includeInputs of type primitives.BooleanDefaultFalse",
+    "input": "{\"includeInputs\":1}"
+  },
+  {
+    "error": "json: cannot unmarshal number into ListActionsArgs.labels.0 of type primitives.StringUnder300",
+    "input": "{\"labels\":[1]}"
+  }
+]

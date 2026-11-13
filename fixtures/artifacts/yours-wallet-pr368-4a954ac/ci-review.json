@@ -1,0 +1,1296 @@
+{
+  "schema": "tpnil-yours-candidate-ci-receipt@1",
+  "claim": "ENGINEERING_CANDIDATE_ONLY",
+  "officialRelease": false,
+  "repository": "yours-org/yours-wallet",
+  "pullRequest": 368,
+  "workflowRun": 43176871616,
+  "workflowUrl": "https://github.com/yours-org/yours-wallet/actions/runs/43176871616",
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "success",
+  "sourceHead": "4a954ac6bb0cb4403fb8ed548efd0cd8d1ba11b1",
+  "actualBuildCheckout": "9cd03b400ed0841f11075386b1d813821e397648",
+  "actualBuildParents": [
+    "ccdd6f480906c06cfa1481ad3a66f4abc8a5cc9e",
+    "4a954ac6bb0cb4403fb8ed548efd0cd8d1ba11b1"
+  ],
+  "sourceAndMergeTreeEqual": true,
+  "gitTreeSha": "8945bafaa9edfb07e8b548a71172f63b72df9029",
+  "buildStamp": "9cd03b4",
+  "jobs": [
+    {
+      "id": 131043151757,
+      "name": "Build and verify",
+      "conclusion": "success",
+      "startedAt": "2026-11-12T07:39:31Z",
+      "completedAt": "2026-11-12T07:41:17Z"
+    }
+  ],
+  "tests": {
+    "passed": 261,
+    "failed": 0,
+    "assertions": 1769,
+    "files": 15,
+    "bundles": 4,
+    "verifyBuild": "PASS",
+    "typecheck": "PASS",
+    "format": "PASS"
+  },
+  "artifact": {
+    "id": 13924895649,
+    "name": "extension-9cd03b400ed0841f11075386b1d813821e397648",
+    "size": 13239205,
+    "sha256": "8dd34e24c210082c8bf3d370cc73b762bd62bd10221467371293adee9d9ba99f",
+    "outerMembers": [
+      "SHA256SUMS",
+      "pw-v5.1.1.zip",
+      "pw-v5.1.1.zip.sha256"
+    ]
+  },
+  "extensionArchive": {
+    "path": "pw-v5.1.1.zip",
+    "size": 13244753,
+    "sha256": "cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105",
+    "extensionRoot": "build/",
+    "manifestVersion": "5.1.1",
+    "memberCount": 45,
+    "eachMemberDigestVerified": true,
+    "duplicateOrTraversalMembers": false,
+    "allCRCVerified": true
+  },
+  "sourceMapProof": {
+    "src/utils/cancelOrdLockListings.ts": [
+      {
+        "map": "build/assets/cancelOrdLockListings-CSngGs3T.js.map",
+        "source": "../../src/utils/cancelOrdLockListings.ts",
+        "sha256": "d3ee64be62e9f007beb6453753aa6ed055341e7021114da0cdeb0da66e64a3a4"
+      }
+    ],
+    "src/services/types/provider.types.ts": [
+      {
+        "map": "build/assets/crypto-Dod0KLUi.js.map",
+        "source": "../../src/services/types/provider.types.ts",
+        "sha256": "855a4e37aa76b1c5c7f48fffce2d454354ad22d0685d11279e39fb5b9bb331be"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/types/provider.types.ts",
+        "sha256": "855a4e37aa76b1c5c7f48fffce2d454354ad22d0685d11279e39fb5b9bb331be"
+      }
+    ],
+    "src/utils/constants.ts": [
+      {
+        "map": "build/assets/crypto-Dod0KLUi.js.map",
+        "source": "../../src/utils/constants.ts",
+        "sha256": "83feebfa3e55b7c99740c75469900e9b37465278328a10b1f035ff1c5208b45b"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/utils/constants.ts",
+        "sha256": "83feebfa3e55b7c99740c75469900e9b37465278328a10b1f035ff1c5208b45b"
+      }
+    ],
+    "src/utils/crypto.ts": [
+      {
+        "map": "build/assets/crypto-Dod0KLUi.js.map",
+        "source": "../../src/utils/crypto.ts",
+        "sha256": "a95fb77b58ed91a6f8c47ed86677479dffb16ccdb1a3bd996a2ceb04e23dfc0b"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/utils/crypto.ts",
+        "sha256": "a95fb77b58ed91a6f8c47ed86677479dffb16ccdb1a3bd996a2ceb04e23dfc0b"
+      }
+    ],
+    "src/components/Show.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/Show.tsx",
+        "sha256": "b119190575bd127391b7fa80a594ccdd6234ef7c2056c6566531a32d5284f1ba"
+      }
+    ],
+    "src/contexts/ColorThemeContext.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/ColorThemeContext.ts",
+        "sha256": "4289f511bd1bde548d2e4a0f7553902bc9fa93b1db6f50f45bd16b820798a71c"
+      }
+    ],
+    "src/hooks/useTheme.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/hooks/useTheme.ts",
+        "sha256": "bdad988e0f2711441db4573f2ea24b33333c4361b1ced542f77877db3af106c3"
+      }
+    ],
+    "src/utils/sleep.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/utils/sleep.ts",
+        "sha256": "4dda2769c6c58dbab3b2d82de2229618dc8b8bc5a826ca908198d380dff01fc2"
+      }
+    ],
+    "src/components/Input.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/Input.tsx",
+        "sha256": "09a54735c8416bf4254c701df9d5993e46402c1875e06b5b332e1a9f91a44fad"
+      }
+    ],
+    "src/contexts/ServiceContext.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/ServiceContext.ts",
+        "sha256": "42f68670e4e7bbf79ce64afca20d8501009c1b3ad811471d3aadbeacc35a47e7"
+      }
+    ],
+    "src/hooks/useServiceContext.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/hooks/useServiceContext.ts",
+        "sha256": "273a30386716f1a09778a27e0305a8d5fa3fabebdacbec36f363cbc05cdb8e84"
+      }
+    ],
+    "src/components/YoursIcon.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/YoursIcon.tsx",
+        "sha256": "9e8a6738f350aab4eff40ee40176aa8bcb3bc2c2baf4043c96441244e4f1a7f4"
+      }
+    ],
+    "src/utils/chromeHelpers.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/utils/chromeHelpers.ts",
+        "sha256": "943392dbecf589118adeade2274fe79db79656708d6db2245c1e3b33b1781783"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/utils/chromeHelpers.ts",
+        "sha256": "943392dbecf589118adeade2274fe79db79656708d6db2245c1e3b33b1781783"
+      }
+    ],
+    "src/utils/usbCrypto.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/utils/usbCrypto.ts",
+        "sha256": "4873512d9a08b28acb46726b6f2e2073a10ac5c81aefac61b48779a5c7507bde"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/utils/usbCrypto.ts",
+        "sha256": "4873512d9a08b28acb46726b6f2e2073a10ac5c81aefac61b48779a5c7507bde"
+      }
+    ],
+    "src/services/UsbKey.service.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/UsbKey.service.ts",
+        "sha256": "5758391767a024b01ead06740b48e5b91b4ce16a848c005c00f08506e4d49d38"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/UsbKey.service.ts",
+        "sha256": "5758391767a024b01ead06740b48e5b91b4ce16a848c005c00f08506e4d49d38"
+      }
+    ],
+    "src/services/usbPresence.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/usbPresence.ts",
+        "sha256": "bd12c023abf0c9d7dcdb4a1761a465171a8c45d90fef90d53130b2dbb239b7da"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/usbPresence.ts",
+        "sha256": "bd12c023abf0c9d7dcdb4a1761a465171a8c45d90fef90d53130b2dbb239b7da"
+      }
+    ],
+    "src/components/UnlockWallet.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/UnlockWallet.tsx",
+        "sha256": "700716ee0bb62b8d1fcbbb44200c73be39501d61174b2c039615686517ade009"
+      }
+    ],
+    "src/components/PageLoader.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/PageLoader.tsx",
+        "sha256": "6c013a4e0f799b3fd658cc1e37d98c927aaf466d70726e88c453e798c54ccf20"
+      }
+    ],
+    "src/services/passKey.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/passKey.ts",
+        "sha256": "d8b0ce7742988cd9481b90543909b2af46808bb21a7247d1f933985c7aeea665"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/passKey.ts",
+        "sha256": "d8b0ce7742988cd9481b90543909b2af46808bb21a7247d1f933985c7aeea665"
+      }
+    ],
+    "src/cwi-errors.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/cwi-errors.ts",
+        "sha256": "3e6437870db0257991da538e9e1e1a56a7a14f64f6f88a927116dfbfe5a78d8f"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "3e6437870db0257991da538e9e1e1a56a7a14f64f6f88a927116dfbfe5a78d8f"
+      },
+      {
+        "map": "build/content.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "3e6437870db0257991da538e9e1e1a56a7a14f64f6f88a927116dfbfe5a78d8f"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi-errors.ts",
+        "sha256": "3e6437870db0257991da538e9e1e1a56a7a14f64f6f88a927116dfbfe5a78d8f"
+      }
+    ],
+    "src/cwi-transport.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi-transport.ts",
+        "sha256": "e371f5dc5b9bb51adc995391702bc95ab5ed1da3ad4ad460029faf013c1c3e0a"
+      }
+    ],
+    "src/cwi.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/cwi.ts",
+        "sha256": "b535313774171e7130ac807c159cbc6db3278b354c9933fa8791132e0566834d"
+      }
+    ],
+    "src/inject.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../src/inject.ts",
+        "sha256": "09aef0dec2d898c823ed6759588fd37822c81099937e1f81eff8669e4817759e"
+      }
+    ],
+    "src/contexts/BottomMenuContext.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/BottomMenuContext.ts",
+        "sha256": "9d80db7e5d6a68d19a9e03d6b75938d4c0039ba5ef546c2dd08bb8789ca6c8ed"
+      }
+    ],
+    "src/components/Button.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/Button.tsx",
+        "sha256": "d5341f55992b1b66cfb72ac64efcf98665d478f6ec266bbf216a8532cb5feb59"
+      }
+    ],
+    "src/contexts/SnackbarContext.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/SnackbarContext.ts",
+        "sha256": "d3595dfadfad1170ed22b448a5fde33e32f7b1f9d73a699f21aa78ee8e1cd346"
+      }
+    ],
+    "src/utils/wallet.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/utils/wallet.ts",
+        "sha256": "820fc904c4b8bb091254e4959fe6fd48aceed43920bc77f42d8863c79a531890"
+      }
+    ],
+    "src/components/BottomMenu.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/BottomMenu.tsx",
+        "sha256": "871321435df0a14a8ac6c11c352cc8c5b1b7ce803d0a52f48a3c779ea86af770"
+      }
+    ],
+    "src/contexts/providers/BottomMenuProvider.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/providers/BottomMenuProvider.tsx",
+        "sha256": "8d4a111e51b096badb1b73649e64a6675e7b3de43d8253dc7357c3c7abcc6640"
+      }
+    ],
+    "src/components/Snackbar.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/components/Snackbar.tsx",
+        "sha256": "dd06e1326b4289d6c0bb5c7fc3db41a8ee7bb396616282e0881f3869928b63d4"
+      }
+    ],
+    "src/contexts/providers/SnackbarProvider.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/providers/SnackbarProvider.tsx",
+        "sha256": "357d6800e7929b844b64cd3a9fa3af213458bc0f6c16f188411f7fd46b340c45"
+      }
+    ],
+    "src/services/serviceHelpers.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/serviceHelpers.ts",
+        "sha256": "12ead15e41083c1120c1cdaef612a6907ea1876fbe1fe645ea9b2784364cdf11"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/serviceHelpers.ts",
+        "sha256": "12ead15e41083c1120c1cdaef612a6907ea1876fbe1fe645ea9b2784364cdf11"
+      }
+    ],
+    "src/services/ChromeStorage.service.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/ChromeStorage.service.ts",
+        "sha256": "8c769cd6311cdefce11a898d32782694e83d69db37faaac873e4d006e6278e1a"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/ChromeStorage.service.ts",
+        "sha256": "8c769cd6311cdefce11a898d32782694e83d69db37faaac873e4d006e6278e1a"
+      }
+    ],
+    "src/utils/keys.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/utils/keys.ts",
+        "sha256": "f3bcef0a2f4a004f00068c543d08f1e92767c1a684d2d6bfed20fa1778eda0e6"
+      }
+    ],
+    "src/services/Keys.service.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/services/Keys.service.ts",
+        "sha256": "5a4279cc114c688bb66a8966b68a8377fbfa2f5f65430be8ea61520885dfdd08"
+      }
+    ],
+    "src/contexts/providers/ServiceProvider.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/providers/ServiceProvider.tsx",
+        "sha256": "31cb5d7cc1d0697b35c6ac2ba23e660ca58d05972cc7cad166432088995e8c38"
+      }
+    ],
+    "src/theme.ts": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/theme.ts",
+        "sha256": "dde3c729003a090c503650efcd06a58c95307f6ee3226cb75da16f04df08f728"
+      }
+    ],
+    "src/contexts/providers/ThemeProvider.tsx": [
+      {
+        "map": "build/assets/index-DUFlsnsQ.js.map",
+        "source": "../../src/contexts/providers/ThemeProvider.tsx",
+        "sha256": "6e37fa940960015b4bfd85cc7a037cb6d8de700b083f22620aa4c41c5334c2cd"
+      }
+    ],
+    "src/components/UsbGate.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/UsbGate.tsx",
+        "sha256": "3bf58895ad6368750531aaa73956564acd616b973b39d85751cd54cf3c5e3a17"
+      }
+    ],
+    "src/components/UsbBackupPill.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/UsbBackupPill.tsx",
+        "sha256": "47f011da45c2212a893f6f56baa92014e935ec5f911e2cf5dbdae7789dffd23c"
+      }
+    ],
+    "src/hooks/useUsbBackupRunner.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useUsbBackupRunner.ts",
+        "sha256": "2d891012d12c3fe22f684b00c93a433491dcb42829973f0c8d35275087a06780"
+      }
+    ],
+    "src/hooks/useActivityDetector.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useActivityDetector.ts",
+        "sha256": "42572c612e84c69d75bfda48041b770a8c1056738086b256c3e4e1b949f870a3"
+      }
+    ],
+    "src/components/Reusable.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/Reusable.ts",
+        "sha256": "756e1679a167c658252c401ae0b3d47cb768bb68d5bc9e311e45c9e68ee57b64"
+      }
+    ],
+    "src/utils/format.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/format.ts",
+        "sha256": "ad41c83fb9736674a2f722d7b6b5782de0b0f50e04c42d92135acc23ce5803b7"
+      }
+    ],
+    "src/components/TopNav.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/TopNav.tsx",
+        "sha256": "433768665b30a1301a5b0fa650b379bebccfe9de34eb096d197ef12235acff0e"
+      }
+    ],
+    "src/utils/uri.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/uri.ts",
+        "sha256": "6115a8ebfbf04d0da203b0f3a5166cd0bc7dd691c95330bd7665f0b1c451f9ef"
+      }
+    ],
+    "src/components/TxPreview.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/TxPreview.tsx",
+        "sha256": "5bed4aa3d1d89e4d61eede1ca5929d67ee7d82f232e8f1b93c3eaa2dc35a602b"
+      }
+    ],
+    "src/utils/tools.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/tools.ts",
+        "sha256": "34023b3679cd1c89b279be8423884151fd5a3e504254bf2807e502c8001c8014"
+      }
+    ],
+    "src/pages/AppsAndTools.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/AppsAndTools.tsx",
+        "sha256": "edf37f2bde113366363fc144c5194fe28f43725445087681be5d77ccffe35478"
+      }
+    ],
+    "src/components/QrCode.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/QrCode.tsx",
+        "sha256": "bfef97c06d8e1da90ac84bfd4d8322f39d72bc805edd9a776c8bd8621f6de9f6"
+      }
+    ],
+    "src/hooks/useIdentity.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useIdentity.ts",
+        "sha256": "916fae10e35152efb2862c5d90e9786384c240d8843c9261874f05dba712750e"
+      }
+    ],
+    "src/components/AssetRow.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/AssetRow.tsx",
+        "sha256": "17006156449ca92a993e98a13787b245cccd98a94a69e38728bc13c136fe313c"
+      }
+    ],
+    "src/components/BackupPromo.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/BackupPromo.tsx",
+        "sha256": "72664b503f2ad1d9b90f07cd09da52d2f8d18e098e90d420d7f68b898515eb0d"
+      }
+    ],
+    "src/hooks/useSyncTracker.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useSyncTracker.ts",
+        "sha256": "c625b13a084962b83daf979beb36629f733c48955b0907a41207988ebaaaaff1"
+      }
+    ],
+    "src/components/UpgradeNotification.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/UpgradeNotification.tsx",
+        "sha256": "974769a3c496368380e384afce5729cddb7c58cb1b876432562e1fafd339644b"
+      }
+    ],
+    "src/components/Bsv21TokensList.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/Bsv21TokensList.tsx",
+        "sha256": "3619571224c8aca0d5ea2362d3b099ba520c1194f040fbfc40f318d022ea9d69"
+      }
+    ],
+    "src/components/ToggleSwitch.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/ToggleSwitch.tsx",
+        "sha256": "7c3f684320370a3c98e124efd37077f778e69d0ef61b1c925af7e74857777e8d"
+      }
+    ],
+    "src/components/ManageTokens.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/ManageTokens.tsx",
+        "sha256": "5c5333244a22166dd4aa3276f9bbd9af03b76c6d7f7167deb5cd19990366a293"
+      }
+    ],
+    "src/components/SendConfirmation.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/SendConfirmation.tsx",
+        "sha256": "7fc4ebc9c166fa3bb166507c9cb5375b36b090937fe6bff2a195358d64913ef8"
+      }
+    ],
+    "src/components/Bsv21OverlayPrompt.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/Bsv21OverlayPrompt.tsx",
+        "sha256": "fa4f9f891c005b2325ab997ad48d30bc8a26cf9335469841053cabee68b519fa"
+      }
+    ],
+    "src/components/SpeedBump.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/SpeedBump.tsx",
+        "sha256": "8c362058af18852cff52487b51a79e8f287552d9409a037195f2c4aa16f47a7b"
+      }
+    ],
+    "src/hooks/useIntersectObserver.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useIntersectObserver.ts",
+        "sha256": "00a17d72a4f8e5093b1751c40d7b406fd0648a52f31713466d7cfa8e6fb86281"
+      }
+    ],
+    "src/utils/coinHistory.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/coinHistory.ts",
+        "sha256": "525d7d49e197d01d8ae3b4c82962bcaf564ce9a4ac51123f34684f4a796d5af1"
+      }
+    ],
+    "src/components/CoinHistory.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/CoinHistory.tsx",
+        "sha256": "0281d29ce6a8502c0bdbf1a6ae5fc0d036e50fb93df3c7c76d4abfe9bec737cb"
+      }
+    ],
+    "src/components/SendBsv21View.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/SendBsv21View.tsx",
+        "sha256": "026ce4b98eb5f1de52335137a84bfc3266fc818da4ced3328b744196ec5105ee"
+      }
+    ],
+    "src/components/AssetPicker.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/AssetPicker.tsx",
+        "sha256": "f5481ae4b646edb95a602b5c69e4c0631c86118ad14ac52c4d06253bfb9ec412"
+      }
+    ],
+    "src/utils/mneeDerivations.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/mneeDerivations.ts",
+        "sha256": "d1247dfda9858f97ca016ad15dfbb97473b3e470d660082fa72690bd7274f817"
+      }
+    ],
+    "src/utils/sweepLegacyMnee.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/sweepLegacyMnee.ts",
+        "sha256": "9e5bc5357a67f60a86a7f5ae0ea02bb0c93130761af0cb8740a119b0c0b1622e"
+      }
+    ],
+    "src/pages/BsvWallet.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/BsvWallet.tsx",
+        "sha256": "5a88b3eae949c538965fc2072bccb4270391d42786aee57a5cc3d6726ace82de"
+      }
+    ],
+    "src/components/NetworkChoice.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/NetworkChoice.tsx",
+        "sha256": "8188187c450ea3395fe713d83ccf208c8f7a00d4105b9a17e4f1c00c878c9998"
+      }
+    ],
+    "src/utils/chromeStorageHelpers.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/chromeStorageHelpers.ts",
+        "sha256": "1ccf2ad369d88add0c9eda2e5bd5c6733516d7031d98565d4047c97740b4e5e2"
+      }
+    ],
+    "src/pages/onboarding/CreateAccount.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/onboarding/CreateAccount.tsx",
+        "sha256": "8359efca26abc9262da33182ba3afec67fcfc1a984e40b62a12ffc97914afb41"
+      }
+    ],
+    "src/pages/onboarding/ImportAccount.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/onboarding/ImportAccount.tsx",
+        "sha256": "6e779b60215bdd3467bef56f70869c2d75f399ab27e68ab9ee0f52e8d692aac9"
+      }
+    ],
+    "src/components/WalletRow.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/WalletRow.tsx",
+        "sha256": "ee2b69a61d59d59c7655d730861a79ace007ec294a4879bd500946da152aab99"
+      }
+    ],
+    "src/pages/onboarding/RestoreAccount.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/onboarding/RestoreAccount.tsx",
+        "sha256": "2a320d5c2b65e7b364c8a45d7afdb9b0b9d5b0aeb3b6567676fb1b5ecc1c97ea"
+      }
+    ],
+    "src/pages/onboarding/Start.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/onboarding/Start.tsx",
+        "sha256": "dc51b9aba906c010753c94c075a6506ead16809ffb4258342cd5581039ae819b"
+      }
+    ],
+    "src/components/Ordinal.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/Ordinal.tsx",
+        "sha256": "0618d67d137e5a004fcf07899fd092b033e4a31d76a0c9cb5dd3d1cf41323abd"
+      }
+    ],
+    "src/pages/OrdWallet.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/OrdWallet.tsx",
+        "sha256": "d47987555868149919020f0887b9c42838d362638028b3b9b005432193b3f142"
+      }
+    ],
+    "src/components/AvatarPicker.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/AvatarPicker.tsx",
+        "sha256": "d41b3d59f274e4f5d7904e453c8fa20286752aa843f3e0ea205f0d5d0754c822"
+      }
+    ],
+    "src/utils/masterExporter.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/masterExporter.ts",
+        "sha256": "1bd7622239914f5fd1023eb93d55937cb6b9d280d1b228683dd97040fb05637a"
+      }
+    ],
+    "src/pages/PermissionsManager.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/PermissionsManager.tsx",
+        "sha256": "aa8d5e248708fadeb20de3d43a4f6439cc669eed5e21c1cc37ec4b7475953eb2"
+      }
+    ],
+    "src/components/ProviderPicker.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/ProviderPicker.tsx",
+        "sha256": "ec6334433b511e2b35ad546e9d43526f57bd5b9d978bef191e515663605d9ae3"
+      }
+    ],
+    "src/hooks/useRemoteStatus.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useRemoteStatus.ts",
+        "sha256": "a997668d3f27674abc5bfcac36e646e8fe3664e714998c4d2446bd717fe64e4f"
+      }
+    ],
+    "src/pages/StorageStatus.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/StorageStatus.tsx",
+        "sha256": "8937897f15e65dd140b421e5c2d2fe882c690eb857eb9d94402ba3d7ad5dc50d"
+      }
+    ],
+    "src/services/storageReconcile.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/services/storageReconcile.ts",
+        "sha256": "9a566f7d295aae84c24f8d5c403ef46e50749bff27dd72fc388481a20471907d"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/storageReconcile.ts",
+        "sha256": "9a566f7d295aae84c24f8d5c403ef46e50749bff27dd72fc388481a20471907d"
+      }
+    ],
+    "src/hooks/useStorageRepair.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useStorageRepair.ts",
+        "sha256": "88e5f0f03af4f07b99c68eae83517e7671c5aa20bc8b68911210e5309ca5dd31"
+      }
+    ],
+    "src/pages/Settings.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/Settings.tsx",
+        "sha256": "3006e22a3a9cc723c07403320e148abf764c7d1422368d9abe18d3b362a7720d"
+      }
+    ],
+    "src/hooks/useBlockHeightTracker.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/hooks/useBlockHeightTracker.ts",
+        "sha256": "8c4c1fdce86aecd332521a1e57e18b441c502298d12578a46a22453998cf2c99"
+      }
+    ],
+    "src/components/SyncingBlocks.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/SyncingBlocks.tsx",
+        "sha256": "0aefcac9248b5f95333f5e8574968d5dcfd14ec0afb83ac5e6515f3f121589ae"
+      }
+    ],
+    "src/components/StorageRepairOverlay.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/components/StorageRepairOverlay.tsx",
+        "sha256": "0fe0a2a6d0093241145ee2225bed391f9fe376382083c237de8709e95c30263d"
+      }
+    ],
+    "src/utils/masterImporter.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/utils/masterImporter.ts",
+        "sha256": "c095549b68f712f57ca4edc1e15aa663d5407a011cb66830db36a14551d42cf1"
+      }
+    ],
+    "src/pages/onboarding/MasterRestore.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/onboarding/MasterRestore.tsx",
+        "sha256": "3aee84041e081e61ac3b27341d440277be44597e46c6a2682d074bdc5b2db401"
+      }
+    ],
+    "src/contexts/BlockHeightContext.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/contexts/BlockHeightContext.ts",
+        "sha256": "1fad1faf023797e01e4b6badbbd9d0aab2d84cc293fa33f45fca8e3568b0ee38"
+      }
+    ],
+    "src/contexts/providers/BlockHeightProvider.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/contexts/providers/BlockHeightProvider.tsx",
+        "sha256": "b505c3f4233f4e449fd5ea985ead1d9483725734d79961df54f277fca352fce8"
+      }
+    ],
+    "src/contexts/SyncContext.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/contexts/SyncContext.ts",
+        "sha256": "1a522f8bd015ecf238f433a08089986ac357a80be4ca443b830e19fd46fa04b2"
+      }
+    ],
+    "src/contexts/providers/SyncProvider.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/contexts/providers/SyncProvider.tsx",
+        "sha256": "4e9ea97ce2a2585605650ed37f7d16f207daf129da1eafe69c4f38cd43209ae7"
+      }
+    ],
+    "src/sweep/scanner.ts": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/sweep/scanner.ts",
+        "sha256": "f6fbf3fb39485abe3618a0fdf9d186224cc2e6765021034eebb033d3fbf17596"
+      }
+    ],
+    "src/pages/SweepMigration.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/pages/SweepMigration.tsx",
+        "sha256": "5e02e4e144c940f5b29be27e0104fb701c692a3e32b95bf3e603891ad07fefd5"
+      }
+    ],
+    "src/App.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/App.tsx",
+        "sha256": "30c4c6647791c3f8551b92b48da65bfb1e8f90bb905d776acfc6ecb644596536"
+      }
+    ],
+    "src/index.tsx": [
+      {
+        "map": "build/assets/main-7H3MZR-R.js.map",
+        "source": "../../src/index.tsx",
+        "sha256": "301d9d6aa6a20881bc4fd9019e0c4bceae59206ca91824bab6ce6cdf523c6d81"
+      }
+    ],
+    "src/pages/requests/CounterpartyPermissionRequest.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/pages/requests/CounterpartyPermissionRequest.tsx",
+        "sha256": "e1a2829999f3b6a0167f6cb332bb6052f33655d1dfd36e55d8d25c0505307035"
+      }
+    ],
+    "src/utils/protocols.ts": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/utils/protocols.ts",
+        "sha256": "13c3007952fb969157820ed056a1ba8562e0d7280b869e8769519f10bf1dc6c6"
+      }
+    ],
+    "src/pages/requests/GroupedPermissionRequest.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/pages/requests/GroupedPermissionRequest.tsx",
+        "sha256": "5b6e2050d9df1ec9aff1e49d325d3b338b6f2444e9a4ca272ece496469f40bba"
+      }
+    ],
+    "src/pages/requests/OneSatPermissionRequest.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/pages/requests/OneSatPermissionRequest.tsx",
+        "sha256": "cc2d7303625a28ac35570f5d06b9c2c5595dcf8c068e15ee4c54014b08662a8d"
+      }
+    ],
+    "src/pages/requests/PermissionRequest.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/pages/requests/PermissionRequest.tsx",
+        "sha256": "24dc32c8eeda40982941b7139f6799fd38934d53ed252e33410a4ca933ac2c58"
+      }
+    ],
+    "src/pages/requests/UsbCheckRequest.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/pages/requests/UsbCheckRequest.tsx",
+        "sha256": "d7f4ec87ca77b61ff2b819bf653fa6e75069663e7df4883432ea3ca3b9c5fd87"
+      }
+    ],
+    "src/prompt-tab.tsx": [
+      {
+        "map": "build/assets/prompt-tab-Qmbuvzwc.js.map",
+        "source": "../../src/prompt-tab.tsx",
+        "sha256": "1c5ebec89b87fa68ae5580c00049f7447ebfdd9748f343d971c1d412b3b325c7"
+      }
+    ],
+    "src/sweep-tab.tsx": [
+      {
+        "map": "build/assets/sweep-tab-CUkcdwoU.js.map",
+        "source": "../../src/sweep-tab.tsx",
+        "sha256": "ef2276c49c28bf3bd56bfc950ca7a065d94f3400028f0256fb16dc024e69a6e4"
+      }
+    ],
+    "src/pages/usb/usbHelpers.ts": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/usbHelpers.ts",
+        "sha256": "3ebd8295ce168ebb5a634cae910c308c9b98140a0c5d672ee1f46e2a81df765e"
+      }
+    ],
+    "src/pages/usb/UsbLayout.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/UsbLayout.tsx",
+        "sha256": "797c568142ab786c3659b3d28afcf05986eaa9904a4118ed77df7e98478fe572"
+      }
+    ],
+    "src/pages/usb/presence.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/presence.tsx",
+        "sha256": "3f503e5ace5664841c9aff462365052059d392dab0c91ed2ba0a504e77acdac1"
+      }
+    ],
+    "src/pages/usb/steps.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/steps.tsx",
+        "sha256": "0e94ecfb1cfe8c15e34ff1abe05900da192363a3f090b1c66a874127fbd5ef51"
+      }
+    ],
+    "src/pages/usb/AddFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/AddFlow.tsx",
+        "sha256": "28a3ff6bf6a60b0193ab022c837cb1e79dd2d1411217460ee8f38ed082a50a1d"
+      }
+    ],
+    "src/pages/usb/DisableFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/DisableFlow.tsx",
+        "sha256": "8d0ff7f52ccd8a2cc1bd70f29c140b5df464a684457195edef793a8cd85c0f4e"
+      }
+    ],
+    "src/pages/usb/EnrollFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/EnrollFlow.tsx",
+        "sha256": "95b2a53f4ce2930f19b79f90090f5c1b882cca10aab047a3199c372708cc2618"
+      }
+    ],
+    "src/pages/usb/RepickFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/RepickFlow.tsx",
+        "sha256": "afba5d061f5bc97b62186f7d49b4acfa20a1d621f1e7b17ac80e94dd7a11c811"
+      }
+    ],
+    "src/pages/usb/RestoreFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/RestoreFlow.tsx",
+        "sha256": "c0700134d77f93abb3eb24c5fb8d9f6cc5b4d0ccba17943aefc3dd7b96acf5f6"
+      }
+    ],
+    "src/pages/usb/RotateFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/RotateFlow.tsx",
+        "sha256": "50bb3f4de516ebcd0dbb059ba5d99303331c7c34706db7e4bf3ed4af0532f097"
+      }
+    ],
+    "src/pages/usb/UsbFlow.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/pages/usb/UsbFlow.tsx",
+        "sha256": "232034b172ca41f3c3d76670bb616bbd63713327f85ac4f87981a3f4c189cba9"
+      }
+    ],
+    "src/usb-tab.tsx": [
+      {
+        "map": "build/assets/usb-tab-DP1Nyxv3.js.map",
+        "source": "../../src/usb-tab.tsx",
+        "sha256": "9abe1b95f16b868427c290440658f1af817914625fd546ccf5803f4d8280fe40"
+      }
+    ],
+    "src/services/usbBackupBackground.ts": [
+      {
+        "map": "build/assets/usbBackup-BCDsDTJt.js.map",
+        "source": "../../src/services/usbBackupBackground.ts",
+        "sha256": "149943aea7f9e4deb1fb3df9724d44aa1b8d344d27113a3d46b927325fc937d2"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/usbBackupBackground.ts",
+        "sha256": "149943aea7f9e4deb1fb3df9724d44aa1b8d344d27113a3d46b927325fc937d2"
+      }
+    ],
+    "src/services/usbBackupCoalesce.ts": [
+      {
+        "map": "build/assets/usbBackup-BCDsDTJt.js.map",
+        "source": "../../src/services/usbBackupCoalesce.ts",
+        "sha256": "591c95197bc7d060c61c877d9ba316de07fae99916eb0d0a450286a0faffcc72"
+      }
+    ],
+    "src/services/usbRekey.ts": [
+      {
+        "map": "build/assets/usbBackup-BCDsDTJt.js.map",
+        "source": "../../src/services/usbRekey.ts",
+        "sha256": "6f4760fd674eeb38ee763e8cbbd5c4d38dde3c8f4e0c98565bc21625fd72a6a3"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/usbRekey.ts",
+        "sha256": "6f4760fd674eeb38ee763e8cbbd5c4d38dde3c8f4e0c98565bc21625fd72a6a3"
+      }
+    ],
+    "src/services/usbBackup.ts": [
+      {
+        "map": "build/assets/usbBackup-BCDsDTJt.js.map",
+        "source": "../../src/services/usbBackup.ts",
+        "sha256": "b367f0eb7fe80ac3e1ea955544beea8db5626ba5a90c0e514697c58115654640"
+      }
+    ],
+    "src/hooks/useBottomMenu.tsx": [
+      {
+        "map": "build/assets/useSnackbar-D1ptG4rt.js.map",
+        "source": "../../src/hooks/useBottomMenu.tsx",
+        "sha256": "5efe6195fd0fdc312f4e3fc8b3d28690225d279073106d982bfe72e6ac9ed525"
+      }
+    ],
+    "src/hooks/useSnackbar.tsx": [
+      {
+        "map": "build/assets/useSnackbar-D1ptG4rt.js.map",
+        "source": "../../src/hooks/useSnackbar.tsx",
+        "sha256": "e4afe38111a2d9b204e545721c8b85718097b6713bb89ae13f65df1c080bdfdc"
+      }
+    ],
+    "src/cwi-validation.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/cwi-validation.ts",
+        "sha256": "75e3c47a1c47c72353f37cc1cd42c46f9bdfc57763fc060c1f5464bb8549c438"
+      }
+    ],
+    "src/services/oneSatPrompt.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/oneSatPrompt.ts",
+        "sha256": "89240d6e1a8469b124397b891745aa0d644064c79aee115ed6482467c4ad0c08"
+      }
+    ],
+    "src/initSyncContext.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/initSyncContext.ts",
+        "sha256": "b5bf0455b3a789453cc243985fc75eb4c6d98afed88f5be4c3cde0b1386a5e65"
+      }
+    ],
+    "src/services/legacyBaskets.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/legacyBaskets.ts",
+        "sha256": "97201d263dcab171f78128b0efb22b75330c7b08075c08abc5ffe83d2395c560"
+      }
+    ],
+    "src/services/proofRepair.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/proofRepair.ts",
+        "sha256": "f2161f81f7e7c41c9e3403cb9a1ddb866d1bd4345f972964f2a8d7c4b59b6d81"
+      }
+    ],
+    "src/services/storageReconcileBackground.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/storageReconcileBackground.ts",
+        "sha256": "3ef2b9555f5f566cd3eaddb31c68d56c0391f319be62adf7b19addf3166224a0"
+      }
+    ],
+    "src/initWallet.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/initWallet.ts",
+        "sha256": "9fe8bfe3776383c6d878364457440c3b3bc3cfabb3986cc9359b2f91233821e2"
+      }
+    ],
+    "src/backup/WalletBackupService.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/backup/WalletBackupService.ts",
+        "sha256": "5683f14ec254c6768a2530b0917690bfc9c5a08c3cbe2d3415b59e0f0123c755"
+      }
+    ],
+    "src/services/usbRekeyBackground.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/services/usbRekeyBackground.ts",
+        "sha256": "527b4d056741707a09da1aedd24aecd34b9598f1891b5379a41ae57046b5fee2"
+      }
+    ],
+    "src/background.ts": [
+      {
+        "map": "build/background.js.map",
+        "source": "../src/background.ts",
+        "sha256": "11a56116971a068ad85190d67624b5c5c94a521b1d36476df3d7182116694ef8"
+      }
+    ],
+    "src/cwi-content.ts": [
+      {
+        "map": "build/content.js.map",
+        "source": "../src/cwi-content.ts",
+        "sha256": "c44b3a3516b33080c360495ef55ba41344529c2b514e47eeba0f602bcfec2022"
+      }
+    ],
+    "src/content.ts": [
+      {
+        "map": "build/content.js.map",
+        "source": "../src/content.ts",
+        "sha256": "34f41219d958b050f798d3a87987f5d2b25e67b5bba16bddc6fe03d5d5f4d794"
+      }
+    ]
+  },
+  "patchedDependencySourceProof": {
+    "node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs": [
+      {
+        "map": "build/assets/crypto-Dod0KLUi.js.map",
+        "source": "../../node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs",
+        "sha256": "401dcb497dcc2331b2963b21344b1867398f9ee7aef4de154e341267f485c7cc"
+      },
+      {
+        "map": "build/background.js.map",
+        "source": "../node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs",
+        "sha256": "401dcb497dcc2331b2963b21344b1867398f9ee7aef4de154e341267f485c7cc"
+      },
+      {
+        "map": "build/content.js.map",
+        "source": "../node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs",
+        "sha256": "401dcb497dcc2331b2963b21344b1867398f9ee7aef4de154e341267f485c7cc"
+      },
+      {
+        "map": "build/inject.js.map",
+        "source": "../node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs",
+        "sha256": "401dcb497dcc2331b2963b21344b1867398f9ee7aef4de154e341267f485c7cc"
+      }
+    ],
+    "node_modules/@1sat/wallet/dist/permissions/manager.js": [
+      {
+        "map": "build/background.js.map",
+        "source": "../node_modules/@1sat/wallet/dist/permissions/manager.js",
+        "sha256": "dc4c8deb5020ac44b9f74c8afffa49e9b28e9f650f1ce66a33fcda9e4bcf3104"
+      }
+    ]
+  },
+  "localFrozenInstalledPatchFiles": [
+    {
+      "path": "out/index.client.cjs",
+      "sha256": "4a14171505c51dc5fc1de9b00d9c713e18a3182610ed418974881aebe72ff1c2",
+      "bytes": 1906419
+    },
+    {
+      "path": "out/index.client.cjs.standing-allowance.map",
+      "sha256": "6a4c990063139cd94334e7f464f18b55a921aa504d8dbd30b2cb47132b0db352",
+      "bytes": 3760067
+    },
+    {
+      "path": "out/index.client.d.cts",
+      "sha256": "a2701b1a27adcd245227aaa9ede5a41dd82a09f265293e01a076d8b876ba4a76",
+      "bytes": 519662
+    },
+    {
+      "path": "out/index.client.d.cts.standing-allowance.map",
+      "sha256": "a48a8251e5def3c0b946be58e492d5ff809b15cd36b72e87df9840303594c74c",
+      "bytes": 94150
+    },
+    {
+      "path": "out/index.client.d.mts",
+      "sha256": "2e1ee0e15315a2fa736d5a24f76ece93f33464d562335b1e7baeb65aae43a022",
+      "bytes": 519676
+    },
+    {
+      "path": "out/index.client.d.mts.standing-allowance.map",
+      "sha256": "d863aa5819ec851a76c48e1950ffa6639a64999d06b90d1157a9d2863d6793c8",
+      "bytes": 94149
+    },
+    {
+      "path": "out/index.client.mjs",
+      "sha256": "401dcb497dcc2331b2963b21344b1867398f9ee7aef4de154e341267f485c7cc",
+      "bytes": 1888276
+    },
+    {
+      "path": "out/index.client.mjs.standing-allowance.map",
+      "sha256": "4d03b54fe539907461efa62ba5f12476a75507815a05fe4eedf45fe2cd666fb2",
+      "bytes": 3751232
+    }
+  ],
+  "cost": {
+    "completedJobSeconds": 106.0,
+    "actualMoneyUSD": null,
+    "operatorCostUSD": null,
+    "agentCostUSD": null,
+    "ownedCapacityAllocationUSD": null,
+    "unknownCostsAreZero": false
+  },
+  "qualification": {
+    "nativeRunPerformed": false,
+    "profileAdmitted": false,
+    "releaseIdentity": "CI engineering candidate; inherited manifest5.1.1 is not an official release"
+  },
+  "receipts": {
+    "SHA256SUMS": {
+      "size": 4261,
+      "sha256": "667e4699767ca9695375957fa29facc66593b16adc7d9a19702de62b8b83015b"
+    },
+    "acquisition.json": {
+      "size": 949,
+      "sha256": "859f0818d1d6a057aa8f1d248bc899abdc0c3227c026d0ff60b20eb3c180d5b7"
+    },
+    "artifact-13924895649.zip": {
+      "size": 13239205,
+      "sha256": "8dd34e24c210082c8bf3d370cc73b762bd62bd10221467371293adee9d9ba99f"
+    },
+    "artifacts.json": {
+      "size": 790,
+      "sha256": "5f2468c3cee5a170db29ebc1bd10fdb73c1a68a8535876ed97bea929561bbdb1"
+    },
+    "built-merge-commit.json": {
+      "size": 2619,
+      "sha256": "e22dee979c9157154efabffb3af56f0e79ef237fe5c1ccd336b0e074901bb7da"
+    },
+    "identities.json": {
+      "size": 184,
+      "sha256": "9ce1e90fdcc4e905f89add67efc644a46ee2a5e88f7f563561d8e5eab433f57b"
+    },
+    "installed-patched-files.json": {
+      "size": 1454,
+      "sha256": "064c2a640cd3cf95c39bf1fba06c17ab147d50494a5c1e53e3ee495ac79c939a"
+    },
+    "job-131043151757.log": {
+      "size": 71379,
+      "sha256": "5f7a6394459fc96287c66d83fd10a29d8d7ceafd679d9c19fcc234a310233b59"
+    },
+    "jobs.json": {
+      "size": 2112,
+      "sha256": "489916d3fd979a4bdbb5af6169d48e76ff6d8951addc0fe7d63b459571603381"
+    },
+    "manifest.json": {
+      "size": 997,
+      "sha256": "2c67342b0c6b7011e51920be3d8f4a24c0eef3e7b42ef01a304592c86eaa877e"
+    },
+    "pr368.json": {
+      "size": 17710,
+      "sha256": "bca3ca8126e40d95e17b780d6ffb6b3e04eda30223e604ba07df301555163496"
+    },
+    "pw-v5.1.1.zip": {
+      "size": 13244753,
+      "sha256": "cd12b686c5295061bd4b727b32e17c3686e210fcdfa6aa2193790590458d9105"
+    },
+    "pw-v5.1.1.zip.sha256": {
+      "size": 80,
+      "sha256": "6d55eed89c4b92dbb052b3ea1d481281443a92b90898dbd4e285841ab0522981"
+    },
+    "run-logs.zip": {
+      "size": 35006,
+      "sha256": "4cc5269d990fd8ab728a75d50e6a864de4e603608b62a7f4c84d4014ab9e817b"
+    },
+    "run.json": {
+      "size": 12576,
+      "sha256": "17a368de2c56132b24e742f35e723357dcc0cfb3d1e6e095e805c09bf8be5a7a"
+    },
+    "source-head-commit.json": {
+      "size": 1154,
+      "sha256": "657e0944fe1adaf68a940d827de48aa8c1aaec1a4e47bebc5c77c351daa78c8e"
+    },
+    "zip-members.json": {
+      "size": 6881,
+      "sha256": "bfbd715089980f11dee861053eb83c725b8697a993a690cb05080527c4d36dd4"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+node:internal/fs/promises:1345
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/attempt-2026-11-12T06-43-00Z/original/repetition-2/evidence/integrated/synthesis-lch.json'
+    at async open (node:internal/fs/promises:1345:25)
+    at async Object.readFile (node:internal/fs/promises:2003:14)
+    at async read (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify-synthesis.ts:12:51)
+    at async verifyNativeSynthesis (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify-synthesis.ts:13:81)
+    at async <anonymous> (/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/source/synthesis/src/wallet-lab/native/verify-synthesis.ts:85:82) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43165501159/attempt-2026-11-12T06-43-00Z/original/repetition-2/evidence/integrated/synthesis-lch.json'
+}
+
+Node.js v24.22.1

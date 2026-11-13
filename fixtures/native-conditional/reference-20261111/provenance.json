@@ -1,0 +1,30 @@
+{
+  "schema": "tpnil-native-conditional-reference-fixture@1",
+  "claim": "LAB_SELF_TEST_ONLY_REAL_TYPESCRIPT_REFERENCE_NOT_NATIVE_QUALIFICATION",
+  "executionDate": "2026-11-11",
+  "nodeVersion": "24.22.1",
+  "sdkVersion": "2.7.1",
+  "walletToolboxVersion": "2.13.0",
+  "initialFunding": "fundRemoteWalletFromTeranode public API with fixtures/teranode/wab-funding-v1.json",
+  "walletActor": "Public fixture key 77 repeated32; never a production/native wallet",
+  "originalCounts": {
+    "PASS": 69,
+    "FAIL": 14,
+    "BLOCKED": 1
+  },
+  "callCount": 123,
+  "transactions": 13,
+  "sourceStageFiles": 95,
+  "sourceBeforeAfterIdentical": true,
+  "command": "PATH=/Users/tyeverett/.nvm/versions/node/v24.22.1/bin:$PATH synthesis/node_modules/.bin/tsx out/conditional-preflight-20261111/run.ts >out/conditional-preflight-20261111/stdout-7.log 2>out/conditional-preflight-20261111/stderr-7.log",
+  "serviceLockSha256": "2c871f8e6536c71fa356a51f1d3ea7c4ebc7a2b938c45f928800f31c2a431fc4",
+  "sourceBaseline": "9a9e99f1fb5a10fc8b6726aaa6a0d7dc239ec47e plus source-before.json uncommitted implementation hashes",
+  "files": {
+    "report.json": "52da9f7ad24c7648b21cde0a585a98c8f2b80e0431defd5b13ad3522cb35a102",
+    "source-before.json": "9c5c8738aaabc49c6460236fd7f4dc19853b1f16d631c0116a414b42e581baa4",
+    "source-after.json": "9c5c8738aaabc49c6460236fd7f4dc19853b1f16d631c0116a414b42e581baa4",
+    "executed-harness.ts": "2801c64bb90f60dea5362ab346a567c1c97225c7b301571fc9f36387fab6b499",
+    "original-stdout.txt": "36dd7c73daa8bb8bb81871d4a122b2499afac361007c6b109c9446dc28c69631",
+    "original-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

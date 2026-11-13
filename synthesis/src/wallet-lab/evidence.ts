@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { canonicalJson, sha256Hex } from '../determinism.js'
-import type { WalletLabResult } from './model.js'
+import { identifiesYoursCandidate, matchesYoursCandidate, type WalletLabResult } from './model.js'
 
 const secretKeys = new Set([
   'mnemonic',
@@ -47,7 +47,19 @@ export class EvidenceBundle {
   addBytes(name: string, value: Uint8Array): void {
     if (!/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(name) || name.includes('..'))
       throw new TypeError(`Invalid evidence name: ${name}`)
+    // Progress JSON is replaceable; a captured PNG is immutable. A later
+    // observer cannot silently destroy the bytes bound by an earlier receipt.
+    const previous = this.files.get(name)
+    if (name.endsWith('.png') && previous && !Buffer.from(previous).equals(Buffer.from(value)))
+      throw new Error(`Captured image already exists with different bytes: ${name}`)
     this.files.set(name, Uint8Array.from(value))
+  }
+
+  /** Read an already captured observation without exposing mutable storage. */
+  readBytes(name: string): Buffer {
+    const value = this.files.get(name)
+    if (value === undefined) throw new Error(`Evidence has not been captured: ${name}`)
+    return Buffer.from(value)
   }
 
   flush(): WalletLabResult['evidence'] {
@@ -74,15 +86,18 @@ export function verifyEvidenceBundle(directory: string): WalletLabResult {
   const recordPath = path.join(directory, 'record.json')
   const parsed = JSON.parse(fs.readFileSync(recordPath, 'utf8')) as WalletLabResult
   if (parsed.schema !== 'tpnil-isi4-wallet-run@1.0.0') throw new Error('Unsupported wallet-run evidence schema')
-  if (!['EXPERIMENTAL_CONFORMANCE_RESULT', 'ENGINEERING_OBSERVATION_ONLY'].includes(parsed.claim) || parsed.program !== (parsed.itcve === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : parsed.itcve === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : parsed.itcve === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0') || !['ITCVE-1@1.0.0', 'ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(parsed.itcve))
+  if (!['EXPERIMENTAL_CONFORMANCE_RESULT', 'ENGINEERING_OBSERVATION_ONLY'].includes(parsed.claim) || parsed.program !== (parsed.itcve === 'ITCVE-1@4.8.0' ? 'ISI-4@5.8.0' : parsed.itcve === 'ITCVE-1@4.7.0' ? 'ISI-4@5.7.0' : parsed.itcve === 'ITCVE-1@4.6.0' ? 'ISI-4@5.6.0' : parsed.itcve === 'ITCVE-1@4.5.0' ? 'ISI-4@5.5.0' : parsed.itcve === 'ITCVE-1@4.4.0' ? 'ISI-4@5.4.0' : parsed.itcve === 'ITCVE-1@4.2.0' ? 'ISI-4@5.2.0' : parsed.itcve === 'ITCVE-1@4.1.0' ? 'ISI-4@5.1.0' : parsed.itcve === 'ITCVE-1@4.0.0' ? 'ISI-4@5.0.0' : parsed.itcve === 'ITCVE-1@2.0.0' ? 'ISI-4@4.0.0' : parsed.itcve === 'ITCVE-1@1.5.0' ? 'ISI-4@3.0.0' : parsed.itcve === 'ITCVE-1@1.4.0' ? 'ISI-4@2.0.0' : 'ISI-4@1.0.0') || !['ITCVE-1@1.0.0', 'ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(parsed.itcve))
     throw new Error('Unexpected wallet-run claim or program boundary')
+  if (parsed.itcve === 'ITCVE-1@4.1.0' || parsed.itcve === 'ITCVE-1@4.2.0' || parsed.itcve === 'ITCVE-1@4.4.0' || ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(parsed.itcve)) {
+    if (parsed.claim !== 'ENGINEERING_OBSERVATION_ONLY' || parsed.profile !== 'candidate-wallet-native-engineering' || parsed.walletCandidate?.officialRelease !== false || !matchesYoursCandidate(parsed.artifacts.wallet, parsed.itcve)) throw new Error('Candidate wallet requires its explicit engineering boundary')
+  } else if (identifiesYoursCandidate(parsed.artifacts.wallet) || parsed.walletCandidate !== undefined || parsed.profile === 'candidate-wallet-native-engineering') throw new Error('Candidate wallet identity cannot enter a release profile')
   const selection = parsed.configuration.serviceComponents?.components
-  if (selection !== null && typeof selection === 'object' && Object.values(selection).includes('go') && !['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(parsed.itcve))
+  if (selection !== null && typeof selection === 'object' && Object.values(selection).includes('go') && !['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(parsed.itcve))
     throw new Error('Go service selection requires the Go component profile')
-  if (['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0'].includes(parsed.itcve)) {
+  if (['ITCVE-1@1.1.0', 'ITCVE-1@1.3.0', 'ITCVE-1@1.4.0', 'ITCVE-1@1.5.0', 'ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(parsed.itcve)) {
     if (parsed.claim !== 'ENGINEERING_OBSERVATION_ONLY' || parsed.configuration.serviceComponents === undefined)
       throw new Error('Go component profile requires engineering claim and component identities')
-    validateComponentIdentity(parsed.configuration.serviceComponents, parsed.itcve === 'ITCVE-1@1.3.0' || parsed.itcve === 'ITCVE-1@1.4.0' || parsed.itcve === 'ITCVE-1@1.5.0' || parsed.itcve === 'ITCVE-1@2.0.0' ? parsed.itcve : undefined)
+    validateComponentIdentity(parsed.configuration.serviceComponents, parsed.itcve === 'ITCVE-1@1.3.0' || parsed.itcve === 'ITCVE-1@1.4.0' || parsed.itcve === 'ITCVE-1@1.5.0' || parsed.itcve === 'ITCVE-1@2.0.0' || parsed.itcve === 'ITCVE-1@4.0.0' || parsed.itcve === 'ITCVE-1@4.1.0' || parsed.itcve === 'ITCVE-1@4.2.0' || parsed.itcve === 'ITCVE-1@4.4.0' || (parsed.itcve === 'ITCVE-1@4.6.0' || parsed.itcve === 'ITCVE-1@4.7.0' || parsed.itcve === 'ITCVE-1@4.8.0') || parsed.itcve === 'ITCVE-1@4.5.0' ? parsed.itcve : undefined)
     const identity = JSON.parse(fs.readFileSync(path.join(directory, 'evidence/service-components.json'), 'utf8'))
     if (canonicalJson(identity) !== canonicalJson(parsed.configuration.serviceComponents))
       throw new Error('Service component evidence differs from configuration')

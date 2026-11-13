@@ -1,0 +1,36 @@
+{
+  "schema": "tpnil-local-extraction-controls@1",
+  "claim": "ACQUISITION_TOOLING_CONTROLS_ONLY",
+  "extractorSha256": "990131e65f21bd1398d86f4740ca4a77cc93197ed8a3d7e2d904b2f2d17c17e6",
+  "controls": [
+    {
+      "case": "ordinary",
+      "exitCode": 0,
+      "expected": "PASS",
+      "stdout": "{\"verified\": true, \"zipIntegrity\": \"PASS\", \"members\": [{\"path\": \"ordinary/file.json\", \"bytes\": 16, \"sha256\": \"a2d24846687432e879ee6d724317351221af62e5d52383ca73ace47a6fe96cd8\"}], \"uncompressedBytes\": 16}\n",
+      "stderr": ""
+    },
+    {
+      "case": "parent-traversal",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/safe-extract.py\", line 12, in <module>\n    if entry.filename in seen or p.is_absolute() or '..' in p.parts or '\\\\' in entry.filename or not p.parts or '\\x00' in entry.filename: raise RuntimeError('Unsafe/duplicate ZIP member')\n                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Unsafe/duplicate ZIP member\n"
+    },
+    {
+      "case": "canonical-alias",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/safe-extract.py\", line 11, in <module>\n    if p.as_posix()!=entry.filename.rstrip('/'): raise RuntimeError('Noncanonical ZIP member path rejected')\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Noncanonical ZIP member path rejected\n"
+    },
+    {
+      "case": "symlink",
+      "exitCode": 1,
+      "expected": "REJECT",
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/out/native-review-43216478235/safe-extract.py\", line 14, in <module>\n    if stat.S_ISLNK(entry.external_attr>>16): raise RuntimeError('ZIP symlink rejected')\n                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: ZIP symlink rejected\n"
+    }
+  ],
+  "nativeCalls": 0
+}

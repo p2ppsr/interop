@@ -1,0 +1,96 @@
+{
+  "schema": "tpnil-native6-archive-independent-review@1",
+  "claim": "ARCHIVE_INTEGRITY_AND_SCOPE_REVIEW_ONLY",
+  "archive": "journals/integrated-native-attempts/2026-11-12/43216478235",
+  "manifestSha256": "9f2f3103b9397048b46a0413dead3c2f5c2eb17ae7b42c1a9ce94c0b28080fea",
+  "nativeQualification": false,
+  "newNativeSessions": 0,
+  "checks": [
+    {
+      "name": "original archive",
+      "exitCode": 0,
+      "stdout": "{\"verified\": true, \"claim\": \"FAILED_ATTEMPT_ARCHIVE_INTEGRITY_AND_FROZEN_DIAGNOSIS_ONLY\", \"source\": \"1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41\", \"workflowRun\": 43216478235, \"originalMembers\": 376, \"archiveFiles\": 566, \"nativeQualification\": false, \"raw535PerRepetition\": {\"PASS\": 432, \"FAIL\": 27, \"BLOCKED\": 76}, \"historical99PerRepetition\": {\"PASS\": 97, \"FAIL\": 2, \"BLOCKED\": 0, \"MISSING\": 0}, \"rust\": \"NOT_EXECUTED\", \"jobSeconds\": 2285, \"completedCohortJobSeconds\": 24957, \"actualCleanupSucceeded\": true, \"parentAdmission\": false}\n",
+      "stderr": "",
+      "expected": true
+    },
+    {
+      "name": "qualification promotion",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 12, in <module>\n    assert m['qualifiedEnvironment']is False and m['completeBRC100Conformance']is False and m['officialRelease']is False and m['candidateOnly']is True\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "wrong source",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 10, in <module>\n    m=read('attempt.json');assert m['schema']=='tpnil-integration-attempt@1'and m['source']==source and m['workflowRun']==43216478235 and m['artifactId']==13945313469\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "wrong failure scope",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 11, in <module>\n    assert m['claim']=='OBSERVER_VERIFICATION_ERROR'and m['failureClassification']=='UNRESOLVED_FINAL_SUBMISSION_ANCESTRY'and m['walletExecuted']is True and m['workflowConclusion']=='failure'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "original member omitted",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 13, in <module>\n    names=[x['name']for x in m['files']];assert len(names)==len(set(names));assert sorted(names)==sorted(p.relative_to(root).as_posix()for p in root.rglob('*')if p.is_file()and p!=root/'attempt.json')\n                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "failed wallet assertions erased",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 41, in <module>\n    d=read('diagnosis.json');assert d['nativeQualification']is False and d['completeBRC100Conformance']is False and d['full535Raw']=={'PASS':432,'FAIL':27,'BLOCKED':76}and d['historical99Raw']=={'PASS':97,'FAIL':2,'BLOCKED':0}and d['rust']=='NOT_EXECUTED'and d['actualCleanupSucceeded']is True and d['parentAdmission']is False and d['acceptedNativeCustomerPacks']==0\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "cleanup success promoted to parent admission",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 41, in <module>\n    d=read('diagnosis.json');assert d['nativeQualification']is False and d['completeBRC100Conformance']is False and d['full535Raw']=={'PASS':432,'FAIL':27,'BLOCKED':76}and d['historical99Raw']=={'PASS':97,'FAIL':2,'BLOCKED':0}and d['rust']=='NOT_EXECUTED'and d['actualCleanupSucceeded']is True and d['parentAdmission']is False and d['acceptedNativeCustomerPacks']==0\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "cost unknown set zero",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 40, in <module>\n    cost=read('cost.json');assert sha(raw('cost.json'))=='af97b7a71764afe2a8834ff8ef227616857347686844b947dd8d4ef8a8023509';assert cost['actualNativeJobSeconds']==2285 and cost['foundationActualJobSeconds']==1458 and cost['currentOrderActualJobSeconds']==3743 and cost['completedCohortJobSecondsAfterNative']==24957 and cost['unknownCostsAreZero']is False;assert all(cost[k]is None for k in ['actualCIChargeUSD','operatorEffortUSD','developmentAgentUsageUSD','allocatedOwnedCapacityUSD','storageAndEgressUSD','totalFullCostUSD'])\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "native time removed",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 40, in <module>\n    cost=read('cost.json');assert sha(raw('cost.json'))=='af97b7a71764afe2a8834ff8ef227616857347686844b947dd8d4ef8a8023509';assert cost['actualNativeJobSeconds']==2285 and cost['foundationActualJobSeconds']==1458 and cost['currentOrderActualJobSeconds']==3743 and cost['completedCohortJobSecondsAfterNative']==24957 and cost['unknownCostsAreZero']is False;assert all(cost[k]is None for k in ['actualCIChargeUSD','operatorEffortUSD','developmentAgentUsageUSD','allocatedOwnedCapacityUSD','storageAndEgressUSD','totalFullCostUSD'])\n                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "frozen review files dropped",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 17, in <module>\n    b=safe(row['path']).read_bytes();assert len(b)==row['storedBytes']and sha(b)==row['storedSha256'];assert row['encoding']in['gzip','identity'];v=gzip.decompress(b)if row['encoding']=='gzip'else b;assert len(v)==row['originalBytes']and sha(v)==row['originalSha256']\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "expected": false
+    },
+    {
+      "name": "truncated original zip",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/var/folders/5k/w6tcsqc57b7gx9g9x6sy2vcc0000gn/T/tpnil-native6-archive-review-6rvl7fln/archive/verify.py\", line 15, in <module>\n    b=safe(row['name']).read_bytes();assert len(b)==row['size']and sha(b)==row['sha256'],row['name']\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: native-integrated.zip\n",
+      "expected": false
+    },
+    {
+      "name": "restored archive",
+      "exitCode": 0,
+      "stdout": "{\"verified\": true, \"claim\": \"FAILED_ATTEMPT_ARCHIVE_INTEGRITY_AND_FROZEN_DIAGNOSIS_ONLY\", \"source\": \"1f9fe0f9b979e9bbca66e90335f02ba2b80c7d41\", \"workflowRun\": 43216478235, \"originalMembers\": 376, \"archiveFiles\": 566, \"nativeQualification\": false, \"raw535PerRepetition\": {\"PASS\": 432, \"FAIL\": 27, \"BLOCKED\": 76}, \"historical99PerRepetition\": {\"PASS\": 97, \"FAIL\": 2, \"BLOCKED\": 0, \"MISSING\": 0}, \"rust\": \"NOT_EXECUTED\", \"jobSeconds\": 2285, \"completedCohortJobSeconds\": 24957, \"actualCleanupSucceeded\": true, \"parentAdmission\": false}\n",
+      "stderr": "",
+      "expected": true
+    }
+  ],
+  "allPassed": true,
+  "scriptSha256": "3fb2b475698abac2a38baae6301c7384bb5b747751a626d55bcbed90c26e01b3"
+}

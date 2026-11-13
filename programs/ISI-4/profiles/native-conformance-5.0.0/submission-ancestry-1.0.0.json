@@ -1,0 +1,15 @@
+{
+  "schema": "tpnil-native-submission-ancestry-policy@1.0.0",
+  "claim": "PROSPECTIVE_SAFETY_ADMISSION",
+  "scope": "Official observer2 and engineering candidate only; original shutdown receipts and historical admission policies remain unchanged.",
+  "receiptPolicy": "tpnil-native-shutdown-submissions@2.0.0",
+  "requirements": [
+    "First independently verify complete owned-provider shutdown ledgers, original prefixes, cleanup and permission observations.",
+    "Inspect each final submitted target and every reachable unmined ancestor from retained bytes and independently resolved native transactions. A rejected provider verdict does not exempt a submission.",
+    "Reject any protected transaction-state spend after an independently recomputed no-spend PASS, including a spend carried as an ancestor.",
+    "Reject denied lifecycle and coverage payments carried as targets or unmined ancestors.",
+    "The exact independently verified lifecycle grant may appear as an ancestor of a subsequent authorized transaction. A repeated target outside its original grant window is still forbidden.",
+    "Never infer a passing wallet predicate from this admission check or promote unqualified historical observations."
+  ],
+  "completeBRC100Conformance": false
+}

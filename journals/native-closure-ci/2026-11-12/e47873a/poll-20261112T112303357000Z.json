@@ -1,0 +1,68 @@
+{
+  "observedAt": "2026-11-12T11:23:03.357000+00:00",
+  "source": "e47873a952c4fbb25bae241aadf41863104ae977",
+  "runs": [
+    {
+      "run": 43207730680,
+      "name": "Foundation checks",
+      "status": "in_progress",
+      "conclusion": null,
+      "jobs": [
+        {
+          "id": 131147051825,
+          "name": "go-components",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsedSeconds": 303,
+          "maximumSeconds": 1200,
+          "overBound": false,
+          "currentStep": null,
+          "failedSteps": []
+        },
+        {
+          "id": 131147052248,
+          "name": "offline-core",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsedSeconds": 209,
+          "maximumSeconds": 600,
+          "overBound": false,
+          "currentStep": null,
+          "failedSteps": [
+            "Run node scripts/verify-native-portability-archive.mjs"
+          ]
+        },
+        {
+          "id": 131147052254,
+          "name": "integrated-components",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsedSeconds": 389,
+          "maximumSeconds": 2400,
+          "overBound": false,
+          "currentStep": "Prepare exact component closures",
+          "failedSteps": []
+        }
+      ]
+    },
+    {
+      "run": 43207730665,
+      "name": "Retained native evidence reevaluation",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 131147051626,
+          "name": "retained-native-evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsedSeconds": 116,
+          "maximumSeconds": 1200,
+          "overBound": false,
+          "currentStep": null,
+          "failedSteps": []
+        }
+      ]
+    }
+  ]
+}

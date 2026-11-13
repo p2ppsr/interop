@@ -1,0 +1,196 @@
+--- a/pkg/internal/storage/funder/sql.go
++++ b/pkg/internal/storage/funder/sql.go
+@@ -631,16 +631,27 @@
+ 
+ func (c *utxoCollector) prepareResult() (*Result, error) {
+ 	changeAmount := c.change()
+-
+-	// If the change amount is below the dust floor, it is uneconomical to create any change output.
+-	// Discard all change outputs and give the amount as extra fee to the miner.
++	actualFee := c.fee
++
++	// Discarded dust is paid to the miner, not credited to the wallet. Keep the
++	// returned amount equal to the change outputs actually created so action
++	// history and spending limits account for the full debit. Do not mutate the
++	// collector fee: repeated GetResult calls must not add the remainder twice.
+ 	if changeAmount < c.dustFloor {
+ 		c.changeOutputsCount = 0
++		if changeAmount > 0 {
++			var err error
++			actualFee, err = satoshi.Add(actualFee, changeAmount)
++			if err != nil {
++				return nil, fmt.Errorf("failed to include discarded change in fee: %w", err)
++			}
++			changeAmount = 0
++		}
+ 	}
+ 
+ 	return &Result{
+ 		AllocatedUTXOs:     c.allocatedUTXOs,
+-		Fee:                c.fee,
++		Fee:                actualFee,
+ 		ChangeAmount:       changeAmount,
+ 		ChangeOutputsCount: c.changeOutputsCount,
+ 		DustFloor:          c.dustFloor,
+--- a/pkg/internal/storage/funder/funder_result.go
++++ b/pkg/internal/storage/funder/funder_result.go
+@@ -11,7 +11,9 @@
+ type Result struct {
+ 	AllocatedUTXOs     []*UTXO
+ 	ChangeOutputsCount uint64
+-	ChangeAmount       satoshi.Value
++	// ChangeAmount is the value of emitted wallet change; omitted dust is zero.
++	ChangeAmount satoshi.Value
++	// Fee includes all discarded change actually paid to the miner.
+ 	Fee                satoshi.Value
+ 	DustFloor          satoshi.Value
+ 	ChangeInitialValue satoshi.Value
+--- a/pkg/internal/storage/funder/collector_internal_test.go
++++ b/pkg/internal/storage/funder/collector_internal_test.go
+@@ -72,6 +72,12 @@
+ 	}
+ 	expectedFee, err := feeCalculator.Calculate(collector.txSize)
+ 	require.NoError(t, err)
++	if result.ChangeOutputsCount == 0 {
++		// With no emitted change, every remaining satoshi is actual miner fee.
++		// The rate calculation is a lower bound, not a phantom wallet credit.
++		require.GreaterOrEqual(t, result.Fee, expectedFee)
++		expectedFee = satoshi.MustSubtract(collector.satsCovered, collector.txSats)
++	}
+ 	require.Equal(t, expectedFee, result.Fee)
+ }
+ 
+--- a/pkg/internal/storage/funder/sql_test.go
++++ b/pkg/internal/storage/funder/sql_test.go
+@@ -758,11 +758,11 @@
+ 		// when:
+ 		result, err := funderSvc.Fund(ctx, -50, smallTransactionSize, oneOutput, basket, testusers.Alice.ID, nil, nil, false, false, 0, given.GormDB())
+ 
+-		// then: no change output created; extra sats go to the miner (ChangeAmount > 0 is fine)
++		// No change output is emitted: all 50 caller-provided satoshis are miner fee.
+ 		then.Result(result).WithoutError(err)
+ 		require.Zero(t, result.ChangeOutputsCount, "expected 0 change outputs when change is below dustFloor")
+-		require.Positive(t, int(result.ChangeAmount), "sub-dust change amount should be positive (given to miner as fee)")
+-		require.Less(t, int(result.ChangeAmount), 192, "change amount must be below dustFloor (192 at 500 sat/kb)")
++		require.Zero(t, result.ChangeAmount, "discarded dust cannot be credited as wallet change")
++		require.Equal(t, satoshi.Value(50), result.Fee)
+ 	})
+ 
+ 	t.Run("dust floor: large change at high fee rate still produces outputs above the dust floor", func(t *testing.T) {
+--- /dev/null
++++ b/pkg/internal/storage/funder/native_dust_accounting_tpnil_test.go
+@@ -0,0 +1,42 @@
++package funder
++
++import (
++	"fmt"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/defs"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/satoshi"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/storage/database/models"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/txutils"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++// Conservation uses only actually emitted change. A discarded dust remainder is
++// miner fee, never a wallet credit. Repeated observation must not add it twice.
++func TestTPNILDustAccountingConservesActualOutputs(t *testing.T) {
++	for _, rate := range []int64{1, 100, 500} {
++		for _, amount := range []uint64{50, 100, 500, 1000, 10000} {
++			t.Run(fmt.Sprintf("rate%d-input%d", rate, amount), func(t *testing.T) {
++				c, err := newCollector(13, 44, 1, 1, 1000, newFeeCalculator(defs.FeeModel{Type: defs.SatPerKB, Value: rate}), 8, false)
++				require.NoError(t, err)
++				require.NoError(t, c.allocateUTXO(&models.UserUTXO{OutputID: 1, Satoshis: amount, EstimatedInputSize: txutils.P2PKHEstimatedInputSize}))
++				if !c.IsFunded() {
++					_, err := c.GetResult()
++					require.ErrorIs(t, err, wdk.ErrNotEnoughFunds)
++					return
++				}
++				result, err := c.GetResult()
++				require.NoError(t, err)
++				emitted := result.ChangeAmount
++				if result.ChangeOutputsCount == 0 {
++					emitted = 0
++					require.Zero(t, result.ChangeAmount, "no output cannot credit phantom change")
++				}
++				require.Equal(t, satoshi.Value(amount), satoshi.MustAdd(13, satoshi.MustAdd(emitted, result.Fee)), "allocated value must equal recipient + emitted change + actual fee")
++				again, err := c.GetResult()
++				require.NoError(t, err)
++				require.Equal(t, result, again, "reading result twice must not double-charge dust")
++			})
++		}
++	}
++}
+--- /dev/null
++++ b/pkg/storage/native_dust_accounting_tpnil_test.go
+@@ -0,0 +1,69 @@
++package storage_test
++
++import (
++	"encoding/json"
++	"fmt"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/defs"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/fixtures/testusers"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/internal/satoshi"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/storage/internal/testabilities"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk"
++	"github.com/bsv-blockchain/go-wallet-toolbox/pkg/wdk/primitives"
++	"github.com/stretchr/testify/require"
++	"testing"
++)
++
++// Real SQLite allocation -> CreateAction -> authenticated listActions: the
++// stored signed-net balance must reflect actual change outputs, including dust.
++func TestTPNILDustAccountingStoredDebitRPC(t *testing.T) {
++	for _, amount := range []int64{50, 1000} {
++		t.Run(fmt.Sprint(amount), func(t *testing.T) {
++			given, cleanup := testabilities.Given(t)
++			defer cleanup()
++			provider := given.Provider().WithFeeModel(defs.FeeModel{Type: defs.SatPerKB, Value: 100}).GORM()
++			given.Faucet(provider, testusers.Alice).TopUp(satoshi.Value(amount))
++			args := fixtures.DefaultValidCreateActionArgs()
++			args.Outputs[0].Satoshis = 13
++			args.Labels = []primitives.StringUnder300{"dust accounting"}
++			created, err := provider.CreateAction(t.Context(), testusers.Alice.AuthID(), args)
++			require.NoError(t, err)
++			var allocated, change, outputs int64
++			for _, in := range created.Inputs {
++				allocated += in.SourceSatoshis
++			}
++			for _, out := range created.Outputs {
++				outputs += int64(out.Satoshis)
++				if out.ProvidedBy == wdk.ProvidedByStorage {
++					change += int64(out.Satoshis)
++				}
++			}
++			require.Equal(t, amount, allocated)
++			require.Greater(t, allocated-outputs, int64(0))
++			if amount == 50 {
++				require.Zero(t, change)
++				require.Equal(t, int64(37), allocated-outputs)
++			} else {
++				require.Positive(t, change)
++			}
++			stored, err := provider.TransactionEntity().Read().Reference().Equals(created.Reference).Find(t.Context())
++			require.NoError(t, err)
++			require.Len(t, stored, 1)
++			require.Equal(t, change-allocated, stored[0].Satoshis, "history debit must include dust actually paid to miner")
++			stop := given.StartedRPCServerFor(provider)
++			defer stop()
++			response := callJSONRPC(t, given.ServerURL(), testusers.Alice, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: args.Labels, Limit: 10}})
++			require.Nil(t, response.Error)
++			var result struct {
++				Actions []struct {
++					Satoshis int64 `json:"satoshis"`
++				}
++			}
++			require.NoError(t, json.Unmarshal(response.Result, &result))
++			require.Len(t, result.Actions, 1)
++			require.Equal(t, change-allocated, result.Actions[0].Satoshis)
++			denied := callJSONRPC(t, given.ServerURL(), testusers.Bob, "listActions", []any{testusers.Alice.AuthID(), wdk.ListActionsArgs{Labels: args.Labels, Limit: 10}})
++			require.NotNil(t, denied.Error)
++		})
++	}
++}

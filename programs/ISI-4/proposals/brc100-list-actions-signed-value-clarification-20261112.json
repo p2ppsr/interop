@@ -1,0 +1,92 @@
+{
+  "schema": "tpnil-standard-clarification-draft@1.0.0",
+  "status": "DRAFT_NOT_SENT",
+  "claim": "SOURCE_AND_CODEC_EVIDENCE_ONLY",
+  "completeBRC100Conformance": false,
+  "nativeQualification": null,
+  "runtimeChanged": false,
+  "oracleChanged": false,
+  "retainedPredicate": {
+    "id": "output.listActions",
+    "result": "FAIL"
+  },
+  "proposal": {
+    "path": "programs/ISI-4/proposals/brc100-list-actions-signed-value-clarification-20261112.md",
+    "sha256": "5fc59ee857fbededc1020581af77bfa0541676dbcf5350e3f1b120824268bf2c"
+  },
+  "pinnedStandard": {
+    "commit": "39a643ff148a8dcd23ec08986a8ddeb7d5713743",
+    "path": "wallet/0100.md",
+    "sha256": "537ab393c655195e8cd61897b00d6b187a36f17d930493f8af48430752064082",
+    "typeLines": [
+      277,
+      435,
+      442
+    ],
+    "actionFieldLines": [
+      810,
+      824
+    ],
+    "wireLines": [
+      1619,
+      1628,
+      1820,
+      1823
+    ]
+  },
+  "laterInspectedStandard": {
+    "repository": "bsv-blockchain/BRCs",
+    "commit": "9150386334fe1411a295ee1f2e354f215f93339e",
+    "path": "wallet/0100.md",
+    "gitBlobSha": "6aea78a5568c79ba01f577c51e2add540d0c188e",
+    "sha256": "d7487c5830cd68e3426b99d9f393ed1e338ed437a26ce9818bd96e6aca7663d4",
+    "url": "https://github.com/bsv-blockchain/BRCs/blob/9150386334fe1411a295ee1f2e354f215f93339e/wallet/0100.md"
+  },
+  "actualPredicateInput": [
+    {
+      "args": {
+        "includeOutputs": true,
+        "labels": [
+          "tpnil-boundary"
+        ]
+      },
+      "actions": [
+        {
+          "txid": "e75b8feda0ed5d1c7ba84ddc92b9b8167ef181ea0994f77200a1a38dfd381176",
+          "satoshis": -36,
+          "isOutgoing": true,
+          "status": "unproven"
+        }
+      ]
+    }
+  ],
+  "distinctSetupControlExample": {
+    "txid": "0e8c43e17ef73969c0c9ed207f86241b845a77df5f83bc71dc4434fe9a71ad06",
+    "satoshis": -1032,
+    "isOutgoing": true,
+    "status": "nosend"
+  },
+  "codecValues": [
+    -1032,
+    -1,
+    0,
+    1,
+    1032
+  ],
+  "codecScope": "Existing field encoding only; boundary/ownership/status semantics require independent acceptance before any adopted revision.",
+  "receipts": {
+    "journals/native-closure-validation/2026-11-11-observer3/diagnostics/signed-action-value/review-2.json.gz": "3376d61fd92d0b69c6a3b14bcc9f2515c0a0e6e189df60473d79da9c580b4150",
+    "journals/native-closure-validation/2026-11-11-observer3/diagnostics/signed-action-value/typescript-codec.json.gz": "2aa0ea20e2af7b478175a35ced2497260028c41c075bb296dfab56dc0895f964",
+    "journals/native-closure-validation/2026-11-11-observer3/diagnostics/signed-action-value/go-codec.json.gz": "89620d02c813af4f914ed0bf850e741b4a9f05f47ba80363f15960152999c4be",
+    "journals/native-closure-validation/2026-11-11-observer3/diagnostics/signed-action-value/codec.mjs.gz": "076f2ebf27d3bfc8b1de544d4083c0c1e2218a492970758f30333dcd9313c352",
+    "journals/native-closure-validation/2026-11-11-observer3/diagnostics/signed-action-value/codec.go.gz": "c395d840bbdad11ece7528ddbb038df8d03605b1a181cccae04dabc5e3c75c86"
+  },
+  "prohibitedSilentChanges": [
+    "absolute value projection",
+    "zero clamp",
+    "dropping negative or zero history",
+    "fabricating minimum1",
+    "using isOutgoing as assumed invertible sign",
+    "mutating the pinned oracle or previous native journals"
+  ]
+}

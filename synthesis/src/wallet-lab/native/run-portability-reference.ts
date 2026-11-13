@@ -15,8 +15,10 @@ if (fs.existsSync(output)) throw new Error('Portability evidence output already 
 fs.mkdirSync(output, { recursive: true })
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-portability-reference-'))
 fs.writeFileSync(path.join(temp, 'index.html'), '<title>Reference storage portability</title>')
-const prospective = process.argv.includes('--portability-patch')
-const go = language === 'go' ? { binary: path.resolve(import.meta.dirname, prospective ? '../../../../out/itcve-go-storage-portability' : '../../../../out/itcve-go-storage-sync'), ...(prospective ? { storagePortabilityPatch: true } : { storageSyncPatch: true }), ...(process.argv.includes('--terminal-rejection-receipts') ? { terminalRejectionReceipts: true } : {}) } : undefined
+const syncOrder = process.argv.includes('--sync-order-patch')
+if(syncOrder&&language!=='go')throw new Error('Go11 reference requires actual Go providers')
+const prospective = syncOrder || process.argv.includes('--portability-patch')
+const go = syncOrder ? {binary:path.resolve(import.meta.dirname,'../../../../out/itcve-go-storage-sync-order'),storageCallerKnownInputsPatch:true,storageSyncOrderPatch:true,terminalRejectionReceipts:true} : language === 'go' ? { binary: path.resolve(import.meta.dirname, prospective ? '../../../../out/itcve-go-storage-portability' : '../../../../out/itcve-go-storage-sync'), ...(prospective ? { storagePortabilityPatch: true } : { storageSyncPatch: true }), ...(process.argv.includes('--terminal-rejection-receipts') ? { terminalRejectionReceipts: true } : {}) } : undefined
 const source = new ControlledWalletServices({ webroot: temp, components: { storage: language as 'go' | 'typescript' }, go, ...(prospective && language === 'typescript' ? { typescriptDescendantExport: true } : {}) })
 const destination = source.createStorageCounterpart(temp, '12'.repeat(32))
 const trace: Transcript[] = []
@@ -40,7 +42,7 @@ try {
   for (const header of source.headers.values()) destination.registerHeader(header)
   await destination.start()
   current = await createFixtureWallet(source, '77'.repeat(32), (wallet, endpoint) => client(wallet, endpoint, 'source-active'))
-  const report = await qualifyStoragePortability({ wallet, source, destination, mode: 'reference-engineering', ...(prospective ? { proofOracle: 'v2' as const } : {}), controls: {
+  const report = await qualifyStoragePortability({ wallet, source, destination, mode: 'reference-engineering', ...(prospective ? { proofOracle: syncOrder ? 'v4' as const : 'v2' as const } : {}), controls: {
     async createTask() {
       const ciphertext = (await wallet.encrypt({ plaintext: Utils.toArray(portableTask, 'utf8'), protocolID: [0, 'todo list'], keyID: '1', counterparty: 'self' })).ciphertext
       const script = await new PushDrop(wallet).lock([Utils.toArray('1ToDoDtKreEzbHYKFjmoBuduFmSXXUGZG', 'utf8'), ciphertext], [0, 'todo list'], '1', 'self', true, true)

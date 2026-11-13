@@ -2,13 +2,19 @@
 import { Transaction } from '@bsv/sdk'
 
 export const clauseOracle4Id = 'tpnil-brc100-clause-oracle@4.0.0'
+export const clauseOracle7Id = 'tpnil-brc100-clause-oracle@7.0.0'
 export const noSendChangeInputId = 'input.createAction.options.noSendChange.0'
 export const noSendChangeOutputId = 'output.createAction.noSendChange-final-outpoints'
 export const noSendChangeSetupId = `setup.${noSendChangeInputId}`
 export const noSendChangeReadId = 'setup.noSendChange.public-actions'
 export const noSendChangeLabel = 'tpnil oracle4 nosend anchor'
-export function noSendChangeSetupArgs() {
-  return { description: 'TPNIL oracle4 noSend change anchor', outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'TPNIL noSend anchor output', basket: 'tpnil nosend anchor' }], labels: [noSendChangeLabel], options: { noSend: true, randomizeOutputs: false } }
+export const noSendChangeSourceId = 'setup.noSendChange.explicit-source'
+export function noSendChangeSourceArgs() {
+  return { description: 'TPNIL oracle7 explicit change source', outputs: [{ satoshis: 1000, lockingScript: '7551', outputDescription: 'TPNIL explicit surplus source', basket: 'tpnil nosend surplus' }], options: { randomizeOutputs: false, acceptDelayedBroadcast: false } }
+}
+export function noSendChangeSetupArgs(revision: 1 | 2 | 3 = 1, source?: { txid: string; tx: number[] }) {
+  if (revision === 3) return { description: 'TPNIL oracle7 noSend change anchor', inputBEEF: source?.tx, inputs: [{ outpoint: `${source?.txid}.0`, unlockingScript: '51', inputDescription: 'TPNIL explicit surplus input' }], outputs: [{ satoshis: 1, lockingScript: '51', outputDescription: 'TPNIL noSend anchor output', basket: 'tpnil nosend anchor' }], labels: [noSendChangeLabel], options: { noSend: true, randomizeOutputs: false } }
+  return { description: 'TPNIL oracle4 noSend change anchor', outputs: [{ satoshis: revision === 2 ? 997 : 1, lockingScript: '51', outputDescription: 'TPNIL noSend anchor output', basket: 'tpnil nosend anchor' }], labels: [noSendChangeLabel], options: { noSend: true, randomizeOutputs: false } }
 }
 export function noSendChangeReadArgs() {
   return { labels: [noSendChangeLabel], labelQueryMode: 'all', includeOutputs: true, includeOutputLockingScripts: true, includeLabels: true, limit: 10, offset: 0 }
@@ -16,8 +22,9 @@ export function noSendChangeReadArgs() {
 
 /** Read the signed action through public methods. The returned noSendChange is
  * retained untouched and scored separately; it is not the fixture's authority. */
-export async function prepareNoSendChangeFixture(call: (id: string, method: string, args: any) => Promise<any>) {
-  const pendingBatch = await call(noSendChangeSetupId, 'createAction', noSendChangeSetupArgs())
+export async function prepareNoSendChangeFixture(call: (id: string, method: string, args: any) => Promise<any>, revision: 1 | 2 | 3 = 1) {
+  const source = revision === 3 ? await call(noSendChangeSourceId, 'createAction', noSendChangeSourceArgs()) : undefined
+  const pendingBatch = await call(noSendChangeSetupId, 'createAction', noSendChangeSetupArgs(revision, source?.result))
   const publicRead = await call(noSendChangeReadId, 'listActions', noSendChangeReadArgs())
   let outpoints: string[] | undefined
   try {

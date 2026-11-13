@@ -1,0 +1,26 @@
+{
+  "claim": "PROSPECTIVE_DRAFT_REVIEW_ONLY",
+  "reviewedAt": "2026-11-12T11:30:06.136210+00:00",
+  "result": "CHANGES_REQUIRED",
+  "finding": {
+    "id": "current-producer-still-in-semantic-import-closure",
+    "verifierImport": "portabilityAssertions, portableTask from ./conformance-portability.js",
+    "problem": "Draft exempts current producer bytes but historical semantic verifier imports mutable producer constants at runtime. New source-binding tests only check read callback suppression and do not exercise this semantic dependency.",
+    "requestedCorrection": "Execute historical producer/verifier closure under retained immutable bytes or prove and strictly bind exact runtime imported semantics before replay. Keep retained evidence unchanged."
+  },
+  "files": [
+    {
+      "path": "scripts/verify-native-portability-archive.mjs",
+      "sha256": "c2b2333d9ab14921abb858a3710810813eacaa7286f37ad4a7d3ce1112f70fc5"
+    },
+    {
+      "path": "test/native-portability-archive.test.mjs",
+      "sha256": "2014a2cbae4077efafa13ba0bc77e896fba21c742afe6d05d634de741638a71c"
+    },
+    {
+      "path": "synthesis/src/wallet-lab/native/verify-conformance-portability.ts",
+      "sha256": "ae0fd49a3c5ace7b84c0f43e04db061ca8b32962db0dd5cde581c85aba8f0ad2"
+    }
+  ],
+  "nativeSessions": 0
+}

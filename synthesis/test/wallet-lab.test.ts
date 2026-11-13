@@ -4,6 +4,7 @@ import path from 'node:path'
 import { createHash } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { EvidenceBundle, redactEvidence, verifyEvidenceBundle, verifyWalletRunSeries } from '../src/wallet-lab/evidence.js'
+import { retiredYoursCandidateArtifacts, yoursPr368Artifact } from '../src/wallet-lab/model.js'
 
 describe('wallet laboratory evidence', () => {
   it('redacts secret-bearing fields recursively', () => {
@@ -60,6 +61,24 @@ describe('wallet laboratory evidence', () => {
       expect(verifyEvidenceBundle(directory).runId).toBe('unit-test')
       expect(verifyEvidenceBundle(directory).claim).toBe('ENGINEERING_OBSERVATION_ONLY')
       expect(fs.readFileSync(path.join(directory, 'evidence', 'observation.json'), 'utf8')).not.toContain('fixture-secret')
+      const candidate = { ...record, itcve: 'ITCVE-1@4.1.0', program: 'ISI-4@5.1.0', profile: 'candidate-wallet-native-engineering', walletCandidate: { officialRelease: false }, artifacts: { ...record.artifacts, wallet: { ...yoursPr368Artifact } } }
+      // Crossing the artifact/claim boundary must fail before ordinary evidence
+      // validation; a candidate's passing predicates cannot qualify a release.
+      for (const changed of [
+        { ...candidate, claim: 'EXPERIMENTAL_CONFORMANCE_RESULT' },
+        { ...candidate, profile: 'production-wallet-native-conformance' },
+        { ...candidate, walletCandidate: { officialRelease: true } },
+        { ...candidate, artifacts: record.artifacts },
+        { ...candidate, itcve: 'ITCVE-1@4.0.0', program: 'ISI-4@5.0.0' }
+      ]) {
+        fs.writeFileSync(path.join(directory, 'record.json'), JSON.stringify(changed))
+        expect(() => verifyEvidenceBundle(directory)).toThrow(/Candidate wallet/)
+      }
+      for (const wallet of [yoursPr368Artifact, ...retiredYoursCandidateArtifacts].flatMap(artifact => [artifact, { ...artifact, version: '5.1.1' }])) {
+        fs.writeFileSync(path.join(directory, 'record.json'), JSON.stringify({ ...record, claim: 'EXPERIMENTAL_CONFORMANCE_RESULT', artifacts: { ...record.artifacts, wallet } }))
+        expect(() => verifyEvidenceBundle(directory)).toThrow(/Candidate wallet identity/)
+      }
+      fs.writeFileSync(path.join(directory, 'record.json'), JSON.stringify(record))
       fs.appendFileSync(path.join(directory, 'evidence', 'observation.json'), 'tamper')
       expect(() => verifyEvidenceBundle(directory)).toThrow(/mismatch/)
     } finally {

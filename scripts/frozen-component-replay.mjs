@@ -4,26 +4,66 @@ import path from 'node:path'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex')
-const paths=['package.json','.nvmrc','.github','scripts','synthesis','infra','fixtures','components','integrations','itcves','programs','config','src','bin','adapters','schemas','suts']
+const paths=['package.json','.nvmrc','.github','scripts','synthesis','infra','fixtures','components','integrations','itcves','programs','config','src','bin','adapters','schemas','suts','test','docs']
 /** Replay an integration pack against its recorded Git source. The caller owns and
  * removes `directory`; installed dependencies are reused only with exact locks. */
 export function prepareFrozenComponentReplay(root,source,directory,{repository=process.env.TPNIL_REPLAY_GIT_ROOT??root}={}) {
   assert.match(source,/^[0-9a-f]{40}$/)
   assert.ok(!fs.existsSync(directory),'Frozen replay requires a new owned directory')
-  const tree=execFileSync('git',['ls-tree','-r','-z',source,'--',...paths],{cwd:repository,maxBuffer:32*1024*1024}).toString().split('\0').filter(Boolean)
-  assert.ok(tree.length>0,'Frozen source is absent')
+  const tree=execFileSync('git',['ls-tree','-r','-l','-z',source,'--',...paths],{cwd:repository,maxBuffer:32*1024*1024,timeout:30000}).toString().split('\0').filter(Boolean)
+  assert.ok(tree.length>0&&tree.length<=100000,'Frozen source is absent or exceeds the file limit')
+  const files=new Map(),directories=new Set()
+  let paddedBytes=0
   for(const row of tree) {
-    assert.match(row,/^100(?:644|755) blob [a-f0-9]{40}\t/,'Frozen replay rejects Git symlinks and non-file objects')
-    const name=row.slice(row.indexOf('\t')+1)
-    assert.ok(!path.isAbsolute(name)&&name.split('/').every(part=>part&&part!=='.'&&part!=='..'),'Unsafe frozen source path')
+    const match=/^(100(?:644|755)) blob ([a-f0-9]{40}) +([0-9]+)\t([\s\S]+)$/.exec(row)
+    assert.ok(match,'Frozen replay rejects Git symlinks and non-file objects')
+    const [,mode,blob,length,name]=match,size=Number(length),parts=name.split('/')
+    assert.ok(!path.isAbsolute(name)&&Buffer.byteLength(name)<=4096&&parts.every(part=>part&&part!=='.'&&part!=='..'),'Unsafe frozen source path')
+    assert.ok(Number.isSafeInteger(size)&&size>=0&&size<=256*1024*1024,'Frozen source file exceeds the size limit')
+    assert.ok(!files.has(name),'Duplicate frozen source path')
+    files.set(name,{mode,blob,size});paddedBytes+=Math.ceil(size/512)*512
+    for(let i=1;i<parts.length;i++)directories.add(parts.slice(0,i).join('/'))
   }
+  // Account for content padding, directory headers and bounded long-name/PAX
+  // metadata before allocating disk. The archive itself is checked again below.
+  const maximumArchiveBytes=768*1024*1024
+  assert.ok(paddedBytes+(files.size+directories.size+1)*8192+10240<=maximumArchiveBytes,'Frozen source archive exceeds the disk budget')
   fs.mkdirSync(directory,{recursive:true})
   // Node canonicalizes import.meta.filename. Legacy CLI guards compare it to
   // argv[1], so every extracted entry point must use the same physical path.
   directory=fs.realpathSync(directory)
-  const present=[...new Set(tree.map(row=>row.slice(row.indexOf('\t')+1).split('/')[0]))]
-  const archive=execFileSync('git',['archive','--format=tar',source,'--',...present],{cwd:repository,maxBuffer:128*1024*1024})
-  const unpack=spawnSync('tar',['-xf','-','-C',directory],{input:archive});assert.equal(unpack.status,0,String(unpack.stderr))
+  const present=[...new Set([...files.keys()].map(name=>name.split('/')[0]))]
+  const scratch=fs.mkdtempSync(path.join(path.dirname(directory),'.tpnil-replay-archive-'))
+  try {
+    const archive=path.join(scratch,'source.tar')
+    // Direct file output avoids Node's128MiB stdout buffer. This is a local
+    // replay artifact, removed on both success and failure, not another clone.
+    execFileSync('git',['archive','--format=tar',`--output=${archive}`,source,'--',...present],{cwd:repository,timeout:60000,maxBuffer:1024*1024})
+    assert.ok(fs.statSync(archive).size<=maximumArchiveBytes,'Frozen source archive exceeds the disk budget')
+    const unpack=spawnSync('tar',['-xf',archive,'-C',directory],{timeout:60000,maxBuffer:1024*1024})
+    assert.equal(unpack.status,0,String(unpack.error??unpack.stderr))
+  } finally { fs.rmSync(scratch,{recursive:true,force:true}) }
+  const extracted=[]
+  function inspect(current) {
+    for(const entry of fs.readdirSync(current,{withFileTypes:true})) {
+      const file=path.join(current,entry.name)
+      assert.ok(!entry.isSymbolicLink(),'Frozen archive contains a symlink')
+      if(entry.isDirectory())inspect(file)
+      else {assert.ok(entry.isFile(),'Frozen archive contains a non-file object');extracted.push(path.relative(directory,file))}
+    }
+  }
+  inspect(directory)
+  assert.deepEqual(extracted.sort(),[...files.keys()].sort(),'Frozen archive inventory differs from the Git tree')
+  const buffer=Buffer.alloc(1024*1024)
+  for(const [name,expected] of files) {
+    const file=path.join(directory,name),stat=fs.statSync(file)
+    assert.equal(stat.size,expected.size,`Frozen source size differs: ${name}`)
+    assert.equal(Boolean(stat.mode&0o111),expected.mode==='100755',`Frozen source executable mode differs: ${name}`)
+    const digest=createHash('sha1').update(`blob ${expected.size}\0`),fd=fs.openSync(file,'r')
+    try {let count;while((count=fs.readSync(fd,buffer,0,buffer.length,null))>0)digest.update(buffer.subarray(0,count))}
+    finally {fs.closeSync(fd)}
+    assert.equal(digest.digest('hex'),expected.blob,`Frozen source Git blob differs: ${name}`)
+  }
   const expectedNode=fs.readFileSync(path.join(directory,'.nvmrc'),'utf8').trim().replace(/^v/,'')
   assert.equal(process.versions.node,expectedNode,'Use the recorded Node runtime for integration replay')
   const reused=[]

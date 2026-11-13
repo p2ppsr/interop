@@ -1,0 +1,51 @@
+{
+  "schema": "tpnil-ci-cost-increment@1",
+  "claim": "PARTIAL_COST_ACCOUNTING_ONLY",
+  "currency": "USD",
+  "includedRunIds": [
+    43143699101,
+    43143699270
+  ],
+  "includedCompletedJobs": 4,
+  "knownJobWallSeconds": 1341,
+  "failedWorkflowJobSecondsIncluded": 1228,
+  "successfulRetainedReplayJobSecondsIncluded": 113,
+  "measurement": "Sum of GitHub job completed_at minus started_at; includes setup, execution and cleanup within each job, not provider billing or queue time.",
+  "linkedPreviouslyRecordedRun": {
+    "repository": "yours-org/yours-wallet",
+    "id": 43140694759,
+    "jobSeconds": 106,
+    "path": "journals/native-root-cause-audit/2026-11-11/candidate-ci-review.json",
+    "sha256": "7862ad7d60d01f947c1033abec29e45dfa84d59f68e89fc642e99295627ca7a9",
+    "includedInThisIncrement": false,
+    "reason": "Already recorded candidate CI; link avoids duplicate evidence and double counting."
+  },
+  "workOrder": {
+    "repository": "network-ops",
+    "commit": "dc6e7d8d2",
+    "path": "artifacts/ops/itcve-native-closure-20261111/native-attempt-1/work-order.json",
+    "newPaidCapacity": false,
+    "newReservation": false
+  },
+  "reservedUSD": null,
+  "estimatedUSD": null,
+  "accruedUSD": null,
+  "invoicedUSD": null,
+  "creditedUSD": null,
+  "actualCIChargeUSD": null,
+  "storageAndEgressUSD": null,
+  "operatorEffortUSD": null,
+  "developmentAgentUsageUSD": null,
+  "allocatedOwnedCapacityUSD": null,
+  "totalFullCostUSD": null,
+  "acceptedNativeCustomerPacks": null,
+  "costPerAcceptedPackUSD": null,
+  "unknownCostsAreZero": false,
+  "fullCostReconciled": false,
+  "thirtyTwoFoldImprovementMeasured": false,
+  "exclusions": [
+    "Current native attempt43143722884 and all later retries/publication checks are outside this completed2workflow increment.",
+    "Prior cohorts remain in their existing ledger and are not reset or overwritten.",
+    "Job time is an observed duration, not evidence that hosted CI or local engineering was free."
+  ]
+}

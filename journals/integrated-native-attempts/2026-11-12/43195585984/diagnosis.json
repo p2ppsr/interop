@@ -1,0 +1,63 @@
+{
+  "schema": "tpnil-native-attempt-diagnosis@1",
+  "claim": "UNQUALIFIED_PARTIAL_DIAGNOSTIC",
+  "workflowRun": 43195585984,
+  "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "qualifiedEnvironment": false,
+  "nativeQualification": false,
+  "candidateOnly": true,
+  "officialRelease": false,
+  "full535": "NOT_EXECUTED_TO_COMPLETION",
+  "original99": "NOT_EXECUTED",
+  "rust": "NOT_EXECUTED",
+  "primaryFailure": "Native wallet settings page is absent",
+  "primaryFailureLocation": "synthesis/src/wallet-lab/native/conformance-portability.ts:292",
+  "outerWorkerFailure": "Native wallet cleanup failed",
+  "permissionExtension": {
+    "rawAssertions": {
+      "PASS": 0,
+      "FAIL": 15,
+      "BLOCKED": 0
+    },
+    "actualCalls": 1,
+    "scenarioCallsAfterIdentity": 0,
+    "observerDecision": "Trusted Deny on setup identity request",
+    "publicError": "ERR_PERMISSION_DENIED",
+    "notFifteenWalletDefects": true
+  },
+  "partialFrozenModuleReplays": {
+    "permissionCoverage": {
+      "PASS": 29,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "permissions": {
+      "PASS": 8,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "lifecycle": {
+      "PASS": 3,
+      "FAIL": 0,
+      "BLOCKED": 0
+    }
+  },
+  "wholeFiveContextAdmission": {
+    "PASS": 15,
+    "FAIL": 14,
+    "BLOCKED": 0,
+    "reason": "Only three contexts exist; full five-context profile prerequisite is absent. Partial29-pass replay is not whole-profile admission."
+  },
+  "actualCleanupSucceeded": true,
+  "shutdownBindingsAdmitted": false,
+  "missingRequiredBindings": [
+    "record.json",
+    "permission-lifecycle.json",
+    "service-counterparts.json"
+  ],
+  "secondaryEvidenceErrors": 3,
+  "frozenSourceUnchanged": true,
+  "originalArtifactMembers": 91,
+  "actualJobSeconds": 1180,
+  "completeBRC100Conformance": false
+}

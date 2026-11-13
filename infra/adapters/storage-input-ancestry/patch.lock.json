@@ -1,0 +1,20 @@
+{
+  "module": "github.com/bsv-blockchain/go-wallet-toolbox",
+  "version": "v0.191.4",
+  "sum": "h1:Ah0arWUQLGeY8OOa3a3gWRZUtgAhH9siyfENkodDG7U=",
+  "schema": "tpnil-storage-input-ancestry-go-patch@1.0.0",
+  "parent": "infra/adapters/storage-merge-accounting/patch.lock.json",
+  "parentSha256": "c1a98f939cbb39368482ee818d3e8bff81fccd4a76abc0cc7cda22c5a4a7ace5",
+  "patch": "go-wallet-toolbox-v0.191.4.patch",
+  "patchSha256": "dc67d4ec233725f584c2ac47c36b0c428c57391f192ca17d6e598b3adbbf4b97",
+  "files": {
+    "pkg/storage/internal/actions/create.go": {
+      "before": "6e6ae762402ab513d72c2427d55d0d9e5691abc07755099aa21a340bd905120d",
+      "after": "746617161b67c387b39ab1cddc693282cf503b733424b45ab453e10447769fe9"
+    },
+    "pkg/storage/native_input_ancestry_tpnil_test.go": {
+      "before": null,
+      "after": "6a7eecb1f06fc27ed7f12ea3c46af623b7cb4d669a24f99c6404bf20f70f2b0a"
+    }
+  }
+}

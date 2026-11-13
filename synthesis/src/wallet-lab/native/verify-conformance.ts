@@ -1,3 +1,6 @@
+import {nativeCompletionProfile} from './completion-profile.js'
+import { completionModules, verifyCompletionReports } from './coverage-completion/suite.js'
+import { coverageObservationEncoding, decodeCoverageObservation } from './coverage-observation.js'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -9,14 +12,28 @@ import { verifyNativePortability } from './verify-conformance-portability.js'
 import { verifyNativeClauseConformance } from './verify-conformance-clauses.js'
 import { validateComponentIdentity } from '../go-services.js'
 
-export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' = 'ITCVE-1@1.4.0') {
-  const read = (name: string) => JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance', `${name}.json`), 'utf8'))
+export async function verifyNativeConformance(evidenceDirectory: string, baselineVectors: VectorResult[], lifecycleOracle?: string, portabilityOracle?: string, clauseOracle = 'tpnil-brc100-clause-oracle@3.0.0', profile: 'ITCVE-1@1.4.0' | 'ITCVE-1@1.5.0' | 'ITCVE-1@2.0.0' | 'ITCVE-1@4.0.0' | 'ITCVE-1@4.1.0' | 'ITCVE-1@4.2.0' | 'ITCVE-1@4.3.0' | 'ITCVE-1@4.4.0' | 'ITCVE-1@4.5.0' | 'ITCVE-1@4.6.0' | 'ITCVE-1@4.7.0' | 'ITCVE-1@4.8.0' = 'ITCVE-1@1.4.0') {
+  const completion = ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(profile ?? '')
+  const selectedCompletion = completion ? nativeCompletionProfile(profile) : undefined
+  const read = (name: string) => decodeCoverageObservation<any>(JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance', `${name}.json`), 'utf8')), completion && ['coverage-extension', 'coverage-certificates'].includes(name) ? coverageObservationEncoding : undefined)
   const report = read('result')
-  const closure = profile === 'ITCVE-1@2.0.0'
+  const recovery = completion || profile === 'ITCVE-1@4.4.0'
+  const expanded = recovery || profile === 'ITCVE-1@4.3.0'
+  if (expanded) assert.equal(JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'conformance/permission-extension.json'), 'utf8')).identityPermission, recovery ? 'explicit-allow-v1' : undefined)
+  const observer3 = profile === 'ITCVE-1@4.2.0'
+  const candidate = expanded || observer3 || profile === 'ITCVE-1@4.1.0'
+  const release511 = candidate || profile === 'ITCVE-1@4.0.0'
+  const closure = release511 || profile === 'ITCVE-1@2.0.0'
   const coverage = closure || profile === 'ITCVE-1@1.5.0'
-  assert.equal(report.schema, closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
-  assert.equal(clauseOracle, coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
+  assert.equal(report.schema, release511 ? 'tpnil-native-conformance@5.0.0' : closure ? 'tpnil-native-conformance@4.0.0' : coverage ? 'tpnil-native-conformance@3.0.0' : 'tpnil-native-conformance@2.0.0'); assert.equal(report.profile, profile); assert.equal(report.program, completion ? selectedCompletion!.program : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : release511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0')
+  const fixtureRevision = ['tpnil-brc100-clause-oracle@6.0.0', 'tpnil-brc100-clause-oracle@7.0.0'].includes(clauseOracle) ? 2 : 1
+  if (observer3 || expanded) assert.equal(fixtureRevision, 2, 'Observer3 requires its prospective fixture revision')
+  assert.equal(clauseOracle, completion ? 'tpnil-brc100-clause-oracle@7.0.0' : release511 ? fixtureRevision === 2 ? 'tpnil-brc100-clause-oracle@6.0.0' : 'tpnil-brc100-clause-oracle@5.0.0' : coverage ? 'tpnil-brc100-clause-oracle@4.0.0' : 'tpnil-brc100-clause-oracle@3.0.0')
   assert.equal(read('clauses').oracle, clauseOracle, 'Clause report selected a different oracle from the frozen plan')
+  if (release511) {
+    assert.equal(read('conditional').oracle, `tpnil-native-conditional-oracle@${fixtureRevision === 2 ? 2 : 1}.0.0`)
+    assert.equal(read('permission-coverage').oracle, `tpnil-native-permission-coverage-oracle@${expanded ? 5 : fixtureRevision === 2 ? 3 : 1}.0.0`)
+  }
   assert.deepEqual(read('baseline-vectors'), baselineVectors, 'Original ToDo observations were altered by the prospective scenario')
   const integrated = JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'integrated/result.json'), 'utf8'))
   assert.equal(typeof integrated.walletIdentity, 'string', 'Native conformance requires the joined wallet identity')
@@ -36,17 +53,17 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
   } else assert.equal(read('lifecycle').schema, 'tpnil-native-conformance-lifecycle@2')
   assert.deepEqual(read('lifecycle').serviceIdentity, JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'service-components.json'), 'utf8')))
   const portabilityReport = read('portability')
-  if (coverage) assert.equal(portabilityOracle, 'tpnil-native-portability-oracle@3.0.0', 'Coverage profile requires the signed-completion oracle')
+  if (coverage) assert.equal(portabilityOracle, completion ? 'tpnil-native-portability-oracle@4.0.0' : 'tpnil-native-portability-oracle@3.0.0', 'Coverage profile requires the signed-completion oracle')
   if (portabilityOracle !== undefined) {
-    assert.equal(portabilityOracle, coverage ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0')
-    assert.equal(portabilityReport.schema, coverage ? 'tpnil-native-storage-portability@3' : 'tpnil-native-storage-portability@2')
+    assert.equal(portabilityOracle, completion ? 'tpnil-native-portability-oracle@4.0.0' : coverage ? 'tpnil-native-portability-oracle@3.0.0' : 'tpnil-native-portability-oracle@2.0.0')
+    assert.equal(portabilityReport.schema, completion ? 'tpnil-native-storage-portability@4' : coverage ? 'tpnil-native-storage-portability@3' : 'tpnil-native-storage-portability@2')
     assert.equal(portabilityReport.oracle, portabilityOracle)
     const primary = JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'service-components.json'), 'utf8'))
     assert.deepEqual(portabilityReport.components.source, primary)
-    const patch = fs.readFileSync(path.resolve(import.meta.dirname, '../../../../infra/adapters/storage-portability/patch.lock.json'))
+    const patch = fs.readFileSync(path.resolve(import.meta.dirname, profile === 'ITCVE-1@4.8.0' ? '../../../../infra/adapters/storage-sync-order/patch.lock.json' : completion ? '../../../../infra/adapters/storage-caller-known-inputs/patch.lock.json' : expanded ? '../../../../infra/adapters/storage-sqlite-retry/patch.lock.json' : fixtureRevision === 2 ? '../../../../infra/adapters/storage-native-contracts/patch.lock.json' : release511 ? '../../../../infra/adapters/storage-list-actions/patch.lock.json' : '../../../../infra/adapters/storage-portability/patch.lock.json'))
     for (const identity of [primary, portabilityReport.components.replacement]) {
       validateComponentIdentity(identity, profile)
-      assert.equal(identity.go.compatibilityPatch.schema, 'tpnil-storage-portability-go-build@1.0.0')
+      assert.equal(identity.go.compatibilityPatch.schema, profile === 'ITCVE-1@4.8.0' ? 'tpnil-storage-sync-order-go-build@1.0.0' : completion ? 'tpnil-storage-caller-known-inputs-go-build@1.0.0' : expanded ? 'tpnil-storage-sqlite-retry-go-build@1.0.0' : fixtureRevision === 2 ? 'tpnil-storage-native-contracts-go-build@1.0.0' : release511 ? 'tpnil-storage-list-actions-go-build@1.0.0' : 'tpnil-storage-portability-go-build@1.0.0')
       assert.equal(identity.go.compatibilityPatch.patchLockSha256, sha256Hex(patch), 'Portability requires the admitted ancestry export build')
     }
   } else {
@@ -56,6 +73,44 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
   const portability = await verifyNativePortability(portabilityReport)
   assert.equal(read('clauses').substrate, 'unchanged-native-window.CWI', 'Reference clauses cannot qualify a native wallet')
   const clauses = await verifyNativeClauseConformance(read('clauses'), JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'integrated/boundary.json'), 'utf8')))
+  const conditional = release511 ? await (await import('./verify-conformance-conditional.js')).verifyNativeConditionalConformance(read('conditional')) : undefined
+  if (fixtureRevision === 2) assert.equal(read('transaction-states').oracle, `tpnil-native-transaction-states-oracle@${observer3 || expanded ? 2 : 1}.0.0`, 'Transaction state oracle differs from the selected profile')
+  const transactionStates = fixtureRevision === 2 ? await (await import('./verify-transaction-states.js')).verifyNativeTransactionStates(read('transaction-states')) : undefined
+  const certificateStates = fixtureRevision === 2 ? await (await import('./verify-certificate-states.js')).verifyNativeCertificateStates(read('certificate-states')) : undefined
+  if (fixtureRevision === 2) {
+    const boundary = JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'integrated/boundary.json'), 'utf8'))
+    ;(await import('./verify-certificate-states.js')).verifyCertificateStateParentBindings(read('certificate-states'), {
+      boundary, identity: integrated.walletIdentity,
+      globalRoutes: JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'routes.json'), 'utf8')),
+      globalSubmissions: JSON.parse(fs.readFileSync(path.join(evidenceDirectory, 'native-submissions.json'), 'utf8'))
+    })
+  }
+  const permissionEvidence = (name: string) => fs.readFileSync(path.join(evidenceDirectory, name))
+  const permissionCoverage = release511 ? await (await import('./verify-conformance-permission-coverage.js')).verifyNativePermissionCoverage(read('permission-coverage'), permissionEvidence, integrated.walletIdentity, expanded ? { profile: completion ? selectedCompletion!.profile : recovery ? 'ITCVE-1@4.4.0' : 'ITCVE-1@4.3.0' } : undefined) : undefined
+  let extensions: { permissions: any; transactions: any; extension: any; certificates: any } | undefined
+  if (expanded) {
+    const suite = read('coverage-suite')
+    assert.equal(suite.schema, 'tpnil-native-coverage-suite@1.0.0'); assert.equal(suite.claim, 'ENGINEERING_OBSERVATION_ONLY')
+    assert.deepEqual(suite.modules, ['permissions', 'transactions', 'extension', 'certificates']); assert.deepEqual(suite.errors, [])
+    const reports = { permissions: read('permission-extension'), transactions: read('coverage-transactions'), extension: read('coverage-extension'), certificates: read('coverage-certificates') }
+    const policies = [
+      ['permissions', 'native-coverage-permissions-1.0.0'], ['transactions', selectedCompletion ? `native-coverage-transactions-${selectedCompletion.transactionRevision}.0.0` : 'native-coverage-transactions-2.0.0'],
+      ['extension', selectedCompletion?.extensionDirectory ?? 'native-coverage-extension-2.0.0'], ['certificates', 'native-coverage-certificates-1.0.0']
+    ] as const
+    for (const [name, directory] of policies) {
+      const bytes = fs.readFileSync(path.resolve(import.meta.dirname, `../../../../programs/ISI-4/profiles/${directory}/policy.json`)), policy = JSON.parse(bytes.toString())
+      assert.equal(reports[name].oracle, policy.oracle); assert.equal(reports[name].policySha256, sha256Hex(bytes)); assert.equal(reports[name].identity, integrated.walletIdentity)
+    }
+    const evidence = (name: string) => fs.readFileSync(path.join(evidenceDirectory, name))
+    extensions = {
+      permissions: await (await import('./coverage-permissions-verifier.js')).verifyPermissionExtension(reports.permissions, read('permission-coverage'), evidence, integrated.walletIdentity),
+      transactions: await (await import('./coverage-transactions-verifier.js')).verifyNativeTransactionCoverage(reports.transactions),
+      extension: await (await import('./coverage-extension-verifier.js')).verifyNativeCoverageExtension(reports.extension),
+      certificates: await (await import('./coverage-certificates-verify.js')).verifyCertificateCoverage(reports.certificates, evidence)
+    }
+    assert.deepEqual(Object.values(extensions).map(item => item.assertions.length), [15, 22, 61, 11])
+  }
+  const completions = completion ? await verifyCompletionReports(name => fs.readFileSync(path.join(evidenceDirectory, name)), selectedCompletion!.profile) : undefined
   const identities = read('service-counterparts')
   assert.deepEqual(Object.keys(identities), ['replacement-wallet.itcve.test'])
   for (const identity of Object.values(identities) as Record<string, unknown>[]) validateComponentIdentity(identity, profile)
@@ -66,12 +121,26 @@ export async function verifyNativeConformance(evidenceDirectory: string, baselin
   for (const [offset, item] of verified.entries()) {
     const expected = item.assertions.map((row: any) => ({ id: offset === 1 ? `public-api/${row.id}` : row.id, outcome: row.result }))
     if (offset === 0 && permissionLifecycle) expected.push(...permissionLifecycle.assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
+    if (offset === 0 && permissionCoverage) expected.push(...permissionCoverage.assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
+    if (offset === 3 && conditional) expected.push(...conditional.assertions.map((row: any) => ({ id: `conditional/${row.id}`, outcome: row.result })))
+    if (offset === 3 && transactionStates) expected.push(...transactionStates.assertions.map((row: any) => ({ id: `transaction-states/${row.id}`, outcome: row.result })))
+    if (offset === 3 && certificateStates) expected.push(...certificateStates.assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
+    if (extensions && offset === 0) expected.push(...extensions.permissions.assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
+    if (extensions && offset === 3) for (const name of ['transactions', 'extension', 'certificates'] as const) expected.push(...extensions[name].assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
+    if (completions) for (const module of completionModules) if (module.vector === offset + 4) expected.push(...completions[module.name].assertions.map((row: any) => ({ id: row.id, outcome: row.result })))
     if (offset === 1) expected.unshift(...baseline[5]!.assertions)
     const outcome = expected.some((row: any) => row.outcome === 'FAIL') ? 'FAIL' : expected.some((row: any) => row.outcome === 'BLOCKED') ? 'BLOCKED' : expected.length > 0 && expected.every((row: any) => row.outcome === 'PASS') ? 'PASS' : 'INCONCLUSIVE'
     assert.deepEqual(actual[offset + 4], { id: `ISI-4-V00${offset + 5}`, outcome, assertions: expected })
   }
+  if (expanded) {
+    const all = actual.flatMap((vector: any) => vector.assertions.map((row: any) => `${vector.id}/${row.id}`))
+    const expectedCount = 535 + (completion ? completionModules.reduce((sum, module) => sum + module.ids.length, 0) : 0)
+    assert.equal(all.length, expectedCount); assert.equal(new Set(all).size, expectedCount, 'Expanded predicate inventory contains duplicates')
+    const profileManifest = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, completion ? '../../../../' + selectedCompletion!.manifest : recovery ? '../../../../itcves/ITCVE-1/4.4.0/profile.json' : '../../../../itcves/ITCVE-1/4.3.0/profile.json'), 'utf8'))
+    for (const vector of actual.slice(4)) assert.deepEqual(vector.assertions.map((row: any) => row.id), profileManifest.nativeConformance.assertions[vector.id])
+  }
   assert.equal(report.outcome, aggregateOutcome(report.vectors))
-  for (const name of ['lifecycle', 'portability', 'clauses']) assert.equal(read(name).identity, integrated.walletIdentity, `${name} belongs to the joined native wallet`)
+  for (const name of ['lifecycle', 'portability', 'clauses', ...(release511 ? ['conditional', 'permission-coverage'] : []), ...(fixtureRevision === 2 ? ['transaction-states', 'certificate-states'] : [])]) assert.equal(read(name).identity, integrated.walletIdentity, `${name} belongs to the joined native wallet`)
   assert.deepEqual(read('portability').components.replacement, identities['replacement-wallet.itcve.test'])
   // All vectors retain their evidence references and raw per-predicate outcomes.
   for (const vector of report.vectors) for (const assertion of vector.assertions) {

@@ -1,0 +1,28 @@
+{
+  "schema": "tpnil-ci-failure-initial-diagnosis@1",
+  "recordedAt": "2026-11-12T08:48:38.579944+00:00",
+  "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+  "run": 43185320652,
+  "job": 131070928492,
+  "name": "offline-core",
+  "jobSeconds": 157,
+  "failedStep": "Run npm test --prefix synthesis",
+  "reportedTests": {
+    "pass": 1037,
+    "skipped": 27,
+    "declaredTotal": 1102,
+    "unreported": 38,
+    "filesPassed": 63,
+    "filesSkipped": 2,
+    "declaredFiles": 66
+  },
+  "missingFile": "synthesis/test/native-coverage-certificates.test.ts",
+  "observedRunnerError": "SyntaxError: Unexpected token replacement-character in convert-source-map -> @vitest/utils -> parseErrorStacktrace",
+  "suiteDurationSeconds": 123.05,
+  "childTimeoutConfiguredSeconds": 120,
+  "underlyingChildFailure": "UNKNOWN; timeout is a hypothesis, not proven by retained log",
+  "captureLimitation": "beforeAll writes child stdout/stderr only after success; afterAll deletes temporary directory even when child fails",
+  "nativeDispatchAdmitted": false,
+  "rerunRequested": false,
+  "logSha256": "89c8780bf9df5aae0709ffdfd2b69c25620901f6fe613766a7b7cd7eb72c730c"
+}

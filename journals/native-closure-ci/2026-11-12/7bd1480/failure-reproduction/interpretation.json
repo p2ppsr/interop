@@ -1,0 +1,44 @@
+{
+  "schema": "tpnil-ci-failure-supplement@1",
+  "claim": "LOCAL_REPRODUCTION_EXPLAINS_CI_DIAGNOSTIC_MASKING",
+  "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+  "nativeSessions": 0,
+  "primary": "The offline-core workflow installs synthesis closure but not integrations/services; exact reference child imports mongodb-memory-server from missing integration closure. Same frozen source/closure arrangement exits1 in0.566s with MODULE_NOT_FOUND.",
+  "secondary": "The TSX register module contains a literal sourceMappingURL template misread by Vitest source-map recovery; exact package bytes reproduce the reported replacement-character JSON SyntaxError.",
+  "ciUnderlyingStderrCaptured": false,
+  "ciTimingIsTimeoutProof": false,
+  "initialDiagnosisPreserved": "43185320652/initial-failure-diagnosis.json",
+  "qualification": false,
+  "files": [
+    {
+      "path": "dependency-absent-2.json",
+      "bytes": 48565,
+      "sha256": "adf08a101eaf57ad3c80ee9c168045ead1bebd42a6915da719b4f7e3a02613ac"
+    },
+    {
+      "path": "dependency-absent-2.stdout.log",
+      "bytes": 158,
+      "sha256": "aa55a8b3c3535b6f774030cdb36f558149854b45a67c59dbcaf468201b5be21f"
+    },
+    {
+      "path": "dependency-absent-2.stderr.log",
+      "bytes": 1924,
+      "sha256": "2abe318ac3b42d3a438decb9b3873dd08487ffc9a859ff9c5c253147c239b7c3"
+    },
+    {
+      "path": "reproduce-map.json",
+      "bytes": 6775,
+      "sha256": "ba6a3baa07d4704582d5112e250c0311c728552a36a41a9a69b4b5733b19968c"
+    },
+    {
+      "path": "reproduce-map.mjs",
+      "bytes": 1255,
+      "sha256": "8aacad735a23ff0384316cd316bbbc22e6a552728bcf4a939389317bda38fcfc"
+    },
+    {
+      "path": "reproduce-missing-2.py",
+      "bytes": 2499,
+      "sha256": "3c56d88ed3aaac7b91d39d61e21f77e426ef9fc5f15bae8665367ad91fe365a2"
+    }
+  ]
+}

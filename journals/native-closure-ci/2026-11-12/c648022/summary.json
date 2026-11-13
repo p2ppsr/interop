@@ -1,0 +1,210 @@
+{
+  "schema": "tpnil-native-closure-ci-log-archive@2",
+  "claim": "CI_EXECUTION_AND_RETAINED_EVIDENCE_REVIEW_ONLY",
+  "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+  "workflows": [
+    {
+      "id": 43192958630,
+      "name": "Foundation checks",
+      "url": "https://github.com/p2ppsr/interop/actions/runs/43192958630",
+      "source": "c648022b2d9209b7350527bd5553d73e3e82a52c",
+      "conclusion": "success",
+      "jobSeconds": 1500,
+      "jobs": [
+        {
+          "id": 131096630566,
+          "name": "offline-core",
+          "startedAt": "2026-11-12T09:36:38Z",
+          "completedAt": "2026-11-12T09:41:29Z",
+          "jobSeconds": 291,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131096630950,
+          "name": "go-components",
+          "startedAt": "2026-11-12T09:36:38Z",
+          "completedAt": "2026-11-12T09:41:40Z",
+          "jobSeconds": 302,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        },
+        {
+          "id": 131096631032,
+          "name": "integrated-components",
+          "startedAt": "2026-11-12T09:36:38Z",
+          "completedAt": "2026-11-12T09:51:45Z",
+          "jobSeconds": 907,
+          "conclusion": "success",
+          "failedSteps": [],
+          "skippedSteps": []
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "core": {
+      "pass": 172,
+      "fail": 0,
+      "skipped": 1,
+      "total": 173
+    },
+    "synthesis": {
+      "pass": 1040,
+      "fail": 0,
+      "skipped": 65,
+      "total": 1105,
+      "passedFiles": 64,
+      "failedFiles": 0,
+      "skippedFiles": 3,
+      "totalFiles": 67,
+      "completeSuitePassed": true,
+      "skipBreakdown": {
+        "certificateReferenceMovedToRequiredIntegratedJob": 39,
+        "goComponents": 8,
+        "permissionUIReference": 1,
+        "shutdown": 1,
+        "goCoverageAdmission": 13,
+        "goCoverageExtensionReferences": 2,
+        "listener": 1
+      }
+    },
+    "goComponents": {
+      "pass": 13
+    },
+    "certificateReferenceAndMutationsSeparateJob": {
+      "pass": 39,
+      "required": true
+    },
+    "shutdownAndListenerSeparateJob": {
+      "pass": 14
+    },
+    "transport": {
+      "pass": 8
+    },
+    "services": {
+      "pass": 15
+    },
+    "rust": {
+      "defaultPass": 1,
+      "graph3Pass": 14
+    },
+    "python": {
+      "pass": 5
+    },
+    "typecheck": "PASS"
+  },
+  "failure": null,
+  "integratedComponentObservations": {
+    "total": 590,
+    "counts": {
+      "PASS": 584,
+      "FAIL": 6
+    },
+    "knownGoMessageBoxFailures": [
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-1/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "paid-internalization",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-after-acknowledgment",
+        "result": "FAIL"
+      },
+      {
+        "lane": "messaging",
+        "resultFile": "messaging-2/result.json",
+        "run": 0,
+        "implementation": "go",
+        "id": "payment-replay-rejected",
+        "result": "FAIL"
+      }
+    ]
+  },
+  "publicationSemanticReplay": {
+    "archives": 14,
+    "failedAttempts": 17,
+    "totalBundles": 31
+  },
+  "descendantMatrix": {
+    "verified": true,
+    "directions": 4,
+    "result": "PASS"
+  },
+  "previousRetainedReevaluation": {
+    "run": 43185320587,
+    "source": "7bd1480037ddc064f5a8cb2f567f6e58285c5999",
+    "archive": "../7bd1480",
+    "newRunOnThisSource": false,
+    "jobSecondsIncludedAgain": false
+  },
+  "completeBRC100Conformance": false,
+  "nativeWalletConformanceClosed": false,
+  "currentCandidateNativeSessionsInThisArchive": 0,
+  "cost": {
+    "knownJobWallSeconds": 1500,
+    "completedCohortJobSecondsBeforeIncrement": 17037,
+    "completedCohortJobSecondsAfterIncrement": 18537,
+    "historicalSeparateCohortJobSeconds": 20670,
+    "historicalCohortIncludedInIncrement": false,
+    "actualCIChargeUSD": null,
+    "storageAndEgressUSD": null,
+    "operatorEffortUSD": null,
+    "developmentAgentUsageUSD": null,
+    "allocatedOwnedCapacityUSD": null,
+    "totalFullCostUSD": null,
+    "newPaidCapacityReservations": 0,
+    "unknownCostsAreZero": false,
+    "fullCostReconciled": false,
+    "thirtyTwoFoldImprovementMeasured": false,
+    "unusedNativeAllowanceIsActualCost": false,
+    "workOrder": {
+      "repository": "network-ops",
+      "commit": "d2545e38a135efb44fa8c1d7d379828ae0bb6547",
+      "path": "artifacts/ops/itcve-native-closure-20261111/attempt-5-test-budget-order/work-order.json",
+      "sha256": "5c33af5916f059b249c6c447eeec1a2bdc98d07c98bd98f7fd1e59181ef15aa8",
+      "source": "c648022b2d9209b7350527bd5553d73e3e82a52c"
+    }
+  },
+  "scope": [
+    "All raw API snapshots, complete job logs, original artifact ZIPs and member byte inventories retained.",
+    "Nonempty CI producer/child-verifier receipts checked. This archive does not rerun frozen artifact semantic verifiers locally.",
+    "Prior7bd missing-dependency and39dd timed-out test failures remain unchanged in separate archives.",
+    "Required39 certificate cases run in the integrated job; their default skip is not counted as a pass.",
+    "Retained source5 was not rerun or charged twice; no matching workflow push-path changed.",
+    "This CI archive contains no new native session or current candidate qualification."
+  ]
+}

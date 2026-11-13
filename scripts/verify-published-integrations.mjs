@@ -96,6 +96,34 @@ export function extractZipSafely(bytes, directory, { maxEntries = 100000, maxByt
   return { entries: count, bytes: total }
 }
 
+/** Preserve a GitHub ZIP byte-for-byte when its compressed size exceeds Git's
+ * single-file limit. Ordered, bounded parts remain ordinary journal files. */
+export function readIntegrationArchive(directory, archive, manifest) {
+  if (manifest.archiveParts === undefined) return fs.readFileSync(path.join(directory, archive))
+  assert.equal(manifest.schema, 'tpnil-integrated-native-archive@1')
+  assert.equal(archive, 'native-integrated.zip')
+  const spec = manifest.archiveParts
+  assert.deepEqual(Object.keys(spec).sort(), ['parts', 'path', 'sha256', 'size'])
+  assert.equal(spec.path, archive); assert.match(spec.sha256, /^[a-f0-9]{64}$/)
+  assert(Number.isSafeInteger(spec.size) && spec.size > 0 && spec.size <= 512 * 1024 * 1024)
+  assert(Array.isArray(spec.parts) && spec.parts.length >= 2 && spec.parts.length <= 16)
+  assert(!fs.existsSync(path.join(directory, archive)), 'Both split and unsplit archives are present')
+  const expected = spec.parts.map((_, index) => `${archive}.part-${String(index).padStart(3, '0')}`)
+  assert.deepEqual(spec.parts, expected, 'Archive parts are missing, reordered or renamed')
+  assert.deepEqual(manifest.files.filter(row => row.path.startsWith(`${archive}.part-`)).map(row => row.path).sort(), expected)
+  const chunks = []; let total = 0
+  for (const name of expected) {
+    const entry = manifest.files.find(row => row.path === name), file = path.join(directory, name), stat = fs.lstatSync(file)
+    assert(entry && stat.isFile() && !stat.isSymbolicLink())
+    assert(stat.size > 0 && stat.size <= 64 * 1024 * 1024 && stat.size === entry.size)
+    total += stat.size; assert(total <= spec.size)
+    const bytes = fs.readFileSync(file); assert.equal(sha256(bytes), entry.sha256, name); chunks.push(bytes)
+  }
+  assert.equal(total, spec.size)
+  const bytes = Buffer.concat(chunks, total); assert.equal(sha256(bytes), spec.sha256, 'Reassembled original ZIP differs')
+  return bytes
+}
+
 export function verifyIntegrationArchive(directory) {
   const attempt = fs.existsSync(path.join(directory, 'attempt.json'))
   const manifestName = attempt ? 'attempt.json' : 'provenance.json', manifest = readJson(path.join(directory, manifestName))
@@ -111,8 +139,16 @@ export function verifyIntegrationArchive(directory) {
     const bytes = fs.readFileSync(path.join(directory, names[index])); assert.equal(bytes.length, item.size); assert.equal(sha256(bytes), item.sha256, names[index])
   }
   if (attempt) {
-    assert(['OBSERVER_BUILD_ERROR', 'OBSERVER_STARTUP_ERROR', 'OBSERVER_EXECUTION_ERROR', 'OBSERVER_VERIFICATION_ERROR'].includes(manifest.claim))
+    assert(['OBSERVER_BUILD_ERROR', 'OBSERVER_STARTUP_ERROR', 'OBSERVER_EXECUTION_ERROR', 'OBSERVER_VERIFICATION_ERROR', 'INTEGRATION_FAILURE_NOT_QUALIFIED'].includes(manifest.claim))
     if (manifest.claim === 'OBSERVER_BUILD_ERROR') assert.equal(manifest.walletExecuted, false)
+    if (manifest.claim === 'INTEGRATION_FAILURE_NOT_QUALIFIED') {
+      assert.equal(manifest.walletExecuted, true); assert.equal(manifest.newNativeSessions, 2)
+      assert.equal(manifest.nativeQualification, false); assert.equal(manifest.completeBRC100Conformance, false)
+      assert(names.includes('findings.json')); const findings=readJson(path.join(directory,'findings.json'))
+      assert.equal(findings.originalQualificationReceipts,'ABSENT')
+      assert(Array.isArray(findings.differentOutcomes)&&findings.differentOutcomes.length>0,'Unqualified repetition mismatch needs its differing findings')
+      for(const row of findings.differentOutcomes) { assert(['PASS','FAIL','BLOCKED'].includes(row.first)); assert(['PASS','FAIL','BLOCKED'].includes(row.second)); assert.notEqual(row.first,row.second) }
+    }
     return { kind, directory, source: manifest.source, files: names.length, claim: manifest.claim }
   }
   if (kind === 'reevaluation') {
@@ -127,24 +163,34 @@ export function verifyIntegrationArchive(directory) {
   const qualification = readJson(path.join(directory, 'qualification.json'))
   assert.equal(qualification.source, manifest.source)
   const exactHistory = kind === 'component' && qualification.profile === 'ITCVE-1@3.0.0'
-  const closure = kind === 'native' && qualification.profile === 'ITCVE-1@2.0.0'
+  const candidate = kind === 'native' && ['ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
+  const enhanced = kind === 'native' && qualification.profile === 'ITCVE-1@4.8.0'
+  const replay = kind === 'native' && qualification.profile === 'ITCVE-1@4.7.0'
+  const followup = kind === 'native' && ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
+  const completion = candidate && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(qualification.profile)
+  const recovery = candidate && qualification.profile === 'ITCVE-1@4.4.0'
+  const expanded = completion || recovery || candidate && qualification.profile === 'ITCVE-1@4.3.0'
+  const observer3 = candidate && qualification.profile === 'ITCVE-1@4.2.0'
+  const wallet511 = candidate || kind === 'native' && qualification.profile === 'ITCVE-1@4.0.0'
+  const closure = wallet511 || kind === 'native' && qualification.profile === 'ITCVE-1@2.0.0'
   const coverage = closure || kind === 'native' && qualification.profile === 'ITCVE-1@1.5.0'
   const conformance = coverage || (kind === 'native' && qualification.profile === 'ITCVE-1@1.4.0')
-  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
+  assert.equal(qualification.profile, exactHistory ? 'ITCVE-1@3.0.0' : enhanced ? 'ITCVE-1@4.8.0' : replay ? 'ITCVE-1@4.7.0' : followup ? 'ITCVE-1@4.6.0' : completion ? 'ITCVE-1@4.5.0' : recovery ? 'ITCVE-1@4.4.0' : expanded ? 'ITCVE-1@4.3.0' : observer3 ? 'ITCVE-1@4.2.0' : candidate ? 'ITCVE-1@4.1.0' : wallet511 ? 'ITCVE-1@4.0.0' : closure ? 'ITCVE-1@2.0.0' : coverage ? 'ITCVE-1@1.5.0' : conformance ? 'ITCVE-1@1.4.0' : 'ITCVE-1@1.3.0')
   const archive = kind === 'component' ? 'integrated-lab.zip' : 'native-integrated.zip'
-  assert(names.includes(archive))
+  if (manifest.archiveParts === undefined) assert(names.includes(archive))
+  else { assert.equal(kind, 'native'); assert.equal(completion, true); readIntegrationArchive(directory, archive, manifest) }
   if (kind === 'component') { assert.equal(qualification.schema, exactHistory ? 'tpnil-integrated-component-qualification@2' : 'tpnil-integrated-component-qualification@1'); assert.equal(qualification.claim, 'INFRASTRUCTURE_QUALIFICATION_ONLY') }
   else {
     assert.equal(qualification.schema, conformance ? 'tpnil-native-integrated-qualification@2' : 'tpnil-native-integrated-qualification@1')
-    assert.equal(qualification.claim, 'EXPERIMENTAL_CONFORMANCE_RESULT'); assert.equal(qualification.qualifiedEnvironment, true)
-    if (conformance) { assert.equal(qualification.program, closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
+    assert.equal(qualification.claim, candidate ? 'ENGINEERING_OBSERVATION_ONLY' : 'EXPERIMENTAL_CONFORMANCE_RESULT'); assert.equal(qualification.qualifiedEnvironment, true)
+    if (conformance) { assert.equal(qualification.program, enhanced ? 'ISI-4@5.8.0' : replay ? 'ISI-4@5.7.0' : followup ? 'ISI-4@5.6.0' : completion ? 'ISI-4@5.5.0' : recovery ? 'ISI-4@5.4.0' : expanded ? 'ISI-4@5.3.0' : observer3 ? 'ISI-4@5.2.0' : candidate ? 'ISI-4@5.1.0' : wallet511 ? 'ISI-4@5.0.0' : closure ? 'ISI-4@4.0.0' : coverage ? 'ISI-4@3.0.0' : 'ISI-4@2.0.0'); assert.equal(qualification.completeBRC100Conformance, false) }
   }
   if (qualification.workflowRun !== undefined) assert.equal(qualification.workflowRun, manifest.workflowRun)
   if (qualification.artifact !== undefined) {
-    const entry = manifest.files.find(item => item.path === archive)
+    const entry = manifest.archiveParts ?? manifest.files.find(item => item.path === archive)
     assert.equal(qualification.artifact.id, manifest.artifactId); assert.equal(qualification.artifact.size, entry.size); assert.equal(qualification.artifact.sha256, entry.sha256)
   }
-  return { kind, directory, source: manifest.source, files: names.length, archive, qualification }
+  return { kind, directory, source: manifest.source, files: names.length, archive, qualification, ...(manifest.archiveParts === undefined ? {} : { archiveParts: manifest.archiveParts }) }
 }
 
 function outcomes(assertions) {
@@ -163,19 +209,31 @@ export function componentArchiveSummary(directory) {
   }) }))
   return { source: lock.source, profile: result.profile, laneCount: lanes.length, laneRuns, isolatedExecutions, assertions: { total: all.length, outcomes: outcomes(all) }, lanes, findings }
 }
+export function requireArchiveVerifierReceipt(stdout, bundle) {
+  const expected = bundle.kind === 'native'
+    ? { schema: bundle.qualification.schema, source: bundle.source, qualifiedEnvironment: true,
+        profile: bundle.qualification.profile, claim: bundle.qualification.claim,
+        ...(bundle.qualification.program === undefined ? {} : { program: bundle.qualification.program }) }
+    : bundle.kind === 'component'
+      ? { verified: true, childOraclesVerified: true, source: bundle.source, profile: bundle.qualification.profile }
+      : { verified: true, claim: 'RETAINED_NATIVE_EVIDENCE_REEVALUATION', evaluatorSource: bundle.source }
+  return requireVerifierReceipt(stdout, expected)
+}
 export function verifyArchiveSemantics(bundle, { root = repository } = {}) {
-  if (bundle.kind === 'attempt') return { semantic: false, reason: 'Failed observer attempt issues no wallet qualification' }
+  if (bundle.kind === 'attempt') return { semantic: false, reason: 'Unqualified or failed attempt issues no wallet qualification' }
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-published-integration-'))
   let frozenSource
   try {
-    const extracted = extractZipSafely(fs.readFileSync(path.join(bundle.directory, bundle.archive)), temporary)
+    const manifest = readJson(path.join(bundle.directory, 'provenance.json'))
+    const bytes = readIntegrationArchive(bundle.directory, bundle.archive, manifest)
+    const extracted = extractZipSafely(bytes, temporary, bundle.kind === 'native' && ['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(bundle.qualification.profile) ? { maxBytes: 1024 * 1024 * 1024 } : {})
     const lock = readJson(path.join(temporary, 'run-lock.json')); assert.equal(bundle.kind==='reevaluation'?lock.evaluatorSource:lock.source, bundle.source)
     const script = bundle.kind === 'component' ? 'verify-integrated-lab.mjs' : bundle.kind === 'reevaluation' ? 'verify-native-reevaluation.mjs' : 'verify-native-integrated.mjs'
     frozenSource=fs.mkdtempSync(path.join(os.tmpdir(),'tpnil-integration-source-'));fs.rmdirSync(frozenSource)
     const replayRoot=prepareFrozenComponentReplay(root,bundle.source,frozenSource).root
     const child = spawnSync(process.execPath, [path.join(replayRoot, 'scripts', script), temporary], { cwd: replayRoot, env:{...process.env,RUSTUP_TOOLCHAIN:'1.88.0',TPNIL_REPLAY_GIT_ROOT:process.env.TPNIL_REPLAY_GIT_ROOT??root}, encoding: 'utf8', timeout: 600000, maxBuffer: 16 * 1024 * 1024 })
     assert.equal(child.status, 0, `${script} failed: ${child.stderr}\n${child.stdout}`)
-    requireVerifierReceipt(child.stdout,bundle.kind==='native'?{schema:bundle.qualification.schema,source:bundle.source,qualifiedEnvironment:true}:bundle.kind==='component'?{verified:true,childOraclesVerified:true,source:bundle.source,profile:bundle.qualification.profile}:{verified:true,claim:'RETAINED_NATIVE_EVIDENCE_REEVALUATION',evaluatorSource:bundle.source})
+    requireArchiveVerifierReceipt(child.stdout, bundle)
     if (bundle.kind === 'component') {
       const summary = componentArchiveSummary(temporary)
       for (const [name, value] of Object.entries(summary)) assert.deepEqual(bundle.qualification[name], value, `Published component ${name} differs from verified evidence`)

@@ -1,0 +1,32 @@
+{
+  "schema": "tpnil-native-rust-compatibility@3.0.0",
+  "variant": "integrated-native-conformance-pr368-coverage-1",
+  "nativePlan": {
+    "path": "infra/native/conformance/plan-pr368-coverage-1.json",
+    "sha256": "a67ed62b96732bb321c8dd08de5ee4903853d5c460a85bf58899eb6e9a1d0b48",
+    "profile": "ITCVE-1@4.3.0",
+    "program": "ISI-4@5.3.0"
+  },
+  "rustCorpus": "tpnil-rust-corpus@3",
+  "graphOracle": {
+    "id": "tpnil-rust-graph-oracle@3.0.0",
+    "manifest": "components/rust/graph-oracle-3.0.0.json",
+    "manifestSha256": "28abfaa934e8246d2b6adb8e567f8ad8e3ef08e49dc9f7dcebebd5b7b4bf9063",
+    "operation": "spends-indexed-v3",
+    "cargoFeature": "graph-oracle-v3"
+  },
+  "scope": "Exact PR368 candidate 4a954ac engineering profile with 535 native assertions: 426 predecessor identities plus 15 permission, 22 transaction, 61 extension and 11 certificate predicates. The full five-context browser chain within the same isolated profile, independent owned-storage output observations, signed funding and transaction ancestry, and final provider ledgers remain mandatory. Permission oracle 5 retains the 100-satoshi fee-inclusive cap and runs both permission modules on fresh managed funding after the declared public funding reserves, before ToDo or customer transactions. The independent prelude receipt binds before/after state and ledger ranges; historical outcomes and oracle 4 remain unchanged. Identifier normalization follows pinned BRC100 line 307. The final Go compatibility layer retains caller-owned input ancestry and narrowly retries typed SQLite snapshot-upgrade contention. This is not official-release qualification or a complete BRC100 claim.",
+  "sources": {
+    "scripts/native-rust-compatibility.mjs": "ff8d7dba7aa9ab65b994091bfa348a34db599a3ff9eca61f853f041525df357e",
+    "scripts/native-wallet-profiles.mjs": "eb5c89d83a974409d97c4a0a52a98d3a8d2f407676628b406946088aec255d5c",
+    "scripts/run-native-go-wallet.mjs": "13c8dd4aed3f5e31eb37cc04ffe313bde473fb5ea3a3c898ecbcf76d5e67f0e8",
+    "scripts/verify-native-integrated.mjs": "66c297cba33a072a2889b342c31888c48bd33e85d81cf75a69d2ba768a38f374",
+    ".github/workflows/isi4-yours-wallet.yml": "262761453f1d4f1ef650a96e3c5176075efb6b26bbb3b20af4d857f42c9616ba",
+    "scripts/check-native-wallet-selector.mjs": "98815ef84f650667caeef9d189e2a14428c922846dea424b95976e6c2358b868"
+  },
+  "sourceBindingRevision": 4,
+  "predecessor": {
+    "manifest": "infra/native/conformance/rust-graph-pr368-cb3c2f2-observer-3.json",
+    "sha256": "e2df7cf9a5ae1ec61b752b55876a9216f2bda08136ff83a56c373cc84070fbc0"
+  }
+}

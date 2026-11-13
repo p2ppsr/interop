@@ -4,11 +4,39 @@ import { P2PKH, PrivateKey, Transaction } from '@bsv/sdk'
 import { canonicalJson } from '../../determinism.js'
 import { lifecyclePermissionConfig } from './conformance-permission-lifecycle-model.js'
 import { evaluateNativePermissionLifecycle } from './verify-conformance-permission-lifecycle.js'
-import { shutdownSubmissionPolicy, type ShutdownSubmission } from './shutdown-submissions.js'
+import { shutdownSubmissionPolicy, shutdownCoveragePolicy, shutdownOrderedPolicy, orderedSubmissionDescription, type ShutdownSubmission } from './shutdown-submissions.js'
+import { coveragePaymentScript, permissionCoverageConfig } from './conformance-permission-coverage-model.js'
 
 const sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex')
 const equal = (a: unknown, b: unknown) => assert.equal(canonicalJson(a), canonicalJson(b))
 const time = (value: unknown) => { assert.equal(typeof value, 'string'); const result = Date.parse(value as string); assert.ok(Number.isFinite(result)); return result }
+
+/** Join every global event to exactly one provider-local position, preserving
+ * both the observed global prefix and each independently retained owner ledger. */
+export function verifyOrderedSubmissionLedger(report: any, global: ShutdownSubmission[]) {
+  assert.equal(report.ordering, orderedSubmissionDescription)
+  const check = (providers: any[], submissions: any[], provenance: any[]) => {
+    assert.ok(Array.isArray(submissions) && Array.isArray(provenance)); assert.equal(submissions.length, provenance.length)
+    const owners = new Map(providers.map(provider => [provider.id, provider.submissions] as const)), positions = new Map(providers.map(provider => [provider.id, 0]))
+    assert.equal(owners.size, providers.length)
+    for (const [index, position] of provenance.entries()) {
+      assert.deepEqual(Object.keys(position).sort(), ['provider', 'providerIndex'])
+      const rows = owners.get(position.provider); assert.ok(rows, 'Unknown global submission owner')
+      assert.equal(position.providerIndex, positions.get(position.provider), 'Missing, repeated or reordered provider-local position')
+      assert.ok(position.providerIndex < rows.length); equal(submissions[index], rows[position.providerIndex])
+      positions.set(position.provider, position.providerIndex + 1)
+    }
+    for (const [id, rows] of owners) assert.equal(positions.get(id), rows.length, 'Provider submission omitted from global journal')
+  }
+  check(report.initialProviders, global, report.initialProvenance)
+  assert.equal(report.initialCount, global.length)
+  equal(report.providers.map((provider: any) => provider.id), report.initialProviders.map((provider: any) => provider.id))
+  for (const [index, provider] of report.providers.entries()) equal(provider.submissions.slice(0, report.initialProviders[index].submissions.length), report.initialProviders[index].submissions)
+  equal(report.submissions.slice(0, global.length), global)
+  equal(report.provenance.slice(0, global.length), report.initialProvenance)
+  check(report.providers, report.submissions, report.provenance)
+  return { final: report.submissions as ShutdownSubmission[], provenance: report.provenance }
+}
 function transaction(row: ShutdownSubmission): Transaction {
   assert.match(row.txid, /^[0-9a-f]{64}$/); assert.match(row.beefHex, /^(?:[0-9a-f]{2})+$/)
   assert.equal(typeof row.verdict, 'string'); assert.ok(row.verdict.length > 0)
@@ -19,21 +47,42 @@ function transaction(row: ShutdownSubmission): Transaction {
   return tx
 }
 
+/** Distinct amounts make these four denied requests unambiguous. A late repeat,
+ * rejected provider verdict, or suffix from a different owned provider is still
+ * a submission and cannot disappear at browser shutdown. */
+export function verifyCoverageDeniedPaymentsThroughShutdown(report: any, global: ShutdownSubmission[], final: ShutdownSubmission[]) {
+  const window = report.submissionWindow
+  assert.ok(Number.isSafeInteger(window.startIndex) && window.startIndex >= 0 && Number.isSafeInteger(window.endIndex) && window.endIndex >= window.startIndex && window.endIndex <= global.length)
+  assert.equal(window.endIndex, report.submissions.length)
+  equal(report.submissions, global.slice(0, window.endIndex))
+  equal(final.slice(0, global.length), global)
+  const denied = ['overflow', 'alternate', 'revoked', 'revokedRestart'].map(key => permissionCoverageConfig.paymentAmounts[key])
+  for (const row of final.slice(window.startIndex)) {
+    const tx = transaction(row)
+    assert.ok(!tx.outputs.some(output => denied.includes(output.satoshis) && output.lockingScript.toHex() === coveragePaymentScript), 'Denied coverage payment appears in the final post-shutdown ledger')
+  }
+  return { verified: true, checked: final.length - window.startIndex, deniedAmounts: denied }
+}
+
 /** The parent first verifies native transaction ownership/funding and child
  * outcomes. This independent closure binds their immutable reports to every
  * provider's post-close ledger and checks the otherwise-unobserved suffix. */
 export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, binding: {
   worker: any; recordBytes: Uint8Array; globalSubmissionsBytes: Uint8Array; permissionReportBytes: Uint8Array; counterpartsBytes: Uint8Array
+  permissionCoverageReportBytes?: Uint8Array
   expectedIdentity: string; readEvidence(name: string): Buffer; storageTransactions: Map<string, Transaction>
 }) {
   const report = JSON.parse(Buffer.from(receiptBytes).toString())
-  assert.equal(report.schema, shutdownSubmissionPolicy); assert.equal(report.policy, shutdownSubmissionPolicy)
-  assert.equal(report.profile, 'ITCVE-1@2.0.0'); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
-  assert.equal(report.ordering, 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.')
+  assert.ok(['ITCVE-1@2.0.0', 'ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(report.profile)); assert.equal(report.claim, 'ENGINEERING_OBSERVATION_ONLY')
+  const ordered = ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(report.profile)
+  const policy = ordered ? shutdownOrderedPolicy : ['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0'].includes(report.profile) ? shutdownCoveragePolicy : shutdownSubmissionPolicy
+  assert.equal(report.schema, policy); assert.equal(report.policy, policy)
+  assert.deepEqual(Object.keys(report.bindings).sort(), ['record', 'global', 'module', 'counterparts', ...(['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(report.profile) ? ['coverage'] : [])].sort())
+  assert.equal(report.ordering, ordered ? orderedSubmissionDescription : 'Original global prefix, then per-provider suffixes in declared provider order; no cross-provider chronology claim.')
   assert.deepEqual(report.errors, [])
   assert.equal(binding.worker.shutdownSubmissionsSha256, sha(receiptBytes)); assert.equal(binding.worker.cleanWalletAndServiceShutdown, true)
   const record = JSON.parse(Buffer.from(binding.recordBytes).toString())
-  assert.equal(binding.worker.recordSha256, sha(binding.recordBytes)); assert.equal(record.itcve, 'ITCVE-1@2.0.0')
+  assert.equal(binding.worker.recordSha256, sha(binding.recordBytes)); assert.equal(record.itcve, report.profile)
   for (const [name, expectedPath, bytes] of [
     ['record', 'record.json', binding.recordBytes], ['global', 'evidence/native-submissions.json', binding.globalSubmissionsBytes],
     ['module', 'evidence/conformance/permission-lifecycle.json', binding.permissionReportBytes], ['counterparts', 'evidence/conformance/service-counterparts.json', binding.counterpartsBytes]
@@ -60,9 +109,9 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
   assert.equal(new Set(ids).size, ids.length)
   assert.ok(ids.every((id: unknown) => typeof id === 'string' && /^source(?:\/[a-z0-9.-]+)*$/.test(id)))
   equal(report.providers.map((provider: any) => provider.id), ids)
-  equal(report.initialProviders.flatMap((provider: any) => provider.submissions), global)
+  if (!ordered) equal(report.initialProviders.flatMap((provider: any) => provider.submissions), global)
   assert.equal(report.initialCount, global.length)
-  const final = [...global], provenance = report.initialProviders.flatMap((provider: any) => provider.submissions.map((_row: unknown, providerIndex: number) => ({ provider: provider.id, providerIndex })))
+  let final = [...global], provenance = report.initialProviders.flatMap((provider: any) => provider.submissions.map((_row: unknown, providerIndex: number) => ({ provider: provider.id, providerIndex })))
   for (const [index, provider] of report.providers.entries()) {
     const before = report.initialProviders[index].submissions
     assert.ok(Array.isArray(provider.submissions) && provider.submissions.length >= before.length)
@@ -71,7 +120,10 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
       final.push(provider.submissions[providerIndex]); provenance.push({ provider: provider.id, providerIndex })
     }
   }
-  equal(report.submissions, final); equal(report.provenance, provenance)
+  if (ordered) {
+    const checked = verifyOrderedSubmissionLedger(report, global)
+    final = checked.final; provenance = checked.provenance
+  } else { equal(report.submissions, final); equal(report.provenance, provenance) }
   assert.equal(new Set(provenance.map((row: any) => `${row.provider}:${row.providerIndex}`)).size, final.length)
   const window = permission.submissionWindow
   assert.ok(Number.isSafeInteger(window.startIndex) && window.startIndex >= 0 && Number.isSafeInteger(window.endIndex) && window.endIndex >= window.startIndex && window.endIndex <= global.length)
@@ -99,5 +151,17 @@ export async function verifyNativeShutdownSubmissions(receiptBytes: Uint8Array, 
     }
     assert.ok(!tx.outputs.some(output => [lifecyclePermissionConfig.paymentSatoshis, lifecyclePermissionConfig.secondPaymentSatoshis].includes(output.satoshis as 5 | 7) && output.lockingScript.toHex() === script), 'Unapproved denied payment appears in the final post-shutdown ledger')
   }
-  return { verified: true, policy: shutdownSubmissionPolicy, initialCount: global.length, finalCount: final.length, tailCount: final.length - global.length, providers: ids.length, deniedPaymentsCheckedThroughShutdown: true }
+  let coverage
+  if (['ITCVE-1@4.0.0', 'ITCVE-1@4.1.0', 'ITCVE-1@4.2.0', 'ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(report.profile)) {
+    assert.ok(binding.permissionCoverageReportBytes, 'New profile requires the complete permission coverage report')
+    const bytes = binding.permissionCoverageReportBytes
+    equal(report.bindings.coverage, { path: 'evidence/conformance/permission-coverage.json', bytes: bytes.length, sha256: sha(bytes) })
+    const module = JSON.parse(Buffer.from(bytes).toString())
+    assert.equal(module.identity, binding.expectedIdentity)
+    assert.ok(time(module.endedAt) <= time(report.initialCapturedAt))
+    const { verifyNativePermissionCoverage } = await import('./verify-conformance-permission-coverage.js')
+    await verifyNativePermissionCoverage(module, binding.readEvidence, binding.expectedIdentity, ['ITCVE-1@4.3.0', 'ITCVE-1@4.4.0', 'ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(report.profile) ? { profile: report.profile } : undefined)
+    coverage = verifyCoverageDeniedPaymentsThroughShutdown(module, global, final)
+  }
+  return { verified: true, policy, initialCount: global.length, finalCount: final.length, tailCount: final.length - global.length, providers: ids.length, deniedPaymentsCheckedThroughShutdown: true, ...(coverage ? { coverage } : {}) }
 }
