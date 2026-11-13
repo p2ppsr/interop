@@ -1,0 +1,40 @@
+✔ completion selector is distinct and current pending inputs cannot start native execution (1.18025ms)
+✔ worker selects only4.8 with explicit coverage6 and complete identity/observer flags (6.302ms)
+✔ coverage6 freezes all current inputs and admits its complete source fixture (86.0365ms)
+✔ coverage6 cannot substitute an input or a release artifact in its source fixture (17.642542ms)
+✔ source successor preserves original frozen4.8 criteria and exact source1 JSON bytes (887.204042ms)
+✔ image audit preserves every inherited path and rejects altered bytes, modes, owners, links and extra or missing files (4.985417ms)
+✔ image audit permits exactly the declared environment additions and retains all runtime config (0.647916ms)
+✖ complete source overlay includes every staged file and the exact two generated storage inputs (34.346666ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1045.486583
+
+✖ failing tests:
+
+test at test/native-image.test.mjs:23:1
+✖ complete source overlay includes every staged file and the exact two generated storage inputs (34.346666ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(dest.startsWith('/work/')||dest==='/opt/tpnil/')
+  
+      at copyOverlay (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/scripts/verify-native-image.mjs:54:12)
+      at TestContext.<anonymous> (file:///Users/tyeverett/tmp/network-ops/worktrees/p2ppsr/interop/codex/lab-integration-20261106/test/native-image.test.mjs:33:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

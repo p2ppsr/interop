@@ -1,0 +1,348 @@
+﻿2026-11-13T08:33:57.6136830Z Current runner version: '2.338.2'
+2026-11-13T08:33:57.6156569Z ##[group]Runner Image Provisioner
+2026-11-13T08:33:57.6157215Z Hosted Compute Agent
+2026-11-13T08:33:57.6157588Z Version: 20261103.629
+2026-11-13T08:33:57.6157975Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-13T08:33:57.6158486Z Build Date: 2026-11-03T17:26:59Z
+2026-11-13T08:33:57.6158900Z Worker ID: {775c34be-d7e7-45dd-947e-1802176629c5}
+2026-11-13T08:33:57.6159307Z Region: centralus
+2026-11-13T08:33:57.6159691Z Cloud: Azure
+2026-11-13T08:33:57.6160023Z ##[endgroup]
+2026-11-13T08:33:57.6160871Z ##[group]Operating System
+2026-11-13T08:33:57.6161259Z Ubuntu
+2026-11-13T08:33:57.6161604Z 24.04.5
+2026-11-13T08:33:57.6161965Z LTS
+2026-11-13T08:33:57.6162287Z ##[endgroup]
+2026-11-13T08:33:57.6162673Z ##[group]Runner Image
+2026-11-13T08:33:57.6163059Z Image: ubuntu-24.04
+2026-11-13T08:33:57.6163410Z Version: 20261111.370.1
+2026-11-13T08:33:57.6164342Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-13T08:33:57.6165291Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+2026-11-13T08:33:57.6165867Z ##[endgroup]
+2026-11-13T08:33:57.6166570Z ##[group]GITHUB_TOKEN Permissions
+2026-11-13T08:33:57.6168000Z Contents: read
+2026-11-13T08:33:57.6168392Z Metadata: read
+2026-11-13T08:33:57.6168782Z ##[endgroup]
+2026-11-13T08:33:57.6170176Z Secret source: Actions
+2026-11-13T08:33:57.6170804Z Cache mode: write
+2026-11-13T08:33:57.6171442Z Prepare workflow directory
+2026-11-13T08:33:57.6388789Z Prepare all required actions
+2026-11-13T08:33:57.6421995Z Getting action download info
+2026-11-13T08:33:57.9150084Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-13T08:33:58.0192382Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-13T08:33:58.1233223Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-13T08:33:59.0476247Z Complete job name: offline-core
+2026-11-13T08:33:59.1258688Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-11-13T08:33:59.1259711Z with:
+2026-11-13T08:33:59.1260283Z   ref: a2e9de7ecf2e655d52520adaae551e2c13656e50
+2026-11-13T08:33:59.1260993Z   fetch-depth: 0
+2026-11-13T08:33:59.1261546Z   persist-credentials: false
+2026-11-13T08:33:59.1262168Z   repository: p2ppsr/interop
+2026-11-13T08:33:59.1268401Z   token: ***
+2026-11-13T08:33:59.1268954Z   ssh-strict: true
+2026-11-13T08:33:59.1269489Z   ssh-user: git
+2026-11-13T08:33:59.1270058Z   clean: true
+2026-11-13T08:33:59.1270667Z   sparse-checkout-cone-mode: true
+2026-11-13T08:33:59.1271358Z   fetch-tags: false
+2026-11-13T08:33:59.1271894Z   show-progress: true
+2026-11-13T08:33:59.1272584Z   lfs: false
+2026-11-13T08:33:59.1273168Z   submodules: false
+2026-11-13T08:33:59.1273783Z   set-safe-directory: true
+2026-11-13T08:33:59.1274566Z   allow-unsafe-pr-checkout: false
+2026-11-13T08:33:59.1275412Z env:
+2026-11-13T08:33:59.1275957Z   GIT_CONFIG_COUNT: 1
+2026-11-13T08:33:59.1276600Z   GIT_CONFIG_KEY_0: http.version
+2026-11-13T08:33:59.1277251Z   GIT_CONFIG_VALUE_0: HTTP/1.1
+2026-11-13T08:33:59.1277904Z ##[endgroup]
+2026-11-13T08:33:59.3560483Z Syncing repository: p2ppsr/interop
+2026-11-13T08:33:59.3562140Z ##[group]Getting Git version info
+2026-11-13T08:33:59.3562930Z Working directory is '/home/runner/work/interop/interop'
+2026-11-13T08:33:59.3564079Z [command]/usr/bin/git version
+2026-11-13T08:33:59.3643113Z git version 2.56.1
+2026-11-13T08:33:59.3721443Z ##[endgroup]
+2026-11-13T08:33:59.3729768Z Temporarily overriding HOME='/home/runner/work/_temp/0f9e0991-e881-402f-8c8d-a80d6f9669b2' before making global git config changes
+2026-11-13T08:33:59.3731398Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T08:33:59.3732701Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T08:33:59.3735560Z Deleting the contents of '/home/runner/work/interop/interop'
+2026-11-13T08:33:59.3736801Z ##[group]Initializing the repository
+2026-11-13T08:33:59.3737606Z [command]/usr/bin/git init /home/runner/work/interop/interop
+2026-11-13T08:33:59.4380588Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-13T08:33:59.4381957Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-13T08:33:59.4383110Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-13T08:33:59.4383981Z hint: call:
+2026-11-13T08:33:59.4384640Z hint:
+2026-11-13T08:33:59.4385312Z hint: 	git config --global init.defaultBranch <name>
+2026-11-13T08:33:59.4386033Z hint:
+2026-11-13T08:33:59.4386736Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-13T08:33:59.4387850Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-13T08:33:59.4388811Z hint:
+2026-11-13T08:33:59.4389304Z hint: 	git branch -m <name>
+2026-11-13T08:33:59.4389852Z hint:
+2026-11-13T08:33:59.4390616Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-13T08:33:59.4399141Z Initialized empty Git repository in /home/runner/work/interop/interop/.git/
+2026-11-13T08:33:59.4409986Z [command]/usr/bin/git remote add origin https://github.com/p2ppsr/interop
+2026-11-13T08:33:59.5066601Z ##[endgroup]
+2026-11-13T08:33:59.5068018Z ##[group]Disabling automatic garbage collection
+2026-11-13T08:33:59.5069331Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-13T08:33:59.5101988Z ##[endgroup]
+2026-11-13T08:33:59.5103243Z ##[group]Setting up auth
+2026-11-13T08:33:59.5107592Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T08:33:59.5138368Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T08:33:59.5459459Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T08:33:59.5487501Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T08:33:59.5674371Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T08:33:59.5703088Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T08:33:59.5890987Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-13T08:33:59.5929100Z ##[endgroup]
+2026-11-13T08:33:59.5930501Z ##[group]Fetching the repository
+2026-11-13T08:33:59.5939245Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-13T08:34:14.8399355Z From https://github.com/p2ppsr/interop
+2026-11-13T08:34:14.8399915Z  * [new branch]      codex/itcve-go-components-20261106 -> origin/codex/itcve-go-components-20261106
+2026-11-13T08:34:14.8400328Z  * [new branch]      codex/lab-integration-20261106 -> origin/codex/lab-integration-20261106
+2026-11-13T08:34:14.8400739Z  * [new branch]      codex/native-wallet-closure-20261111 -> origin/codex/native-wallet-closure-20261111
+2026-11-13T08:34:14.8401347Z  * [new branch]      codex/native-wallet-conformance-20261109 -> origin/codex/native-wallet-conformance-20261109
+2026-11-13T08:34:14.8401725Z  * [new branch]      main                     -> origin/main
+2026-11-13T08:34:14.8401999Z  * [new tag]         sut-artifacts-2026-09-20 -> sut-artifacts-2026-09-20
+2026-11-13T08:34:14.8408165Z [command]/usr/bin/git rev-parse --verify --quiet a2e9de7ecf2e655d52520adaae551e2c13656e50^{object}
+2026-11-13T08:34:14.8431575Z a2e9de7ecf2e655d52520adaae551e2c13656e50
+2026-11-13T08:34:14.8435830Z ##[endgroup]
+2026-11-13T08:34:14.8436313Z ##[group]Determining the checkout info
+2026-11-13T08:34:14.8436838Z ##[endgroup]
+2026-11-13T08:34:14.8439809Z [command]/usr/bin/git sparse-checkout disable
+2026-11-13T08:34:14.8495372Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-13T08:34:14.8519722Z ##[group]Checking out the ref
+2026-11-13T08:34:14.8522166Z [command]/usr/bin/git checkout --progress --force a2e9de7ecf2e655d52520adaae551e2c13656e50
+2026-11-13T08:34:16.4468944Z Updating files:  42% (5455/12790)
+2026-11-13T08:34:17.0005408Z Updating files:  43% (5500/12790)
+2026-11-13T08:34:17.8975375Z Updating files:  43% (5553/12790)
+2026-11-13T08:34:18.0923926Z Updating files:  43% (5609/12790)
+2026-11-13T08:34:18.1466102Z Updating files:  44% (5628/12790)
+2026-11-13T08:34:18.1947058Z Updating files:  45% (5756/12790)
+2026-11-13T08:34:18.2468048Z Updating files:  46% (5884/12790)
+2026-11-13T08:34:18.2625426Z Updating files:  47% (6012/12790)
+2026-11-13T08:34:18.2967944Z Updating files:  48% (6140/12790)
+2026-11-13T08:34:18.3154379Z Updating files:  49% (6268/12790)
+2026-11-13T08:34:18.3381237Z Updating files:  50% (6395/12790)
+2026-11-13T08:34:18.3952612Z Updating files:  51% (6523/12790)
+2026-11-13T08:34:18.4422611Z Updating files:  52% (6651/12790)
+2026-11-13T08:34:18.4652419Z Updating files:  53% (6779/12790)
+2026-11-13T08:34:18.4702159Z Updating files:  54% (6907/12790)
+2026-11-13T08:34:18.4776739Z Updating files:  55% (7035/12790)
+2026-11-13T08:34:18.4856063Z Updating files:  56% (7163/12790)
+2026-11-13T08:34:18.4931968Z Updating files:  57% (7291/12790)
+2026-11-13T08:34:18.4994620Z Updating files:  58% (7419/12790)
+2026-11-13T08:34:18.5041202Z Updating files:  59% (7547/12790)
+2026-11-13T08:34:18.5081655Z Updating files:  60% (7674/12790)
+2026-11-13T08:34:18.5132364Z Updating files:  61% (7802/12790)
+2026-11-13T08:34:18.5231748Z Updating files:  62% (7930/12790)
+2026-11-13T08:34:18.5384042Z Updating files:  63% (8058/12790)
+2026-11-13T08:34:18.5444004Z Updating files:  64% (8186/12790)
+2026-11-13T08:34:18.5606048Z Updating files:  65% (8314/12790)
+2026-11-13T08:34:18.5908338Z Updating files:  66% (8442/12790)
+2026-11-13T08:34:18.5963478Z Updating files:  67% (8570/12790)
+2026-11-13T08:34:18.6038522Z Updating files:  68% (8698/12790)
+2026-11-13T08:34:18.6148336Z Updating files:  69% (8826/12790)
+2026-11-13T08:34:18.6419158Z Updating files:  70% (8953/12790)
+2026-11-13T08:34:18.6550401Z Updating files:  71% (9081/12790)
+2026-11-13T08:34:18.6607207Z Updating files:  72% (9209/12790)
+2026-11-13T08:34:18.6782920Z Updating files:  73% (9337/12790)
+2026-11-13T08:34:18.6869430Z Updating files:  74% (9465/12790)
+2026-11-13T08:34:18.7050930Z Updating files:  75% (9593/12790)
+2026-11-13T08:34:18.7093280Z Updating files:  76% (9721/12790)
+2026-11-13T08:34:18.8636637Z Updating files:  77% (9849/12790)
+2026-11-13T08:34:18.8646872Z Updating files:  78% (9977/12790)
+2026-11-13T08:34:18.8686508Z Updating files:  78% (9992/12790)
+2026-11-13T08:34:18.8756265Z Updating files:  79% (10105/12790)
+2026-11-13T08:34:18.8806128Z Updating files:  80% (10232/12790)
+2026-11-13T08:34:18.8846523Z Updating files:  81% (10360/12790)
+2026-11-13T08:34:18.8900259Z Updating files:  82% (10488/12790)
+2026-11-13T08:34:18.8945395Z Updating files:  83% (10616/12790)
+2026-11-13T08:34:18.9090752Z Updating files:  84% (10744/12790)
+2026-11-13T08:34:18.9772477Z Updating files:  85% (10872/12790)
+2026-11-13T08:34:19.0466829Z Updating files:  86% (11000/12790)
+2026-11-13T08:34:19.0547298Z Updating files:  87% (11128/12790)
+2026-11-13T08:34:19.0803648Z Updating files:  88% (11256/12790)
+2026-11-13T08:34:19.0874331Z Updating files:  89% (11384/12790)
+2026-11-13T08:34:19.0928632Z Updating files:  90% (11511/12790)
+2026-11-13T08:34:19.1309287Z Updating files:  91% (11639/12790)
+2026-11-13T08:34:19.2098082Z Updating files:  92% (11767/12790)
+2026-11-13T08:34:19.2154010Z Updating files:  93% (11895/12790)
+2026-11-13T08:34:19.2228977Z Updating files:  94% (12023/12790)
+2026-11-13T08:34:19.2289336Z Updating files:  95% (12151/12790)
+2026-11-13T08:34:19.2350419Z Updating files:  96% (12279/12790)
+2026-11-13T08:34:19.2423059Z Updating files:  97% (12407/12790)
+2026-11-13T08:34:19.2675562Z Updating files:  98% (12535/12790)
+2026-11-13T08:34:19.2723233Z Updating files:  99% (12663/12790)
+2026-11-13T08:34:19.2741504Z Updating files: 100% (12790/12790)
+2026-11-13T08:34:19.2742113Z Updating files: 100% (12790/12790), done.
+2026-11-13T08:34:19.3809121Z Note: switching to 'a2e9de7ecf2e655d52520adaae551e2c13656e50'.
+2026-11-13T08:34:19.3809462Z 
+2026-11-13T08:34:19.3809749Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-13T08:34:19.3810155Z changes and commit them, and you can discard any commits you make in this
+2026-11-13T08:34:19.3810547Z state without impacting any branches by switching back to a branch.
+2026-11-13T08:34:19.3810825Z 
+2026-11-13T08:34:19.3811042Z If you want to create a new branch to retain commits you create, you may
+2026-11-13T08:34:19.3811455Z do so (now or later) by using -c with the switch command. Example:
+2026-11-13T08:34:19.3811713Z 
+2026-11-13T08:34:19.3811900Z   git switch -c <new-branch-name>
+2026-11-13T08:34:19.3812109Z 
+2026-11-13T08:34:19.3812275Z Or undo this operation with:
+2026-11-13T08:34:19.3812486Z 
+2026-11-13T08:34:19.3812643Z   git switch -
+2026-11-13T08:34:19.3812823Z 
+2026-11-13T08:34:19.3813059Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-13T08:34:19.3813358Z 
+2026-11-13T08:34:19.3813650Z HEAD is now at a2e9de7 Emit canonical portability scores and retain native17 evidence
+2026-11-13T08:34:19.4125158Z ##[endgroup]
+2026-11-13T08:34:19.4169378Z [command]/usr/bin/git log -1 --format=%H
+2026-11-13T08:34:19.4193136Z a2e9de7ecf2e655d52520adaae551e2c13656e50
+2026-11-13T08:34:19.4202126Z ##[group]Removing auth
+2026-11-13T08:34:19.4205375Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T08:34:19.4232557Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T08:34:19.4443300Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T08:34:19.4466168Z http.https://github.com/.extraheader
+2026-11-13T08:34:19.4474741Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-13T08:34:19.4625787Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T08:34:19.4839463Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T08:34:19.4868889Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T08:34:19.5081839Z ##[endgroup]
+2026-11-13T08:34:19.5917654Z ##[group]Run [[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]]
+2026-11-13T08:34:19.5917971Z [36;1m[[ "$TPNIL_CI_EVENT_SHA" =~ ^[0-9a-f]{40}$ ]][0m
+2026-11-13T08:34:19.5918197Z [36;1mif [ "$(git rev-parse HEAD)" != "$TPNIL_CI_EVENT_SHA" ]; then[0m
+2026-11-13T08:34:19.5918418Z [36;1m  [[ "$TPNIL_CI_PULL_NUMBER" =~ ^[0-9]+$ ]][0m
+2026-11-13T08:34:19.5918735Z [36;1m  git -c http.version=HTTP/1.1 -c protocol.version=2 fetch --no-tags origin "refs/pull/$TPNIL_CI_PULL_NUMBER/merge"[0m
+2026-11-13T08:34:19.5919068Z [36;1m  test "$(git rev-parse FETCH_HEAD)" = "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-13T08:34:19.5919286Z [36;1m  git checkout --detach "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-13T08:34:19.5919448Z [36;1mfi[0m
+2026-11-13T08:34:19.5919599Z [36;1mtest "$(git rev-parse HEAD)" = "$TPNIL_CI_EVENT_SHA"[0m
+2026-11-13T08:34:19.5938848Z shell: /usr/bin/bash -e {0}
+2026-11-13T08:34:19.5938999Z env:
+2026-11-13T08:34:19.5939169Z   TPNIL_CI_EVENT_SHA: a2e9de7ecf2e655d52520adaae551e2c13656e50
+2026-11-13T08:34:19.5939593Z   TPNIL_CI_PULL_NUMBER: 
+2026-11-13T08:34:19.5939725Z ##[endgroup]
+2026-11-13T08:34:19.6624892Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-11-13T08:34:19.6625134Z with:
+2026-11-13T08:34:19.6625265Z   node-version-file: .nvmrc
+2026-11-13T08:34:19.6625401Z   always-auth: false
+2026-11-13T08:34:19.6625523Z   check-latest: false
+2026-11-13T08:34:19.6626985Z   token: ***
+2026-11-13T08:34:19.6627098Z ##[endgroup]
+2026-11-13T08:34:19.7606858Z Node version file is not JSON file
+2026-11-13T08:34:19.7607604Z Resolved .nvmrc as 24.22.1
+2026-11-13T08:34:19.7620232Z Attempting to download 24.22.1...
+2026-11-13T08:34:19.7745035Z (node:2212) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T08:34:19.7745592Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T08:34:20.5816302Z Acquiring 24.22.1 - x64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-linux-x64.tar.gz
+2026-11-13T08:34:21.0332259Z Extracting ...
+2026-11-13T08:34:21.0442046Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/5b40d9ff-3923-42c3-af83-02c5dd4ba667 -f /home/runner/work/_temp/f449abd7-2c11-4283-84c0-7284e3ddea51
+2026-11-13T08:34:22.2530856Z Adding to the cache ...
+2026-11-13T08:34:24.6211448Z ##[group]Environment details
+2026-11-13T08:34:24.8036065Z node: v24.22.1
+2026-11-13T08:34:24.8036373Z npm: 11.19.1
+2026-11-13T08:34:24.8036546Z yarn: 1.22.22
+2026-11-13T08:34:24.8036985Z ##[endgroup]
+2026-11-13T08:34:24.8229259Z ##[group]Run printf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"
+2026-11-13T08:34:24.8229582Z [36;1mprintf 'ImageOS=%s\nImageVersion=%s\n' "$ImageOS" "$ImageVersion"[0m
+2026-11-13T08:34:24.8248999Z shell: /usr/bin/bash -e {0}
+2026-11-13T08:34:24.8249156Z ##[endgroup]
+2026-11-13T08:34:24.8290397Z ImageOS=ubuntu24
+2026-11-13T08:34:24.8290637Z ImageVersion=20261111.370.1
+2026-11-13T08:34:24.8310974Z ##[group]Run npm test
+2026-11-13T08:34:24.8311126Z [36;1mnpm test[0m
+2026-11-13T08:34:24.8326268Z shell: /usr/bin/bash -e {0}
+2026-11-13T08:34:24.8326410Z ##[endgroup]
+2026-11-13T08:34:24.8979596Z 
+2026-11-13T08:34:24.8980173Z > tpnil@0.5.0 test
+2026-11-13T08:34:24.8980516Z > node --test test/*.test.mjs
+2026-11-13T08:34:24.8980684Z 
+2026-11-13T08:34:25.5690986Z ✔ actual Git blob above the old stdout limit is exact, including binary NUL bytes (117.472563ms)
+2026-11-13T08:34:25.5691647Z ✔ selector still rejects current and committed byte tampering with a large input (184.284264ms)
+2026-11-13T08:34:25.5692436Z ✔ bounded metadata rejects oversize, missing and non-blob source before reading payload (89.5892ms)
+2026-11-13T08:34:25.5693108Z ✔ same-size corrupted Git object is rejected by its pinned object identity and cleans temporary output (109.395509ms)
+2026-11-13T08:34:25.5693706Z ✔ Git replace refs cannot substitute a different committed blob (83.728028ms)
+2026-11-13T08:34:31.7202304Z ✔ canonical encoding has a fixed known answer and preserves array order (1.19927ms)
+2026-11-13T08:34:31.7216318Z ✔ strict parser rejects ambiguous keys, Unicode, numbers and trailing data (0.850079ms)
+2026-11-13T08:34:31.7274081Z ✔ unsupported schema keywords fail closed (0.313113ms)
+2026-11-13T08:34:31.7278501Z ✔ catalogs distinguish executable vectors from design-only vectors (47.153105ms)
+2026-11-13T08:34:31.7279418Z ✔ plans reject unknown fields, empty suites, repeated IDs and SUT claims (311.439381ms)
+2026-11-13T08:34:31.7280431Z ✔ missing evidence blocks; an explicit observed mismatch fails (50.454281ms)
+2026-11-13T08:34:31.7285282Z ✔ JSON pointer escaping and null evidence are precise (55.971677ms)
+2026-11-13T08:34:31.7286078Z ✔ array pointer cannot claim array length or leading-zero index (53.690394ms)
+2026-11-13T08:34:31.7286845Z ✔ artifact verification rejects changed bytes, path traversal and symlinks (3.065145ms)
+2026-11-13T08:34:31.7304031Z ✔ journal replay retains exact scoped result and immutable objects (1165.872699ms)
+2026-11-13T08:34:31.7305379Z ✔ timestamps change record identity without changing semantic result (1230.513987ms)
+2026-11-13T08:34:31.7306133Z ✔ tampering with an archived artifact fails replay (1321.497004ms)
+2026-11-13T08:34:31.7306696Z ✔ missing archived objects fail replay (907.645889ms)
+2026-11-13T08:34:31.7307296Z ✔ journal truncation and chain rewrites are detected (678.877907ms)
+2026-11-13T08:34:31.7307973Z ✔ known prior journal prefix cannot be replaced by another valid run (508.856441ms)
+2026-11-13T08:34:31.7308675Z ✔ appending retains the prior prefix and duplicate run is rejected (167.078226ms)
+2026-11-13T08:34:31.7309427Z ✔ concurrent/stale writers and reversed timestamps fail closed (59.576395ms)
+2026-11-13T08:34:31.7310219Z ✔ failed and blocked observations remain recorded outcomes (60.151558ms)
+2026-11-13T08:34:31.7310892Z ✔ schema-invalid evidence cannot be appended (62.506727ms)
+2026-11-13T08:34:31.7331975Z ✔ demo cannot overwrite an existing evidence directory (55.819266ms)
+2026-11-13T08:34:31.7333089Z ✔ retained descendant CI archive binds all 46 members and eight fresh runs (128.409928ms)
+2026-11-13T08:34:31.7333992Z ✔ a recomputed outer digest cannot relabel reference evidence as native qualification (5.824367ms)
+2026-11-13T08:34:31.7338317Z ✔ published counts and member inventory must agree with the actual ZIP (123.575418ms)
+2026-11-13T08:34:31.7339030Z ✔ v1 archive cannot claim the prospective exact-history policy (34.455894ms)
+2026-11-13T08:34:31.7339856Z ✔ prospective qualification schema cannot reinterpret a v1 archive (11.703699ms)
+2026-11-13T08:34:31.7340651Z ✔ omitting a provenance file or adding an unlisted file cannot hide an archive (3.010757ms)
+2026-11-13T08:34:31.7346697Z ✔ component3 frozen replay survives current source drift but rejects dependency drift and Git links (129.559768ms)
+2026-11-13T08:34:31.7347680Z ✔ verification requires a complete final receipt, not a zero exit or diagnostic output (33.112063ms)
+2026-11-13T08:34:31.7348929Z ✔ replays a Git archive larger than128MiB and rejects archive attribute transformations (2661.957135ms)
+2026-11-13T08:34:31.7349911Z ✔ publication guard rejects locally present but ignored evidence and incorrect staged bytes (1784.239305ms)
+2026-11-13T08:34:31.7350835Z ✔ history guard permits additions but rejects modifications, deletions and type changes (2548.432065ms)
+2026-11-13T08:34:31.7351710Z ✔ replacement root preserves prior journal bytes; later history requires an ancestor (1370.097573ms)
+2026-11-13T08:34:31.7352798Z ✔ a clean replacement root establishes a baseline without discarded objects; descendants require their base (318.898316ms)
+2026-11-13T08:34:31.7353655Z ✔ source-only intake remains blocked and cannot issue a conformance claim (19.852756ms)
+2026-11-13T08:34:31.7354563Z ✔ verified runtime criteria require runtime evidence, not source inspection (2.304897ms)
+2026-11-13T08:34:31.7355388Z ✔ intake rejects omitted criteria, live-broadcast scope changes, and unknown references (2.775848ms)
+2026-11-13T08:34:31.7356194Z ✔ intake detects altered artifacts and altered referenced evidence (584.585984ms)
+2026-11-13T08:34:31.7356880Z ✔ intake rejects evidence traversal and symlink substitution (2.52447ms)
+2026-11-13T08:34:31.7357605Z ✔ retained intake review verifies from archived objects and detects changes (594.111933ms)
+2026-11-13T08:34:31.7358503Z ✔ current intake permits authorized evaluation without redistribution or participation publicity (3.615576ms)
+2026-11-13T08:34:31.7359558Z ✔ public reproduction needs every reproduction permission and is separate from participation publicity (4.189191ms)
+2026-11-13T08:34:31.7360680Z ✔ evaluation and retention authorization independently gate execution without changing technical readiness (4.056791ms)
+2026-11-13T08:34:31.7361746Z ✔ every granted permission needs rights evidence; malformed and unknown permissions fail closed (3.906735ms)
+2026-11-13T08:34:31.7362660Z ✔ current archived reviews retain permission scope and detect permission tampering (370.858402ms)
+2026-11-13T08:34:31.7363968Z ✔ aggregate rejects omitted lanes, rewritten profile, cleanup failures and altered receipts even with rebound hashes (941.030032ms)
+2026-11-13T08:34:31.7364948Z ✔ aggregate detects modified files before trusting retained observations (120.549114ms)
+2026-11-13T08:34:31.7365797Z ✔ component3 rejects old schemas, relabelled policies and non-UTC cells despite rebound inventories (618.785102ms)
+2026-11-13T08:34:31.7366649Z ✔ component3 explicitly freezes the ninth matrix and never replaces native2 (0.612785ms)
+2026-11-13T08:34:31.7367557Z ✔ preparation defaults to the full closure and rejects unsupported or repeated flags (48.666424ms)
+2026-11-13T08:34:31.7368536Z ✔ verifier selection cannot build Go, discovery or SQLite and uses a separate exact source path (1.291259ms)
+2026-11-13T08:34:31.7383502Z ✔ verifier preparation refuses aliased or complete service caches before mutation or network (2.205968ms)
+2026-11-13T08:34:38.7628261Z ##[error]The operation was canceled.
+2026-11-13T08:34:38.7760428Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-13T08:34:38.7760817Z with:
+2026-11-13T08:34:38.7761019Z   name: offline-reference-test-failures
+2026-11-13T08:34:38.7761273Z   path: out/test-evidence
+2026-11-13T08:34:38.7761486Z   if-no-files-found: warn
+2026-11-13T08:34:38.7761692Z   retention-days: 90
+2026-11-13T08:34:38.7761889Z   compression-level: 6
+2026-11-13T08:34:38.7762089Z   overwrite: false
+2026-11-13T08:34:38.7762287Z   include-hidden-files: false
+2026-11-13T08:34:38.7762513Z ##[endgroup]
+2026-11-13T08:34:38.9635192Z (node:8167) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-13T08:34:38.9667403Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-13T08:34:38.9890457Z ##[warning]No files were found with the provided path: out/test-evidence. No artifacts will be uploaded.
+2026-11-13T08:34:39.0051885Z Post job cleanup.
+2026-11-13T08:34:39.1085222Z [command]/usr/bin/git version
+2026-11-13T08:34:39.1113481Z git version 2.56.1
+2026-11-13T08:34:39.1148428Z Temporarily overriding HOME='/home/runner/work/_temp/96a511e3-3f5e-4fc0-b074-55ef9ef78e6b' before making global git config changes
+2026-11-13T08:34:39.1149242Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-13T08:34:39.1149931Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/interop/interop
+2026-11-13T08:34:39.1325540Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-13T08:34:39.1395643Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-13T08:34:39.1726140Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-13T08:34:39.1766132Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-13T08:34:39.2174957Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-13T08:34:39.2256307Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-13T08:34:39.2918264Z Cleaning up orphan processes
+2026-11-13T08:34:39.3222231Z Terminate orphan process: pid (2251) (npm test)
+2026-11-13T08:34:39.3239699Z Terminate orphan process: pid (2262) (sh)
+2026-11-13T08:34:39.3259734Z Terminate orphan process: pid (2263) (MainThread)
+2026-11-13T08:34:39.3297523Z Terminate orphan process: pid (3052) (MainThread)
+2026-11-13T08:34:39.3329306Z Terminate orphan process: pid (7997) (MainThread)
+2026-11-13T08:34:39.3348053Z Terminate orphan process: pid (8143) (python3)
+2026-11-13T08:34:39.3366359Z Terminate orphan process: pid (8195) (MainThread)
+2026-11-13T08:34:39.3471556Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

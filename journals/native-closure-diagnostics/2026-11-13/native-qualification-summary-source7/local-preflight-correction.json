@@ -1,0 +1,21 @@
+{
+  "claim": "LAB_SELF_TEST_ONLY",
+  "nativeSessions": 0,
+  "corrections": [
+    {
+      "log": "core-first.log",
+      "reason": "Successor selector test retained revision14 expectation; new source7 requires15."
+    },
+    {
+      "log": "selector-image-first.log",
+      "reason": "New documentation COPY destination was relative; strict owned image overlay requires /work/docs path."
+    },
+    {
+      "log": "python-first.log",
+      "reason": "Local command named nonexistent python/tests; documented test/test_*.py packaging suite passes, five tests."
+    }
+  ],
+  "correctedBeforeCommitPushOrPaidAdmission": true,
+  "globalCanonicalJsonUnchanged": true,
+  "originalCriteriaUnchanged": true
+}

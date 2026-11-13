@@ -1,4 +1,5 @@
 import {verifyPriorFixtureReplay} from './prior-fixture-replay.js'
+import { encodeCoverageObservation } from './coverage-observation.js'
 import assert from 'node:assert/strict'
 import { createDecipheriv, createHash } from 'node:crypto'
 import { Beef, BigNumber, Point, PrivateKey, ProtoWallet, PublicKey, Schnorr, Signature, Transaction, Utils } from '@bsv/sdk'
@@ -267,8 +268,10 @@ export async function verifyNativeCoverageExtension(report: CoverageExtensionRep
       assert.equal(assertions.find(r => r.id === predicateId)?.result, 'FAIL', 'No extension request permits TXID-only return')
     }
     if (!tx && typeof row.result.txid === 'string' && /^[a-f0-9]{64}$/.test(row.result.txid)) { const stored = report.storageTransactions.find(r => r.txid === row.result.txid); assert.ok(stored, 'Unrecoverable body cannot hide a valid-shaped unbound TXID'); tx = Transaction.fromHex(stored.rawTxHex) }
-    if (tx) transactions.push({ callId: row.id, actor: row.actor, predicateId, txid: tx.id('hex'), rawHex: tx.toHex(), originalResult: row.result })
-    else { assert.equal(assertions.find(r => r.id === predicateId)?.result, 'FAIL', 'Unrecoverable return requires exact mapped predicate failure'); malformedNativeResponses.push({ callId: row.id, actor: row.actor, predicateId, result: row.result }) }
+    // Qualification summaries are JSON receipts. Preserve exceptional CWI
+    // values with the same reversible codec as their original observations.
+    if (tx) transactions.push({ callId: row.id, actor: row.actor, predicateId, txid: tx.id('hex'), rawHex: tx.toHex(), originalResult: encodeCoverageObservation(row.result) })
+    else { assert.equal(assertions.find(r => r.id === predicateId)?.result, 'FAIL', 'Unrecoverable return requires exact mapped predicate failure'); malformedNativeResponses.push({ callId: row.id, actor: row.actor, predicateId, result: encodeCoverageObservation(row.result) }) }
   }
   return { verified: true as const, assertions, assertionCount: assertions.length, counts: Object.fromEntries(['PASS', 'FAIL', 'BLOCKED'].map(value => [value, assertions.filter(a => a.result === value).length])), transactions, malformedNativeResponses, finalLedgerRequired: true, completeBRC100Conformance: false }
 }

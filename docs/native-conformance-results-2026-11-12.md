@@ -490,3 +490,38 @@ verifiers also pass on native17 inputs, including locally executed48Rust checks
 per repetition. These executions occur after the failed workflow and are not
 its original Rust results or native qualification. A fresh bounded native
 attempt and complete independent source replay remain required.
+
+
+## Native18 original qualification and source7 summary correction
+
+[Foundation43394221881](https://github.com/p2ppsr/interop/actions/runs/43394221881)
+passes1905job-seconds:235Linux core/oneSKIP,1811synthesis/126SKIP, fivePython
+and13Go checks. The590-observation component matrix remains584PASS/six upstream
+Go Messaging FAIL findings with passing evidence verification. Duplicate
+43394199991 is canceled at109seconds. [Evaluator10 run43394199944](https://github.com/p2ppsr/interop/actions/runs/43394199944)
+passes137seconds and independent frozen replay.
+
+[Native18 run43396834995](https://github.com/p2ppsr/interop/actions/runs/43396834995)
+fails after3855job-seconds. Both complete698-observation captures match
+685PASS/oneFAIL/12BLOCKED; original99 remain98PASS/one signed-satoshi FAIL.
+The original native qualification receipt is present, qualifiedEnvironment=true
+and repetitionMatch=true. Integrated verification rechecks it and rejects
+undefined metadata in each extension fixture-external returned-transaction
+summary. Original integrated qualification and both original Rust results are
+absent. Complete integrated frozen replay is refused.
+
+The [failed attempt](../journals/integrated-native-attempts/2026-11-13/43396834995/attempt.json)
+preserves all551original members in the exact141587068-byte ZIP and retains the
+original native receipt separately. Complete independent image reconstruction
+verifies71529final/557source-overlay entries,455frozen inputs, full configuration
+and the original Linux Go manifest. Containers exit0 and are removed; host
+policy is restored. Order24 closes at6006job-seconds, completed cohort82331.
+Full monetary/operator/agent/allocated-capacity costs remain unknown.
+
+The [source7 correction](native-qualification-summary-source-correction-2026-11-13.md)
+uses the existing reversible observation codec for derived raw-result summaries.
+Strict canonical JSON, native predicate derivation,698criteria and all artifacts
+remain unchanged. Both actual raw reports round-trip through strict qualification
+JSON; exceptional native values remain explicit and reversible. Original failed
+evidence remains unchanged. Fresh integrated qualification, actual Rust and full
+frozen source replay are required before readiness.

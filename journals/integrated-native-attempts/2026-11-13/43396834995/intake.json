@@ -1,0 +1,163 @@
+{
+  "schema": "tpnil-native18-original-intake@1",
+  "source": "a2e9de7ecf2e655d52520adaae551e2c13656e50",
+  "run": 43396834995,
+  "githubConclusion": "failure",
+  "artifactId": 14027550634,
+  "archiveSha256": "c610460d98d37c867f667eb577daac6cd544982c5000660c1f8f74468b0dcf07",
+  "compressedBytes": 141587068,
+  "members": 551,
+  "expandedBytes": 803332187,
+  "repetitions": [
+    {
+      "repetition": 1,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 685,
+        "FAIL": 1,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "FAIL": 1,
+        "PASS": 98
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    },
+    {
+      "repetition": 2,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 685,
+        "FAIL": 1,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "FAIL": 1,
+        "PASS": 98
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    }
+  ],
+  "missingOriginalQualificationOrRust": [
+    "integrated-qualification.json",
+    "rust-repetition-1/result.json",
+    "rust-repetition-2/result.json"
+  ],
+  "independentSemanticReplayExecuted": false,
+  "nativeQualificationAcceptedByThisIntake": false,
+  "completeBRC100Conformance": false
+}
