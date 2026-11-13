@@ -12,7 +12,7 @@ export const nativeRustCompatibilityPath='infra/native/conformance/rust-graph-3.
 export const nativeWallet511Observer2CompatibilityPath='infra/native/conformance/rust-graph-5.1.1-selector-2.json'
 export const nativeCandidateCoverage3OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-3.json'
 export const nativeCandidateCoverage6OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6.json'
-export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6-source-8.json'
+export const nativeCandidateCoverage6CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-6-source-9.json'
 export const nativeCandidateCoverage5OriginalCompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5.json'
 export const nativeCandidateCoverage5CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-5-source-2.json'
 export const nativeCandidateCoverage4CompatibilityPath='infra/native/conformance/rust-graph-pr368-coverage-4.json'
@@ -41,13 +41,16 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   if(expanded) { assert.equal(plan.observerRevision,3);assert.equal(plan.coverageRevision,enhanced?6:replay?5:followup?4:completion?3:recovery?2:1);completion ? assert.equal(plan.expectedObservations,698) : assert.equal(plan.expectedObservations,535);assert.equal(plan.admissionState,'FROZEN','Expanded source must be frozen before admission') }
   if(enhanced) {
     const originalBytes=read(nativeCandidateCoverage6OriginalPlanPath),original=JSON.parse(originalBytes)
-    assert.equal(plan.sourceBindingRevision,16,'Go11 artifact successor revision differs')
-    assert.equal(plan.id,`${original.id}-SOURCE-8`)
-    const predecessorPath='infra/native/conformance/plan-pr368-coverage-6-source-7.json',predecessor=read(predecessorPath),source2Path='infra/native/conformance/plan-pr368-coverage-6-source-2.json',source2=read(source2Path)
+    assert.equal(plan.sourceBindingRevision,17,'Go11 source successor revision differs')
+    assert.equal(plan.id,`${original.id}-SOURCE-9`)
+    const predecessorPath='infra/native/conformance/plan-pr368-coverage-6-source-8.json',predecessor=read(predecessorPath),source2Path='infra/native/conformance/plan-pr368-coverage-6-source-2.json',source2=read(source2Path)
     assert.deepEqual(plan.sourcePredecessor,{path:predecessorPath,sha256:sha(predecessor)})
     assert.equal(sha(readCommitted(source,predecessorPath)),sha(predecessor))
+    const source7Path='infra/native/conformance/plan-pr368-coverage-6-source-7.json',source7=read(source7Path)
+    assert.deepEqual(JSON.parse(predecessor).sourcePredecessor,{path:source7Path,sha256:sha(source7)})
+    assert.equal(sha(readCommitted(source,source7Path)),sha(source7))
     const source6Path='infra/native/conformance/plan-pr368-coverage-6-source-6.json',source6=read(source6Path)
-    assert.deepEqual(JSON.parse(predecessor).sourcePredecessor,{path:source6Path,sha256:sha(source6)})
+    assert.deepEqual(JSON.parse(source7).sourcePredecessor,{path:source6Path,sha256:sha(source6)})
     assert.equal(sha(readCommitted(source,source6Path)),sha(source6))
     const source5Path='infra/native/conformance/plan-pr368-coverage-6-source-5.json',source5=read(source5Path)
     assert.deepEqual(JSON.parse(source6).sourcePredecessor,{path:source5Path,sha256:sha(source5)})
@@ -106,9 +109,9 @@ export async function nativeRustBinding(plan,planSha256,source,{read=file=>fs.re
   assert.equal(sha(readCommitted(source,compatibilityPath)),sha(bytes),'Compatibility manifest did not exist unchanged at the recorded native execution source')
   assert.equal(manifest.schema,'tpnil-native-rust-compatibility@3.0.0')
   assert.equal(manifest.variant,enhanced?nativeCandidateCoverage6Variant:replay?nativeCandidateCoverage5Variant:followup?nativeCandidateCoverage4Variant:completion?nativeCandidateCoverage3Variant:recovery?nativeCandidateCoverage2Variant:expanded?nativeCandidateCoverage1Variant:observer3?nativeCandidateObserver3Variant:candidate?nativeCandidateVariant:observer2?nativeWallet511Observer2Variant:wallet511?nativeWallet511Variant:nativeRustV3Variant)
-  assert.equal(manifest.sourceBindingRevision,enhanced?21:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
+  assert.equal(manifest.sourceBindingRevision,enhanced?22:replay?13:followup?11:completion?10:recovery?5:expanded?4:observer3?3:observer2?2:wallet511?1:2)
   if(expanded) {
-    const previous=enhanced?'infra/native/conformance/rust-graph-pr368-coverage-6-source-7.json':replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
+    const previous=enhanced?'infra/native/conformance/rust-graph-pr368-coverage-6-source-8.json':replay?nativeCandidateCoverage5OriginalCompatibilityPath:followup?'infra/native/conformance/rust-graph-pr368-coverage-3-source-5.json':completion?'infra/native/conformance/rust-graph-pr368-coverage-3-source-4.json':recovery?nativeCandidateCoverage1CompatibilityPath:nativeCandidateObserver3CompatibilityPath,prior=read(previous)
     assert.deepEqual(manifest.predecessor,{manifest:previous,sha256:sha(prior)})
     assert.equal(sha(readCommitted(source,previous)),sha(prior))
   }

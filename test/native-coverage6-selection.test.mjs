@@ -44,15 +44,15 @@ test('worker selects only4.8 with explicit coverage6 and complete identity/obser
 test('coverage6 freezes all current inputs and admits its complete source fixture', async () => {
   for (const [name, digest] of Object.entries(plan.conformanceInputs)) assert.equal((await import('node:crypto')).createHash('sha256').update(read(name)).digest('hex'), digest, name)
   const selected = await checkNativeWalletSelector('integrated-native-conformance-pr368-coverage-6', { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) })
-  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-6-source-8.json')
+  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-6-source-9.json')
   assert.equal(selected.wallet.version, '5.1.1-pr368.e360e67')
   assert.equal(selected.rust.corpus, 'tpnil-rust-corpus@3')
-  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-6-source-8.json')
+  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-6-source-9.json')
 })
 test('coverage6 cannot substitute an input or a release artifact in its source fixture', async () => {
   const variant = 'integrated-native-conformance-pr368-coverage-6', options = { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) }
   await assert.rejects(checkNativeWalletSelector(variant, { ...options, read: name => name === 'synthesis/src/wallet-lab/services.ts' ? Buffer.from('changed') : read(name) }), /Current conformance input differs/)
-  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-6-source-8.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
+  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-6-source-9.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
 })
 
 test('source successor preserves original frozen4.8 criteria and exact source1 JSON bytes', () => {
@@ -60,6 +60,8 @@ test('source successor preserves original frozen4.8 criteria and exact source1 J
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-5.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-5.json']) assert.deepEqual(read(name),execFileSync('git',['show',`71d8b58cbbf802377b34cfbcceb056413b2327d1:${name}`],{maxBuffer:32*1024*1024}))
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-6.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-6.json']) assert.deepEqual(read(name),execFileSync('git',['show',`a2e9de7ecf2e655d52520adaae551e2c13656e50:${name}`],{maxBuffer:32*1024*1024}))
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-7.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-7.json']) assert.deepEqual(read(name),execFileSync('git',['show',`3aac88975fc0f4e911fcf10fea6c8158f7760534:${name}`],{maxBuffer:32*1024*1024}))
+ for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-8.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-8.json']) assert.deepEqual(read(name),execFileSync('git',['show',`83d9cf88adff1412ec5e6e205a73e7534898212f:${name}`],{maxBuffer:32*1024*1024}))
+ assert.match(read('.github/workflows/ci.yml').toString(),/npm test --prefix synthesis -- --testTimeout=30000 --maxWorkers=2/)
  const originalPath='infra/native/conformance/plan-pr368-coverage-6.json'
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-3.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-3.json']) assert.deepEqual(read(name),execFileSync('git',['show',`38d06bfe2de7e3c1cfbb26b9848052d301b85905:${name}`],{maxBuffer:32*1024*1024}))
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-2.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-2.json']) assert.deepEqual(read(name),execFileSync('git',['show',`4c872d109e49d2e63b3942cc0ec2f7386832c5a9:${name}`],{maxBuffer:32*1024*1024}))
@@ -71,5 +73,5 @@ test('source successor preserves original frozen4.8 criteria and exact source1 J
  for(const name of [originalPath,'infra/native/conformance/rust-graph-pr368-coverage-6.json',...Object.keys(original.conformanceInputs).filter(name=>name.startsWith('itcves/')||name.startsWith('programs/'))]) {
   assert.deepEqual(read(name),execFileSync('git',['show',`bbbc164b9042468e3e5895c3a6f42177dcc4b568:${name}`],{maxBuffer:32*1024*1024}),name)
  }
- assert.equal(plan.sourceBindingRevision,16)
+ assert.equal(plan.sourceBindingRevision,17)
 })

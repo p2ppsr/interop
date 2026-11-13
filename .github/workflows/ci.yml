@@ -43,8 +43,9 @@ jobs:
       - run: npm ci --prefix synthesis --ignore-scripts
       - run: npm audit --prefix synthesis --audit-level=moderate
       - run: npm run typecheck --prefix synthesis
-      # Full cryptographic replay cases need a bounded CPU allowance on shared runners.
-      - run: npm test --prefix synthesis -- --testTimeout=30000
+      # Bound parallel cryptographic replay to two workers on shared runners.
+      # Keep each test's 30-second limit and all assertion semantics unchanged.
+      - run: npm test --prefix synthesis -- --testTimeout=30000 --maxWorkers=2
       - run: node scripts/verify-published-journals.mjs
       - run: node scripts/verify-native-reserve-reference.mjs
       - run: node scripts/verify-descendant-storage-archives.mjs --semantic
