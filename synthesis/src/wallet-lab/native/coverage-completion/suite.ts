@@ -27,6 +27,21 @@ import { partialTraceIds } from './partial-trace-model.js'
 import { runNativePartialTrace } from './partial-trace-run.js'
 import { evaluatePartialTrace, partialTraceAssertions } from './partial-trace-verifier.js'
 import { verifyPartialTraceParent, type PartialTracePrerequisites } from './partial-trace-parent.js'
+import { deriveCompletionNativeFundingRoots } from './funding-roots.js'
+import { bindLaterNativeOwnedSpend } from '../coverage-transactions-verifier.js'
+
+/** Verify the later owner's full parent before allowing its exact release in
+ * the earlier transaction module's final-ledger protection. Full completion
+ * and partial-trace admission still execute with the complete coverage parent. */
+export async function verifyLaterNativeOwnedSpend(binding: BasketParentBinding) {
+  assert.equal(binding.profile, 'ITCVE-1@4.8.0')
+  const json = (name: string) => JSON.parse(binding.readEvidence(`conformance/${name}.json`).toString())
+  const report = decodeCoverageObservation<any>(json('transaction-branches'), coverageObservationEncoding)
+  const funding = await deriveCompletionNativeFundingRoots(binding)
+  const parent = await verifyTransactionBranchParent(report, { ...binding, declaredNativePayments: funding.declaredNativePayments })
+  if (!['completion.transaction.nosend-change/valid-full', 'completion.transaction.batch-send/returnTXIDOnly'].every(id => parent.assertions.find((row: any) => row.id === id)?.result === 'PASS')) return undefined
+  return bindLaterNativeOwnedSpend(json('coverage-transactions'), report, parent, funding, binding.globalSubmissions)
+}
 
 export const completionModules = [
   { name: 'permissions', vector: 4, file: 'permission-sequence', encoded: false, ids: [...permissionRows] },

@@ -418,3 +418,42 @@ checks pass with types/catalogs/standards. The original4.8 criteria,698IDs,
 wallet, Go10, Rust3 and source3 JSON remain frozen. Fresh original native
 qualification, both actual Rust results, independent frozen replay and final
 publication checks remain required. Full BRC100 conformance stays unproven.
+
+
+## Native16 evidence failure and source5 composition
+
+[Sourcef4bc Foundation43370667487](https://github.com/p2ppsr/interop/actions/runs/43370667487)
+passes1825job-seconds:235Linux core/oneSKIP,1774synthesis/125SKIP, fivePython and
+13Go checks. Its590-observation component matrix retains584PASS/six upstream Go
+Messaging FAIL findings with verified evidence. Duplicate43370653169 is canceled
+at50seconds. [Evaluator10 run43370755592](https://github.com/p2ppsr/interop/actions/runs/43370755592)
+passes137seconds with independent frozen replay and original bytes unchanged.
+
+[Native16 run43372408766](https://github.com/p2ppsr/interop/actions/runs/43372408766)
+fails after3341job-seconds. The raw captures contain684PASS/twoFAIL/12BLOCKED
+and683PASS/threeFAIL/12BLOCKED. Both original99 remain98PASS/one signed-satoshi
+FAIL. Final replay rejects a producer permission PASS after the later completion
+sequence overwrites its identity PNG. The original early image is missing; no
+original qualification or Rust results exist. Full replay is refused. The
+[failed attempt](../journals/integrated-native-attempts/2026-11-13/43372408766/attempt.json)
+preserves the exact141401919-byte ZIP and548member hashes. Independent image
+reconstruction verifies71521final entries,549source-overlay entries, all451
+frozen inputs, full runtime configuration and the original Linux Go manifest.
+Both containers exit0 and are removed; host policy is restored. Order22 closes
+at5353job-seconds, completed cohort70939. Full costs remain unknown.
+
+The [source5 correction](native-evidence-ownership-source-correction-2026-11-13.md)
+is limited to evidence composition. Completion prompt PNGs have their own
+parent-selected namespace, and captured image bytes are immutable. Valid imports
+may replay only an exact previously accepted fixture. A rejected reference may
+overlap only an exact earlier signed delayed-wallet raw receipt. Later spending
+of native-owned change and an already credited payment requires the complete
+transaction-branch parent, independently proven funding, owned inventory and
+its exact declared held-transaction release. Every other final protected spend
+remains rejected. All698criteria and earlier frozen source JSON remain unchanged.
+
+Retrospective diagnostics execute16independent parent/funding checks per capture
+with these prospective corrections. The missing early PNG and absent new
+namespace remain rejected; original results are unchanged. Fresh original
+qualification, both actual Rust results and complete frozen replay are still
+required before readiness. Full BRC100 conformance remains unproven.

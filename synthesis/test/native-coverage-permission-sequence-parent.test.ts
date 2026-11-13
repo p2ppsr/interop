@@ -77,3 +77,19 @@ for (const kind of ['old-profile', 'reference-mode', 'missing-ui-freshness', 'st
     if (kind === 'missing-cleanup') f.report.cleanup.pagesClosed = false
     await assert.rejects(verifyPermissionSequenceParent(f.report, f.binding))
   })
+
+test('namespaces completion PNGs without reusing earlier extension observations', async () => {
+  const f = await fixture(); f.report.promptEvidenceNamespace = 'sequence-v1'
+  for (const row of f.report.observations.filter((row: any) => row.kind === 'call')) for (const prompt of row.value.prompts) {
+    const previous = prompt.screenshot.name
+    prompt.screenshot.name = previous.replace('conformance/extension-', 'conformance/sequence-v1-')
+    f.evidence.set(prompt.screenshot.name, Buffer.from(f.read(previous)))
+  }
+  assert.equal((await verifyPermissionSequenceParent(f.report, f.binding)).assertions.length, 8)
+  delete f.report.promptEvidenceNamespace
+  await assert.rejects(verifyPermissionSequenceParent(f.report, f.binding))
+})
+test('the selected4.8 parent requires its own deterministic PNG namespace', async () => {
+  const f = await fixture(); (f.binding as any).profile = 'ITCVE-1@4.8.0'; f.report.promptScopeRevision = 2
+  await assert.rejects(verifyPermissionSequenceParent(f.report, f.binding), /sequence-v1/)
+})

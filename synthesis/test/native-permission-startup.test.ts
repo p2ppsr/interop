@@ -4,6 +4,7 @@ import path from 'node:path'
 import { chromium, type BrowserContext, type Page } from 'playwright'
 import { PrivateKey } from '@bsv/sdk'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { EvidenceBundle } from '../src/wallet-lab/evidence.js'
 import { createExtendedPermissionObserver } from '../src/wallet-lab/native/coverage-permissions-observer.js'
 import { verifyPermissionExtensionIdentityConsent } from '../src/wallet-lab/native/coverage-permissions-verifier.js'
 import { runNativePortability, withNativePortabilitySettingsPage } from '../src/wallet-lab/native/conformance-portability.js'
@@ -12,7 +13,7 @@ import { runNativePortability, withNativePortabilitySettingsPage } from '../src/
 // input capture. The test extension and fake CWI response never qualify a wallet.
 describe.skipIf(!fs.existsSync(chromium.executablePath()))('prospective permission startup recovery', () => {
   let directory: string, extension: string, profile: string, extensionId: string, context: BrowserContext, application: Page
-  let denied: any, allowed: any
+  let denied: any, allowed: any, sequence: any, bundle: EvidenceBundle
   const identity = PrivateKey.fromHex('01').toPublicKey().toString(), images = new Map<string, Buffer>()
   const origin = 'https://permission-extension.itcve.test'
   const retained = JSON.parse(fs.readFileSync(new URL('./fixtures/native5-identity-prompt.json', import.meta.url), 'utf8'))
@@ -39,11 +40,14 @@ describe.skipIf(!fs.existsSync(chromium.executablePath()))('prospective permissi
       throw new Error('Permission denied.')
     })
     await context.addInitScript(() => { (window as any).CWI = { getPublicKey: (args: any) => (window as any).fixtureRequest(args) } })
-    const owner: any = { context, extensionId, evidence: { addBytes: (name: string, bytes: Uint8Array) => images.set(name, Buffer.from(bytes)) } }
+    bundle = new EvidenceBundle(path.join(directory, 'observations'))
+    const owner: any = { context, extensionId, evidence: { addBytes: (name: string, bytes: Uint8Array) => { bundle.addBytes(name, bytes); images.set(name, Buffer.from(bytes)) } } }
     const first = createExtendedPermissionObserver(owner)
-    denied = await first.request('identity', origin, 'getPublicKey', { identityKey: true }); await first.close()
+    denied = await first.request('identity-denied', origin, 'getPublicKey', { identityKey: true }); await first.close()
     const second = createExtendedPermissionObserver(owner)
     allowed = await second.request('identity', origin, 'getPublicKey', { identityKey: true }, { decision: 'allow' }); await second.close()
+    const third = createExtendedPermissionObserver(owner, 'sequence-v1')
+    sequence = await third.request('identity', origin, 'getPublicKey', { identityKey: true }, { decision: 'allow' }); await third.close()
     const initial = await context.newPage(); await initial.goto(`chrome-extension://${extensionId}/index.html`)
     await context.close(); context = await launch()
     const nextWorker = context.serviceWorkers()[0] ?? await context.waitForEvent('serviceworker')
@@ -55,6 +59,17 @@ describe.skipIf(!fs.existsSync(chromium.executablePath()))('prospective permissi
   }, 60_000)
   afterAll(async () => { if (context) await context.close(); if (directory) fs.rmSync(directory, { recursive: true, force: true }) })
 
+  it('retains sequential module identity PNGs and rejects replacement while keeping JSON progress mutable', () => {
+    expect(sequence.outcome.status).toBe('fulfilled')
+    expect(allowed.prompts[0].screenshot.name).toBe('conformance/extension-identity-0.png')
+    expect(sequence.prompts[0].screenshot.name).toBe('conformance/sequence-v1-identity-0.png')
+    for (const row of [allowed, sequence]) { const image = row.prompts[0].screenshot; expect(bundle.readBytes(image.name)).toEqual(read(image.name)); bundle.addBytes(image.name, read(image.name)) }
+    const image = allowed.prompts[0].screenshot, changed = Buffer.from(read(image.name)); changed[changed.length - 1] = changed[changed.length - 1]! ^ 1
+    expect(() => bundle.addBytes(image.name, changed)).toThrow('already exists with different bytes')
+    expect(() => verifyPermissionExtensionIdentityConsent(allowed, extensionId, name => bundle.readBytes(name), identity)).not.toThrow()
+    bundle.addJson('progress.json', { step: 1 }); bundle.addJson('progress.json', { step: 2 }); expect(JSON.parse(bundle.readBytes('progress.json').toString())).toEqual({ step: 2 })
+    expect(bundle.flush().filter(row => row.name.endsWith('identity-0.png'))).toHaveLength(2)
+  })
   it('reproduces default denial without weakening other missing-decision calls', () => {
     expect(denied.outcome.status).toBe('rejected'); expect(denied.outcome.error.message).toBe('Permission denied.')
     expect(denied.prompts[0].button).toBe('Deny'); expect(denied.prompts[0].trustedClick.dispatch.isTrusted).toBe(true)

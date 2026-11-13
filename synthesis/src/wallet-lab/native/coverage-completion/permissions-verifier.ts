@@ -28,6 +28,7 @@ export async function verifyApprovedLinkage(category:Category,value:any,identity
  * browser chain, fixture/funding, provider and permission-token ledger joins. */
 export async function evaluatePermissionSequence(report:Report,read:(name:string)=>Buffer){
  assert.ok(report.promptScopeRevision===undefined||report.promptScopeRevision===2);
+ assert.ok(report.promptEvidenceNamespace===undefined||report.promptEvidenceNamespace==='sequence-v1');
  const actions=program(report.anchor),specs=new Map(actions.map(a=>[a.id,a]));let commonError:Error|undefined
  const observation=(id:string)=>{const found=report.observations.filter(o=>o.id===id);assert.equal(found.length,1,`Exactly one observation ${id}`);return found[0]!}
  const call=(id:string)=>{const o=observation(id);assert.equal(o.kind,'call');return (o as Extract<Report['observations'][number],{kind:'call'}>).value}
@@ -44,7 +45,7 @@ export async function evaluatePermissionSequence(report:Report,read:(name:string
  const check=async(id:string)=>{
   const s=call(id),spec=specs.get(id) as CallSpec;assert.equal(s.id,id);assert.equal(s.origin,spec.origin);assert.equal(new URL(s.pageUrl).origin,spec.origin);assert.equal(s.method,spec.method);same(s.args,spec.args)
   if(spec.expect==='cached'){assert.equal(s.prompts.length,0);assert.equal(s.submissionStart,s.submissionEnd)}else{
-   assert.equal(s.prompts.length,1);const p=s.prompts[0]!;assert.equal(p.decision,spec.expect);assert.equal(p.pendingBeforeDecision,true);assert.equal(new URL(p.url).protocol,'chrome-extension:');assert.equal(new URL(p.url).hostname,report.extensionId);assert.equal(new URL(p.url).pathname,'/prompt.html');assert.equal(p.button,spec.grouped?spec.expect==='allow'?'Allow Selected':'Deny All':spec.expect==='allow'?'Allow':'Deny');scope(spec,p);verifyPermissionClick(p.trustedClick,p,s);image(p.screenshot)
+   assert.equal(s.prompts.length,1);const p=s.prompts[0]!;assert.equal(p.decision,spec.expect);assert.equal(p.pendingBeforeDecision,true);assert.equal(new URL(p.url).protocol,'chrome-extension:');assert.equal(new URL(p.url).hostname,report.extensionId);assert.equal(new URL(p.url).pathname,'/prompt.html');assert.equal(p.button,spec.grouped?spec.expect==='allow'?'Allow Selected':'Deny All':spec.expect==='allow'?'Allow':'Deny');assert.equal(p.screenshot.name,`conformance/${report.promptEvidenceNamespace??'extension'}-${id}-0.png`);scope(spec,p);verifyPermissionClick(p.trustedClick,p,s);image(p.screenshot)
   }
   assert.ok(Number.isSafeInteger(s.submissionStart)&&s.submissionStart>=report.submissionStart&&s.submissionEnd>=s.submissionStart&&s.submissionEnd<=report.submissionEnd)
   if(spec.expect==='deny'){assert.equal(s.outcome.status,'rejected');assert.equal(s.outcome.value,undefined);assert.match(s.outcome.error?.message??'',/permission.*denied|denied by user|user has denied|no user consent/i);assert.doesNotMatch(s.outcome.error.message,/timeout|timed out|unsupported|not implemented|network|fetch failed|insufficient|invalid parameter/i);assert.equal(s.submissionStart,s.submissionEnd);return}

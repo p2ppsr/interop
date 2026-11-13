@@ -82,6 +82,8 @@ COPY docs/native-observer-source-correction-2026-11-13.md /work/docs/native-obse
 COPY docs/native-transaction-fixture-source-correction-2026-11-13.md /work/docs/native-transaction-fixture-source-correction-2026-11-13.md
 COPY docs/native-transaction-failure-classification-2026-11-13.md /work/docs/native-transaction-failure-classification-2026-11-13.md
 
+COPY docs/native-evidence-ownership-source-correction-2026-11-13.md /work/docs/native-evidence-ownership-source-correction-2026-11-13.md
+
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root
 COPY --from=conformance_files /work /work

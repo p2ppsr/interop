@@ -2,7 +2,7 @@ import {nativeCompletionProfile} from './completion-profile.js'
 import {nativeProofResources} from './proof-resources.js'
 import type { PartialTracePrerequisites } from './coverage-completion/partial-trace-parent.js'
 import { coverageObservationEncoding, decodeCoverageObservation } from './coverage-observation.js'
-import { verifyCompletionParent } from './coverage-completion/suite.js'
+import { verifyCompletionParent, verifyLaterNativeOwnedSpend } from './coverage-completion/suite.js'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { Beef, P2PKH, PrivateKey, ProtoWallet, PublicKey, Transaction, Utils } from '@bsv/sdk'
@@ -182,7 +182,8 @@ export async function verifyNativeCoverageSuite(binding: FundingBinding & { comp
     outputSnapshotObservations: json('native-output-snapshot-observations.json'), outputProviderRegistry: json('native-output-provider-registry.json') })
   const extensionFunding = await verifyCoverageModuleFunding(extension.trace, { ...binding, declaredNativePayments: transactionFunding.declaredNativePayments }, { assertions: extension.assertions, predicateFor: call => coverageExtensionTransactionPredicate(call.id) })
   const foreignOwnerFixture = binding.profile === 'ITCVE-1@4.8.0' ? bindForeignOwnerFixture(transactions, extension, extensionBindings, extensionFunding, binding.globalSubmissions) : undefined
-  const transactionBindings = await verifyTransactionCoverageParentBindings(transactions, { ...binding, graph, ...(foreignOwnerFixture ? {foreignOwnerFixture} : {}) })
+  const laterNativeOwnedSpend = binding.profile === 'ITCVE-1@4.8.0' ? await verifyLaterNativeOwnedSpend({ ...binding, profile: binding.profile }) : undefined
+  const transactionBindings = await verifyTransactionCoverageParentBindings(transactions, { ...binding, graph, ...(foreignOwnerFixture ? {foreignOwnerFixture} : {}), ...(laterNativeOwnedSpend ? {laterNativeOwnedSpend} : {}) })
   const certificateBindings = await verifyCertificateCoverageParentBindings(certificates, { ...binding, browserContexts: contexts.contexts, globalRoutes: json('routes.json'), trustedMinedRoot: graph.trustedMinedRoot })
   const certificateFunding = await verifyCoverageModuleFunding(certificates.trace, { ...binding, declaredNativePayments: extensionFunding.declaredNativePayments })
   assert.ok(permission.submissionWindow.endIndex <= transactions.submissionStart && transactions.submissionEnd <= extension.submissionStart && extension.submissionEnd <= certificates.submissionStart, 'Coverage module submission windows are out of order')

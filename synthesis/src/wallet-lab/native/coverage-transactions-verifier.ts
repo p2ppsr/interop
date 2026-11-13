@@ -76,7 +76,8 @@ async function inspect(report: Report) {
   }
   const submitted = (txid: string, start: number, end: number) => report.submissions.slice(start - report.submissionStart, end - report.submissionStart).some(s => s.txid === txid && s.verdict === 'ACCEPTED_BY_NETWORK')
   const noSubmission = (name: string) => { const r = row(name); assert.equal(r.submissionEnd, r.submissionStart, `${name} emitted a network submission`) }
-  const reject = (name: string, reference = false) => { const r = row(name); assert.ok(r.result === undefined, `${name}: invalid operation returned success`); assert.ok(specifiedError(r.error) || reference && r.error && /reference.*(?:not|invalid|issued|unknown)|(?:invalid|unknown).*reference/i.test(r.error.message) && !/timeout|network|not implemented/i.test(r.error.message), `Expected named state/parameter rejection: ${name}: ${r.error?.message}`); noSubmission(name) }
+  const rejectResult = (name: string, reference = false) => { const r = row(name); assert.ok(r.result === undefined, `${name}: invalid operation returned success`); assert.ok(specifiedError(r.error) || reference && r.error && /reference.*(?:not|invalid|issued|unknown)|(?:invalid|unknown).*reference/i.test(r.error.message) && !/timeout|network|not implemented/i.test(r.error.message), `Expected named state/parameter rejection: ${name}: ${r.error?.message}`) }
+  const reject = (name: string, reference = false) => { rejectResult(name, reference); noSubmission(name) }
   const priorDelayedTransaction = async (txid: string, beforeRow: Call) => {
     const prior = report.trace.slice(0, report.trace.indexOf(beforeRow)).find(call => call.actor === 'wallet' && call.result?.txid === txid && Array.isArray(call.result?.tx))
     assert.ok(prior && ['createAction', 'signAction'].includes(prior.method), 'Delayed progress lacks an earlier signed wallet action')
@@ -90,12 +91,15 @@ async function inspect(report: Report) {
     const observed = observedSubmissionTransactions(entry, { resolvedTransactions: graph, requireResolvedAncestors: true, trustedMinedRoot: { txid: fixture.txid, rawHex: fixture.rawHex } })[0]!.transaction
     assert.equal(observed.toHex(), signedTx.toHex(), 'Delayed progress receipt differs from the earlier signed action')
   }
-  const noControlSubmission = async (name: string) => {
+  const noControlSubmission = async (name: string, exactRaw = false) => {
     if (revision === 1) { noSubmission(name); return }
     const control = row(name)
     // A staged control or its abort cannot broadcast. Independent background
     // delivery of an earlier signed delayed action is not the control's effect.
-    for (const entry of [...report.submissionPrefix, ...report.submissions].slice(control.submissionStart, control.submissionEnd)) await acceptedDelayedReceipt(entry, control)
+    for (const entry of [...report.submissionPrefix, ...report.submissions].slice(control.submissionStart, control.submissionEnd)) {
+      await acceptedDelayedReceipt(entry, control)
+      if (exactRaw) assert.equal(entry.beefHex, (await priorDelayedTransaction(entry.txid, control)).toHex(), 'Rejected reference may overlap only the byte-identical raw prior delayed transaction')
+    }
   }
   const noHeldSubmission = async (name: string) => {
     if (revision < 3) { noSubmission(name); return }
@@ -155,7 +159,7 @@ async function inspect(report: Report) {
   const changes = async (name: string) => { const tx = await txFor(name), value = row(name).result.noSendChange; assert.ok(Array.isArray(value) && value.length > 0); assert.equal(new Set(value).size, value.length); for (const outpoint of value) { assert.match(outpoint, /^[a-f0-9]{64}\.[0-9]+$/); const [tid, i] = outpoint.split('.'); assert.equal(tid, tx.id('hex')); const output = tx.outputs[Number(i)]!; assert.ok(output); assert.match(output.lockingScript.toHex(), /^76a914[a-f0-9]{40}88ac$/); assert.ok(output.satoshis! > 0) }; await noHeldSubmission(name); return value as string[] }
   const spend = (tx: Transaction, outpoint: string) => tx.inputs.some(i => `${i.sourceTXID ?? i.sourceTransaction?.id('hex')}.${i.sourceOutputIndex}` === outpoint)
   assert.equal(success('funder-identity').result.publicKey, (await new ProtoWallet(PrivateKey.fromHex(tc.funderKey)).getPublicKey({ identityKey: true })).publicKey)
-  return { revision, policy, row, success, noControlSubmission, txFor, signed, graph, hydrate, submitted, noSubmission, noHeldSubmission, reject, inventory, internal, incoming, listed, added, credit, changes, spend, replay }
+  return { revision, policy, row, success, noControlSubmission, txFor, signed, graph, hydrate, submitted, noSubmission, noHeldSubmission, rejectResult, reject, inventory, internal, incoming, listed, added, credit, changes, spend, replay }
 }
 export async function deriveTransactionCoverageOutcomes(report: Report): Promise<Outcome[]> {
   return withTransactionProofResources(report.oracle === 'tpnil-native-coverage-transactions-oracle@4.0.0' ? 4 : 1, () => deriveTransactionCoverageOutcomesWithResources(report))
@@ -167,7 +171,7 @@ async function deriveTransactionCoverageOutcomesWithResources(report: Report): P
     [id('acceptDelayedBroadcast-omitted-true')]: async () => {
       for (const operation of ['create', 'sign']) for (const value of ['omitted', 'true']) { const name = `default-${operation}-${value}`, tx = await txFor(name), statuses = success(name).result.sendWithResults; assert.equal(statuses?.filter((x: any) => x.txid === tx.id('hex') && ['sending', 'unproven'].includes(x.status)).length, 1, 'Delayed transaction requires a truthful pending/processed status'); if (statuses.find((x: any) => x.txid === tx.id('hex')).status === 'unproven') assert.ok(submitted(tx.id('hex'), row(name).submissionStart, report.submissionEnd), 'Processed delayed status lacks submission evidence') }
     },
-    [id('foreign-reference-reject')]: async () => { reject('foreign-sign', true); reject('foreign-abort', true); const tx = await txFor('foreign-owner-sign'); assert.ok(submitted(tx.id('hex'), row('foreign-owner-sign').submissionStart, row('foreign-owner-sign').submissionEnd)); assert.notEqual(success('funder-identity').result.publicKey, report.identity) },
+    [id('foreign-reference-reject')]: async () => { for (const name of ['foreign-sign', 'foreign-abort']) { if (v.revision >= 4) { v.rejectResult(name, true); await v.noControlSubmission(name, true) } else reject(name, true) }; const tx = await txFor('foreign-owner-sign'); assert.ok(submitted(tx.id('hex'), row('foreign-owner-sign').submissionStart, row('foreign-owner-sign').submissionEnd)); assert.notEqual(success('funder-identity').result.publicKey, report.identity) },
     [id('two-dependent-held')]: async () => {
       const parent = await txFor('held-a'), child = await txFor('held-child'), outpoints = await changes('held-a'); await noHeldSubmission('held-child'); assert.ok(outpoints.some(p => spend(child, p)), 'Held child must consume its named final change')
       const release = success('held-release'), results = release.result.sendWithResults; assert.ok(Array.isArray(results)); for (const tx of [parent, child]) { assert.equal(results.filter((r: any) => r.txid === tx.id('hex') && ['unproven', 'sending'].includes(r.status)).length, 1); assert.ok(submitted(tx.id('hex'), release.submissionStart, report.submissionEnd)) }
@@ -255,7 +259,41 @@ export function bindForeignOwnerFixture(report: Report, external: any, parent: {
   return {outpoint,txid:tx.id('hex'),rawHex,positions,start:external.submissionStart,end:external.submissionEnd}
 }
 
-export async function verifyTransactionCoverageParentBindings(report: Report, binding: { foreignOwnerFixture?: ForeignOwnerFixtureBinding; identity: string; globalSubmissions: Submission[]; finalSubmissions: Submission[]; storageTransactions: ReadonlyMap<string, Transaction>; graph: SubmissionGraphOptions }) {
+/** The later full-set control may spend outputs already owned by this native
+ * wallet. Its complete parent and funding joins must verify before this narrow
+ * receipt is issued. Negative calls gain no authority to spend an output. */
+export interface LaterNativeOwnedSpendBinding extends ForeignOwnerFixtureBinding { outpoints: string[] }
+export function bindLaterNativeOwnedSpend(report: Report, later: any, parent: {verified: true; assertions: any[]}, funding: {verified: true}, ledger: Submission[]): LaterNativeOwnedSpendBinding {
+  assert.equal(report.oracle, 'tpnil-native-coverage-transactions-oracle@4.0.0')
+  assert.equal(later.schema, 'tpnil-native-transaction-branches@1.0.0'); assert.equal(later.programRevision, 2)
+  assert.equal(later.identity, report.identity); assert.equal(parent.verified, true); assert.equal(funding.verified, true)
+  for (const id of ['completion.transaction.nosend-change/valid-full', 'completion.transaction.batch-send/returnTXIDOnly']) assert.equal(parent.assertions.find(row => row.id === id)?.result, 'PASS')
+  const one = (id: string) => { const rows = later.trace.filter((row: any) => row.id === id); assert.equal(rows.length, 1); return rows[0] }
+  const held = one('full-child-sign'), stage = one('full-child-stage'), release = one('batch-return-sign')
+  assert.equal(held.actor, 'wallet'); assert.equal(held.method, 'signAction'); assert.equal(held.error, undefined)
+  assert.equal(stage.actor, 'wallet'); assert.equal(stage.method, 'createAction'); assert.equal(stage.error, undefined)
+  assert.equal(held.args.reference, stage.result.signableTransaction.reference); assert.equal(held.args.options.noSend, true)
+  assert.equal(release.actor, 'wallet'); assert.equal(release.method, 'signAction'); assert.equal(release.error, undefined)
+  assert.equal(release.args.options.acceptDelayedBroadcast, false); assert.equal(release.args.options.returnTXIDOnly, true)
+  const tx = coverageAtomic(held.result.tx), txid = tx.id('hex'), rawHex = tx.toHex()
+  assert.equal(txid, held.result.txid); assert.ok(release.args.options.sendWith.includes(txid))
+  assert.ok(report.submissionEnd <= later.initialSubmissionCount && held.submissionEnd <= release.submissionStart)
+  const eligible = later.cuts.filter((cut: any) => cut.id === 'full-set-before'); assert.equal(eligible.length, 1)
+  const owned = eligible[0].snapshot.providers.filter((p: any) => p.id === later.activeProvider.id).flatMap((p: any) => p.snapshot.outputs).filter((o: any) => o.spendable && o.basketName === 'default')
+  const inactive = report.trace.find(row => row.id === 'change-no-send-false')!.args.options.noSendChange[0]
+  const incoming = report.trace.find(row => row.id === 'incoming-fixture')!.result.txid + '.0'
+  const outpoints = [inactive, incoming].filter(point => owned.some((o: any) => o.outpoint === point) && tx.inputs.some(i => `${i.sourceTXID ?? i.sourceTransaction?.id('hex')}.${i.sourceOutputIndex}` === point))
+  const positions: number[] = []
+  assert.ok(Number.isSafeInteger(release.submissionStart) && Number.isSafeInteger(release.submissionEnd) && release.submissionEnd <= ledger.length)
+  for (let i = later.initialSubmissionCount; i < later.submissions.length; i++) if (ledger[i]?.txid === txid) {
+    assert.ok(i >= release.submissionStart && i < release.submissionEnd, 'Owned held transaction escaped its exact release')
+    assert.equal(ledger[i]!.beefHex, rawHex); assert.equal(ledger[i]!.verdict, 'ACCEPTED_BY_NETWORK'); positions.push(i)
+  }
+  assert.equal(positions.length, 1)
+  return { outpoint: inactive, outpoints, txid, rawHex, positions, start: release.submissionStart, end: release.submissionEnd }
+}
+
+export async function verifyTransactionCoverageParentBindings(report: Report, binding: { laterNativeOwnedSpend?: LaterNativeOwnedSpendBinding; foreignOwnerFixture?: ForeignOwnerFixtureBinding; identity: string; globalSubmissions: Submission[]; finalSubmissions: Submission[]; storageTransactions: ReadonlyMap<string, Transaction>; graph: SubmissionGraphOptions }) {
   assert.equal(report.identity, binding.identity)
   assert.equal(binding.graph.requireResolvedAncestors, true); assert.ok(binding.graph.resolvedTransactions)
   assert.deepEqual(binding.graph.trustedMinedRoot, { txid: fixture.txid, rawHex: fixture.rawHex })
@@ -296,6 +334,17 @@ export async function verifyTransactionCoverageParentBindings(report: Report, bi
   protect('relinquish-without-spend', () => v.row('relinquish').args.output)
   for (const [suffix, call] of [['missing-paymentRemittance', 'missing-payment'], ['missing-insertionRemittance', 'missing-insertion'], ['wrong-derivation', 'wrong-derivation'], ['wrong-derivation', 'wrong-prefix'], ['wrong-derivation', 'wrong-sender'], ['output-index-out-of-range', 'index-range']] as const) protect(suffix, () => `${v.incoming().id('hex')}.${v.row(call).args.outputs[0].outputIndex}`, suffix === 'output-index-out-of-range' || suffix === 'missing-insertionRemittance' ? [] : report.trace.filter(r => r.actor === 'wallet' && r.result?.txid && !r.id.startsWith('change-') && !/^proof-.*-create$/.test(r.id)).map(r => r.id))
   const foreignOwner = binding.foreignOwnerFixture
+  const laterNative = binding.laterNativeOwnedSpend
+  if (laterNative) {
+    assert.equal(report.oracle, 'tpnil-native-coverage-transactions-oracle@4.0.0')
+    assert.ok(laterNative.start >= report.submissionEnd && laterNative.end <= binding.globalSubmissions.length)
+    assert.equal(Transaction.fromHex(laterNative.rawHex).id('hex'), laterNative.txid)
+    assert.equal(laterNative.positions.length, 1)
+    for (const position of laterNative.positions) {
+      assert.ok(position >= laterNative.start && position < laterNative.end)
+      assert.deepEqual(binding.globalSubmissions[position], { txid: laterNative.txid, beefHex: laterNative.rawHex, verdict: 'ACCEPTED_BY_NETWORK' })
+    }
+  }
   if(foreignOwner) {
     assert.equal(report.oracle,'tpnil-native-coverage-transactions-oracle@4.0.0')
     assert.equal(foreignOwner.outpoint,v.row('change-foreign').args.options.noSendChange[0]);assert.ok(foreignOwner.start>=report.submissionEnd&&foreignOwner.end<=binding.globalSubmissions.length)
@@ -310,9 +359,10 @@ export async function verifyTransactionCoverageParentBindings(report: Report, bi
     for (const claim of protectedClaims) if (v.spend(observed.transaction, claim.outpoint)) {
       const permit = claim.permittedCallIds.some(name => v.row(name).result?.txid === observed.txid) ? approved.get(observed.txid) : undefined
       const ownedFixture=claim.id===id('foreign-output')&&foreignOwner?.outpoint===claim.outpoint&&foreignOwner.txid===observed.txid&&foreignOwner.rawHex===observed.transaction.toHex()&&(!observed.isTarget||foreignOwner.positions.includes(index))
-      if (!ownedFixture && !(permit && permit.positions.size > 0 && permit.rawHex === observed.transaction.toHex() && (!observed.isTarget || permit.positions.has(index)))) invalidProtectedSpends.set(`${claim.id}/${observed.txid}`, { claim: claim.id, outpoint: claim.outpoint, spender: observed.txid, firstObservedIndex: index })
+      const ownedNative = [id('noSend-false'), id('missing-paymentRemittance'), id('wrong-derivation')].includes(claim.id) && laterNative?.outpoints.includes(claim.outpoint) && laterNative.txid === observed.txid && laterNative.rawHex === observed.transaction.toHex() && index >= laterNative.positions[0]! && (!observed.isTarget || laterNative.positions.includes(index))
+      if (!ownedNative && !ownedFixture && !(permit && permit.positions.size > 0 && permit.rawHex === observed.transaction.toHex() && (!observed.isTarget || permit.positions.has(index)))) invalidProtectedSpends.set(`${claim.id}/${observed.txid}`, { claim: claim.id, outpoint: claim.outpoint, spender: observed.txid, firstObservedIndex: index })
     }
   }
   assert.equal(invalidProtectedSpends.size, 0, `Protected outpoint spent in final submission ancestry: ${JSON.stringify([...invalidProtectedSpends.values()])}`)
-  return { verified: true as const, claim: 'ENGINEERING_OBSERVATION_ONLY', signedTransactions: feeTransactions.size, successfulReturnedTransactions: signed.size, aggregateFeesSatoshis, publicCalls: report.trace.length, finalCount: binding.finalSubmissions.length, ancestorCount, protectedClaims, unprovenClaims, ...(foreignOwner?{foreignOwnerFixture:foreignOwner}:{}) }
+  return { verified: true as const, claim: 'ENGINEERING_OBSERVATION_ONLY', signedTransactions: feeTransactions.size, successfulReturnedTransactions: signed.size, aggregateFeesSatoshis, publicCalls: report.trace.length, finalCount: binding.finalSubmissions.length, ancestorCount, protectedClaims, unprovenClaims, ...(foreignOwner?{foreignOwnerFixture:foreignOwner}:{}), ...(laterNative?{laterNativeOwnedSpend:laterNative}:{}) }
 }

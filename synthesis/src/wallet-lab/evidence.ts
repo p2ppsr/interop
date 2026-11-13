@@ -47,6 +47,11 @@ export class EvidenceBundle {
   addBytes(name: string, value: Uint8Array): void {
     if (!/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(name) || name.includes('..'))
       throw new TypeError(`Invalid evidence name: ${name}`)
+    // Progress JSON is replaceable; a captured PNG is immutable. A later
+    // observer cannot silently destroy the bytes bound by an earlier receipt.
+    const previous = this.files.get(name)
+    if (name.endsWith('.png') && previous && !Buffer.from(previous).equals(Buffer.from(value)))
+      throw new Error(`Captured image already exists with different bytes: ${name}`)
     this.files.set(name, Uint8Array.from(value))
   }
 

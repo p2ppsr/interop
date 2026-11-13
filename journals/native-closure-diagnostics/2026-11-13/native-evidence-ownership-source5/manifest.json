@@ -1,0 +1,773 @@
+{
+  "schema": "tpnil-native-evidence-ownership-preflight@1",
+  "claim": "LAB_SELF_TEST_ONLY",
+  "beforeSource": "f4bc39f4675acc7d5fea3eebda7ae7b3a7e4aca6",
+  "nativeSessions": 0,
+  "nativeQualification": false,
+  "plan": "infra/native/conformance/plan-pr368-coverage-6-source-5.json",
+  "planSha256": "88c5e9d8ef17c51d323a4c7e7888167a979d2cd381ae87489d0c3362cfb37a39",
+  "rustSha256": "96b725447c0320e0ab8cf92fa2c35f9dd96632b348d8f7722aa6973dfffd2503",
+  "nativeInputs": 453,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1573,
+      "sha256": "4f986676508aa5f09029a1850f03bae874041ac309dff2e777fcda52c4fd9100"
+    },
+    {
+      "path": "all-image-references.json",
+      "bytes": 1441,
+      "sha256": "16af6ec8d12945d51a5b54e182067aa2085a633b386fdd31a1b49d4ec3754cea"
+    },
+    {
+      "path": "candidate-fixture.ts",
+      "bytes": 2001,
+      "sha256": "be834859532d9694085e410824959142a4b74530ef7d7c575fbfe55cf9bf680b"
+    },
+    {
+      "path": "check.log",
+      "bytes": 233,
+      "sha256": "baa33431367858d930c5009e8d05cd2cda11023cb2f667ab89fa5cbbf0299d10"
+    },
+    {
+      "path": "core.log",
+      "bytes": 23426,
+      "sha256": "c78531caef1ffe0ef3806120284194cbeb7d394510813f42dcbf440599f72ad9"
+    },
+    {
+      "path": "diagnose-permissions.ts",
+      "bytes": 862,
+      "sha256": "83fd3b6e451796e437bfad3355a0fa7fad15d380e558fe7f01f85dcfe5ac372a"
+    },
+    {
+      "path": "focused-first.log",
+      "bytes": 301,
+      "sha256": "d6dab7918e7ce57cc331d8c829c59e508313704c9b56b7aa3f830bdc86e894ee"
+    },
+    {
+      "path": "focused-second.log",
+      "bytes": 301,
+      "sha256": "9fca6e9b42c42b6b4715e7f1d980ebe5dd4fe320c285dcc443b49592ba9d44a0"
+    },
+    {
+      "path": "freeze.py",
+      "bytes": 663,
+      "sha256": "07e06ceada665a920ee3fb12aedb788266302aae3b88eb6b44303ce855c6bf48"
+    },
+    {
+      "path": "original-byte-audit.json",
+      "bytes": 174,
+      "sha256": "1f3fb6d3329a94680e04090042c50792d4702c341d3d42e02161d2e43a732e60"
+    },
+    {
+      "path": "parent-diagnostics-before-owned-join.json",
+      "bytes": 11465,
+      "sha256": "376f9aa4c5004e4684da3c9ffe8b207c636eb431ef5a57865b5d3cf3711ae4dd"
+    },
+    {
+      "path": "parent-diagnostics-before-owned-join.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "parent-diagnostics-before-owned-join.stdout",
+      "bytes": 9986,
+      "sha256": "fe99c013e7eb74e270efa109815445007409e24138af5cfbd96202eba95324ef"
+    },
+    {
+      "path": "parent-diagnostics-incomplete-harness.json",
+      "bytes": 12195,
+      "sha256": "68cd3ca86ef7375493f0227b759b81ad647210c1e22a50834080157f17355ad7"
+    },
+    {
+      "path": "parent-diagnostics-incomplete-harness.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "parent-diagnostics-incomplete-harness.stdout",
+      "bytes": 10909,
+      "sha256": "20c4da2697fcfa6d92a2ea4b96eb2f162b8ed8b87974dfeb41e177cacdc5b2b8"
+    },
+    {
+      "path": "parent-diagnostics.json",
+      "bytes": 10017,
+      "sha256": "c7197cd99bc1b1192d01bfa3745465dab1295486b18cf726ddd5e5dd6b2d7941"
+    },
+    {
+      "path": "parent-diagnostics.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "parent-diagnostics.stdout",
+      "bytes": 8456,
+      "sha256": "fa97968799c3712263ffd123c3a8d02c15aba8a0dc11a9979c376abe3cbd6814"
+    },
+    {
+      "path": "parent-diagnostics.ts",
+      "bytes": 9455,
+      "sha256": "2d508dc6e5ad2010a7f8b80b28a353d57951f5452272a33d3d4a93996b73e152"
+    },
+    {
+      "path": "permission-replay.json",
+      "bytes": 5999,
+      "sha256": "d11d8e6280fdffafe0ce10723ff0ce4ff42a90aa2dbb0b275b90283d79aa73e8"
+    },
+    {
+      "path": "permission-replay.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "permission-replay.stdout",
+      "bytes": 555,
+      "sha256": "e1fc446e75c26623007c77e1c77bedf5516bd6f88c3886ca7cbdd86e2984ca02"
+    },
+    {
+      "path": "publication-first.log",
+      "bytes": 9730,
+      "sha256": "e9cb6f21707fb2ea51b7691f9d9062c7c07a52865ec9f02c09e9ed76ce67bc2d"
+    },
+    {
+      "path": "python-final.log",
+      "bytes": 103,
+      "sha256": "1f11b6e880045ee35de832b81b45d06257342e13b5c79bbf0034379d4ca220b9"
+    },
+    {
+      "path": "python-first.log",
+      "bytes": 1578,
+      "sha256": "f2ecbcd7f2b5fe98a76b77eb478bce3f73a2c8d80f2784d1a942b2ebd1360cfa"
+    },
+    {
+      "path": "reference/action-ledgers.json.gz",
+      "bytes": 24893,
+      "sha256": "e8690d7413d146aa0f52ecb9203e69cf015a8947bdff94a9b267171ff6c6d49f"
+    },
+    {
+      "path": "reference/cleanup.json.gz",
+      "bytes": 39,
+      "sha256": "e6acc39a52c4d83466184b440773b466251909b28c7cf7bfa66c5a542859c1ef"
+    },
+    {
+      "path": "reference/final-providers.json.gz",
+      "bytes": 4888,
+      "sha256": "679548545fea38eaabb1ab18e878723e288caa7453f7c903a3ddd1c4ed5ee562"
+    },
+    {
+      "path": "reference/funding.json.gz",
+      "bytes": 1788,
+      "sha256": "c8e369626826ab45794eeba167711e4b57b549e56622236d9a977d6d9617ecf1"
+    },
+    {
+      "path": "reference/knowledge-observations.json.gz",
+      "bytes": 20088,
+      "sha256": "3305176b4a6b9a9ef6632c8e7c2108ffbea5e4a857ee3826dd6e92200ff4c3ae"
+    },
+    {
+      "path": "reference/output-observations.json.gz",
+      "bytes": 122878,
+      "sha256": "db5d51f6cde380df465a323d95271b014212a12fb96878f6603e3d79b300f7ce"
+    },
+    {
+      "path": "reference/registry.json.gz",
+      "bytes": 4864,
+      "sha256": "594925e4675afc2f2f2e898d988084c950ddeec9e170e8812e72cde3ff5f2994"
+    },
+    {
+      "path": "reference/report-final.json.gz",
+      "bytes": 341861,
+      "sha256": "a5283cd5faf08309df90ae76167a0e325b8b4e37d3d6706cb777b3d1e23e3910"
+    },
+    {
+      "path": "reference/report-progress.json.gz",
+      "bytes": 335513,
+      "sha256": "5748fa79b765b2a0a0539dbf2030680ea35779e15eabefbd62a6e5ea21bf7cb0"
+    },
+    {
+      "path": "reference/report.json.gz",
+      "bytes": 341861,
+      "sha256": "a5283cd5faf08309df90ae76167a0e325b8b4e37d3d6706cb777b3d1e23e3910"
+    },
+    {
+      "path": "reference/routes.json.gz",
+      "bytes": 23,
+      "sha256": "abc129be8d26e8d4afe9ce45f9d5a73c8ed9aa62810ca24ee789fe4581dc4a80"
+    },
+    {
+      "path": "reference/source/external/yours-wallet/node_modules/@bsv/wallet-toolbox-client/out/index.client.mjs.gz",
+      "bytes": 419359,
+      "sha256": "d41b5f2841629f6fb8cfa6be7324c8fe3f95f706b05ea0bb1c65e90a64ff6020"
+    },
+    {
+      "path": "reference/source/external/yours-wallet/patches/@bopen-io%2Fwallet-toolbox-client@2.14.8.patch.gz",
+      "bytes": 1687558,
+      "sha256": "be763a0ae8f534239ba0f30150056a6bcc8dff96cf3dd3318df1a74ef7e51dc7"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-batch-subjects/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 4436,
+      "sha256": "6c1618b285bfcc13d1c7e45fd9253e44d60fe948beeb1d8f0158a1f517f65152"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-batch-subjects/patch.lock.json.gz",
+      "bytes": 724,
+      "sha256": "821fba96e8079576cb999e961f1543c8b1d3d7386d2d92f5a91500191edf5773"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/LICENSE-sdk.gz",
+      "bytes": 1825,
+      "sha256": "c11d1957dbc1620fba153f5d49c6440b50a2f344314a74c4699c8bb5ca3af90b"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/LICENSE-toolbox.gz",
+      "bytes": 1825,
+      "sha256": "c11d1957dbc1620fba153f5d49c6440b50a2f344314a74c4699c8bb5ca3af90b"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/go-sdk-v1.7.3.patch.gz",
+      "bytes": 3876,
+      "sha256": "723e2b0aeefb97dfe95c5b1449428d6479e6b28f750ec0a4f30a65d1cb6f343f"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 8108,
+      "sha256": "d447baecc1f28a79c6fc58094c801f85412e193dbd63ef4147cb0aafef4c18b9"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/module-projection.json.gz",
+      "bytes": 355,
+      "sha256": "8d7c61b04fbfb80fad9fb10bf6c9897c635bc50c3984729c8677618d0bf98eb5"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/patch.lock.json.gz",
+      "bytes": 1998,
+      "sha256": "2ecd60674c6364addd8945b3efa650cfbd93722ac9e5227a3ac9e1606601603c"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-caller-known-inputs/upstream-toolbox.go.mod.gz",
+      "bytes": 3983,
+      "sha256": "bca365f40b9e2edc7f67e6fa8b5a2a7a990eec6a5a51e78dd9c336a512df0207"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-dust-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2848,
+      "sha256": "b980633ef36e0eaba3c429d4f38aa42b4a8e6a9d202e3e3b6b348cf12e8314d5"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-dust-accounting/patch.lock.json.gz",
+      "bytes": 887,
+      "sha256": "d2005768db38c330a5f3476eaf872ce9e64cc83ec0cd65aaf17d6bfaffe39c1f"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-input-ancestry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 1940,
+      "sha256": "20f47f3be10900866c34fee7567a3c1619cbcbd3e1215fa9b60d7d79e3812328"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-input-ancestry/patch.lock.json.gz",
+      "bytes": 564,
+      "sha256": "9de708a452fd6f4f5010f28639ed39c0a9d4b0cd05e8ce08a40eb84a51f99dd1"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-list-actions/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3772,
+      "sha256": "f1ddface869d40c2bea67d0622f8aa867d7d4daa2b3a6fe6b6afa1ce3ea89e2f"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-list-actions/patch.lock.json.gz",
+      "bytes": 879,
+      "sha256": "7579c980756df6558552eed9c0e8691f631cb30195054fd67784da47cb34945d"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-merge-accounting/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 3509,
+      "sha256": "724e1d16cb951232a1789556300104602519583baa12b5b786cc9e8c99ba3ab6"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-merge-accounting/patch.lock.json.gz",
+      "bytes": 802,
+      "sha256": "135313fbd369bf5797d3ad77dd98e85266ad4555e517d19f3830a518387f4a59"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-native-contracts/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 7421,
+      "sha256": "56480ccf437a44df6f7661e0bf58eb418cd0ee2bf6f57008db807246e63ea417"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-native-contracts/patch.lock.json.gz",
+      "bytes": 1846,
+      "sha256": "81308a35487eef69098cbcf3a8dfff6b1e62dbadf63de4b8dfe359fc89ff6fe9"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-native-contracts/rpc-contract-test.mjs.gz",
+      "bytes": 1286,
+      "sha256": "ea4ad7c7ea2b5e68ac856a0cdde52351f8818abfac0fb32d842784c91990ec96"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-portability/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 5466,
+      "sha256": "d3cd9b31f9a6018ced01c44734c1f331bd1834bb0a69599d6f8278184de407e1"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-portability/patch.lock.json.gz",
+      "bytes": 589,
+      "sha256": "26a53927aeef69d5d5964ca220c2a447d97717f945ca1647ed665d1b6d40b3a0"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-sqlite-retry/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2839,
+      "sha256": "c2c5b80fadc69a11b0cdf13ccb340a7d34ef854d8e826529ee75531964ca3299"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-sqlite-retry/patch.lock.json.gz",
+      "bytes": 619,
+      "sha256": "75e5eb38f7a86884a464337f32b7e6f5cbbfe66402f8f0fdf540a9943f1377f0"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-sync/go-wallet-toolbox-v0.191.4.patch.gz",
+      "bytes": 2636,
+      "sha256": "18624d5cf478377f050e7fd66ad155525d221f758c438e223fcce4f5223a19bb"
+    },
+    {
+      "path": "reference/source/infra/adapters/storage-sync/patch.lock.json.gz",
+      "bytes": 990,
+      "sha256": "05fb6106b956c2606293dc7df6cb7a57d4992895a94350dd97c2bd6ef153d65b"
+    },
+    {
+      "path": "reference/source/out/itcve-go-storage-caller-known-inputs.json.gz",
+      "bytes": 4228,
+      "sha256": "7fdcb6ae4b83ebed6af216b91d382f6134b3de66094873fdf2dd7da9de219cb6"
+    },
+    {
+      "path": "reference/source/out/source15-reference/candidate-fixture.ts.gz",
+      "bytes": 963,
+      "sha256": "192b713f58bd0a37cd0938a506f2599f1519d69ef7f34bb21acbcb9000084b86"
+    },
+    {
+      "path": "reference/source/out/source15-reference/run-reference.ts.gz",
+      "bytes": 2602,
+      "sha256": "199775077da1c3e65a9e4aa6c37348f72c10c9fb510df106b80313459f5e1ca0"
+    },
+    {
+      "path": "reference/source/scripts/prepare-storage-caller-known-inputs-go.mjs.gz",
+      "bytes": 4130,
+      "sha256": "c8f6571fb66732b09f3b754b19c49a8a309f0db80da6fa4f3219161aba9397e9"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-mongo/main.go.gz",
+      "bytes": 682,
+      "sha256": "1fa3cff171f62935dde01cc4b027878a08b1fe5558182ced8887e67cb920a75d"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/action_references.go.gz",
+      "bytes": 1196,
+      "sha256": "ae1f303f3328a6129e3de62ee067adf8b3f0c2eada9e2bcab9d8267deae3ffae"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/action_references_test.go.gz",
+      "bytes": 1801,
+      "sha256": "dbfa609bc2a3691ad881b1920e70ef2cf0b476e9fa641ea38a8fe119ad84071f"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/lifecycle_test.go.gz",
+      "bytes": 1239,
+      "sha256": "671e93b89af1c3a504542096e289ce3a4754e056725bc1d0bcde00a45c5670dc"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/main.go.gz",
+      "bytes": 8158,
+      "sha256": "83976f7098d6dbe32c291e95a81b50c9524f064f40e17ce386e19846e08b0b8f"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/main_test.go.gz",
+      "bytes": 1368,
+      "sha256": "392e6666150dcc5a4885c6b8f5956ab2968e90a90b4cd273937284c21cf15264"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/sync.go.gz",
+      "bytes": 1155,
+      "sha256": "1c66fd58028929fba54501bef64cb79a8a5bc0effe7480504f6a5e3cb60970ba"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services/sync_test.go.gz",
+      "bytes": 929,
+      "sha256": "698de1224efabfe8bf634b9b6aa05a22688a6ef9b56dc059c0d85ce955e6a984"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot.go.gz",
+      "bytes": 2743,
+      "sha256": "8408b2cab0ccea121cd61d1f217f32cb028df11226597248c615bed6e060a4e0"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-batch-subjects/native_output_snapshot_test.go.gz",
+      "bytes": 2502,
+      "sha256": "33b42335b2ffaadd5ade0bd0c3a5d3fdc47b1c187f6d88b21d6d802cbe09f35d"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_ledger.go.gz",
+      "bytes": 6232,
+      "sha256": "87a5e7d141ce960831aa704f48615491e7e4ff218c8b0d717f38012ce80c62db"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_ledger_test.go.gz",
+      "bytes": 4071,
+      "sha256": "392fe30d4aab0d05c42274da1c260d12215f8d7a4c025ce68f47ccbd35eb9572"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_observer_pool.go.gz",
+      "bytes": 1260,
+      "sha256": "3a9310e305cdb4161aec8b404d04d29f9f33bc4c33e687db08c7f198da3df897"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_observer_pool_test.go.gz",
+      "bytes": 1160,
+      "sha256": "48b5c3128908bd6238e7fed97eb12c32d793cef82bc3ad2a372df788e40affef"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_owner_binding_test.go.gz",
+      "bytes": 1523,
+      "sha256": "5dff3ff31372442cc9e08cd48a3352baad0edaac6148283d54c47a8a44f2a934"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_pool_test.go.gz",
+      "bytes": 1554,
+      "sha256": "ac927c0b157b40907c0285c7c4c7e79b43d75ffb4a2f649b8c658f991ac13ef8"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_precision_test.go.gz",
+      "bytes": 650,
+      "sha256": "f7d6f83401d50c2b8ae905088f0eb4c1930b8307a099d196797d6b92f4d33591"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_provider_cut.go.gz",
+      "bytes": 1428,
+      "sha256": "fcbd9a97cce54e8ced685e9e561c2ead633dc8e4d27483f9dde32f35f9a3f709"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_provider_cut_test.go.gz",
+      "bytes": 1760,
+      "sha256": "2450af9bffcf2340aeb487f8c045ddd7f9b11089782b7cdcb8ac091e9c000784"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_query_cut.go.gz",
+      "bytes": 1878,
+      "sha256": "80cabbf36482f77e1c0af6d4f067ff8816f1c6bbd6e7f42312c751b947843ab3"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_query_cut_test.go.gz",
+      "bytes": 989,
+      "sha256": "2d2b465e7633acc4dced470c2ca4f42f753558b6ff81dcbd0bb7b2532bc87791"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_snapshot.go.gz",
+      "bytes": 3594,
+      "sha256": "c381e94767498909de48dcedaade0a59ed48ccc252c39fea7db1c085aa3b5474"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/action_snapshot_test.go.gz",
+      "bytes": 3932,
+      "sha256": "69f7530db8775c0241965440a09172f0301620f747d1b68d38448f529963505c"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/certificate_inventory.go.gz",
+      "bytes": 2960,
+      "sha256": "5c218706de8b1b02071f46d1c319cfd59ffe341112eaec31eeefe08c5b8772c0"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/certificate_inventory_test.go.gz",
+      "bytes": 2533,
+      "sha256": "858d335671fc4ffbb1390d54726d470461aab3af796b132fe31b987090b5027b"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/transaction_knowledge_inventory.go.gz",
+      "bytes": 2465,
+      "sha256": "b364200377fd929b542fce919d0e6976bd70a626224a3321846ec20097c30d1a"
+    },
+    {
+      "path": "reference/source/synthesis/go/cmd/itcve-services-coverage-observers/transaction_knowledge_inventory_test.go.gz",
+      "bytes": 2005,
+      "sha256": "4a37abbf83f0c3ec48ebb06343769fd09706c8d1f4324f47b78ea43dc2e9d029"
+    },
+    {
+      "path": "reference/source/synthesis/go/components.lock.json.gz",
+      "bytes": 635,
+      "sha256": "57dc1670c72ea16498b9d9ae49f5cd1767abb5e9964fc47c00f975cfc3494262"
+    },
+    {
+      "path": "reference/source/synthesis/go/go.mod.gz",
+      "bytes": 3963,
+      "sha256": "d186ddfac0f0a40af94cd14fade2fdc0028d451a6f7be705cff5af9885839c12"
+    },
+    {
+      "path": "reference/source/synthesis/go/go.sum.gz",
+      "bytes": 39480,
+      "sha256": "d5e3e4aa0b61ce3cd1061b4b81e018e84983a1b99b0b56fd387c989b69bdf27f"
+    },
+    {
+      "path": "reference/source/synthesis/package-lock.json.gz",
+      "bytes": 27759,
+      "sha256": "66ca4a2f910de53b94c2ab14d28ecd39d044229790c4c9fd0ba49aef3759983a"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/go-batch-build.ts.gz",
+      "bytes": 2916,
+      "sha256": "e9ac8c3dc02ed9cd6c5d789a83648e3a503abf6f5f693a0f0b500ea38fa4c85e"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/go-services.ts.gz",
+      "bytes": 7640,
+      "sha256": "5b7794a36b8c85ded3eb41021ad0cc239291fbd5d4a1ebe8c69d10ea5de5c9e5"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-driver.ts.gz",
+      "bytes": 3587,
+      "sha256": "9e8e9fc0f5c1342e0067368b243206877b2600921291f1140add3c149cb64cb3"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-model.ts.gz",
+      "bytes": 866,
+      "sha256": "cf8e8c4e5615fe026a61c41d1c3f83bebe1c4766a64da1ce42727f470a045ae8"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-oracle.ts.gz",
+      "bytes": 3705,
+      "sha256": "e4b072b7b46163cd75525dd11b3e97f0bf8f4894258f65c0020c884b22d51ee4"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-parent.ts.gz",
+      "bytes": 3051,
+      "sha256": "069174ce7fbe58f05ed069019fc65d22df57c85cf01ee61791696d34245cbe43"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-run.ts.gz",
+      "bytes": 2424,
+      "sha256": "fe79ec4bf7bb0d370b663ee8780e9800980abba31bf5411875cb33ed60a554a0"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-verifier.ts.gz",
+      "bytes": 7013,
+      "sha256": "b848264ef77bc6bb55691958f0a760e13c07b340bb43e63846e2a8219dbd149a"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native/coverage-completion/transaction-known-source.ts.gz",
+      "bytes": 5858,
+      "sha256": "c3a72e305c370af83372c046f8125a8f15676e8c0ed662958fa8ac85f2181212"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native-owned-inventories.ts.gz",
+      "bytes": 475,
+      "sha256": "70d7429bf39295d280525c558025a70a33a06d009f013e4cdeed57962c6464df"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/native-transaction-knowledge-inventory.ts.gz",
+      "bytes": 1510,
+      "sha256": "9844c5a2ecb07f1ea229410fd370067decda1fc2d96b9a3c4de03ebbbe146fea"
+    },
+    {
+      "path": "reference/source/synthesis/src/wallet-lab/services.ts.gz",
+      "bytes": 17896,
+      "sha256": "6e9635078216cd1e4746f95ae1609c5d9b04f2094f3f8bb260badac4f93c7270"
+    },
+    {
+      "path": "reference/source-after.json.gz",
+      "bytes": 4011,
+      "sha256": "8f9bd9aa1df18c389afc235aec98eb8cce0374bf1c0baf8c051f82f8ee5f807b"
+    },
+    {
+      "path": "reference/source-before.json.gz",
+      "bytes": 4011,
+      "sha256": "8f9bd9aa1df18c389afc235aec98eb8cce0374bf1c0baf8c051f82f8ee5f807b"
+    },
+    {
+      "path": "reference/storage.json.gz",
+      "bytes": 4467,
+      "sha256": "8b9050dd2372dc529f4a6a2f29400f107c623dee3baabe46917a944e4e530149"
+    },
+    {
+      "path": "reference/verification.json.gz",
+      "bytes": 858,
+      "sha256": "24453aef74d7246db9168362db606aff511749a780118bec91bac108c4b2f40d"
+    },
+    {
+      "path": "reference.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "reference.stdout",
+      "bytes": 1744,
+      "sha256": "3ef557fbba170a5dd8c12698417954cf50ae771c586c49461ac931a260bc59c8"
+    },
+    {
+      "path": "run-reference.ts",
+      "bytes": 7169,
+      "sha256": "fe610863f1f463cfebb29cb9691bf0fb359d5bb5ebc7178239b5b19a9e7d8673"
+    },
+    {
+      "path": "selector-image-final.log",
+      "bytes": 969,
+      "sha256": "425c84e60638d57f77896b565e6a9b0a4d6660687e8fa02d0757d9ef3a1dd88f"
+    },
+    {
+      "path": "selector-image.log",
+      "bytes": 975,
+      "sha256": "17f2ed46f919f801e919508bd4f23c0ff9c06f268cfcc96cfb75a279375f8cca"
+    },
+    {
+      "path": "source/docs/implementation-status.md.gz",
+      "bytes": 5901,
+      "sha256": "d6e417c86632f96dc3255a21738c29303206038087511c619d98e313dc8af581"
+    },
+    {
+      "path": "source/docs/native-conformance-results-2026-11-12.md.gz",
+      "bytes": 19440,
+      "sha256": "a263ec65272893b703d006f641091ab0150b0b1941d1f427ef18fe71752c1650"
+    },
+    {
+      "path": "source/docs/native-evidence-ownership-source-correction-2026-11-13.md.gz",
+      "bytes": 1777,
+      "sha256": "13d378ea8d9f4e31006b2d938f5e508afb6806eb1a033f8a236a8afc99338627"
+    },
+    {
+      "path": "source/infra/native/conformance/Dockerfile.gz",
+      "bytes": 1326,
+      "sha256": "51ba4f0e5bef48387953cb2aa6db3caea10d658f479caf9692c157e7265c02fe"
+    },
+    {
+      "path": "source/infra/native/conformance/plan-pr368-coverage-6-source-5.json.gz",
+      "bytes": 28702,
+      "sha256": "2b11a626097b36b0fdd4ae94ed1e366042dfdd54a7adf3b413414b5c8f9742c3"
+    },
+    {
+      "path": "source/infra/native/conformance/rust-graph-pr368-coverage-6-source-5.json.gz",
+      "bytes": 1150,
+      "sha256": "764a6030e67e9dca13841c195d11d18388caddcccd33df0c886a64fe575ff719"
+    },
+    {
+      "path": "source/scripts/native-rust-compatibility.mjs.gz",
+      "bytes": 3528,
+      "sha256": "67ebd1ae899f105835e9e9da30f65676f0ffa9d1e144160de0ca6e6c006f7f93"
+    },
+    {
+      "path": "source/scripts/native-wallet-profiles.mjs.gz",
+      "bytes": 1196,
+      "sha256": "01e54303cbf5e7cea4ab18c85e5a50efbb12226b9e949d735d1941e48a3d621b"
+    },
+    {
+      "path": "source/scripts/verify-native-integrated.mjs.gz",
+      "bytes": 4038,
+      "sha256": "a8301035263b0d0de72b4602088f7ca6f8d003f66206a79924ffdbbcd2cfef3a"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/evidence.ts.gz",
+      "bytes": 3254,
+      "sha256": "1d179a47c256be17b404950c10049c39ab679dbca2b36618eabeb085424bf3e6"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/permissions-driver.ts.gz",
+      "bytes": 3850,
+      "sha256": "8c180b53fbe4d3b4b62336f6de35d10c80239bbc0612f035d76e89c5c74c5d88"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/permissions-model.ts.gz",
+      "bytes": 2995,
+      "sha256": "b6ec777ece6ea31911553fe94bae7912b7befb5354e14d4dc592bcca4675be4c"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/permissions-parent.ts.gz",
+      "bytes": 2406,
+      "sha256": "e8da7588cd9c5b1da7f334b16867b40e73ac5f5dd838a48acabd4bdb1a8131d0"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/permissions-verifier.ts.gz",
+      "bytes": 5702,
+      "sha256": "78c30d273ea026d26e18e62d23a578767b131f6385b29b4f2124be9dc3122196"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/suite.ts.gz",
+      "bytes": 2828,
+      "sha256": "7fc2546efcb2adcfcee6521df3464b341cb6e5e9f8b3f509a426b111b6b4863d"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-completion/transaction-branches-verifier.ts.gz",
+      "bytes": 7013,
+      "sha256": "b848264ef77bc6bb55691958f0a760e13c07b340bb43e63846e2a8219dbd149a"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-permissions-observer.ts.gz",
+      "bytes": 4213,
+      "sha256": "0c3b83ca58ab1766ae2eeb84e1c24e367bfdee444a672d8637284660687b443b"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/coverage-transactions-verifier.ts.gz",
+      "bytes": 12149,
+      "sha256": "48c9e5468c09c98ace81cffc8874974ad80dfed06f9d473a5bc735a87da41947"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify-coverage-suite.ts.gz",
+      "bytes": 5906,
+      "sha256": "6292caaf31b7eb62799ffcff1b045fda7bbe7a0cd5e514a89c8c626856868346"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/verify.ts.gz",
+      "bytes": 10539,
+      "sha256": "03ef642fb0b7c26889b13b1b8aee7b4d729677f05a3b7ae25c8fbcd735f3e5e4"
+    },
+    {
+      "path": "source/synthesis/src/wallet-lab/native/worker.ts.gz",
+      "bytes": 4790,
+      "sha256": "302b2d7aa0e23d4414706be501d0a2e934ae1cd5f92703a36ca31f8e60545ccb"
+    },
+    {
+      "path": "source/synthesis/test/native-coverage-permission-sequence-parent.test.ts.gz",
+      "bytes": 2721,
+      "sha256": "48bd8c9de235014d20f4fd32b1391be85c806aab4abbd6fcac57d411c5c4d394"
+    },
+    {
+      "path": "source/synthesis/test/native-observer-receipt-source5.test.ts.gz",
+      "bytes": 2497,
+      "sha256": "27e931efc2e20eb65fe246b3571459b915aff8a200b2aafabe80610737d2e378"
+    },
+    {
+      "path": "source/synthesis/test/native-permission-startup.test.ts.gz",
+      "bytes": 4074,
+      "sha256": "957366131d4b75f7d2daf65b5d941db6dfee59a26f1c040ea3868ff1cc3402a8"
+    },
+    {
+      "path": "source/test/native-coverage6-selection.test.mjs.gz",
+      "bytes": 2342,
+      "sha256": "f8806494feef038941549ea4980b5c0813d28e587d26e0ff65aa020218b92d21"
+    },
+    {
+      "path": "standards.log",
+      "bytes": 362,
+      "sha256": "d0560516f217a4d43a2dfd8d2891c2a436d0bff1d50b2a0199840abc4e2bf528"
+    },
+    {
+      "path": "synthesis-full.log",
+      "bytes": 383,
+      "sha256": "a44e4d901d045799b2f3c00200697aa001bc049f358443a9bba7d11bdfb86309"
+    },
+    {
+      "path": "typecheck-final.log",
+      "bytes": 52,
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f"
+    },
+    {
+      "path": "typecheck-first.log",
+      "bytes": 52,
+      "sha256": "381be222d640c62a1491f0cd300dd4b3d77f00d5b62028c59702bba3119afc8f"
+    },
+    {
+      "path": "typecheck-second.log",
+      "bytes": 145,
+      "sha256": "4b22afa30c09210cb77f0227a3ae26118703bcc90d8982b8784dd4cd32b140e9"
+    },
+    {
+      "path": "verify.py",
+      "bytes": 607,
+      "sha256": "03d91f8d3865a5efe6528bb3ca562e10a5c6a19988347272b3d98c29a52fe93b"
+    }
+  ]
+}

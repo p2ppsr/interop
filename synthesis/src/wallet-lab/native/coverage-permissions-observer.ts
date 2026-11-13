@@ -54,7 +54,7 @@ export async function waitForCoverageRevocationSnapshot(page: Pick<Page, 'locato
 /** Prospective permission-extension observer. Concurrent requests require distinct
  * IDs and exact promptText so their decisions cannot cross-bind. Unexpected
  * permission prompts are denied and retained; they cannot count as cache hits. */
-export function createExtendedPermissionObserver(context: NativeScenarioContext) {
+export function createExtendedPermissionObserver(context: NativeScenarioContext, imageNamespace: 'extension' | 'sequence-v1' = 'extension') {
   const pages = new Map<string, Page>(), prompts = new Set<Page>(), steps: CoveragePermissionCall[] = [], screenshots = new Map<string, Buffer>()
   const pageFor = async (origin: string) => {
     if (origin === 'https://todo.itcve.test') return context.application
@@ -129,7 +129,7 @@ export function createExtendedPermissionObserver(context: NativeScenarioContext)
           const buttonLocator = popup.getByRole('button', { name: decision === 'allow' ? /^Allow(?: Selected)?$/ : /^Deny(?: All)?$/ }).first()
           if (!(await buttonLocator.isVisible().catch(() => false))) continue
           const button = (await buttonLocator.innerText()).trim(), observedAt = now()
-          const name = `conformance/extension-${id}-${step.prompts.length}.png`
+          const name = `conformance/${imageNamespace}-${id}-${step.prompts.length}.png`
           const bytes = await popup.screenshot({ type: 'png', timeout: 5000 }); context.evidence.addBytes(name, bytes); screenshots.set(name, Buffer.from(bytes))
           prompts.add(popup); handled.add(popup)
           const pendingBeforeDecision = await page.evaluate(id => (window as any).__tpnilExtendedPermissionRequests[id]?.status === 'pending', id)

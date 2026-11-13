@@ -1,0 +1,183 @@
+{
+  "source": "f4bc39f4675acc7d5fea3eebda7ae7b3a7e4aca6",
+  "run": 43372408766,
+  "claim": "RAW_OBSERVATIONS_NOT_QUALIFIED",
+  "repetitions": [
+    {
+      "repetition": 1,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 684,
+        "FAIL": 2,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/truncated-proof"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    },
+    {
+      "repetition": 2,
+      "status": "RAW_OBSERVATIONS_ONLY",
+      "assertions": 698,
+      "expectedAssertions": 698,
+      "counts": {
+        "PASS": 683,
+        "FAIL": 3,
+        "BLOCKED": 12
+      },
+      "original99": {
+        "PASS": 98,
+        "FAIL": 1
+      },
+      "failed": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "output.listActions"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.signing-branches/foreign-reference-reject"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/truncated-proof"
+        }
+      ],
+      "blocked": [
+        {
+          "vector": "ISI-4-V008",
+          "id": "coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "conditional/coverage.remaining-obligations"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "transaction.internalization/conflicting-remittance"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-301.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-399.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.internalizeAction"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.baskets.ascii-400.relinquishOutput"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.transaction.proof-trust/explicit-knownTxids"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.transaction.batch-send/returnTXIDOnly"
+        },
+        {
+          "vector": "ISI-4-V008",
+          "id": "completion.partial-trace.query.action-filters/empty-labels"
+        }
+      ]
+    }
+  ],
+  "differentOutcomes": [
+    {
+      "vector": "ISI-4-V008",
+      "id": "transaction.signing-branches/foreign-reference-reject",
+      "first": "PASS",
+      "second": "FAIL"
+    }
+  ],
+  "nativeJobSeconds": 3341,
+  "order22JobSeconds": 5353,
+  "completedCohortJobSeconds": 70939,
+  "actualRustResults": "NOT_EXECUTED",
+  "originalQualificationReceipts": "ABSENT",
+  "independentFullNativeReplay": "NOT_EXECUTED_MISSING_ORIGINAL_QUALIFICATION_AND_RUST",
+  "imageSourceReconstruction": "PASS",
+  "actualFullCostUSD": null,
+  "fullCostReconciled": false,
+  "roots": [
+    "Permission extension and completion sequence both capture extension-identity-0.png; the later capture overwrites the early image. Final replay rejects the producer PASS. Original early PNG bytes are missing and cannot qualify.",
+    "Valid full internalization replays the exact accepted truncation-source raw fixture. Reuse strict prior-fixture replay verification; malformed import remains zero-receipt with unchanged snapshots.",
+    "Repetition2 foreign-sign window overlaps the earlier default-sign-omitted delayed accepted raw receipt. Require exact earlier signed delayed-wallet transaction proof and retain foreign ownership/protected-spend checks."
+  ]
+}

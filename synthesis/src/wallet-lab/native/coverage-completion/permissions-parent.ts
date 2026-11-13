@@ -34,6 +34,7 @@ export interface PermissionSequenceParent {
 export async function verifyPermissionSequenceParent(report: Report, binding: PermissionSequenceParent) {
   assert.ok(['ITCVE-1@4.5.0', 'ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile))
   assert.equal(report.promptScopeRevision, ['ITCVE-1@4.6.0', 'ITCVE-1@4.7.0', 'ITCVE-1@4.8.0'].includes(binding.profile) ? 2 : undefined)
+  if (binding.profile === 'ITCVE-1@4.8.0') assert.equal(report.promptEvidenceNamespace, 'sequence-v1')
   assert.equal(report.mode, 'NATIVE_OBSERVATION')
   assert.equal(report.identity, binding.identity)
   assert.equal(report.freshness.kind, 'PUBLIC_UI_OBSERVATION')
