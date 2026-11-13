@@ -231,3 +231,19 @@ test('missing independently staged fixture retains row diagnostics without disca
  assert.deepEqual(checked, read('missing-stage-verification.json'))
  assert.equal(checked.acceptedNativeAssertions, 0)
 })
+
+test('an attempted valid signed control failure remains FAIL instead of becoming a fixture blocker', async () => {
+ const dir = new URL('./fixtures/native-transaction-failure-classification/', import.meta.url)
+ const manifest = JSON.parse(fs.readFileSync(new URL('provenance.json', dir), 'utf8'))
+ const load = (name: string) => { const entry = manifest.files.find((x: any) => x.path === name + '.gz'), bytes = fs.readFileSync(new URL(entry.path, dir)), raw = gunzipSync(bytes); assert.equal(createHash('sha256').update(bytes).digest('hex'), entry.gzipSha256); assert.equal(createHash('sha256').update(raw).digest('hex'), entry.sha256); return JSON.parse(raw.toString()) }
+ const r = decodeCoverageObservation<any>(load('report.json'), coverageObservationEncoding)
+ assert.ok(r.stale); assert.ok(row(r, 'stale-unsigned-change')); assert.match(row(r, 'valid-signed-change').error.message, /Injected valid signed-control failure/)
+ let saved: any
+ await finalizeTransactionBranchReport(r, value => { saved = structuredClone(value) })
+ const stale = saved.assertions.find((x: any) => x.id === 'completion.transaction.nosend-change/unsigned-stale-txid')
+ assert.equal(stale.result, 'FAIL'); assert.match(stale.detail, /Valid signed change control returned an error/)
+ assert.equal(saved.result, 'FAIL'); assert.equal(saved.nativeQualification, false)
+ const checked = await evaluateTransactionBranches(r); assert.deepEqual(checked, load('verification.json')); assert.equal(checked.acceptedNativeAssertions, 0)
+ // Removing the recorded fixture cannot turn attempted requests into BLOCKED.
+ delete r.stale; await assert.rejects(evaluateTransactionBranches(r))
+})

@@ -36,6 +36,7 @@ test('complete source overlay includes every staged file and the exact two gener
  assert.ok(names.includes('/work/synthesis/test/fixtures/native-pagination/report.json.gz'))
  assert.ok(names.includes('/work/scripts/verify-native-image.mjs'))
  assert.ok(names.includes('/work/docs/native-transaction-fixture-source-correction-2026-11-13.md'))
+ assert.ok(names.includes('/work/docs/native-transaction-failure-classification-2026-11-13.md'))
  assert.ok(names.includes('/work/synthesis/test/fixtures/native-transaction-branches-source3/provenance.json'))
  assert.ok(names.includes('/opt/tpnil/itcve-go-storage-caller-known-inputs'))
  assert.ok(names.includes('/opt/tpnil/itcve-go-storage-caller-known-inputs.json'))

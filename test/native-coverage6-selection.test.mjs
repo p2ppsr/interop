@@ -44,19 +44,20 @@ test('worker selects only4.8 with explicit coverage6 and complete identity/obser
 test('coverage6 freezes all current inputs and admits its complete source fixture', async () => {
   for (const [name, digest] of Object.entries(plan.conformanceInputs)) assert.equal((await import('node:crypto')).createHash('sha256').update(read(name)).digest('hex'), digest, name)
   const selected = await checkNativeWalletSelector('integrated-native-conformance-pr368-coverage-6', { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) })
-  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-6-source-3.json')
+  assert.equal(selected.plan, 'infra/native/conformance/plan-pr368-coverage-6-source-4.json')
   assert.equal(selected.wallet.version, '5.1.1-pr368.e360e67')
   assert.equal(selected.rust.corpus, 'tpnil-rust-corpus@3')
-  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-6-source-3.json')
+  assert.equal(selected.rust.manifest, 'infra/native/conformance/rust-graph-pr368-coverage-6-source-4.json')
 })
 test('coverage6 cannot substitute an input or a release artifact in its source fixture', async () => {
   const variant = 'integrated-native-conformance-pr368-coverage-6', options = { source: 'a'.repeat(40), read, readCommitted: (_source, name) => read(name) }
   await assert.rejects(checkNativeWalletSelector(variant, { ...options, read: name => name === 'synthesis/src/wallet-lab/services.ts' ? Buffer.from('changed') : read(name) }), /Current conformance input differs/)
-  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-6-source-3.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
+  await assert.rejects(checkNativeWalletSelector(variant, { ...options, readCommitted: (_source, name) => name === 'infra/native/conformance/plan-pr368-coverage-6-source-4.json' ? Buffer.from('changed') : read(name) }), /Plan is not committed/)
 })
 
 test('source successor preserves original frozen4.8 criteria and exact source1 JSON bytes', () => {
  const originalPath='infra/native/conformance/plan-pr368-coverage-6.json'
+ for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-3.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-3.json']) assert.deepEqual(read(name),execFileSync('git',['show',`38d06bfe2de7e3c1cfbb26b9848052d301b85905:${name}`],{maxBuffer:32*1024*1024}))
  for(const name of ['infra/native/conformance/plan-pr368-coverage-6-source-2.json','infra/native/conformance/rust-graph-pr368-coverage-6-source-2.json']) assert.deepEqual(read(name),execFileSync('git',['show',`4c872d109e49d2e63b3942cc0ec2f7386832c5a9:${name}`],{maxBuffer:32*1024*1024}))
  const original=JSON.parse(read(originalPath))
  const semantic=value=>Object.fromEntries(Object.entries(value).filter(([key])=>!['id','conformanceInputs','sourceBindingRevision','sourcePredecessor'].includes(key)))
@@ -64,5 +65,5 @@ test('source successor preserves original frozen4.8 criteria and exact source1 J
  for(const name of [originalPath,'infra/native/conformance/rust-graph-pr368-coverage-6.json',...Object.keys(original.conformanceInputs).filter(name=>name.startsWith('itcves/')||name.startsWith('programs/'))]) {
   assert.deepEqual(read(name),execFileSync('git',['show',`bbbc164b9042468e3e5895c3a6f42177dcc4b568:${name}`],{maxBuffer:32*1024*1024}),name)
  }
- assert.equal(plan.sourceBindingRevision,11)
+ assert.equal(plan.sourceBindingRevision,12)
 })

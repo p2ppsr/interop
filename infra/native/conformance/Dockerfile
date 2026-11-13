@@ -80,6 +80,7 @@ COPY programs/ISI-4/profiles/native-coverage-transactions-4.0.0 /work/programs/I
 COPY docs/native-observer-source-correction-2026-11-13.md /work/docs/native-observer-source-correction-2026-11-13.md
 
 COPY docs/native-transaction-fixture-source-correction-2026-11-13.md /work/docs/native-transaction-fixture-source-correction-2026-11-13.md
+COPY docs/native-transaction-failure-classification-2026-11-13.md /work/docs/native-transaction-failure-classification-2026-11-13.md
 
 FROM ${TPNIL_INTEGRATED_BASE}
 USER root

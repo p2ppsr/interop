@@ -1,0 +1,75 @@
+{
+  "source": "38d06bfe2de7e3c1cfbb26b9848052d301b85905",
+  "verifierSha256": "301f9bba632c747a29015e6db8661fc223f7e06bc8ecdb9a3d76cdafcb3ca3d4",
+  "nativeSessions": 0,
+  "nativeQualification": false,
+  "claim": "LAB_SELF_TEST_ONLY",
+  "checked": {
+    "claim": "ENGINEERING_OBSERVATION_ONLY",
+    "acceptedNativeAssertions": 0,
+    "outcomes": [
+      {
+        "id": "transaction.defaults/noSend-omitted-false",
+        "result": "BLOCKED",
+        "localChecks": "SATISFIED",
+        "detail": "No native qualification: production profile integration and complete native source/cache/route/funding/final-ledger/context admission are absent. These public library observations never substitute for native execution."
+      },
+      {
+        "id": "transaction.proof-trust/known-wallet-trustSelf",
+        "result": "BLOCKED",
+        "localChecks": "SATISFIED",
+        "detail": "No native qualification: production profile integration and complete native source/cache/route/funding/final-ledger/context admission are absent. These public library observations never substitute for native execution."
+      },
+      {
+        "id": "transaction.proof-trust/explicit-knownTxids",
+        "result": "BLOCKED",
+        "localChecks": "UNAVAILABLE",
+        "detail": "Fresh isolated source and complete backend absence are observed; whole native frontend cache/no-exposure causal proof remains a separate admission requirement"
+      },
+      {
+        "id": "transaction.proof-trust/truncated-proof",
+        "result": "BLOCKED",
+        "localChecks": "SATISFIED",
+        "detail": "No native qualification: production profile integration and complete native source/cache/route/funding/final-ledger/context admission are absent. These public library observations never substitute for native execution."
+      },
+      {
+        "id": "transaction.nosend-change/valid-full",
+        "result": "BLOCKED",
+        "localChecks": "SATISFIED",
+        "detail": "No native qualification: production profile integration and complete native source/cache/route/funding/final-ledger/context admission are absent. These public library observations never substitute for native execution."
+      },
+      {
+        "id": "transaction.nosend-change/empty-return-unexercised",
+        "result": "BLOCKED",
+        "localChecks": "SATISFIED",
+        "detail": "No native qualification: production profile integration and complete native source/cache/route/funding/final-ledger/context admission are absent. These public library observations never substitute for native execution."
+      },
+      {
+        "id": "transaction.nosend-change/unsigned-stale-txid",
+        "result": "BLOCKED",
+        "localChecks": "UNAVAILABLE",
+        "detail": "Stale-TXID fixture unavailable: Missing public prerequisite valid-signed-change: Injected valid signed-control failure: LAB_SELF_TEST_ONLY"
+      },
+      {
+        "id": "transaction.batch-send/returnTXIDOnly",
+        "result": "FAIL",
+        "localChecks": "REJECTED",
+        "detail": "Expected values to be strictly equal:\n+ actual - expected\n\n+ {\n+   code: undefined,\n+   message: 'Injected valid signed-control failure: LAB_SELF_TEST_ONLY',\n+   name: 'Error'\n+ }\n- undefined\n"
+      }
+    ],
+    "observedCalls": 25,
+    "completeCuts": 14,
+    "independentProofTransactions": 16,
+    "limits": {
+      "walletCalls": 96,
+      "externalFunderCalls": 6,
+      "signedTransactions": 24,
+      "observationCuts": 32,
+      "restarts": 0,
+      "ownedValueCeiling": 100000,
+      "feeBudget": 5000
+    },
+    "universalBRCStatusOrderingClaim": false,
+    "interpretation": "Caller batch order followed by the new signed transaction and terminal unproven results are the pinned candidate/service compatibility expectation, not a universal BRC order requirement. Actual signAction has no noSendChange return contract."
+  }
+}

@@ -393,3 +393,28 @@ counterexamples and an injected staging failure are retained as engineering
 controls. Fresh native qualification, both actual Rust results and complete
 independent replay remain required before PR readiness. Full BRC100 conformance
 and the signed-satoshi finding remain open.
+
+
+## Source3 admission stop and signed-control classification
+
+[Source38d Foundation43367727544](https://github.com/p2ppsr/interop/actions/runs/43367727544)
+passes2074job-seconds:235Linux core/oneSKIP,1773synthesis/125SKIP, fivePython and
+13Go checks;262artifact members are retained. The component matrix remains
+584PASS/six upstream Go Messaging FAIL findings. Duplicate43367712049 is canceled
+at49seconds. [Evaluator10 run43367814553](https://github.com/p2ppsr/interop/actions/runs/43367814553)
+passes152seconds and independent frozen replay with original bytes and criteria
+unchanged. Order21 actual2275 and completed cohort65586.
+
+No native16 session was dispatched. Review found that the broad fixture-blocker
+handling could classify an attempted valid signed-control error as BLOCKED.
+The [admission stop and exact old/new replay](../journals/native-closure-diagnostics/2026-11-13/native-signed-control-classification/manifest.json)
+are retained. The [source4 correction](native-transaction-failure-classification-2026-11-13.md)
+permits BLOCKED only before either request was attempted and before any fixture
+mapping exists. An observed error from the valid signed control remains FAIL.
+Its failed diagnostic report is preserved; global evidence errors remain fatal.
+
+Local236core,1807synthesis/92SKIP,63focused, eightselector/image and fivePython
+checks pass with types/catalogs/standards. The original4.8 criteria,698IDs,
+wallet, Go10, Rust3 and source3 JSON remain frozen. Fresh original native
+qualification, both actual Rust results, independent frozen replay and final
+publication checks remain required. Full BRC100 conformance stays unproven.
