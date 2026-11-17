@@ -11,6 +11,14 @@ import { createWalletProfileSelfTest } from '../src/wallet-profile-self-test.mjs
 function fixture(t) { const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-isi5-')); t.after(() => fs.rmSync(root, { recursive: true, force: true })); return createWalletProfileSelfTest(path.join(root, 'new')); }
 function mutate(f, number, change) { const item = f.record.cases[number - 1], file = path.join(f.directory, item.projection.path); const value = readJson(file); change(value); const bytes = Buffer.from(JSON.stringify(value)); fs.writeFileSync(file, bytes); item.projection.sha256 = digest(bytes); item.projection.size = bytes.length; }
 const evaluate = f => evaluateWalletProfiles(f.plan, f.record, f.directory);
+function rebindPlan(f) {
+  f.record.planHash = hashJson(f.plan);
+  const file = path.join(f.directory, f.record.oracle.path), oracle = readJson(file);
+  oracle.planHash = f.record.planHash;
+  const bytes = Buffer.from(JSON.stringify(oracle)); fs.writeFileSync(file, bytes);
+  f.record.oracle.sha256 = digest(bytes); f.record.oracle.size = bytes.length;
+}
+
 
 test('optional ISI-5 has ten complete vectors; old index/catalog schemas retain their namespace', () => {
   const catalog = readJson(path.join(ROOT, WALLET_PROFILE_CATALOG)); checkCatalog(catalog);
@@ -23,7 +31,7 @@ test('complete synthetic observations pass only LAB_SELF_TEST_ONLY and engineeri
   const f = fixture(t), result = evaluate(f);
   assert.equal(result.overall, 'PASS'); assert.equal(result.outcomes.length, 10); assert.equal(result.claim, 'LAB_SELF_TEST_ONLY');
   assert.ok(result.outcomes.every(outcome => outcome.assertions.length > 5));
-  f.plan.mode = 'engineering'; f.record.planHash = hashJson(f.plan);
+  f.plan.mode = 'engineering'; rebindPlan(f);
   assert.throws(() => evaluate(f), /cannot be promoted/);
   f.plan.mode = 'CERTIFIED'; assert.throws(() => evaluate(f));
 });
@@ -82,13 +90,13 @@ test('CLI reports FAIL/BLOCKED as lab data and reserves error exit for invalid e
 });
 
 test('single-store and absent background consumers have explicit frozen scope rather than mandatory extra components', t => {
-  const f = fixture(t); f.plan.optionalConsumers = { mirrors: false, background: false }; f.record.planHash = hashJson(f.plan);
+  const f = fixture(t); f.plan.optionalConsumers = { mirrors: false, background: false }; rebindPlan(f);
   mutate(f, 10, o => { o.consumerInventory = f.plan.optionalConsumers; o.mirrorConsumer = o.backgroundConsumer = 'absent'; delete o.canonicalRevision; delete o.backgroundAfterLogout; });
   assert.equal(evaluate(f).overall, 'PASS');
   mutate(f, 10, o => { o.consumerInventory.background = true; }); assert.equal(evaluate(f).overall, 'FAIL');
 });
 test('declared profile-scoped notification identity is preserved independently of root-scoped implementations', t => {
-  const f = fixture(t); f.plan.notificationIdentityRole = 'active-profile'; f.record.planHash = hashJson(f.plan);
+  const f = fixture(t); f.plan.notificationIdentityRole = 'active-profile'; rebindPlan(f);
   assert.equal(evaluate(f).outcomes[9].status, 'FAIL');
   mutate(f, 10, o => { o.notificationIdentityAfterSwitch = f.oracle.secondary.identity; }); assert.equal(evaluate(f).overall, 'PASS');
 });
@@ -96,4 +104,14 @@ test('declared profile-scoped notification identity is preserved independently o
 test('profile inventory ordering cannot invent a semantic mismatch', t => {
   const f = fixture(t); mutate(f, 3, o => { o.after = { ...o.after, profiles: [...o.after.profiles].reverse() }; });
   assert.equal(evaluate(f).overall, 'PASS');
+});
+
+test('derived keys bind the pre-frozen observer/root and original UMP evidence without predetermined profile entropy', t => {
+  const f = fixture(t), file = path.join(f.directory, f.record.oracle.path);
+  const original = readJson(file);
+  for (const change of [o => { o.observerSha256 = 'ff'.repeat(32); }, o => { o.planHash = 'ff'.repeat(32); }, o => { o.root.identity = o.secondary.identity; }, o => { o.sources.third.sha256 = 'ff'.repeat(32); }, o => { o.sources.third = o.sources.secondary; }]) {
+    const oracle = structuredClone(original); change(oracle); const bytes = Buffer.from(JSON.stringify(oracle));
+    fs.writeFileSync(file, bytes); f.record.oracle.sha256 = digest(bytes); f.record.oracle.size = bytes.length;
+    assert.throws(() => evaluate(f));
+  }
 });

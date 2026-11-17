@@ -13,7 +13,7 @@ const hashPattern = /^[0-9a-f]{64}$/;
 const outpointPattern = /^[0-9a-f]{64}\.(0|[1-9][0-9]*)$/;
 function oracleRecord(value) {
   const roles = ['root', 'secondary', 'third', 'replacement'];
-  if (value.schema !== 'tpnil-isi5-oracle@0.1.0' || Object.keys(value).sort().join() !== ['schema', 'claim', ...roles].sort().join() || !['LAB_SELF_TEST_ONLY', 'ENGINEERING_OBSERVATION_ONLY'].includes(value.claim)) throw new Error('Invalid profile fixture oracle');
+  if (value.schema !== 'tpnil-isi5-oracle@0.1.0' || Object.keys(value).sort().join() !== ['schema', 'claim', 'planHash', 'observerSha256', 'sources', ...roles].sort().join() || !['LAB_SELF_TEST_ONLY', 'ENGINEERING_OBSERVATION_ONLY'].includes(value.claim)) throw new Error('Invalid profile fixture oracle');
   for (const role of roles) {
     const item = value[role];
     if (!item || Object.keys(item).sort().join() !== 'identity,profile' || typeof item.profile !== 'string' || !item.profile || !/^(02|03)[0-9a-f]{64}$/.test(item.identity)) throw new Error('Invalid profile fixture identity');
@@ -130,8 +130,21 @@ export function evaluateWalletProfiles(plan, record, evidenceRoot) {
   if (!Number.isFinite(started) || !Number.isFinite(finished) || new Date(started).toISOString() !== record.startedAt || new Date(finished).toISOString() !== record.finishedAt || finished < started) throw new Error('Invalid observation interval');
   unique(record.cases.map(item => item.id), 'profile observation vector');
   if (record.cases.some(item => !catalog.vectors.some(vector => vector.id === item.id))) throw new Error('Unknown profile observation vector');
-  const oracle = oracleRecord(parseJson(artifactBytes(evidenceRoot, plan.oracle)));
-  if (oracle.claim !== (plan.mode === 'self-test' ? 'LAB_SELF_TEST_ONLY' : 'ENGINEERING_OBSERVATION_ONLY')) throw new Error('Synthetic fixture and observation claims cannot be promoted or relabelled');
+  const fixture = parseJson(artifactBytes(evidenceRoot, plan.fixtureOracle));
+  const claim = plan.mode === 'self-test' ? 'LAB_SELF_TEST_ONLY' : 'ENGINEERING_OBSERVATION_ONLY';
+  if (fixture.schema !== 'tpnil-isi5-fixture@0.1.0' || Object.keys(fixture).sort().join() !== 'claim,replacement,root,schema') throw new Error('Invalid frozen profile fixture');
+  if (fixture.claim !== claim) throw new Error('Synthetic fixture and observation claims cannot be promoted or relabelled');
+  const oracle = oracleRecord(parseJson(artifactBytes(evidenceRoot, record.oracle)));
+  if (oracle.claim !== claim || oracle.planHash !== record.planHash || oracle.observerSha256 !== plan.oracleObserverSha256 || !same(oracle.root, fixture.root) || !same(oracle.replacement, fixture.replacement)) throw new Error('Derived profile oracle does not bind its frozen fixture/observer/plan');
+  if (!oracle.sources || Object.keys(oracle.sources).sort().join() !== 'secondary,third') throw new Error('Missing derived UMP source bindings');
+  for (const role of ['secondary', 'third']) {
+    const source = oracle.sources[role];
+    if (!source || Object.keys(source).sort().join() !== 'path,sha256,size' || !hashPattern.test(source.sha256) || !Number.isSafeInteger(source.size) || source.size < 1) throw new Error('Invalid derived UMP source binding');
+    artifactBytes(evidenceRoot, source);
+    const creation = record.cases.find(item => item.id === (role === 'secondary' ? 'ISI-5-V001' : 'ISI-5-V004'));
+    const observedSources = creation?.evidence.filter(item => item.role === 'independent-ump') ?? [];
+    if (observedSources.length && !observedSources.some(item => item.sha256 === source.sha256 && item.size === source.size)) throw new Error('Derived key is not bound to its creation UMP observation');
+  }
   const outcomes = catalog.vectors.map(vector => {
     const item = record.cases.find(item => item.id === vector.id);
     if (!item) return { id: vector.id, requirementId: vector.requirementId, status: 'BLOCKED', assertions: [{ id: `${vector.id}/execution`, status: 'BLOCKED' }] };

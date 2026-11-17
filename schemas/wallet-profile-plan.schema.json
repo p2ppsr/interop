@@ -21,30 +21,6 @@
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
     },
-    "oracle": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "string",
-          "minLength": 1
-        },
-        "sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "size": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 16777216
-        }
-      },
-      "required": [
-        "path",
-        "sha256",
-        "size"
-      ],
-      "additionalProperties": false
-    },
     "sutSha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
@@ -96,6 +72,34 @@
         "root",
         "active-profile"
       ]
+    },
+    "fixtureOracle": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "oracleObserverSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
     }
   },
   "required": [
@@ -104,7 +108,7 @@
     "selection",
     "mode",
     "profileHash",
-    "oracle",
+    "fixtureOracle",
     "sutSha256",
     "environmentSha256",
     "platform",
@@ -112,7 +116,8 @@
     "network",
     "publicBroadcast",
     "optionalConsumers",
-    "notificationIdentityRole"
+    "notificationIdentityRole",
+    "oracleObserverSha256"
   ],
   "additionalProperties": false
 }

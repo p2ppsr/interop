@@ -31,8 +31,11 @@ or promote either claim to a SUT conformance finding.
 | V010 | Mirrors, logout and background work | Canonical revision wins over a stale mirror; conflicting accounts are retained/refused. Logout disables mirrors, prevents old-copy login and defers background work. The declared root/profile notification identity contract is preserved. |
 
 Profile names and UI labels are not identity oracles. A fixture oracle independently
-binds opaque profile IDs to canonical compressed secp256k1 public keys before the
-run. Root, secondary, third and a replacement account have distinct identities.
+binds the root and replacement account to canonical compressed secp256k1 public
+keys before the run. Secondary and third profile bindings are outputs of an
+independent observer over the newly published UMP records; their entropy is not
+predetermined. The derived oracle binds the frozen plan and observer digest,
+unchanged root/replacement identities and exact source UMP evidence digests. Root, secondary, third and a replacement account have distinct identities.
 A frozen `optionalConsumers` inventory declares mirror and background consumers.
 Absent consumers require independent absence-inventory evidence rather than a
 new implementation; consumer-specific assertions are applied only when present.
@@ -51,11 +54,15 @@ application; the program does not require BitGenius or a third-party account.
 
 ## Run and evidence contract
 
-Freeze the catalog, `tpnil-isi5-plan@0.1.0`, independent oracle, exact SUT bytes,
+Freeze the catalog, `tpnil-isi5-plan@0.1.0`, baseline fixture/observer, exact SUT bytes,
 platform/device kind, service closure and fault schedule before collecting data.
-The plan binds the catalog's TPNIL-JSON-1 hash, oracle path/size/SHA-256,
+The plan binds the catalog's TPNIL-JSON-1 hash, baseline fixture path/size/SHA-256, independent observer digest,
 SUT/environment digests, network and selected program. Every run binds that plan
-hash. The v0.2 catalog/index schemas add ISI-5 while retaining the original v0.1
+hash and its derived profile-oracle artifact. The baseline fixture uses
+`tpnil-isi5-fixture@0.1.0` with `claim`, `root` and `replacement` records; each
+contains `profile` and `identity`. The derived `tpnil-isi5-oracle@0.1.0` adds
+`secondary`, `third`, `planHash`, `observerSha256` and `sources.secondary/third`
+artifact descriptors. The v0.2 catalog/index schemas add ISI-5 while retaining the original v0.1
 schemas for historical records. ISI-5 identifiers and vector versions are permanent.
 
 The plan selects isolated controlled services and prohibits public broadcast.
