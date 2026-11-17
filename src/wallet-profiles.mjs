@@ -74,9 +74,13 @@ function caseOracle(vector, observation, oracle, evidence, plan) {
       compare('unavailable-retains-snapshot', ['stale.snapshot', 'unavailable.retainedSnapshot']);
       break;
     case 'ISI-5-V006':
-      state('before', 'secondary'); state('afterFailure', 'secondary', false); state('afterRetry', 'secondary');
+      state('before', 'secondary'); state('afterFailure', 'secondary', observation?.failureOutcome === 'verified-rollback'); state('afterRetry', 'secondary');
+      check('safe-failure-outcome', ['failureOutcome'], value => ['unavailable', 'verified-rollback'].includes(value));
       for (const key of ['selected', 'ump', 'revision', 'snapshot']) compare(`failed-save-retains-${key}`, [`before.${key}`, `afterFailure.${key}`]);
-      flag('writeResult', 'rejected'); flag('whileBlocked.identityCall', 'rejected'); flag('whileBlocked.umpMutation', 'rejected'); flag('newActionIds', []);
+      flag('writeResult', 'rejected');
+      if (observation?.failureOutcome === 'verified-rollback') { flag('afterFailureAccess.identityCall', 'served-previous'); flag('afterFailureAccess.identity', oracle.secondary.identity); }
+      else flag('afterFailureAccess.identityCall', 'rejected');
+      flag('afterFailureAccess.umpMutation', 'rejected'); flag('newActionIds', []);
       compare('local-only-retry', ['before.ump', 'afterRetry.ump']);
       check('retry-commits', ['before.revision', 'afterRetry.revision'], (before, after) => after > before);
       break;
@@ -88,7 +92,7 @@ function caseOracle(vector, observation, oracle, evidence, plan) {
       if (beef == null) assertions.push({ id: `${vector.id}/retained-original-bytes`, status: 'BLOCKED' });
       else check('retained-original-bytes', ['originalReceiptSha256', 'replayedReceiptSha256s'], (original, replayed) => original === beef.sha256 && Array.isArray(replayed) && replayed.length > 0 && replayed.every(value => value === original));
       check('no-duplicate-action', ['originalActionId', 'newActionIds'], (original, ids) => typeof original === 'string' && original.length > 0 && same(ids, [original]));
-      flag('withoutReceipt.status', 'pending'); flag('withoutReceipt.newActionCount', 0); flag('withoutReceipt.checkpointRetained', true);
+      flag('withoutReceipt.originalOutcome', 'unavailable'); flag('withoutReceipt.status', 'pending'); flag('withoutReceipt.newActionCount', 0); flag('withoutReceipt.checkpointRetained', true);
       check('successor-not-predecessor', ['before.ump', 'after.ump'], (before, after) => before !== after);
       break;
     }

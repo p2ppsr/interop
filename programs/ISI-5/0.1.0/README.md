@@ -24,11 +24,19 @@ or promote either claim to a SUT conformance finding.
 | V003 | Terminate/relaunch | Whole-process exit and relaunch retain selected ID, actual key, profile inventory and UMP without wallet logout. Home/background alone is insufficient. |
 | V004 | Create third while secondary is active | Root mutation creates one original action; secondary remains active through creation and reopen without wallet logout. |
 | V005 | Reconcile stale state | Startup/foreground discover the authenticated successor while preserving selection. Discovery failure retains state and refuses new UMP mutations instead of creating an account. |
-| V006 | Fail a local save | Failure preserves committed state, withdraws serving readiness and blocks calls. Explicit refresh after removing the fault commits state without a financial action. |
+| V006 | Fail a local save | Failure preserves committed state and either withholds APIs or serves the independently verified previous durable identity. New UMP writes remain refused; refresh commits state without a financial action. |
 | V007 | Recover an uncertain update | Recovery binds root ownership, intended profiles, exact predecessor/outpoint and original receipt bytes. Replay reuses those bytes; admission without a receipt retains a pending checkpoint and creates no replacement. |
 | V008 | Missing profile, failed builder, account replacement | Remote removal cannot silently serve root. Failed activation preserves the prior actual identity or refuses APIs. Delayed callbacks cannot overwrite a replacement account. |
 | V009 | Explicit application re-login | A controlled application's fresh authenticated peer and server principal match secondary after explicit sign-out/sign-in, without a page reload, payment replay or account linking. |
 | V010 | Mirrors, logout and background work | Canonical revision wins over a stale mirror; conflicting accounts are retained/refused. Logout disables mirrors, prevents old-copy login and defers background work. The declared root/profile notification identity contract is preserved. |
+
+`newActionIds` counts original UMP mutation operations; separately identified
+permission and funding transactions retain their own provenance. V002 orders
+admitted selection operations; pre-admission cancellations remain in the raw
+concurrency evidence. Its cache predicate covers identity-bound reads. V006
+injects failure before the first selection-intent commit and permits either
+unavailability or verified rollback. V007 separately makes the original outcome
+unavailable after admission, which requires retaining the unresolved checkpoint.
 
 Profile names and UI labels are not identity oracles. A fixture oracle independently
 binds the root and replacement account to canonical compressed secp256k1 public

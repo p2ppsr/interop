@@ -115,3 +115,9 @@ test('derived keys bind the pre-frozen observer/root and original UMP evidence w
     assert.throws(() => evaluate(f));
   }
 });
+
+test('verified rollback may serve the previously committed identity while unresolved writes remain refused', t => {
+  const f = fixture(t); mutate(f, 6, o => { o.failureOutcome = 'verified-rollback'; o.afterFailure.ready = true; o.afterFailureAccess.identityCall = 'served-previous'; o.afterFailureAccess.identity = o.before.identity; });
+  assert.equal(evaluate(f).overall, 'PASS');
+  mutate(f, 6, o => { o.afterFailureAccess.identity = o.before.root; }); assert.equal(evaluate(f).overall, 'FAIL');
+});
