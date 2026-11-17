@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 candidate — optional wallet profile semantics
+
+- Add opt-in ISI-5@0.1.0 with ten UMP/profile continuity flows, independent of core ISI-4 acceptance.
+- Add digest-bound engineering observation evaluation, a labelled synthetic pack and seeded regression tests; no native SUT result or certification is issued.
+- Add v0.2 catalog/index schemas and preserve original v0.1 contracts and historical program artifacts.
+
 ## Unreleased
 
 - Add ITCVE-1 1.1.0 with independent TypeScript/Go Overlay, ChainTracks and Wallet Storage selection, pinned native dependencies, authenticated mixed-component tests, fault/recovery checks, wallet/Android configuration and CI evidence. Historical profiles and results remain fixed.
