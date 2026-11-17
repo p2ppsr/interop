@@ -8,7 +8,7 @@ import { digest, hashJson } from '../src/json.mjs';
 import { ROOT, readJson, checkCatalog, checkSchema } from '../src/core.mjs';
 import { evaluateWalletProfiles, WALLET_PROFILE_CATALOG } from '../src/wallet-profiles.mjs';
 import { createWalletProfileSelfTest } from '../src/wallet-profile-self-test.mjs';
-function fixture(t) { const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-isi5-')); t.after(() => fs.rmSync(root, { recursive: true, force: true })); return createWalletProfileSelfTest(path.join(root, 'new')); }
+function fixture(t) { const root = fs.mkdtempSync(path.join(os.tmpdir(), 'tpnil-isi6-')); t.after(() => fs.rmSync(root, { recursive: true, force: true })); return createWalletProfileSelfTest(path.join(root, 'new')); }
 function mutate(f, number, change) { const item = f.record.cases[number - 1], file = path.join(f.directory, item.projection.path); const value = readJson(file); change(value); const bytes = Buffer.from(JSON.stringify(value)); fs.writeFileSync(file, bytes); item.projection.sha256 = digest(bytes); item.projection.size = bytes.length; }
 const evaluate = f => evaluateWalletProfiles(f.plan, f.record, f.directory);
 function rebindPlan(f) {
@@ -20,11 +20,11 @@ function rebindPlan(f) {
 }
 
 
-test('optional ISI-5 has ten complete vectors; old index/catalog schemas retain their namespace', () => {
+test('optional ISI-6 has ten complete vectors; old index/catalog schemas retain their namespace', () => {
   const catalog = readJson(path.join(ROOT, WALLET_PROFILE_CATALOG)); checkCatalog(catalog);
   assert.equal(catalog.vectors.length, 10);
   assert.ok(catalog.vectors.every(vector => vector.applicability.includes('independent of ISI-4')));
-  assert.throws(() => checkSchema('program-index', { schemaVersion: '0.1.0', programs: [{ id: 'ISI-5', version: '0.1.0' }] }));
+  assert.throws(() => checkSchema('program-index', { schemaVersion: '0.1.0', programs: [{ id: 'ISI-6', version: '0.1.0' }] }));
   assert.equal(readJson(path.join(ROOT, 'programs/ISI-4/1.0.0/catalog.json')).vectors.length, 8);
 });
 test('complete synthetic observations pass only LAB_SELF_TEST_ONLY and engineering cannot issue conformance', t => {
@@ -80,7 +80,7 @@ test('missing semantic fact or absent raw artifact blocks instead of passing', t
 });
 test('tamper, symlinks, duplicates, unknown vectors and wrong plan/catalog binding fail the evidence contract', t => {
   const f = fixture(t);
-  for (const change of [x => { x.record.planHash = '00'.repeat(32); }, x => { x.plan.profileHash = '00'.repeat(32); }, x => { x.record.cases.push(x.record.cases[0]); }, x => { x.record.cases[0].id = 'ISI-5-V999'; }, x => { x.record.cases[0].projection.path = '../escape'; }, x => { x.record.finishedAt = '2026-11-15T00:00:00.000Z'; }]) { const invalid = structuredClone(f); change(invalid); assert.throws(() => evaluate(invalid)); }
+  for (const change of [x => { x.record.planHash = '00'.repeat(32); }, x => { x.plan.profileHash = '00'.repeat(32); }, x => { x.record.cases.push(x.record.cases[0]); }, x => { x.record.cases[0].id = 'ISI-6-V999'; }, x => { x.record.cases[0].projection.path = '../escape'; }, x => { x.record.finishedAt = '2026-11-15T00:00:00.000Z'; }]) { const invalid = structuredClone(f); change(invalid); assert.throws(() => evaluate(invalid)); }
   const file = path.join(f.directory, f.record.cases[0].projection.path); fs.appendFileSync(file, ' '); assert.throws(() => evaluate(f), /size|digest/i);
   fs.unlinkSync(file); fs.symlinkSync('oracle.json', file); assert.throws(() => evaluate(f), /Symlink/);
 });

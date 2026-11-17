@@ -147,4 +147,4 @@ admission and qualification evidence.
 
 ## Optional UMP and profile semantics
 
-[ISI-5](../programs/ISI-5/0.1.0/README.md) runs independently of ISI-4. Generate a LAB_SELF_TEST_ONLY pack with `node scripts/create-isi5-self-test.mjs out/isi5-self-test`, or evaluate a frozen engineering observation pack with `node bin/tpnil.mjs evaluate-wallet-profiles plan.json record.json evidence-root`. Complete FAIL and BLOCKED outcomes are laboratory data; invalid evidence exits with code 2. Native adapters, exact artifacts/platforms and controlled services require separate admission before SUT findings.
+[ISI-6](../programs/ISI-6/0.1.0/README.md) runs independently of ISI-4. Generate a LAB_SELF_TEST_ONLY pack with `node scripts/create-isi6-self-test.mjs out/isi6-self-test`, or evaluate a frozen engineering observation pack with `node bin/tpnil.mjs evaluate-wallet-profiles plan.json record.json evidence-root`. Complete FAIL and BLOCKED outcomes are laboratory data; invalid evidence exits with code 2. Native adapters, exact artifacts/platforms and controlled services require separate admission before SUT findings.

@@ -2,7 +2,7 @@
 
 ## 0.6.0 candidate — optional wallet profile semantics
 
-- Add opt-in ISI-5@0.1.0 with ten UMP/profile continuity flows, independent of core ISI-4 acceptance.
+- Add opt-in ISI-6@0.1.0 with ten UMP/profile continuity flows, independent of core ISI-4 acceptance.
 - Add digest-bound engineering observation evaluation, a labelled synthetic pack and seeded regression tests; no native SUT result or certification is issued.
 - Add v0.2 catalog/index schemas and preserve original v0.1 contracts and historical program artifacts.
 

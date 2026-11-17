@@ -1,9 +1,9 @@
-# ISI-5 0.1.0 — optional UMP and wallet profile semantics
+# ISI-6 0.1.0 — optional UMP and wallet profile semantics
 
-ISI-5 is an opt-in compatibility program for wallets that implement UMP-backed
+ISI-6 is an opt-in compatibility program for wallets that implement UMP-backed
 accounts and multiple wallet profiles. Selection of `ump-profiles` requires all
 ten vectors in [the catalog](catalog.json). ISI-4 acceptance, its ToDo flows,
-BRC-100 method inventory and retained results are independent of ISI-5. A wallet
+BRC-100 method inventory and retained results are independent of ISI-6. A wallet
 that does not select this program acquires no new ISI-4 failure or requirement.
 These requirements are laboratory profile semantics, not additions to BRC-100.
 
@@ -62,16 +62,16 @@ application; the program does not require BitGenius or a third-party account.
 
 ## Run and evidence contract
 
-Freeze the catalog, `tpnil-isi5-plan@0.1.0`, baseline fixture/observer, exact SUT bytes,
+Freeze the catalog, `tpnil-isi6-plan@0.1.0`, baseline fixture/observer, exact SUT bytes,
 platform/device kind, service closure and fault schedule before collecting data.
 The plan binds the catalog's TPNIL-JSON-1 hash, baseline fixture path/size/SHA-256, independent observer digest,
 SUT/environment digests, network and selected program. Every run binds that plan
 hash and its derived profile-oracle artifact. The baseline fixture uses
-`tpnil-isi5-fixture@0.1.0` with `claim`, `root` and `replacement` records; each
-contains `profile` and `identity`. The derived `tpnil-isi5-oracle@0.1.0` adds
+`tpnil-isi6-fixture@0.1.0` with `claim`, `root` and `replacement` records; each
+contains `profile` and `identity`. The derived `tpnil-isi6-oracle@0.1.0` adds
 `secondary`, `third`, `planHash`, `observerSha256` and `sources.secondary/third`
-artifact descriptors. The v0.2 catalog/index schemas add ISI-5 while retaining the original v0.1
-schemas for historical records. ISI-5 identifiers and vector versions are permanent.
+artifact descriptors. The v0.2 catalog/index schemas add ISI-6 while retaining the original v0.1
+schemas for historical records. ISI-6 identifiers and vector versions are permanent.
 
 The plan selects isolated controlled services and prohibits public broadcast.
 Supported mainnet-format controlled-service configurations preserve the existing
@@ -119,8 +119,8 @@ transaction counts require independent observer records, not SUT-authored counte
 Generate a new synthetic pack and evaluate it:
 
 ```sh
-node scripts/create-isi5-self-test.mjs out/isi5-self-test
-node bin/tpnil.mjs evaluate-wallet-profiles out/isi5-self-test/plan.json out/isi5-self-test/record.json out/isi5-self-test
+node scripts/create-isi6-self-test.mjs out/isi6-self-test
+node bin/tpnil.mjs evaluate-wallet-profiles out/isi6-self-test/plan.json out/isi6-self-test/record.json out/isi6-self-test
 node --test test/wallet-profiles.test.mjs
 ```
 
