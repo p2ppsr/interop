@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "tpnil-isi6-plan@0.1.0"
+    },
+    "program": {
+      "const": "ISI-6@0.1.0"
+    },
+    "selection": {
+      "const": "ump-profiles"
+    },
+    "mode": {
+      "enum": [
+        "self-test",
+        "engineering"
+      ]
+    },
+    "profileHash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sutSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "environmentSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "deviceKind": {
+      "enum": [
+        "physical",
+        "virtual",
+        "simulator",
+        "headless"
+      ]
+    },
+    "network": {
+      "enum": [
+        "main",
+        "testnet",
+        "ttn"
+      ]
+    },
+    "publicBroadcast": {
+      "const": false
+    },
+    "optionalConsumers": {
+      "type": "object",
+      "properties": {
+        "mirrors": {
+          "type": "boolean"
+        },
+        "background": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "mirrors",
+        "background"
+      ],
+      "additionalProperties": false
+    },
+    "notificationIdentityRole": {
+      "enum": [
+        "root",
+        "active-profile"
+      ]
+    },
+    "fixtureOracle": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size"
+      ],
+      "additionalProperties": false
+    },
+    "oracleObserverSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schema",
+    "program",
+    "selection",
+    "mode",
+    "profileHash",
+    "fixtureOracle",
+    "sutSha256",
+    "environmentSha256",
+    "platform",
+    "deviceKind",
+    "network",
+    "publicBroadcast",
+    "optionalConsumers",
+    "notificationIdentityRole",
+    "oracleObserverSha256"
+  ],
+  "additionalProperties": false
+}

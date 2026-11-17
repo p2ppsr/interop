@@ -13,3 +13,5 @@ Canonical encoding **TPNIL-JSON-1** is UTF-8 JSON without trailing whitespace; o
 `component-qualification-plan.schema.json` binds an external source revision, an argument-vector command, and semantic output assertions. The runner retains stdout, stderr, source state, tool versions, and the replayable result as content-addressed objects. These findings qualify supporting infrastructure only.
 
 ISI-4 wallet-run and native-observation records use explicit `tpnil-isi4-*` schema identifiers and the verifier in `src/sut-evidence.mjs`. It checks the claim and program boundary, all eight vector outcomes, the exact evidence file set, sizes and SHA-256 digests. The wallet runner additionally compares the semantic projection across clean repetitions.
+
+The additive `catalog-v2` and `program-index-v2` contracts use schemaVersion `0.2.0` and register optional ISI-6; original v0.1 contracts remain unchanged and dispatched by version. `wallet-profile-plan` and `wallet-profile-record` bind ISI-6 engineering observations to a frozen catalog/oracle and exact evidence digests. The evaluator cannot issue SUT conformance or certification.

@@ -1,0 +1,315 @@
+{
+  "schemaVersion": "0.2.0",
+  "id": "ISI-6",
+  "version": "0.1.0",
+  "status": "draft",
+  "title": "Optional UMP and wallet profile continuity semantics",
+  "itcve": {
+    "id": "ITCVE-1",
+    "version": "1.0.0"
+  },
+  "profile": "ump-profiles",
+  "vectors": [
+    {
+      "id": "ISI-6-V001",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R001",
+      "title": "Create and durably retain a profile",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Create a secondary profile through the supported wallet control, then query its published UMP and device state.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "Creation preserves the selected root, publishes exactly the intended profile inventory and commits a durable snapshot before readiness."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "independent-ump",
+        "device-state"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V002",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R002",
+      "title": "Activate the actual profile identity live",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Switch root to secondary while an old-profile request is held; query fresh identity and exercise concurrent controls.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "The fresh BRC-100 key is the independently derived secondary key; the UMP is unchanged, old replies/caches are fenced and financial activity cannot race a switch."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "device-state",
+        "concurrency"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V003",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R003",
+      "title": "Retain selection across process termination",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Force-stop the complete wallet process, prove its exit, relaunch and query identity without signing the wallet out.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "The selected secondary identity, profile inventory and UMP survive; a background/Home transition alone is insufficient."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "device-state",
+        "process-lifecycle"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V004",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R004",
+      "title": "Mutate root metadata while a secondary remains selected",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Create a third profile while secondary is active, without wallet logout; inspect the new UMP independently and reopen.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "One original update adds the third profile and preserves the selected secondary identity and root ownership."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "independent-ump",
+        "device-state"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V005",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R005",
+      "title": "Reconcile a stale snapshot without losing intent",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Restore the admitted stale predecessor, discover a valid successor at startup and foreground; separately interrupt discovery.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "Verified reconciliation preserves secondary selection; failed discovery retains recoverable state and refuses new UMP mutations instead of creating an account."
+      ],
+      "evidence": [
+        "device-state",
+        "independent-ump",
+        "brc100",
+        "fault-injection"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V006",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R006",
+      "title": "Refuse and recover an unsuccessful durable save",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Inject local commit failure during a switch/update, query public APIs, remove the fault and explicitly refresh.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "A failed save preserves committed state, reports the operation rejected and either withholds APIs or serves only the independently verified prior durable identity. New UMP writes remain refused; explicit local-save retry creates no financial action."
+      ],
+      "evidence": [
+        "native-ui",
+        "device-state",
+        "brc100",
+        "fault-injection"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V007",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R007",
+      "title": "Recover the original uncertain UMP update",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Interrupt after action admission and after original signed receipt retention; reconcile or re-publish that same receipt, then repeat recovery.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "Ownership, predecessor, intended profiles and exact receipt bind recovery; no replacement action is created. Admission without a receipt stays pending until the original outcome is established."
+      ],
+      "evidence": [
+        "independent-ump",
+        "device-state",
+        "fault-injection",
+        "transaction-receipt",
+        "atomic-beef"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V008",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R008",
+      "title": "Handle missing profiles and obsolete sessions explicitly",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Remove the selected profile remotely, fail wallet construction, then replace the account while the previous identity read is delayed.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "A missing profile cannot silently become root; a failed builder preserves identity or withholds APIs; late callbacks cannot overwrite the replacement account."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "device-state",
+        "fault-injection",
+        "concurrency"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V009",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R009",
+      "title": "Authenticate the selected identity on explicit application login",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Use a controlled BRC-103 application with root, switch to secondary, then explicitly sign out and sign in on the same page.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "The resulting server principal and peer belong to secondary, prior session is revoked, and neither payment replay nor account linking occurs. A cookie alone is not a wallet identity oracle."
+      ],
+      "evidence": [
+        "native-ui",
+        "brc100",
+        "application-auth"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    },
+    {
+      "id": "ISI-6-V010",
+      "version": "0.1.0",
+      "requirementId": "ISI-6-R010",
+      "title": "Prevent stale mirror and background account restoration",
+      "origin": "laboratory-profile",
+      "reference": "programs/ISI-6/0.1.0/README.md",
+      "applicability": "Mandatory only after explicit selection of ISI-6 ump-profiles; independent of ISI-4 acceptance.",
+      "executable": true,
+      "preconditions": [
+        "Digest-frozen SUT, platform, profile catalog, independent fixture oracle and controlled-service plan.",
+        "Isolated funded fixture identities; supported wallet controls and fault boundaries; no personal wallet or public-mainnet spending."
+      ],
+      "steps": [
+        "Establish divergent legacy/mirror copies; reconcile, log out, restart and deliver a background event under the declared notification identity contract.",
+        "Retain the independent projections and raw role-specific evidence; evaluate the complete ISI-6 record."
+      ],
+      "expected": [
+        "Canonical revision wins; conflicting accounts are retained/refused, logout tombstones prevent old-copy login and background work defers disabled state."
+      ],
+      "evidence": [
+        "device-state",
+        "process-lifecycle",
+        "background-consumer",
+        "fault-injection"
+      ],
+      "blockers": [
+        "Native adapter, artifact/platform and controlled-service admission are separate prerequisites to a SUT conformance finding."
+      ]
+    }
+  ]
+}
