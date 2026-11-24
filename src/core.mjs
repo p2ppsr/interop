@@ -5,7 +5,7 @@ import { canonical, digest, hashJson, parseJson, validate, equal } from './json.
 
 export const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 export const VERSION = '0.1.0'; // Stable self-test and evidence protocol.
-export const RELEASE_VERSION = '0.5.0';
+export const RELEASE_VERSION = '0.6.0';
 export const readJson = file => parseJson(fs.readFileSync(file));
 const schemas = new Map();
 export function checkSchema(name, value) {
@@ -64,7 +64,7 @@ export function evaluate(plan, observations) {
   return { schemaVersion: VERSION, claim: 'LAB_SELF_TEST_ONLY', planHash: hashJson(plan), observationsHash: hashJson(observations), overall, outcomes };
 }
 export function checkCatalog(catalog) {
-  checkSchema('catalog', catalog);
+  checkSchema(catalog.schemaVersion === '0.2.0' ? 'catalog-v2' : 'catalog', catalog);
   unique(catalog.vectors.map(v => v.id), 'vector ID');
   unique(catalog.vectors.map(v => v.requirementId), 'requirement ID');
   for (const v of catalog.vectors) {
@@ -74,9 +74,9 @@ export function checkCatalog(catalog) {
 }
 export function checkRepository() {
   const index = readJson(path.join(ROOT, 'programs/index.json'));
-  checkSchema('program-index', index);
+  checkSchema(index.schemaVersion === '0.2.0' ? 'program-index-v2' : 'program-index', index);
   unique(index.programs.map(p => p.id), 'program ID');
-  if (index.programs.length !== 4) throw new Error('Expected four registered programs');
+  if (index.programs.length !== (index.schemaVersion === '0.2.0' ? 5 : 4)) throw new Error('Incomplete registered program set');
   const catalogs = index.programs.map(p => readJson(path.join(ROOT, 'programs', p.id, p.version, 'catalog.json')));
   const version = fs.readFileSync(path.join(ROOT, 'VERSION'), 'utf8').trim();
   if (version !== RELEASE_VERSION || readJson(path.join(ROOT, 'package.json')).version !== RELEASE_VERSION) throw new Error('Laboratory version mismatch');

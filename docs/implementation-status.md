@@ -1,6 +1,6 @@
 # Implementation status
 
-| Capability | Laboratory 0.5.0 |
+| Capability | Laboratory 0.6.0 candidate |
 | --- | --- |
 | Reproducible compiled-webroot packaging | Implemented with fixed archive metadata; Python standard library |
 | Strict JSON contract validation, digest verification, deterministic equality oracle | Implemented for laboratory self-tests |
@@ -9,8 +9,9 @@
 | Native macOS qualification execution | Implemented on clean hosted Apple-silicon macOS VMs; two retained BSV Desktop repetitions pass installation, initialization, mainnet-mode, and local BRC-100 bridge assertions |
 | BRC-38/39 file portability | [Proposed profile](../programs/ISI-4/proposals/brc39-file-portability-0.1.0.md) and pinned synthetic envelope oracle; native cross-wallet file matrix remains unexecuted; ITCVE-1 2.0 V007 separately passes supported Go counterpart-provider replacement, which is not file export/import |
 | Native Send/Receive, PeerPay and Mountaintops | [Payment journey proposal](payment-journeys.md), deterministic coverage inventory and executable pinned application source regressions. ITCVE-1 1.3.0 separately implements controlled Message Box faults and independent payment outcomes through wallet APIs. Native payment UI drivers and the broader wallet payment-profile admission remain open; application source checks issue infrastructure findings only |
-| ISI requirement catalogs and machine-readable vector plans | Four program families with versioned catalogs; the retained qualified ISI-4 4.0 result executes V001–V008. V007 supported counterpart replacement passes; V008 retains observed failures and one broader-coverage gate. Later candidate profiles have separate execution and admission records |
-| Four ISI reports on admitted SUTs | First ISI-4 experimental result retained; ISI-1, ISI-2, and ISI-3 SUT reports remain pending |
+| Optional UMP/profile semantics | [ISI-6 0.1.0](../programs/ISI-6/0.1.0/README.md) defines ten opt-in flows with a digest-bound engineering observation evaluator and executable synthetic regression pack. Native collector/platform/service admission and SUT evaluation remain pending; no ISI-4 vector, runner or retained result changes |
+| ISI requirement catalogs and machine-readable vector plans | Five independently selected program families with versioned catalogs; the retained qualified ISI-4 4.0 result executes V001–V008. V007 supported counterpart replacement passes; V008 retains observed failures and one broader-coverage gate. Later candidate profiles have separate execution and admission records |
+| ISI reports on admitted SUTs | First ISI-4 experimental result retained; ISI-1, ISI-2, and ISI-3 SUT reports remain pending |
 | Teranode regtest closure and mining | Implemented with pinned source and image digests; real PushDrop post and revision spends, conflict rejection, deterministic mining, retrieval, and full-stack restart recovery retain passing evidence |
 | Selectable Go service components | [ITCVE-1 1.1.0](../itcves/ITCVE-1/1.1.0/README.md): real Go Overlay Services, ChainTracks and Wallet Storage, all eight mixed combinations, source/module/binary identities, controlled fault/recovery checks and Linux CI. Engineering selection retains its claim; native admission is recorded separately below |
 | Native wallet with all-Go services | [ITCVE-1 1.2.0](../itcves/ITCVE-1/1.2.0/README.md) qualified for unchanged Yours Wallet 5.1.0 on native Linux/amd64. [Two retained repetitions](../journals/native-wallet-qualification/2026-11-06/yours-wallet-5.1.0-all-go/qualification.json) match: V001–V004 PASS, V005–V006 FAIL, V007–V008 BLOCKED. Exact artifacts, sandbox/trust, kernel isolation, mined ancestry, serialized redemption and cleanup verify offline. Other wallets and mixed closures require separate admission |
